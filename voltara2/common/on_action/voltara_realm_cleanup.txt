@@ -1,0 +1,4 @@
+﻿# Immediate, idempotent setup: works while the campaign is paused.
+on_game_start = { on_actions = { voltara_realm_cleanup_start } }
+on_game_start_after_lobby = { on_actions = { voltara_realm_cleanup_start } }
+voltara_realm_cleanup_start = { effect = { voltara_realm_cleanup = yes } }

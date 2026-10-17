@@ -1,0 +1,4482 @@
+﻿vmaa_voltara_demon_1 = {
+ type = heavy_infantry
+ damage = 37
+ toughness = 27
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 7 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_demon
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2922050163_mehrunes_knights
+}
+
+vmaa_voltara_demon_2 = {
+ type = heavy_infantry
+ damage = 44
+ toughness = 26
+ pursuit = 0
+ screen = 20
+ stack = 75
+ buy_cost = { gold = 216 }
+ low_maintenance_cost = { gold = 0.74 }
+ high_maintenance_cost = { gold = 2.47 }
+ provision_cost = 15
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { plains = { damage = 8 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_demon
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_dremora_spellswords
+}
+
+vmaa_voltara_ironcoil_naga_1 = {
+ type = heavy_infantry
+ damage = 42
+ toughness = 23
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { wetlands = { damage = 8 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_ironcoil_naga
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_heavy_infantry
+}
+
+vmaa_voltara_ironcoil_naga_2 = {
+ type = pikemen
+ damage = 28
+ toughness = 35
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 142 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.49 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_ironcoil_naga
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_house_guard
+}
+
+vmaa_voltara_merfolk_1 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_merfolk
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_spear_infantry
+}
+
+vmaa_voltara_merfolk_2 = {
+ type = skirmishers
+ damage = 21
+ toughness = 21
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 108 }
+ low_maintenance_cost = { gold = 0.35 }
+ high_maintenance_cost = { gold = 1.17 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_merfolk
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_skirmishers
+}
+
+vmaa_voltara_western_corsairs_1 = {
+ type = skirmishers
+ damage = 24
+ toughness = 16
+ pursuit = 26
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_western_corsairs
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_corsair_warriors
+}
+
+vmaa_voltara_western_corsairs_2 = {
+ type = archers
+ damage = 50
+ toughness = 15
+ pursuit = 0
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 169 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.89 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 9 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_western_corsairs
+ culture = { has_innovation = innovation_advanced_bowmaking }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_pirate_archers
+}
+
+vmaa_voltara_island_freebooters_1 = {
+ type = skirmishers
+ damage = 19
+ toughness = 18
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_island_freebooters
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_pirate_skirmishers
+}
+
+vmaa_voltara_island_freebooters_2 = {
+ type = pikemen
+ damage = 28
+ toughness = 35
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 142 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.49 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_island_freebooters
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_pirate_pikemen
+}
+
+vmaa_voltara_culture_18_1 = {
+ type = archers
+ damage = 33
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_18
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_high_elven_archers
+}
+
+vmaa_voltara_culture_18_2 = {
+ type = heavy_infantry
+ damage = 46
+ toughness = 26
+ pursuit = 0
+ screen = 20
+ stack = 75
+ buy_cost = { gold = 216 }
+ low_maintenance_cost = { gold = 0.74 }
+ high_maintenance_cost = { gold = 2.47 }
+ provision_cost = 15
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { plains = { damage = 8 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_18
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2922050163_crystal_tower_spellcasters
+}
+
+vmaa_voltara_culture_19_1 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { plains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_19
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_lockstep_legion
+}
+
+vmaa_voltara_culture_19_2 = {
+ type = heavy_infantry
+ damage = 39
+ toughness = 33
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 176 }
+ low_maintenance_cost = { gold = 0.58 }
+ high_maintenance_cost = { gold = 1.95 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 7 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_19
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_civic_guard
+}
+
+vmaa_voltara_culture_20_1 = {
+ type = heavy_infantry
+ damage = 44
+ toughness = 22
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 8 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_20
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_orc_berserkers
+}
+
+vmaa_voltara_culture_20_2 = {
+ type = heavy_infantry
+ damage = 48
+ toughness = 25
+ pursuit = 0
+ screen = 20
+ stack = 75
+ buy_cost = { gold = 216 }
+ low_maintenance_cost = { gold = 0.74 }
+ high_maintenance_cost = { gold = 2.47 }
+ provision_cost = 15
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { plains = { damage = 9 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_20
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_orc_war_mages
+}
+
+vmaa_voltara_culture_21_1 = {
+ type = archers
+ damage = 31
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_21
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_poison_archers
+}
+
+vmaa_voltara_culture_21_2 = {
+ type = pikemen
+ damage = 28
+ toughness = 35
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 142 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.49 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_21
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_pike_infantry
+}
+
+vmaa_voltara_culture_22_1 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { plains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_22
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_crownlands_spears
+}
+
+vmaa_voltara_culture_22_2 = {
+ type = heavy_cavalry
+ damage = 121
+ toughness = 36
+ pursuit = 20
+ screen = 5
+ stack = 50
+ buy_cost = { gold = 304 }
+ low_maintenance_cost = { gold = 1.01 }
+ high_maintenance_cost = { gold = 3.38 }
+ provision_cost = 15
+ counters = { archers = 1 }
+ terrain_bonus = { plains = { damage = 22 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_22
+ culture = { has_innovation = innovation_arched_saddle }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_shining_cataphracts
+}
+
+vmaa_voltara_culture_23_1 = {
+ type = heavy_infantry
+ damage = 41
+ toughness = 24
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_23
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_longbeard_heavy_infantry
+}
+
+vmaa_voltara_culture_23_2 = {
+ type = archers
+ damage = 44
+ toughness = 18
+ pursuit = 0
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 169 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.89 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 8 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_23
+ culture = { has_innovation = innovation_advanced_bowmaking }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_longbeard_crossbowmen
+}
+
+vmaa_voltara_culture_24_1 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { plains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_24
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_gondorian_marines
+}
+
+vmaa_voltara_culture_24_2 = {
+ type = heavy_infantry
+ damage = 39
+ toughness = 33
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 176 }
+ low_maintenance_cost = { gold = 0.58 }
+ high_maintenance_cost = { gold = 1.95 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 7 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_24
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_arbor_marines
+}
+
+vmaa_voltara_culture_25_1 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { plains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_25
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_hillmen_pikemen
+}
+
+vmaa_voltara_culture_25_2 = {
+ type = heavy_cavalry
+ damage = 119
+ toughness = 36
+ pursuit = 20
+ screen = 5
+ stack = 50
+ buy_cost = { gold = 304 }
+ low_maintenance_cost = { gold = 1.01 }
+ high_maintenance_cost = { gold = 3.38 }
+ provision_cost = 15
+ counters = { archers = 1 }
+ terrain_bonus = { plains = { damage = 21 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_25
+ culture = { has_innovation = innovation_arched_saddle }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3534998754_vale_knights
+}
+
+vmaa_voltara_culture_26_1 = {
+ type = light_cavalry
+ damage = 25
+ toughness = 20
+ pursuit = 35
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 150 }
+ low_maintenance_cost = { gold = 0.54 }
+ high_maintenance_cost = { gold = 1.8 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { drylands = { damage = 4 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_26
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_bellakaze_outriders
+}
+
+vmaa_voltara_culture_26_2 = {
+ type = horse_archers
+ damage = 44
+ toughness = 23
+ pursuit = 35
+ screen = 20
+ stack = 100
+ buy_cost = { gold = 256 }
+ low_maintenance_cost = { gold = 0.86 }
+ high_maintenance_cost = { gold = 2.86 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { drylands = { damage = 8 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_26
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_variag_horse_archers
+}
+
+vmaa_voltara_culture_27_1 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { plains = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_27
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_caravan_guards
+}
+
+vmaa_voltara_culture_27_2 = {
+ type = pikemen
+ damage = 30
+ toughness = 34
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 142 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.49 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { plains = { damage = 5 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_27
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_temple_guardians
+}
+
+vmaa_voltara_culture_30_1 = {
+ type = heavy_infantry
+ damage = 41
+ toughness = 23
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_30
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_she_bears
+}
+
+vmaa_voltara_culture_30_2 = {
+ type = heavy_infantry
+ damage = 39
+ toughness = 33
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 176 }
+ low_maintenance_cost = { gold = 0.58 }
+ high_maintenance_cost = { gold = 1.95 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 7 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_30
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3534998754_winter_guards
+}
+
+vmaa_voltara_culture_31_1 = {
+ type = archers
+ damage = 32
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_31
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_greenwood_archers
+}
+
+vmaa_voltara_culture_31_2 = {
+ type = pikemen
+ damage = 30
+ toughness = 34
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 142 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.49 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { forest = { damage = 5 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_31
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_hadorim_forest_wardens
+}
+
+vmaa_voltara_culture_32_1 = {
+ type = skirmishers
+ damage = 24
+ toughness = 16
+ pursuit = 26
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_32
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_clan_axemen
+}
+
+vmaa_voltara_culture_32_2 = {
+ type = heavy_infantry
+ damage = 40
+ toughness = 32
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 176 }
+ low_maintenance_cost = { gold = 0.58 }
+ high_maintenance_cost = { gold = 1.95 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_32
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_dunlending_huscarl
+}
+
+vmaa_voltara_culture_33_1 = {
+ type = skirmishers
+ damage = 19
+ toughness = 18
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { forest = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_33
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_rain_bringers
+}
+
+vmaa_voltara_culture_33_2 = {
+ type = heavy_cavalry
+ damage = 112
+ toughness = 38
+ pursuit = 20
+ screen = 5
+ stack = 50
+ buy_cost = { gold = 304 }
+ low_maintenance_cost = { gold = 1.01 }
+ high_maintenance_cost = { gold = 3.38 }
+ provision_cost = 15
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 20 toughness = 7 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_33
+ culture = { has_innovation = innovation_arched_saddle }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2966543745_reach_scouts
+}
+
+vmaa_voltara_culture_35_1 = {
+ type = archers
+ damage = 32
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_35
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2966543745_raventree_bows
+}
+
+vmaa_voltara_culture_35_2 = {
+ type = heavy_infantry
+ damage = 39
+ toughness = 33
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 176 }
+ low_maintenance_cost = { gold = 0.58 }
+ high_maintenance_cost = { gold = 1.95 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 7 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_35
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3534998754_marcher_footmen
+}
+
+vmaa_voltara_culture_36_1 = {
+ type = pikemen
+ damage = 25
+ toughness = 31
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_36
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_sworn_brothers
+}
+
+vmaa_voltara_culture_36_2 = {
+ type = archers
+ damage = 35
+ toughness = 15
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 128 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.37 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_36
+ culture = { has_innovation = innovation_advanced_bowmaking }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_nw_rangers
+}
+
+vmaa_voltara_culture_39_1 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_39
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_spear_infantry
+}
+
+vmaa_voltara_culture_39_2 = {
+ type = heavy_infantry
+ damage = 39
+ toughness = 33
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 176 }
+ low_maintenance_cost = { gold = 0.58 }
+ high_maintenance_cost = { gold = 1.95 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { wetlands = { damage = 7 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_39
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2922050163_dreugh_infantry
+}
+
+vmaa_voltara_culture_40_1 = {
+ type = heavy_infantry
+ damage = 137
+ toughness = 93
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 25 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_40
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_heavy_infantry
+}
+
+vmaa_voltara_culture_40_2 = {
+ type = archers
+ damage = 164
+ toughness = 68
+ pursuit = 0
+ screen = 4
+ stack = 20
+ buy_cost = { gold = 216 }
+ low_maintenance_cost = { gold = 0.74 }
+ high_maintenance_cost = { gold = 2.47 }
+ provision_cost = 15
+ counters = { skirmishers = 1 }
+ terrain_bonus = { mountains = { damage = 30 toughness = 12 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_40
+ culture = { has_innovation = innovation_advanced_bowmaking }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_archers
+}
+
+vmaa_voltara_culture_41_1 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_41
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_spear_infantry
+}
+
+vmaa_voltara_culture_41_2 = {
+ type = skirmishers
+ damage = 21
+ toughness = 21
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 108 }
+ low_maintenance_cost = { gold = 0.35 }
+ high_maintenance_cost = { gold = 1.17 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_41
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_skirmishers
+}
+
+vmaa_voltara_culture_42_1 = {
+ type = archers
+ damage = 32
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_42
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_dunmer_bowmen
+}
+
+vmaa_voltara_culture_42_2 = {
+ type = heavy_infantry
+ damage = 44
+ toughness = 26
+ pursuit = 0
+ screen = 20
+ stack = 75
+ buy_cost = { gold = 216 }
+ low_maintenance_cost = { gold = 0.74 }
+ high_maintenance_cost = { gold = 2.47 }
+ provision_cost = 15
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { plains = { damage = 8 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_42
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_dunmer_spellswords
+}
+
+vmaa_voltara_culture_43_1 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_43
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_sea_watch
+}
+
+vmaa_voltara_culture_43_2 = {
+ type = archers
+ damage = 46
+ toughness = 18
+ pursuit = 0
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 169 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.89 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 8 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_43
+ culture = { has_innovation = innovation_advanced_bowmaking }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_quayside_crossbowmen
+}
+
+vmaa_voltara_culture_45_1 = {
+ type = archers
+ damage = 31
+ toughness = 15
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_45
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3534998754_reach_scouts
+}
+
+vmaa_voltara_culture_45_2 = {
+ type = heavy_cavalry
+ damage = 120
+ toughness = 36
+ pursuit = 20
+ screen = 5
+ stack = 50
+ buy_cost = { gold = 304 }
+ low_maintenance_cost = { gold = 1.01 }
+ high_maintenance_cost = { gold = 3.38 }
+ provision_cost = 15
+ counters = { archers = 1 }
+ terrain_bonus = { plains = { damage = 22 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_45
+ culture = { has_innovation = innovation_arched_saddle }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3534998754_highgarden_knights
+}
+
+vmaa_voltara_culture_46_1 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_46
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3534998754_vale_pikes
+}
+
+vmaa_voltara_culture_46_2 = {
+ type = heavy_infantry
+ damage = 39
+ toughness = 33
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 176 }
+ low_maintenance_cost = { gold = 0.58 }
+ high_maintenance_cost = { gold = 1.95 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_46
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_gondorian_footmen
+}
+
+vmaa_voltara_culture_47_1 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_47
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_lake_wardens
+}
+
+vmaa_voltara_culture_47_2 = {
+ type = archers
+ damage = 36
+ toughness = 15
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 128 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.37 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_47
+ culture = { has_innovation = innovation_advanced_bowmaking }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_river_bows
+}
+
+vmaa_voltara_culture_48_1 = {
+ type = skirmishers
+ damage = 24
+ toughness = 16
+ pursuit = 26
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_48
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_stepstone_sailors
+}
+
+vmaa_voltara_culture_48_2 = {
+ type = heavy_infantry
+ damage = 39
+ toughness = 33
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 176 }
+ low_maintenance_cost = { gold = 0.58 }
+ high_maintenance_cost = { gold = 1.95 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { wetlands = { damage = 7 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_culture_48
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_ironborn_reavers
+}
+
+vmaa_voltara_rhaullan_1 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_rhaullan
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_marshstriders
+}
+
+vmaa_voltara_rhaullan_2 = {
+ type = pikemen
+ damage = 28
+ toughness = 35
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 142 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.49 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_rhaullan
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_frog_spears
+}
+
+vmaa_voltara_desert_southron_1 = {
+ type = light_cavalry
+ damage = 25
+ toughness = 20
+ pursuit = 35
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 150 }
+ low_maintenance_cost = { gold = 0.54 }
+ high_maintenance_cost = { gold = 1.8 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { drylands = { damage = 4 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_desert_southron
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_haradrim_raiders
+}
+
+vmaa_voltara_desert_southron_2 = {
+ type = horse_archers
+ damage = 44
+ toughness = 23
+ pursuit = 35
+ screen = 20
+ stack = 100
+ buy_cost = { gold = 256 }
+ low_maintenance_cost = { gold = 0.86 }
+ high_maintenance_cost = { gold = 2.86 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { drylands = { damage = 8 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_desert_southron
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_variag_horse_archers
+}
+
+vmaa_voltara_southorion_1 = {
+ type = light_cavalry
+ damage = 25
+ toughness = 20
+ pursuit = 35
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 150 }
+ low_maintenance_cost = { gold = 0.54 }
+ high_maintenance_cost = { gold = 1.8 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { drylands = { damage = 4 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_southorion
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_dothraki_screamers
+}
+
+vmaa_voltara_southorion_2 = {
+ type = horse_archers
+ damage = 48
+ toughness = 22
+ pursuit = 35
+ screen = 20
+ stack = 100
+ buy_cost = { gold = 256 }
+ low_maintenance_cost = { gold = 0.86 }
+ high_maintenance_cost = { gold = 2.86 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { drylands = { damage = 9 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_southorion
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_dothraki_archers
+}
+
+vmaa_voltara_giants_1 = {
+ type = heavy_infantry
+ damage = 137
+ toughness = 93
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { drylands = { damage = 25 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_giants
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_heavy_infantry
+}
+
+vmaa_voltara_giants_2 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 13
+ pursuit = 0
+ screen = 0
+ stack = 10
+ buy_cost = { gold = 230 }
+ low_maintenance_cost = { gold = 0.7 }
+ high_maintenance_cost = { gold = 2.34 }
+ provision_cost = 15
+ 
+ 
+ siege_tier = 2
+ siege_value = 0.3
+ can_recruit = { culture = culture:voltara_giants
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_giant_regiment
+}
+
+vmaa_voltara_gorilla_1 = {
+ type = heavy_infantry
+ damage = 41
+ toughness = 24
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_gorilla
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_imga_frenzied
+}
+
+vmaa_voltara_gorilla_2 = {
+ type = archers
+ damage = 35
+ toughness = 15
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 128 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.37 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_gorilla
+ culture = { has_innovation = innovation_advanced_bowmaking }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_imga_archers
+}
+
+vmaa_voltara_western_goblins_1 = {
+ type = skirmishers
+ damage = 23
+ toughness = 17
+ pursuit = 26
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { plains = { damage = 4 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_western_goblins
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_skirmishers
+}
+
+vmaa_voltara_western_goblins_2 = {
+ type = pikemen
+ damage = 28
+ toughness = 35
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 142 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.49 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { plains = { damage = 5 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_western_goblins
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_pike_infantry
+}
+
+vmaa_voltara_local_giant_voltara_test_1001 = {
+ type = heavy_infantry
+ damage = 137
+ toughness = 93
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 25 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_1001
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_heavy_infantry
+}
+
+vmaa_voltara_local_giant_voltara_test_10070 = {
+ type = archers
+ damage = 144
+ toughness = 62
+ pursuit = 0
+ screen = 4
+ stack = 20
+ buy_cost = { gold = 160 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.9 }
+ provision_cost = 15
+ counters = { skirmishers = 1 }
+ terrain_bonus = { drylands = { damage = 26 toughness = 11 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_10070
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_archers
+}
+
+vmaa_voltara_local_giant_voltara_test_10113 = {
+ type = heavy_infantry
+ damage = 133
+ toughness = 96
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { wetlands = { damage = 24 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_10113
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_pikemen
+}
+
+vmaa_voltara_local_giant_voltara_test_102 = {
+ type = heavy_infantry
+ damage = 137
+ toughness = 93
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 25 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_102
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_heavy_infantry
+}
+
+vmaa_voltara_local_giant_voltara_test_10309 = {
+ type = archers
+ damage = 144
+ toughness = 62
+ pursuit = 0
+ screen = 4
+ stack = 20
+ buy_cost = { gold = 160 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.9 }
+ provision_cost = 15
+ counters = { skirmishers = 1 }
+ terrain_bonus = { drylands = { damage = 26 toughness = 11 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_10309
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_archers
+}
+
+vmaa_voltara_local_giant_voltara_test_10354 = {
+ type = heavy_infantry
+ damage = 133
+ toughness = 96
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 24 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_10354
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_pikemen
+}
+
+vmaa_voltara_local_giant_voltara_test_10395 = {
+ type = heavy_infantry
+ damage = 137
+ toughness = 93
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 25 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_10395
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_heavy_infantry
+}
+
+vmaa_voltara_local_giant_voltara_test_10504 = {
+ type = archers
+ damage = 144
+ toughness = 62
+ pursuit = 0
+ screen = 4
+ stack = 20
+ buy_cost = { gold = 160 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.9 }
+ provision_cost = 15
+ counters = { skirmishers = 1 }
+ terrain_bonus = { mountains = { damage = 26 toughness = 11 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_10504
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_archers
+}
+
+vmaa_voltara_local_giant_voltara_test_10542 = {
+ type = heavy_infantry
+ damage = 133
+ toughness = 96
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { drylands = { damage = 24 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_10542
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_pikemen
+}
+
+vmaa_voltara_local_giant_voltara_test_10627 = {
+ type = heavy_infantry
+ damage = 137
+ toughness = 93
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { wetlands = { damage = 25 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_10627
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_heavy_infantry
+}
+
+vmaa_voltara_local_giant_voltara_test_10833 = {
+ type = archers
+ damage = 144
+ toughness = 62
+ pursuit = 0
+ screen = 4
+ stack = 20
+ buy_cost = { gold = 160 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.9 }
+ provision_cost = 15
+ counters = { skirmishers = 1 }
+ terrain_bonus = { wetlands = { damage = 26 toughness = 11 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_10833
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_archers
+}
+
+vmaa_voltara_local_giant_voltara_test_10884 = {
+ type = heavy_infantry
+ damage = 133
+ toughness = 96
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { drylands = { damage = 24 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_10884
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_pikemen
+}
+
+vmaa_voltara_local_giant_voltara_test_10989 = {
+ type = heavy_infantry
+ damage = 137
+ toughness = 93
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 25 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_10989
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_heavy_infantry
+}
+
+vmaa_voltara_local_giant_voltara_test_11051 = {
+ type = archers
+ damage = 144
+ toughness = 62
+ pursuit = 0
+ screen = 4
+ stack = 20
+ buy_cost = { gold = 160 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.9 }
+ provision_cost = 15
+ counters = { skirmishers = 1 }
+ terrain_bonus = { mountains = { damage = 26 toughness = 11 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_11051
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_archers
+}
+
+vmaa_voltara_local_giant_voltara_test_11098 = {
+ type = heavy_infantry
+ damage = 133
+ toughness = 96
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 24 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_11098
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_pikemen
+}
+
+vmaa_voltara_local_giant_voltara_test_1111 = {
+ type = heavy_infantry
+ damage = 137
+ toughness = 93
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 25 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_1111
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_heavy_infantry
+}
+
+vmaa_voltara_local_giant_voltara_test_11136 = {
+ type = archers
+ damage = 144
+ toughness = 62
+ pursuit = 0
+ screen = 4
+ stack = 20
+ buy_cost = { gold = 160 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.9 }
+ provision_cost = 15
+ counters = { skirmishers = 1 }
+ terrain_bonus = { drylands = { damage = 26 toughness = 11 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_11136
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_archers
+}
+
+vmaa_voltara_local_giant_voltara_test_113 = {
+ type = heavy_infantry
+ damage = 133
+ toughness = 96
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 24 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_113
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_pikemen
+}
+
+vmaa_voltara_local_giant_voltara_test_128 = {
+ type = heavy_infantry
+ damage = 137
+ toughness = 93
+ pursuit = 0
+ screen = 8
+ stack = 20
+ buy_cost = { gold = 170 }
+ low_maintenance_cost = { gold = 0.6 }
+ high_maintenance_cost = { gold = 2.0 }
+ provision_cost = 15
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 25 toughness = 17 } }
+ 
+ can_recruit = { culture = culture:voltara_local_giant_voltara_test_128
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_giant_heavy_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_ironhold = {
+ type = archers
+ damage = 31
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_ironhold
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_poison_archers
+}
+
+vmaa_voltara_local_goblin_voltara_rhaulla = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_rhaulla
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_deeproad_lurkers
+}
+
+vmaa_voltara_local_goblin_voltara_test_1001 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { plains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_1001
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_pike_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_10113 = {
+ type = skirmishers
+ damage = 23
+ toughness = 17
+ pursuit = 26
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 4 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_10113
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_skirmishers
+}
+
+vmaa_voltara_local_goblin_voltara_test_102 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_102
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_heavy_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_10293 = {
+ type = archers
+ damage = 31
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_10293
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_poison_archers
+}
+
+vmaa_voltara_local_goblin_voltara_test_103 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { plains = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_103
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_deeproad_lurkers
+}
+
+vmaa_voltara_local_goblin_voltara_test_10354 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { forest = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_10354
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_pike_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_10395 = {
+ type = skirmishers
+ damage = 23
+ toughness = 17
+ pursuit = 26
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 4 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_10395
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_skirmishers
+}
+
+vmaa_voltara_local_goblin_voltara_test_10396 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_10396
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_heavy_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_10397 = {
+ type = archers
+ damage = 31
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_10397
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_poison_archers
+}
+
+vmaa_voltara_local_goblin_voltara_test_104 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_104
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_deeproad_lurkers
+}
+
+vmaa_voltara_local_goblin_voltara_test_10498 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_10498
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_pike_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_10504 = {
+ type = skirmishers
+ damage = 23
+ toughness = 17
+ pursuit = 26
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_10504
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_skirmishers
+}
+
+vmaa_voltara_local_goblin_voltara_test_10627 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_10627
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_heavy_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_10833 = {
+ type = archers
+ damage = 31
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_10833
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_poison_archers
+}
+
+vmaa_voltara_local_goblin_voltara_test_10971 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { forest = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_10971
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_deeproad_lurkers
+}
+
+vmaa_voltara_local_goblin_voltara_test_10972 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { forest = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_10972
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_pike_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_11051 = {
+ type = skirmishers
+ damage = 23
+ toughness = 17
+ pursuit = 26
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { plains = { damage = 4 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_11051
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_skirmishers
+}
+
+vmaa_voltara_local_goblin_voltara_test_11098 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_11098
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_heavy_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_1111 = {
+ type = archers
+ damage = 31
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_1111
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_poison_archers
+}
+
+vmaa_voltara_local_goblin_voltara_test_113 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { plains = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_113
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_deeproad_lurkers
+}
+
+vmaa_voltara_local_goblin_voltara_test_114 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_114
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_pike_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_124 = {
+ type = skirmishers
+ damage = 23
+ toughness = 17
+ pursuit = 26
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_124
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_skirmishers
+}
+
+vmaa_voltara_local_goblin_voltara_test_128 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_128
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_heavy_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_1738 = {
+ type = archers
+ damage = 31
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_1738
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_poison_archers
+}
+
+vmaa_voltara_local_goblin_voltara_test_523 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_523
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_deeproad_lurkers
+}
+
+vmaa_voltara_local_goblin_voltara_test_539 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { forest = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_539
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_pike_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_559 = {
+ type = skirmishers
+ damage = 23
+ toughness = 17
+ pursuit = 26
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_559
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_skirmishers
+}
+
+vmaa_voltara_local_goblin_voltara_test_561 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_561
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_heavy_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_578 = {
+ type = archers
+ damage = 31
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_578
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_poison_archers
+}
+
+vmaa_voltara_local_goblin_voltara_test_582 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_582
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_deeproad_lurkers
+}
+
+vmaa_voltara_local_goblin_voltara_test_7741 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { plains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_7741
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_pike_infantry
+}
+
+vmaa_voltara_local_goblin_voltara_test_867 = {
+ type = skirmishers
+ damage = 23
+ toughness = 17
+ pursuit = 26
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_867
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_goblin_skirmishers
+}
+
+vmaa_voltara_local_goblin_voltara_test_9206 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_goblin_voltara_test_9206
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_heavy_infantry
+}
+
+vmaa_voltara_local_ironcoil_voltara_test_10113 = {
+ type = heavy_infantry
+ damage = 42
+ toughness = 23
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { wetlands = { damage = 8 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_local_ironcoil_voltara_test_10113
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_heavy_infantry
+}
+
+vmaa_voltara_local_ironcoil_voltara_test_10395 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { forest = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_ironcoil_voltara_test_10395
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_house_guard
+}
+
+vmaa_voltara_local_ironcoil_voltara_test_10504 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { plains = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_ironcoil_voltara_test_10504
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_skirmishers
+}
+
+vmaa_voltara_local_ironcoil_voltara_test_10627 = {
+ type = heavy_infantry
+ damage = 42
+ toughness = 23
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { wetlands = { damage = 8 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_local_ironcoil_voltara_test_10627
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_heavy_infantry
+}
+
+vmaa_voltara_local_ironcoil_voltara_test_10833 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { forest = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_ironcoil_voltara_test_10833
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_house_guard
+}
+
+vmaa_voltara_local_ironcoil_voltara_test_11098 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_ironcoil_voltara_test_11098
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_skirmishers
+}
+
+vmaa_voltara_local_naga_voltara_ironhold = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_ironhold
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_spear_infantry
+}
+
+vmaa_voltara_local_naga_voltara_test_1001 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_test_1001
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_skirmishers
+}
+
+vmaa_voltara_local_naga_voltara_test_10028 = {
+ type = archers
+ damage = 33
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_test_10028
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_archers
+}
+
+vmaa_voltara_local_naga_voltara_test_10029 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_test_10029
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2922050163_dreugh_infantry
+}
+
+vmaa_voltara_local_naga_voltara_test_10030 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_test_10030
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_spear_infantry
+}
+
+vmaa_voltara_local_naga_voltara_test_10033 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_test_10033
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_skirmishers
+}
+
+vmaa_voltara_local_naga_voltara_test_102 = {
+ type = archers
+ damage = 33
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_test_102
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_archers
+}
+
+vmaa_voltara_local_naga_voltara_test_103 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_test_103
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2922050163_dreugh_infantry
+}
+
+vmaa_voltara_local_naga_voltara_test_104 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_test_104
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_spear_infantry
+}
+
+vmaa_voltara_local_naga_voltara_test_10460 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_test_10460
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_skirmishers
+}
+
+vmaa_voltara_local_naga_voltara_test_1111 = {
+ type = archers
+ damage = 33
+ toughness = 14
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 95 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_test_1111
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_archers
+}
+
+vmaa_voltara_local_naga_voltara_test_113 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { wetlands = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_test_113
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2922050163_dreugh_infantry
+}
+
+vmaa_voltara_local_naga_voltara_test_128 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_naga_voltara_test_128
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_spear_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_38 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_38
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_longbeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_anvilcrown = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { forest = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_anvilcrown
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_ironfist_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_basalthearth = {
+ type = archers
+ damage = 39
+ toughness = 16
+ pursuit = 0
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 125 }
+ low_maintenance_cost = { gold = 0.43 }
+ high_maintenance_cost = { gold = 1.45 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_basalthearth
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_blacklock_crossbowmen
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_bronzeoath = {
+ type = heavy_infantry
+ damage = 40
+ toughness = 24
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_bronzeoath
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_firebeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_caverncoil = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_caverncoil
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3695810892_stonefoot_skirmishers
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_cinderburrow = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_cinderburrow
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_broadbeam_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_copperdelve = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_copperdelve
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_longbeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_deepgate = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_deepgate
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_ironfist_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_hearthguard = {
+ type = archers
+ damage = 39
+ toughness = 16
+ pursuit = 0
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 125 }
+ low_maintenance_cost = { gold = 0.43 }
+ high_maintenance_cost = { gold = 1.45 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { forest = { damage = 7 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_hearthguard
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_blacklock_crossbowmen
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_oathhammer = {
+ type = heavy_infantry
+ damage = 40
+ toughness = 24
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_oathhammer
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_firebeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_oldforge = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { forest = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_oldforge
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3695810892_stonefoot_skirmishers
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_runeward = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { forest = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_runeward
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_broadbeam_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_silverhearth = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_silverhearth
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_longbeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_iron_stonelantern = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_iron_stonelantern
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_ironfist_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_basalt = {
+ type = archers
+ damage = 39
+ toughness = 16
+ pursuit = 0
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 125 }
+ low_maintenance_cost = { gold = 0.43 }
+ high_maintenance_cost = { gold = 1.45 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_basalt
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_blacklock_crossbowmen
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_blackeagle = {
+ type = heavy_infantry
+ damage = 40
+ toughness = 24
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_blackeagle
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_firebeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_blackhammer = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_blackhammer
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3695810892_stonefoot_skirmishers
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_coppergate = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_coppergate
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_broadbeam_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_cragward = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_cragward
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_longbeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_darkanvil = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_darkanvil
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_ironfist_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_deepanvil = {
+ type = archers
+ damage = 39
+ toughness = 16
+ pursuit = 0
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 125 }
+ low_maintenance_cost = { gold = 0.43 }
+ high_maintenance_cost = { gold = 1.45 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_deepanvil
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_blacklock_crossbowmen
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_deepanvilwatch = {
+ type = heavy_infantry
+ damage = 40
+ toughness = 24
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_deepanvilwatch
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_firebeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_flinttooth = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_flinttooth
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3695810892_stonefoot_skirmishers
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_granitefist = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_granitefist
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_broadbeam_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_granitefistwatch = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_granitefistwatch
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_longbeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_hardrock = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_hardrock
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_ironfist_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_ironroot = {
+ type = archers
+ damage = 39
+ toughness = 16
+ pursuit = 0
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 125 }
+ low_maintenance_cost = { gold = 0.43 }
+ high_maintenance_cost = { gold = 1.45 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_ironroot
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_blacklock_crossbowmen
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_ironrootwatch = {
+ type = heavy_infantry
+ damage = 40
+ toughness = 24
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_ironrootwatch
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_firebeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_lostbanner = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_lostbanner
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3695810892_stonefoot_skirmishers
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_oathstone = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_oathstone
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_broadbeam_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_oathstonewatch = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_oathstonewatch
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_longbeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_reedscale = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { wetlands = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_reedscale
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_ironfist_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_silverpick = {
+ type = archers
+ damage = 39
+ toughness = 16
+ pursuit = 0
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 125 }
+ low_maintenance_cost = { gold = 0.43 }
+ high_maintenance_cost = { gold = 1.45 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_silverpick
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_blacklock_crossbowmen
+}
+
+vmaa_voltara_local_stoneborn_voltara_mosaic_thornknife = {
+ type = heavy_infantry
+ damage = 40
+ toughness = 24
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_mosaic_thornknife
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_firebeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_test_102 = {
+ type = skirmishers
+ damage = 18
+ toughness = 19
+ pursuit = 18
+ screen = 26
+ stack = 100
+ buy_cost = { gold = 80 }
+ low_maintenance_cost = { gold = 0.27 }
+ high_maintenance_cost = { gold = 0.9 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 3 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_test_102
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3695810892_stonefoot_skirmishers
+}
+
+vmaa_voltara_local_stoneborn_voltara_test_103 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_test_103
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_broadbeam_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_test_1037 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_test_1037
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_longbeard_heavy_infantry
+}
+
+vmaa_voltara_local_stoneborn_voltara_test_105 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { forest = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_test_105
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_ironfist_pikemen
+}
+
+vmaa_voltara_local_stoneborn_voltara_test_1111 = {
+ type = archers
+ damage = 39
+ toughness = 16
+ pursuit = 0
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 125 }
+ low_maintenance_cost = { gold = 0.43 }
+ high_maintenance_cost = { gold = 1.45 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 3 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_test_1111
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_blacklock_crossbowmen
+}
+
+vmaa_voltara_local_stoneborn_voltara_test_128 = {
+ type = heavy_infantry
+ damage = 40
+ toughness = 24
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { culture = culture:voltara_local_stoneborn_voltara_test_128
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_firebeard_heavy_infantry
+}
+
+vmaa_order_voltara_religion_1 = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 30
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.45 }
+ high_maintenance_cost = { gold = 1.5 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 5 } }
+ 
+ can_recruit = { has_religion = religion:voltara_religion
+ piety_level >= 2
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_warriors_sons_heavy_infantry
+}
+
+vmaa_order_voltara_religion_2 = {
+ type = heavy_cavalry
+ damage = 119
+ toughness = 36
+ pursuit = 20
+ screen = 5
+ stack = 50
+ buy_cost = { gold = 304 }
+ low_maintenance_cost = { gold = 1.01 }
+ high_maintenance_cost = { gold = 3.38 }
+ provision_cost = 15
+ counters = { archers = 1 }
+ terrain_bonus = { plains = { damage = 21 toughness = 6 } }
+ 
+ can_recruit = { has_religion = religion:voltara_religion
+ piety_level >= 2
+ culture = { has_innovation = innovation_arched_saddle }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_warriors_sons_heavy_cav
+}
+
+vmaa_order_voltara_khaos_religion_1 = {
+ type = heavy_infantry
+ damage = 41
+ toughness = 23
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { has_religion = religion:voltara_khaos_religion
+ piety_level >= 2
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2962333032_fiery_hand
+}
+
+vmaa_order_voltara_khaos_religion_2 = {
+ type = heavy_infantry
+ damage = 46
+ toughness = 26
+ pursuit = 0
+ screen = 20
+ stack = 75
+ buy_cost = { gold = 216 }
+ low_maintenance_cost = { gold = 0.74 }
+ high_maintenance_cost = { gold = 2.47 }
+ provision_cost = 15
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { plains = { damage = 8 toughness = 5 } }
+ 
+ can_recruit = { has_religion = religion:voltara_khaos_religion
+ piety_level >= 2
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2922050163_crystal_tower_spellcasters
+}
+
+vmaa_order_voltara_folk_religion_1 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { plains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { has_religion = religion:voltara_folk_religion
+ piety_level >= 2
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_warrior_druids
+}
+
+vmaa_order_voltara_folk_religion_2 = {
+ type = archers
+ damage = 36
+ toughness = 15
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 128 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.37 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { has_religion = religion:voltara_folk_religion
+ piety_level >= 2
+ culture = { has_innovation = innovation_advanced_bowmaking }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_woodmen_huntsmen
+}
+
+vmaa_order_voltara_serpents_religion_1 = {
+ type = pikemen
+ damage = 25
+ toughness = 32
+ pursuit = 0
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 105 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 8
+ counters = { heavy_cavalry = 1 }
+ terrain_bonus = { plains = { damage = 4 toughness = 6 } }
+ 
+ can_recruit = { has_religion = religion:voltara_serpents_religion
+ piety_level >= 2
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_argonian_spear_infantry
+}
+
+vmaa_order_voltara_serpents_religion_2 = {
+ type = heavy_infantry
+ damage = 39
+ toughness = 33
+ pursuit = 0
+ screen = 10
+ stack = 100
+ buy_cost = { gold = 176 }
+ low_maintenance_cost = { gold = 0.58 }
+ high_maintenance_cost = { gold = 1.95 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 7 toughness = 6 } }
+ 
+ can_recruit = { has_religion = religion:voltara_serpents_religion
+ piety_level >= 2
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2922050163_dreugh_infantry
+}
+
+vmaa_order_voltara_stone_religion_1 = {
+ type = heavy_infantry
+ damage = 41
+ toughness = 24
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 145 }
+ low_maintenance_cost = { gold = 0.51 }
+ high_maintenance_cost = { gold = 1.7 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { has_religion = religion:voltara_stone_religion
+ piety_level >= 2
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_longbeard_heavy_infantry
+}
+
+vmaa_order_voltara_stone_religion_2 = {
+ type = archers
+ damage = 44
+ toughness = 18
+ pursuit = 0
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 169 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.89 }
+ provision_cost = 8
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { plains = { damage = 8 toughness = 3 } }
+ 
+ can_recruit = { has_religion = religion:voltara_stone_religion
+ piety_level >= 2
+ culture = { has_innovation = innovation_advanced_bowmaking }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_ironfist_crossbowmen
+}
+
+vmaa_order_voltara_weavers_religion_1 = {
+ type = heavy_infantry
+ damage = 40
+ toughness = 24
+ pursuit = 0
+ screen = 20
+ stack = 75
+ buy_cost = { gold = 160 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.9 }
+ provision_cost = 15
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { plains = { damage = 7 toughness = 4 } }
+ 
+ can_recruit = { has_religion = religion:voltara_weavers_religion
+ piety_level >= 2
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2922050163_crystal_tower_spellcasters
+}
+
+vmaa_order_voltara_weavers_religion_2 = {
+ type = archers
+ damage = 36
+ toughness = 15
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 128 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.37 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { has_religion = religion:voltara_weavers_religion
+ piety_level >= 2
+ culture = { has_innovation = innovation_advanced_bowmaking }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2291024373_grey_elven_archers
+}
+
+vmaa_order_voltara_old_ones_religion_1 = {
+ type = heavy_infantry
+ damage = 42
+ toughness = 23
+ pursuit = 0
+ screen = 20
+ stack = 75
+ buy_cost = { gold = 160 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.9 }
+ provision_cost = 15
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { plains = { damage = 8 toughness = 4 } }
+ 
+ can_recruit = { has_religion = religion:voltara_old_ones_religion
+ piety_level >= 2
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_orc_war_mages
+}
+
+vmaa_order_voltara_old_ones_religion_2 = {
+ type = heavy_infantry
+ damage = 48
+ toughness = 25
+ pursuit = 4
+ screen = 5
+ stack = 100
+ buy_cost = { gold = 196 }
+ low_maintenance_cost = { gold = 0.66 }
+ high_maintenance_cost = { gold = 2.21 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { plains = { damage = 9 toughness = 4 } }
+ 
+ can_recruit = { has_religion = religion:voltara_old_ones_religion
+ piety_level >= 2
+ culture = { has_innovation = innovation_men_at_arms }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_2887120253_orc_champions
+}
+
+vmaa_order_voltara_embers_religion_1 = {
+ type = skirmishers
+ damage = 24
+ toughness = 16
+ pursuit = 26
+ screen = 16
+ stack = 100
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.32 }
+ high_maintenance_cost = { gold = 1.05 }
+ provision_cost = 8
+ counters = { archers = 1 }
+ terrain_bonus = { plains = { damage = 4 toughness = 3 } }
+ 
+ can_recruit = { has_religion = religion:voltara_embers_religion
+ piety_level >= 2
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_skirmishers
+}
+
+vmaa_order_voltara_embers_religion_2 = {
+ type = archers
+ damage = 36
+ toughness = 15
+ pursuit = 6
+ screen = 8
+ stack = 100
+ buy_cost = { gold = 128 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.37 }
+ provision_cost = 8
+ counters = { skirmishers = 1 }
+ terrain_bonus = { plains = { damage = 6 toughness = 3 } }
+ 
+ can_recruit = { has_religion = religion:voltara_embers_religion
+ piety_level >= 2
+ culture = { has_innovation = innovation_advanced_bowmaking }
+ NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 20 }
+ illustration = vmaa_art_3059124362_goblin_archers
+}

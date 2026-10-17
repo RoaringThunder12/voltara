@@ -1,0 +1,9 @@
+﻿voltara_is_trained_threadbinder = { OR = {
+ has_trait = education_magic has_trait = arcana_good has_trait = battlemage
+ has_trait = vt_ek_necromancer has_trait = vt_ek_experimentalist_necromancer
+ has_trait = hagraven has_trait = briarheart
+ has_perk = alteration_novice_perk has_perk = illusion_novice_perk
+ has_perk = conjuration_novice_perk has_perk = destruction_novice_perk
+ has_perk = restoration_novice_perk has_perk = necromancy_novice_perk
+} }
+voltara_threadwarrior_eligible = { voltara_is_trained_threadbinder = yes has_arcana = { VALUE >= 10 } prowess >= 10 is_adult = yes is_imprisoned = no }

@@ -13,14 +13,14 @@
 	}
 
 	is_valid = {
-		vt_ek_is_necromancer = yes
+		voltara_is_trained_threadbinder = yes
 	}
 
 	auto_selection_weight = {
 		value = 0
 		if = {
 			limit = { 
-				vt_ek_is_necromancer = yes
+				voltara_is_trained_threadbinder = yes
 				NOT = { has_perk = necromancy_master_perk }
 			}
 			add = 2000

@@ -1,0 +1,19 @@
+﻿on_game_start_after_lobby = { on_actions = { voltara_knighthood_setup } }
+voltara_knighthood_setup = { effect = {
+ agot_knight_tree_on_start = yes
+ character:19060034 = { add_trait = squire add_trait_xp = { trait = squire track = knight value = 100 } }
+ character:19060041 = { add_trait = squire add_trait_xp = { trait = squire track = knight value = 100 } }
+} }
+
+yearly_global_pulse = { on_actions = { voltara_squire_training } }
+voltara_squire_training = { effect = {
+ every_living_character = {
+  limit = { is_squire_with_trait_xp = yes has_variable = voltara_knight_mentor }
+  if = { limit = { var:voltara_knight_mentor = { is_alive = yes is_agot_knight_trigger = yes } in_diplomatic_range = var:voltara_knight_mentor }
+   if = { limit = { NOT = { has_trait_xp = { trait = squire track = knight value >= 80 } } }
+    add_trait_xp = { trait = squire track = knight value = 20 }
+   }
+  }
+  else = { remove_variable = voltara_knight_mentor }
+ }
+} }

@@ -1,0 +1,21 @@
+﻿voltara_in_squire_organizer_realm = {
+ OR = {
+  this = scope:actor
+  is_vassal_or_below_of = scope:actor
+  is_courtier_of = scope:actor
+  employer ?= { is_vassal_or_below_of = scope:actor }
+ }
+}
+voltara_realm_squire_candidate = {
+ voltara_in_squire_organizer_realm = yes
+ is_alive = yes is_female = no age >= 5 age < 16 is_imprisoned = no
+ NOT = { is_agot_knight_trigger = yes }
+ NOT = { has_variable = voltara_knight_mentor }
+ NOT = { has_trait = voltara_slave }
+ NOT = { voltara_is_ruins_placeholder = yes }
+}
+voltara_realm_knight_mentor = {
+ voltara_in_squire_organizer_realm = yes
+ is_alive = yes is_adult = yes is_agot_knight_trigger = yes is_imprisoned = no
+ NOT = { voltara_is_ruins_placeholder = yes }
+}

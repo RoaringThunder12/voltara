@@ -1,0 +1,10 @@
+﻿on_game_start_after_lobby = { on_actions = { voltara_gibbus_household_setup } }
+voltara_gibbus_household_setup = { effect = {
+ character:19064034 = {
+  if = { limit = { NOT = { has_character_flag = voltara_gibbus_household_initialized } }
+   character:19064030 = { save_scope_as = voltara_owner }
+   voltara_enslave_character = yes
+   add_character_flag = voltara_gibbus_household_initialized
+  }
+ }
+} }

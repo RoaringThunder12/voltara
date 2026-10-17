@@ -1,5 +1,5 @@
 ﻿voltara_register_dragon_effect = {
- add_trait = dragon add_character_flag = voltara_dragon
+ add_trait = dragon add_character_flag = voltara_dragon set_culture = culture:dragon_culture
  set_variable = { name = dragon_size value = { value = age multiply = 1.5 min = 1 max = 400 } }
  random_list = { 1 = { add_trait = dragon_aggressive } 1 = { add_trait = dragon_friendly } }
  random_list = { 1 = { add_trait = dragon_solitary } 1 = { add_trait = dragon_cooperative } }
@@ -102,7 +102,7 @@ voltara_hatch_egg_effect = {
 voltara_spawn_hatchling_effect = {
  save_scope_as = voltara_hatcher
  create_character = { name = Voltara_Emberwing age = 0 gender_female_chance = 50 dynasty = none ethnicity = dragon
- culture = scope:voltara_hatcher.culture faith = scope:voltara_hatcher.faith location = scope:voltara_hatcher.capital_province
+ culture = culture:dragon_culture faith = scope:voltara_hatcher.faith location = scope:voltara_hatcher.capital_province
  random_traits = no trait = dragon trait = education_dragon_1 save_scope_as = dragon }
  scope:dragon = { voltara_register_dragon_effect = yes
  if = { limit = { exists = scope:egg.var:egg_color } set_variable = { name = egg_color value = scope:egg.var:egg_color } }

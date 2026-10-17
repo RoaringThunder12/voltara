@@ -1,0 +1,9 @@
+﻿voltara_bear_pelt_portrait = { usage = game priority = 85
+ bear_pelt = {
+  dna_modifiers = { accessory = { mode = add gene = cloaks template = vt_bear_king_pelt range = { 0 1 } } }
+  weight = { base = 0 modifier = { add = 100 is_adult = yes is_imprisoned = no
+   any_character_artifact = { has_variable = voltara_bear_king_pelt is_equipped = yes }
+   NOT = { should_be_fully_naked_portrait_trigger = yes }
+  } }
+ }
+}

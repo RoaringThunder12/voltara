@@ -1,0 +1,25 @@
+﻿# Lazy initialization supports existing saves and does not invent a knighting parent.
+voltara_ensure_knight_tree = {
+ if = { limit = { is_agot_knight_trigger = yes NOT = { has_variable = my_knight_tree } }
+  save_scope_as = voltara_tree_founder
+  agot_knight_tree_on_start = yes
+  if = { limit = { any_in_global_list = { variable = known_knight_trees var:knight_tree_founder ?= scope:voltara_tree_founder } }
+   random_in_global_list = { variable = known_knight_trees limit = { var:knight_tree_founder ?= scope:voltara_tree_founder } save_scope_as = voltara_existing_tree }
+   set_variable = { name = my_knight_tree value = scope:voltara_existing_tree }
+  }
+  else = {
+   character:19999000 = {
+    set_variable = { name = knight_teacher value = scope:voltara_tree_founder }
+    create_story = { type = agot_knight_tree_teacher save_scope_as = voltara_founder_record }
+    create_story = { type = agot_knight_tree_structure save_scope_as = voltara_founder_tree }
+   }
+   scope:voltara_founder_tree = {
+    set_variable = { name = knight_tree_founder value = scope:voltara_tree_founder }
+    add_to_variable_list = { name = teacher_story_container target = scope:voltara_founder_record }
+    add_to_variable_list = { name = knight_tree_gui target = scope:voltara_tree_founder }
+    add_to_global_variable_list = { name = known_knight_trees target = this }
+   }
+   set_variable = { name = my_knight_tree value = scope:voltara_founder_tree }
+  }
+ }
+}

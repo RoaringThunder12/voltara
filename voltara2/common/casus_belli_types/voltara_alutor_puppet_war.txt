@@ -1,0 +1,19 @@
+﻿voltara_alutor_puppet_war = {
+ icon = make_tributary_cb group = conquest target_titles = none
+ war_name = voltara_alutor_puppet_war_name cb_name = voltara_alutor_puppet_war
+ allowed_for_character = { voltara_alutor_war_attacker = yes }
+ allowed_against_character = { scope:defender = { voltara_southorion_war_target = yes } scope:defender = { is_independent_ruler = yes is_tributary = no } }
+ valid_to_start = { scope:attacker = { voltara_alutor_war_attacker = yes } scope:defender = { voltara_southorion_war_target = yes } scope:defender = { is_independent_ruler = yes is_tributary = no } }
+ cost = { prestige = 750 }
+ on_primary_attacker_death = inherit on_primary_defender_death = inherit
+ on_victory_desc = { desc = voltara_alutor_puppet_war_victory }
+ on_white_peace_desc = { desc = voltara_alutor_war_no_demands }
+ on_defeat_desc = { desc = voltara_alutor_war_defeat }
+ on_victory = { save_scope_value_as = { name = high_obligations value = yes }
+start_tributary_interaction_effect = { TRIBUTARY = scope:defender SUZERAIN = scope:attacker }
+scope:attacker = { add_prestige = 300 }
+ }
+ on_white_peace = { scope:attacker = { add_prestige = -100 } }
+ on_defeat = { scope:attacker = { add_prestige = -300 } scope:defender = { add_prestige = 150 } }
+ on_invalidated_desc = { desc = voltara_alutor_war_no_demands }
+}

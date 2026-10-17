@@ -1,0 +1,11 @@
+﻿voltara_alutor_war_attacker = {
+ has_title = title:k_voltara_40
+ is_independent_ruler = yes
+ NOT = { has_trait = dragon }
+}
+voltara_southorion_war_target = {
+ is_landed = yes
+ NOT = { voltara_is_ruins_placeholder = yes }
+ NOT = { has_trait = dragon }
+ any_realm_county = { target_is_de_jure_liege_or_above = title:h_voltara_southorion }
+}

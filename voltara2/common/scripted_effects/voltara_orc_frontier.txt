@@ -1,5 +1,5 @@
 ﻿voltara_ironcoil_traits = {
- if = { limit = { culture = culture:voltara_ironcoil_naga }
+ if = { limit = { OR = { culture = culture:voltara_ironcoil_naga culture = culture:voltara_local_ironcoil_voltara_test_10113 culture = culture:voltara_local_ironcoil_voltara_test_10395 culture = culture:voltara_local_ironcoil_voltara_test_10504 culture = culture:voltara_local_ironcoil_voltara_test_10627 culture = culture:voltara_local_ironcoil_voltara_test_10833 culture = culture:voltara_local_ironcoil_voltara_test_11098 } }
   if = { limit = { NOT = { has_trait = physique_good } } add_trait = physique_good_1 }
   if = { limit = { NOR = { has_trait = voltara_lifespan_1 has_trait = voltara_lifespan_2 has_trait = voltara_lifespan_3 has_trait = voltara_lifespan_4 } } add_trait = voltara_lifespan_1 }
  }

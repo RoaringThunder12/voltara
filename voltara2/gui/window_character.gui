@@ -7,6 +7,8 @@ window = {
 	widgetid = "character_window"
 	datacontext = "[GetVariableSystem]"
 	datacontext = "[CharacterWindow.GetCharacter]"
+ 
+
 	movable = no
 	layer = middle
 	allow_outside = yes
@@ -429,6 +431,17 @@ window = {
 
 				blockoverride "extra_buttons"
 				{
+ button_standard = {
+  name = "voltara_knight_tree_button"
+  size = { 115 30 }
+  text = "voltara_knight_tree_button_label"
+  tooltip = "voltara_knight_tree_button_help"
+  visible = "[GetPlayer.IsValid]"
+  enabled = "[GetScriptedGui('agot_knight_tree_check').IsShown(GuiScope.SetRoot(CharacterWindow.GetCharacter.MakeScope).End)]"
+  onclick = "[GetScriptedGui('agot_open_knight_tree').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('opened_character', CharacterWindow.GetCharacter.MakeScope).End)]"
+  onclick = "[GetVariableSystem.Set('knight_tree_visible', 'true')]"
+ }
+
 					button = {
 						visible = "[And( InDebugMode, Not( Character.AccessDenied ) )]"
 						size = { 30 30 }
@@ -4617,6 +4630,8 @@ vbox = { spacing = 3
  }
  text_multi = { text = "voltara_dragon_panel_lore" max_width = 520 autoresize = yes }
  }
+
+
 }
 
 

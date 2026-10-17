@@ -1,0 +1,64 @@
+﻿on_war_started = { on_actions = { voltara_slave_war_coalitions } }
+voltara_slave_war_coalitions = {
+ trigger = { scope:war = { using_cb = voltara_slave_liberation_war } }
+ effect = {
+  # Remember the whole empire before the paramounts temporarily detach.
+  every_living_character = {
+   limit = { top_liege = scope:defender }
+   add_character_flag = voltara_slave_war_original_realm
+  }
+  title:h_voltara_severos = { set_variable = { name = voltara_mw_active value = scope:war } }
+  scope:attacker.primary_title = {
+   set_variable = { name = voltara_mw_home value = title:h_voltara_severos }
+   set_variable = { name = voltara_mw_war value = scope:war }
+  }
+  # Named defectors leave their immediate lieges before general participation.
+  character:19060029 = { if = { limit = { is_alive = yes is_landed = yes is_independent_ruler = no } voltara_mw_detach = yes } }
+  title:d_voltara_test_437.holder ?= { if = { limit = { is_independent_ruler = no } voltara_mw_detach = yes } }
+  scope:defender = {
+   every_vassal = {
+    limit = { highest_held_title_tier >= tier_county NOT = { voltara_is_ruins_placeholder = yes } NOT = { voltara_keeper_realm = yes } }
+    add_to_temporary_list = voltara_slave_paramounts
+   }
+  }
+  every_in_list = { list = voltara_slave_paramounts voltara_mw_detach = yes }
+  every_in_list = {
+   list = voltara_slave_paramounts
+   limit = {
+    NOT = { has_title = title:e_voltara_bryndale }
+    NOT = { has_title = title:e_voltara_enderal }
+    NOT = { has_title = title:e_voltara_kedith }
+    NOT = { has_title = title:e_voltara_thornfall }
+    NOT = { has_title = title:d_voltara_test_437 }
+    NOT = { this = character:19060029 }
+   }
+   save_scope_as = voltara_imperial_supporter
+   scope:war = { add_defender = scope:voltara_imperial_supporter }
+  }
+  if = { limit = { character:19060029 = { is_alive = yes is_landed = yes } } scope:war = { add_attacker = character:19060029 } }
+  if = { limit = { exists = title:d_voltara_test_437.holder } scope:war = { add_attacker = title:d_voltara_test_437.holder } }
+
+  if = { limit = { exists = title:e_voltara_sixth_southron_invasion.holder title:e_voltara_sixth_southron_invasion.holder = { is_alive = yes NOT = { this = scope:defender } NOT = { this = scope:attacker } } }
+   scope:war = { add_attacker = title:e_voltara_sixth_southron_invasion.holder }
+  }
+  if = { limit = { exists = title:e_voltara_thornfall.holder title:e_voltara_thornfall.holder = { is_alive = yes NOT = { this = scope:defender } NOT = { this = scope:attacker } } }
+   scope:war = { add_attacker = title:e_voltara_thornfall.holder }
+  }
+  if = { limit = { exists = title:e_voltara_bryndale.holder title:e_voltara_bryndale.holder = { is_alive = yes NOT = { this = scope:defender } NOT = { this = scope:attacker } } }
+   scope:war = { add_attacker = title:e_voltara_bryndale.holder }
+  }
+  if = { limit = { exists = title:e_voltara_enderal.holder title:e_voltara_enderal.holder = { is_alive = yes NOT = { this = scope:defender } NOT = { this = scope:attacker } } }
+   scope:war = { add_attacker = title:e_voltara_enderal.holder }
+  }
+  if = { limit = { exists = title:e_voltara_halithor.holder title:e_voltara_halithor.holder = { is_alive = yes NOT = { this = scope:defender } NOT = { this = scope:attacker } } }
+   scope:war = { add_defender = title:e_voltara_halithor.holder }
+  }
+  if = { limit = { exists = title:e_voltara_thonia.holder title:e_voltara_thonia.holder = { is_alive = yes NOT = { this = scope:defender } NOT = { this = scope:attacker } } }
+   scope:war = { add_defender = title:e_voltara_thonia.holder }
+  }
+  if = { limit = { exists = title:e_voltara_rhaulla.holder title:e_voltara_rhaulla.holder = { is_alive = yes NOT = { this = scope:defender } NOT = { this = scope:attacker } } }
+   scope:war = { add_defender = title:e_voltara_rhaulla.holder }
+  }
+  if = { limit = { exists = title:e_voltara_kedith.holder } scope:war = { add_attacker = title:e_voltara_kedith.holder } }
+ }
+}

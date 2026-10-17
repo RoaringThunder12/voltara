@@ -1,0 +1,129 @@
+﻿# Octavian is the durable event root. All crisis stages are guarded against repetition.
+voltara_cassian_coup = {
+ set_global_variable = { name = voltara_cassian_crisis_coup value = yes }
+ save_scope_as = voltara_usurper
+ character:19060001 = {
+  capital_province = { save_scope_as = voltara_old_capital }
+  every_held_title = { add_to_list = voltara_imperial_titles }
+  every_vassal = { limit = { NOT = { this = scope:voltara_usurper } } add_to_list = voltara_imperial_vassals }
+  # Prevent an involuntary game-over; the continuation choice follows the crisis.
+  if = { limit = { is_ai = no scope:voltara_usurper = { is_ai = yes } }
+   scope:voltara_usurper = { add_character_flag = voltara_choose_crisis_successor }
+   set_player_character = scope:voltara_usurper
+  }
+  death = { death_reason = death_voltara_imperial_assassin }
+ }
+ if = { limit = { exists = title:e_voltara_bryndale.holder }
+  title:e_voltara_bryndale.holder = {
+   save_scope_as = voltara_refuge_host
+   if = { limit = { character:19060002 = { is_alive = yes } }
+    character:19060002 = { if = { limit = { is_imprisoned = yes } release_from_prison = yes } }
+    add_courtier = character:19060002
+   }
+   if = { limit = { character:19060005 = { is_alive = yes } }
+    character:19060005 = { if = { limit = { is_imprisoned = yes } release_from_prison = yes } }
+    add_courtier = character:19060005
+   }
+  }
+ }
+ if = { limit = { character:19060004 = { is_alive = yes } }
+  character:19060004 = { death = { death_reason = death_murder_known killer = scope:voltara_usurper } }
+ }
+ create_title_and_vassal_change = { type = usurped save_scope_as = voltara_coup_transfer add_claim_on_loss = yes }
+ every_in_list = { list = voltara_imperial_titles change_title_holder = { holder = scope:voltara_usurper change = scope:voltara_coup_transfer } }
+ every_in_list = { list = voltara_imperial_vassals limit = { is_alive = yes is_ruler = yes }
+  change_liege = { liege = scope:voltara_usurper change = scope:voltara_coup_transfer }
+ }
+ resolve_title_and_vassal_change = scope:voltara_coup_transfer
+ if = { limit = { exists = scope:voltara_refuge_host }
+  scope:voltara_refuge_host = {
+   if = { limit = { character:19060002 = { is_alive = yes is_landed = no } } add_courtier = character:19060002 }
+   if = { limit = { character:19060005 = { is_alive = yes is_landed = no } } add_courtier = character:19060005 }
+  }
+ }
+ change_government = lp_feudal_government
+ add_prestige = 250
+ every_player = { trigger_event = { id = voltara_cassian_crisis.10 days = 1 } }
+ trigger_event = { id = voltara_cassian_crisis.2 days = 7 }
+}
+voltara_begin_slave_revolt = {
+ set_global_variable = { name = voltara_cassian_crisis_revolt value = yes }
+ save_scope_as = voltara_revolt_emperor
+ capital_province = { save_scope_as = voltara_revolt_location county = { save_scope_as = voltara_revolt_county } }
+ # Capture the original imperial population before Thornfall leaves.
+ every_living_character = { limit = { top_liege = scope:voltara_revolt_emperor } add_character_flag = voltara_slave_war_original_realm }
+ title:e_voltara_thornfall.holder = {
+  save_scope_as = voltara_revolt_leader
+  voltara_mw_save_contract = yes
+  create_title_and_vassal_change = { type = independency save_scope_as = voltara_thornfall_departure add_claim_on_loss = no }
+  becomes_independent = { change = scope:voltara_thornfall_departure }
+  resolve_title_and_vassal_change = scope:voltara_thornfall_departure
+ }
+ scope:voltara_revolt_leader = {
+  add_character_flag = voltara_cassian_slave_rebel
+  add_gold = 500
+  save_scope_as = voltara_liberator
+  start_war = { casus_belli = voltara_slave_liberation_war target = scope:voltara_revolt_emperor }
+  random_character_war = { limit = { using_cb = voltara_slave_liberation_war } save_scope_as = voltara_slave_war }
+  if = { limit = { exists = scope:voltara_slave_war }
+   spawn_army = {
+    levies = { value = scope:voltara_revolt_emperor.max_military_strength multiply = 0.6 min = 4000 max = 20000 }
+    location = scope:voltara_revolt_location war = scope:voltara_slave_war name = voltara_broken_chains_host
+   }
+  }
+ }
+ # Named slaves in the emperor's own household can escape to the rebellion.
+ every_courtier = {
+  limit = { has_trait = voltara_slave is_imprisoned = no }
+  voltara_free_character = yes
+  save_scope_as = voltara_escaped_slave
+  scope:voltara_revolt_leader = { add_courtier = scope:voltara_escaped_slave }
+ }
+ every_player = { trigger_event = { id = voltara_cassian_crisis.20 days = 1 } }
+ trigger_event = { id = voltara_cassian_crisis.3 days = 7 }
+}
+voltara_thorne_exile = {
+ set_global_variable = { name = voltara_cassian_crisis_exile value = yes }
+ if = { limit = { character:19060044 = { is_alive = yes } character:19060033 = { is_alive = yes } }
+  character:19060044 = { death = { death_reason = death_murder_known killer = character:19060033 } }
+  set_global_variable = { name = voltara_elira_killed_by_caledor value = yes }
+ }
+ if = { limit = { character:19060042 = { is_alive = yes } }
+  character:19060042 = {
+   if = { limit = { is_imprisoned = yes } release_from_prison = yes }
+   if = { limit = { NOT = { exists = rite:voltara_khaotism_rite } } create_rite_from_type = { type = voltara_khaotism_rite convert = yes } }
+   set_character_rite = rite:voltara_khaotism_rite
+   add_stress = 60
+   if = { limit = { has_dlc_feature = roads_to_power NOT = { is_landless_adventurer = yes } is_landed = no }
+    create_adventurer_title = { name = voltara_withering_hand_camp holder = this save_scope_as = voltara_thorne_camp }
+    change_government = landless_adventurer_government
+    add_realm_law = landless_adventurer_succession_law
+    add_gold = 250
+   }
+   if = { limit = { exists = title:e_voltara_bryndale.holder }
+    domicile ?= { move_domicile = title:e_voltara_bryndale.holder.capital_province }
+   }
+   if = { limit = { character:19060043 = { is_alive = yes is_imprisoned = no } } add_courtier = character:19060043 }
+   if = { limit = { is_landless_adventurer = yes character:19064034 = { is_alive = yes } }
+    save_scope_as = voltara_liberator
+    character:19064034 = {
+     if = { limit = { is_imprisoned = yes } release_from_prison = yes }
+     voltara_free_character = yes
+     add_trait = voltara_former_slave
+    }
+    add_courtier = character:19064034
+   }
+
+   if = { limit = { character:19060033 = { is_alive = yes } } set_relation_rival = { target = character:19060033 reason = rival_generic_history } }
+  }
+ }
+ every_player = { trigger_event = { id = voltara_cassian_crisis.30 days = 1 } }
+ if = { limit = { has_character_flag = voltara_choose_crisis_successor } trigger_event = { id = voltara_cassian_crisis.40 days = 2 } }
+}
+voltara_slave_revolt_cleanup = {
+ every_living_character = { limit = { has_character_flag = voltara_slave_war_original_realm } remove_character_flag = voltara_slave_war_original_realm }
+ scope:attacker = {
+  remove_character_flag = voltara_cassian_slave_rebel
+  if = { limit = { has_variable = voltara_revolt_title } destroy_title = var:voltara_revolt_title remove_variable = voltara_revolt_title }
+ }
+}

@@ -1,0 +1,89 @@
+﻿voltara_grant_knighthood = {
+ category = interaction_category_friendly common_interaction = yes icon = knight
+ desc = voltara_grant_knighthood_desc
+ is_shown = {
+  scope:actor = { is_agot_knight_trigger = yes }
+  scope:recipient = { age >= 16 NOT = { is_agot_knight_trigger = yes } NOT = { voltara_is_ruins_placeholder = yes } NOT = { has_trait = voltara_slave } }
+  scope:actor != scope:recipient
+ }
+ is_valid_showing_failures_only = { scope:actor = { is_imprisoned = no in_diplomatic_range = scope:recipient } scope:recipient = { is_alive = yes is_imprisoned = no trigger_if = { limit = { has_variable = voltara_knight_mentor } var:voltara_knight_mentor = scope:actor } } }
+ ai_accept = { base = 100 }
+ on_accept = {
+  scope:recipient = { add_trait = squire add_trait_xp = { trait = squire track = knight value = 100 } remove_variable = voltara_knight_mentor }
+  agot_add_to_knight_tree = { KNIGHT = scope:actor SQUIRE = scope:recipient }
+ }
+ ai_targets = { ai_recipients = courtiers } ai_frequency = 12
+ ai_will_do = { base = 10 }
+}
+
+voltara_take_squire = {
+ category = interaction_category_friendly common_interaction = yes icon = knight
+ desc = voltara_take_squire_desc
+ is_shown = {
+  scope:actor = { is_agot_knight_trigger = yes is_adult = yes }
+  scope:recipient = { is_courtier = yes is_female = no age > 6 NOT = { has_variable = voltara_knight_mentor } NOT = { is_agot_knight_trigger = yes } NOT = { has_trait = knight } NOT = { has_trait = voltara_slave } }
+ }
+ is_valid_showing_failures_only = { scope:actor = { is_imprisoned = no in_diplomatic_range = scope:recipient } scope:recipient = { is_imprisoned = no } }
+ auto_accept = yes
+ on_accept = { scope:recipient = { add_trait = squire set_variable = { name = voltara_knight_mentor value = scope:actor } } }
+ ai_targets = { ai_recipients = courtiers } ai_frequency = 12 ai_will_do = { base = 20 }
+}
+
+voltara_assign_squire = {
+ category = interaction_category_friendly common_interaction = yes icon = knight
+ desc = voltara_assign_squire_desc
+ is_shown = { scope:actor = scope:recipient scope:actor = { is_landed = yes NOT = { voltara_is_ruins_placeholder = yes } } }
+ populate_actor_list = { scope:actor = {
+ if = { limit = { voltara_realm_knight_mentor = yes } add_to_list = characters }
+ every_courtier = { limit = { voltara_realm_knight_mentor = yes } add_to_list = characters }
+ every_vassal_or_below = {
+  if = { limit = { voltara_realm_knight_mentor = yes } add_to_list = characters }
+  every_courtier = { limit = { voltara_realm_knight_mentor = yes } add_to_list = characters }
+ }
+} }
+ populate_recipient_list = { scope:actor = {
+ if = { limit = { voltara_realm_squire_candidate = yes } add_to_list = characters }
+ every_courtier = { limit = { voltara_realm_squire_candidate = yes } add_to_list = characters }
+ every_vassal_or_below = {
+  if = { limit = { voltara_realm_squire_candidate = yes } add_to_list = characters }
+  every_courtier = { limit = { voltara_realm_squire_candidate = yes } add_to_list = characters }
+ }
+} }
+ is_valid_showing_failures_only = { scope:actor = { is_alive = yes is_imprisoned = no } }
+ can_send = {
+  scope:actor = scope:recipient
+  exists = scope:secondary_actor exists = scope:secondary_recipient
+  scope:secondary_actor = { voltara_realm_knight_mentor = yes }
+  scope:secondary_recipient = { voltara_realm_squire_candidate = yes }
+ }
+ auto_accept = yes
+ on_accept = {
+  if = { limit = { scope:actor = scope:recipient scope:secondary_actor = { voltara_realm_knight_mentor = yes } scope:secondary_recipient = { voltara_realm_squire_candidate = yes } }
+   scope:secondary_recipient = { add_trait = squire set_variable = { name = voltara_knight_mentor value = scope:secondary_actor } }
+  }
+ }
+ ai_will_do = { base = 0 }
+}
+
+
+
+voltara_arrange_knighting = {
+ category = interaction_category_friendly common_interaction = yes icon = knight
+ desc = voltara_arrange_knighting_desc
+ is_shown = { scope:recipient = { voltara_in_squire_organizer_realm = yes is_squire_with_trait_xp = yes has_variable = voltara_knight_mentor age >= 16 } }
+ is_valid_showing_failures_only = {
+  scope:recipient = { is_alive = yes is_imprisoned = no NOT = { has_trait = voltara_slave }
+   var:voltara_knight_mentor = { is_alive = yes is_imprisoned = no is_agot_knight_trigger = yes in_diplomatic_range = scope:recipient }
+  }
+ }
+ ai_accept = { base = 100 }
+ on_accept = {
+  scope:recipient = {
+   var:voltara_knight_mentor = { save_scope_as = voltara_ceremony_knight }
+   add_trait_xp = { trait = squire track = knight value = 100 }
+   remove_variable = voltara_knight_mentor
+  }
+  agot_add_to_knight_tree = { KNIGHT = scope:voltara_ceremony_knight SQUIRE = scope:recipient }
+ }
+ ai_targets = { ai_recipients = courtiers } ai_frequency = 6 ai_will_do = { base = 50 }
+}

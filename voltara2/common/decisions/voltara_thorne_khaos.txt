@@ -1,0 +1,30 @@
+﻿voltara_thorne_submit_to_khaos = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" }
+ desc = voltara_thorne_submit_to_khaos_desc
+ selection_tooltip = voltara_thorne_submit_to_khaos_tooltip
+ confirm_text = voltara_thorne_submit_to_khaos_confirm
+ decision_group_type = major
+ ai_check_interval = 12
+ is_shown = { this = character:19060042 NOT = { has_character_flag = voltara_thorne_submitted_to_khaos } }
+ is_valid = { rite = rite:voltara_khaotism_rite is_imprisoned = no is_incapable = no }
+ effect = {
+  add_character_flag = voltara_thorne_submitted_to_khaos
+  add_trait = witch
+  remove_trait = vt_ek_arcana_bad_1
+  remove_trait = vt_ek_arcana_bad_2
+  remove_trait = vt_ek_arcana_bad_3
+  remove_trait = vt_ek_arcana_good_1
+  remove_trait = vt_ek_arcana_good_2
+  add_trait = vt_ek_arcana_good_3
+  # Preserve any stronger magical longevity acquired before this decision.
+  if = {
+   limit = { NOT = { has_trait = lifespan_magic_4 } NOT = { has_trait = lifespan_magic_5 } NOT = { has_trait = lifespan_magic_6 } }
+   remove_trait = lifespan_magic_1
+   remove_trait = lifespan_magic_2
+   add_trait = lifespan_magic_3
+  }
+  voltara_initialize_threadbinder = yes
+ }
+ ai_potential = { this = character:19060042 }
+ ai_will_do = { base = 100 }
+}

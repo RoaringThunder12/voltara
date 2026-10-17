@@ -1,0 +1,70 @@
+﻿namespace = voltara_cassian_crisis
+voltara_cassian_crisis.1 = {
+ type = character_event hidden = yes
+ trigger = { is_alive = yes character:19060001 = { is_alive = yes has_title = title:h_voltara_severos } NOT = { has_global_variable = voltara_cassian_crisis_coup } }
+ immediate = { voltara_cassian_coup = yes }
+}
+voltara_cassian_crisis.2 = {
+ type = character_event hidden = yes
+ trigger = { is_alive = yes has_title = title:h_voltara_severos NOT = { has_global_variable = voltara_cassian_crisis_revolt } exists = title:e_voltara_thornfall.holder title:e_voltara_thornfall.holder = { is_alive = yes NOT = { this = root } } }
+ immediate = { voltara_begin_slave_revolt = yes }
+}
+voltara_cassian_crisis.3 = {
+ type = character_event hidden = yes
+ trigger = { NOT = { has_global_variable = voltara_cassian_crisis_exile } }
+ immediate = { voltara_thorne_exile = yes }
+}
+voltara_cassian_crisis.10 = {
+ type = character_event title = voltara_cassian_crisis.10.t desc = voltara_cassian_crisis.10.desc theme = intrigue
+ option = { name = voltara_cassian_crisis.ack }
+}
+voltara_cassian_crisis.20 = {
+ type = character_event title = voltara_cassian_crisis.20.t desc = voltara_cassian_crisis.20.desc theme = war
+ option = { name = voltara_cassian_crisis.ack }
+}
+voltara_cassian_crisis.30 = {
+ type = character_event title = voltara_cassian_crisis.30.t
+ desc = { first_valid = {
+  triggered_desc = { trigger = { has_global_variable = voltara_elira_killed_by_caledor character:19060042 = { is_alive = yes } } desc = voltara_cassian_crisis.30.desc }
+  desc = voltara_cassian_crisis.30.alternate
+ } }
+ theme = intrigue
+ option = { name = voltara_cassian_crisis.ack }
+}
+voltara_cassian_crisis.40 = {
+ type = character_event title = voltara_cassian_crisis.40.t desc = voltara_cassian_crisis.40.desc theme = realm
+ trigger = { is_ai = no has_character_flag = voltara_choose_crisis_successor }
+ immediate = {
+  if = { limit = { exists = title:e_voltara_bryndale.holder }
+   title:e_voltara_bryndale.holder = {
+    save_scope_as = voltara_refuge_host
+    random_held_title = { limit = { tier = tier_county NOT = { this = holder.capital_county } } save_scope_as = voltara_nora_refuge }
+    if = { limit = { NOT = { exists = scope:voltara_nora_refuge } }
+     random_realm_county = { limit = { holder = { is_ai = yes NOT = { this = scope:voltara_refuge_host } } } save_scope_as = voltara_nora_refuge }
+    }
+   }
+  }
+ }
+ option = { name = voltara_cassian_crisis.40.octavian remove_character_flag = voltara_choose_crisis_successor }
+ option = {
+  name = voltara_cassian_crisis.40.thorne
+  trigger = { character:19060042 = { is_alive = yes is_ai = yes is_landless_adventurer = yes } }
+  remove_character_flag = voltara_choose_crisis_successor
+  set_player_character = character:19060042
+ }
+ option = {
+  name = voltara_cassian_crisis.40.nora
+  trigger = { exists = scope:voltara_nora_refuge character:19060005 = { is_alive = yes is_ai = yes } }
+  custom_tooltip = voltara_cassian_crisis.nora_refuge_tt
+  remove_character_flag = voltara_choose_crisis_successor
+  create_title_and_vassal_change = { type = granted save_scope_as = voltara_refuge_grant add_claim_on_loss = no }
+  scope:voltara_nora_refuge = { change_title_holder = { holder = character:19060005 change = scope:voltara_refuge_grant take_baronies = yes } }
+  character:19060005 = { change_liege = { liege = scope:voltara_refuge_host change = scope:voltara_refuge_grant } }
+  resolve_title_and_vassal_change = scope:voltara_refuge_grant
+  character:19060005 = {
+   change_government = feudal_government
+   if = { limit = { character:19060002 = { is_alive = yes } } add_courtier = character:19060002 }
+  }
+  set_player_character = character:19060005
+ }
+}

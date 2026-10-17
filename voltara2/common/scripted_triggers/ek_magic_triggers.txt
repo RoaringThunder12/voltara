@@ -117,12 +117,12 @@ has_always_access_to_magic_education = {
 	OR = {
 		AND = {
 			exists = dynasty
-			dynasty = { has_dynasty_perk = magicka_legacy_3 }
+			dynasty = { has_dynasty_perk = witchcraft_legacy_3 }
 		}
 		culture = {
 			OR = {
-				has_cultural_parameter = unlocks_arcana_education
-				has_cultural_parameter = sorcerer_kings_tradition 
+				has_cultural_tradition = tradition_mystical_ancestors
+				has_cultural_tradition = tradition_mystical_ancestors 
 			}
 		}
 	}
@@ -607,7 +607,7 @@ has_curable_disease = {
 }
 
 has_not_curable_disease = {
-	has_trait_with_flag = not_curable_disease
+	OR = { has_trait = leper has_trait = cancer }
 }
 
 has_daedric_curse = {
@@ -648,9 +648,7 @@ has_daedric_curse = {
 }
 
 county_is_warded = {
-	any_county_province = {
-		has_building_or_higher = alabaster_white_walls_01
-	}
+	holder = { has_character_modifier = modifier_ritual_magic_ward }
 }
 
 is_court_mage_trigger = {

@@ -1,0 +1,59 @@
+﻿maa_undead_archers = {
+	type = archers
+	
+	damage = 25
+	toughness = 15
+	pursuit = 0
+	screen = 5
+	max = 1
+
+	counters = {
+		skirmishers = 1
+	}
+
+	# Free of charge?
+	buy_cost = { gold = 0 }
+	low_maintenance_cost = { gold = 0 }
+	high_maintenance_cost = { gold = 0 }
+	provision_cost = 0
+	
+	stack = 100
+	ai_quality = { value = 100 }
+	
+	 # Spawned by decision
+
+	illustration = undead_maa
+
+ can_recruit = { always = no }
+}
+maa_bone_colossus = {
+	type = heavy_infantry
+	
+	damage = 75
+	toughness = 100
+	pursuit = 0
+	screen = 0
+	siege_tier = 1
+	siege_value = 0.2
+	
+	counters = {
+		heavy_infantry = 1
+		pikemen = 1
+	}
+	
+	buy_cost = { gold = 50 }
+	low_maintenance_cost = { gold = 0 }
+	high_maintenance_cost = { gold = 0 }
+	provision_cost = 0
+	
+	max_sub_regiments = 1
+	
+	stack = 10
+	ai_quality = { value = 100 }
+	
+	 # Spawned by event
+
+	illustration = undead_maa
+
+ can_recruit = { always = no }
+}

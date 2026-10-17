@@ -25,7 +25,6 @@
  game_concept_petty_desc:0 "The most basic potency a [spell|E] can have.\nPotency progression:\n[petty|E] > [lesser|E] > [common|E] > [greater|E] > [grand|E]"
  game_concept_lesser:0 "Lesser"
  game_concept_lesser_desc:0 "A Lesser [spell|E] is twice as powerful as a Petty one, but for 190% of the cost in [magicka|E][magicka_i].\nPotency progression:\n[petty|E] > [lesser|E] > [common|E] > [greater|E] > [grand|E]"
- game_concept_common:0 "Common"
  game_concept_common_desc:0 "A Common [spell|E] is thrice as powerful as a Petty one, but for 270% of the cost in [magicka|E][magicka_i].\nPotency progression:\n[petty|E] > [lesser|E] > [common|E] > [greater|E] > [grand|E]"
  game_concept_greater:0 "Greater"
  game_concept_greater_desc:0 "A Greater [spell|E] is four times as powerful as a Petty one, but for 340% of the cost in [magicka|E][magicka_i].\nPotency progression:\n[petty|E] > [lesser|E] > [common|E] > [greater|E] > [grand|E]"
@@ -59,7 +58,6 @@
  bloodworm_helmet_effect:0 "\n$EFFECT_LIST_BULLET$Empowers the $claim_corpse_name$ [spell|E]"
 
  #try CHARACTER instead of charwindow, it needs to be Character.MakeScope.Char as just Character is not recognised
- arcana_title:0 "#bold;high;size:18 [arcana|E]: [Character.MakeScope.ScriptValue('arcana')|0]#! #bold;italic;low;size:18 ([Character.Custom('ArcanaLevel')])#!"
  arcana_base:0 "Base: #high [Character.MakeScope.ScriptValue('arcana_base')|0]#!"
  #education
  #arcana_education_magic:0 "[Character.Custom('arcana_education_magic')]"
@@ -224,13 +222,6 @@
 
  #magicka_value:0 "#T [magicka|E]: [GetPlayer.MakeScope.Var('magicka').GetValue|V0]/[GetPlayer.MakeScope.ScriptValue('magicka_max')|V0]#!\nMonthly Regen: [GetPlayer.MakeScope.ScriptValue('magicka_regen')|+=]\nMonthly Change: [GetPlayer.MakeScope.ScriptValue('magicka_monthly')|+=]"
  #magicka_value_char_view:0 "#T [magicka|E]: [Character.MakeScope.Var('magicka').GetValue|V0]/[Character.MakeScope.ScriptValue('magicka_max')|V0]#!\nMonthly Regen: [Character.MakeScope.ScriptValue('magicka_regen')|+=]\nMonthly Change: [Character.MakeScope.ScriptValue('magicka_monthly')|+=]"
- 
- GAINS_MAGIC_LIFESTYLE_XP:2 "Gains $VALUE|V0$ [vt_threadbinding_magic_lifestyle|E] Experience"
- GAINED_MAGIC_LIFESTYLE_XP:2 "Gained $VALUE|V0$ [vt_threadbinding_magic_lifestyle|E] Experience"
- I_GAIN_MAGIC_LIFESTYLE_XP:2 "You gain $VALUE|V0$ [vt_threadbinding_magic_lifestyle|E] Experience"
- I_GAINED_MAGIC_LIFESTYLE_XP:2 "You gained $VALUE|V0$ [vt_threadbinding_magic_lifestyle|E] Experience"
- TARGET_GAINS_MAGIC_LIFESTYLE_XP:2 "[CHARACTER.GetShortUIName|U] gains $VALUE|V0$ [vt_threadbinding_magic_lifestyle|E] Experience"
- TARGET_GAINED_MAGIC_LIFESTYLE_XP:2 "[CHARACTER.GetShortUIName|U] gained $VALUE|V0$ [vt_threadbinding_magic_lifestyle|E] Experience"
 
  ADD_ARCANA_SKILL_EFFECT:1 "[arcana|E] is increased by [arcana_i]$VALUE|+0$"
  REMOVE_ARCANA_SKILL_EFFECT:1 "[arcana|E] is decreased by [arcana_i]$VALUE|-0$"

@@ -2,8 +2,20 @@
  law_group_type = voltara_slavery_laws index = 0
  can_realm_have = { always = yes }
  should_start_with = { NOT = { voltara_historical_slavery_realm = yes } }
- can_pass = { is_landed = yes }
- pass_cost = { prestige = 300 }
+ can_pass = {
+  is_landed = yes
+  custom_tooltip = {
+   text = voltara_abolition_cassian_lock_tt
+   NOT = {
+    character:19060001 = { is_alive = yes }
+    top_liege = { OR = { has_title = title:h_voltara_severos has_title = title:e_voltara_21 } }
+   }
+  }
+  prestige_level >= 3
+  piety_level >= 3
+  is_at_war = no
+ }
+ pass_cost = { prestige = 3000 piety = 2000 }
  on_after_pass = { voltara_abolish_slavery = yes voltara_report_slavery_crime = yes }
 }
 voltara_slavery_legal = {

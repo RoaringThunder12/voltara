@@ -1,0 +1,8 @@
+﻿on_game_start_after_lobby = { on_actions = { voltara_bear_pelt_setup } }
+voltara_bear_pelt_setup = { effect = { character:19060034 = {
+ if = { limit = { NOT = { has_character_flag = voltara_bear_pelt_created } }
+  create_artifact = { name = voltara_bear_pelt_name description = voltara_bear_pelt_desc type = miscellaneous template = voltara_bear_pelt_template visuals = voltara_bear_pelt wealth = 40 quality = 65 modifier = voltara_bear_pelt_modifier save_scope_as = voltara_new_pelt history = { type = created_before_history } }
+  scope:voltara_new_pelt = { set_variable = { name = voltara_bear_king_pelt value = yes } equip_artifact_to_owner = yes }
+  add_character_flag = voltara_bear_pelt_created
+ }
+} } }

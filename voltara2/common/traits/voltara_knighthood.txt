@@ -1,0 +1,8 @@
+﻿# AGOT's squire/knight progression adapted to Voltara; the existing legacy knight trait remains for compatibility.
+squire = {
+ physical = no shown_in_ruler_designer = no monthly_prestige = 0.1 same_opinion = 5
+ name = { first_valid = { triggered_desc = { trigger = { exists = this has_trait_xp = { trait = squire track = knight value >= 100 } } desc = trait_knight } desc = trait_squire } }
+ desc = { first_valid = { triggered_desc = { trigger = { exists = this has_trait_xp = { trait = squire track = knight value >= 100 } } desc = trait_knight_desc } desc = trait_squire_desc } }
+ icon = { first_valid = { triggered_desc = { trigger = { exists = this has_trait_xp = { trait = squire track = knight value >= 100 } } desc = knight.dds } desc = squire.dds } }
+ tracks = { knight = { 100 = { attraction_opinion = 5 monthly_prestige = 0.15 heavy_cavalry_damage_mult = 0.05 knight_effectiveness_mult = 0.02 } } }
+}

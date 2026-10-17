@@ -1,0 +1,5 @@
+﻿voltara_pirate_court = {
+ OR = { has_government = pirate_government
+  AND = { is_landed = no exists = liege liege = { has_government = pirate_government } }
+ }
+}

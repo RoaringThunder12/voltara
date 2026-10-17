@@ -4,57 +4,7 @@
 	position = { 0 0 }
 	icon = node_learning
 	
-	auto_selection_weight = {
-		value = 11
-		if = {
-			limit = { has_students_magicka_background = yes }
-			add = 1989
-		}
-		if = {
-			limit = {
-				exists = dynasty
-				dynasty = { has_dynasty_modifier = magicka_legacy_restoration_focus }
-			}
-			add = 500
-		}
-		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_restoration_spells } } ###EK EDIT: new parameter
-            add = 200
-        }
-		if = {
-			limit = {
-				has_trait = zealous
-				religion = { is_in_family = rf_aedra }
-			}
-			add = 200
-		}
-		if = {
-			limit = { 
-				religion = { is_in_family = rf_daedra } 
-				NOR = {
-					religion = religion:meridia_religion
-					religion = religion:velothi_religion
-				}
-			}
-			add = -200
-		}
-		if = {
-			limit = { has_trait = compassionate }
-			add = 20
-		}
-		if = {
-			limit = {
-				can_start_new_lifestyle_tree_trigger = no
-			}
-			multiply = 0
-		}
-		if = {
-			limit = {
-				is_ai = yes
-			}
-			multiply = 0
-		}
-	}
+	auto_selection_weight = { value = 10 if = { limit = { can_magic_trigger = no } multiply = 0 } }
 	
 	effect = {	
 		custom_description_no_bullet = {
@@ -64,7 +14,7 @@
 		#	text = enable_ek_life_extension_scheme
 		#}
         if = {
-            limit = { culture = { has_cultural_parameter = cheaper_restoration_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_vt_threadbinding_magic_lifestyle_xp = 330
         }
     }
@@ -83,7 +33,7 @@ restoration_apprentice_perk = {
 			text = restoration_apprentice_perk_effect
 		}
         if = {
-            limit = { culture = { has_cultural_parameter = cheaper_restoration_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_vt_threadbinding_magic_lifestyle_xp = 330
         }
     }
@@ -118,7 +68,7 @@ restoration_journeyman_perk = {
 			text = restoration_journeyman_perk_effect
 		}
         if = {
-            limit = { culture = { has_cultural_parameter = cheaper_restoration_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_vt_threadbinding_magic_lifestyle_xp = 330
         }
     }
@@ -153,7 +103,7 @@ restoration_expert_perk = {
 			text = restoration_expert_perk_effect
 		}
         if = {
-            limit = { culture = { has_cultural_parameter = cheaper_restoration_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_vt_threadbinding_magic_lifestyle_xp = 330
         }
     }
@@ -210,7 +160,7 @@ restoration_master_perk = {
 			text = restoration_master_perk_effect_cloning
 		}
         if = {
-            limit = { culture = { has_cultural_parameter = cheaper_restoration_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_vt_threadbinding_magic_lifestyle_xp = 500
         }
 		if = {

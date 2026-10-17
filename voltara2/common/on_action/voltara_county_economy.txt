@@ -1,0 +1,6 @@
+﻿on_game_start = { on_actions = { voltara_county_economy_start } }
+on_game_start_after_lobby = { on_actions = { voltara_county_economy_start } }
+voltara_county_economy_start = {
+ trigger = { NOT = { has_global_variable = voltara_county_economy_initialized } }
+ effect = { voltara_initialize_county_economy_effect = yes }
+}

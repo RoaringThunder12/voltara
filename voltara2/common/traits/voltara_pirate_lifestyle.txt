@@ -1,0 +1,101 @@
+﻿voltara_pirate = {
+	category = lifestyle
+	icon = mariner.dds
+
+	# Modifiers
+	martial = 1
+	prowess = 1
+	negate_health_penalty_add = 0.25
+
+	embarkation_cost_mult = -0.1
+	naval_movement_speed_mult = 0.5
+	sea_travel_danger = low_sea_danger_reduction
+	coastal_sea_travel_danger = low_sea_danger_reduction
+
+	track = {
+		50 = {
+			martial = 1
+			prowess = 1
+			negate_health_penalty_add = 0.25
+
+			embarkation_cost_mult = -0.1
+			naval_movement_speed_mult = 0.5
+			sea_travel_danger = medium_sea_danger_reduction
+			coastal_sea_travel_danger = medium_sea_danger_reduction
+		}
+		100 = {
+			martial = 1
+			prowess = 1
+			negate_health_penalty_add = 0.5
+
+			embarkation_cost_mult = -0.1
+			naval_movement_speed_mult = 1.0
+			sea_travel_danger = -65
+			coastal_sea_travel_danger = -65
+		}
+	}
+
+	ruler_designer_cost = 20
+
+	name = {
+		first_valid = {
+			#Renowned mariner
+			triggered_desc = {
+				trigger = {
+					exists = this
+					has_trait_xp = {
+						trait = voltara_pirate
+						value >= 100
+					}
+				}
+				desc = trait_voltara_pirate_3
+			}
+			#mariner
+			triggered_desc = {
+				trigger = {
+					exists = this
+					has_trait_xp = {
+						trait = voltara_pirate
+						value >= 50
+					}
+				}
+				desc = trait_voltara_pirate_2
+			}
+			#Novice mariner
+			desc = trait_voltara_pirate_1
+		}
+	}
+
+	desc = {
+		first_valid = {
+			#The trait can never go higher than the first level if it's not assigned to a character
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_voltara_pirate_1_desc
+			}
+			triggered_desc = {
+				trigger = {
+					has_trait_xp = {
+						trait = voltara_pirate
+						value >= 100
+					}
+				}
+				desc = trait_voltara_pirate_3_character_desc
+			}
+			triggered_desc = {
+				trigger = {
+					has_trait_xp = {
+						trait = voltara_pirate
+						value >= 50
+					}
+				}
+				desc = trait_voltara_pirate_2_character_desc
+			}
+			desc = trait_voltara_pirate_1_character_desc
+		}
+	}
+
+	ai_energy = 10
+}

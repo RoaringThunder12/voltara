@@ -4,44 +4,14 @@
 	position = { 0 0 }
 	icon = node_intrigue
 	
-	auto_selection_weight = {
-		value = 11
-		if = {
-			limit = { has_students_magicka_background = yes }
-			add = 1989
-		}
-		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_illusion_spells } } ###EK EDIT: new parameter
-            add = 200
-        }
-		if = {
-            limit = { has_trait = paranoid }
-            add = 20
-        }
-		if = {
-            limit = { has_trait = deceitful }
-            add = 20
-        }
-		if = {
-			limit = {
-				can_start_new_lifestyle_tree_trigger = no
-			}
-			multiply = 0
-		}
-		if = {
-			limit = {
-				can_magic_trigger = no
-			}
-			multiply = 0
-		}
-	}
+	auto_selection_weight = { value = 10 if = { limit = { can_magic_trigger = no } multiply = 0 } }
 	
 	effect = {	
 		custom_description_no_bullet = {
 			text = illusion_novice_perk_effect
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_illusion_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_vt_threadbinding_magic_lifestyle_xp = 330
         }
 	}
@@ -60,7 +30,7 @@ illusion_apprentice_perk = {
 			text = illusion_apprentice_perk_effect
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_illusion_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_vt_threadbinding_magic_lifestyle_xp = 330
         }
 	}
@@ -94,7 +64,7 @@ illusion_journeyman_perk = {
 			text = illusion_journeyman_perk_effect
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_illusion_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_vt_threadbinding_magic_lifestyle_xp = 330
         }
 	}
@@ -114,7 +84,7 @@ illusion_medium_rituals_perk = {
 			text = illusion_medium_rituals_perk_effect
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_illusion_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_vt_threadbinding_magic_lifestyle_xp = 330
         }
 	}
@@ -133,7 +103,7 @@ illusion_expert_perk = {
 			text = illusion_expert_perk_effect
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_illusion_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_vt_threadbinding_magic_lifestyle_xp = 330
         }
 	}
@@ -153,7 +123,7 @@ illusion_major_rituals_perk = {
 			text = illusion_major_rituals_perk_effect
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_illusion_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_vt_threadbinding_magic_lifestyle_xp = 330
         }
 	}
@@ -191,7 +161,7 @@ illusion_master_perk = {
 			}
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_illusion_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_vt_threadbinding_magic_lifestyle_xp = 330
         }
 		if = {

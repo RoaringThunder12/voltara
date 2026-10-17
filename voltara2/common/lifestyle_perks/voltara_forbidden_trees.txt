@@ -1,0 +1,133 @@
+﻿voltara_ravenbound_0_perk = {
+ lifestyle = dark_arts_lifestyle tree = ravenbound position = { 0 0 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+
+ character_modifier = { learning = 1 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_ravenbound_1_perk = {
+ lifestyle = dark_arts_lifestyle tree = ravenbound position = { 0 1 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+ parent = voltara_ravenbound_0_perk
+ character_modifier = { intrigue = 1 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_ravenbound_2_perk = {
+ lifestyle = dark_arts_lifestyle tree = ravenbound position = { 2 1 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+ parent = voltara_ravenbound_0_perk
+ character_modifier = { intrigue = 1 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_ravenbound_3_perk = {
+ lifestyle = dark_arts_lifestyle tree = ravenbound position = { 0 2 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+ parent = voltara_ravenbound_1_perk
+ character_modifier = { stress_gain_mult = -0.05 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_ravenbound_4_perk = {
+ lifestyle = dark_arts_lifestyle tree = ravenbound position = { 2 2 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+ parent = voltara_ravenbound_1_perk
+ parent = voltara_ravenbound_2_perk
+ character_modifier = { learning = 1 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_ravenbound_5_perk = {
+ lifestyle = dark_arts_lifestyle tree = ravenbound position = { 0 3 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+ parent = voltara_ravenbound_3_perk
+ character_modifier = { health = 0.2 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_ravenbound_6_perk = {
+ lifestyle = dark_arts_lifestyle tree = ravenbound position = { 2 3 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+ parent = voltara_ravenbound_3_perk
+ parent = voltara_ravenbound_4_perk
+ character_modifier = { dread_gain_mult = 0.1 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_ravenbound_7_perk = {
+ lifestyle = dark_arts_lifestyle tree = ravenbound position = { 1 4 } icon = trait_voltara_hagraven
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes NOT = { has_trait = briarheart } NOT = { has_trait = vt_ek_undead_character } NOT = { has_trait = vt_ek_lich_character } NOT = { has_trait = vampire_character } NOT = { has_trait = lycan_character } }
+ parent = voltara_ravenbound_5_perk
+ parent = voltara_ravenbound_6_perk
+ trait = hagraven
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_thornheart_0_perk = {
+ lifestyle = dark_arts_lifestyle tree = thornheart position = { 0 0 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+
+ character_modifier = { martial = 1 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_thornheart_1_perk = {
+ lifestyle = dark_arts_lifestyle tree = thornheart position = { 0 1 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+ parent = voltara_thornheart_0_perk
+ character_modifier = { learning = 1 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_thornheart_2_perk = {
+ lifestyle = dark_arts_lifestyle tree = thornheart position = { 2 1 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+ parent = voltara_thornheart_0_perk
+ character_modifier = { prowess = 1 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_thornheart_3_perk = {
+ lifestyle = dark_arts_lifestyle tree = thornheart position = { 0 2 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+ parent = voltara_thornheart_1_perk
+ character_modifier = { prowess = 1 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_thornheart_4_perk = {
+ lifestyle = dark_arts_lifestyle tree = thornheart position = { 2 2 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+ parent = voltara_thornheart_1_perk
+ parent = voltara_thornheart_2_perk
+ character_modifier = { stress_gain_mult = -0.05 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_thornheart_5_perk = {
+ lifestyle = dark_arts_lifestyle tree = thornheart position = { 0 3 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+ parent = voltara_thornheart_3_perk
+ character_modifier = { health = 0.2 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_thornheart_6_perk = {
+ lifestyle = dark_arts_lifestyle tree = thornheart position = { 2 3 } icon = node_necromancy
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes }
+ parent = voltara_thornheart_3_perk
+ parent = voltara_thornheart_4_perk
+ character_modifier = { advantage = 1 }
+ auto_selection_weight = { value = 10 }
+}
+
+voltara_thornheart_7_perk = {
+ lifestyle = dark_arts_lifestyle tree = thornheart position = { 1 4 } icon = trait_voltara_briarheart
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes NOT = { has_trait = hagraven } NOT = { has_trait = vt_ek_undead_character } NOT = { has_trait = vt_ek_lich_character } NOT = { has_trait = vampire_character } NOT = { has_trait = lycan_character } has_arcana = { VALUE >= 10 } prowess >= 10 }
+ parent = voltara_thornheart_5_perk
+ parent = voltara_thornheart_6_perk
+ trait = briarheart
+ auto_selection_weight = { value = 10 }
+}

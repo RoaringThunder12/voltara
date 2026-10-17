@@ -938,7 +938,7 @@ is_valid = {
 
 		scope:actor = {
 				add_magicka = {
-					VALUE = 100.negate
+					VALUE = -100
 				}
 				change_variable = {
 					name = magicka
@@ -1028,7 +1028,7 @@ is_valid = {
 				target = scope:recipient
 			}
 
-			add_magicka = { VALUE = 60.negate }
+			add_magicka = { VALUE = -60 }
 			change_variable = { name = magicka add = -60 }
 		}
 

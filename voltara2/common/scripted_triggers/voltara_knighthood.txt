@@ -1,0 +1,2 @@
+﻿is_agot_knight_trigger = { OR = { has_trait = knight has_trait_xp = { trait = squire track = knight value >= 100 } } }
+is_squire_with_trait_xp = { has_trait = squire NOT = { is_agot_knight_trigger = yes } }

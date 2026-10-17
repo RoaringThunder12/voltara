@@ -38,7 +38,21 @@ skin_color_hue = {
 		
 
 		
-	}
+	skin_color_hue_blue = {
+			index = 2
+			male = {
+				skin_hsv_shift_curve = {
+					curve = {
+						{ 0.0   { 0.3 0.0 0.0 } }
+						{ 1.0   { 0.6 0.0 0.0 } }
+					}
+				}
+			}
+			female = male
+			boy = male
+			girl = male
+		}
+}
 }
 morph_genes = {
 skin_color_saturation = {

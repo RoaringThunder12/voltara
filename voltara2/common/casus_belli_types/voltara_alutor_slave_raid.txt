@@ -1,0 +1,27 @@
+﻿voltara_alutor_slave_raid = {
+ icon = fp1_varangian_adventurer_conquest group = conquest target_titles = none
+ war_name = voltara_alutor_slave_raid_name cb_name = voltara_alutor_slave_raid
+ allowed_for_character = { voltara_slave_expedition_attacker = yes }
+ allowed_against_character = { scope:defender = { voltara_slave_expedition_target = yes } scope:attacker = { voltara_slavery_is_legal = yes } }
+ valid_to_start = { scope:attacker = { voltara_slave_expedition_attacker = yes } scope:defender = { voltara_slave_expedition_target = yes } scope:attacker = { voltara_slavery_is_legal = yes } }
+ cost = { prestige = 250 }
+ on_primary_attacker_death = inherit on_primary_defender_death = inherit
+ on_victory_desc = { desc = voltara_alutor_slave_raid_victory }
+ on_white_peace_desc = { desc = voltara_slave_expedition_white_peace }
+ on_defeat_desc = { desc = voltara_slave_expedition_defeat }
+ on_victory = { scope:attacker = { save_scope_as = voltara_owner add_prestige = 150 }
+scope:defender = {
+
+ random_courtier = { limit = { is_adult = yes is_landed = no is_imprisoned = no NOT = { has_trait = dragon } NOT = { voltara_is_ruins_placeholder = yes } } voltara_enslave_character = yes }
+ random_courtier = { limit = { is_adult = yes is_landed = no is_imprisoned = no NOT = { has_trait = dragon } NOT = { voltara_is_ruins_placeholder = yes } } voltara_enslave_character = yes }
+ random_courtier = { limit = { is_adult = yes is_landed = no is_imprisoned = no NOT = { has_trait = dragon } NOT = { voltara_is_ruins_placeholder = yes } } voltara_enslave_character = yes }
+ random_courtier = { limit = { is_adult = yes is_landed = no is_imprisoned = no NOT = { has_trait = dragon } NOT = { voltara_is_ruins_placeholder = yes } } voltara_enslave_character = yes }
+ random_courtier = { limit = { is_adult = yes is_landed = no is_imprisoned = no NOT = { has_trait = dragon } NOT = { voltara_is_ruins_placeholder = yes } } voltara_enslave_character = yes }
+ random_courtier = { limit = { is_adult = yes is_landed = no is_imprisoned = no NOT = { has_trait = dragon } NOT = { voltara_is_ruins_placeholder = yes } } voltara_enslave_character = yes }
+ random_courtier = { limit = { is_adult = yes is_landed = no is_imprisoned = no NOT = { has_trait = dragon } NOT = { voltara_is_ruins_placeholder = yes } } voltara_enslave_character = yes }
+ random_courtier = { limit = { is_adult = yes is_landed = no is_imprisoned = no NOT = { has_trait = dragon } NOT = { voltara_is_ruins_placeholder = yes } } voltara_enslave_character = yes }
+} }
+ on_white_peace = { scope:attacker = { add_prestige = -100 } }
+ on_defeat = { scope:attacker = { add_prestige = -300 } scope:defender = { add_prestige = 150 } }
+ on_invalidated_desc = { desc = voltara_slave_expedition_white_peace }
+}

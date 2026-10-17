@@ -1,0 +1,6 @@
+﻿on_game_start_after_lobby = { on_actions = { voltara_dragon_identity_repair_all } }
+on_game_start = { on_actions = { voltara_dragon_identity_repair_all } }
+on_character_created = { on_actions = { voltara_dragon_identity_repair } }
+yearly_global_pulse = { on_actions = { voltara_dragon_identity_repair_all } }
+voltara_dragon_identity_repair_all = { effect = { every_living_character = { limit = { has_trait = dragon } voltara_dragon_identity_repair_effect = yes } } }
+voltara_dragon_identity_repair = { trigger = { has_trait = dragon } effect = { voltara_dragon_identity_repair_effect = yes } }

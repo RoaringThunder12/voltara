@@ -10,7 +10,7 @@ voltara_mw_detach = {
  create_title_and_vassal_change = { type = independency save_scope_as = mw_change add_claim_on_loss = no }
  becomes_independent = { change = scope:mw_change }
  resolve_title_and_vassal_change = scope:mw_change
- trigger_event = { id = voltara_mega_wars.1 days = 1 }
+ if = { limit = { scope:war = { NOT = { using_cb = voltara_slave_liberation_war } } } trigger_event = { id = voltara_mega_wars.1 days = 1 } }
 }
 voltara_mw_reassemble = {
  if = {

@@ -8,45 +8,7 @@
 		vt_ek_is_necromancer = yes
 	}
 	
-	auto_selection_weight = {
-		value = 11
-		if = {
-			limit = {
-				OR = {
-					has_trait = vt_ek_necromancer
-					has_trait = vt_ek_experimentalist_necromancer
-				}
-			}
-			add = 1989
-		}
-		if = {
-			limit = {
-				exists = dynasty
-				dynasty = { has_dynasty_modifier = magicka_legacy_necromancy_focus }
-			}
-			add = 500
-		}
-		if = {
-            limit = { faith = { has_doctrine_parameter = cheaper_necromancy_spells } } ###EK EDIT: new parameter
-            add = 100
-        }
-		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_necromancy_spells } } ###EK EDIT: new parameter
-            add = 100
-        }
-		if = {
-			limit = {
-				can_start_new_lifestyle_tree_trigger = no
-			}
-			multiply = 0
-		}
-		if = {
-			limit = {
-				can_magic_trigger = no
-			}
-			multiply = 0
-		}
-	}
+	auto_selection_weight = { value = 10 if = { limit = { can_magic_trigger = no } multiply = 0 } }
 	
 	effect = {	
 		if = {
@@ -84,7 +46,7 @@ necromancy_apprentice_perk = {
 			}
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_necromancy_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_dark_arts_lifestyle_xp = 330
         }
 	}
@@ -103,7 +65,7 @@ necromancy_minor_rituals_perk = {
 			text = necromancy_minor_rituals_perk_effect
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_necromancy_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_dark_arts_lifestyle_xp = 330
         }
 	}
@@ -130,7 +92,7 @@ necromancy_journeyman_perk = {
 			}
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_necromancy_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_dark_arts_lifestyle_xp = 330
         }
 	}
@@ -150,7 +112,7 @@ necromancy_medium_rituals_perk = {
 			text = necromancy_medium_rituals_perk_effect
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_necromancy_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_dark_arts_lifestyle_xp = 330
         }
 	}
@@ -177,7 +139,7 @@ necromancy_expert_perk = {
 			}
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_necromancy_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_dark_arts_lifestyle_xp = 330
         }
 	}
@@ -197,7 +159,7 @@ necromancy_major_rituals_perk = {
 			text = necromancy_major_rituals_perk_effect
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_necromancy_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_dark_arts_lifestyle_xp = 330
         }
 	}
@@ -246,7 +208,7 @@ necromancy_master_perk = {
 			}
 		}
 		if = {
-            limit = { culture = { has_cultural_parameter = cheaper_necromancy_spells } } ###EK EDIT: new parameter
+            limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors } } ###EK EDIT: new parameter
             add_dark_arts_lifestyle_xp = 330
         }
 		if = {

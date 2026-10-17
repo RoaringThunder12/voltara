@@ -1,0 +1,18 @@
+﻿voltara_pirate_hats = {
+ usage = game priority = 110
+ hats = {
+  dna_modifiers = { accessory = { mode = add gene = headgear template = voltara_pirate_hats value = 0 } }
+  weight = { base = 0 modifier = { add = 100 age >= 16 is_landed = yes voltara_pirate_court = yes NOT = { has_trait = voltara_slave } } }
+ }
+ bandanas = {
+  dna_modifiers = { accessory = { mode = add gene = headgear template = voltara_pirate_hats value = 1 } }
+  weight = { base = 0 modifier = { add = 100 age >= 16 is_landed = no voltara_pirate_court = yes NOT = { has_trait = voltara_slave } } }
+ }
+}
+voltara_pirate_clothing = {
+ usage = game priority = 110
+ shirt = {
+  dna_modifiers = { accessory = { mode = add gene = clothes template = voltara_pirate_shirt value = 0 } }
+  weight = { base = 0 modifier = { add = 100 age >= 16 is_female = no voltara_pirate_court = yes NOT = { has_trait = voltara_slave } } }
+ }
+}

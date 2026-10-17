@@ -1,0 +1,32 @@
+﻿voltara_slave_liberation_war = {
+ icon = peasant_war group = civil_war target_titles = none
+ war_name = voltara_slave_liberation_war_name cb_name = voltara_slave_liberation_war
+ allowed_for_character = { has_character_flag = voltara_cassian_slave_rebel }
+ allowed_against_character = { has_title = title:h_voltara_severos }
+ valid_to_start = { scope:attacker = { has_character_flag = voltara_cassian_slave_rebel } scope:defender = { has_title = title:h_voltara_severos } }
+ should_invalidate = { OR = { scope:attacker = { is_alive = no } scope:defender = { is_alive = no } } }
+ on_primary_attacker_death = invalidate on_primary_defender_death = inherit
+ attacker_capital_gives_war_score = no full_occupation_by_defender_gives_victory = no
+ max_attacker_score_from_battles = 100 max_defender_score_from_battles = 100
+ on_victory_desc = { desc = voltara_slave_war_victory }
+ on_white_peace_desc = { desc = voltara_slave_war_white_peace }
+ on_defeat_desc = { desc = voltara_slave_war_defeat }
+ on_invalidated_desc = { desc = voltara_slave_war_invalidated }
+ on_victory = {
+  voltara_slave_victory_dissolve_hegemony = yes
+  scope:attacker = { add_prestige = 500 }
+  voltara_slave_revolt_cleanup = yes
+ }
+ on_white_peace = { voltara_slave_revolt_cleanup = yes }
+ on_defeat = {
+  # Capture the current rulers on the rebel side, including successor rulers.
+  scope:war = { every_war_attacker = {
+   limit = { is_alive = yes is_ruler = yes }
+   save_scope_as = voltara_defeated_rebel
+   scope:defender = { imprison = { target = scope:voltara_defeated_rebel type = dungeon } }
+  } }
+  scope:defender = { add_prestige = 250 }
+  voltara_slave_revolt_cleanup = yes
+ }
+ on_invalidated = { voltara_slave_revolt_cleanup = yes }
+}

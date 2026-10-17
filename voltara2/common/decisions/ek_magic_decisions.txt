@@ -25,7 +25,7 @@
 			faith = {
 				custom_description = {
 					text = doctrine_necromancy_accepted_custom_desc
-					has_doctrine = doctrine_necromancy_accepted
+					has_doctrine_parameter = necromancy_accepted
 				}
 			}	
 			calc_true_if = {
@@ -36,7 +36,7 @@
 				faith = {
 					custom_description = {
 						text = doctrine_necromancy_shunned_custom_desc
-						has_doctrine = doctrine_necromancy_shunned
+						has_doctrine_parameter = necromancy_criminal
 					}
 				}
 			}
@@ -78,12 +78,12 @@
         }
 
 		modifier = { 
-			faith = { has_doctrine = doctrine_necromancy_shunned }
+			faith = { has_doctrine_parameter = necromancy_criminal }
 			add = -20
 		}
 
 		modifier = { 
-			faith = { has_doctrine = doctrine_necromancy_crime }
+			faith = { has_doctrine_parameter = necromancy_criminal }
 			add = -30
 		}
     }	
@@ -205,12 +205,12 @@ reveal_necromancy_decision = { # lose the secret and get the trait
 		}
 
 		modifier = { 
-			faith = { has_doctrine = doctrine_necromancy_shunned }
+			faith = { has_doctrine_parameter = necromancy_criminal }
 			add = -20
 		}
 
 		modifier = { 
-			faith = { has_doctrine = doctrine_necromancy_crime }
+			faith = { has_doctrine_parameter = necromancy_criminal }
 			add = -40
 		}
     }
@@ -323,252 +323,13 @@ become_lich_decision_ai = { #computer time B-)
 	}
 }
 
-become_hagraven_decision = { #added by tristan
-	picture = { reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds" }
-
-	desc = become_hagraven_decision_desc
-	selection_tooltip = become_hagraven_decision_tooltip
-
-	ai_check_interval = 0
-	
-	decision_group_type = major
 
 
-	is_shown = {
-		has_trait = witch
-		faith = { has_doctrine_parameter = become_hagraven_active }
-		is_female = yes
-		is_hagraven = no
-	}
-	
-	is_valid = {
-		has_trait = witch
-		has_magicka >= { VALUE = 100 }
-		has_arcana >= { VALUE = 16 }
-		NOT = { has_character_modifier = failed_hagraven_ascension}
-	}
 
-    is_valid_showing_failures_only = {
-        is_capable_adult = yes
-        is_available = yes
-        is_imprisoned = no
-		NOR = {
-			has_trait = vt_ek_lich_character
-			has_character_flag = race_daedra
-			has_trait = lifespan
-			has_trait = lifespan_magic
-			has_trait = tsaesci
-			is_vampire = yes
-			vt_ek_is_undead = yes
-			is_lycan = yes
-			is_briarheart = yes
-			is_hagraven = yes
-			has_trait = immortal
-			is_immortal = yes
-		}
-    }
 
-	effect = {
-		custom_tooltip = {
-			text = become_hagraven_decision_effect
-			trigger_event = { id = life_extension.0400 }
-		}
-	}
-	
-	minimum_cost = {
-		piety = 1000
-	}
 
-	ai_potential = { always = no } #this is the player version of the decision, which features a magicka cost
-}
 
-become_hagraven_decision_ai = { #computer time B-) #added by tristan
-	picture = { reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds" }
 
-	desc = become_hagraven_decision_ai_desc
-	selection_tooltip = become_hagraven_decision_tooltip
-	
-	decision_group_type = major
-
-	is_shown = {
-		has_trait = witch
-		faith = { has_doctrine_parameter = become_hagraven_active }
-		is_female = yes
-		is_hagraven = no
-		is_ai = yes
-	}
-	
-	is_valid = {
-		has_trait = witch
-		has_arcana >= { VALUE = 16 }
-		NOT = { has_character_modifier = failed_hagraven_ascension}
-	}
-
-    is_valid_showing_failures_only = {
-        is_capable_adult = yes
-        is_available = yes
-        is_imprisoned = no
-		NOR = {
-			has_trait = vt_ek_lich_character
-			has_character_flag = race_daedra
-			has_trait = lifespan
-			has_trait = lifespan_magic
-			has_trait = tsaesci
-			is_vampire = yes
-			vt_ek_is_undead = yes
-			is_lycan = yes
-			is_briarheart = yes
-			is_hagraven = yes
-			has_trait = immortal
-			is_immortal = yes
-		}
-    }
-
-	effect = {
-		trigger_event = { id = life_extension.0400 }
-	}
-	
-	minimum_cost = {
-		piety = 1000
-	}
-
-	ai_goal = yes
-	ai_potential = { always = yes }
-	ai_will_do = {
-		base = 100
-	}
-}
-
-become_briarheart_decision = {
-	picture = { reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds" }
-
-	desc = become_briarheart_decision_desc
-	selection_tooltip = become_briarheart_decision_tooltip
-
-	ai_check_interval = 0
-	
-	decision_group_type = major
-
-	is_shown = {
-		faith = { has_doctrine_parameter = become_briarheart_active }
-		#can_be_warrior_trigger = { ARMY_OWNER = root }
-		is_briarheart = no
-	}
-	is_valid = {
-		NOT = { has_character_modifier = failed_briarheart_ascension}
-		OR = {
-			custom_description = {
-				text = is_losing_defensive_war_trigger_custom_desc
-				is_losing_defensive_war_trigger = yes
-			}
-			#custom_description = {	##this trigger doesn work, may amend in future
-			#	text = outnumbered_in_war_trigger_custom_desc
-			#	outnumbered_in_war_trigger = yes
-			#}
-			custom_description = {
-				text = at_war_with_any_non_coreligionist_trigger_custom_desc
-				at_war_with_any_non_coreligionist_trigger = yes
-			}
-		}
-
-		prowess >= 10
-	}
-
-    is_valid_showing_failures_only = {
-        is_capable_adult = yes
-        is_available = yes
-        is_imprisoned = no
-		age >= 18
-		NOR = {
-			has_trait = vt_ek_lich_character
-			has_character_flag = race_daedra
-			has_trait = lifespan
-			has_trait = lifespan_magic
-			has_trait = tsaesci
-			is_vampire = yes
-			vt_ek_is_undead = yes
-			is_lycan = yes
-			is_briarheart = yes
-			is_hagraven = yes
-			has_trait = immortal
-			is_immortal = yes
-		}
-    }
-
-	effect = {
-		custom_tooltip = {
-			text = become_briarheart_decision_effect
-			trigger_event = { id = life_extension.0410 }
-		}
-	}
-	
-	minimum_cost = {
-		piety = 1000
-	}
-
-	ai_potential = { always = no } #this is the player version of the decision, which features a magicka cost
-}
-
-become_briarheart_decision_ai = { #computer time B-) #added by tristan
-	picture = { reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds" }
-
-	desc = become_briarheart_decision_ai_desc
-	selection_tooltip = become_briarheart_decision_tooltip
-	
-	decision_group_type = major
-
-	is_shown = {
-		faith = { has_doctrine_parameter = become_briarheart_active }
-		#can_be_warrior_trigger = { ARMY_OWNER = root }
-		is_ai = yes
-		is_female = no
-		is_briarheart = no
-		age >= 18
-	}
-	is_valid = {
-		NOT = { has_character_modifier = failed_briarheart_ascension}
-		OR = {
-			is_losing_defensive_war_trigger = yes
-			# outnumbered_in_war_trigger = yes
-			at_war_with_any_non_coreligionist_trigger = yes
-		}
-		prowess >= 14
-	}
-
-    is_valid_showing_failures_only = {
-        is_capable_adult = yes
-        is_available = yes
-        is_imprisoned = no
-		NOR = {
-			has_trait = vt_ek_lich_character
-			has_character_flag = race_daedra
-			has_trait = lifespan
-			has_trait = lifespan_magic
-			has_trait = tsaesci
-			is_vampire = yes
-			vt_ek_is_undead = yes
-			is_lycan = yes
-			is_briarheart = yes
-			is_hagraven = yes
-			has_trait = immortal
-			is_immortal = yes
-		}
-    }
-
-	effect = {
-		trigger_event = { id = life_extension.0410 }
-	}
-	
-	minimum_cost = {
-		piety = 1000
-	}
-
-	ai_goal = yes
-	ai_potential = { always = yes }
-	ai_will_do = {
-		base = 100
-	}
-}
 
 life_extension_decision = { #become immortal
 	picture = { reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds" }

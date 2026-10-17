@@ -980,7 +980,7 @@ arcana = {
 	if = {
 		limit = {
 			exists = dynasty
-			dynasty = { has_dynasty_perk = magicka_legacy_1 }
+			dynasty = { has_dynasty_perk = witchcraft_legacy_1 }
 		}
 		add = {
 			value = arcana_magicka_legacy_1
@@ -997,7 +997,7 @@ arcana = {
 	if = {
 		limit = { 
 			has_trait = paranoid 
-			culture = { has_cultural_parameter = paranoid_bonuses }
+			culture = { has_cultural_tradition = tradition_mystical_ancestors }
 		}
 		add = {
 			value = arcana_tradition_parliament_of_bugs
@@ -1007,7 +1007,7 @@ arcana = {
 	if = {
 		limit = { 
 			has_trait = education_intrigue_1 
-			culture = { has_cultural_parameter = sneaky_mages }
+			culture = { has_cultural_tradition = tradition_mystical_ancestors }
 		}
 		add = {
 			value = arcana_tradition_pale_shamans_1
@@ -1017,7 +1017,7 @@ arcana = {
 	if = {
 		limit = { 
 			has_trait = education_intrigue_2
-			culture = { has_cultural_parameter = sneaky_mages }
+			culture = { has_cultural_tradition = tradition_mystical_ancestors }
 		}
 		add = {
 			value = arcana_tradition_pale_shamans_2
@@ -1027,7 +1027,7 @@ arcana = {
 	if = {
 		limit = { 
 			has_trait = education_intrigue_3
-			culture = { has_cultural_parameter = sneaky_mages }
+			culture = { has_cultural_tradition = tradition_mystical_ancestors }
 		}
 		add = {
 			value = arcana_tradition_pale_shamans_3
@@ -1037,7 +1037,7 @@ arcana = {
 	if = {
 		limit = { 
 			has_trait = education_intrigue_4
-			culture = { has_cultural_parameter = sneaky_mages }
+			culture = { has_cultural_tradition = tradition_mystical_ancestors }
 		}
 		add = {
 			value = arcana_tradition_pale_shamans_4
@@ -1047,7 +1047,7 @@ arcana = {
 	if = {
 		limit = { 
 			has_trait = education_intrigue_5
-			culture = { has_cultural_parameter = sneaky_mages }
+			culture = { has_cultural_tradition = tradition_mystical_ancestors }
 		}
 		add = {
 			value = arcana_tradition_pale_shamans_5
@@ -1122,7 +1122,7 @@ arcana = {
 	}	
 	# Traditions
 	if = {
-		limit = { culture = { has_cultural_parameter = better_arcane_education }}
+		limit = { culture = { has_cultural_tradition = tradition_mystical_ancestors }}
 		add = {
 			value = arcana_prescriptivism
 			desc = arcana_prescriptivism
@@ -1157,13 +1157,7 @@ arcana = {
 		}
 	}
 	# Event Modifiers
-	if = {
-		limit = { has_character_modifier = modifier_sload_soap_arcana }
-		add = {
-			value = modifier_sload_soap_arcana
-			desc = modifier_sload_soap_arcana
-		}
-	}
+	
 	if = {
 		limit = { has_character_modifier = cloning_mastery }
 		add = {
@@ -1171,37 +1165,13 @@ arcana = {
 			desc = arcana_cloning_mastery
 		}
 	}
-	if = {
-		limit = { has_character_modifier = mundus_mage_modifier }
-		add = {
-			value = mundus_mage_modifier
-			desc = mundus_mage_modifier
-		}
-	}
-	if = {
-		limit = { has_character_modifier = tournament_arcane_clash_winner_modifier }
-		add = {
-			value = tournament_arcane_clash_winner_modifier
-			desc = tournament_arcane_clash_winner_modifier
-		}
-	}
-	if = {
-		limit = { has_character_modifier = tournament_arcane_clash_participant_modifier }
-		add = {
-			value = tournament_arcane_clash_participant_modifier
-			desc = tournament_arcane_clash_participant_modifier
-		}
-	}
-	if = {
-		limit = { has_character_modifier = tournament_exhausted_arcana_modifier }
-		add = {
-			value = tournament_exhausted_arcana_modifier
-			desc = tournament_exhausted_arcana_modifier
-		}
-	}
+	
+	
+	
+	
 	# Tenets
 	if = {
-		limit = { faith = { has_doctrine_parameter = magic_worship }}
+		limit = { faith = { has_doctrine_parameter = necromancy_accepted }}
 		add = {
 			value = arcana_magic_worship
 			desc = arcana_magic_worship
@@ -1210,28 +1180,14 @@ arcana = {
 	if = {
 		limit = { 
 			has_trait = vt_ek_lich_character 
-			faith = { has_doctrine_parameter = lich_trait_arcana }
+			faith = { has_doctrine_parameter = necromancy_accepted }
 		}
 		add = {
 			value = arcana_necromancy_worship_lich
 			desc = arcana_necromancy_worship_lich
 		}
 	}
-	# Holy Sites
-	if = {
-		limit = {
-			faith = {
-				controls_holy_site = hs_illuminis
-			}
-			title:b_illumination = {
-				is_holy_site_of = faith
-			}
-		}
-		add = {
-			value = arcana_hs_illuminis
-			desc = arcana_hs_illuminis
-		}
-	}
+
 	# Court Positions
 	if = {
 		limit = {
@@ -1269,7 +1225,7 @@ conjuration_spell_cost_modifier = {
 	if = {
 		limit = { 
 			exists = root
-			culture = { has_cultural_parameter = cheaper_conjuration_spells }
+			culture = { has_cultural_tradition = tradition_mystical_ancestors }
 		}
 		add = -0.1
 	}
@@ -1296,7 +1252,7 @@ alteration_spell_cost_modifier = {
 	if = {
 		limit = { 
 			exists = root
-			culture = { has_cultural_parameter = cheaper_alteration_spells }
+			culture = { has_cultural_tradition = tradition_mystical_ancestors }
 		}
 		add = -0.1
 	}
@@ -1323,7 +1279,7 @@ destruction_spell_cost_modifier = {
 	if = {
 		limit = { 
 			exists = root
-			culture = { has_cultural_parameter = cheaper_destruction_spells }
+			culture = { has_cultural_tradition = tradition_mystical_ancestors }
 		}
 		add = -0.1
 	}
@@ -1350,7 +1306,7 @@ illusion_spell_cost_modifier = {
 	if = {
 		limit = { 
 			exists = root
-			culture = { has_cultural_parameter = cheaper_illusion_spells }
+			culture = { has_cultural_tradition = tradition_mystical_ancestors }
 		}
 		add = -0.1
 	}
@@ -1377,7 +1333,7 @@ restoration_spell_cost_modifier = {
 	if = {
 		limit = { 
 			exists = root
-			culture = { has_cultural_parameter = cheaper_restoration_spells }
+			culture = { has_cultural_tradition = tradition_mystical_ancestors }
 		}
 		add = -0.1
 	}
@@ -1404,7 +1360,7 @@ necromancy_spell_cost_modifier = {
 	if = {
 		limit = { 
 			exists = root
-			faith = { has_doctrine_parameter = cheaper_necromancy_spells }
+			faith = { has_doctrine_parameter = necromancy_accepted }
 		}
 		add = -0.1
 	}
@@ -1412,7 +1368,7 @@ necromancy_spell_cost_modifier = {
 	if = {
 		limit = { 
 			exists = root
-			culture = { has_cultural_parameter = cheaper_necromancy_spells }
+			culture = { has_cultural_tradition = tradition_mystical_ancestors }
 		}
 		add = -0.1
 	}
@@ -1444,7 +1400,7 @@ magicka_max = {
 	if = {
 		limit = {
 			has_royal_court = yes
-			has_court_type = court_magical
+			has_court_type = court_scholarly
 			court_grandeur_current_level >= 1
 		}
 		multiply = 1.25
@@ -1516,7 +1472,7 @@ magicka_mult = {
 	if = {
 		limit = {
 			exists = dynasty
-			dynasty = { has_dynasty_perk = magicka_legacy_1 }
+			dynasty = { has_dynasty_perk = witchcraft_legacy_1 }
 		}
 		add = {
 			value = magicka_mult_magicka_legacy_1
@@ -1532,7 +1488,7 @@ magicka_mult = {
 	if = {
 		limit = {
 			has_royal_court = yes
-			has_court_type = court_magical
+			has_court_type = court_scholarly
 			court_grandeur_current_level >= 1
 		}
 		add = {
@@ -1645,19 +1601,7 @@ magicka_mult = {
 			desc = magicka_modifier_spell_shock
 		}
 	}
-	if = {
-		limit = {
-			any_realm_county = {
-				any_county_province = {
-					has_building = garlas_agea_02
-				}
-			}
-		}
-		add = {
-			value = magicka_mult_building_garlas_agea
-			desc = magicka_building_garlas_agea
-		}
-	}
+	
 }
 
 ##  Master  ##
@@ -2238,14 +2182,14 @@ ritual_slot_limit = {
 	if = { #+1 if you have the last magica dynasty perk
 		limit = {
 			exists = dynasty
-			dynasty = { has_dynasty_perk = magicka_legacy_5 }
+			dynasty = { has_dynasty_perk = witchcraft_legacy_5 }
 		}
 		add = 1
 	}
 	if = { #+1 if you have an Arcane Court at max lvl
 		limit = {
 			has_royal_court = yes
-			has_court_type = court_magical
+			has_court_type = court_scholarly
 			court_grandeur_current_level >= 10
 		}
 		add = 1
@@ -2435,26 +2379,8 @@ restless_dead_value = {
 		}
 		add = 1
     }
-	if = { 
-        limit = { 
-            any_realm_county = {
-				any_county_province = {
-					has_building = deep_graves_01
-				}
-			}
-		}
-		add = 0.2
-    }
-	if = { 
-        limit = { 
-            any_realm_county = {
-				any_county_province = {
-					has_building = bone_orchard_01 
-				}
-			}
-		}
-		add = 0.2
-    }
+	
+	
 }
 
 create_undead_value = {

@@ -1,0 +1,13 @@
+﻿voltara_establish_aeliunist_knighthood = {
+ if = {
+  limit = { NOT = { has_global_variable = voltara_aeliunist_knights_established } }
+  agot_knight_tree_on_start = yes
+  every_living_character = {
+   limit = { voltara_aeliunist_starting_knight_candidate = yes }
+   add_trait = squire
+   add_trait_xp = { trait = squire track = knight value = 100 }
+   # No invented historical mentor: the existing lazy initializer creates a founder record when opened.
+  }
+  set_global_variable = { name = voltara_aeliunist_knights_established value = yes }
+ }
+}

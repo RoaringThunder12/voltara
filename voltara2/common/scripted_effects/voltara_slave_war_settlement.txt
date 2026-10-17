@@ -1,0 +1,23 @@
+﻿voltara_slave_victory_dissolve_hegemony = {
+ # Free everyone in the current imperial realm before destroying its top title.
+ scope:defender = { add_realm_law = voltara_slavery_banned voltara_abolish_slavery = yes add_prestige = -500 save_scope_as = voltara_liberator }
+ # Detached paramounts, including neutral Kedith, remain subject to emancipation.
+ every_independent_ruler = {
+  limit = { primary_title = { var:voltara_mw_war ?= scope:war } }
+  add_realm_law = voltara_slavery_banned
+  voltara_abolish_slavery = yes
+ }
+ every_living_character = {
+  limit = { has_character_flag = voltara_slave_war_original_realm has_trait = voltara_slave }
+  voltara_free_character = yes
+ }
+ # Leave the regional titles intact, but remove their imperial overlord.
+ scope:defender = {
+  every_vassal = { add_to_temporary_list = voltara_slave_remaining_vassals }
+ }
+ create_title_and_vassal_change = { type = independency save_scope_as = voltara_slave_dissolution add_claim_on_loss = no }
+ every_in_list = { list = voltara_slave_remaining_vassals becomes_independent = { change = scope:voltara_slave_dissolution } }
+ resolve_title_and_vassal_change = scope:voltara_slave_dissolution
+ scope:defender = { destroy_title = title:h_voltara_severos }
+ set_global_variable = { name = voltara_severosi_hegemony_fallen value = yes }
+}

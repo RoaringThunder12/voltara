@@ -1,0 +1,20 @@
+﻿on_game_start_after_lobby = { on_actions = { voltara_noble_relationships_setup } }
+voltara_noble_relationships_setup = { effect = {
+ character:19060029 = { set_relation_friend = { target = character:19060026 reason = friend_generic_history } }
+ character:19060033 = { set_relation_rival = { target = character:19060002 reason = rival_generic_history } }
+ character:19060041 = {
+  if = { limit = { NOT = { has_character_flag = voltara_stoneheart_camp_initialized } }
+   if = { limit = { has_dlc_feature = roads_to_power }
+    create_adventurer_title = { name = vn_stoneheart_company holder = this save_scope_as = voltara_edmund_camp }
+    change_government = landless_adventurer_government
+    add_realm_law = landless_adventurer_succession_law
+    add_courtier = character:19064020
+    add_courtier = character:19064021
+    add_courtier = character:19064022
+    set_designated_heir = character:19064020
+    add_character_flag = voltara_stoneheart_camp_initialized
+   }
+   set_relation_friend = { target = character:19064020 reason = friend_generic_history }
+  }
+ }
+} }

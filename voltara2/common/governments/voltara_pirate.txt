@@ -1,0 +1,30 @@
+﻿pirate_government = {
+	government_rules = {
+		create_cadet_branches = yes
+		rulers_should_have_dynasty = yes
+		dynasty_named_realms = yes
+		allow_accolades = no
+ sticky_government = yes
+	}
+
+	royal_court = any
+
+	primary_holding = pirate_den_holding
+	valid_holdings = { pirate_den_holding castle_holding city_holding tribal_holding church_holding }
+	required_county_holdings = { pirate_den_holding castle_holding tribal_holding }
+
+	vassal_contract_group = pirate_vassal
+
+	flags = {
+		agot_pirate_gov_succ_block
+		agot_pirate_sailing_requirements
+		government_can_raid_rule
+		agot_unlocks_conquest_cb
+		government_is_pirate_without_landless_dlc
+		government_is_settled
+		government_is_pirate
+		government_is_pirate_trigger_check
+	}
+
+	color = rgb{ 57 174 119 }
+}
