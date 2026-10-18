@@ -1,0 +1,10 @@
+﻿on_game_start = { on_actions = { voltara_queue_regional_governments } }
+on_game_start_after_lobby = { on_actions = { voltara_queue_regional_governments } }
+voltara_queue_regional_governments = {
+ trigger = { NOT = { has_global_variable = voltara_regional_governments_initialized } NOT = { has_global_variable = voltara_regional_governments_queued } }
+ effect = {
+  set_global_variable = { name = voltara_regional_governments_queued value = yes }
+  # Run after the legacy first-day realm initialization.
+  random_living_character = { limit = { is_landed = yes } trigger_event = { id = voltara_regional_governments.1 days = 1 } }
+ }
+}
