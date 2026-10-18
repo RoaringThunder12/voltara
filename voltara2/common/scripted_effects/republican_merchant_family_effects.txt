@@ -1,0 +1,447 @@
+﻿#Scope: Character
+#	scope:republican_government_story
+add_merchant_family_effect = {
+	save_scope_as = character
+	scope:republican_government_story = {
+		add_to_variable_list = {
+			name = merchant_families
+			target = scope:character
+		}
+	}
+	set_variable = {
+		name = republican_government_story
+		value = scope:republican_government_story
+	}
+	if = {
+		limit = {
+			any_held_title = {
+				is_merchant_family_title = yes	
+			}
+		}
+		#Maybe de jure title can be set here
+	}
+	else = { give_merchant_title_effect = { LIEGE = scope:republican_government_story.story_owner } }
+}
+
+#Scope: Character
+#	scope:republican_government_story
+remove_merchant_family_effect = {
+	save_scope_as = character
+	scope:republican_government_story = {
+		remove_list_variable = {
+			name = merchant_families
+			target = scope:character
+		}
+	}
+	remove_variable = republican_government_story
+	destroy_merchant_title_effect = yes
+	remove_trade_variables = yes
+}
+
+#Scope: Character
+give_merchant_title_effect = {
+	create_nomad_title = {
+		name = merchant_family_title
+		holder = scope:character
+		government = merchant_republic_government
+		save_scope_as = new_title
+	}
+	create_title_and_vassal_change = {
+		type = swear_fealty
+		save_scope_as = change
+	}
+	if = {
+		limit = { NOT = { $LIEGE$ = scope:character } }
+		change_liege = {
+			liege = $LIEGE$
+			change = scope:change
+		}
+	}
+	resolve_title_and_vassal_change = scope:change
+	scope:new_title = {
+		set_variable = {
+			name = merchant_family_title
+			value = yes
+		}
+		#set_de_jure_liege_title = $LIEGE$.capital_county.kingdom
+	}
+	change_government = merchant_republic_government
+	every_held_title = { limit = { is_noble_family_title = yes } prev = { destroy_title = prev } }
+	hidden_effect = {
+		$LIEGE$ = {
+			if = {
+				limit = { NOT = { scope:character = this } }
+				send_interface_toast = {
+					type = event_new_merchant_family
+					title = merchant_republic_new_family_toast.t
+					left_icon = scope:character
+					custom_tooltip = merchant_republic_new_family_toast.desc
+				}
+			}
+			every_vassal = {
+				limit = {
+					is_merchant_family = yes
+					NOT = { scope:character = this }
+				}
+				send_interface_toast = {
+					type = event_new_merchant_family
+					title = merchant_republic_new_family_toast.t
+					left_icon = scope:character
+					custom_tooltip = merchant_republic_new_family_toast.desc
+				}
+			}
+		}
+	}
+	add_trait = republican_merchant
+}
+
+#Scope: Character
+destroy_merchant_title_effect = {
+	every_held_title = {
+		limit = { is_merchant_family_title = yes }
+		prev = { destroy_title = prev }
+	}
+	if = { limit = { is_landed = yes }
+		change_government = feudal_government
+	}
+	#If unlanded player, we should make them a laamp maybe
+}
+
+#Scope: republican_government_story
+generate_merchant_family_effect = {
+	save_scope_as = republican_government_story
+	story_owner = {
+		save_scope_as = liege
+		create_character = {
+			age = { 30 60 }
+			random_traits_list = {
+				count = 1
+				education_stewardship_1 = {}
+				education_stewardship_2 = {}
+				education_stewardship_3 = {}
+				education_stewardship_4 = {}
+			}
+			random_traits = yes
+			gender_female_chance = 1
+			stewardship = { 5 15 }
+			learning = { 5 10 }
+			culture = scope:liege.capital_county.culture
+			faith = scope:liege.capital_county.faith
+			dynasty = generate
+			location = scope:liege.capital_province
+			save_scope_as = character
+		}
+		scope:character = {
+			dynasty = { add_dynasty_prestige = 200 }
+			add_gold = 100
+			add_prestige = 250
+			add_piety = 50
+			add_merchant_family_effect = yes
+		}
+	}
+}
+
+#Scope: republican_government_story
+generate_merchant_families_to_capacity_effect = { #TODO: Fix capacity and current, maybe make it a variable in the plutocracy manager calc'd in the tick
+	save_scope_as = republican_government_story
+	while = {
+		count = {
+			add = merchant_family_capacity
+			subtract = merchant_family_current
+			min = 0
+		}
+		generate_merchant_family_effect = yes
+	}
+}
+
+#Scope: republican_government_story
+offer_merchant_family_title_to_vassals_effect = {
+	story_owner = {
+		save_scope_as = liege
+		ordered_vassal = {
+			order_by = gold
+			limit = {
+				is_lowborn = no
+				NOR = {
+					government_has_flag = government_is_merchant_republic
+					dynasty = scope:liege.dynasty
+				}
+				is_ai = no
+			}
+			add_to_list = vassal_list
+		}
+		ordered_vassal = {
+			order_by = gold
+			limit = {
+				is_lowborn = no
+				NOR = {
+					government_has_flag = government_is_merchant_republic
+					government_has_flag = government_is_theocracy
+					dynasty = scope:liege.dynasty
+				}
+				is_ai = yes
+			}
+			add_to_list = vassal_list
+		}
+		ordered_in_list = {
+			list = vassal_list
+			max = { #TODO: Fix capacity + current
+				scope:republican_government_story = {
+					add = merchant_family_capacity
+					subtract = merchant_family_current
+				}
+				max = list_size:vassal_list
+			}
+			offer_merchant_family_title_effect = yes
+		}
+	}
+}
+
+#Scope: Character
+offer_merchant_family_title_effect = {
+	trigger_event = republican_core.1000
+}
+
+#Scope: Character
+pass_merchant_family_title_to_house_heir_effect = {
+	save_scope_as = character
+	var:republican_government_story = { save_scope_as = republican_government_story }
+	house = {
+		if = {
+			limit = { any_house_member = { NOT = { scope:character = this } eligble_merchant_family_heir = yes } }
+			ordered_house_member = {
+				limit = { NOT = { scope:character = this } eligble_merchant_family_heir = yes }
+				position = 0
+				order_by = age
+				save_scope_as = merchant_family_successor
+			}
+		}
+		else_if = {
+			limit = { any_house_member = { NOT = { scope:character = this } } }
+			ordered_house_member = {
+				limit = { NOT = { scope:character = this } }
+				position = 0
+				order_by = age
+				save_scope_as = merchant_family_successor
+			}
+		}
+	}
+
+	if = {
+		limit = { house = { NOT = { any_house_member = { NOT = { scope:character = this } } } } }
+		every_held_title = {
+			limit = { is_merchant_family_title = yes }
+			prev = { destroy_title = prev }
+		}
+	}
+	else = {
+		scope:republican_government_story = {
+			remove_list_variable = {
+				name = merchant_families
+				target = scope:character
+			}
+			add_to_variable_list = {
+				name = merchant_families
+				target = scope:merchant_family_successor
+			}
+		}
+		pay_short_term_gold = {
+			target = scope:merchant_family_successor
+			gold = {
+				value = gold
+				multiply = 0.5
+			}
+		}
+		create_title_and_vassal_change = {
+			type = returned
+			save_scope_as = change
+			add_claim_on_loss = no
+		}
+		every_held_title = {
+			limit = { is_merchant_family_title = yes }
+			change_title_holder = {
+				holder = scope:merchant_family_successor
+				change = scope:change
+			}
+		}
+		resolve_title_and_vassal_change = scope:change
+		scope:merchant_family_successor = {
+			set_variable = {
+				name = republican_government_story
+				value = scope:republican_government_story
+			}
+			change_government = merchant_republic_government
+		}
+		if = {
+			limit = {
+				is_ai = no
+				scope:republican_government_story.var:play_as_same_family ?= yes
+			}
+			set_player_character = scope:merchant_family_successor
+		}
+	}	
+}
+
+#Scope: republican_government_story
+convert_republic_to_merchant_republic_effect = {
+	save_scope_as = republican_government_story
+	story_owner = {
+		if = { limit = { is_merchant_family = no } add_merchant_family_effect = yes }
+		else = { change_government = merchant_republic_government }
+	}
+	offer_merchant_family_title_to_vassals_effect = yes
+	generate_merchant_families_to_capacity_effect = yes
+}
+
+#Scope: Character
+convert_to_merchant_republic_government_effect = {
+	custom_tooltip = {
+		text = convert_to_merchant_republic_government_tt
+		if = { limit = { has_variable = republican_government_story }
+			var:republican_government_story = {
+				remove_list_variable = {
+					name = merchant_families
+					target = prev
+				}
+			}
+			remove_variable = republican_government_story
+			create_story = republican_government_story
+		}
+		else_if = {
+			limit = {
+				NOT = { government_has_flag = government_is_active_republic }
+			}
+			create_story = republican_government_story
+		}
+		var:republican_government_story = {
+			add_to_variable_list = {
+				name = merchant_families
+				target = prev
+			}
+			convert_republic_to_merchant_republic_effect = yes
+		}
+	}
+}
+
+#Scope: Character
+create_merchant_republic_kingdom_title_effect = {
+	save_scope_as = merchant_republic_liege
+	if = {
+		limit = {
+			highest_held_title_tier < tier_kingdom
+		}
+		hidden_effect = {
+			capital_county.empire = { save_scope_as = old_empire  }
+			primary_title = {
+				if = {
+					limit = { is_merchant_family_title = no }
+					save_scope_as = old_title
+				}
+				else = {
+					prev.capital_county = { save_scope_as = old_title }
+				}
+			}
+			
+			create_dynamic_title = {
+				tier = kingdom
+				name = NEW_CREATED_TITLE_NAME
+			}
+			create_title_and_vassal_change = {
+				type = created
+				save_scope_as = change
+				add_claim_on_loss = no
+			}
+			
+			scope:new_title = {
+				change_title_holder = {
+					holder = scope:merchant_republic_liege
+					change = scope:change
+				}
+			}
+			
+			resolve_title_and_vassal_change = scope:change
+			
+			if = {
+				limit = {
+					exists = capital_county.duchy
+					OR = {
+						scope:merchant_republic_liege = capital_county.duchy.holder
+						scope:merchant_republic_liege = { completely_controls = capital_county.duchy }
+					}
+				}
+				capital_county.duchy = { set_de_jure_liege_title = scope:new_title }
+			}
+			if = {
+				limit = {
+					scope:merchant_republic_liege = {
+						is_independent_ruler = no
+						top_liege = { highest_held_title_tier = tier_empire	}
+					}
+				}
+				scope:new_title = { set_de_jure_liege_title = prev.top_liege.primary_title }
+			}
+			else = { scope:new_title = { set_de_jure_liege_title = scope:old_empire } }
+
+			scope:new_title = {
+				set_coa = scope:old_title
+				set_color_from_title = scope:old_title
+				set_capital_county = scope:old_title.title_capital_county
+			}
+			set_primary_title_to = scope:new_title
+		}
+	}
+	if = {
+		limit = { government_has_flag = government_is_tribal }
+		every_realm_province = {
+			limit = {
+				has_holding_type = tribal_holding
+				barony.holder = prev
+			}
+			set_holding_type = city_holding
+		}
+	}
+}
+
+#Scope: character
+pass_merchant_family_title_to_ruler_of_same_house = {
+	save_scope_as = character
+	every_vassal_or_below = {
+		limit = {
+			is_merchant_family = yes
+			house = scope:character.house
+		}
+		create_title_and_vassal_change = {
+			type = returned
+			save_scope_as = change
+			add_claim_on_loss = no
+		}
+		every_held_title = {
+			limit = { is_merchant_family_title = yes }
+			change_title_holder = {
+				holder = scope:character
+				change = scope:change
+			}
+		}
+		resolve_title_and_vassal_change = scope:change
+		var:republican_government_story = {
+			remove_list_variable = {
+				name = merchant_families
+				target = prev
+			}
+			add_to_variable_list = {
+				name = merchant_families
+				target = scope:character
+			}
+		}
+		pay_short_term_gold = {
+			target = scope:character
+			gold = gold
+		}
+		remove_variable = republican_government_story
+		remove_trade_variables = yes
+		if = {
+			limit = { is_ai = no }
+			set_player_character = scope:character
+		}
+	}
+}

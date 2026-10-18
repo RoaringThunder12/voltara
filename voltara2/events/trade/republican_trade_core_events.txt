@@ -1,0 +1,662 @@
+﻿namespace = republican_trade
+
+### TRADE EVENTS ###
+# republican_trade.1000 - Trade Deal ruler died, negotiate new trade deal
+# republican_trade.1001 - Vassal asked to negotiate trade deal
+# republican_trade.1002 - Trade Deal Scheme Success
+# republican_trade.1003 - Trade Deal Scheme Failure
+# republican_trade.1010 - Personal request during trade deal negotiations
+republican_trade.1000 = { #Trade Deal ruler died, negotiate new trade deal
+	type = character_event
+	title = republican_trade.1000.t
+	desc = republican_trade.1000.desc
+	theme = realm
+	override_background = { reference = republican_trade_deal }
+
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	lower_center_portrait = { character = scope:recipient }
+
+	trigger = {
+		OR = {
+			can_start_scheme = {
+				type = trade_deal_scheme
+				target_character = scope:recipient
+			}
+			any_vassal = {
+				can_start_scheme = {
+					type = trade_deal_scheme
+					target_character = scope:recipient
+				}
+			}
+		}
+	}
+
+	option = { #Do it myself
+		name = republican_trade.1000.a
+		trigger = {
+			can_start_scheme = {
+				type = trade_deal_scheme
+				target_character = scope:recipient
+			}
+		}
+		send_interface_toast = {
+			type = event_toast_effect_neutral
+			title = trade_deal_interaction_notification
+
+			left_icon = root				
+			right_icon = scope:recipient
+
+			begin_scheme_basic_effect = {
+				SCHEME_TYPE = trade_deal_scheme
+				TARGET_TYPE = target_character
+				TARGET_SCOPE = scope:recipient
+			}
+		}
+
+		ai_chance = {
+			base = 0
+			ai_value_modifier = { ai_energy = 0.5 }
+			modifier = {
+				add = -1000
+				any_scheme = {
+					scheme_type = trade_deal_scheme
+				}
+			}
+			modifier = {
+				add = -30
+				any_scheme = {
+					scheme_type = learn_language
+				}
+			}
+			modifier = {
+				add = -10
+				any_scheme = {
+					scheme_type = sway
+				}
+			}
+		}
+	}
+	option = { #Ask the merchant families for help
+		name = republican_trade.1000.b
+		trigger = {
+			any_vassal = {
+				can_start_scheme = {
+					type = trade_deal_scheme
+					target_character = scope:recipient
+				}
+			}
+		}
+		custom_tooltip = {
+			text = republican_trade.1000.b.tt
+			every_vassal = {
+				limit = { is_merchant_family = yes }
+				trigger_event = republican_trade.1001
+			}
+		}
+		ai_chance = {
+			base = 0
+			ai_value_modifier = {
+				ai_greed = 0.5
+				ai_energy = -0.5
+			}
+		}
+	}
+
+	option = { #It's not worth the effort
+		name = republican_trade.1000.c
+		custom_tooltip = republican_trade.1000.c.tt
+
+		ai_chance = {
+			base = 0
+			ai_value_modifier = {
+				ai_greed = -0.5
+				ai_energy = -0.5
+			}
+		}
+	}
+}
+
+republican_trade.1001 = { #Liege asks you to negotiate a trade deal
+	type = character_event
+	title = republican_trade.1001.t
+	desc = republican_trade.1001.desc
+	theme = realm
+	override_background = { reference = republican_trade_deal }
+
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = liege
+		animation = personality_compassionate
+	}
+	lower_center_portrait = { character = scope:recipient }
+
+	trigger = {
+		can_start_scheme = {
+			type = trade_deal_scheme
+			target_character = scope:recipient
+		}
+	}
+
+	option = { #Do it
+		name = republican_trade.1001.a
+		trigger = {
+			can_start_scheme = {
+				type = trade_deal_scheme
+				target_character = scope:recipient
+			}
+		}
+		send_interface_toast = {
+			type = event_toast_effect_neutral
+			title = trade_deal_interaction_notification
+
+			left_icon = root				
+			right_icon = scope:recipient
+
+			begin_scheme_basic_effect = {
+				SCHEME_TYPE = trade_deal_scheme
+				TARGET_TYPE = target_character
+				TARGET_SCOPE = scope:recipient
+			}
+			reverse_add_opinion = {
+				target = liege
+				modifier = pleased_opinion
+				opinion = 10
+			}
+		}
+
+		ai_chance = {
+			base = 50
+			modifier = {
+				add = -1000
+				any_scheme = {
+					scheme_type = trade_deal_scheme
+				}
+			}
+			ai_value_modifier = { ai_energy = 0.5 }
+			opinion_modifier = {
+				who = liege
+				opinion_target = root
+				multiplier = 0.5
+			}
+			base = 0
+			modifier = {
+				add = -30
+				NOT = {
+					any_scheme = {
+						scheme_type = learn_language
+					}
+				}
+			}
+			modifier = {
+				add = -10
+				NOT = {
+					any_scheme = {
+						scheme_type = sway
+					}
+				}
+			}
+		}
+	}
+
+	option = { #It's not worth the effort
+		name = republican_trade.1001.b
+		custom_tooltip = { text = republican_trade.1001.b.tt }
+
+		ai_chance = {
+			base = 0
+			ai_value_modifier = {
+				ai_greed = -0.5
+				ai_energy = -0.5
+			}
+			opinion_modifier = {
+				who = liege
+				opinion_target = root
+				multiplier = -0.5
+			}
+		}
+	}
+}
+
+republican_trade.1002 = { #Trade Deal Scheme Success
+	type = character_event
+	title = republican_trade.1002.t
+	desc = republican_trade.1002.desc
+	theme = diplomacy
+	override_background = { reference = republican_trade_deal }
+
+	left_portrait = {
+		character = root
+		animation = chancellor
+	}
+	right_portrait = {
+		character = scope:target
+		animation = personality_compassionate
+	}
+
+	immediate = {
+		play_sound_effect = "event:/GoldenDominion/SFX/trade_deal_success"
+		hidden_effect = {
+			add_trait = republican_merchant
+		}
+		add_trait_xp = {
+			trait = republican_merchant
+			value = 3
+		}
+		add_character_to_trade_deals = { RULER = scope:target }
+		scope:scheme = {
+			end_scheme = yes
+		}
+		reverse_add_opinion = {
+			target = scope:target
+			modifier = pleased_opinion
+			opinion = 10
+		}
+		add_opinion = {
+			target = scope:target
+			modifier = pleased_opinion
+			opinion = 10
+		}
+
+	}
+
+	option = {
+		name = republican_trade.1002.a
+	}
+}
+
+republican_trade.1003 = { #Trade Deal Scheme Failure
+	type = character_event
+	title = republican_trade.1003.t
+	desc = republican_trade.1003.desc
+	theme = diplomacy
+	override_background = { reference = republican_trade_deal }
+
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:recipient
+		animation = personality_rational
+	}
+
+	immediate = {
+		add_trait_xp = {
+			trait = republican_merchant
+			value = 1
+		}
+		scope:target = {
+			add_opinion = {
+				target = scope:owner
+				modifier = trade_deal_scheme_blocker_opinion
+				opinion = -10
+			}
+		}
+		scope:scheme = {
+			end_scheme = yes
+		}
+	}
+
+	option = {
+		name = republican_trade.1003.a
+	}
+}
+
+republican_trade.1004 = { #AI start trade deal scheme
+	hidden = yes
+	immediate = {
+		ordered_independent_ruler = {
+			order_by = ai_trade_deal_target_weight
+			position = { integer_range = { min = 0 max = 4 } }
+			limit = {
+				in_diplomatic_range = scope:actor
+				scope:actor = {
+					can_start_scheme = {
+						type = trade_deal_scheme
+						target_character = prev
+					}
+				}
+			}
+			scope:actor = {
+				begin_scheme_basic_effect = {
+					SCHEME_TYPE = trade_deal_scheme
+					TARGET_TYPE = target_character
+					TARGET_SCOPE = prev
+				}
+			}
+		}
+	}
+}
+
+# Personal request during trade deal negotiations
+republican_trade.1010 = {
+	type = character_event
+	title = republican_trade.1010.t
+	desc = republican_trade.1010.desc
+	theme = diplomacy
+	override_background = { reference = republican_trade_deal }
+
+	left_portrait = {
+		character = scope:owner
+		animation = eyeroll
+	}
+
+	right_portrait = {
+		character = scope:target
+		animation = debating
+		camera = camera_event_left_forward
+	}
+
+	option = { # Diplomatic attempt to navigate their request
+		name = republican_trade.1010.a
+		
+		duel = {
+			skill = diplomacy
+			target = scope:target
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 2.5
+				}
+				send_interface_toast = {
+					type = event_trade_scheme
+					title = republican_trade_negotiation_toast
+					scope:scheme = {
+						add_scheme_modifier = {
+							type = extra_success_chance_modifier
+						}
+					}
+				}
+			}
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -2.5
+				}
+				send_interface_toast = {
+					type = event_trade_scheme
+					title = republican_trade_negotiation_toast
+					reverse_add_opinion = {
+						modifier = irritated_opinion
+						target = scope:target
+						opinion = -20
+					}
+				}
+			}
+		}
+		stress_impact = {
+			shy = major_stress_impact_gain
+			gregarious = medium_stress_impact_loss
+			arrogant = medium_stress_impact_gain
+			stubborn = medium_stress_impact_gain
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_trait = shy
+					has_trait = lazy
+				}
+			}
+		}
+	}
+
+	option = { # Manage the request through financial or stewardship skill
+		name = republican_trade.1010.b
+		
+		duel = {
+			skill = stewardship
+			target = scope:target
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 2.5
+				}
+				send_interface_toast = {
+					type = event_trade_scheme
+					title = republican_trade_negotiation_toast
+					scope:scheme = {
+						add_scheme_modifier = {
+							type = extra_success_chance_modifier
+						}
+					}
+				}
+			}
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -2.5
+				}
+				send_interface_toast = {
+					type = event_trade_scheme
+					title = republican_trade_negotiation_toast
+					reverse_add_opinion = {
+						modifier = irritated_opinion
+						target = scope:target
+						opinion = -20
+					}
+				}
+			}
+		}
+		stress_impact = {
+			just = major_stress_impact_loss
+			lazy = medium_stress_impact_gain
+			arrogant = medium_stress_impact_gain
+			stubborn = medium_stress_impact_gain
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_trait = lazy
+					has_trait = stubborn
+				}
+			}
+		}
+	}
+
+	option = { # Stand firm and refuse the request
+		name = republican_trade.1010.c
+		
+		reverse_add_opinion = {
+			modifier = irritated_opinion
+			target = scope:target
+			opinion = -10
+		}
+		stress_impact = {
+			stubborn = major_stress_impact_loss
+			lazy = medium_stress_impact_loss
+			arrogant = medium_stress_impact_loss
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_trait = gregarious
+					has_trait = just
+				}
+			}
+		}
+	}
+}
+
+# Rival merchants
+republican_trade.1011 = {
+	type = character_event
+	title = republican_trade.1011.t
+	desc = republican_trade.1011.desc
+	theme = diplomacy
+	override_background = { reference = republican_trade_deal }
+
+	left_portrait = {
+		character = scope:owner
+		animation = eyeroll
+		camera = camera_event_left
+	}
+
+	right_portrait = {
+		character = scope:merchant_character
+		animation = debating
+		camera = camera_event_right
+	}
+
+	immediate = {
+		create_character = {
+			template = merchant_template
+			faith = scope:target.faith
+			culture = scope:target.culture
+			gender = root
+			location = location
+			save_scope_as = merchant_character
+
+			after_creation = {
+				add_prestige = { integer_range = { min = 25 max = 500 } }
+				add_piety = { integer_range = { min = 25 max = 250 } }
+				add_gold = { integer_range = { min = root.medium_gold_value max = root.major_gold_value } }
+			}
+		}
+	}
+
+	option = { # Expose the rival merchant faction's deceit.
+		name = republican_trade.1011.a
+		
+		duel = {
+			skill = intrigue
+			target = scope:merchant_character
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 3
+				}
+				
+				send_interface_toast = {
+					type = event_trade_scheme
+					title = republican_trade_negotiation_toast
+					scope:scheme = {
+						add_scheme_modifier = {
+							type = extra_success_chance_modifier
+						}
+					}
+				}
+			}
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -3
+				}
+				send_interface_toast = {
+					type = event_trade_scheme
+					title = republican_trade_negotiation_toast
+					scope:scheme = { end_scheme = yes }
+				}
+			}
+		}
+		stress_impact = {
+			deceitful = major_stress_impact_loss
+			lazy = minor_stress_impact_gain
+			stubborn = medium_stress_impact_loss
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_trait = honest
+				}
+			}
+		}
+	}
+
+	option = { # Bypass the court and strike a private deal with the ruler.
+		name = republican_trade.1011.b
+		
+		duel = {
+			skill = diplomacy
+			target = scope:merchant_character
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 3
+				}
+				send_interface_toast = {
+					type = event_trade_scheme
+					title = republican_trade_negotiation_toast
+					scope:scheme = {
+						add_scheme_modifier = {
+							type = extra_success_chance_modifier
+						}
+					}
+				}
+			}
+			50 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -3
+				}
+				send_interface_toast = {
+					type = event_trade_scheme
+					title = republican_trade_negotiation_toast
+					scope:scheme = { end_scheme = yes }
+				}
+			}
+		}
+		stress_impact = {
+			shy = major_stress_impact_loss
+			lazy = minor_stress_impact_gain
+			honest = medium_stress_impact_loss
+			stubborn = medium_stress_impact_loss
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_trait = shy
+					has_trait = deceitful
+				}
+			}
+		}
+	}
+
+	option = { # Buy out the rival merchants to remove their influence.
+		name = republican_trade.1011.c
+		
+		remove_short_term_gold = minor_gold_value
+		stress_impact = {
+			greedy = major_stress_impact_gain
+			arrogant = medium_stress_impact_gain
+			lazy = medium_stress_impact_loss
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_trait = greedy
+					has_trait = arrogant
+				}
+			}
+		}
+	}
+
+	option = { # Abandon the deal and focus elsewhere.
+		name = republican_trade.1011.d
+		scope:scheme = { end_scheme = yes }
+		stress_impact = {
+			lazy = major_stress_impact_loss
+			greedy = minor_stress_impact_gain
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+}

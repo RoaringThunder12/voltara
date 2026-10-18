@@ -1,0 +1,86 @@
+﻿# Run only in a disposable campaign: scripted_tests vt_weave
+vt_weave_01_initialization = {
+ character_target = 19060001
+ assert = { exists = this }
+ effect = { trigger_event = { on_action = vt_weave_initialize } }
+ expect = { exists = situation:voltara_weave has_global_variable = vt_weave_ready }
+ expect = { situation:voltara_weave = { any_situation_county = { this = root.capital_county } } }
+ expect = { situation:voltara_weave = { any_situation_sub_region = { any_situation_sub_region_participant = { this = root } } } }
+}
+vt_weave_02_balance_and_phases = {
+ character_target = 19060001
+ assert = { exists = situation:voltara_weave }
+ effect = {
+  set_global_variable = { name = vt_weave_balance value = 0 }
+  set_global_variable = { name = vt_weave_deaths value = 0 }
+  set_global_variable = { name = vt_weave_conversions value = 0 }
+  set_global_variable = { name = vt_weave_rituals value = 0 }
+  situation:voltara_weave = { vt_weave_monthly = yes }
+ }
+ expect = { global_var:vt_weave_balance = 0 situation:voltara_weave = { any_situation_sub_region = { sub_region_current_phase = vt_weave_balanced } } }
+ effect = { set_global_variable = { name = vt_weave_balance value = -60 } situation:voltara_weave = { vt_weave_monthly = yes } }
+ expect = { global_var:vt_weave_balance = -59.5 situation:voltara_weave = { any_situation_sub_region = { sub_region_current_phase = vt_weave_order_phase } } }
+ effect = { set_global_variable = { name = vt_weave_balance value = 60 } situation:voltara_weave = { vt_weave_monthly = yes } }
+ expect = { global_var:vt_weave_balance = 59.5 situation:voltara_weave = { any_situation_sub_region = { sub_region_current_phase = vt_weave_chaos } } }
+}
+vt_weave_03_conversion_no_double_count = {
+ character_target = 19060001
+ assert = { exists = situation:voltara_weave vt_weave_order = yes }
+ effect = {
+  set_global_variable = { name = vt_weave_conversions value = 0 }
+  set_variable = { name = vt_weave_allegiance value = 1 }
+  vt_weave_check_allegiance = { WEIGHT = 0.4 }
+ }
+ expect = { global_var:vt_weave_conversions = -0.8 }
+ effect = { vt_weave_check_allegiance = { WEIGHT = 0.4 } }
+ expect = { global_var:vt_weave_conversions = -0.8 }
+}
+vt_weave_04_death_reasons = {
+ character_target = 19060001
+ assert = { exists = situation:voltara_weave }
+ effect = {
+  set_global_variable = { name = vt_weave_deaths value = 0 }
+  create_character = { age = 70 gender_female_chance = 0 location = root.capital_province culture = root.culture rite = root.rite save_scope_as = test_natural }
+  scope:test_natural = { death = { death_reason = death_old_age } }
+ }
+ expect = { global_var:vt_weave_deaths = -0.03 }
+ effect = {
+  create_character = { age = 30 gender_female_chance = 0 location = root.capital_province culture = root.culture rite = root.rite save_scope_as = test_murder }
+  scope:test_murder = { death = { death_reason = death_murder killer = root } }
+ }
+ expect = { global_var:vt_weave_deaths = 0.17 }
+ effect = {
+  create_character = { age = 30 gender_female_chance = 0 location = root.capital_province culture = culture:voltara_demon rite = root.rite save_scope_as = test_demon }
+  scope:test_demon = { death = { death_reason = death_battle killer = root } }
+ }
+ expect = { global_var:vt_weave_deaths = -1.83 }
+}
+vt_weave_05_necromancer_and_trait = {
+ character_target = 19060001
+ effect = {
+  create_character = { age = 30 gender_female_chance = 100 location = root.capital_province culture = root.culture rite = root.rite save_scope_as = test_mage }
+  scope:test_mage = { vt_weave_awaken_necromancer = yes vt_weave_trait_pulse = yes }
+ }
+ expect = { scope:test_mage = { has_trait = vt_ek_necromancer has_trait = witch has_perk = necromancy_novice_perk has_character_flag = vt_weave_trait_cooldown } }
+}
+vt_weave_06_demon_war = {
+ character_target = 19060001
+ assert = { exists = situation:voltara_weave }
+ effect = { situation:voltara_weave = { random_situation_county = { limit = { vt_weave_eligible_county = yes } vt_weave_spawn_incursion = yes } } }
+ expect = { exists = scope:vt_weave_invader exists = scope:vt_weave_war }
+ expect = { scope:vt_weave_invader = { culture = culture:voltara_demon has_trait = demon1 is_at_war = yes } }
+ effect = { scope:vt_weave_war = { end_war = defender } }
+ expect = { scope:vt_weave_invader = { is_landed = no is_at_war = no } }
+}
+vt_weave_07_demon_victory = {
+ character_target = 19060001
+ effect = { situation:voltara_weave = { random_situation_county = { limit = { vt_weave_eligible_county = yes } vt_weave_spawn_incursion = yes } } }
+ expect = { exists = scope:vt_weave_war scope:vt_weave_invader = { is_at_war = yes } }
+ effect = { scope:vt_weave_war = { end_war = attacker } }
+ expect = { scope:vt_weave_target = { holder = scope:vt_weave_invader } scope:vt_weave_invader = { is_landed = yes is_at_war = no } }
+}
+vt_weave_08_yearly_pulse = {
+ character_target = 19060001
+ effect = { set_global_variable = { name = vt_weave_balance value = 60 } situation:voltara_weave = { vt_weave_yearly = yes } }
+ expect = { exists = situation:voltara_weave }
+}

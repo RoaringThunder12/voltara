@@ -1,0 +1,287 @@
+﻿#Scope: title
+is_merchant_family_title = {
+	var:merchant_family_title ?= yes
+}
+
+#Scope: Character
+is_merchant_family = {
+	any_held_title = {
+		is_merchant_family_title = yes
+	}
+}
+
+#Scope: Character
+can_convert_to_merchant_republic_trigger = {
+	sub_realm_size < minor_realm_size
+	has_sea_access = yes
+	OR = {
+		custom_description = {
+			text = have_city_and_maritime_tradition
+			culture = {
+				AND = { #Normal cultural conditions
+					OR = { #Something about cities
+						has_cultural_tradition = tradition_city_keepers
+						has_cultural_tradition = tradition_parochialism
+						has_cultural_tradition = tradition_republican_legacy
+						has_cultural_tradition = tradition_family_entrepreneurship
+					}
+					OR = { #Something about the sea/coast
+						has_cultural_tradition = tradition_maritime_mercantilism
+						has_cultural_tradition = tradition_seafaring
+						has_cultural_tradition = tradition_fishermen
+						has_cultural_tradition = tradition_fp1_coastal_warriors
+						has_cultural_tradition = tradition_polders
+						has_cultural_tradition = tradition_wetlanders
+					}
+				}
+			}
+		}
+		historical_merchant_republic_trigger = yes
+	}
+	NOT = { culture = { has_cultural_tradition = tradition_practiced_pirates } }
+}
+
+#Scope: Character
+historical_merchant_republic_trigger = { has_sea_access = yes OR = { has_government = voltara_colonial_government capital_county = title:c_voltara_11336 capital_county = title:c_voltara_11371 capital_county = title:c_voltara_11392 } }
+
+#Scope: Character
+has_trade_deal_with_trigger = {
+	var:republican_government_story ?= {
+		has_variable_list = trade_deals
+		is_target_in_variable_list = {
+			name = trade_deals
+			target = $TARGET$
+		}
+	}
+}
+
+#Scope: Character
+has_sea_access = {
+	custom_description = {
+		text = capital_county_has_sea_access
+		OR = {
+			AND = {
+				culture = {
+					OR = {
+						has_cultural_parameter = can_travel_along_rivers
+						has_innovation = innovation_african_canoes
+						has_innovation = innovation_longboats
+					}
+				}
+				any_sub_realm_barony = {
+					county = prev.capital_county
+					title_province = {
+						OR = {
+							is_coastal = yes
+							is_riverside_province = yes
+						}
+					}
+				}
+			}
+			any_sub_realm_barony = {
+				county = prev.capital_county
+				title_province = {
+					is_coastal = yes
+				}
+			}
+
+		}
+	}
+}
+
+valid_trade_contract_accept_trigger = {
+	is_merchant_family = yes
+	is_alive = yes
+	is_adult = yes
+	is_incapable = no
+}
+
+valid_trade_contract_basic_trigger = {
+	$EMPLOYER$ = {
+		NOR = { 
+			can_use_trade = yes
+			government_has_flag = government_is_theocracy
+		}
+		# Players shouldn't get tangled up in contracts, ever.
+		is_ai = yes
+		# Plus some standard stuff.
+		is_alive = yes
+		is_adult = yes
+		is_landed = yes
+		is_incapable = no
+	}
+	$MERCHANT$ = {
+		can_use_trade = yes
+		is_alive = yes
+		is_adult = yes
+	}
+	# Don't offer to work with those who've wronged us.
+	## No one we're at war with.
+	$EMPLOYER$ = {
+		NOT = { is_at_war_with = $MERCHANT$ }
+	}
+	## Rivals are cheap to avoid.
+	$EMPLOYER$ = {
+		NOT = { has_relation_rival = $MERCHANT$ }
+	}
+	# If we're looking at the player, make sure there's no uhh... weird legacies between us.
+	$MERCHANT$ = {
+		trigger_if = {
+			limit = { is_ai = no }
+			NOR = {
+				has_any_major_negative_opinion_against_character_trigger = { CHARACTER = $EMPLOYER$ }
+				$EMPLOYER$ = {
+					has_any_major_negative_opinion_against_character_trigger = { CHARACTER = $MERCHANT$ }
+				}
+			}
+		}
+	}
+}
+
+valid_trade_contract_start_trigger = {
+	scope:employer = {
+		is_ai = yes
+		is_landed = yes
+		NOR = {
+			location = root.location
+			government_has_flag = government_is_theocracy
+			can_use_trade = yes
+		}
+		highest_held_title_tier >= tier_county
+	}
+	trigger_if = {
+		limit = {
+			any_character_task_contract = {
+				count >= 1
+				task_contract_employer = scope:employer
+			}
+		}
+		always = no
+	}
+}
+
+#Scope: Province
+#Can the $CHARACTER$ upgrade the building?
+can_upgrade_tradepost = {
+	has_building_or_higher = common_tradeport_01
+	switch = {
+		trigger = has_building
+		common_tradeport_01 = {
+			trigger_if = {
+				limit = {
+					$CHARACTER$.culture = {
+						NOT = { has_cultural_parameter = trade_ports_enabled_for_tribals }
+					}
+				}
+				building_requirement_castle_city_church = { LEVEL = 01 }
+			}
+			trigger_else = {
+				OR = {
+					has_building_or_higher = tribe_01
+					building_requirement_castle_city_church = { LEVEL = 01 }
+				}
+			}
+			trigger_if = {
+				limit = {
+					NOT = { $CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports	} }
+				}
+				$CHARACTER$.culture = { has_innovation = innovation_crop_rotation }
+			}
+			trigger_else = { $CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports } }
+		}
+		common_tradeport_02 = {
+			NOT = { has_holding_type = tribal_holding }
+			trigger_if = {
+				limit = {
+					NOT = { $CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports	} }
+				}
+				$CHARACTER$.culture = { has_innovation = innovation_manorialism }
+				building_requirement_castle_city_church = { LEVEL = 02 }
+			}
+			trigger_else = {
+				$CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports }
+				$CHARACTER$.culture = { has_innovation = innovation_crop_rotation }
+				building_requirement_castle_city_church = { LEVEL = 01 }
+			}
+		}
+		common_tradeport_03 = {
+			NOT = { has_holding_type = tribal_holding }
+			trigger_if = {
+				limit = {
+					NOT = { $CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports	} }
+				}
+				$CHARACTER$.culture = { has_innovation = innovation_manorialism }
+				building_requirement_castle_city_church = { LEVEL = 02 }
+			}
+			trigger_else = {
+				$CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports }
+				$CHARACTER$.culture = { has_innovation = innovation_crop_rotation }
+				building_requirement_castle_city_church = { LEVEL = 01 }
+			}
+		}
+		common_tradeport_04 = {
+			NOT = { has_holding_type = tribal_holding }
+			trigger_if = {
+				limit = {
+					NOT = { $CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports	} }
+				}
+				$CHARACTER$.culture = { has_innovation = innovation_guilds }
+				building_requirement_castle_city_church = { LEVEL = 03 }
+			}
+			trigger_else = {
+				$CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports }
+				$CHARACTER$.culture = { has_innovation = innovation_manorialism }
+				building_requirement_castle_city_church = { LEVEL = 02 }
+			}
+		}
+		common_tradeport_05 = {
+			NOT = { has_holding_type = tribal_holding }
+			trigger_if = {
+				limit = {
+					NOT = { $CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports	} }
+				}
+				$CHARACTER$.culture = { has_innovation = innovation_guilds }
+				building_requirement_castle_city_church = { LEVEL = 03 }
+			}
+			trigger_else = {
+				$CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports }
+				$CHARACTER$.culture = { has_innovation = innovation_manorialism }
+				building_requirement_castle_city_church = { LEVEL = 02 }
+			}
+		}
+		common_tradeport_06 = {
+			NOT = { has_holding_type = tribal_holding }
+			trigger_if = {
+				limit = {
+					NOT = { $CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports	} }
+				}
+				$CHARACTER$.culture = { has_innovation = innovation_cranes }
+				building_requirement_castle_city_church = { LEVEL = 04 }
+			}
+			trigger_else = {
+				$CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports }
+				$CHARACTER$.culture = { has_innovation = innovation_guilds }
+				building_requirement_castle_city_church = { LEVEL = 03 }
+			}
+		}
+		common_tradeport_07 = {
+			NOT = { has_holding_type = tribal_holding }
+			trigger_if = {
+				limit = {
+					NOT = { $CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports	} }
+				}
+				$CHARACTER$.culture = { has_innovation = innovation_cranes }
+				building_requirement_castle_city_church = { LEVEL = 04 }
+			}
+			trigger_else = {
+				$CHARACTER$.culture = { has_cultural_parameter = next_level_trade_ports }
+				$CHARACTER$.culture = { has_innovation = innovation_guilds }
+				building_requirement_castle_city_church = { LEVEL = 03 }
+			}
+		}
+		common_tradeport_08 = {
+			always = no
+		}
+	}
+	
+}

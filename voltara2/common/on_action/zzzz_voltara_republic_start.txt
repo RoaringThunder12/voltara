@@ -1,0 +1,13 @@
+﻿on_game_start_after_lobby = { on_actions = { voltara_republic_initialize } }
+on_game_start = { on_actions = { voltara_republic_initialize } }
+voltara_republic_initialize = {
+ effect = {
+ if = { limit = { NOT = { has_global_variable = voltara_republic_piracy_started } } title:c_voltara_301.holder ?= { create_story = { type = story_narentine } } set_global_variable = { name = voltara_republic_piracy_started value = yes } }
+  every_ruler = {
+   limit = { has_government = voltara_colonial_government NOT = { has_variable = republican_government_story } highest_held_title_tier >= tier_county }
+   create_story = republican_government_story
+  }
+ }
+}
+
+yearly_global_pulse = { on_actions = { voltara_republic_initialize } }

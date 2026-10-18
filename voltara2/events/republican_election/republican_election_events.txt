@@ -1,0 +1,49 @@
+﻿namespace = republican_election
+
+#Election Start
+republican_election.0001 = {
+	hidden = yes
+	trigger = {
+		has_variable = republican_government_story
+		var:republican_government_story = {
+			prev.current_date >= var:election_date
+		}
+	}
+	immediate = {
+		var:republican_government_story = {
+			republican_government_populate_candidate_list_effect = yes
+		}
+		trigger_event = {
+			id = republican_election.0002
+			days = 30
+		}
+		send_interface_toast = {
+			title = republican_election_started_title
+			custom_label = republican_election_started_desc
+			left_icon = root.primary_title
+			right_icon = root
+		}
+		play_sound_effect = "event:/GoldenDominion/UI/election_start"
+		every_vassal = {
+			limit = { is_ai = no }
+			send_interface_toast = {
+				title = republican_election_started_title
+				custom_label = republican_election_started_desc
+				left_icon = root.primary_title
+				right_icon = root
+			}
+			play_sound_effect = "event:/GoldenDominion/UI/election_start"
+		}
+	}
+}
+
+#Election Conclusion - Sortition
+republican_election.0002 = {
+	hidden = yes
+	trigger = {
+		has_variable = republican_government_story
+	}
+	immediate = {
+		republican_government_election_effect = yes
+	}
+}

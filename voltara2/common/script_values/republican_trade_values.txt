@@ -1,0 +1,228 @@
+﻿#The income earned by the republic (if non-merchant republic)
+republic_income_from_trade = {
+	value = 0
+	add ?= var:republican_government_story.var:total_trade_value
+}
+
+republic_trade_strength = {
+	value = 0
+	add = {
+		if = {
+			limit = { story_owner = { NOT = { government_has_flag = government_is_merchant_republic } } }
+			value = 20
+			#Add some more things to add trade strength here
+		}
+		else_if = {
+			limit = { story_owner = { government_has_flag = government_is_merchant_republic } }
+			value = merchant_republic_trade_strength
+		}
+	}
+	#Add some burgher multiplication here
+}
+
+#The income earned by the merchant family character
+merchant_family_domicile_income_from_trade = {
+	value = 0
+	add ?= var:owned_trade_value
+	multiply = {
+		value = 1
+		if = {
+			limit = { domicile ?= { has_domicile_parameter = increased_trade_income_1 } }
+			add = 0.15
+		}
+		if = {
+			limit = { domicile ?= { has_domicile_parameter = increased_trade_income_2 } }
+			add = 0.3
+		}
+	}
+}
+income_from_trade_in_gold = { value = var:owned_trade_value divide = 100 }
+
+#The trade strength of the merchant family
+merchant_family_trade_strength = {
+	save_temporary_scope_as = merchant_family
+	value = 5
+	if = {
+		limit = { is_republican_government_story_owner = yes }
+		add = 5
+	}
+	house ?= {
+		every_house_member = {
+			limit = { is_courtier_of = scope:merchant_family }
+			add = 1
+		}
+	}
+	multiply = {
+		value = 1
+		if = {
+			limit = { domicile ?= { has_domicile_parameter = increased_trade_strength_1 } }
+			add = 0.1
+		}
+		if = {
+			limit = { domicile ?= { has_domicile_parameter = increased_trade_strength_2 } }
+			add = 0.2
+		}
+		if = {
+			limit = { domicile ?= { has_domicile_parameter = trade_depot } }
+			add = 0.15
+		}
+	}
+}
+non_merchant_family_merchant_republic_ruler_trade_strength = 5
+
+#Scope: republican_government_story
+#The total trade strength of the Plutocracy
+merchant_republic_trade_strength = {
+	story_owner = {
+		if = {
+			limit = {
+				is_republican_government_story_owner = yes
+				is_merchant_family = no
+			}
+			add = non_merchant_family_merchant_republic_ruler_trade_strength
+		}
+	}
+	every_in_list = {
+		variable = merchant_families
+		add = merchant_family_trade_strength
+	}
+}
+
+#Merchant family trade strength fraction, their slice of the pie in the Plutocracy
+merchant_family_trade_share = {
+	value = merchant_family_trade_strength
+	divide = merchant_republic_trade_strength
+}
+
+#Scope: character
+# Number of trade posts in realm
+realm_trade_posts = {
+	every_sub_realm_barony = {
+		limit = {
+			title_province = { has_building_or_higher = common_tradeport_01 }
+		}
+		add = 1
+	}
+}
+
+#Scope: character
+# Trade value for an independent ruler's realm
+realm_trade_value = {
+	value = 200
+	every_realm_province = { #Dev * County_Control%
+		add = {
+			value = available_loot
+			if = {
+				limit = { is_coastal = yes }
+				multiply = 2
+			}
+			multiply = county.county_control
+			divide = 100
+		}
+	}
+	divide = 20
+	multiply = {
+		value = 1
+		add = { #Each trade post is 2% extra trade value
+			value = realm_trade_posts
+			divide = 50
+		}
+	}
+}
+
+#Scope: republican_government_story
+# Total owned trade value for a republic
+realm_owned_trade_value = {
+	value = story_owner.realm_trade_value #Own trade value in realm
+	if = {
+		limit = { has_variable_list = trade_deals }
+		every_in_list = { #Trade deal trade value
+			variable = trade_deals
+			save_temporary_scope_as = target_ruler
+			add = {
+				value = realm_trade_value
+				multiply = prev.trade_share_in_rulers_target_realm
+			}
+		}
+	}
+}
+
+#Scope: republican_government_story
+#	Needed Scopes: scope:target_ruler
+#Republican_government_story's trade share in scope:target_ruler
+trade_share_in_rulers_target_realm = {
+	value = 0
+	if = {
+		limit = {
+			has_variable_list = trade_deals
+			is_target_in_variable_list = {
+				name = trade_deals
+				target = scope:target_ruler
+			}
+		}
+		add = var:trade_strength
+		divide = target_ruler_total_trade_strength_in_realm
+	}
+}
+
+#The sum of trade strengths (in trade target realms)
+# Scope agnostic, but uses scope:target_ruler
+target_ruler_total_trade_strength_in_realm = { #Trade target
+	value = 0
+	every_in_global_list = {
+		variable = republican_government_stories
+		limit = {
+			has_variable_list = trade_deals
+			is_target_in_variable_list = {
+				name = trade_deals
+				target = scope:target_ruler
+			}
+		}
+		every_in_list = {
+			variable = trade_deals
+			limit = { this = scope:target_ruler }
+		}
+		add = var:trade_strength
+	}
+}
+
+amount_of_trade_deals = {
+	value = 0
+	if = {
+		limit = { has_variable = republican_government_story }
+		var:republican_government_story = {
+			add = list_size:trade_deals
+		}
+	}
+}
+
+ai_trade_deal_target_weight = {
+	value = realm_trade_value
+	if = {
+		limit = { has_character_modifier = trade_deal_recipient_modifier }
+		multiply = 0.5
+	}
+	if = {
+		limit = { health < fine_health }
+		multiply = 0.5
+	}
+}
+
+#Currenlt not used
+#merchant_top_income = {
+#	value = 0
+#	ordered_in_global_list = {
+#		variable = plutocracy_managers
+#		order_by = var:total_trade_value
+#		position = 0
+#		story_owner = {
+#			ordered_vassal = {
+#				order_by = var:owned_trade_value
+#				limit = { is_merchant_family = yes }
+#				position = 0
+#				add = var:owned_trade_value
+#			}
+#			min = var:owned_trade_value
+#		}
+#	}
+#}

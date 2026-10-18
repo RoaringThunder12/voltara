@@ -1,0 +1,458 @@
+﻿fp_market_01 = {
+	allowed_domicile_types = { family_palace }
+	construction_time = 180
+
+	cost = {
+		gold = 200
+	}
+
+	character_modifier = {
+		development_growth_factor = 0.02
+		domicile_monthly_gold_add = 0.2
+	}
+	ai_value = {
+		value = 100
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_market_02 = {
+	allowed_domicile_types = { family_palace }
+	construction_time = 240
+
+	cost = {
+		gold = 350
+	}
+
+	previous_building = fp_market_01
+
+	character_modifier = {
+		development_growth_factor = 0.03
+		domicile_monthly_gold_add = 0.2
+	}
+	ai_value = {
+		value = 100
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_market_03 = {
+	allowed_domicile_types = { family_palace }
+	construction_time = 365
+
+	cost = {
+		gold = 500
+	}
+
+	previous_building = fp_market_02
+
+	character_modifier = {
+		development_growth_factor = 0.05
+		domicile_monthly_gold_add = 0.2
+	}
+	parameters = {
+		increased_trade_income_1 = yes
+	}
+	ai_value = {
+		value = 100
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_market_04 = {
+	allowed_domicile_types = { family_palace }
+	construction_time = 400
+
+	cost = {
+		gold = 650
+	}
+
+	previous_building = fp_market_03
+
+	character_modifier = {
+		development_growth_factor = 0.05
+		domicile_monthly_gold_add = 0.2
+	}
+	parameters = {
+		increased_trade_income_1 = yes
+	}
+	ai_value = {
+		value = 100
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_market_05 = {
+	allowed_domicile_types = { family_palace }
+	construction_time = 450
+
+	cost = {
+		gold = 800
+	}
+
+	previous_building = fp_market_04
+
+	character_modifier = {
+		diplomatic_range_mult = 0.05
+		development_growth_factor = 0.05
+		domicile_monthly_gold_add = 0.3
+	}
+	parameters = {
+		increased_trade_income_2 = yes
+	}
+	ai_value = {
+		value = 100
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_market_06 = {
+	allowed_domicile_types = { family_palace }
+	construction_time = 500
+
+	cost = {
+		gold = 1000
+	}
+
+	previous_building = fp_market_05
+
+	character_modifier = {
+		diplomatic_range_mult = 0.1
+		development_growth_factor = 0.05
+		domicile_monthly_gold_add = 0.4
+		diplomacy = 1
+		negate_diplomacy_penalty_add = 1
+	}
+	parameters = {
+		increased_trade_income_2 = yes
+	}
+	ai_value = {
+		value = 100
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_market.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_cultural_market_04 = {
+	allowed_domicile_types = { family_palace }
+	construction_time = 365
+
+	cost = {
+		gold = 600
+	}
+
+	previous_building = fp_market_03
+
+	character_modifier = {
+		cultural_head_acceptance_gain_mult = 0.05
+		negate_diplomacy_penalty_add = 1
+		diplomacy_lifestyle_xp_gain_mult = 0.02
+		different_culture_opinion = 2
+		domicile_monthly_gold_add = 0.2
+	}
+	parameters = {
+		increased_trade_income_1 = yes
+	}
+	ai_value = {
+		value = 100
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/flat_icons/map_modes/cultures.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/flat_icons/map_modes/cultures.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		icon = "gfx/interface/icons/flat_icons/map_modes/cultures.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_cultural_market_05 = {
+	allowed_domicile_types = { family_palace }
+	construction_time = 450
+
+	cost = {
+		gold = 750
+	}
+
+	previous_building = fp_cultural_market_04
+
+	character_modifier = {
+		development_growth_factor = 0.05
+		cultural_head_acceptance_gain_mult = 0.05
+		diplomacy = 1
+		diplomacy_lifestyle_xp_gain_mult = 0.03
+		different_culture_opinion = 3
+		domicile_monthly_gold_add = 0.2
+	}
+	parameters = {
+		increased_trade_income_1 = yes
+	}
+	ai_value = {
+		value = 100
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/flat_icons/map_modes/cultures.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/flat_icons/map_modes/cultures.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		icon = "gfx/interface/icons/flat_icons/map_modes/cultures.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_cultural_market_06 = {
+	allowed_domicile_types = { family_palace }
+	construction_time = 500
+
+	cost = {
+		gold = 900
+		prestige = 300
+	}
+
+	previous_building = fp_cultural_market_05
+
+	character_modifier = {
+		development_growth_factor = 0.05
+		cultural_head_acceptance_gain_mult = 0.1
+		diplomacy = 1
+		negate_diplomacy_penalty_add = 1
+		diplomacy_lifestyle_xp_gain_mult = 0.05
+		different_culture_opinion = 5
+		domicile_monthly_gold_add = 0.2
+	}
+	parameters = {
+		increased_trade_income_1 = yes
+	}
+	ai_value = {
+		value = 100
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/flat_icons/map_modes/cultures.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/flat_icons/map_modes/cultures.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		icon = "gfx/interface/icons/flat_icons/map_modes/cultures.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_market_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}

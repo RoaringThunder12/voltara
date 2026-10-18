@@ -1,0 +1,75 @@
+﻿voltara_free_duchy_allegiance_repair = {
+ if = { limit = { NOT = { has_global_variable = voltara_free_duchies_repaired_v2 } NOT = { has_global_variable = voltara_cassian_crisis_revolt } exists = title:e_voltara_21.holder exists = title:h_voltara_severos.holder }
+ title:d_voltara_test_325.holder ?= {
+  if = { limit = { is_independent_ruler = yes is_at_war = no highest_held_title_tier < tier_empire NOT = { this = title:e_voltara_21.holder } }
+   create_title_and_vassal_change = { type = swear_fealty save_scope_as = voltara_free_duchy_change }
+   change_liege = { liege = title:e_voltara_21.holder change = scope:voltara_free_duchy_change }
+   resolve_title_and_vassal_change = scope:voltara_free_duchy_change
+  }
+ }
+ title:d_voltara_test_200.holder ?= {
+  if = { limit = { is_independent_ruler = yes is_at_war = no highest_held_title_tier < tier_empire NOT = { this = title:e_voltara_21.holder } }
+   create_title_and_vassal_change = { type = swear_fealty save_scope_as = voltara_free_duchy_change }
+   change_liege = { liege = title:e_voltara_21.holder change = scope:voltara_free_duchy_change }
+   resolve_title_and_vassal_change = scope:voltara_free_duchy_change
+  }
+ }
+ title:d_voltara_test_247.holder ?= {
+  if = { limit = { is_independent_ruler = yes is_at_war = no highest_held_title_tier < tier_empire NOT = { this = title:e_voltara_21.holder } }
+   create_title_and_vassal_change = { type = swear_fealty save_scope_as = voltara_free_duchy_change }
+   change_liege = { liege = title:e_voltara_21.holder change = scope:voltara_free_duchy_change }
+   resolve_title_and_vassal_change = scope:voltara_free_duchy_change
+  }
+ }
+ title:d_voltara_test_288.holder ?= {
+  if = { limit = { is_independent_ruler = yes is_at_war = no highest_held_title_tier < tier_empire NOT = { this = title:e_voltara_21.holder } }
+   create_title_and_vassal_change = { type = swear_fealty save_scope_as = voltara_free_duchy_change }
+   change_liege = { liege = title:e_voltara_21.holder change = scope:voltara_free_duchy_change }
+   resolve_title_and_vassal_change = scope:voltara_free_duchy_change
+  }
+ }
+ title:d_voltara_test_309.holder ?= {
+  if = { limit = { is_independent_ruler = yes is_at_war = no highest_held_title_tier < tier_empire NOT = { this = title:e_voltara_21.holder } }
+   create_title_and_vassal_change = { type = swear_fealty save_scope_as = voltara_free_duchy_change }
+   change_liege = { liege = title:e_voltara_21.holder change = scope:voltara_free_duchy_change }
+   resolve_title_and_vassal_change = scope:voltara_free_duchy_change
+  }
+ }
+ title:d_voltara_test_4404.holder ?= {
+  if = { limit = { is_independent_ruler = yes is_at_war = no highest_held_title_tier < tier_empire NOT = { this = title:e_voltara_21.holder } }
+   create_title_and_vassal_change = { type = swear_fealty save_scope_as = voltara_free_duchy_change }
+   change_liege = { liege = title:e_voltara_21.holder change = scope:voltara_free_duchy_change }
+   resolve_title_and_vassal_change = scope:voltara_free_duchy_change
+  }
+ }
+ title:d_voltara_test_291.holder ?= {
+  if = { limit = { is_independent_ruler = yes is_at_war = no highest_held_title_tier < tier_empire NOT = { this = title:e_voltara_21.holder } }
+   create_title_and_vassal_change = { type = swear_fealty save_scope_as = voltara_free_duchy_change }
+   change_liege = { liege = title:e_voltara_21.holder change = scope:voltara_free_duchy_change }
+   resolve_title_and_vassal_change = scope:voltara_free_duchy_change
+  }
+ }
+ title:d_voltara_test_4211.holder ?= {
+  if = { limit = { is_independent_ruler = yes is_at_war = no highest_held_title_tier < tier_empire NOT = { this = title:e_voltara_21.holder } }
+   create_title_and_vassal_change = { type = swear_fealty save_scope_as = voltara_free_duchy_change }
+   change_liege = { liege = title:e_voltara_21.holder change = scope:voltara_free_duchy_change }
+   resolve_title_and_vassal_change = scope:voltara_free_duchy_change
+  }
+ }
+ title:d_voltara_test_331.holder ?= {
+  if = { limit = { is_independent_ruler = yes is_at_war = no highest_held_title_tier < tier_empire NOT = { this = title:e_voltara_21.holder } }
+   create_title_and_vassal_change = { type = swear_fealty save_scope_as = voltara_free_duchy_change }
+   change_liege = { liege = title:e_voltara_21.holder change = scope:voltara_free_duchy_change }
+   resolve_title_and_vassal_change = scope:voltara_free_duchy_change
+  }
+ }
+ title:d_voltara_test_289.holder ?= {
+  if = { limit = { is_independent_ruler = yes is_at_war = no highest_held_title_tier < tier_empire NOT = { this = title:e_voltara_21.holder } }
+   create_title_and_vassal_change = { type = swear_fealty save_scope_as = voltara_free_duchy_change }
+   change_liege = { liege = title:e_voltara_21.holder change = scope:voltara_free_duchy_change }
+   resolve_title_and_vassal_change = scope:voltara_free_duchy_change
+  }
+ }
+ set_global_variable = { name = voltara_free_duchies_repaired_v2 value = yes }
+ }
+}

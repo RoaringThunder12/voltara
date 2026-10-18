@@ -1,0 +1,106 @@
+﻿
+
+merchant_republic_government = {
+	primary_holding = castle_holding
+	valid_holdings = { city_holding }
+	required_county_holdings = { city_holding castle_holding church_holding }
+
+	government_rules = {
+		create_cadet_branches = no
+		rulers_should_have_dynasty = yes
+		dynasty_named_realms = yes
+		landless_playable = yes #Okay this one changes your government when you get land, kind of counter-intuitive.
+		sticky_government = yes
+	}
+
+	royal_court = none
+
+	domicile_type = family_palace
+	
+	ai = {
+		use_legends = yes
+	}
+
+	fallback = 100 #For some reason needs this set to a number for no auto-revert to tribal
+
+	flags = {
+		government_is_active_republic
+		government_is_merchant_republic
+		government_allows_nomad_domicile_titles
+	}
+	color = hsv{ 0.55 1.00 1 }
+
+	vassal_contract_group = voltara_republic_vassal
+
+	character_modifier = {
+		#Character modifiers
+		negate_stewardship_penalty_add = 1
+		monthly_income_mult = 0.1
+		monthly_war_income_mult = -0.2
+		tyranny_gain_mult = 0.25
+		dread_gain_mult = -0.25
+		character_capital_county_monthly_development_growth_add = 0.1
+		coastal_sea_travel_danger = -30
+		sea_travel_danger = -25
+		travel_danger = 5
+
+		#Personality modifiers
+		ai_greed = 25
+		ai_war_chance = -0.3
+		short_reign_duration_mult = -2
+		long_reign_bonus_mult = -0.25
+
+		#Realm modifiers
+		domain_limit = -2
+		vassal_limit = -10
+		epidemic_resistance = 5
+		diplomatic_range_mult = 0.2
+		city_holding_holding_build_gold_cost = -0.10
+		city_holding_holding_build_speed = -0.10
+		city_holding_build_gold_cost = -0.10
+		city_holding_build_speed = -0.10
+		development_growth_factor = 0.1
+
+		#Military modifiers
+		levy_size = -0.25
+		garrison_size = 0.2
+		additional_fort_level = 1
+		army_maintenance_mult = 0.2
+		men_at_arms_maintenance = -0.1
+		men_at_arms_recruitment_cost = 0.1
+		men_at_arms_cap = -2
+		men_at_arms_limit = -1
+		naval_movement_speed_mult = 0.2
+		no_disembark_penalty = yes
+		no_water_crossing_penalty = yes
+		advantage = -10
+		coastal_advantage = 10
+		knight_limit = -2
+		knight_effectiveness_mult = -0.1
+		mercenary_hire_cost_mult = -0.2
+		winter_movement_speed = -0.1
+		embarkation_cost_mult = -0.1
+
+		#Vassal
+		feudal_government_vassal_opinion = -10
+		feudal_government_levy_contribution_mult = -0.2
+		feudal_government_tax_contribution_mult = 0.1
+		clan_government_vassal_opinion = -10
+		clan_government_levy_contribution_mult = -0.2
+		clan_government_tax_contribution_mult = 0.1
+		administrative_government_vassal_opinion = -5
+		administrative_government_levy_contribution_mult = -0.2
+		administrative_government_tax_contribution_mult = 0.1
+	}
+
+	ai = {
+		arrange_marriage = yes
+		use_lifestyle = yes
+		use_goals = yes
+		use_scripted_guis = yes
+		use_goals = yes
+		use_decisions = yes
+		use_legends = yes
+	}
+
+}

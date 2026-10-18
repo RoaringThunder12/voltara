@@ -1,0 +1,389 @@
+﻿@republican_authority_cooldown_years = 20
+republican_seniority = { law_group_type = succession_order_laws index = 0 
+		can_keep = {
+			can_have_republican_law_trigger = yes
+		}
+		can_have = {
+			can_have_republican_law_trigger = yes
+		}
+		should_start_with = {
+			always = yes
+		}
+		potential = {
+			can_have_republican_law_trigger = yes
+		}
+		succession = {
+			order_of_succession = inheritance
+			traversal_order = dynasty_house
+			rank = oldest
+			title_division = single_heir
+		}
+	 }
+republican_2_year_term_law = { law_group_type = republican_term_length_laws index = 0 
+		
+		can_keep = {
+			can_have_republican_law_trigger = yes
+		}
+		can_have = {
+			can_have_republican_law_trigger = yes
+		}
+
+		potential = {
+			can_have_republican_law_trigger = yes
+		}
+		modifier = {
+			short_reign_duration_mult = -0.8
+		}
+
+		pass_cost = { prestige = 1000 }
+
+		on_pass = {
+			if = {
+				limit = { NOT = { has_republican_faction_support = yes } }
+				republican_factions_changed_law_without_support_effect = yes
+			}
+		}
+	 }
+republican_4_year_term_law = { law_group_type = republican_term_length_laws index = 1 
+		
+		can_keep = {
+			can_have_republican_law_trigger = yes
+		}
+		can_have = {
+			can_have_republican_law_trigger = yes
+		}
+		should_start_with = {
+			always = yes
+		}
+		potential = {
+			can_have_republican_law_trigger = yes
+		}
+		modifier = {
+			short_reign_duration_mult = -0.4
+		}
+
+		pass_cost = { prestige = 1000 }
+
+		on_pass = {
+			if = {
+				limit = { NOT = { has_republican_faction_support = yes } }
+				republican_factions_changed_law_without_support_effect = yes
+			}
+		}
+	 }
+republican_lifetime_term_law = { law_group_type = republican_term_length_laws index = 2 
+		
+		can_keep = {
+			can_have_republican_law_trigger = yes
+		}
+		can_have = {
+			can_have_republican_law_trigger = yes
+		}
+
+		potential = {
+			can_have_republican_law_trigger = yes
+		}
+		modifier = {
+			short_reign_duration_mult = 0.4
+		}
+
+		pass_cost = { prestige = 1000 }
+
+		on_pass = {
+			if = {
+				limit = { NOT = { has_republican_faction_support = yes } }
+				republican_factions_changed_law_without_support_effect = yes
+			}
+		}
+	 }
+republican_sortition_law = { law_group_type = republican_election_type_laws index = 0 
+		
+		can_keep = {
+			can_have_republican_law_trigger = yes
+		}
+		can_have = {
+			can_have_republican_law_trigger = yes
+		}
+
+		potential = {
+			can_have_republican_law_trigger = yes
+		}
+
+		pass_cost = { prestige = 1000 }
+
+		on_pass = {
+			if = {
+				limit = { NOT = { has_republican_faction_support = yes } }
+				republican_factions_changed_law_without_support_effect = yes
+			}
+		}
+	 }
+republican_preferred_lots_law = { law_group_type = republican_election_type_laws index = 1 
+		
+		can_keep = {
+			can_have_republican_law_trigger = yes
+		}
+		can_have = {
+			can_have_republican_law_trigger = yes
+		}
+		should_start_with = {
+			always = yes
+		}
+		potential = {
+			can_have_republican_law_trigger = yes
+		}
+
+		pass_cost = { prestige = 1000 }
+
+		on_pass = {
+			if = {
+				limit = { NOT = { has_republican_faction_support = yes } }
+				republican_factions_changed_law_without_support_effect = yes
+			}
+		}
+	 }
+republican_elective_law = { law_group_type = republican_election_type_laws index = 2 
+		
+		can_keep = {
+			can_have_republican_law_trigger = yes
+		}
+		can_have = {
+			can_have_republican_law_trigger = yes
+		}
+
+		potential = {
+			can_have_republican_law_trigger = yes
+		}
+
+		pass_cost = { prestige = 1000 }
+
+		on_pass = {
+			if = {
+				limit = { NOT = { has_republican_faction_support = yes } }
+				republican_factions_changed_law_without_support_effect = yes
+			}
+		}
+	 }
+republican_authority_0 = { law_group_type = republican_authority index = 0 
+		modifier = {
+			belligerent_opinion = -10
+			barons_and_minor_landholders_opinion = 20
+			glory_hound_opinion = 10
+			parochial_opinion = 20
+			courtly_opinion = 5
+			vassal_limit = 10
+			accolades = -1
+			county_opinion_add = 15
+		}
+		flag = can_change_succession_laws
+
+		can_keep = {
+			realm_law_use_republican_authority = yes
+		}
+
+		on_pass = {
+			if = {
+				limit = { NOT = { has_republican_faction_support = yes } }
+				republican_factions_changed_law_without_support_effect = yes
+			}
+			set_variable = {
+				name = republican_authority_cooldown
+				years = @republican_authority_cooldown_years
+			}
+		}
+	 }
+republican_authority_1 = { law_group_type = republican_authority index = 1 
+		modifier = {
+			belligerent_opinion = 5
+			barons_and_minor_landholders_opinion = -30
+			glory_hound_opinion = -15
+			parochial_opinion = -15
+			courtly_opinion = -5
+			minority_opinion = -10
+			vassal_limit = -5
+			county_opinion_add = -5
+		}
+		flag = title_revocation_allowed
+		flag = vassal_retraction_allowed
+		flag = can_have_tributaries
+		flag = diarchs_want_to_subsidise_without_this_flag
+
+		can_keep = {
+			realm_law_use_republican_authority = yes
+		}
+
+		can_pass = {
+			trigger_if = {
+				limit = { has_realm_law = republican_authority_0 }
+				custom_description = {
+					subject = root
+					text = "has_republican_authority_cooldown"
+					NAND = {
+						has_variable = republican_authority_cooldown
+						NOT = {
+							culture = { has_innovation = innovation_all_things }
+						}
+					}
+				}
+			}
+		}
+		
+		pass_cost = {
+			prestige = {
+				if = {
+					limit = {
+						NOR = {
+							has_realm_law = republican_authority_2
+							has_realm_law = republican_authority_3
+						}
+					}
+					add = increase_crown_authority_prestige_cost
+				}
+			}
+		}
+		
+		on_pass = {
+			if = {
+				limit = { NOT = { has_republican_faction_support = yes } }
+				republican_factions_changed_law_without_support_effect = yes
+			}
+			set_variable = {
+				name = republican_authority_cooldown
+				years = @republican_authority_cooldown_years
+			}
+		}
+
+		ai_will_do = {
+			if = {
+				limit = { has_realm_law = republican_authority_0 }
+				value = 1
+			}
+		}
+	 }
+republican_authority_2 = { law_group_type = republican_authority index = 2 
+		modifier = {
+			belligerent_opinion = 10
+			barons_and_minor_landholders_opinion = -10
+			glory_hound_opinion = -10
+			parochial_opinion = -10
+			courtly_opinion = -5
+			zealot_opinion = -10
+			minority_opinion = -10
+			vassal_tax_contribution_mult = 0.1
+			vassal_levy_contribution_mult = 0.1
+			vassal_limit = -5
+			county_opinion_add = -10
+		}
+		flag = vassal_internal_wars_banned
+		flag = vassal_refusal_is_treason
+		
+		can_keep = {
+			realm_law_use_republican_authority = yes
+		}
+
+		can_pass = {
+			trigger_if = {
+				limit = { NOT = { has_realm_law = republican_authority_3 } }
+				has_realm_law = republican_authority_1
+				custom_description = {
+					subject = root
+					text = "has_republican_authority_cooldown"
+					NAND = {
+						has_variable = republican_authority_cooldown
+						NOT = {
+							culture = { has_innovation = innovation_all_things }
+						}
+					}
+				}
+			}
+		}
+
+		pass_cost = {
+			prestige = {
+				if = {
+					limit = {
+						NOT = { has_realm_law = republican_authority_3 }
+					}
+					add = increase_crown_authority_prestige_cost
+				}
+			}
+		}
+		
+		on_pass = {
+			if = {
+				limit = { NOT = { has_republican_faction_support = yes } }
+				republican_factions_changed_law_without_support_effect = yes
+			}
+			set_variable = {
+				name = republican_authority_cooldown
+				years = @republican_authority_cooldown_years
+			}
+		}
+
+		ai_will_do = {
+			if = {
+				limit = { has_realm_law = republican_authority_1 }
+				value = 1
+			}
+		}
+	 }
+republican_authority_3 = { law_group_type = republican_authority index = 3 
+		modifier = {
+			belligerent_opinion = 15
+			barons_and_minor_landholders_opinion = -20
+			glory_hound_opinion = -25
+			parochial_opinion = -25
+			courtly_opinion = -10
+			zealot_opinion = -20
+			minority_opinion = -30
+			vassal_tax_contribution_mult = 0.25
+			vassal_levy_contribution_mult = 0.25
+			vassal_limit = -5
+			domain_limit = 1
+			accolades = 1
+			powerful_vassal_opinion = -10
+			county_opinion_add = -10
+		}
+		flag = vassal_all_wars_banned
+		flag = max_authority_level
+		
+		can_keep = {
+			realm_law_use_republican_authority = yes
+		}
+
+		can_pass = {
+			has_realm_law = republican_authority_2
+			custom_description = {
+				subject = root
+				text = "has_republican_authority_cooldown"
+				NAND = {
+					has_variable = republican_authority_cooldown
+					NOT = {
+						culture = { has_innovation = innovation_all_things }
+					}
+				}
+			}
+		}
+		
+		pass_cost = {
+			prestige = {
+				if = {
+					limit = {
+						NOT = { has_realm_law = republican_authority_3 }
+					}
+					add = increase_crown_authority_prestige_cost
+				}
+			}
+		}
+		
+		on_pass = {
+			if = {
+				limit = { NOT = { has_republican_faction_support = yes } }
+				republican_factions_changed_law_without_support_effect = yes
+			}
+			set_variable = {
+				name = republican_authority_cooldown
+				years = @republican_authority_cooldown_years
+			}
+		}
+	 }

@@ -1,0 +1,91 @@
+﻿republican_diarch = {
+	# Handled via content - this is only for power sharing arrangements we want to start automatically.
+	start = { always = no }
+
+	end = {
+		liege = {
+			NOT = { government_has_flag = government_is_active_republic }
+		}
+	}
+
+	# Mandates
+	## Just the standard suite
+	mandate = fill_coffers
+	mandate = swell_armies
+	#mandate = promote_authority
+	## Aptitudes.
+	aptitude_score = {
+		add = mandate_type_qualification:fill_coffers
+		add = mandate_type_qualification:swell_armies
+		add = mandate_type_qualification:promote_authority
+	}
+	
+	# Scales of Power
+	## 000
+	power_level = {
+		swing = 0
+		parameter = unlock_syphon_treasury_interaction
+
+	}
+	## 020
+	power_level = {
+		swing = 20
+	}
+	## 040
+	power_level = {
+		swing = 40
+	}
+	## 60
+	power_level = {
+		swing = 60
+
+	}
+	power_level = {
+		swing = 60
+	}
+	## 70
+	power_level = {
+		swing = 70
+	}
+	## 080
+	power_level = {
+		swing = 80
+	}
+	## 90
+	power_level = {
+		swing = 90
+	}
+
+	# Trend towards an even balance of power.
+	swing_balance = {
+		value = 40
+	}
+
+	succession = yes
+	# Candidate scoring for succession.
+	candidate_score = { add = diarchy_vizier_succession_score_value }
+
+	loyalty_score = { add = diarch_loyalty_score_type_vizierate_value }
+
+	end_interaction = liege_dismiss_vizier_interaction
+
+
+	diarch_modifier = {
+		name = civil_servant_salary_and_corruption
+		monthly_income = 1
+		scale = {
+			add = liege.monthly_character_balance
+			multiply = {
+				add = stewardship
+				# Get nearest complete 5.
+				divide = 5
+				round = yes
+				min = 1
+				# And fractalise.
+				divide = 20
+				# So we should be getting something like 5% of our liege's income per 5 stewardship, with rounding errors.
+				## Plus, y'know, Paradox maths.
+			}
+		}
+	}
+}

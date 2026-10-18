@@ -1,0 +1,73 @@
+﻿
+on_game_start_after_lobby = { on_actions = { vt_weave_initialize } }
+on_game_start = { on_actions = { vt_weave_deferred_initialization } }
+yearly_global_pulse = { on_actions = { vt_weave_initialize } }
+vt_weave_deferred_initialization = { effect = { trigger_event = { on_action = vt_weave_initialize days = 1 } } }
+on_death = { on_actions = { vt_weave_death } }
+on_faith_conversion = { on_actions = { vt_weave_character_conversion } }
+on_county_faith_change = { on_actions = { vt_weave_county_conversion } }
+vt_weave_initialize = { effect = {
+ if = { limit = { NOT = { exists = situation:voltara_weave } }
+  set_global_variable = { name = vt_weave_balance value = 0 }
+  set_global_variable = { name = vt_weave_deaths value = 0 }
+  set_global_variable = { name = vt_weave_conversions value = 0 }
+  set_global_variable = { name = vt_weave_rituals value = 0 }
+  set_global_variable = { name = vt_weave_progress value = 0.5 }
+  set_global_variable = { name = vt_weave_last_deaths value = 0 }
+  set_global_variable = { name = vt_weave_last_conversions value = 0 }
+  set_global_variable = { name = vt_weave_last_rituals value = 0 }
+  start_situation = { type = voltara_weave }
+  every_living_character = { vt_weave_remember_allegiance = yes }
+  situation:voltara_weave = { every_situation_county = { vt_weave_remember_allegiance = yes } }
+  set_global_variable = { name = vt_weave_ready value = yes }
+ }
+} }
+vt_weave_death = {
+ trigger = { has_global_variable = vt_weave_ready NOT = { voltara_is_ruins_placeholder = yes } }
+ effect = {
+  if = { limit = { OR = { scope:death_reason = flag:death_natural_causes
+scope:death_reason = flag:death_old_age
+scope:death_reason = flag:death_drinking_passive
+scope:death_reason = flag:death_heart_attack
+scope:death_reason = flag:death_bubonic_plague
+scope:death_reason = flag:death_smallpox
+scope:death_reason = flag:death_typhus
+scope:death_reason = flag:death_cancer
+scope:death_reason = flag:death_dysentery
+scope:death_reason = flag:death_pneumonic
+scope:death_reason = flag:death_consumption
+scope:death_reason = flag:death_leper
+scope:death_reason = flag:death_ergotism
+scope:death_reason = flag:death_measles
+scope:death_reason = flag:death_gout_ridden
+scope:death_reason = flag:death_great_pox
+scope:death_reason = flag:death_ill
+scope:death_reason = flag:death_sickly
+scope:death_reason = flag:death_giant
+scope:death_reason = flag:death_spindly
+scope:death_reason = flag:death_wheezing
+scope:death_reason = flag:death_bleeder
+scope:death_reason = flag:death_depressed
+scope:death_reason = flag:death_lunatic
+scope:death_reason = flag:death_possessed
+scope:death_reason = flag:death_incapable
+scope:death_reason = flag:death_physique_bad_1
+scope:death_reason = flag:death_physique_bad_2
+scope:death_reason = flag:death_physique_bad_3
+scope:death_reason = flag:death_weak
+scope:death_reason = flag:death_obesity
+scope:death_reason = flag:blind
+scope:death_reason = flag:death_inbred
+scope:death_reason = flag:death_apoplexy
+scope:death_reason = flag:death_childbirth
+scope:death_reason = flag:death_stress } NOT = { exists = scope:killer } }
+   change_global_variable = { name = vt_weave_deaths add = -0.03 }
+  }
+  else_if = { limit = { OR = { culture = culture:voltara_demon vt_weave_necromancer = yes } }
+   change_global_variable = { name = vt_weave_deaths add = -2 }
+  }
+  else = { change_global_variable = { name = vt_weave_deaths add = 0.2 } }
+ }
+}
+vt_weave_character_conversion = { trigger = { has_global_variable = vt_weave_ready } effect = { vt_weave_check_allegiance = { WEIGHT = 0.4 } } }
+vt_weave_county_conversion = { trigger = { has_global_variable = vt_weave_ready } effect = { vt_weave_check_allegiance = { WEIGHT = 1 } } }

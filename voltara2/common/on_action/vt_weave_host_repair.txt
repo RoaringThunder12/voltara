@@ -1,0 +1,14 @@
+﻿on_game_start_after_lobby = { on_actions = { vt_weave_repair_empty_hosts } }
+vt_weave_repair_empty_hosts = {
+ effect = {
+  every_living_character = {
+   limit = {
+    has_character_flag = vt_weave_demon_revolt
+    NOT = { has_character_flag = vt_weave_host_troops_v2 }
+    max_military_strength < 10
+    any_character_war = { using_cb = vt_weave_demon_incursion }
+   }
+   trigger_event = { id = vt_weave_host_repair.1 days = 1 }
+  }
+ }
+}

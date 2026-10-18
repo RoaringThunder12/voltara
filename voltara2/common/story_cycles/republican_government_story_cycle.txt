@@ -1,0 +1,203 @@
+﻿republican_government_story = {
+	on_setup = {
+		add_to_global_variable_list = { name = republican_government_stories target = root }
+
+		republican_government_instate_default_laws = yes
+		story_owner = {
+			set_variable = {
+				name = republican_government_story
+				value = scope:story
+			}
+			change_government = voltara_colonial_government
+ add_realm_law = republican_seniority
+ add_realm_law = republican_4_year_term_law
+ add_realm_law = republican_elective_law
+ add_realm_law = republican_authority_0
+			republican_government_elect_magistrates_effect = yes
+			republican_government_set_diarch_as_heir = yes
+			republican_trigger_election_after_term = yes
+		}
+		set_variable = { name = succession_date value = current_date }
+		set_variable = { name = election_date value = { value = current_date add = republican_election_term_in_days } }
+		set_variable = { name = republican_prestige value = 0 }
+
+		republican_calc_faction_weights_effect = yes
+		republican_government_populate_candidate_list_effect = yes
+
+		set_variable = { name = legacy_level_trade value = 0 }
+		set_variable = { name = legacy_level_diplomacy value = 0 }
+		set_variable = { name = legacy_level_civic value = 0 }
+		set_variable = { name = legacy_level_militia value = 0 }
+		set_variable = { name = legacy_level_prosperity value = 0 }
+
+		story_owner = { republican_legacy_apply_trait_effect = yes }
+		set_variable = { name = oligarchs_support value = story_owner.republican_oligarchs_support_target }
+		set_variable = { name = burghers_support value = story_owner.republican_burghers_support_target }
+		set_variable = { name = commons_support value = story_owner.republican_commons_support_target }
+		set_variable = { name = clerics_support value = story_owner.republican_clerics_support_target }
+		set_variable = { name = militants_support value = story_owner.republican_militants_support_target }
+		set_variable = { name = republican_support value = story_owner.republican_support }
+
+	}
+	
+	on_end = {
+		remove_list_global_variable = { name = republican_government_stories target = root }
+		republican_end_trade_effect = yes
+		if = {
+			limit = { story_owner = { government_has_flag = government_is_merchant_republic } }
+			every_in_list = {
+				variable = merchant_families
+				remove_merchant_family_effect = yes
+			}
+		}
+	}
+
+	on_owner_death = {
+		story_owner.player_heir = {
+			set_variable = {
+				name = republican_government_story
+				value = root
+			}
+			set_variable = { #We use this for on_title_gain
+				name = interim_republican_ruler_title
+				value = prev.story_owner.primary_title
+			}
+		}
+		if = {
+			limit = { story_owner = { government_has_flag = government_is_merchant_republic } }
+			remove_list_variable = {
+				name = merchant_families
+				target = story_owner
+			}
+		}
+		set_variable = {
+			name = election_date
+			value = current_date
+		}
+		make_story_owner = story_owner.player_heir
+	}
+
+	effect_group = {
+		months = 1
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				republican_calc_faction_weights_effect = yes
+				change_variable = {
+					name = republican_prestige
+					add = story_owner.republican_prestige_gain
+				}
+				story_owner = {		
+					republican_drift_faction_support_effect = { FACTION = oligarchs }
+					republican_drift_faction_support_effect = { FACTION = burghers }
+					republican_drift_faction_support_effect = { FACTION = commons }
+					republican_drift_faction_support_effect = { FACTION = clerics }
+					republican_drift_faction_support_effect = { FACTION = militants }
+				}
+			}
+		}
+	}
+
+	effect_group = {
+		months = 1
+		triggered_effect = {
+			trigger = { story_owner =  { can_use_trade = yes } }
+			effect = {
+				remove_dead_rulers_from_trade_deals_effect = yes
+				remove_non_independent_rulers_from_trade_deals_effect = yes
+				update_trade_variables_effect = yes
+			}
+		}
+	}
+
+	#Merchant Republic Effects
+	effect_group = {
+		years = { 3 6 }
+		chance = 50
+		triggered_effect = {
+			trigger = {
+				story_owner =  { government_has_flag = government_is_merchant_republic }
+				merchant_family_current < merchant_family_capacity
+			}
+			effect = {
+				offer_merchant_family_title_to_vassals_effect = yes
+			}
+		}
+	}
+
+	effect_group = {
+		years = { 1 3 }
+		chance = 75
+		triggered_effect = {
+			trigger = {
+				story_owner =  { government_has_flag = government_is_merchant_republic }
+				merchant_family_current < merchant_family_capacity
+			}
+			effect = {
+				generate_merchant_family_effect = yes
+			}
+		}
+	}
+
+	effect_group = {
+		years = { 1 2 }
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner = {
+					every_vassal = {
+						limit = {
+							is_merchant_family = yes
+							is_ai = yes
+							NOT = { any_held_title = { is_merchant_family_title = no } }
+						}
+						trigger_event = republican_core.1001
+					}
+					create_trade_contract = yes
+					#Create contract
+					random_vassal = {
+						limit = { is_merchant_family = yes is_ai = yes }
+						create_trade_contract = yes
+					}
+					random_vassal = {
+						limit = { is_merchant_family = yes is_ai = no }
+						create_trade_contract = yes
+					}
+					if = {
+						limit = {
+							is_adult = yes
+							is_incapable = no
+						}
+						add_trait_xp = {
+							trait = republican_merchant
+							value = 3
+						}
+					}
+					every_vassal = {
+						limit = {
+							is_merchant_family = yes
+							is_adult = yes
+							is_incapable = no
+						}
+						add_trait_xp = {
+							trait = republican_merchant
+							value = 2
+						}
+					}
+				}
+			}
+		}
+	}
+
+	effect_group = {
+		years = 1
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner = {
+					trigger_event = { on_action = yearly_republican_ruler_pulse }
+				}
+			}
+		}
+	}
+}

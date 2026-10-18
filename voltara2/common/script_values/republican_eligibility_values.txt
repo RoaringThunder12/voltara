@@ -1,0 +1,294 @@
+﻿#Scope: character
+# Needs: scope:liege
+
+republican_magistrate_eligibility = {
+	value = {
+		value = 10
+		desc = republican_magistrate_eligibility_base_desc
+	}
+	#Vassal
+	if = {
+		limit = {
+			is_vassal_of = scope:liege
+			OR = {
+				government_has_flag = government_is_republic
+				government_has_flag = government_is_active_republic
+			}
+		}
+		add = {
+			value = 25
+			desc = republican_magistrate_eligibility_republican_vassal_desc
+		}
+		if = { limit = { is_powerful_vassal_of = scope:liege }
+			add = {
+				value = 25
+				desc = republican_magistrate_eligibility_republican_powerful_vassal_desc
+			}
+		}
+	}
+
+	#Traits and Skills
+	add = {
+		value = martial
+		add = diplomacy
+		add = stewardship
+		add = intrigue
+		add = learning
+		multiply = 1
+		desc = sum_of_skills_desc
+	}
+	if = {
+		limit = { has_trait = gallivanter }
+		subtract = {
+			value = 200
+			desc = trait_gallivanter
+		}
+	}
+
+	#CRIMINAL
+	if = {
+		limit = {
+			has_trait = deviant
+			exists = scope:liege.faith
+			trait_is_criminal_in_faith_trigger = { TRAIT = deviant FAITH = scope:liege.faith GENDER_CHARACTER = this }
+		}
+		add = {
+			value = -30
+			desc = "deviant_and_criminal_desc"
+		}
+	}
+	if = {
+		limit = {
+			has_trait = incestuous
+			exists = scope:liege.faith
+			trait_is_criminal_in_faith_trigger = { TRAIT = incestuous FAITH = scope:liege.faith GENDER_CHARACTER = this }
+		}
+		add = {
+			value = -30
+			desc = "incestuous_and_criminal_desc"
+		}
+	}
+	if = {
+		limit = {
+			has_trait = sodomite
+			exists = scope:liege.faith
+			trait_is_criminal_in_faith_trigger = { TRAIT = sodomite FAITH = scope:liege.faith GENDER_CHARACTER = this }
+		}
+		add = {
+			value = -30
+			desc = "sodomite_and_criminal_desc"
+		}
+	}
+	if = {
+		limit = {
+			has_trait = cannibal
+			exists = scope:liege.faith
+			trait_is_criminal_in_faith_trigger = { TRAIT = cannibal FAITH = scope:liege.faith GENDER_CHARACTER = this }
+		}
+		add = {
+			value = -30
+			desc = "cannibal_and_criminal_desc"
+		}
+	}
+	if = {
+		limit = {
+			has_trait = kinslayer_1
+			exists = scope:liege.faith
+			trait_is_criminal_in_faith_trigger = { TRAIT = kinslayer_1 FAITH = scope:liege.faith GENDER_CHARACTER = this }
+		}
+		add = {
+			value = -30
+			desc = "kinslayer_1_and_criminal_desc"
+		}
+	}
+	if = {
+		limit = {
+			has_trait = kinslayer_2
+			exists = scope:liege.faith
+			trait_is_criminal_in_faith_trigger = { TRAIT = kinslayer_2 FAITH = scope:liege.faith GENDER_CHARACTER = this }
+		}
+		add = {
+			value = -30
+			desc = "kinslayer_2_and_criminal_desc"
+		}
+	}
+	if = {
+		limit = {
+			has_trait = kinslayer_3
+			exists = scope:liege.faith
+			trait_is_criminal_in_faith_trigger = { TRAIT = kinslayer_3 FAITH = scope:liege.faith GENDER_CHARACTER = this }
+		}
+		add = {
+			value = -30
+			desc = "kinslayer_3_and_criminal_desc"
+		}
+	}
+	if = {
+		limit = {
+			has_trait = witch
+			exists = scope:liege.faith
+			trait_is_criminal_in_faith_trigger = { TRAIT = witch FAITH = scope:liege.faith GENDER_CHARACTER = this }
+		}
+		add = {
+			value = -30
+			desc = "witch_and_criminal_desc"
+		}
+	}
+	if = {
+		limit = {
+			has_trait = adulterer
+			exists = scope:liege.faith
+			trait_is_criminal_in_faith_trigger = { TRAIT = adulterer FAITH = scope:liege.faith GENDER_CHARACTER = this }
+		}
+		add = {
+			value = -30
+			desc = "adulterer_and_criminal_desc"
+		}
+	}
+	if = {
+		limit = {
+			has_trait = fornicator
+			exists = scope:liege.faith
+			trait_is_criminal_in_faith_trigger = { TRAIT = fornicator FAITH = scope:liege.faith GENDER_CHARACTER = this }
+		}
+		add = {
+			value = -30
+			desc = "fornicator_and_criminal_desc"
+		}
+	}
+
+	# FAITH HOSTILITY
+	if = {
+		limit = {
+			scope:liege.faith ?= {
+				faith_hostility_level = {
+					target = prev.faith
+					value = faith_astray_level
+				}
+			}
+		} #Change to faith acceptance
+		subtract = {
+			value = 10
+			desc = astray_faith_succession_desc
+		}
+	}
+	if = {
+		limit = {
+			scope:liege.faith ?= {
+				faith_hostility_level = {
+					target = prev.faith
+					value = faith_hostile_level
+				}
+			}
+		} #Change to faith acceptance
+		subtract = {
+			value = 25
+			desc = hostile_faith_succession_desc
+		}
+	}
+	if = {
+		limit = {
+			scope:liege.faith ?= {
+				faith_hostility_level = {
+					target = prev.faith
+					value >= faith_evil_level
+				}
+			}
+		} #Change to faith acceptance
+		subtract = {
+			value = 50
+			desc = evil_faith_sucession_desc
+		}
+	}
+	#SAME CULTURE AS REGION
+	if = {
+		limit = { culture ?= scope:liege.capital_county.culture }
+		add = {
+			value = 10
+			desc = of_local_culture_succession_desc
+		}
+	}
+	# POPULAR OPINION
+	if = {
+		limit = { is_landed = yes }
+		add = {
+			value = {
+				value = capital_county.county_holder_opinion
+				multiply = 0.25
+			}
+			desc = county_holder_opinion_desc
+		}
+	}
+	# LOWBORN? EW no
+	if = {
+		limit = {
+			is_lowborn = yes
+		}
+		subtract = {
+			value = 25
+			desc = lowborn_desc_succession
+		}
+	}
+
+	#ADJUST BASED ON GENDER LAW - MUST GO AT THE END
+	if = {
+		limit = {
+			scope:liege ?= { has_realm_law = male_preference_law }
+			is_female = yes
+		}
+		multiply = {
+			value = {
+				value = 1
+				subtract = appointment_non_preferred_gender_penalty_value
+			}
+			desc = appointment_male_preference_desc
+		}
+	}
+	else_if = {
+		limit = {
+			scope:liege ?= { has_realm_law = male_only_law }
+			is_female = yes
+		}
+		multiply = {
+			value = {
+				value = 1
+				subtract = appointment_opposite_gender_penalty_value
+			}
+			desc = appointment_male_only_desc
+		}
+	}
+	else_if = {
+		limit = {
+			scope:liege ?= { has_realm_law = female_preference_law }
+			is_female = no
+		}
+		multiply = {
+			value = {
+				value = 1
+				subtract = appointment_non_preferred_gender_penalty_value
+			}
+			desc = appointment_female_preference_desc
+		}
+	}
+	else_if = {
+		limit = {
+			scope:liege ?= { has_realm_law = female_only_law }
+			is_female = no
+		}
+		multiply = {
+			value = {
+				value = 1
+				subtract = appointment_opposite_gender_penalty_value
+			}
+			desc = appointment_female_only_desc
+		}
+	}
+}
+
+republican_magistrate_gender_female_chance = {
+	value = 0
+	if = { limit = { has_realm_law = male_preference_law } add = 20 }
+	else_if = { limit = { has_realm_law = equal_law } add = 50 }
+	else_if = { limit = { has_realm_law = female_preference_law } add = 75 }
+	else_if = { limit = { has_realm_law = female_only_law } add = 100 }
+}

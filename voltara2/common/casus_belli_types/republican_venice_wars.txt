@@ -1,0 +1,164 @@
+﻿republican_sack_venice = {
+	#icon = invasion
+	group = event
+	allow_hostages = no
+	allowed_for_character = {}
+	valid_to_start = {
+		always = no
+	}
+
+	on_declaration = {
+		on_declared_war = yes
+	}
+
+	on_victory_desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { # Desc for only one player attacker
+					scope:attacker = {
+						is_local_player = yes
+					}
+				}
+				desc = republican_sack_venice_war_victory_player_attacker_desc
+			}
+			desc =  republican_sack_venice_war_victory_desc # Desc for a third party involved
+		}
+
+	}
+
+	on_victory = {
+		scope:attacker = { show_pow_release_message_effect = yes }
+		scope:attacker = { trigger_event = republican_venice.2020 }
+	}
+
+	on_white_peace_desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:attacker = {
+						is_local_player = yes
+					}
+				}
+				desc = republican_sack_venice_war_white_peace_player_attacker_desc
+			}
+			desc = republican_sack_venice_war_white_peace_desc
+		}
+
+	}
+
+	on_white_peace = {
+		scope:attacker = {
+			show_pow_release_message_effect = yes
+			stress_impact = {
+ 				ambitious = medium_stress_impact_gain
+ 				arrogant = medium_stress_impact_gain
+ 			}
+		}
+		hidden_effect = {
+			scope:attacker = {
+				add_truce_both_ways = {
+					character = scope:defender
+					days = 1825
+					war = root.war
+					result = white_peace
+				}
+			}
+		}
+
+		scope:attacker.var:narentine_story = { #The war can start again later, we give a freebie delay
+			set_variable = {
+				name = narentine_war_triggered
+				value = no
+			}
+			change_variable = {
+				name = narentine_war_delays
+				subtract = 1
+			}
+		}
+
+		scope:defender = {
+			stress_impact = {
+ 				arrogant = medium_stress_impact_gain
+ 			}
+
+
+			add_prestige = minor_prestige_value
+		}
+
+	}
+
+	on_defeat_desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:defender = { is_local_player = yes } }
+				desc = republican_sack_venice_war_defeat_player_defender_desc
+			}
+			desc = republican_sack_venice_war_defeat_desc
+		}
+
+	}
+
+	on_defeat = {
+		scope:attacker = { show_pow_release_message_effect = yes }
+		scope:defender = {
+
+			add_dread = medium_dread_gain
+			# Prestige for Defender
+			add_prestige_war_defender_effect = {
+				PRESTIGE_VALUE = medium_prestige_value
+			}
+
+			# LEGITIMACY FROM WINNING FACTION WAR
+			faction_war_end_victory_legitimacy_effect = yes
+		}
+		scope:defender = { trigger_event = republican_venice.2030 }
+	}
+
+	should_invalidate = {
+		scope:defender = {
+			NOR = {
+				government_has_flag = government_is_merchant_republic
+				any_sub_realm_title = {
+					this = title:c_voltara_11336
+				}
+			}
+
+		}
+		scope:attacker = { is_independent_ruler = no }
+	}
+
+	on_invalidated = { 
+		if = {
+			limit = {
+				scope:attacker = { is_independent_ruler = no }
+			}
+			scope:attacker.var:narentine_story = { end_story = yes }
+		}
+		scope:attacker = { remove_variable = narentine_story }
+	}
+
+	on_invalidated_desc = msg_invalidate_war_title
+
+	check_defender_inheritance_validity = no
+
+	on_primary_attacker_death = inherit
+	on_primary_defender_death = inherit
+
+	attacker_allies_inherit = yes
+	defender_allies_inherit = yes
+
+	transfer_behavior = transfer
+
+	war_name = "republican_SACK_VENICE_WAR_NAME"
+
+	interface_priority = 120
+
+	attacker_wargoal_percentage = 0.8
+
+	max_attacker_score_from_battles = 75
+	max_defender_score_from_battles = 75
+	
+	max_defender_score_from_occupation = 150
+	max_attacker_score_from_occupation = 150
+
+}

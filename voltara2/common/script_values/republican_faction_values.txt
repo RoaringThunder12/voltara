@@ -1,0 +1,584 @@
+﻿republican_oligarchs_weight = {
+	value = {
+		value = 5
+		desc = "BASE"
+	}
+	add = {
+		value = {
+			every_vassal = {
+				limit = {
+					has_government = feudal_government
+				}
+				add = sub_realm_size
+			}
+			divide = sub_realm_size
+			multiply = 5
+		}
+		desc = "republican_weight_feudal_vassals"
+	}
+	if = {
+		limit = {
+			capital_county.culture = { has_cultural_tradition = tradition_hereditary_hierarchy }
+		}
+		add = {
+			value = 5
+			desc = "tradition_hereditary_hierarchy_name"
+		}
+	}
+	if = {
+		limit = {
+			capital_county.culture = { has_cultural_tradition = tradition_castle_keepers }
+		}
+		add = {
+			value = 5
+			desc = "tradition_castle_keepers_name"
+		}
+	}
+	add = {
+		every_court_position_holder = {
+			type = republican_magistrate
+			limit = { has_dynasty = yes }
+			add = dynasty.dynasty_prestige_level
+		}
+		desc = "republican_magistrate_dynasty_prestige_level"
+	}
+	add = {
+		every_sub_realm_barony = {
+			limit = {
+				title_province = { has_holding_type = castle_holding }
+			}
+			add = 1
+		}
+		desc = "republican_weight_castle_holdings"
+	}
+}
+
+republican_burghers_weight = {
+	value = {
+		value = 5
+		desc = "BASE"
+	}
+	add = {
+		every_sub_realm_county = {
+			add = {
+				value = development_level
+				divide = prev.sub_realm_size
+				divide = 4
+			}
+		}
+		desc = "republican_sub_realm_development_level"
+	}
+	add = {
+		add = {
+			every_vassal = {
+				limit = {
+					has_government = republic_government
+				}
+				add = sub_realm_size
+			}
+			divide = sub_realm_size
+			multiply = 5
+		}
+		desc = "republican_republic_vassals"
+	}
+	if = {
+		limit = {
+			capital_county.culture = {
+				OR = {
+					has_cultural_tradition = tradition_parochialism
+					has_cultural_tradition = tradition_republican_legacy
+				}
+			}
+		}
+		add = {
+			value = 5
+			desc = "republican_parochial_tradition"
+		}
+	}
+	if = {
+		limit = {
+			capital_county.culture = { has_cultural_tradition = tradition_maritime_mercantilism }
+		}
+		add = {
+			value = 5
+			desc = "tradition_maritime_mercantilism_name"
+		}
+	}
+	if = {
+		limit = {
+			capital_county.culture = { has_cultural_tradition = tradition_fishermen }
+		}
+		add = {
+			value = 5
+			desc = "tradition_fishermen_name"
+		}
+	}
+	if = {
+		limit = {
+			capital_county.culture = { has_cultural_tradition = tradition_city_keepers }
+		}
+		add = {
+			value = 5
+			desc = "tradition_city_keepers_name"
+		}
+	}
+	add = {
+		every_court_position_holder = {
+			type = republican_magistrate
+			limit = { has_trait = education_stewardship }
+			add = 1
+		}
+		desc = "republican_stewardship_magistrates"
+	}
+	add = {
+		every_sub_realm_barony = {
+			limit = {
+				title_province = { has_holding_type = city_holding }
+			}
+			add = 1
+		}
+		desc = "republican_sub_realm_cities"
+	}
+}
+
+republican_commons_weight = {
+	value = {
+		value = 5
+		desc = "BASE"
+	}
+	add = {
+		every_sub_realm_county = {
+			add = {
+				value = county_control
+				subtract = 100
+				multiply = -0.01
+			}
+		}
+		desc = "republican_sub_realm_control"
+	}
+	if = {
+		limit = {
+			capital_county.culture = { has_cultural_tradition = tradition_collective_lands }
+		}
+		add = {
+			value = 10
+			desc = "tradition_collective_lands_name"
+		}
+	}
+	add = {
+		every_court_position_holder = {
+			type = republican_magistrate
+			if = { limit = { has_dynasty = no } add = 2 }
+			if = { limit = { has_trait = peasant_leader } add = 2 }
+		}
+		desc = "republican_commonfolk_magistrate"
+	}
+}
+
+republican_clerics_weight = {
+	value = {
+		value = 5
+		desc = "BASE"
+	}
+	add = {
+		every_vassal = {
+			limit = {
+				has_government = theocracy_government
+			}
+			add = sub_realm_size
+		}
+		divide = sub_realm_size
+		multiply = 5
+		desc = "republican_weight_theocratic_vassals"
+	}
+	if = {
+		limit = {
+			capital_county.culture = { has_cultural_tradition = tradition_fervent_temple_builders }
+		}
+		add = {
+			value = 5
+			desc = "tradition_fervent_temple_builders_name"
+		}
+	}
+	if = {
+		limit = {
+			capital_county.culture = { has_cultural_tradition = tradition_zealous_people }
+		}
+		add = {
+			value = 5
+			desc = "tradition_zealous_people_builders_name"
+		}
+	}
+	add = {
+		every_court_position_holder = {
+			type = republican_magistrate
+			add = {
+				value = ai_zeal
+				min = 0
+			}
+		}
+		divide = 100
+		desc = "republican_magistrate_zeal"
+	}
+	add = {
+		every_sub_realm_barony = {
+			limit = {
+				title_province = { has_holding_type = church_holding }
+			}
+			add = 1
+		}
+		desc = "republican_church_holdings"
+	}
+}
+
+republican_militants_weight = {
+	value = {
+		value = 5
+		desc = "BASE"
+	}
+	add = {
+		every_vassal = {
+			limit = {
+				has_vassal_stance = glory_hound
+			}
+			add = 1
+		}
+		desc = "glory_hound"
+	}
+	if = {
+		limit = {
+			capital_county.culture = { has_cultural_pillar = ethos_bellicose }
+		}
+		add = {
+			value = 5
+			desc = "ethos_bellicose_name"
+		}
+	}
+	if = {
+		limit = {
+			capital_county.culture = {
+				OR = {
+					has_cultural_tradition = tradition_hit_and_run
+					has_cultural_tradition = tradition_quarrelsome
+					has_cultural_tradition = tradition_swords_for_hire
+					has_cultural_tradition = tradition_ep3_audacious_cadets
+					has_cultural_tradition = tradition_fp1_coastal_warriors
+					has_cultural_tradition = tradition_fp2_state_ransoming
+					has_cultural_tradition = tradition_practiced_pirates
+				}
+			}
+		}
+		add = {
+			value = 5
+			desc = "republican_martial_traditions"
+		}
+	}
+	add = {
+		every_court_position_holder = {
+			type = republican_magistrate
+			limit = { has_trait = education_martial }
+			add = 2
+		}
+		desc = "republican_martial_magistrates"
+	}
+}
+
+#Scope: republican_government_story
+republican_total_faction_weight = {
+	value = var:oligarchs_weight
+	add = var:burghers_weight
+	add = var:commons_weight
+	add = var:clerics_weight
+	add = var:militants_weight
+}
+
+
+
+republican_oligarchs_support_target = {
+	value = {
+		value = 50
+		desc = "BASE"
+	} 
+	if = {
+		limit = { is_lowborn = yes }
+		subtract = 5
+		desc = "republican_ruler_is_lowborn"
+	}
+	add = {
+		value = prestige_level
+		add = 1
+		multiply = 5
+		subtract = 10
+		desc = "republican_ruler_prestige_level"
+	}
+	add = {
+		value = dynasty.dynasty_prestige_level
+		multiply = 2
+		subtract = 4
+		desc = "republican_ruler_dynasty_prestige_level"
+	}
+	add = {
+		value = 0
+		if = {	limit = { has_realm_law = republican_2_year_term_law } subtract = 10 }
+		else_if = {	limit = { has_realm_law = republican_4_year_term_law } subtract = 5 }
+		else_if = {	limit = { has_realm_law = republican_lifetime_term_law } add = 5 }
+		desc = "republican_term_length"
+	}
+	add = {
+		if = {	limit = { has_realm_law = republican_authority_0 } subtract = 5 }
+		else_if = {	limit = { has_realm_law = republican_authority_2 } add = 5 }
+		desc = "republican_authority"
+	}
+
+	subtract = {
+		value = tyranny
+		divide = 2
+		desc = "republican_tyranny"
+	}
+	divide = 100
+}
+
+republican_burghers_support_target = {
+	value = {
+		value = 40
+		desc = "BASE"
+	} 
+	add = {
+		value = stewardship
+		max = 20
+		subtract = 10
+		divide = 2
+		desc = "republican_ruler_stewardship"
+	}
+	add = {
+		value = capital_county.development_level
+		max = 40
+		subtract = 20
+		divide = 4
+		desc = "republican_capital_development"
+	}
+	if = {
+		limit = { is_at_war = yes }
+		subtract = 5
+		desc = "republican_at_war"
+	}
+	add = {
+		value = 4
+		every_sub_realm_barony = {
+			limit = {
+				title_province = {
+					OR = {
+						is_raided = yes
+						has_province_modifier = recently_looted_modifier
+						is_occupied = yes
+					}
+				}
+			}
+			subtract = 2
+		}
+		min = -10
+		desc = "republican_occupation_and_raids"
+	}
+
+	if = {	limit = { has_realm_law = republican_authority_0 } add = { value = 5 desc = "republican_authority" } }
+	else_if = {	limit = { has_realm_law = republican_authority_3 } subtract = { value = 5 desc = "republican_authority" } }
+
+	if = {	limit = { has_realm_law = republican_lifetime_term_law } subtract = { value = 5 desc = "republican_authority" } }
+
+	subtract = {
+		value = tyranny
+		divide = 2
+		desc = "republican_tyranny"
+	}
+	divide = 100
+}
+
+republican_commons_support_target = {
+	value = {
+		value = 40
+		desc = "BASE"
+	} 
+	if = {
+		limit = { is_lowborn = yes }
+		add = 5
+		desc = "republican_ruler_is_lowborn"
+	}
+	if = {	limit = { has_realm_law = republican_authority_0 } add = { value = 10 desc = "republican_authority" } }
+	else_if = {	limit = { has_realm_law = republican_authority_1 } add = { value = 5 desc = "republican_authority" } }
+	else_if = {	limit = { has_realm_law = republican_authority_3 } subtract = { value = 10 desc = "republican_authority" } }
+	subtract = {
+		value = tyranny
+		subtract = 5
+		desc = "republican_tyranny"
+	}
+	add = {
+		every_sub_realm_county = {
+			add = county_opinion
+		}
+		divide = 2
+		divide = sub_realm_size
+		desc = "republican_sub_realm_popular_opinion"
+	}
+	divide = 100
+}
+
+republican_clerics_support_target = {
+	value = {
+		value = 50
+		desc = "BASE"
+	} 
+	add = {
+		value = learning
+		max = 20
+		subtract = 10
+		divide = 2
+		desc = "republican_ruler_learning"
+	}
+	if = {
+		limit = { has_trait = zealous }
+		add = 5
+		desc = "republican_zealous"
+	}
+	if = {
+		limit = { has_trait = excommunicated }
+		subtract = 20
+		desc = "republican_excommunicated"
+	}
+	add = {
+		value = num_virtuous_traits
+		multiply = 2
+		desc = "republican_virtuous_traits"
+	}
+	subtract = {
+		value = num_sinful_traits		
+		multiply = 2
+		desc = "republican_sinful_traits"
+	}
+	subtract = {
+		value = tyranny
+		divide = 2
+		desc = "republican_tyranny"
+	}
+	divide = 100
+}
+
+republican_militants_support_target = {
+	value = {
+		value = 40
+		desc = "BASE"
+	} 
+	add = {
+		value = martial
+		max = 30
+		subtract = 10
+		divide = 3
+		desc = "republican_ruler_martial"
+	}
+	if = {
+		limit = { is_at_war = yes }
+		add = 5
+		desc = "republican_at_war"
+	}
+	if = {
+		limit = { is_at_war = yes is_commanding_army = yes }
+		add = 5
+		desc = "republican_commanding_army"
+	}
+	else = {
+		subtract = {
+			add = days_of_continuous_peace
+			divide = 365
+			desc = "republican_at_peace"
+		}
+	}
+	if = {
+		limit = { has_trait = brave }
+		add = 5
+		desc = "republican_brave"
+	}
+	if = {
+		limit = { has_trait = strategist }
+		add = 5
+		desc = "republican_strategist"
+	}
+	if = {
+		limit = { has_trait = gallant }
+		add = 5
+		desc = "republican_gallant"
+	}
+	if = {
+		limit = { has_trait = craven }
+		subtract = 5
+		desc = "republican_craven"
+	}
+	divide = 100
+}
+
+#Percentage of Weight
+republican_oligarchs_weight_percentage = {
+	var:republican_government_story = {
+		value = var:oligarchs_weight
+
+		divide = republican_total_faction_weight
+	}
+}
+republican_burghers_weight_percentage = {
+	var:republican_government_story = {
+		value = var:burghers_weight
+
+		divide = republican_total_faction_weight
+	}
+}
+republican_commons_weight_percentage = {
+	var:republican_government_story = {
+		value = var:commons_weight
+
+		divide = republican_total_faction_weight
+	}
+}
+republican_clerics_weight_percentage = {
+	var:republican_government_story = {
+		value = var:clerics_weight
+
+		divide = republican_total_faction_weight
+	}
+}
+republican_militants_weight_percentage = {
+	var:republican_government_story = {
+		value = var:militants_weight
+
+		divide = republican_total_faction_weight
+	}
+}
+
+republican_support = {
+	value = 0
+	var:republican_government_story = {
+		add = {
+			value = var:oligarchs_support
+			multiply = prev.republican_oligarchs_weight_percentage
+		}
+		add = {
+			value = var:burghers_support
+			multiply = prev.republican_burghers_weight_percentage
+		}
+		add = {
+			value = var:commons_support
+			multiply = prev.republican_commons_weight_percentage
+		}
+		add = {
+			value = var:clerics_support
+			multiply = prev.republican_clerics_weight_percentage
+		}
+		add = {
+			value = var:militants_support
+			multiply = prev.republican_militants_weight_percentage
+		}
+	}
+}
+
+republican_oligarchs_support = { value = var:republican_government_story.var:oligarchs_support }
+republican_burghers_support = { value = var:republican_government_story.var:burghers_support }
+republican_commons_support = { value = var:republican_government_story.var:commons_support }
+republican_clerics_support = { value = var:republican_government_story.var:clerics_support }
+republican_militants_support = { value = var:republican_government_story.var:militants_support }

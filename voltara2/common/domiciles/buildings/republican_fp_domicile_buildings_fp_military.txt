@@ -1,0 +1,1094 @@
+﻿@specialization_cost_1 = 1000
+@specialization_cost_2 = 1500
+@specialization_cost_3 = 2000
+@specialization_construction_time_1 = 1000
+@specialization_construction_time_2 = 1500
+@specialization_construction_time_3 = 2000
+
+fp_military_01 = {
+	allowed_domicile_types = { family_palace }
+	cost = { gold = 150 }
+	construction_time = 300
+	internal_slots = 1
+	
+	character_modifier = {
+		martial = 1
+		domicile_monthly_prestige_add = 0.25
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_02 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_01
+	cost = { gold = 300 }
+	construction_time = 400
+	internal_slots = 1
+	
+	character_modifier = {
+		domicile_monthly_prestige_add = 0.50
+		prowess_no_portrait = 1
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+# Branch 1: Improved Levies
+fp_military_levy_03 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_02
+	cost = { gold = 600 }
+	construction_time = 600
+	internal_slots = 1
+	
+	character_modifier = {
+		levy_size = 0.05
+		levy_reinforcement_rate = 0.025
+		vassal_levy_contribution_mult = 0.025
+		martial = 1
+		domicile_monthly_prestige_add = 0.50
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_levy_04 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_levy_03
+	cost = { gold = 800 }
+	construction_time = 700
+	internal_slots = 1
+	
+	character_modifier = {
+		levy_size = 0.075
+		levy_reinforcement_rate = 0.05
+		vassal_levy_contribution_mult = 0.05
+		domicile_monthly_prestige_add = 0.50
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_levy_05 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_levy_04
+	cost = { gold = 1000 }
+	construction_time = 850
+	internal_slots = 1
+	
+	character_modifier = {
+		levy_size = 0.10
+		levy_reinforcement_rate = 0.075
+		vassal_levy_contribution_mult = 0.075
+		martial = 1
+		domicile_monthly_prestige_add = 0.50
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_levy_06 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_levy_05
+	cost = { gold = 1200 }
+	construction_time = 1000
+	internal_slots = 1
+	
+	character_modifier = {
+		levy_size = 0.125
+		levy_reinforcement_rate = 0.10
+		vassal_levy_contribution_mult = 0.10
+		domicile_monthly_prestige_add = 0.75
+		prowess_no_portrait = 1
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+# Branch 2: Improved Knights
+fp_military_knight_03 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_02
+	cost = { gold = 600 }
+	construction_time = 600
+	internal_slots = 1
+	
+	character_modifier = {
+		knight_effectiveness_mult = 0.10
+		knight_limit = 1
+		martial = 1
+		prowess_no_portrait = 1
+		domicile_monthly_prestige_add = 0.50
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_knight_04 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_knight_03
+	cost = { gold = 800 }
+	construction_time = 700
+	internal_slots = 1
+	
+	character_modifier = {
+		knight_limit = 2
+		prowess_no_portrait = 1
+		domicile_monthly_prestige_add = 0.50
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_knight_05 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_knight_04
+	cost = { gold = 1000 }
+	construction_time = 850
+	internal_slots = 1
+	
+	character_modifier = {
+		knight_effectiveness_mult = 0.20
+		knight_limit = 3
+		martial = 1
+		prowess_no_portrait = 1
+		domicile_monthly_prestige_add = 0.50
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_knight_06 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_knight_05
+	cost = { gold = 1200 }
+	construction_time = 1000
+	internal_slots = 1
+	
+	character_modifier = {
+		knight_effectiveness_mult = 0.25
+		knight_limit = 4
+		prowess_no_portrait = 1
+		domicile_monthly_prestige_add = 0.75
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+# Branch 3: Improved Men-at-Arms (MaA)
+fp_military_maa_03 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_02
+	cost = { gold = 600 }
+	construction_time = 600
+	internal_slots = 1
+	
+	character_modifier = {
+		men_at_arms_recruitment_cost = -0.03
+		men_at_arms_maintenance = -0.02
+		martial = 1
+		negate_martial_penalty_add = 1
+		domicile_monthly_prestige_add = 0.50
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_maa_04 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_maa_03
+	cost = { gold = 800 }
+	construction_time = 700
+	internal_slots = 1
+	
+	character_modifier = {
+		men_at_arms_recruitment_cost = -0.05
+		men_at_arms_maintenance = -0.03
+		negate_martial_penalty_add = 1
+		domicile_monthly_prestige_add = 0.50
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_maa_05 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_maa_04
+	cost = { gold = 1000 }
+	construction_time = 850
+	internal_slots = 1
+	
+	character_modifier = {
+		men_at_arms_recruitment_cost = -0.07
+		men_at_arms_maintenance = -0.04
+		martial = 1
+		domicile_monthly_prestige_add = 0.50
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_maa_06 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_military_maa_05
+	cost = { gold = 1200 }
+	construction_time = 1000
+	internal_slots = 1
+	
+	character_modifier = {
+		men_at_arms_recruitment_cost = -0.10
+		men_at_arms_maintenance = -0.05
+		negate_martial_penalty_add = 1
+		domicile_monthly_prestige_add = 0.75
+		prowess_no_portrait = 1
+	}
+	ai_value = {
+		value = 20
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+#Internal Slots
+#Levy Specialization
+fp_military_special_levy_01 = {
+	construction_time = @specialization_construction_time_1
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_01
+
+	cost = {
+		gold = @specialization_cost_1
+		prestige = @specialization_cost_1
+	}
+
+	can_construct = {
+		domicile = { has_domicile_building_or_higher = fp_military_levy_04 }
+	}
+
+	character_modifier = {
+		levy_maintenance = -0.1
+		levy_reinforcement_rate = 0.1
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/faction_type/peasants.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_special_levy_quality_02 = {
+	construction_time = @specialization_construction_time_2
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_special_levy_01
+
+	cost = {
+		gold = @specialization_cost_2
+	}
+
+	can_construct = {
+		domicile = { has_domicile_building_or_higher = fp_military_levy_05 }
+	}
+
+	character_modifier = {
+		levy_attack = 2
+		levy_toughness = 2
+		levy_screen = 1
+		levy_maintenance = 0.2
+		levy_size = -0.05
+		vassal_levy_contribution_mult = -0.2
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/flat_icons/duel.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_special_levy_quality_03 = {
+	construction_time = @specialization_construction_time_3
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_special_levy_quality_02
+
+	cost = {
+		gold = @specialization_cost_3
+	}
+
+	can_construct = {
+		domicile = { has_domicile_building_or_higher = fp_military_levy_06 }
+	}
+
+	character_modifier = {
+		levy_attack = 3
+		levy_toughness = 5
+		levy_screen = 2
+		levy_maintenance = 0.2
+		levy_size = -0.1
+		vassal_levy_contribution_mult = -0.3
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/flat_icons/duel.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_special_levy_quantity_02 = {
+	construction_time = @specialization_construction_time_2
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_special_levy_01
+
+	cost = {
+		gold = @specialization_cost_2
+	}
+
+	can_construct = {
+		domicile = {
+			has_domicile_building_or_higher = fp_military_levy_05
+		}
+	}
+
+	character_modifier = {
+		levy_maintenance = -0.05
+		levy_size = 0.1
+		vassal_levy_contribution_mult = 0.05
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/activity_types/tour_type_taxation_icon.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_special_levy_quantity_03 = {
+	construction_time = @specialization_construction_time_3
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_special_levy_quantity_02
+
+	cost = {
+		gold = @specialization_cost_3
+	}
+
+	can_construct = {
+		domicile = { has_domicile_building_or_higher = fp_military_levy_06 }
+	}
+
+	character_modifier = {
+		levy_maintenance = -0.05
+		levy_size = 0.15
+		vassal_levy_contribution_mult = 0.15
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/activity_types/tour_type_taxation_icon.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+#Knights Specilization
+fp_military_special_knights_01 = {
+	construction_time = @specialization_construction_time_1
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_01
+
+	cost = {
+		gold = @specialization_cost_1
+		prestige = @specialization_cost_1
+	}
+
+	can_construct = {
+		domicile = { has_domicile_building_or_higher = fp_military_knight_04 }
+	}
+
+	character_modifier = {
+		knight_effectiveness_mult = 0.1
+		knight_effectiveness_per_stewardship = 0.01
+		monthly_prestige_gain_per_knight_add = 0.01
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/activity_intents/recruit_knights_intent.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_special_knights_quality_02 = {
+	construction_time = @specialization_construction_time_2
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_special_knights_01
+
+	cost = {
+		gold = @specialization_cost_2
+	}
+
+	can_construct = {
+		domicile = { has_domicile_building_or_higher = fp_military_knight_05 }
+	}
+
+	character_modifier = {
+		monthly_prestige_gain_per_knight_add = 0.02
+		knight_effectiveness_mult = 0.3
+		knight_limit = -3
+		knight_effectiveness_per_prowess = 0.01
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/building_types/icon_building_hall_of_heroes.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_special_knights_quality_03 = {
+	construction_time = @specialization_construction_time_3
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_special_knights_quality_02
+
+	cost = {
+		gold = @specialization_cost_3
+	}
+
+	can_construct = {
+		domicile = { has_domicile_building_or_higher = fp_military_knight_06 }
+	}
+
+	character_modifier = {
+		monthly_prestige_gain_per_knight_add = 0.03
+		knight_effectiveness_mult = 0.6
+		knight_limit = -5
+		knight_effectiveness_per_prowess = 0.01
+		knight_effectiveness_per_stewardship = 0.01
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/building_types/icon_building_hall_of_heroes.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_special_knights_quantity_02 = {
+	construction_time = @specialization_construction_time_2
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_special_knights_01
+
+	cost = {
+		gold = @specialization_cost_2
+	}
+
+	can_construct = {
+		domicile = {
+			has_domicile_building_or_higher = fp_military_knight_05
+		}
+	}
+
+	character_modifier = {
+		monthly_prestige_gain_per_knight_add = 0.01
+		knight_effectiveness_mult = 0.05
+		knight_limit = 2
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/building_types/icon_building_regimental_grounds.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_special_knights_quantity_03 = {
+	construction_time = @specialization_construction_time_3
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_special_knights_quantity_02
+
+	cost = {
+		gold = @specialization_cost_3
+	}
+
+	can_construct = {
+		domicile = { has_domicile_building_or_higher = fp_military_knight_06 }
+	}
+
+	character_modifier = {
+		monthly_prestige_gain_per_knight_add = 0.02
+		knight_effectiveness_mult = 0.1
+		knight_limit = 4
+		knight_effectiveness_per_stewardship = 0.01
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/building_types/icon_building_regimental_grounds.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+#MaA Specialization
+fp_military_special_maa_01 = {
+	construction_time = @specialization_construction_time_1
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_01
+
+	cost = {
+		gold = @specialization_cost_1
+		prestige = @specialization_cost_1
+	}
+
+	can_construct = {
+		domicile = { has_domicile_building_or_higher = fp_military_maa_04 }
+	}
+
+	character_modifier = {
+		maa_toughness_mult = 0.05
+		maa_toughness_add = 1
+		men_at_arms_cap = 1
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/building_types/icon_building_barracks.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_special_maa_organization_02 = {
+	construction_time = @specialization_construction_time_2
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_special_maa_01
+
+	cost = {
+		gold = @specialization_cost_2
+	}
+
+	can_construct = {
+		domicile = { has_domicile_building_or_higher = fp_military_maa_05 }
+	}
+
+	character_modifier = {
+		supply_duration = 0.15
+		movement_speed = 0.02
+		maa_screen_add = 1
+		maa_screen_mult = 0.1
+		retreat_losses = -0.05
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/flat_icons/army_details.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}
+
+fp_military_special_maa_organization_03 = {
+	construction_time = @specialization_construction_time_3
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_military_special_maa_organization_02
+
+	cost = {
+		gold = @specialization_cost_3
+	}
+
+	can_construct = {
+		domicile = { has_domicile_building_or_higher = fp_military_maa_06 }
+	}
+
+	character_modifier = {
+		supply_duration = 0.15
+		movement_speed = 0.03
+		maa_screen_add = 2
+		maa_screen_mult = 0.2
+		retreat_losses = -0.05
+	}
+	
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/flat_icons/army_details.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_barracks_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_barracks"
+	}
+}

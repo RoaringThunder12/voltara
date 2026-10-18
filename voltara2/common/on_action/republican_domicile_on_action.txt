@@ -1,0 +1,28 @@
+﻿on_title_gain = {
+	on_actions = {
+		on_title_gain_recreate_custom_domicile
+		on_title_gain_domicile_title
+	}
+}
+
+on_title_gain_recreate_custom_domicile = {
+	trigger = {
+		has_variable = domicile_title
+	}
+	effect = {
+		recreate_domicile_title_effect = yes
+	}
+}
+
+on_title_gain_domicile_title = {
+	trigger = {
+		scope:title.var:custom_domicile_title ?= yes
+	}
+	effect = {
+		set_variable = {
+			name = domicile_title
+			value = scope:title
+		}
+	}
+}
+

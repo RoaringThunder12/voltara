@@ -1,0 +1,140 @@
+﻿
+# Cached allegiance is shared by hooks and monthly fallback: never double-count a conversion.
+vt_weave_remember_allegiance = {
+ if = { limit = { vt_weave_order = yes } set_variable = { name = vt_weave_allegiance value = -1 } }
+ else_if = { limit = { vt_weave_khaos = yes } set_variable = { name = vt_weave_allegiance value = 1 } }
+ else = { set_variable = { name = vt_weave_allegiance value = 0 } }
+}
+vt_weave_check_allegiance = {
+ if = { limit = { has_variable = vt_weave_allegiance }
+  set_variable = { name = vt_weave_previous_allegiance value = var:vt_weave_allegiance }
+  vt_weave_remember_allegiance = yes
+  change_global_variable = { name = vt_weave_conversions add = { value = var:vt_weave_allegiance subtract = var:vt_weave_previous_allegiance multiply = $WEIGHT$ } }
+  remove_variable = vt_weave_previous_allegiance
+ }
+ vt_weave_remember_allegiance = yes
+}
+vt_weave_shift = { change_global_variable = { name = vt_weave_rituals add = $VALUE$ } }
+vt_weave_monthly = {
+ every_situation_county = { vt_weave_check_allegiance = { WEIGHT = 1 } }
+ every_ruler = { vt_weave_check_allegiance = { WEIGHT = 0.4 } }
+ set_global_variable = { name = vt_weave_last_deaths value = { value = global_var:vt_weave_deaths min = -6 max = 6 } }
+ set_global_variable = { name = vt_weave_last_conversions value = { value = global_var:vt_weave_conversions min = -6 max = 6 } }
+ set_global_variable = { name = vt_weave_last_rituals value = { value = global_var:vt_weave_rituals min = -8 max = 8 } }
+ change_global_variable = { name = vt_weave_balance add = global_var:vt_weave_last_deaths }
+ change_global_variable = { name = vt_weave_balance add = global_var:vt_weave_last_conversions }
+ change_global_variable = { name = vt_weave_balance add = global_var:vt_weave_last_rituals }
+ # The world slowly heals toward equilibrium, without erasing sustained player action.
+ if = { limit = { global_var:vt_weave_balance > 0.5 } change_global_variable = { name = vt_weave_balance add = -0.5 } }
+ else_if = { limit = { global_var:vt_weave_balance < -0.5 } change_global_variable = { name = vt_weave_balance add = 0.5 } }
+ set_global_variable = { name = vt_weave_balance value = { value = global_var:vt_weave_balance min = -100 max = 100 } }
+ set_global_variable = { name = vt_weave_progress value = { value = global_var:vt_weave_balance add = 100 divide = 200 } }
+ set_global_variable = { name = vt_weave_deaths value = 0 }
+ set_global_variable = { name = vt_weave_conversions value = 0 }
+ set_global_variable = { name = vt_weave_rituals value = 0 }
+ every_situation_sub_region = {
+  if = { limit = { global_var:vt_weave_balance >= 30 NOT = { sub_region_current_phase = vt_weave_chaos } } change_phase = { phase = vt_weave_chaos } }
+  else_if = { limit = { global_var:vt_weave_balance <= -30 NOT = { sub_region_current_phase = vt_weave_order_phase } } change_phase = { phase = vt_weave_order_phase } }
+  else_if = { limit = { global_var:vt_weave_balance > -30 global_var:vt_weave_balance < 30 NOT = { sub_region_current_phase = vt_weave_balanced } } change_phase = { phase = vt_weave_balanced } }
+ }
+ set_variable = { name = vt_weave_active_incursions value = 0 }
+ every_ruler = { limit = { has_character_flag = vt_weave_demon_revolt is_at_war = yes } prev = { change_variable = { name = vt_weave_active_incursions add = 1 } } }
+ if = { limit = { global_var:vt_weave_balance >= 30 var:vt_weave_active_incursions < 3 NOT = { has_variable = vt_weave_revolt_cooldown } }
+  random = { chance = 20
+   random_situation_county = { limit = { vt_weave_eligible_county = yes } vt_weave_spawn_incursion = yes }
+  }
+ }
+}
+vt_weave_awaken_necromancer = {
+ remove_trait = vt_ek_experimentalist_necromancer
+ add_trait = vt_ek_necromancer add_trait = witch
+ if = { limit = { NOT = { has_perk = necromancy_novice_perk } } add_perk = necromancy_novice_perk }
+ voltara_initialize_threadbinder = yes
+ add_character_flag = { flag = vt_weave_necromancy_cooldown years = 20 }
+}
+vt_weave_trait_pulse = {
+ add_character_flag = { flag = vt_weave_trait_cooldown years = 10 }
+ random_list = {
+  50 = {
+   modifier = { factor = 0 has_trait = vt_ek_arcana_good_3 }
+   if = { limit = { has_trait = vt_ek_arcana_bad_3 } remove_trait = vt_ek_arcana_bad_3 add_trait = vt_ek_arcana_bad_2 }
+   else_if = { limit = { has_trait = vt_ek_arcana_bad_2 } remove_trait = vt_ek_arcana_bad_2 add_trait = vt_ek_arcana_bad_1 }
+   else_if = { limit = { has_trait = vt_ek_arcana_bad_1 } remove_trait = vt_ek_arcana_bad_1 }
+   else_if = { limit = { has_trait = vt_ek_arcana_good_2 } remove_trait = vt_ek_arcana_good_2 add_trait = vt_ek_arcana_good_3 }
+   else_if = { limit = { has_trait = vt_ek_arcana_good_1 } remove_trait = vt_ek_arcana_good_1 add_trait = vt_ek_arcana_good_2 }
+   else_if = { limit = { NOT = { has_trait = vt_ek_arcana_good_3 } } add_trait = vt_ek_arcana_good_1 }
+   if = { limit = { is_ai = no } trigger_event = voltara_weave.30 }
+  }
+  50 = {
+   modifier = { factor = 0 has_trait = vt_ek_arcana_bad_3 }
+   modifier = { factor = 0 has_trait = vt_ek_magickal NOT = { has_trait = arcana_good } }
+   if = { limit = { has_trait = vt_ek_arcana_good_3 } remove_trait = vt_ek_arcana_good_3 add_trait = vt_ek_arcana_good_2 }
+   else_if = { limit = { has_trait = vt_ek_arcana_good_2 } remove_trait = vt_ek_arcana_good_2 add_trait = vt_ek_arcana_good_1 }
+   else_if = { limit = { has_trait = vt_ek_arcana_good_1 } remove_trait = vt_ek_arcana_good_1 }
+   else_if = { limit = { has_trait = vt_ek_arcana_bad_2 } remove_trait = vt_ek_arcana_bad_2 add_trait = vt_ek_arcana_bad_3 }
+   else_if = { limit = { has_trait = vt_ek_arcana_bad_1 } remove_trait = vt_ek_arcana_bad_1 add_trait = vt_ek_arcana_bad_2 }
+   else_if = { limit = { NOT = { has_trait = vt_ek_arcana_bad_3 } } add_trait = vt_ek_arcana_bad_1 }
+   if = { limit = { is_ai = no } trigger_event = voltara_weave.31 }
+  }
+ }
+ voltara_initialize_threadbinder = yes
+}
+vt_weave_yearly = {
+ every_living_character = {
+  limit = { vt_weave_mortal = yes }
+  vt_weave_check_allegiance = { WEIGHT = 0.4 }
+  if = { limit = { OR = { global_var:vt_weave_balance >= 30 global_var:vt_weave_balance <= -30 } NOT = { has_character_flag = vt_weave_trait_cooldown } }
+   random = { chance = 2 vt_weave_trait_pulse = yes }
+  }
+ }
+ every_ruler = {
+  limit = { vt_weave_mortal = yes is_imprisoned = no is_incapable = no NOT = { has_character_flag = vt_weave_flavor_cooldown } }
+  random = { chance = 25
+   if = { limit = { vt_weave_order = yes }
+    random_list = { 1 = { trigger_event = voltara_weave.10 } 1 = { trigger_event = voltara_weave.11 } 1 = { trigger_event = voltara_weave.12 } }
+   }
+   else_if = { limit = { vt_weave_khaos = yes }
+    random_list = { 1 = { trigger_event = voltara_weave.20 } 1 = { trigger_event = voltara_weave.21 } 1 = { trigger_event = voltara_weave.22 } }
+   }
+   else = { trigger_event = voltara_weave.40 }
+  }
+  if = { limit = { global_var:vt_weave_balance >= 30 learning >= 8 NOT = { vt_weave_necromancer = yes } NOT = { has_character_flag = vt_weave_necromancy_cooldown } }
+   random = { chance = 4 trigger_event = voltara_weave.23 }
+  }
+ }
+ if = { limit = { global_var:vt_weave_balance >= 30 }
+  random_ruler = { limit = { vt_weave_mortal = yes is_landed = yes NOT = { vt_weave_order = yes } }
+   create_character = { age = 35 gender_female_chance = 50 location = prev.capital_province culture = prev.culture rite = rite:voltara_unbound_weave dynasty = none learning = 14 martial = 8
+    trait = vt_ek_necromancer trait = witch save_scope_as = vt_weave_wanderer
+    after_creation = { vt_weave_awaken_necromancer = yes }
+   }
+   add_courtier = scope:vt_weave_wanderer
+  }
+ }
+}
+vt_weave_spawn_incursion = {
+ save_scope_as = vt_weave_target
+ holder.top_liege = { save_scope_as = vt_weave_defender add_character_flag = { flag = vt_weave_incursion_cooldown years = 5 } }
+ set_variable = { name = vt_weave_incursion_cooldown value = yes years = 20 }
+ situation:voltara_weave = { set_variable = { name = vt_weave_revolt_cooldown value = yes days = 180 } }
+ create_character = {
+  age = 35 gender_female_chance = 50 location = scope:vt_weave_target.capital_province culture = culture:voltara_demon rite = rite:voltara_unbound_weave dynasty = none
+  trait = demon1 trait = witch martial = 16 learning = 12 prowess = 20
+  save_scope_as = vt_weave_invader
+  after_creation = { voltara_demon_culture_setup = yes add_character_flag = vt_weave_demon_revolt }
+ }
+ create_dynamic_title = { tier = duchy name = vt_weave_rift_host }
+ create_title_and_vassal_change = { type = created save_scope_as = vt_weave_change add_claim_on_loss = no }
+ scope:new_title = {
+  set_capital_county = scope:vt_weave_target set_landless_title = yes set_no_automatic_claims = yes
+  set_can_be_named_after_dynasty = no
+  change_title_holder = { holder = scope:vt_weave_invader change = scope:vt_weave_change }
+ }
+ resolve_title_and_vassal_change = scope:vt_weave_change
+ scope:vt_weave_invader = {
+  change_government = tribal_government
+  start_war = { cb = vt_weave_demon_incursion target = scope:vt_weave_defender target_title = scope:vt_weave_target }
+  trigger_event = { id = vt_weave_host_repair.1 days = 1 }
+  scope:vt_weave_defender = { trigger_event = voltara_weave.50 }
+ }
+}

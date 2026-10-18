@@ -1,0 +1,38 @@
+﻿republican_trade_map_mode_color_effect = {
+	save_scope_as = player
+	every_independent_ruler = {
+		limit = {
+			in_diplomatic_range = scope:player
+		}
+		every_realm_province = {
+			barony = { set_title_color = republican_in_range }
+		}
+	}
+	every_independent_ruler = {
+		limit = {
+			OR = {
+				NOT = { in_diplomatic_range = scope:player }
+				can_use_trade = yes
+			}
+
+		}
+		every_realm_province = {
+			barony = { set_title_color = republican_out_of_range }
+		}
+	}
+	
+	var:republican_government_story = {
+		every_in_list = {
+			variable = trade_deals
+			save_temporary_scope_as = trade_recipient
+			every_realm_province = {
+				barony = { set_title_color = republican_tradedeal }
+			}
+		}
+		story_owner = {
+			every_realm_province = {
+				barony = { set_title_color = republican_tradedeal }
+			}
+		}
+	}
+}

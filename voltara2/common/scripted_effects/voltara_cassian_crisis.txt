@@ -66,6 +66,11 @@ voltara_begin_slave_revolt = {
   start_war = { casus_belli = voltara_slave_liberation_war target = scope:voltara_revolt_emperor }
   random_character_war = { limit = { using_cb = voltara_slave_liberation_war } save_scope_as = voltara_slave_war }
   if = { limit = { exists = scope:voltara_slave_war }
+   # The Strait Keepers defend Severos in the Cassian crisis.
+   if = {
+    limit = { exists = title:k_voltara_22.holder title:k_voltara_22.holder = { is_alive = yes NOT = { this = scope:voltara_revolt_leader } NOT = { this = scope:voltara_revolt_emperor } } }
+    scope:voltara_slave_war = { add_defender = title:k_voltara_22.holder }
+   }
    spawn_army = {
     levies = { value = scope:voltara_revolt_emperor.max_military_strength multiply = 0.6 min = 4000 max = 20000 }
     location = scope:voltara_revolt_location war = scope:voltara_slave_war name = voltara_broken_chains_host

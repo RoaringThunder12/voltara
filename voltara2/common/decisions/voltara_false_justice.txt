@@ -1,0 +1,22 @@
+﻿voltara_forge_false_justice = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_castle_view.dds" }
+ decision_group_type = major
+ desc = voltara_forge_false_justice_desc
+ selection_tooltip = voltara_forge_false_justice_tooltip
+ confirm_text = voltara_forge_false_justice_confirm
+ ai_check_interval = 12
+ is_shown = { this = character:19060003 is_landed = yes NOT = { has_character_flag = voltara_forged_false_justice } }
+ is_valid = { is_adult = yes is_imprisoned = no }
+ cost = { gold = 250 }
+ effect = {
+  create_artifact = {
+   name = voltara_false_justice_name description = voltara_false_justice_desc
+   type = voltara_false_justice_type visuals = hammer template = voltara_heirloom_template
+   wealth = 60 quality = 60 modifier = voltara_false_justice_modifier
+   history = { type = created_before_history }
+   decaying = no
+  }
+  add_character_flag = voltara_forged_false_justice
+ }
+ ai_will_do = { base = 20 }
+}

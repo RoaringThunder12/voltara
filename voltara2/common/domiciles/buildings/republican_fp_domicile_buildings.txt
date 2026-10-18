@@ -1,0 +1,1439 @@
+﻿#########################
+# FAMILY PALACE BUILDINGS
+#########################
+### Family Palace Main Building
+fp_main_01 = {
+	slot_type = main
+	internal_slots = 1
+	construction_time = 730
+	allowed_domicile_types = { family_palace }
+
+	cost = {
+		gold = estate_external_building_high_cost_tier_2_value
+	}
+
+	character_modifier = {
+		domicile_monthly_gold_add = 2
+		domicile_external_slots_capacity_add = 2
+	}
+
+
+	ai_value = {
+		value = 100
+	}
+
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_villa.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_villa_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_villa_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_villa.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_villa_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_villa_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_villa.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+}
+
+fp_main_02 = {
+	slot_type = main
+	internal_slots = 1
+	construction_time = 730
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_main_01
+	
+	can_construct = {
+		culture ?= { has_innovation = innovation_city_planning }
+	}
+
+	cost = {
+		gold = estate_external_building_high_cost_tier_3_value
+	}
+	
+
+	character_modifier = {
+		domicile_monthly_gold_add = 0.2
+		domicile_external_slots_capacity_add = 1
+	}
+
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_manor.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_manor_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_manor_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_manor.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_manor_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_manor_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_manor.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_manor_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_manor_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+}
+
+fp_main_03 = {
+	slot_type = main
+	internal_slots = 1
+	construction_time = 730
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_main_02
+	
+	can_construct = {
+		culture ?= { has_innovation = innovation_manorialism }
+	}
+
+	cost = {
+		gold = estate_external_building_high_cost_tier_4_value
+	}
+	
+
+	character_modifier = {
+		domicile_monthly_gold_add = 0.3
+		domicile_external_slots_capacity_add = 1
+	}
+
+	parameters = {
+		increased_trade_strength_1 = yes
+	}
+
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_mansion.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_mansion_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_mansion_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_mansion.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_mansion_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_mansion_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_mansion.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_mansion_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_mansion_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+}
+
+fp_main_04 = {
+	slot_type = main
+	internal_slots = 2
+	construction_time = 730
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_main_03
+	
+	can_construct = {
+		culture ?= { has_innovation = innovation_development_03 }
+	}
+
+	cost = {
+		gold = estate_external_building_high_cost_tier_5_value
+	}
+
+	character_modifier = {
+		domicile_monthly_gold_add = 0.4
+	}
+
+	parameters = {
+		increased_trade_strength_1 = yes
+	}
+
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_estate.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_estate_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_estate_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_estate.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_estate_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_estate_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_estate.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_estate_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_estate_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+}
+
+fp_main_05 = {
+	slot_type = main
+	internal_slots = 2
+	construction_time = 730
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_main_04
+	
+	can_construct = {
+		culture ?= { has_innovation = innovation_cranes }
+	}
+
+	cost = {
+		gold = estate_external_building_high_cost_tier_6_value
+	}
+
+	parameters = {
+		increased_trade_strength_2 = yes
+	}
+	
+
+	character_modifier = {
+		domicile_monthly_gold_add = 0.6
+		domicile_external_slots_capacity_add = 1
+	}
+
+	ai_value = {
+		value = 100
+	}
+	
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_grand_estate.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grand_estate_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_grand_estate_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_grand_estate.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grand_estate_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_grand_estate_western_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_grand_estate.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grand_estate_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_grand_estate_byzantine_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_estate_main_building"
+	}
+}
+
+### Wine Cellar
+fp_wine_cellar_01 = {
+	construction_time = 730
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_main_01
+
+	cost = {
+		gold = {
+			value = estate_internal_building_high_cost_tier_1_value
+		}
+	}
+
+	character_modifier = {
+		fertility = 0.1
+	}
+	
+	ai_value = {
+		value = 6
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_cellar.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine_mask.png"
+	}
+}
+fp_wine_cellar_02 = {
+	construction_time = 730
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_wine_cellar_01
+
+	cost = {
+		gold = {
+			value = estate_internal_building_high_cost_tier_2_value
+		}
+	}
+
+	character_modifier = {
+		fertility = 0.05
+		courtier_and_guest_opinion = 5
+	}
+	
+	ai_value = {
+		value = 5
+		if = {
+			limit = {
+				scope:owner.culture ?= {
+					has_cultural_pillar = heritage_byzantine
+				}
+			}
+			add = 5
+		}
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_cellar.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine_mask.png"
+	}
+}
+fp_wine_cellar_03 = {
+	construction_time = 730
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_wine_cellar_02
+
+	cost = {
+		gold = {
+			value = estate_internal_building_high_cost_tier_3_value
+		}
+	}
+
+	character_modifier = {
+		fertility = 0.05
+		courtier_and_guest_opinion = 5
+	}
+
+	parameters = {
+		estate_improved_feast_opinion = yes
+	}
+	
+	ai_value = {
+		value = 5
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_cellar.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine_mask.png"
+	}
+}
+
+fp_embassy_01 = {
+	construction_time = 730
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_main_01
+
+	cost = {
+		gold = {
+			value = estate_internal_building_high_cost_tier_1_value
+		}
+	}
+
+	character_modifier = {
+		courtier_and_guest_opinion = 1
+	}
+
+	parameters = {
+		increased_success_personal_schemes_1 = yes
+	}
+	
+	ai_value = {
+		value = 6
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/activity_intents/befriend_intent.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine_mask.png"
+	}
+}
+fp_embassy_02 = {
+	construction_time = 730
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_embassy_01
+
+	cost = {
+		gold = {
+			value = estate_internal_building_high_cost_tier_2_value
+		}
+	}
+
+	character_modifier = {
+		diplomacy = 1
+		courtier_and_guest_opinion = 2
+	}
+
+	parameters = {
+		increased_success_personal_schemes_1 = yes
+	}
+	
+	ai_value = {
+		value = 5
+		if = {
+			limit = {
+				scope:owner.culture ?= {
+					has_cultural_pillar = heritage_byzantine
+				}
+			}
+			add = 5
+		}
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/activity_intents/befriend_intent.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine_mask.png"
+	}
+}
+fp_embassy_03 = {
+	construction_time = 730
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_embassy_02
+
+	cost = {
+		gold = {
+			value = estate_internal_building_high_cost_tier_3_value
+		}
+	}
+
+	parameters = {
+		increased_success_personal_schemes_2 = yes
+	}
+
+	character_modifier = {
+		courtier_and_guest_opinion = 2
+	}
+	
+	ai_value = {
+		value = 5
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/activity_intents/befriend_intent.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_villa_byzantine_mask.png"
+	}
+}
+
+#STEWARDSHIP BUILDINGS
+fp_stewardship_01 = {
+	allowed_domicile_types = { family_palace }
+	cost = { gold = 150 }
+	construction_time = 365
+
+	
+	character_modifier = {
+		domicile_monthly_gold_mult = 0.01
+		direct_vassal_opinion = 2
+	}
+	ai_value = {
+		value = 25
+	}
+
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_mena_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_western_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_byzantine_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+}
+
+fp_stewardship_02 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_stewardship_01
+	cost = { gold = 300 }
+	construction_time = 480
+	
+	character_modifier = {
+		domicile_monthly_gold_mult = 0.02
+		direct_vassal_opinion = 3
+	}
+	ai_value = {
+		value = 25
+	}
+
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_mena_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_western_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_byzantine_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+}
+
+fp_stewardship_03 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_stewardship_02
+	cost = { gold = 600 }
+	construction_time = 600
+	
+	character_modifier = {
+		negate_stewardship_penalty_add = 1
+		domicile_monthly_gold_mult = 0.03
+	}
+	ai_value = {
+		value = 25
+	}
+
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_mena_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_western_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_byzantine_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+}
+
+fp_stewardship_04 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_stewardship_03
+	cost = { gold = 1200 }
+	construction_time = 730
+	
+	character_modifier = {
+		stewardship = 1
+		domicile_monthly_gold_mult = 0.03
+		character_capital_county_monthly_development_growth_add = 0.1
+	}
+	ai_value = {
+		value = 25
+	}
+
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_mena_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_western_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_byzantine_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+}
+
+# Branch 1: Steward's Treasury
+fp_stewardship_steward_05 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_stewardship_04
+	cost = { gold = 2400 }
+	construction_time = 950
+	
+	character_modifier = {
+		stewardship = 1
+		negate_stewardship_penalty_add = 1
+		domicile_monthly_gold_add = 0.4
+		domicile_monthly_gold_mult = 0.05
+	}
+	ai_value = {
+		value = 25
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_mena_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_western_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_byzantine_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+}
+
+# Branch 2: Administrator's Office
+fp_stewardship_admin_05 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_stewardship_04
+	cost = { gold = 2400 }
+	construction_time = 950
+	
+	character_modifier = {
+		negate_stewardship_penalty_add = 1
+		domain_limit = 1
+		domicile_monthly_gold_mult = 0.02
+		character_capital_county_monthly_development_growth_add = 0.2
+		direct_vassal_opinion = 5
+    }
+    ai_value = {
+		value = 25
+	}
+
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_mena_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_western_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_fp_treasury.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_guard_house_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_guard_house_byzantine_mask.png"
+		soundeffect = "event:/DLC/FP2/SFX/UI/fp2_struggle_button_state_change"
+	}
+}
+
+
+fp_temple_01 = {
+	allowed_domicile_types = { family_palace }
+	cost = { gold = 150 }
+	construction_time = 300
+	
+	character_modifier = {
+		domicile_monthly_piety_add = 0.1
+		learning = 1
+	}
+	ai_value = {
+		value = 25
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:islam_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_islamic.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_islamic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		trigger = {
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+}
+
+fp_temple_02 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_temple_01
+	cost = { gold = 300 }
+	construction_time = 400
+	
+	character_modifier = {
+		domicile_monthly_piety_add = 0.2
+	}
+	ai_value = {
+		value = 25
+	}
+		asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:islam_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_islamic.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_islamic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		trigger = {
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+}
+
+fp_temple_03 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_temple_02
+	cost = { gold = 500 }
+	construction_time = 500
+	
+	character_modifier = {
+		domicile_monthly_piety_add = 0.4
+		learning = 1
+		clergy_opinion = 1
+	}
+	ai_value = {
+		value = 25
+	}
+		asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:islam_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_islamic.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_islamic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		trigger = {
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_shrine.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_small"
+	}
+}
+
+fp_temple_04 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_temple_03
+	cost = { gold = 1000 }
+	construction_time = 700
+	
+	character_modifier = {
+		domicile_monthly_piety_add = 0.5
+		learning = 1
+		clergy_opinion = 2
+		learning_lifestyle_xp_gain_mult = 0.05
+	}
+	ai_value = {
+		value = 25
+	}
+		asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:islam_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_islamic.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_islamic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+}
+
+# Branch 1: Sanctuary of Piety - Level 1
+fp_temple_sanctuary_05 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_temple_04
+	cost = { gold = 1600 }
+	construction_time = 850
+	
+	character_modifier = {
+		domicile_monthly_piety_add = 1
+		domicile_monthly_piety_mult = 0.05
+		learning = 1
+		clergy_opinion = 2
+		learning_lifestyle_xp_gain_mult = 0.05
+		negate_learning_penalty_add = 1
+	}
+	ai_value = {
+		value = 25
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:islam_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_islamic.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_islamic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+}
+
+# Branch 1: Sanctuary of Piety - Level 2
+fp_temple_sanctuary_06 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_temple_sanctuary_05
+	cost = { gold = 2000 }
+	construction_time = 1000
+	
+	character_modifier = {
+		domicile_monthly_piety_add = 1.5
+		domicile_monthly_piety_mult = 0.1
+		clergy_opinion = 3
+		learning_lifestyle_xp_gain_mult = 0.1
+		negate_learning_penalty_add = 2
+		learning_per_piety_level = 1
+	}
+	ai_value = {
+		value = 25
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:islam_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_islamic.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_islamic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+}
+
+# Branch 2: Seat of Religious Authority - Level 1
+fp_temple_authority_05 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_temple_04
+	cost = { gold = 1600 }
+	construction_time = 850
+	
+	character_modifier = {
+		domicile_monthly_piety_add = 0.5
+		clergy_opinion = 2
+		monthly_county_control_growth_factor = 0.03
+		learning = 1
+		learning_lifestyle_xp_gain_mult = 0.05
+		domain_tax_same_faith_mult = 0.05
+		levy_reinforcement_rate_same_faith = 0.03
+	}
+	ai_value = {
+		value = 25
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:islam_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_islamic.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_islamic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+}
+
+# Branch 2: Seat of Religious Authority - Level 2
+fp_temple_authority_06 = {
+	allowed_domicile_types = { family_palace }
+	previous_building = fp_temple_authority_05
+	cost = { gold = 2000 }
+	construction_time = 1000
+	
+	character_modifier = {
+		domicile_monthly_piety_add = 0.7
+		clergy_opinion = 3
+		monthly_county_control_growth_factor = 0.05
+		learning_lifestyle_xp_gain_mult = 0.1
+		domain_tax_same_faith_mult = 0.1
+		levy_reinforcement_rate_same_faith = 0.05
+		same_faith_opinion = 3
+	}
+	ai_value = {
+		value = 25
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:islam_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_islamic.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_islamic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_mena_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mena.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			domicile_location.culture = {
+				has_graphical_western_culture_group_trigger = yes
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_generic_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_generic_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		trigger = {
+			owner = {
+				faith.religion = religion:christianity_religion
+			}
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_church.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_temple_christian_orthodox_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_temple_large"
+	}
+}

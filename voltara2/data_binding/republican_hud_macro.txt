@@ -1,0 +1,35 @@
+﻿macro = {
+	description = "Get the Republican Prestige"
+	definition = "GetRepublicanPrestige"
+	replace_with = "Character.MakeScope.Var('republican_government_story').Var('republican_prestige').GetValue"
+}
+
+macro = {
+	description = "Get Republican Faction Weight to Int"
+	definition = "GetRepublicanFactionWeightInt(FactionVar)"
+	replace_with = "FixedPointToInt(Multiply_CFixedPoint(Character.MakeScope.Var('republican_government_story').Var(FactionVar).GetValue, '(CFixedPoint)1'))"
+}
+
+macro = {
+	description = "Can purchase Republican Legacy?"
+	definition = "CanPurchaseRepublicanLegacy"
+	replace_with = "GreaterThanOrEqualTo_CFixedPoint(Character.MakeScope.Var('republican_government_story').Var('republican_prestige').GetValue, Character.MakeScope.Var('republican_government_story').ScriptValue('republican_legacy_cost'))"
+}
+
+macro = {
+	description = "Can't purchase Republican Legacy?"
+	definition = "CantPurchaseRepublicanLegacy"
+	replace_with = "Not( GreaterThanOrEqualTo_CFixedPoint(Character.MakeScope.Var('republican_government_story').Var('republican_prestige').GetValue, Character.MakeScope.Var('republican_government_story').ScriptValue('republican_legacy_cost')))"
+}
+
+macro = {
+	description = "Can the perk be purchased"
+	definition = "CanPurchaseRepublicanPerk(Level)"
+	replace_with = "And(CanPurchaseRepublicanLegacy,And(EqualTo_CFixedPoint(Scope.GetValue, Subtract_CFixedPoint( Level, '(CFixedPoint)1')),LessThan_CFixedPoint(Scope.GetValue, Level)))"
+}
+
+macro = {
+	description = "Can the perk be purchased"
+	definition = "CantPurchaseRepublicanPerk(Level)"
+	replace_with = "Or(And(CantPurchaseRepublicanLegacy,EqualTo_CFixedPoint(Scope.GetValue, Subtract_CFixedPoint( Level, '(CFixedPoint)1'))),LessThan_CFixedPoint(Scope.GetValue, Subtract_CFixedPoint( Level, '(CFixedPoint)1')))"
+}

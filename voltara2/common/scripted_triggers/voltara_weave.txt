@@ -1,0 +1,11 @@
+﻿
+vt_weave_order = { faith.religion = religion:voltara_religion }
+vt_weave_khaos = { faith.religion = religion:voltara_khaos_religion }
+vt_weave_necromancer = { OR = { has_trait = necromancer has_trait = vt_ek_necromancer has_trait = vt_ek_experimentalist_necromancer } }
+vt_weave_mortal = { is_adult = yes is_alive = yes NOT = { has_trait = dragon } NOT = { voltara_is_ruins_placeholder = yes } }
+vt_weave_eligible_county = {
+ tier = tier_county exists = holder vt_weave_order = yes
+ NOT = { has_variable = vt_weave_incursion_cooldown }
+ holder = { is_alive = yes vt_weave_order = yes NOT = { voltara_is_ruins_placeholder = yes } }
+ holder.top_liege = { is_at_war = no NOT = { has_character_flag = vt_weave_incursion_cooldown } }
+}

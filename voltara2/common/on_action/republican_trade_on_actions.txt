@@ -1,0 +1,20 @@
+﻿trade_deal_scheme_success = {
+	events = {
+		republican_trade.1002
+	}
+}
+
+trade_deal_scheme_failure = {
+	events = {
+		republican_trade.1003
+	}
+}
+
+trade_deal_scheme_ongoing = {
+	random_events = {
+		chance_to_happen = 50
+		100 = 0
+		7 = republican_trade.1010
+		7 = republican_trade.1011
+	}
+}

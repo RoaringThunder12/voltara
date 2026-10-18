@@ -1,0 +1,331 @@
+﻿@city_construction_price = 200
+@tradepost_construction_price = 80
+
+# General logic for giving out the appropriate amount of currencies to a plutocrat upon contract completion.
+republican_contract_rewards_disburse_ordinary_currency_effect = {
+	# Grab some scope for ease of access.
+	save_scope_as = task_contract
+	task_contract_employer = { save_scope_as = employer }
+	task_contract_taker = { save_scope_as = taker }
+	# Gold.
+	scope:employer = {
+		# Yes, this is necessary. We get boot errors if we compare a direct script value vs. zero: maths works out, it's just Jomini Magic doin' its thing.
+		save_scope_value_as = {
+			name = gold
+			value = {
+				value = $GOLD$
+				if = {
+					limit = { $EXTRA_REWARD$ = flag:yes }
+					multiply = task_contract_extra_reward_multiplier_value
+				}
+				round = yes
+			}
+		}
+		if = {
+			limit = { scope:gold != 0 }
+			# We pay players directly.
+			if = {
+				limit = {
+					scope:taker = { is_ai = no }
+				}
+				pay_short_term_gold = {
+					target = scope:taker
+					gold = scope:gold
+				}
+			}
+			# Otherwise only deduct gold if the AI can afford it.
+			else_if = {
+				limit = { short_term_gold >= $GOLD$ }
+				pay_short_term_gold = {
+					target = scope:taker
+					gold = scope:gold
+				}
+			}
+			# Else we magic the gold up so we don't bankrupt people foolishly.
+			else = {
+				scope:taker = { add_gold = scope:gold }
+			}
+		}
+	}
+	# Everything else.
+	scope:taker = {
+		# Prestige.
+		if = {
+			limit = { $PRESTIGE$ != 0 }
+			add_prestige = {
+				value = {
+					value = $PRESTIGE$
+					if = {
+						limit = { $EXTRA_REWARD$ = flag:yes }
+						multiply = task_contract_extra_reward_multiplier_value
+					}
+					round = yes
+				}
+			}
+		}
+		# Piety.
+		if = {
+			limit = { $PIETY$ != 0 }
+			add_piety = {
+				value = {
+					value = $PIETY$
+					if = {
+						limit = { $EXTRA_REWARD$ = flag:yes }
+						multiply = task_contract_extra_reward_multiplier_value
+					}
+					round = yes
+				}
+			}
+		}
+		# Opinion.
+		if = {
+			limit = { $OPINION$ != 0 }
+			reverse_add_opinion = {
+				modifier = $OPINION_TYPE$
+				target = scope:employer
+				opinion = $OPINION$
+			}
+		}
+	}
+}
+
+create_trade_contract = {
+	random_list = {
+		60 = {
+			random_neighboring_top_liege_realm_owner = {
+				limit = {
+					prev = {
+						can_create_task_contract = {
+							type_name = republican_establish_trade_presence_contract
+							employer = prev
+						}
+					}
+				}
+				save_scope_as = employer
+			}
+		}
+		10 = {
+			random_independent_ruler = {
+				limit = {
+					prev = {
+						in_diplomatic_range = prev
+						short_term_gold > 300
+						highest_held_title_tier >= tier_kingdom
+						can_create_task_contract = {
+							type_name = republican_establish_trade_presence_contract
+							employer = prev
+						}
+					}
+				}
+				save_scope_as = employer
+			}		
+		}
+	}
+	if = {
+		limit = { exists = scope:employer}
+		create_task_contract = {
+			task_contract_type = republican_establish_trade_presence_contract
+			task_contract_tier = scope:employer.task_contract_tier_value
+			location = scope:employer.capital_province
+			task_contract_employer = scope:employer
+		}
+	}
+}
+
+#Scope: Character
+#	uses: scope:county and contract scopes
+republican_contract_pick_trade_task = {
+	random_list = {
+		20 = { #Build Trade post
+			trigger = {
+				scope:county = {
+					any_county_province = {
+						has_holding = yes
+						has_free_building_slot = yes
+						NOT = { has_building_or_higher = common_tradeport_01 }
+						OR = {
+							is_coastal = yes
+							is_riverside_province = yes
+						}
+					}
+				}
+				scope:task_contract_employer = {
+					short_term_gold > {
+						value = @tradepost_construction_price
+						add = scope:task_contract.var:gold_success_standard
+					}
+				}
+			}
+			save_scope_value_as = { name = $TASK$ value = flag:Build_Tradepost }
+		}
+		10 = { #Upgrade Trade post
+			trigger = {
+				scope:county = {
+					any_county_province = {
+						can_upgrade_tradepost = { CHARACTER = root }
+					}
+				}
+				scope:task_contract_employer = {
+					short_term_gold > {
+						value = @tradepost_construction_price
+						add = scope:task_contract.var:gold_success_standard
+					}
+				}
+			}
+			save_scope_value_as = { name = $TASK$ value = flag:Upgrade_Tradepost }
+		}
+		5 = { #Found City
+			trigger = {
+				scope:county = {
+					any_county_province = {
+						has_holding = no
+					}
+				}
+				scope:task_contract_employer = {
+					short_term_gold > {
+						value = @tradepost_construction_price
+						add = scope:task_contract.var:gold_success_standard
+					}
+				}
+			}
+			save_scope_value_as = { name = $TASK$ value = flag:Found_City }
+		}
+		2 = { #Found foreign merchant community (EP1 Royal Court)
+			trigger = {
+				has_ep1_dlc_trigger = yes 
+				scope:county = { NOT = { has_county_modifier = foreign_merchant_community } }
+			}
+			save_scope_value_as = { name = $TASK$ value = flag:Foreign_Merchants }
+		}
+		2 = { #Mercantile Contacts EP3
+			trigger = {
+				has_ep3_dlc_trigger = yes
+				scope:county = { NOT = { has_county_modifier = mercantile_contacts_modifier } }
+			}
+			save_scope_value_as = { name = $TASK$ value = flag:Mercantile_Contacts }
+		}
+		1 = {
+			trigger = { always = yes }
+			save_scope_value_as = { name = $TASK$ value = flag:Increase_Development }
+		}
+	}
+}
+
+#scope:task_contract
+republican_contract_apply_trade_task_effect = {
+	switch = {
+		trigger = var:trade_task
+		flag:Build_Tradepost = {
+			var:task_contract_destination.county = {
+				if = {
+					limit = {
+						title_province = {
+							has_holding = yes
+							has_free_building_slot = yes
+							NOT = { has_building_or_higher = common_tradeport_01 }
+							OR = {
+								is_coastal = yes
+								is_riverside_province = yes
+							}
+						}
+					}
+					title_province = { add_building = common_tradeport_01 }
+				}
+				else = {
+					random_county_province = {
+						limit = {
+							has_holding = yes
+							has_free_building_slot = yes
+							NOT = { has_building_or_higher = common_tradeport_01 }
+							OR = {
+								is_coastal = yes
+								is_riverside_province = yes
+							}
+						}
+						add_building = common_tradeport_01
+					}
+				}
+			}
+			task_contract_employer = { remove_short_term_gold = @tradepost_construction_price }
+		}
+		flag:Upgrade_Tradepost = {
+			var:task_contract_destination.county = {
+				if = {
+					limit = {
+						title_province = {
+							can_upgrade_tradepost = { CHARACTER = scope:task_contract.var:task_contract_taker }
+						}
+					}
+					title_province = { upgrade_trade_post_effect = yes }
+				}
+				else = {
+					random_county_province = {
+						limit = {
+							can_upgrade_tradepost = { CHARACTER = scope:task_contract.var:task_contract_taker }
+						}
+						upgrade_trade_post_effect = yes
+					}
+				}
+			}
+			task_contract_employer = { remove_short_term_gold = @tradepost_construction_price }
+		}
+		flag:Found_City = {
+			var:task_contract_destination.county = {
+				random_county_province = {
+					limit = { has_holding = no }
+					begin_create_holding = city_holding
+				}
+			}
+			task_contract_employer = { remove_short_term_gold = @city_construction_price }
+		}
+		flag:Foreign_Merchants = {
+			var:task_contract_destination.county = {
+				add_county_modifier = {
+					modifier = foreign_merchant_community
+					years = 10
+				}
+			}
+		}
+		flag:Mercantile_Contacts = {
+			var:task_contract_destination.county = {
+				add_county_modifier = {
+					modifier = mercantile_contacts_modifier
+					years = 10
+				}
+			}
+		}
+		flag:Increase_Development = {
+			var:task_contract_destination.county = {
+				change_development_level = 2
+			}
+		}
+	}
+}
+
+#Scope: province
+upgrade_trade_post_effect = {
+	switch = {
+		trigger = has_building
+		common_tradeport_01 = {
+			add_building = common_tradeport_02
+		}
+		common_tradeport_02 = {
+			add_building = common_tradeport_03
+		}
+		common_tradeport_03 = {
+			add_building = common_tradeport_04
+		}
+		common_tradeport_04 = {
+			add_building = common_tradeport_05
+		}
+		common_tradeport_05 = {
+			add_building = common_tradeport_06
+		}
+		common_tradeport_06 = {
+			add_building = common_tradeport_07
+		}
+		common_tradeport_07 = {
+			add_building = common_tradeport_08
+		}
+	}
+}

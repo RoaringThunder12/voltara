@@ -1,0 +1,94 @@
+﻿republican_legacy_buy_trade_legacy = {
+	scope = character
+	effect = {
+		republican_legacy_purchase_perk_effect = { TRACK = trade }
+	}
+}
+republican_legacy_buy_diplomacy_legacy = {
+	scope = character
+	effect = {
+		republican_legacy_purchase_perk_effect = { TRACK = diplomacy }
+	}
+}
+republican_legacy_buy_civic_legacy = {
+	scope = character
+	effect = {
+		republican_legacy_purchase_perk_effect = { TRACK = civic }
+	}
+}
+republican_legacy_buy_militia_legacy = {
+	scope = character
+	effect = {
+		republican_legacy_purchase_perk_effect = { TRACK = militia }
+	}
+}
+republican_legacy_buy_prosperity_legacy = {
+	scope = character
+	effect = {
+		republican_legacy_purchase_perk_effect = { TRACK = prosperity }
+	}
+}
+
+republican_declare_war = {
+	scope = character
+	effect = {
+		republican_factions_declared_war_without_support_effect = yes
+	}
+}
+
+republican_election_ongoing_sguitrigger = {
+	scope = character
+	is_valid = {
+		republican_election_ongoing = yes
+	}
+}
+
+republican_support_candidate = {
+	scope = character
+	is_valid = {
+		republican_election_ongoing = yes
+		OR = {
+			NOT = { scope:candidate = { has_variable = election_boost } }
+			scope:candidate.var:election_boost < 5
+		}
+		gold > support_candidate_gold_cost
+	}
+	effect = {
+		remove_short_term_gold = support_candidate_gold_cost
+		scope:candidate = { republican_government_boost_election_weight_effect = yes }
+	}
+}
+
+republican_can_trade_sguitrigger = {
+	scope = character
+	is_valid = {
+		can_use_trade = yes
+	}
+}
+
+republican_trade_map_mode_color_sgui = {
+	effect = {
+		republican_trade_map_mode_color_effect = yes
+	}
+}
+
+republican_play_as_same_family = {
+	scope = character
+	is_valid = {
+		is_republican_government_story_owner = yes
+	}
+	effect = {
+		var:republican_government_story = {
+			if = {
+				limit = { has_variable = play_as_same_family }
+				remove_variable = play_as_same_family	
+			}
+			else = {
+				set_variable = {
+					name = play_as_same_family
+					value = yes
+				}
+			}
+		}
+	}
+}

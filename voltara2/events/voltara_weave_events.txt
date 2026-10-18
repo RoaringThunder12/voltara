@@ -1,0 +1,67 @@
+﻿namespace = voltara_weave
+
+voltara_weave.1 = { type = character_event title = voltara_weave.1.t desc = voltara_weave.1.desc theme = learning
+option = { name = voltara_weave.1.a  ai_chance = { base = 1 } }
+}
+
+voltara_weave.10 = { type = character_event title = voltara_weave.10.t desc = voltara_weave.10.desc theme = learning
+immediate = { add_character_flag = { flag = vt_weave_flavor_cooldown years = 3 } }
+option = { name = voltara_weave.10.a trigger = { gold >= 40 } remove_short_term_gold = 40 add_piety = 100 vt_weave_shift = { VALUE = -2 } ai_chance = { base = 70 } }
+option = { name = voltara_weave.10.b add_piety = 25 vt_weave_shift = { VALUE = -0.5 } ai_chance = { base = 30 } }
+}
+
+voltara_weave.11 = { type = character_event title = voltara_weave.11.t desc = voltara_weave.11.desc theme = learning
+immediate = { add_character_flag = { flag = vt_weave_flavor_cooldown years = 3 } }
+option = { name = voltara_weave.11.a trigger = { gold >= 75 } remove_short_term_gold = 75 add_character_modifier = { modifier = vt_weave_warded years = 5 } vt_weave_shift = { VALUE = -3 } ai_chance = { base = 80 } }
+option = { name = voltara_weave.11.b add_stress = 15 vt_weave_shift = { VALUE = 1 } ai_chance = { base = 20 } }
+}
+
+voltara_weave.12 = { type = character_event title = voltara_weave.12.t desc = voltara_weave.12.desc theme = learning
+immediate = { add_character_flag = { flag = vt_weave_flavor_cooldown years = 3 } }
+option = { name = voltara_weave.12.a trigger = { gold >= 50 } remove_short_term_gold = 50 add_character_modifier = { modifier = vt_weave_open_inquiry years = 5 } vt_weave_shift = { VALUE = 1 } ai_chance = { base = 55 } }
+option = { name = voltara_weave.12.b trigger = { gold >= 50 } remove_short_term_gold = 50 add_piety = 125 vt_weave_shift = { VALUE = -2 } ai_chance = { base = 35 } }
+option = { name = voltara_weave.12.c add_stress = -10 ai_chance = { base = 10 } }
+}
+
+voltara_weave.20 = { type = character_event title = voltara_weave.20.t desc = voltara_weave.20.desc theme = learning
+immediate = { add_character_flag = { flag = vt_weave_flavor_cooldown years = 3 } }
+option = { name = voltara_weave.20.a trigger = { gold >= 60 } remove_short_term_gold = 60 add_piety = 100 add_character_modifier = { modifier = vt_weave_ember_strength years = 5 } vt_weave_shift = { VALUE = 3 } ai_chance = { base = 70 } }
+option = { name = voltara_weave.20.b add_prestige = 75 vt_weave_shift = { VALUE = -1 } ai_chance = { base = 30 } }
+}
+
+voltara_weave.21 = { type = character_event title = voltara_weave.21.t desc = voltara_weave.21.desc theme = learning
+immediate = { add_character_flag = { flag = vt_weave_flavor_cooldown years = 3 } }
+option = { name = voltara_weave.21.a trigger = { gold >= 100 } remove_short_term_gold = 100 add_stress = 25 add_character_modifier = { modifier = vt_weave_open_inquiry years = 5 } vt_weave_shift = { VALUE = 3 } ai_chance = { base = 60 } }
+option = { name = voltara_weave.21.b trigger = { gold >= 25 } remove_short_term_gold = 25 add_prestige = 75 vt_weave_shift = { VALUE = 0.5 } ai_chance = { base = 30 } }
+option = { name = voltara_weave.21.c add_stress = -10 ai_chance = { base = 10 } }
+}
+
+voltara_weave.22 = { type = character_event title = voltara_weave.22.t desc = voltara_weave.22.desc theme = learning
+immediate = { add_character_flag = { flag = vt_weave_flavor_cooldown years = 3 } }
+option = { name = voltara_weave.22.a add_character_modifier = { modifier = vt_weave_open_inquiry years = 5 } add_stress = 20 vt_weave_shift = { VALUE = 1 } ai_chance = { base = 55 } }
+option = { name = voltara_weave.22.b add_piety = 75 vt_weave_shift = { VALUE = -2 } ai_chance = { base = 45 } }
+}
+
+voltara_weave.23 = { type = character_event title = voltara_weave.23.t desc = voltara_weave.23.desc theme = learning
+immediate = { add_character_flag = { flag = vt_weave_necromancy_cooldown years = 10 } }
+option = { name = voltara_weave.23.a vt_weave_awaken_necromancer = yes add_stress = 30 vt_weave_shift = { VALUE = 2 } ai_chance = { base = 35 } }
+option = { name = voltara_weave.23.b add_piety = 50 vt_weave_shift = { VALUE = -1 } ai_chance = { base = 65 } }
+}
+
+voltara_weave.30 = { type = character_event title = voltara_weave.30.t desc = voltara_weave.30.desc theme = learning
+option = { name = voltara_weave.30.a  ai_chance = { base = 1 } }
+}
+
+voltara_weave.31 = { type = character_event title = voltara_weave.31.t desc = voltara_weave.31.desc theme = learning
+option = { name = voltara_weave.31.a  ai_chance = { base = 1 } }
+}
+
+voltara_weave.40 = { type = character_event title = voltara_weave.40.t desc = voltara_weave.40.desc theme = learning
+immediate = { add_character_flag = { flag = vt_weave_flavor_cooldown years = 3 } }
+option = { name = voltara_weave.40.a trigger = { gold >= 50 } remove_short_term_gold = 50 add_prestige = 100 add_character_modifier = { modifier = vt_weave_relief years = 3 } vt_weave_shift = { VALUE = -1 } ai_chance = { base = 70 } }
+option = { name = voltara_weave.40.b add_stress = 10 ai_chance = { base = 30 } }
+}
+
+voltara_weave.50 = { type = character_event title = voltara_weave.50.t desc = voltara_weave.50.desc theme = war
+option = { name = voltara_weave.50.a  ai_chance = { base = 1 } }
+}

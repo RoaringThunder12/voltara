@@ -1,0 +1,1297 @@
+﻿######################################################
+##################### MY REALM #######################
+######################################################
+
+window = {
+	name = "republic_window"
+	widgetid = "republic_window"
+	datacontext = "[GetVariableSystem]"
+	datacontext = "[GetPlayer]"
+	parentanchor = top|right
+	layer = windows_layer
+	movable = no
+	visible = "[And(IsDefaultGUIMode, And( GetVariableSystem.Exists('republic_window_visible') ,And( Not( IsGameViewOpen('barbershop') ), And(Not(IsRightWindowOpen),  And( Not( IsPauseMenuShown ), Or(GetPlayer.GetGovernment.IsType( 'voltara_colonial_government' ),GetPlayer.GetGovernment.IsType( 'merchant_republic_government' )))))))]"
+
+	using = Window_Size_MainTab
+
+	state = {
+		name = _show
+		using = Animation_FadeIn_Quick
+		using = Sound_WindowShow_Standard
+		using = Window_Position_MainTab
+		start_sound = { soundeffect = "event:/GoldenDominion/UI/republican_window" }
+
+		on_start = "[GetVariableSystem.Set( 'republic_window_tab', 'my_republic' )]"
+	}
+
+	state = {
+		name = _hide
+		using = Animation_FadeOut_Quick
+		using = Sound_WindowHide_Standard
+		using = Window_Position_MainTab_Hide
+		start_sound = { soundeffect = "event:/GoldenDominion/UI/trade_close" }
+	}
+
+	widget = {
+		background = { using = Background_Area_Solid }
+		size = { 98% 100% }
+		position = { 5% 0% }
+		#margin_top = 0
+		#margin_bottom = 25
+		#margin_right = 13
+	}
+
+	margin_widget = {
+		size = { 100% 100% }
+		margin_top = 30
+		margin_bottom = 10
+		margin_right = 13
+
+		widget = {
+			size = { 100% 100% }
+
+			vbox = {
+				using = Window_Margins
+
+				header_pattern = {
+					layoutpolicy_horizontal = expanding
+
+					blockoverride "header_text"
+					{
+						text = "REPUBLIC_WINDOW_TITLE"
+					}
+
+					blockoverride "button_close"
+					{
+						onclick = "[GetVariableSystem.Toggle('republic_window_visible')]"
+						onclick = "[SetMapMode('realms')]"
+					}
+				}
+
+				hbox = {
+					layoutpolicy_horizontal = expanding
+
+					button_tab = {
+						layoutpolicy_horizontal = expanding
+						text = "REPUBLIC_WINDOW_MY_REPUBLIC"
+						down = "[GetVariableSystem.HasValue('republic_window_tab', 'my_republic')]"
+						onclick = "[GetVariableSystem.Set( 'republic_window_tab', 'my_republic' )]"
+						onclick = "[SetMapMode('realms')]"
+						clicksound = "event:/GoldenDominion/UI/republican_window"
+					}
+
+					button_tab = {
+						layoutpolicy_horizontal = expanding
+						text = "REPUBLIC_WINDOW_MY_REPUBLICAN_LEGACY"
+						down = "[GetVariableSystem.HasValue('republic_window_tab', 'legacy')]"
+						onclick = "[GetVariableSystem.Set( 'republic_window_tab', 'legacy' )]"
+						onclick = "[SetMapMode('realms')]"
+						clicksound = "event:/GoldenDominion/UI/republican_legacy"
+					}
+					button_tab = {
+						layoutpolicy_horizontal = expanding
+						visible = "[GetScriptedGui( 'republican_can_trade_sguitrigger' ).IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						text = "REPUBLIC_WINDOW_MY_TRADE"
+						down = "[GetVariableSystem.HasValue('republic_window_tab', 'trade')]"
+						onclick = "[GetVariableSystem.Set( 'republic_window_tab', 'trade' )]"
+						onclick = "[SetMapMode('trade_map_mode')]"
+						onclick = "[GetScriptedGui('republican_trade_map_mode_color_sgui').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+						clicksound = "event:/GoldenDominion/UI/trade_open"
+					}
+				}
+
+				widget = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+
+
+					vbox = {
+						name = "my_republic"
+						visible = "[GetVariableSystem.HasValue('republic_window_tab', 'my_republic')]"
+						margin = { 10 0 }
+						using = Animation_Tab_Switch
+
+						vbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 4
+							text_single = {
+								layoutpolicy_horizontal = expanding
+								margin = { 0 10 }
+								text = "REPUBLIC_WINDOW_REPUBLICAN_SEATS"
+								align = center|nobaseline
+								#default_format = "#low"
+								background = { using = Background_Area_ExtraDark }
+							}
+							hbox = {
+								background = {
+									using = Background_Area_Dark_Border
+									margin = { -1 5 }
+								}
+								widget = { min_width = 6 }
+								widget_republican_faction = {
+									layoutstretchfactor_horizontal = "[GetRepublicanFactionWeightInt('oligarchs_weight')]"
+									blockoverride "icon_texture" { texture = "gfx/interface/icons/republican_factions/oligarch_icon.dds" }
+									blockoverride "faction_tt" { tooltip = "republic_window_oligarchs_faction_tt" }
+									blockoverride "color_texture" { texture = "gfx/interface/colors/blue.dds" }
+									blockoverride "influence_text" { text = "republican_window_oligarchs_influence_label" }
+									blockoverride "support_text" { text = "republican_window_oligarchs_support_label" }
+									blockoverride "pattern" { texture = "gfx/interface/window_republic/oligarch_pattern.dds" texture_density = 2.5 }
+								}
+								widget_republican_faction = {
+									layoutstretchfactor_horizontal = "[GetRepublicanFactionWeightInt('burghers_weight')]"
+									blockoverride "icon_texture" { texture = "gfx/interface/icons/republican_factions/burgher_icon.dds" }
+									blockoverride "faction_tt" { tooltip = "republic_window_burghers_faction_tt" }
+									blockoverride "color_texture" { texture = "gfx/interface/colors/gold.dds" }
+									blockoverride "influence_text" { text = "republican_window_burghers_influence_label" }
+									blockoverride "support_text" { text = "republican_window_burghers_support_label" }
+									blockoverride "pattern" { texture = "gfx/interface/window_republic/burgher_pattern.dds" texture_density = 3.2 }
+								}
+								widget_republican_faction = {
+									layoutstretchfactor_horizontal = "[GetRepublicanFactionWeightInt('commons_weight')]"
+									blockoverride "icon_texture" { texture = "gfx/interface/icons/republican_factions/commons_icon.dds" }
+									blockoverride "faction_tt" { tooltip = "republic_window_commons_faction_tt" }
+									blockoverride "color_texture" { texture = "gfx/interface/colors/green.dds" }
+									blockoverride "influence_text" { text = "republican_window_commons_influence_label" }
+									blockoverride "support_text" { text = "republican_window_commons_support_label" }
+									blockoverride "pattern" { texture = "gfx/interface/component_masks/patterns/mask_pattern_02.dds" texture_density = 1.2 }
+								}
+								widget_republican_faction = {
+									layoutstretchfactor_horizontal = "[GetRepublicanFactionWeightInt('clerics_weight')]"
+									blockoverride "icon_texture" { texture = "gfx/interface/icons/republican_factions/clerics_icon.dds" }
+									blockoverride "faction_tt" { tooltip = "republic_window_clerics_faction_tt" }
+									blockoverride "color_texture" { texture = "gfx/interface/colors/grey.dds" }
+									blockoverride "influence_text" { text = "republican_window_clerics_influence_label" }
+									blockoverride "support_text" { text = "republican_window_clerics_support_label" }
+									blockoverride "pattern" { texture = "gfx/interface/component_masks/patterns/mask_pattern_05.dds" texture_density = 1.25 }
+								}
+								widget_republican_faction = {
+									layoutstretchfactor_horizontal = "[GetRepublicanFactionWeightInt('militants_weight')]"
+									blockoverride "icon_texture" { texture = "gfx/interface/icons/republican_factions/militants_icon.dds" }
+									blockoverride "faction_tt" { tooltip = "republic_window_militants_faction_tt" }
+									blockoverride "color_texture" { texture = "gfx/interface/colors/red.dds" }
+									blockoverride "influence_text" { text = "republican_window_militants_influence_label" }
+									blockoverride "support_text" { text = "republican_window_militants_support_label" }
+									blockoverride "pattern" { texture = "gfx/interface/component_masks/patterns/mask_pattern_04.dds" texture_density = 1.5 }
+								}
+								widget = { min_width = 6 }
+							}
+							widget = {
+								size = { 0 30}
+								layoutpolicy_horizontal = expanding
+								progressbar_standard = {
+									name = "republican_support_progressbar"
+									tooltip = "republican_support_progressbar_tt"
+									size = { 100% 100% }
+									alpha = 1
+
+									min = 0
+									max = 1
+									value = "[Character.MakeScope.Var('republican_government_story').GetVariable('republican_support').GetValue]"
+									modify_texture = {
+										texture = "gfx/interface/component_masks/mask_rough_edges.dds"
+										spriteType = Corneredtiled
+										spriteborder = { 20 20 }
+										blend_mode = alphamultiply
+										texture_density = 1.5
+									}
+
+									modify_texture = {
+										texture = "gfx/interface/component_masks/mask_fade_horizontal.dds"
+										blend_mode = alphamultiply
+										alpha = 0.2
+									}
+
+									modify_texture = {
+										texture = "gfx/interface/component_masks/mask_scratches.dds"
+										blend_mode = alphamultiply
+										spriteType = corneredtiled
+										alpha = 0.5
+										texture_density = 1
+									}
+								}
+								text_single = {
+									layoutpolicy_horizontal = expanding
+									parentanchor = center
+									margin = { 0 20 }
+									text = "republican_support_label"
+									align = center|nobaseline
+									default_format = "#glow_color:{0,0,0,1}"
+								}
+							}
+						}
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							margin = { 0 10 }
+							text = "REPUBLIC_WINDOW_MERCHANT_FAMILIES"
+							align = center|nobaseline
+							#default_format = "#low"
+							background = { using = Background_Area_ExtraDark }
+							visible = "[GetPlayer.GetGovernment.IsType( 'merchant_republic_government' )]"
+							button_checkbox_label = {
+								parentanchor = right|vcenter
+								enabled = "[GetScriptedGui( 'republican_play_as_same_family' ).IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('republican_play_as_same_family').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+								tooltip = "play_as_merchant_family_tt"
+#							
+								blockoverride "checkbox"
+								{
+									size = { 20 20 }
+									checked = "[Character.MakeScope.Var('republican_government_story').Var('play_as_same_family').IsSet]"
+									
+								}
+
+								blockoverride "text"
+								{
+									text = "play_as_merchant_family"
+									fontsize = 12
+									margin_right = 10
+								}
+							}
+						}
+						republican_merchant_families = {
+							layoutpolicy_horizontal = expanding
+						}
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							margin = { 0 10 }
+							text = "REPUBLIC_WINDOW_REPUBLICAN_CANDIDATES"
+							align = center|nobaseline
+							#default_format = "#low"
+							background = { using = Background_Area_ExtraDark }
+						}
+						republican_election_candidates = {
+							layoutpolicy_horizontal = expanding
+						}
+						expand = {}
+					}
+
+					vbox = {
+						name = "republican_legacy"
+						visible = "[GetVariableSystem.HasValue('republic_window_tab', 'legacy')]"
+						margin = { 10 0 }
+						using = Animation_Tab_Switch
+
+						spacing = 5
+
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							margin = { 0 10 }
+							text = "REPUBLIC_PRESTIGE_HEADER"
+							align = center|nobaseline
+							#default_format = "#low"
+							background = { using = Background_Area_ExtraDark }
+						}
+						republican_prestige_widget = { }
+						republican_legacy_widget = {
+							datacontext = "[Character.MakeScope.Var('republican_government_story').GetVariable('legacy_level_trade')]"
+							blockoverride "background_texture" { texture = "gfx/interface/illustrations/republican_legacy/republican_legacy_trade.dds" }
+							blockoverride "legacy_name" { text = "republican_legacy_name_trade" }
+							blockoverride "perk_1" { text = "republican_legacy_perk_trade_1" }
+							blockoverride "perk_2" { text = "republican_legacy_perk_trade_2" }
+							blockoverride "perk_3" { text = "republican_legacy_perk_trade_3" }
+							blockoverride "perk_4" { text = "republican_legacy_perk_trade_4" }
+							blockoverride "perk_1_tt" { tooltip = "republican_legacy_perk_trade_1_tt" }
+							blockoverride "perk_2_tt" { tooltip = "republican_legacy_perk_trade_2_tt" }
+							blockoverride "perk_3_tt" { tooltip = "republican_legacy_perk_trade_3_tt" }
+							blockoverride "perk_4_tt" { tooltip = "republican_legacy_perk_trade_4_tt" }
+							blockoverride "onclick" { onclick = "[GetScriptedGui( 'republican_legacy_buy_trade_legacy' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+						}
+						republican_legacy_widget = {
+							datacontext = "[Character.MakeScope.Var('republican_government_story').GetVariable('legacy_level_diplomacy')]"
+							blockoverride "background_texture" { texture = "gfx/interface/illustrations/republican_legacy/republican_legacy_diplomacy.dds" }
+							blockoverride "legacy_name" { text = "republican_legacy_name_diplomacy" }
+							blockoverride "perk_1" { text = "republican_legacy_perk_diplomacy_1" }
+							blockoverride "perk_2" { text = "republican_legacy_perk_diplomacy_2" }
+							blockoverride "perk_3" { text = "republican_legacy_perk_diplomacy_3" }
+							blockoverride "perk_4" { text = "republican_legacy_perk_diplomacy_4" }
+							blockoverride "perk_1_tt" { tooltip = "republican_legacy_perk_diplomacy_1_tt" }
+							blockoverride "perk_2_tt" { tooltip = "republican_legacy_perk_diplomacy_2_tt" }
+							blockoverride "perk_3_tt" { tooltip = "republican_legacy_perk_diplomacy_3_tt" }
+							blockoverride "perk_4_tt" { tooltip = "republican_legacy_perk_diplomacy_4_tt" }
+							blockoverride "onclick" { onclick = "[GetScriptedGui( 'republican_legacy_buy_diplomacy_legacy' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+						}
+						republican_legacy_widget = {
+							datacontext = "[Character.MakeScope.Var('republican_government_story').GetVariable('legacy_level_civic')]"
+							blockoverride "background_texture" { texture = "gfx/interface/illustrations/republican_legacy/republican_legacy_civic.dds" }
+							blockoverride "legacy_name" { text = "republican_legacy_name_civic" }
+							blockoverride "perk_1" { text = "republican_legacy_perk_civic_1" }
+							blockoverride "perk_2" { text = "republican_legacy_perk_civic_2" }
+							blockoverride "perk_3" { text = "republican_legacy_perk_civic_3" }
+							blockoverride "perk_4" { text = "republican_legacy_perk_civic_4" }
+							blockoverride "perk_1_tt" { tooltip = "republican_legacy_perk_civic_1_tt" }
+							blockoverride "perk_2_tt" { tooltip = "republican_legacy_perk_civic_2_tt" }
+							blockoverride "perk_3_tt" { tooltip = "republican_legacy_perk_civic_3_tt" }
+							blockoverride "perk_4_tt" { tooltip = "republican_legacy_perk_civic_4_tt" }
+							blockoverride "onclick" { onclick = "[GetScriptedGui( 'republican_legacy_buy_civic_legacy' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+						}
+						republican_legacy_widget = {
+							datacontext = "[Character.MakeScope.Var('republican_government_story').GetVariable('legacy_level_militia')]"
+							blockoverride "background_texture" { texture = "gfx/interface/illustrations/republican_legacy/republican_legacy_militia.dds" }
+							blockoverride "legacy_name" { text = "republican_legacy_name_militia" }
+							blockoverride "perk_1" { text = "republican_legacy_perk_militia_1" }
+							blockoverride "perk_2" { text = "republican_legacy_perk_militia_2" }
+							blockoverride "perk_3" { text = "republican_legacy_perk_militia_3" }
+							blockoverride "perk_4" { text = "republican_legacy_perk_militia_4" }
+							blockoverride "perk_1_tt" { tooltip = "republican_legacy_perk_militia_1_tt" }
+							blockoverride "perk_2_tt" { tooltip = "republican_legacy_perk_militia_2_tt" }
+							blockoverride "perk_3_tt" { tooltip = "republican_legacy_perk_militia_3_tt" }
+							blockoverride "perk_4_tt" { tooltip = "republican_legacy_perk_militia_4_tt" }
+							blockoverride "onclick" { onclick = "[GetScriptedGui( 'republican_legacy_buy_militia_legacy' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+						}
+						republican_legacy_widget = {
+							datacontext = "[Character.MakeScope.Var('republican_government_story').GetVariable('legacy_level_prosperity')]"
+							blockoverride "background_texture" { texture = "gfx/interface/illustrations/republican_legacy/republican_legacy_prosperity.dds" }
+							blockoverride "legacy_name" { text = "republican_legacy_name_prosperity" }
+							blockoverride "perk_1" { text = "republican_legacy_perk_prosperity_1" }
+							blockoverride "perk_2" { text = "republican_legacy_perk_prosperity_2" }
+							blockoverride "perk_3" { text = "republican_legacy_perk_prosperity_3" }
+							blockoverride "perk_4" { text = "republican_legacy_perk_prosperity_4" }
+							blockoverride "perk_1_tt" { tooltip = "republican_legacy_perk_prosperity_1_tt" }
+							blockoverride "perk_2_tt" { tooltip = "republican_legacy_perk_prosperity_2_tt" }
+							blockoverride "perk_3_tt" { tooltip = "republican_legacy_perk_prosperity_3_tt" }
+							blockoverride "perk_4_tt" { tooltip = "republican_legacy_perk_prosperity_4_tt" }
+							blockoverride "onclick" { onclick = "[GetScriptedGui( 'republican_legacy_buy_prosperity_legacy' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+						}
+						expand = {}
+					}
+
+					vbox = {
+						name = "trade"
+						visible = "[GetVariableSystem.HasValue('republic_window_tab', 'trade')]"
+						margin = { 10 0 }
+						using = Animation_Tab_Switch
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							margin = { 0 10 }
+							text = "REPUBLIC_TRADE_HEADER"
+							align = center|nobaseline
+							#default_format = "#low"
+							background = { using = Background_Area_ExtraDark }
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							vbox = {
+								spacing = 5
+								background = { using = Background_Area }
+								margin = { 20 5 }
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									min_width = 200
+									text_single = {
+										text = "republican_trade_trade_value_label"
+										align = center|nobaseline
+									}
+									expand = {}
+									text_single = {
+										layoutpolicy_horizontal = expanding
+										text = "republican_trade_trade_value"
+										align = right|nobaseline
+									}
+								}
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									min_width = 200
+									text_single = {
+										text = "republican_trade_trade_strength_label"
+										align = center|nobaseline
+									}
+									expand = {}
+									text_single = {
+										layoutpolicy_horizontal = expanding
+										text = "republican_trade_trade_strength"
+										align = right|nobaseline
+									}
+								}
+
+							}
+							progressbar_standard = {
+								layoutpolicy_horizontal = expanding
+								layoutpolicy_vertical = expanding
+								min = 0
+								max = 1
+								value = "[GetPlayer.MakeScope.Var('trade_share').GetValue]"
+								progresstexture = "gfx/interface/progressbars/progress_orange.dds"
+								noprogresstexture = "gfx/interface/progressbars/progress_gray.dds"
+
+								background = {
+									texture = "gfx/interface/component_tiles/tile_vignette_3px.dds"
+									spriteType = Corneredtiled
+									texture_density = 0.1
+									spriteborder = { 5 5 }
+									alpha = 1
+								}
+								marker = {
+									name = "current_value"
+									widget = {
+										icon = {
+											size = { 30 52 }
+											position = { -24 2 }
+											texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+											color = { 1 0.9 0.8 0.2 }
+										}
+									}
+								}
+								modify_texture = {
+									texture = "gfx/interface/component_masks/mask_rough_edges.dds"
+									spriteType = Corneredtiled
+									spriteborder = { 20 20 }
+									blend_mode = alphamultiply
+									texture_density = 1.2
+								}
+
+								modify_texture = {
+									texture = "gfx/interface/component_masks/mask_fade_horizontal.dds"
+									blend_mode = alphamultiply
+									alpha = 0.2
+								}
+
+								modify_texture = {
+									texture = "gfx/interface/component_masks/mask_scratches.dds"
+									blend_mode = alphamultiply
+									spriteType = corneredtiled
+									alpha = 0.2
+									texture_density = 1
+								}
+								text_single = {
+									layoutpolicy_horizontal = expanding
+									parentanchor = center
+									fontsize = 18
+									text = "republican_trade_share"
+									align = center|nobaseline
+									default_format = "#color:{1,1,0.9,1};glow_color:{0,0,0,1}"
+								}
+							}
+						}
+						text_single = {
+							layoutpolicy_horizontal = expanding
+							margin = { 0 10 }
+							text = "REPUBLIC_TRADE_DEALS"
+							align = center|nobaseline
+							#default_format = "#low"
+							background = { using = Background_Area_ExtraDark }
+						}
+						republican_trade_deals = {
+							layoutpolicy_horizontal = expanding
+						}
+						expand = {}
+					}
+				}
+			}
+		}
+	}
+}
+
+types Republican_GUI
+{
+	type widget_republican_faction = widget
+	{
+		name = "faction_widget"
+		size = { 0 65 }
+		layoutpolicy_horizontal = expanding
+
+		icon = {
+			size = { 100% 100% }
+			parentanchor = center
+			block = "color_texture" { }
+			alpha = 1
+			modify_texture = {
+				texture = "gfx/interface/component_tiles/tile_frame_thin_02.dds"
+				spriteType = Corneredtiled
+				spriteborder = { 50 50 }
+				blend_mode = alphamultiply
+				texture_density = 0.6
+				alpha = 0.35
+			}
+			modify_texture = {
+				block = "pattern" { texture = "gfx/interface/window_republic/oligarch_pattern.dds" texture_density = 1.5 }
+				spritetype = corneredtiled
+				blend_mode = alphamultiply
+				alpha = 0.2
+			}
+		}
+		text_single = {
+			block = "influence_text" { }
+			position = { 0 -22 }
+			autoresize = yes
+			fontsize_min = 8
+			fontsize = 11
+			parentanchor = center
+			align = center|nobaseline
+			default_format = "#V;bold;glow_color:{0,0,0,1}"
+		}
+		text_single = {
+			block = "support_text" { }
+			position = { 0 22 }
+			autoresize = yes
+			fontsize_min = 8
+			fontsize = 11
+			parentanchor = center
+			align = center|nobaseline
+			default_format = "#V;bold;glow_color:{0,0,0,1}"
+		}
+		icon = {
+			name = "faction_icon"
+			size = { 38 38 }
+			block = "icon_texture" { }
+			parentanchor = center
+			state = {
+				name = icon_enter
+				size = { 44 44 }
+				duration = 0.05
+			}
+			state = {
+				name = icon_leave
+				size = { 38 38 }
+				duration = 0.05
+			}
+		}
+		button = {
+			enabled = yes
+			background = {
+				texture = "gfx/interface/component_tiles/tile_vignette_3px.dds"
+				spriteType = Corneredtiled
+				texture_density = 1
+				spriteborder = { 5 5 }
+				alpha = 0.5
+			}
+			size = { 100% 100% }
+			block = "faction_tt" { }
+			state = {
+				name = _mouse_hierarchy_enter
+				on_start = "[PdxGuiWidget.AccessParent.FindChild('faction_icon').TriggerAnimation('icon_enter')]"
+				duration = 0.1
+				alpha = 0.1
+			}
+			state = {
+				name = _mouse_hierarchy_leave
+				on_start = "[PdxGuiWidget.AccessParent.FindChild('faction_icon').TriggerAnimation('icon_leave')]"
+				duration = 0.1
+				alpha = 1
+			}
+		}
+	}
+
+	type republican_legacy_widget = vbox
+	{
+		layoutpolicy_horizontal = expanding
+		spacing = -5
+		text_single = {
+			layoutpolicy_horizontal = expanding
+			margin_top = 3
+			margin_bottom = 3
+
+			block = "legacy_name" {
+				text = "republican_legacy_name"
+			}
+			fontsize = 16
+			align = center|nobaseline
+			default_format = "#V"
+			background = { using = Background_Area_Dark }
+		}
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			background = {
+				block = "background_texture" {
+					texture = "gfx/interface/illustrations/republican_legacy/republican_legacy_trade.dds"
+				}
+				modify_texture = {
+					texture = "gfx/interface/component_tiles/tile_frame_thin_02.dds"
+					spriteType = Corneredtiled
+					spriteborder = { 50 50 }
+					blend_mode = alphamultiply
+					texture_density = 2
+				}
+
+				modify_texture = {
+					texture = "gfx/interface/component_masks/mask_legacy_track.dds"
+					spriteType = Corneredtiled
+					spriteborder = { 50 50 }
+					blend_mode = alphamultiply
+				}
+			}
+			button_normal = {
+				size = { 0 140 }
+				enabled = "[CanPurchaseRepublicanPerk('(CFixedPoint)1')]"
+				block = "perk_1_tt" {
+					tooltip = "republican_legacy_perk_tt"
+				}
+				block = "onclick" {	}
+				layoutpolicy_horizontal = expanding
+				background = {
+					visible = "[LessThan_CFixedPoint(Scope.GetValue, '(CFixedPoint)1')]"
+					size = { 100% 100% }
+					texture = "gfx/interface/component_masks/mask_frame_horizontal.dds"
+					tintcolor = { 0 0 0 0.8 }
+
+					modify_texture = {
+						texture = "gfx/interface/component_tiles/tile_frame_thin_02.dds"
+						spriteType = Corneredtiled
+						spriteborder = { 50 50 }
+						blend_mode = alphamultiply
+						alpha = 0.2
+						texture_density = 2
+					}
+				}
+				vbox = {
+					visible = "[CantPurchaseRepublicanPerk('(CFixedPoint)1')]"
+					text_multi = {
+						block = "perk_1" {
+							text = "republican_legacy_perk"
+						}
+						autoresize = yes
+						max_width = 100
+						align = center|nobaseline
+						fontsize_min = 10
+						default_format = "#high"
+					}
+				}
+				### TEXT ###
+				vbox = {
+					visible = "[CanPurchaseRepublicanPerk('(CFixedPoint)1')]"
+
+					vbox = {
+						layoutpolicy_vertical = expanding
+						layoutpolicy_horizontal = expanding
+
+						text_multi = {
+							block = "perk_1" {
+								text = "republican_legacy_perk"
+							}
+							autoresize = yes
+							max_width = 100
+							align = center|nobaseline
+							fontsize_min = 10
+							default_format = "#high"
+						}
+
+						text_single = {
+							text = "republican_legacy_perk_unlock"
+							align = center|nobaseline
+							default_format = "#I"
+						}
+					}
+				}
+				button_standard_clean = {
+					visible = "[CanPurchaseRepublicanPerk('(CFixedPoint)1')]"
+					size = { 100% 100% }
+					alwaystransparent = yes
+
+					animation_attention_text = {}
+
+					background = {
+						texture = "gfx/interface/component_tiles/tile_vignette_3px.dds"
+						spriteType = Corneredtiled
+						spriteborder = { 5 5 }
+						margin = { -2 -2 }
+					}
+				}
+			}
+			button_normal = {
+				size = { 0 140 }
+				enabled = "[CanPurchaseRepublicanPerk('(CFixedPoint)2')]"
+				block = "perk_2_tt" {
+					tooltip = "republican_legacy_perk_tt"
+				}
+				block = "onclick" {	}
+				layoutpolicy_horizontal = expanding
+				background = {
+					visible = "[LessThan_CFixedPoint(Scope.GetValue, '(CFixedPoint)2')]"
+					size = { 100% 100% }
+					texture = "gfx/interface/component_masks/mask_frame_horizontal.dds"
+					tintcolor = { 0 0 0 0.8 }
+
+					modify_texture = {
+						texture = "gfx/interface/component_tiles/tile_frame_thin_02.dds"
+						spriteType = Corneredtiled
+						spriteborder = { 50 50 }
+						blend_mode = alphamultiply
+						alpha = 0.2
+						texture_density = 2
+					}
+				}
+				vbox = {
+					visible = "[CantPurchaseRepublicanPerk('(CFixedPoint)2')]"
+					text_multi = {
+						block = "perk_2" {
+							text = "republican_legacy_perk"
+						}
+						autoresize = yes
+						max_width = 100
+						align = center|nobaseline
+						fontsize_min = 10
+						default_format = "#high"
+					}
+				}
+				### TEXT ###
+				vbox = {
+					visible = "[CanPurchaseRepublicanPerk('(CFixedPoint)2')]"
+
+					vbox = {
+						layoutpolicy_vertical = expanding
+						layoutpolicy_horizontal = expanding
+
+						text_multi = {
+							block = "perk_2" {
+								text = "republican_legacy_perk"
+							}
+							autoresize = yes
+							max_width = 100
+							align = center|nobaseline
+							fontsize_min = 10
+							default_format = "#high"
+						}
+
+						text_single = {
+							text = "republican_legacy_perk_unlock"
+							align = center|nobaseline
+							default_format = "#I"
+						}
+					}
+				}
+				button_standard_clean = {
+					visible = "[CanPurchaseRepublicanPerk('(CFixedPoint)2')]"
+					size = { 100% 100% }
+					alwaystransparent = yes
+
+					animation_attention_text = {}
+
+					background = {
+						texture = "gfx/interface/component_tiles/tile_vignette_3px.dds"
+						spriteType = Corneredtiled
+						spriteborder = { 5 5 }
+						margin = { -2 -2 }
+					}
+				}
+			}
+			button_normal = {
+				size = { 0 140 }
+				enabled = "[CanPurchaseRepublicanPerk('(CFixedPoint)3')]"
+				block = "perk_3_tt" {
+					tooltip = "republican_legacy_perk_tt"
+				}
+				block = "onclick" {	}
+				layoutpolicy_horizontal = expanding
+				background = {
+					visible = "[LessThan_CFixedPoint(Scope.GetValue, '(CFixedPoint)3')]"
+					size = { 100% 100% }
+					texture = "gfx/interface/component_masks/mask_frame_horizontal.dds"
+					tintcolor = { 0 0 0 0.8 }
+
+					modify_texture = {
+						texture = "gfx/interface/component_tiles/tile_frame_thin_02.dds"
+						spriteType = Corneredtiled
+						spriteborder = { 50 50 }
+						blend_mode = alphamultiply
+						alpha = 0.2
+						texture_density = 2
+					}
+				}
+				vbox = {
+					visible = "[CantPurchaseRepublicanPerk('(CFixedPoint)3')]"
+					text_multi = {
+						block = "perk_3" {
+							text = "republican_legacy_perk"
+						}
+						autoresize = yes
+						max_width = 100
+						align = center|nobaseline
+						fontsize_min = 10
+						default_format = "#high"
+					}
+				}
+				### TEXT ###
+				vbox = {
+					visible = "[CanPurchaseRepublicanPerk('(CFixedPoint)3')]"
+
+					vbox = {
+						layoutpolicy_vertical = expanding
+						layoutpolicy_horizontal = expanding
+
+						text_multi = {
+							block = "perk_3" {
+								text = "republican_legacy_perk"
+							}
+							autoresize = yes
+							max_width = 100
+							align = center|nobaseline
+							fontsize_min = 10
+							default_format = "#high"
+						}
+
+						text_single = {
+							text = "republican_legacy_perk_unlock"
+							align = center|nobaseline
+							default_format = "#I"
+						}
+					}
+				}
+				button_standard_clean = {
+					visible = "[CanPurchaseRepublicanPerk('(CFixedPoint)3')]"
+					size = { 100% 100% }
+					alwaystransparent = yes
+
+					animation_attention_text = {}
+
+					background = {
+						texture = "gfx/interface/component_tiles/tile_vignette_3px.dds"
+						spriteType = Corneredtiled
+						spriteborder = { 5 5 }
+						margin = { -2 -2 }
+					}
+				}
+			}
+			button_normal = {
+				size = { 0 140 }
+				enabled = "[CanPurchaseRepublicanPerk('(CFixedPoint)4')]"
+				block = "perk_4_tt" {
+					tooltip = "republican_legacy_perk_tt"
+				}
+				block = "onclick" {	}
+				layoutpolicy_horizontal = expanding
+				background = {
+					visible = "[LessThan_CFixedPoint(Scope.GetValue, '(CFixedPoint)4')]"
+					size = { 100% 100% }
+					texture = "gfx/interface/component_masks/mask_frame_horizontal.dds"
+					tintcolor = { 0 0 0 0.8 }
+
+					modify_texture = {
+						texture = "gfx/interface/component_tiles/tile_frame_thin_02.dds"
+						spriteType = Corneredtiled
+						spriteborder = { 50 50 }
+						blend_mode = alphamultiply
+						alpha = 0.2
+						texture_density = 2
+					}
+				}
+				vbox = {
+					visible = "[CantPurchaseRepublicanPerk('(CFixedPoint)4')]"
+					text_multi = {
+						block = "perk_4" {
+							text = "republican_legacy_perk"
+						}
+						autoresize = yes
+						max_width = 100
+						align = center|nobaseline
+						fontsize_min = 10
+						default_format = "#high"
+					}
+				}
+				### TEXT ###
+				vbox = {
+					visible = "[CanPurchaseRepublicanPerk('(CFixedPoint)4')]"
+
+					vbox = {
+						layoutpolicy_vertical = expanding
+						layoutpolicy_horizontal = expanding
+
+						text_multi = {
+							block = "perk_4" {
+								text = "republican_legacy_perk"
+							}
+							autoresize = yes
+							max_width = 100
+							align = center|nobaseline
+							fontsize_min = 10
+							default_format = "#high"
+						}
+
+						text_single = {
+							text = "republican_legacy_perk_unlock"
+							align = center|nobaseline
+							default_format = "#I"
+						}
+					}
+				}
+				button_standard_clean = {
+					visible = "[CanPurchaseRepublicanPerk('(CFixedPoint)4')]"
+					size = { 100% 100% }
+					alwaystransparent = yes
+
+					animation_attention_text = {}
+
+					background = {
+						texture = "gfx/interface/component_tiles/tile_vignette_3px.dds"
+						spriteType = Corneredtiled
+						spriteborder = { 5 5 }
+						margin = { -2 -2 }
+					}
+				}
+			}
+		}
+	}
+
+	type republican_prestige_widget = widget
+	{
+		name = "republican_prestige"
+		datacontext = "[Character.MakeScope.Var('republican_government_story').GetVariable('republican_prestige')]"
+		layoutpolicy_horizontal = expanding
+		button = {
+			size = { 100% 100% }
+			using = tooltip_ne
+			tooltip = "republican_legacy_resource_tt"
+		}
+
+		background = {
+			using = Background_Area_Dark_Border
+			margin = { 2 2 }
+		}
+		size = { 112 50 }
+
+		progressbar_standard = {
+			name = "republican_prestige_progressbar"
+			size = { 100% 100% }
+
+			min = 0
+			max = "[Character.MakeScope.Var('republican_government_story').ScriptValue('republican_legacy_cost')]"
+			value = "[Scope.GetValue]"
+		}
+		vbox = {
+			parentanchor = center
+
+			hbox = {
+				spacing = 6
+				icon = {
+					texture = "gfx/interface/icons/icon_republican_prestige.dds"
+					size = { 30 30 }
+				}
+
+				flowcontainer = {
+					margin_bottom = 7
+					spacing = -6
+					direction = vertical
+
+					text_single = {
+						name = "republican_prestige_value"
+						text = "[Scope.GetValue|0]"
+
+						max_width = 50
+						default_format = "#high"
+						using = Font_Size_Medium
+					}
+					text_single = {
+						name = "balance"
+						text = "[Character.MakeScope.ScriptValue('republican_prestige_gain')|1=]"
+						max_width = 110
+
+						default_format = "#low"
+					}
+				}
+			}
+		}
+	}
+
+	type republican_election_candidates = dynamicgridbox
+	{
+		maxhorizontalslots = 6
+		maxverticalslots = 5
+		datamodel_wrap = 5
+		flipdirection = yes
+		datamodel = "[Character.MakeScope.Var('republican_government_story').GetList('candidates')]"
+
+		item = {
+			widget = {
+
+				datacontext = "[Scope.Char]"
+				size = { 106 140 }
+				vbox = {
+					portrait_head_small = {
+						size = { 115 100 }
+						blockoverride "portrait_texture" {
+							portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+							scale = 1.18
+						}
+						button = {
+							visible = "[GetScriptedGui( 'republican_election_ongoing_sguitrigger' ).IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+							enabled = "[GetScriptedGui( 'republican_support_candidate' ).IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'candidate', Character.MakeScope ).End )]"
+							tooltip = "republican_election_candidates_support_campaign_tt"
+							clicksound = "event:/SFX/UI/Generic/rightTab/sfx_ui_window_rightTab_Decisions"
+							parentanchor = right|top
+							size = { 30 30 }
+							position = { -6 6 }
+							alpha = 0.8
+
+							onclick = "[GetScriptedGui( 'republican_support_candidate' ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'candidate', Character.MakeScope ).End )]"
+							background = {
+								texture = "gfx/interface/buttons/button_lifestyles_base.dds"
+							}
+							icon = {
+								size = { 80% 80% }
+								texture = "gfx/interface/icons/character_interactions/support_candidate.dds"
+								parentanchor = center
+							}
+							state = {
+								name = _mouse_hierarchy_enter
+								duration = 0.1
+								alpha = 1
+							}
+							state = {
+								name = _mouse_hierarchy_leave
+								duration = 0.1
+								alpha = 0.8
+							}
+						}
+						text_single = {
+							parentanchor = left|top
+							position = { 8 5 }
+							raw_text = "@ballotbox_icon![Scope.ScriptValue('republican_election_weight')|1]"
+							default_format = "#color:{1,1,1,1};glow_color:{0,0,0,1}"
+							tooltip = "[Scope.GetScriptValueDesc('republican_election_weight')]"
+						}
+					}
+					widget = {
+						size = { 115 40 }
+
+						background = {
+							texture = "gfx/interface/component_tiles/tile_header_background_01.dds"
+							margin_top = 4
+							margin_left = -4
+							margin_right = -4
+							margin_bottom = -6
+							alpha = 1
+							modify_texture = {
+								texture = "gfx/interface/buttons/button_stone_glass_mask.dds"
+								blend_mode = alphamultiply
+								spritetype = corneredTiled
+								spriteborder = { 40 40 }
+								texture_density = 5
+							}
+
+							modify_texture = {
+								texture = "gfx/interface/buttons/button_stone_glass_overlay.dds"
+								blend_mode = overlay
+								alpha = 0.6
+							}
+						}
+						coat_of_arms_icon = {
+							parentanchor = center
+							position = { 0 -4 }
+							size = { 105 105 }
+							coat_of_arms = "[Scope.Char.GetHouse.GetHouseCoA.GetTexture('(int32)124','(int32)124')]"
+							coat_of_arms_slot = "[Scope.Char.GetHouse.GetHouseCoA.GetSlot('(int32)124','(int32)124')]"
+							coat_of_arms_mask = "gfx/interface/window_republic/coa_mask.dds"
+
+							modify_texture = {
+								texture = "gfx/interface/buttons/button_stone_glass_overlay.dds"
+								blend_mode = overlay
+								alpha = 0.6
+							}
+							modify_texture = {
+								texture = "gfx/interface/component_masks/patterns/mask_pattern_02.dds"
+								texture_density = 2
+								spritetype = corneredtiled
+								blend_mode = alphamultiply
+								alpha = 0.3
+							}
+							alpha = 0.65
+						}
+						icon = {
+							size = { 107 100% }
+							position = { 0 -4 }
+							parentanchor = hcenter|top
+							spriteborder = { 30 30 }
+							spriteType = corneredStretched
+							texture = "gfx/interface/buttons/button_stone_glass_frame.dds"
+							texture_density = 4
+						}
+						text_single = {
+							parentanchor = hcenter|top
+							text = "[Scope.Char.GetFirstNameNoTooltip]"
+							default_format = "#color:{1,1,1,1};glow_color:{0,0,0,1}"
+						}
+					}
+				}
+			}
+		}
+	}
+
+	type republican_merchant_families = dynamicgridbox
+	{
+		maxhorizontalslots = 6
+		maxverticalslots = 5
+		datamodel_wrap = 5
+		flipdirection = yes
+		datamodel = "[Character.MakeScope.Var('republican_government_story').GetList('merchant_families')]"
+		visible = "[GetPlayer.GetGovernment.IsType( 'merchant_republic_government' )]"
+
+		item = {
+			widget = {
+
+				datacontext = "[Scope.Char]"
+				size = { 106 140 }
+				vbox = {
+					portrait_head_small = {
+						size = { 115 100 }
+						blockoverride "portrait_texture" {
+							portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+							scale = 1.18
+						}
+					}
+					widget = {
+						size = { 115 40 }
+
+						background = {
+							texture = "gfx/interface/component_tiles/tile_header_background_01.dds"
+							margin_top = 4
+							margin_left = -4
+							margin_right = -4
+							margin_bottom = -6
+							alpha = 1
+							modify_texture = {
+								texture = "gfx/interface/buttons/button_stone_glass_mask.dds"
+								blend_mode = alphamultiply
+								spritetype = corneredTiled
+								spriteborder = { 40 40 }
+								texture_density = 5
+							}
+
+							modify_texture = {
+								texture = "gfx/interface/buttons/button_stone_glass_overlay.dds"
+								blend_mode = overlay
+								alpha = 0.6
+							}
+						}
+						coat_of_arms_icon = {
+							parentanchor = center
+							position = { 0 -4 }
+							size = { 105 105 }
+							coat_of_arms = "[Scope.Char.GetHouse.GetHouseCoA.GetTexture('(int32)124','(int32)124')]"
+							coat_of_arms_slot = "[Scope.Char.GetHouse.GetHouseCoA.GetSlot('(int32)124','(int32)124')]"
+							coat_of_arms_mask = "gfx/interface/window_republic/coa_mask.dds"
+
+							modify_texture = {
+								texture = "gfx/interface/buttons/button_stone_glass_overlay.dds"
+								blend_mode = overlay
+								alpha = 0.6
+							}
+							modify_texture = {
+								texture = "gfx/interface/component_masks/patterns/mask_pattern_02.dds"
+								texture_density = 2
+								spritetype = corneredtiled
+								blend_mode = alphamultiply
+								alpha = 0.3
+							}
+							alpha = 0.65
+						}
+						icon = {
+							size = { 107 100% }
+							position = { 0 -4 }
+							parentanchor = hcenter|top
+							spriteborder = { 30 30 }
+							spriteType = corneredStretched
+							texture = "gfx/interface/buttons/button_stone_glass_frame.dds"
+							texture_density = 4
+						}
+						text_single = {
+							parentanchor = hcenter|top
+							text = "[Scope.Char.GetHouse.GetNameNoTooltip]"
+							default_format = "#color:{1,1,1,1};glow_color:{0,0,0,1}"
+						}
+					}
+				}
+			}
+		}
+	}
+
+	type republican_trade_deals = dynamicgridbox
+	{
+		maxhorizontalslots = 6
+		maxverticalslots = 5
+		datamodel_wrap = 5
+		flipdirection = yes
+		datamodel = "[Character.MakeScope.Var('republican_government_story').GetList('trade_deals')]"
+		text_single = {
+			visible = "[IsDataModelEmpty( Character.MakeScope.Var('republican_government_story').GetList('trade_deals') )]"
+			text = "republican_trade_deals_no_trade_deals_label"
+			default_format = "#weak"
+			parentanchor = center
+			fontsize = 15
+			margin_top = 25
+		}
+		item = {
+			widget = {
+
+				datacontext = "[Scope.Char]"
+				size = { 106 140 }
+				vbox = {
+					portrait_head_small = {
+						size = { 115 100 }
+						blockoverride "portrait_texture" {
+							portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+							scale = 1.18
+						}
+						text_single = {
+							parentanchor = left|top
+							position = { 12 6 }
+							size = { 0 0 }
+							fontsize = 13
+							text = "republican_window_character_trade_value"
+							default_format = "#color:{1,1,0.9,1};glow_color:{0,0,0,1}"
+							tooltip = "[Scope.GetScriptValueDesc('realm_trade_value')]"
+						}
+					}
+					widget = {
+						size = { 115 40 }
+
+						background = {
+							texture = "gfx/interface/component_tiles/tile_header_background_01.dds"
+							margin_top = 4
+							margin_left = -4
+							margin_right = -4
+							margin_bottom = -6
+							alpha = 1
+							modify_texture = {
+								texture = "gfx/interface/buttons/button_stone_glass_mask.dds"
+								blend_mode = alphamultiply
+								spritetype = corneredTiled
+								spriteborder = { 40 40 }
+								texture_density = 5
+							}
+
+							modify_texture = {
+								texture = "gfx/interface/buttons/button_stone_glass_overlay.dds"
+								blend_mode = overlay
+								alpha = 0.6
+							}
+						}
+						coat_of_arms_icon = {
+							parentanchor = center
+							position = { 0 -4 }
+							size = { 105 105 }
+							coat_of_arms = "[Scope.Char.GetPrimaryTitle.GetTitleCoA.GetTexture('(int32)124','(int32)124')]"
+							coat_of_arms_slot = "[Scope.Char.GetPrimaryTitle.GetTitleCoA.GetSlot('(int32)124','(int32)124')]"
+							coat_of_arms_mask = "gfx/interface/window_republic/coa_mask.dds"
+
+							modify_texture = {
+								texture = "gfx/interface/buttons/button_stone_glass_overlay.dds"
+								blend_mode = overlay
+								alpha = 0.6
+							}
+							modify_texture = {
+								texture = "gfx/interface/component_masks/patterns/mask_pattern_02.dds"
+								texture_density = 2
+								spritetype = corneredtiled
+								blend_mode = alphamultiply
+								alpha = 0.3
+							}
+							alpha = 0.65
+						}
+						icon = {
+							size = { 107 100% }
+							position = { 0 -4 }
+							parentanchor = hcenter|top
+							spriteborder = { 30 30 }
+							spriteType = corneredStretched
+							texture = "gfx/interface/buttons/button_stone_glass_frame.dds"
+							texture_density = 4
+						}
+						text_single = {
+							parentanchor = hcenter|top
+							text = "[Scope.Char.GetFirstNameNoTooltip]"
+							default_format = "#color:{1,1,1,1};glow_color:{0,0,0,1}"
+						}
+					}
+				}
+			}
+		}
+	}
+}

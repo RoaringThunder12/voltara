@@ -1,0 +1,21 @@
+﻿voltara_weave = {
+ is_unique = yes situation_group_type = major sort_order = 100
+ window = situation gui_window_name = window_voltara_weave
+ gui_participation_window_name = window_situation_participation
+ illustration = "gfx/interface/illustrations/weave/banner.dds"
+ icon = { reference = "gfx/interface/illustrations/weave/balance.dds" }
+ sub_regions = { vt_weave_world = { geographical_regions = { voltara_weave_world } center_province = 301 } }
+ participant_groups = {
+  vt_weave_aeliunists = { icon = "gfx/interface/illustrations/weave/order.dds" is_character_valid = { vt_weave_order = yes } map_color = { 0.9 0.75 0.25 } require_realm_in_sub_region = no }
+  vt_weave_khaotists = { icon = "gfx/interface/illustrations/weave/khaos.dds" is_character_valid = { vt_weave_khaos = yes } map_color = { 0.7 0.15 0.7 } require_realm_in_sub_region = no }
+  vt_weave_others = { icon = "gfx/interface/illustrations/weave/balance.dds" map_color = { 0.25 0.6 0.65 } require_realm_in_sub_region = no }
+ }
+ start_phase = vt_weave_balanced
+ on_monthly = { vt_weave_monthly = yes }
+ on_yearly = { vt_weave_yearly = yes }
+ situation_decisions = { vt_weave_consult vt_weave_ward vt_weave_bargain vt_weave_reconcile vt_weave_unravel }
+ phases = {
+vt_weave_balanced = { icon = "gfx/interface/illustrations/weave/balance.dds" illustration = "gfx/interface/illustrations/weave/banner.dds" future_phases = { vt_weave_order_phase = { } vt_weave_chaos = { } } modifier_sets = { vt_weave_world_effects = { icon = "gfx/interface/illustrations/weave/balance.dds" all = { character_modifier = { stress_gain_mult = -0.05 } county_modifier = { development_growth_factor = 0.05 } } } } }
+vt_weave_order_phase = { icon = "gfx/interface/illustrations/weave/order.dds" illustration = "gfx/interface/illustrations/weave/banner.dds" future_phases = { vt_weave_balanced = { } vt_weave_chaos = { } } modifier_sets = { vt_weave_world_effects = { icon = "gfx/interface/illustrations/weave/order.dds" all = { character_modifier = { monthly_piety = 0.15 health = 0.1 } county_modifier = { county_opinion_add = 5 } } } } }
+vt_weave_chaos = { icon = "gfx/interface/illustrations/weave/khaos.dds" illustration = "gfx/interface/illustrations/weave/banner.dds" future_phases = { vt_weave_balanced = { } vt_weave_order_phase = { } } modifier_sets = { vt_weave_world_effects = { icon = "gfx/interface/illustrations/weave/khaos.dds" all = { character_modifier = { dread_baseline_add = 5 stress_gain_mult = 0.1 } county_modifier = { monthly_county_control_growth_add = -0.1 } } } } }
+} }

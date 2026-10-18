@@ -1,0 +1,95 @@
+﻿#Scope: story
+days_since_republican_election = {
+	value = current_date
+	subtract = var:succession_date
+}
+
+#Scope: story
+days_till_republican_election = {
+	value = var:election_date
+	subtract = current_date
+}
+
+#Scope: story
+republican_election_progress_percentage = {
+	value = days_since_republican_election
+	divide = republican_election_term_in_days
+}
+
+#Scope: story
+republican_4_year_term_in_days = 1460
+republican_2_year_term_in_days = 730
+republican_election_term_in_days = {
+	value = 0
+	if = {
+		limit = { republican_government_has_law = { LAW = republican_4_year_term_law } }
+		add = {
+			value = republican_4_year_term_in_days
+		}
+	}
+	if = {
+		limit = { republican_government_has_law = { LAW = republican_2_year_term_law } }
+		add = {
+			value = republican_2_year_term_in_days
+		}
+	}
+}
+
+#Scope: character
+republican_election_weight = {
+	value = {
+		value = 1
+		desc = "BASE"
+	}
+	add = {
+		add = diplomacy
+		add = learning
+		add = martial
+		add = intrigue
+		add = stewardship
+		subtract = 25
+		multiply = 0.1
+		min = -3
+		max = 3
+		desc = sum_of_skills_desc
+	}
+	if = {
+		limit = { is_normal_councillor = yes }
+		add = {
+			value = 0.5
+			desc = "councillor"
+		}
+	}
+	add = {
+		value = dynasty.dynasty_prestige_level
+		multiply = 0.1
+		desc = "game_concept_dynasty_prestige_level"
+	}
+	add = {
+		value = prestige_level
+		multiply = 0.1
+		desc = "game_concept_prestige_level"
+	}
+	if = {
+		limit = { is_merchant_family = yes }
+		multiply = {
+			value = 1.1
+			desc = "is_merchant_family"
+		}
+	}
+	if = {
+		limit = { has_variable = election_boost }
+		multiply = {
+			value = 1
+			add = {
+				value = var:election_boost
+				divide = 10
+			}
+			desc = "election_boost"
+		}
+	}
+}
+
+support_candidate_gold_cost = {
+	value = 50
+}

@@ -1,0 +1,910 @@
+﻿#Scope: character
+#	scope:successor
+republican_succession_effect = {
+	var:republican_government_story = { save_scope_as = story }
+	save_scope_as = character
+	if = {
+		limit = { NOT = { this = scope:successor } }
+		if = {
+			limit = { is_ai = no }
+			set_player_character = scope:successor
+		}
+		if = {
+			limit = { is_merchant_family = yes }
+			save_scope_value_as = {
+				name = merchant_title_found
+				value = yes
+			}
+			if = {
+				limit = { NOT = { house = scope:successor.house } }
+				every_held_title = {
+					limit = { is_merchant_family_title = yes }
+					save_scope_as = merchant_family_title
+				}
+				destroy_title = scope:merchant_family_title
+			}
+		}
+		remove_trait = republican_legacy
+		scope:story = {
+			make_story_owner = scope:successor
+		}
+		set_designated_heir_unsafe = scope:successor
+		force_step_down_landed_titles = yes
+		#Transfer half of the gold back, if merchant family
+		if = {
+			limit = { is_merchant_family = yes }
+			scope:successor = {
+				pay_short_term_gold = {
+					target = prev
+					gold = {
+						value = gold
+						multiply = 0.5
+					}
+				}
+			}
+		}
+		scope:successor = {
+			set_variable = {
+				name = republican_government_story
+				value = scope:story
+			}
+			appoint_court_position = {
+				recipient = prev
+				court_position = republican_magistrate
+			}
+			republican_trigger_election_after_term = yes
+			republican_government_elect_magistrates_effect = yes
+			republican_legacy_apply_trait_effect = yes
+		}
+		if = {
+			limit = { scope:merchant_title_found = yes }
+			if = {
+				limit = { NOT = { house = scope:successor.house } }
+				#Return the merchant family title
+				create_title_and_vassal_change = {
+					type = returned
+					save_scope_as = change
+					add_claim_on_loss = no
+				}
+				scope:merchant_family_title = {
+					change_title_holder = {
+						holder = prev
+						change = scope:change
+					}
+				}
+				resolve_title_and_vassal_change = scope:change
+				change_government = merchant_republic_government
+			}
+			else = {
+				scope:story = {
+					remove_list_variable = {
+						name = merchant_families
+						target = prev
+					}
+					add_to_variable_list = {
+						name = merchant_families
+						target = scope:successor
+					}
+				}
+				remove_variable = republican_government_story
+			}
+		}
+	}
+	else = {
+		republican_trigger_election_after_term = yes
+		republican_government_elect_magistrates_effect = yes
+	}
+	scope:story = {
+		set_variable = {
+			name = succession_date
+			value = current_date
+		}
+		set_variable = {
+			name = election_date
+			value = {
+				value = current_date
+				add = republican_election_term_in_days
+			}
+		}
+	}
+	remove_trade_variables = yes
+	scope:story = {
+		republican_government_populate_candidate_list_effect = yes
+	}
+	scope:successor = {
+		if = {
+			limit = {
+				is_ai = no
+				prev = { is_merchant_family = yes }
+				NOT = { house = prev.house }
+				scope:story.var:play_as_same_family ?= yes
+			}
+			set_player_character = prev
+		}
+		if = {
+			limit = {
+				any_vassal_or_below = {
+					is_merchant_family = yes
+					house = prev.house
+				}
+			}
+			pass_merchant_family_title_to_ruler_of_same_house = yes
+		}
+	}
+}
+
+#Why in the world can't I just use normal script values???
+#Scope: character
+republican_trigger_election_after_term = {
+	if = {
+		limit = { republican_ruler_has_law = { LAW = republican_4_year_term_law } }
+		trigger_event = {
+			id = republican_election.0001
+			days = republican_4_year_term_in_days
+		}
+		var:republican_government_story = {
+			set_variable = {
+				name = election_cooldown
+				value = yes
+				days = republican_4_year_term_in_days
+			}
+		}
+	}
+	else_if = {
+		limit = { republican_ruler_has_law = { LAW = republican_2_year_term_law } }
+		trigger_event = {
+			id = republican_election.0001
+			days = republican_2_year_term_in_days
+		}
+		var:republican_government_story = {
+			set_variable = {
+				name = election_cooldown
+				value = yes
+				days = republican_2_year_term_in_days
+			}
+		}
+	}
+}
+
+#Scope: character (ruler)
+republican_government_set_diarch_as_heir = {
+	if = {
+		limit = { exists = diarch }
+		set_diarchy_type = republican_diarch
+		set_designated_heir_unsafe =  diarch
+	}
+	else_if = {
+		limit = { exists = designated_diarch }
+		set_designated_heir_unsafe =  designated_diarch
+	}
+	else = {
+		republic_government_designate_diarch = yes
+	}
+}
+
+republic_government_designate_diarch = {
+	if = {
+		limit = {
+			NOT = {
+				any_court_position_holder = {
+					type = republican_magistrate
+					NOT = { liege.designated_diarch = this }
+				}
+			}
+		}
+		republican_government_elect_magistrates_effect = yes #Let's find a way to appoint just 1 at some point
+	}
+	trigger_event = republican_core.1003
+}
+
+#Scope: character (republican ruler)
+republican_government_elect_magistrates_effect = {
+	if = {
+		limit = { can_employ_court_position_type = republican_magistrate }
+		save_scope_as = liege
+		every_vassal = {
+			limit = {
+				is_eligible_magistrate_trigger = yes
+				NOT = { has_court_position = republican_magistrate }
+				OR = {
+					government_has_flag = government_is_republic
+					government_has_flag = government_is_active_republic
+				}
+			}
+			add_to_list = candidate_pool
+		}
+		every_courtier = {
+			limit = {
+				is_eligible_magistrate_trigger = yes
+				NOT = { has_court_position = republican_magistrate }
+			}
+			add_to_list = candidate_pool
+		}
+
+		while = {
+			limit = {
+				can_employ_court_position_type = republican_magistrate
+			}
+			if = {
+				limit = { list_size:candidate_pool > 0 }
+				ordered_in_list = {
+					list = candidate_pool
+					order_by = republican_magistrate_eligibility
+
+					scope:liege = {
+						appoint_court_position = {
+							recipient = prev
+							court_position = republican_magistrate
+						}
+					}
+					remove_from_list = candidate_pool
+				}
+			}
+			else = {
+				create_character = {
+					template = republican_magistrate_character
+					faith = scope:liege.capital_county.faith
+					culture = scope:liege.capital_county.culture
+					location = scope:liege.capital_province
+					gender_female_chance = scope:liege.republican_magistrate_gender_female_chance
+					save_scope_as = magistrate_character
+				}
+				scope:liege = {
+					add_courtier = scope:magistrate_character
+					appoint_court_position = {
+						recipient = scope:magistrate_character
+						court_position = republican_magistrate
+					}
+				}
+			}
+		}
+	}
+}
+
+
+#LAW EFFECTS
+#Scope: republican_government_story
+republican_government_instate_default_laws = {
+	add_to_variable_list = {
+		name = laws
+		target = flag:4_year_term
+	}
+}
+
+#ELECTION EFFECTS
+#Scope: republican_government_story
+republican_government_populate_candidate_list_effect = {
+	save_scope_as = republican_government_story
+	story_owner = {
+		republican_candidate_add = yes
+		every_court_position_holder = {
+			type = republican_magistrate
+			republican_candidate_add = yes
+		}
+		if = {
+			limit = { government_has_flag = government_is_merchant_republic }
+			every_vassal_or_below = {
+				limit = { is_merchant_family = yes }
+				republican_candidate_add = yes
+			}
+		}
+	}
+}
+
+#Scope: character (ruler)
+republican_government_election_effect = {
+	var:republican_government_story = { republican_government_populate_candidate_list_effect = yes }
+	if = {
+		limit = { has_realm_law = republican_sortition_law }
+		republican_government_sortition_election_effect = yes
+	}
+	else_if = {
+		limit = { has_realm_law = republican_preferred_lots_law }
+		republican_government_preferred_lots_election_effect = yes
+	}
+	else_if = {
+		limit = { has_realm_law = republican_elective_law }
+		republican_government_elective_election_effect = yes
+	}
+	scope:successor = { republican_government_election_conclusion_effect = yes }
+}
+
+
+#Scope: character (ruler)
+republican_government_sortition_election_effect = {
+	var:republican_government_story = {
+		random_in_list = {
+			variable = candidates
+			save_scope_as = successor
+		}
+	}	
+	republican_succession_effect = yes
+}
+
+#Scope: character (ruler)
+republican_government_preferred_lots_election_effect = {
+	var:republican_government_story = {
+		random_in_list = {
+			variable = candidates
+			weight = {
+				base = 0
+				modifier = {
+					add = republican_election_weight
+				}
+			}
+			save_scope_as = successor
+		}
+
+	}	
+	republican_succession_effect = yes
+}
+
+#Scope: character (ruler)
+republican_government_elective_election_effect = {
+	var:republican_government_story = {
+		ordered_in_list = {
+			variable = candidates
+			position = 0
+			order_by = republican_election_weight
+			save_scope_as = successor
+		}
+	}	
+	republican_succession_effect = yes
+}
+
+#Scope: character (ruler)
+republican_government_election_conclusion_effect = {
+	if = {
+		limit = { scope:character = scope:successor }
+		send_interface_toast = {
+			title = republican_election_concluded_title
+			custom_description_no_bullet = {
+				text = republican_election_concluded_reelected_desc
+				subject = scope:successor
+			}
+			left_icon = this.primary_title
+			right_icon = this
+		}
+		play_sound_effect = "event:/GoldenDominion/UI/election_end"
+		every_vassal = {
+			limit = { is_ai = no }
+			send_interface_toast = {
+				title = republican_election_concluded_title
+				custom_description_no_bullet = {
+					text = republican_election_concluded_reelected_desc
+					subject = scope:successor
+				}
+				left_icon = scope:successor.primary_title
+				right_icon = scope:successor
+			}
+			play_sound_effect = "event:/GoldenDominion/UI/election_end"
+		}
+	}
+	else = {
+		send_interface_toast = {
+			title = republican_election_concluded_title
+			custom_description_no_bullet = {
+				text = republican_election_concluded_elected_desc
+				subject = scope:successor
+			}
+			left_icon = this.primary_title
+			right_icon = this
+			play_sound_effect = "event:/GoldenDominion/UI/election_end"
+		}
+		every_vassal = {
+			limit = { is_ai = no }
+			send_interface_toast = {
+				title = republican_election_concluded_title
+				custom_description_no_bullet = {
+					text = republican_election_concluded_elected_desc
+					subject = scope:successor
+				}
+				left_icon = scope:successor.primary_title
+				right_icon = scope:successor
+			}
+			play_sound_effect = "event:/GoldenDominion/UI/election_end"
+		}
+	}
+}
+
+republican_government_boost_election_weight_effect = {
+	if = {
+		limit = { has_variable = election_boost }
+		change_variable = {
+			name = election_boost
+			add = 1
+		}
+	}
+	else = {
+		set_variable = {
+			name = election_boost
+			value = 1
+		}
+	}
+}
+
+#FACTIONS
+#Scope: story
+republican_calc_faction_weights_effect = {
+	set_variable = { name = oligarchs_weight value = story_owner.republican_oligarchs_weight }
+	set_variable = { name = burghers_weight value = story_owner.republican_burghers_weight }
+	set_variable = { name = commons_weight value = story_owner.republican_commons_weight }
+	set_variable = { name = clerics_weight value = story_owner.republican_clerics_weight }
+	set_variable = { name = militants_weight value = story_owner.republican_militants_weight }
+}
+
+#REPUBLICAN LEGACY
+republican_legacy_purchase_perk_effect = {
+	if = {
+		limit = { is_republican_government_story_owner = yes }
+		var:republican_government_story = {
+			if = { limit = { var:republican_prestige >= republican_legacy_cost }
+				change_variable = {
+					name = republican_prestige
+					subtract = republican_legacy_cost
+				}
+				if = { limit = { NOT = { has_variable = legacy_level_$TRACK$ } }
+					set_variable = {
+						name = legacy_level_$TRACK$
+						value = 0
+					}
+				}
+				change_variable = {
+					name = legacy_level_$TRACK$
+					add = 1
+				}
+			}
+		}
+		republican_legacy_apply_trait_effect = yes
+	}
+}
+
+republican_legacy_apply_trait_effect = {
+	if = {
+		limit = {
+			has_trait = republican_legacy
+		}
+		remove_trait = republican_legacy
+	}
+	if = {
+		limit = {
+			OR = {
+				var:republican_government_story.var:legacy_level_trade > 0
+				var:republican_government_story.var:legacy_level_diplomacy > 0
+				var:republican_government_story.var:legacy_level_civic > 0
+				var:republican_government_story.var:legacy_level_militia > 0
+				var:republican_government_story.var:legacy_level_prosperity > 0
+			}
+		}
+		add_trait = republican_legacy
+		add_trait_xp = {
+			trait = republican_legacy
+			track = trade
+			value = { value = var:republican_government_story.var:legacy_level_trade multiply = 25 }
+		}
+		add_trait_xp = {
+			trait = republican_legacy
+			track = diplomacy
+			value = { value = var:republican_government_story.var:legacy_level_diplomacy multiply = 25 }
+		}
+		add_trait_xp = {
+			trait = republican_legacy
+			track = civic
+			value = { value = var:republican_government_story.var:legacy_level_civic multiply = 25 }
+		}
+		add_trait_xp = {
+			trait = republican_legacy
+			track = militia
+			value = { value = var:republican_government_story.var:legacy_level_militia multiply = 25 }
+		}
+		add_trait_xp = {
+			trait = republican_legacy
+			track = prosperity
+			value = { value = var:republican_government_story.var:legacy_level_prosperity multiply = 25 }
+		}
+	}
+}
+
+republican_drift_faction_support_effect = {
+	save_scope_value_as = {
+		name = support_difference
+		value = {
+			value = var:republican_government_story.var:$FACTION$_support
+			subtract = republican_$FACTION$_support_target
+		}
+	}
+
+	if = {
+		limit = {
+			scope:support_difference != 0
+		}
+		var:republican_government_story = {
+			if = {
+				limit = {
+					scope:support_difference < 0.01
+					scope:support_difference > -0.01
+				}
+				set_variable = {
+					name = $FACTION$_support
+					value = prev.republican_$FACTION$_support_target
+				}
+			}
+			else = {
+				set_variable = {
+					name = $FACTION$_support
+					value = {
+						value = var:$FACTION$_support
+						subtract = {
+							value = scope:support_difference
+							divide = 96
+							if = { limit = { scope:support_difference < 0 } max = -0.0025 }
+							else = { min = 0.0025 }
+						}
+					}
+				}
+			}
+		}
+	}
+	var:republican_government_story = {
+		set_variable = {
+			name = republican_support
+			value = prev.republican_support
+		}
+	}
+}
+
+republican_factions_declared_war_without_support_effect = {
+	republican_faction_add_support_effect = { FACTION = oligarchs VALUE = -0.05 }
+	republican_faction_add_support_effect = { FACTION = burghers VALUE = -0.1 }
+	republican_faction_add_support_effect = { FACTION = commons VALUE = -0.05 }
+	republican_faction_add_support_effect = { FACTION = clerics VALUE = -0.05 }
+	add_tyranny = 10
+}
+
+republican_factions_changed_law_without_support_effect = {
+	republican_faction_add_support_effect = { FACTION = oligarchs VALUE = -0.05 }
+	republican_faction_add_support_effect = { FACTION = burghers VALUE = -0.05 }
+	republican_faction_add_support_effect = { FACTION = commons VALUE = -0.1 }
+	republican_faction_add_support_effect = { FACTION = clerics VALUE = -0.05 }
+	republican_faction_add_support_effect = { FACTION = militants VALUE = -0.05 }
+	add_tyranny = 10
+}
+
+republican_faction_add_support_effect = {
+	custom_description = {
+		text = republican_$FACTION$_faction_add_support
+		value = $VALUE$
+		var:republican_government_story = {
+			change_variable = {
+				name = $FACTION$_support
+				add = $VALUE$
+			}
+		}
+	}
+}
+
+#Scope: character
+handle_nested_republics_effect = {
+	save_scope_as = liege
+	every_vassal_or_below = { #We handle the Subject Merchant Families first
+		limit = {
+			is_nested_active_republic_character = yes
+			is_merchant_family = yes
+			is_republican_government_story_owner = no
+		}
+		if = { #We are a Merchant Republic, Integrate: We change their liege and assign their story variable
+			limit = { scope:liege = { government_has_flag = government_is_merchant_republic } }
+			create_title_and_vassal_change = {
+				type = swear_fealty
+				save_scope_as = change
+			}
+			change_liege = {
+				liege = scope:liege
+				change = scope:change
+			}
+			resolve_title_and_vassal_change = scope:change
+			scope:liege.var:republican_government_story = {
+				add_to_variable_list = {
+					name = merchant_families
+					target = prev
+				}
+			}
+			set_variable = {
+				name = republican_government_story
+				value = scope:liege.var:republican_government_story
+			}
+		}
+		else = { #We are not Merchant Republic, End Them: They must be destroyed!!!
+			var:republican_government_story = { save_scope_as = republican_government_story }
+			#remove_merchant_family_effect = yes
+		}
+	}
+	every_vassal_or_below = { #We handle the Merchant Republic Leader(s)
+		limit = {
+			is_nested_active_republic_character = yes
+			is_merchant_family = yes
+			is_republican_government_story_owner = yes
+		}
+		if = { #We are a Merchant Republic, Integrate: We change their liege, end their story and assign their story variable
+			limit = { scope:liege = { government_has_flag = government_is_merchant_republic } }
+			if = {
+				limit = { NOT = { liege = scope:liege } }
+				create_title_and_vassal_change = {
+					type = swear_fealty
+					save_scope_as = change
+				}
+				change_liege = {
+					liege = scope:liege
+					change = scope:change
+				}
+				resolve_title_and_vassal_change = scope:change
+			}
+			var:republican_government_story = {
+				every_in_list = {
+					variable = merchant_families
+					prev = {
+						remove_list_variable = {
+							name = merchant_families
+							target = prev
+						}
+					}
+				}
+			}
+			scope:liege.var:republican_government_story = {
+				add_to_variable_list = {
+					name = merchant_families
+					target = prev
+				}
+			}
+			var:republican_government_story = { end_story = yes }
+			set_variable = {
+				name = republican_government_story
+				value = scope:liege.var:republican_government_story
+			}
+		}
+		else = { #We are not Merchant Republic, End Them: They must be destroyed!!!
+			var:republican_government_story = { save_scope_as = republican_government_story }
+			remove_merchant_family_effect = yes
+			scope:republican_government_story = { end_story = yes }
+		}
+	}
+	every_vassal_or_below = { #We handle the non-merchant republics, oh how things are simple. :_)
+		limit = {
+			is_nested_active_republic_character = yes
+			is_republican_government_story_owner = yes
+			NOT = { government_has_flag = government_is_merchant_republic }
+		}
+		var:republican_government_story = { end_story = yes }
+		change_government = republic_government
+	}
+}
+
+#Scope: character
+# Needs: scope:republican_government_story
+republican_candidate_add = {
+	scope:republican_government_story = {
+		add_to_variable_list = {
+			name = candidates
+			target = prev
+		}
+	}
+	set_variable = {
+		name = republican_election_candidate
+		value = scope:republican_government_story
+	}
+}
+
+#Scope: character
+republican_candidate_remove = {
+	var:republican_election_candidate = {
+		remove_list_variable = {
+			name = candidates
+			target = prev
+		}
+	}
+	remove_variable = republican_election_candidate
+}
+
+#Scope: character
+republican_convert_merchant_republic_to_communal_republic = {
+	save_scope_as = character
+	var:republican_government_story = { save_scope_as = republican_government_story }
+	scope:republican_government_story = {
+		every_in_list = {
+			variable = merchant_families
+			limit = { NOT = { this = scope:character } }
+			remove_merchant_family_effect = yes
+		}
+		remove_list_variable = {
+			name = merchant_families
+			target = scope:character
+		}
+	}
+	every_held_title = {
+		limit = { is_merchant_family_title = yes }
+		prev = { destroy_title = prev }
+	}
+	remove_trade_variables = yes
+	change_government = voltara_colonial_government
+}
+
+
+
+
+##Scope: character
+##	scope:successor
+#republican_succession_old_effect = {
+#	#Make a list of the courtiers
+#	every_courtier = { add_to_list = courtiers }
+#	create_title_and_vassal_change = {
+#		type = granted
+#		save_scope_as = title_change
+#		add_claim_on_loss = no
+#	}
+#
+#	#Make a list of the magistrates
+#	every_court_position_holder = { type = republican_magistrate add_to_list = magistrates }	
+#
+#	#Save the councillors for later
+#	cp:councillor_chancellor	?= { save_scope_as = chancellor }
+#	cp:councillor_steward		?= { save_scope_as = steward }
+#	cp:councillor_marshal		?= { save_scope_as = marshal }
+#	cp:councillor_spymaster		?= { save_scope_as = spymaster }
+#
+#	#Transfer the titles
+#	every_held_title = {
+#		limit = { tier > tier_barony }
+#		change_title_holder = {
+#			holder = scope:successor
+#			change = scope:title_change
+#		}
+#	}
+#	resolve_title_and_vassal_change = scope:title_change
+#	scope:successor = { change_government = voltara_colonial_government }
+#
+#
+#	#Transfer the gold to new ruler
+#	pay_short_term_gold = {
+#		target = scope:successor
+#		gold = gold
+#	}
+#
+#	#Transfer 50% of the Prestige and Piety difference, if new ruler has less Prestige and Piety
+#	save_scope_value_as = {
+#		name = prestige_handover
+#		value = {
+#			value = prestige
+#			subtract = scope:successor.prestige
+#			multiply = 0.5
+#			min = 0
+#		}
+#	}
+#	save_scope_value_as = {
+#		name = piety_handover
+#		value = {
+#			value = piety
+#			subtract = scope:successor.piety
+#			multiply = 0.5
+#			min = 0
+#		}
+#	}
+#	add_prestige = { value = scope:prestige_handover multiply = -1 }
+#	add_piety = { value = scope:piety_handover multiply = -1 }
+#
+#	scope:successor = {
+#		add_prestige = scope:prestige_handover
+#		add_piety = scope:piety_handover
+#		add_courtier = prev
+#		appoint_court_position = {
+#			recipient = prev
+#			court_position = republican_magistrate
+#		}
+#		every_in_list = {
+#			list = magistrates
+#			save_temporary_scope_as = magistrate
+#			
+#			scope:successor = {
+#				add_courtier = scope:magistrate
+#				appoint_court_position = {
+#					recipient = scope:magistrate
+#					court_position = republican_magistrate
+#				}
+#			}
+#		}
+#		republican_government_elect_magistrates_effect = yes
+#
+#		#Employ former councillors
+#		if = { limit = { NOR = { scope:chancellor = scope:successor scope:chancellor = { is_courtier_of = scope:successor is_landed# = yes } } }
+#			 add_courtier = scope:chancellor }
+#		if = { limit = { NOR = { scope:steward = scope:successor scope:steward = { is_courtier_of = scope:successor is_landed = yes# } } }
+#			 add_courtier = scope:steward }
+#		if = { limit = { NOR = { scope:marshal = scope:successor scope:marshal = { is_courtier_of = scope:successor is_landed = yes# } } }
+#			 add_courtier = scope:marshal }
+#		if = { limit = { NOR = { scope:spymaster = scope:successor scope:spymaster = { is_courtier_of = scope:successor is_landed #= yes } } }
+#			 add_courtier = scope:spymaster }
+#		assign_councillor_type = { type = councillor_chancellor target = scope:chancellor }
+#		assign_councillor_type = { type = councillor_steward target = scope:steward }
+#		assign_councillor_type = { type = councillor_marshal target = scope:marshal }
+#		assign_councillor_type = { type = councillor_spymaster target = scope:spymaster }
+#	}
+#
+#	#Add the courtiers from previous ruler
+#	every_in_list = {
+#		list = courtiers
+#		limit = { NOR = { this = scope:successor is_courtier_of = scope:successor } }
+#		#scope:successor = { add_courtier = prev }
+#	}
+#
+#	#Change player character to sucessor
+#	if = {
+#		limit = { is_ai = no }
+#		set_player_character = scope:successor
+#	}
+#}
+
+#Scope: republican_government_story
+#	scope:story
+#	scope:story_owner
+#republican_government_update_candidate_list_effect = {
+#	save_scope_as = story
+#	story_owner = { save_scope_as = story_owner }
+#	every_in_list = {
+#		variable = candidates
+#		scope:story = {
+#			remove_list_variable = {
+#				name = candidates
+#				target = prev
+#			}
+#		}
+#	}
+#
+#	scope:story_owner = {
+#		every_court_position_holder = {
+#			limit = {
+#				has_court_position = republican_magistrate
+#				
+#			}
+#			scope:story = {
+#				add_to_variable_list = {
+#					name = candidates
+#					target = prev
+#				}
+#			}
+#		}
+#	}
+#}
+
+
+
+#Scope: republican_government_story
+#	scope:story
+#	scope:story_owner
+#republican_government_elect_successor_effect = {
+#	republican_government_update_candidate_list_effect = yes
+#	random_in_list = {
+#		variable = candidates
+#
+#		save_scope_as = successor
+#	}
+#	scope:story_owner = {
+#		set_designated_heir_unsafe = scope:successor
+#		force_step_down_landed_titles = yes
+#	}
+#	make_story_owner = scope:successor
+#	scope:successor = {
+#		set_variable = {
+#			name = republican_government_story
+#			value = scope:story
+#		}
+#	}
+#	#scope:story_owner = { republican_succession_effect = yes }
+#	#scope:successor = {
+#	#	if = { limit = { scope:story_owner = { is_alive = yes } } add_courtier = scope:story_owner }
+#	#}
+#	republican_government_update_candidate_list_effect = yes
+#	scope:successor = {
+#		republican_government_set_diarch_as_heir = yes
+#	}
+#}
+
+

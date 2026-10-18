@@ -1,0 +1,221 @@
+﻿republican_legacy = {
+	icon = republican_legacy.dds
+	category = lifestyle
+	ruler_designer_cost = 50
+	flag = no_message
+
+	desc = trait_republican_legacy_desc
+
+	tracks = {
+		trade = {
+			25 = {
+				republic_government_tax_contribution_mult = 0.15
+				republic_government_vassal_opinion = 15
+			}
+			50 = {
+				domain_tax_mult = 0.1
+			}
+			75 = {
+				character_capital_county_monthly_development_growth_add = 0.2
+			}
+			100 = {
+				diplomatic_range_mult = 0.1
+				embarkation_cost_mult = -0.1
+				naval_movement_speed_mult = 0.1
+				coastal_advantage = 2
+			}
+		}
+		diplomacy = {
+			25 = {
+				independent_ruler_opinion = 10
+				fellow_vassal_opinion = 10
+			}
+			50 = {
+				owned_personal_scheme_success_chance_max_add = 10
+			}
+			75 = {
+				diplomacy = 1
+			}
+			100 = {
+				ignore_negative_culture_opinion = yes
+				general_opinion = 5
+				courtier_and_guest_opinion = 10
+			}
+		}
+		civic = {
+			25 = {
+				legitimacy_gain_mult = 0.2
+				monthly_prestige = 2
+			}
+			50 = {
+				short_reign_duration_mult = -0.2
+				vassal_limit = 5
+				councillor_opinion = 5
+			}
+			75 = {
+				tyranny_loss_mult = -0.2
+				monthly_county_control_growth_factor = 0.2
+				direct_vassal_opinion = 10
+			}
+			100 = {
+				domain_limit = 1
+				domain_limit_min = 1
+			}
+		}
+		militia = {
+			25 = {
+				levy_attack = 1
+				levy_toughness = 2
+				levy_reinforcement_rate = -0.15
+				levy_maintenance = 0.05
+			}
+			50 = {
+				knight_limit = 2
+				knight_effectiveness_mult = 0.2
+			}
+			75 = {
+				capital_additional_fort_level = 2
+				levy_reinforcement_rate = -0.05
+				pikemen_maintenance_mult = -0.05
+				pikemen_toughness_mult = 0.1
+			}
+			100 = {
+				men_at_arms_maintenance = -0.05
+				men_at_arms_limit = 1
+				defender_holding_advantage = 2
+			}
+		}
+		prosperity = {
+			25 = {
+				holding_build_speed = -0.2
+				holding_build_gold_cost = -0.1
+			}
+			50 = {
+				supply_capacity_mult = 0.1
+				supply_limit_mult = 0.15
+				epidemic_resistance = 5
+			}
+			75 = {
+				development_growth_factor = 0.2
+			}
+			100 = {
+				monthly_income_mult = 0.15
+				monthly_war_income_mult = -0.15
+			}
+		}
+	}
+}
+
+republican_merchant = {
+	category = lifestyle
+	ruler_designer_cost = 20
+
+	negate_stewardship_penalty_add = 1
+	monthly_dynasty_prestige = 0.1
+
+	icon = "trait_merchant.dds"
+
+	# Loc
+	name = {
+		first_valid = {
+			#Grand Merchant
+			triggered_desc = {
+				trigger = {
+					exists = this
+					has_trait_xp = {
+						trait = republican_merchant
+						value >= 100
+					}
+				}
+				desc = trait_republican_merchant_4
+			}
+			#Master Merchant
+			triggered_desc = {
+				trigger = { 
+					exists = this
+					has_trait_xp = {
+						trait = republican_merchant
+						value >= 75
+					}
+				}
+				desc = trait_republican_merchant_3
+			}
+			#Journeyman Trader
+			triggered_desc = {
+				trigger = { 
+					exists = this
+					has_trait_xp = {
+						trait = republican_merchant
+						value >= 25
+					}
+				}
+				desc = trait_republican_merchant_2
+			}
+			#Apprentice Merchant
+			desc = trait_republican_merchant_1
+		}
+	}
+
+	# Loc
+	desc = {
+		first_valid = {
+			#Grand Merchant
+			triggered_desc = {
+				trigger = {
+					exists = this
+					has_trait_xp = {
+						trait = republican_merchant
+						value >= 100
+					}
+				}
+				desc = trait_republican_merchant_4_desc
+			}
+			#Master Merchant
+			triggered_desc = {
+				trigger = { 
+					exists = this
+					has_trait_xp = {
+						trait = republican_merchant
+						value >= 75
+					}
+				}
+				desc = trait_republican_merchant_3_desc
+			}
+			#Journeyman Trader
+			triggered_desc = {
+				trigger = { 
+					exists = this
+					has_trait_xp = {
+						trait = republican_merchant
+						value >= 25
+					}
+				}
+				desc = trait_republican_merchant_2_desc
+			}
+			#Apprentice Merchant
+			desc = trait_republican_merchant_1_desc
+		}
+	}
+
+	track = {
+		25 = {
+			stewardship = 1
+			monthly_dynasty_prestige = 0.1
+		}
+		50 = {
+			negate_stewardship_penalty_add = 1
+			monthly_dynasty_prestige = 0.1
+		}
+		75 = {
+			stewardship = 1
+			negate_diplomacy_penalty_add = 1
+			monthly_dynasty_prestige = 0.2
+		}
+		100 = {
+			stewardship = 1
+			diplomacy = 1
+			monthly_dynasty_prestige = 0.5
+
+		}
+	}	
+}

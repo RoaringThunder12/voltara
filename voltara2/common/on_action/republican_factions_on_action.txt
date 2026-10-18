@@ -1,0 +1,205 @@
+﻿on_alliance_added = {
+	on_actions = {
+		on_alliance_added_republican_faction
+	}
+}
+
+on_alliance_added_republican_faction = {
+	trigger = {
+		OR = {
+			scope:first = { government_has_flag = government_is_active_republic }
+			scope:second = { government_has_flag = government_is_active_republic }
+		}
+	}
+	effect = {
+		scope:first = {
+			if = {
+				limit = {
+					government_has_flag = government_is_active_republic
+					max_military_strength < scope:second.max_military_strength
+					scope:second.highest_held_title_tier >= tier_kingdom
+				}
+				republican_faction_add_support_effect = { FACTION = oligarchs VALUE = 0.05 }
+			}
+		}
+		scope:second = {
+			if = {
+				limit = {
+					government_has_flag = government_is_active_republic
+					max_military_strength < scope:first.max_military_strength
+					scope:first.highest_held_title_tier >= tier_kingdom
+				}
+				republican_faction_add_support_effect = { FACTION = oligarchs VALUE = 0.05 }
+			}
+		}
+	}
+}
+
+on_building_completed = {
+	on_actions = {
+		on_building_completed_republican_faction
+	}
+}
+
+on_building_completed_republican_faction = {
+	trigger = {
+		scope:character = {
+			government_has_flag = government_is_active_republic
+		}
+	}
+	effect = {
+		if = {
+			limit = { has_holding_type = city_holding }
+			republican_faction_add_support_effect = { FACTION = burghers VALUE = 0.01 }
+		}
+		if = {
+			limit = { has_holding_type = castle_holding }
+			republican_faction_add_support_effect = { FACTION = oligarchs VALUE = 0.01 }
+		}
+		if = {
+			limit = { has_holding_type = church_holding }
+			republican_faction_add_support_effect = { FACTION = clerics VALUE = 0.01 }
+		}
+	}
+}
+
+on_war_won_attacker = {
+	on_actions = {
+		on_war_won_attacker_republican_faction
+	}
+}
+on_war_won_defender = {
+	on_actions = {
+		on_war_won_defender_republican_faction
+	}
+}
+
+on_war_won_attacker_republican_faction = {
+	trigger = {
+		OR = {
+			scope:attacker = { government_has_flag = government_is_active_republic }
+			scope:defender = { government_has_flag = government_is_active_republic }
+		}
+	}
+	effect = {
+		scope:attacker = {
+			if = {
+				limit = {
+					government_has_flag = government_is_active_republic
+				}
+				if = {
+					limit = {
+						max_military_strength < scope:defender.max_military_strength
+					}
+					republican_faction_add_support_effect = { FACTION = militants VALUE = 0.05 }
+				}
+				else = {
+					republican_faction_add_support_effect = { FACTION = militants VALUE = 0.025 }
+				}
+				if = {
+					limit = {
+						faith != scope:defender.faith
+					}
+					republican_faction_add_support_effect = { FACTION = clerics VALUE = 0.025 }
+				}
+			}
+		}
+		scope:defender = {
+			if = {
+				limit = {
+					government_has_flag = government_is_active_republic
+				}
+				if = {
+					limit = {
+						max_military_strength < scope:attacker.max_military_strength
+					}
+					republican_faction_add_support_effect = { FACTION = militants VALUE = -0.025 }
+				}
+				else = {
+					republican_faction_add_support_effect = { FACTION = militants VALUE = -0.05 }
+				}
+				if = {
+					limit = {
+						faith != scope:attacker.faith
+					}
+					republican_faction_add_support_effect = { FACTION = clerics VALUE = -0.025 }
+				}
+			}
+		}
+	}
+}
+
+on_war_won_defender_republican_faction = {
+	trigger = {
+		OR = {
+			scope:attacker = { government_has_flag = government_is_active_republic }
+			scope:defender = { government_has_flag = government_is_active_republic }
+		}
+	}
+	effect = {
+		scope:attacker = {
+			if = {
+				limit = {
+					government_has_flag = government_is_active_republic
+				}
+				if = {
+					limit = {
+						max_military_strength < scope:defender.max_military_strength
+					}
+					republican_faction_add_support_effect = { FACTION = militants VALUE = -0.05 }
+				}
+				else = {
+					republican_faction_add_support_effect = { FACTION = militants VALUE = -0.025 }
+				}
+				if = {
+					limit = {
+						faith != scope:defender.faith
+					}
+					republican_faction_add_support_effect = { FACTION = clerics VALUE = -0.025 }
+				}
+			}
+		}
+		scope:defender = {
+			if = {
+				limit = {
+					government_has_flag = government_is_active_republic
+				}
+				if = {
+					limit = {
+						max_military_strength < scope:attacker.max_military_strength
+					}
+					republican_faction_add_support_effect = { FACTION = militants VALUE = 0.025 }
+				}
+				else = {
+					republican_faction_add_support_effect = { FACTION = militants VALUE = 0.05 }
+				}
+				if = {
+					limit = {
+						faith != scope:attacker.faith
+					}
+					republican_faction_add_support_effect = { FACTION = clerics VALUE = 0.5 }
+				}
+			}
+		}
+	}
+}
+
+on_county_faith_change = {
+	on_actions = {
+		on_county_faith_change_republican_faction
+	}
+}
+
+on_county_faith_change_republican_faction = {
+	trigger = {
+		holder = {
+			government_has_flag = government_is_active_republic
+			faith = root.faith
+		}
+	}
+	effect = {
+		holder = {
+			republican_faction_add_support_effect = { FACTION = clerics VALUE = 0.025 }
+		}
+	}
+}

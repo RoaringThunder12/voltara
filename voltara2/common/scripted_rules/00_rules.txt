@@ -173,10 +173,7 @@ is_character_allowed_to_be_player = {
 			scope:will_override_government = no
 		}
 
-		custom_description = {
-			text = "GAME_OVER_CANNOT_PLAY_REPUBLIC"
-			NOT = { government_has_flag = government_is_republic }
-		}
+		
 
 		custom_description = {
 			text = "GAME_OVER_CANNOT_PLAY_MERCENARY"
@@ -256,7 +253,7 @@ is_character_allowed_to_be_player = {
 		trigger_else = {
 			# This is a generic "catch all", we should have caught it before this
 			trigger_if = {
-				limit = { is_playable_character = no }
+				limit = { is_playable_character = no NOT = { government_has_flag = government_is_active_republic } NOT = { government_has_flag = government_is_republic } }
 				is_ruler = no # We're not a ruler, but we can become a landless adventurer
 				custom_tooltip = {
 					text = is_valid_for_laampdom_tt

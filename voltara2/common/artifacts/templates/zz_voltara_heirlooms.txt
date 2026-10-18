@@ -1,6 +1,16 @@
 ﻿voltara_heirloom_template = {
-    can_equip = { always = yes }
-    can_benefit = { }
-    fallback = { }
-    unique = yes
+ can_equip = {
+  OR = {
+   scope:artifact = { NOT = { artifact_type = voltara_justice_type } }
+   custom_tooltip = { text = voltara_justice_requirements voltara_can_wield_justice = yes }
+  }
+ }
+ can_benefit = {
+  OR = {
+   scope:artifact = { NOT = { artifact_type = voltara_justice_type } }
+   voltara_can_wield_justice = yes
+  }
+ }
+ fallback = { }
+ unique = yes
 }

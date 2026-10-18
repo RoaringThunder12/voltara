@@ -1,0 +1,36 @@
+﻿#Character modifiers
+domicile_income_from_trade_modifier = {
+	icon = economy_positive
+	domicile_monthly_gold_add = 0.01
+	scale = {
+		value = merchant_family_domicile_income_from_trade
+		desc = domicile_income_from_trade_modifier_scale
+	}
+}
+
+income_from_trade_modifier = {
+	icon = economy_positive
+	monthly_income = 0.01
+	scale = {
+		value = republic_income_from_trade
+		desc = income_from_trade_modifier_scale
+	}
+}
+
+trade_deal_recipient_modifier = {
+	icon = economy_positive
+
+	monthly_income_mult = 0.1
+	monthly_war_income_mult = -0.15
+	build_speed = -0.1
+	build_gold_cost = -0.05
+	supply_limit_mult = 0.1
+	hostile_raid_time = -0.2
+}
+
+republican_house_modifier_hanseatic_founder = {
+	icon = economy_positive
+	parochial_opinion = 10
+	domicile_monthly_gold_mult = 0.1
+	build_speed = -0.1
+}

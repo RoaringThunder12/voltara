@@ -1,0 +1,211 @@
+﻿#Scope: county
+update_local_plutocratic_business = {
+	if = {
+		limit = {
+			any_county_province = {
+				any_province_domicile = {
+					is_domicile_type = family_palace
+					has_domicile_building_or_higher = fp_business_01
+				}
+			}
+		}
+		remove_county_modifier = local_plutocratic_business
+		add_county_modifier = local_plutocratic_business
+	}
+	else = {
+		remove_county_modifier = local_plutocratic_business
+	}
+}
+
+#Scope: domicile
+fp_update_business_slots = {
+	domicile_location = { save_scope_as = province }
+	if = {
+		limit = { scope:province.county = { development_level > fp_urban_dev_level } }
+		save_scope_value_as = {
+			name = province_flag
+			value = flag:storage
+		}
+	}
+	else_if = {
+		limit = {
+			scope:province = {
+				is_coastal = yes
+				OR = {
+					terrain = plains
+					terrain = farmlands
+					terrain = steppe
+				}
+			}
+		}
+		save_scope_value_as = {
+			name = province_flag
+			value = flag:wine
+		}
+	}
+	else_if = {
+		limit = {
+			scope:province = {
+				is_coastal = yes
+				OR = {
+					terrain = hills
+					terrain = drylands
+					terrain = desert_mountains
+				}
+			}
+		}
+		save_scope_value_as = {
+			name = province_flag
+			value = flag:olives
+		}
+	}
+	else_if = {
+		limit = {
+			scope:province = {
+				OR = {
+					terrain = plains
+					terrain = farmlands
+					terrain = floodplains
+					terrain = drylands
+				}
+			}
+		}
+		save_scope_value_as = {
+			name = province_flag
+			value = flag:grain
+		}
+	}
+	else_if = {
+		limit = {
+			scope:province = {
+				terrain = steppe
+			}
+		}
+		save_scope_value_as = {
+			name = province_flag
+			value = flag:horses
+		}
+	}
+	else_if = {
+		limit = {
+			scope:province = {
+				OR = {
+					terrain = oasis
+					terrain = wetlands
+				}
+			}
+		}
+		save_scope_value_as = {
+			name = province_flag
+			value = flag:flowers
+		}
+	}
+	else_if = {
+		limit = {
+			scope:province = {
+				OR = {
+					terrain = forest
+					terrain = taiga
+					terrain = mountains
+					terrain = desert_mountains
+					terrain = jungle
+				}
+			}
+		}
+		save_scope_value_as = {
+			name = province_flag
+			value = flag:forage_and_game
+		}
+	}
+	else = {
+		save_scope_value_as = {
+			name = province_flag
+			value = flag:workshop
+		}
+	}
+	if = {
+		limit = { has_ongoing_domicile_construction = yes }
+		set_variable = {
+			name = queue_update
+			value = yes
+		}
+	}
+	else = {
+		#Remove building
+		switch = {
+			trigger = has_domicile_building_or_higher
+			fp_business_storage = {
+				if = { 	limit = { NOT = { scope:province_flag = flag:storage } }
+					remove_domicile_building = fp_business_storage
+				}
+			}
+			fp_business_wine = {
+				if = { 	limit = { NOT = { scope:province_flag = flag:wine } }
+					remove_domicile_building = fp_business_wine
+				}
+			}
+			fp_business_olives = {
+				if = { 	limit = { NOT = { scope:province_flag = flag:olives } }
+					remove_domicile_building = fp_business_olives
+				}
+			}
+			fp_business_grain = {
+				if = { 	limit = { NOT = { scope:province_flag = flag:grain } }
+					remove_domicile_building = fp_business_grain
+				}
+			}
+			fp_business_horses = {
+				if = { 	limit = { NOT = { scope:province_flag = flag:horses } }
+					remove_domicile_building = fp_business_horses
+				}
+			}
+			fp_business_flowers = {
+				if = { 	limit = { NOT = { scope:province_flag = flag:flowers } }
+					remove_domicile_building = fp_business_flowers
+				}
+			}
+			fp_business_camp = {
+				if = { 	limit = { NOT = { scope:province_flag = flag:forage_and_game } }
+					remove_domicile_building = fp_business_camp
+				}
+			}
+			fp_business_workshop = {
+				if = { 	limit = { NOT = { scope:province_flag = flag:workshop } }
+					remove_domicile_building = fp_business_workshop
+				}
+			}
+		}
+		#Add buildings
+		switch = {
+			trigger = scope:province_flag
+			flag:storage = {
+				add_domicile_building = fp_business_storage
+			}
+			flag:wine = {
+				add_domicile_building = fp_business_wine
+			}
+			flag:olives = {
+				add_domicile_building = fp_business_olives
+			}
+			flag:grain = {
+				add_domicile_building = fp_business_grain
+			}
+			flag:horses = {
+				add_domicile_building = fp_business_horses
+			}
+			flag:flowers = {
+				add_domicile_building = fp_business_flowers
+			}
+			flag:forage_and_game = {
+				add_domicile_building = fp_business_camp
+			}
+			flag:workshop = {
+				add_domicile_building = fp_business_workshop
+			}
+		}
+		set_variable = {
+			name = queue_update
+			value = no
+		}
+	}
+}

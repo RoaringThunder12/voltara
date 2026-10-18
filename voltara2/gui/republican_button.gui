@@ -1,0 +1,73 @@
+﻿widget = {
+	visible = "[And(IsDefaultGUIMode,And( Not( IsGameViewOpen('barbershop') ), And(Not(IsRightWindowOpen),  And( Not( IsPauseMenuShown ), Or(GetPlayer.GetGovernment.IsType( 'voltara_colonial_government' ),GetPlayer.GetGovernment.IsType( 'merchant_republic_government' ))))))]"
+	layer = hud_layer
+	
+	name = republican_button_widget
+	size = { 100% 100% }
+	using = Animation_ShowHide_Quick
+	datacontext = [GetPlayer]
+	
+	widget_hud_main_tab = {
+		position = { -4 570 }
+		scale = 0.8
+		parentanchor = top|right
+		blockoverride "maintab_button"
+		{
+			onclick = "[GetVariableSystem.Toggle('republic_window_visible')]"
+			#onclick = "[SetMapMode('trade_map_mode')]"
+			#onclick = "[GetScriptedGui('republican_trade_map_mode_color_sgui').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+			tooltip = republican_button_tt
+			icon = {
+				texture = "gfx/interface/icons/map_icons/map_council_task_base.dds"
+				widgetanchor = center
+				parentanchor = center
+				size = { 50 50 }
+			}
+			icon = {
+				visible = "[And(CantPurchaseRepublicanLegacy,GetPlayer.GetGovernment.IsType( 'voltara_colonial_government' ))]"
+				texture = "gfx/interface/icons/government_types/voltara_colonial_government.dds"
+				widgetanchor = center
+				parentanchor = center
+				size = { 35 35 }
+			}
+			icon = {
+				visible = "[And(CanPurchaseRepublicanLegacy,GetPlayer.GetGovernment.IsType( 'voltara_colonial_government' ))]"
+				texture = "gfx/interface/icons/government_types/voltara_colonial_government.dds"
+				widgetanchor = center
+				parentanchor = center
+				size = { 35 35 }
+				using = Glow_icon
+			}
+			icon = {
+				visible = "[And(CantPurchaseRepublicanLegacy,GetPlayer.GetGovernment.IsType( 'merchant_republic_government' ))]"
+				texture = "gfx/interface/icons/government_types/merchant_republic_government.dds"
+				widgetanchor = center
+				parentanchor = center
+				size = { 35 35 }
+			}
+			icon = {
+				visible = "[And(CanPurchaseRepublicanLegacy,GetPlayer.GetGovernment.IsType( 'merchant_republic_government' ))]"
+				texture = "gfx/interface/icons/government_types/merchant_republic_government.dds"
+				widgetanchor = center
+				parentanchor = center
+				size = { 35 35 }
+				using = Glow_icon
+			}
+			progresspie = {
+				name = "progress"
+				position = { 0 0 }
+				size = { 45 45 }
+				texture = "gfx/interface/progressbars/action_progress_thin.dds"
+				framesize = { 128 128 }
+				frame = 2
+				widgetanchor = center
+				parentanchor = center
+				value = "[GetPlayer.MakeScope.Var('republican_government_story').ScriptValue('republican_election_progress_percentage')]"
+				#value = "[CalcProgressBetweenDates( GetCurrentDate, (Date)GetPlayer.MakeScope.Var('republican_government_story').Var('succesion_date').GetValue, (Date)GetPlayer.MakeScope.Var('republican_government_story').Var('election_date').GetValue )]" damn, why cant' we convert data into dates?? :(
+				min = 0
+				max = 1
+				mirror = vertical|horizontal
+			}
+		}
+	}
+}

@@ -1,0 +1,74 @@
+﻿namespace = republican_pulse
+
+#Sumptuary Ordinance Debate
+republican_pulse.001 = {
+	type = character_event
+	title = republican_pulse.001.t
+	desc = republican_pulse.001.desc
+	theme = republic
+	left_portrait = {
+		character = root
+		animation = idle
+	}
+	trigger = {
+		republican_oligarchs_weight_percentage > 0.2
+		republican_clerics_weight_percentage > 0.2
+	}
+	option = {
+		name = republican_pulse.001.a
+		republican_faction_add_support_effect = { FACTION = clerics VALUE = 0.1 }
+		republican_faction_add_support_effect = { FACTION = oligarchs VALUE = -0.1 }
+	}
+	option = {
+		name = republican_pulse.001.b
+		republican_faction_add_support_effect = { FACTION = clerics VALUE = -0.1 }
+		republican_faction_add_support_effect = { FACTION = oligarchs VALUE = 0.1 }
+	}
+}
+
+#Magistrate Oversteps Mandate
+republican_pulse.002 = {
+	type = character_event
+	title = republican_pulse.002.t
+	desc = republican_pulse.002.desc
+	theme = republic
+	left_portrait = {
+		character = root
+		animation = idle
+	}
+	right_portrait = {
+		character = scope:magistrate
+		animation = idle
+	}
+	trigger = {
+		any_court_position_holder = {
+			type = republican_magistrate
+			has_trait = ambitious
+		}
+	}
+	immediate = {
+		random_court_position_holder = {
+			type = republican_magistrate
+			limit = { has_trait = ambitious }
+			save_scope_as = magistrate
+		}
+	}
+	option = {
+		name = republican_pulse.002.a
+		republican_faction_add_support_effect = { FACTION = commons VALUE = 0.1 }
+		reverse_add_opinion = {
+			target = scope:magistrate
+			modifier = angry_opinion
+			opinion = -30
+		}
+	}
+	option = {
+		name = republican_pulse.002.b
+		republican_faction_add_support_effect = { FACTION = commons VALUE = -0.15 }
+		reverse_add_opinion = {
+			target = scope:magistrate
+			modifier = pleased_opinion
+			opinion = 10
+		}
+	}
+}

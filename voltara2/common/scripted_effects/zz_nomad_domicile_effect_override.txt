@@ -1,0 +1,45 @@
+﻿#Called from game start on action
+#inside domicile scope
+add_random_yurt_external_building_effect = {
+	if = {
+		limit = { owner = { NOT = { government_has_flag = government_allows_nomad_domicile_titles } } }
+		random_list = {
+			10 = {
+				trigger = {
+					NOT = { has_domicile_building_or_higher = herd_welfare_yurt_01 }
+				}
+				add_domicile_building = herd_welfare_yurt_01
+			}
+			1 = {
+				trigger = {
+					NOT = { has_domicile_building_or_higher = character_warfare_yurt_01 }
+				}
+				add_domicile_building = character_warfare_yurt_01
+			}
+			1 = {
+				trigger = {
+					NOT = { has_domicile_building_or_higher = mass_warfare_yurt_01 }
+				}
+				add_domicile_building = mass_warfare_yurt_01
+			}
+			1 = {
+				trigger = {
+					NOT = { has_domicile_building_or_higher = court_yurt_01 }
+				}
+				add_domicile_building = court_yurt_01
+			}
+			1 = {
+				trigger = {
+					NOT = { has_domicile_building_or_higher = family_yurt_01 }
+				}
+				add_domicile_building = family_yurt_01
+			}
+			1 = {
+				trigger = {
+					NOT = { has_domicile_building_or_higher = mystical_yurt_01 }
+				}
+				add_domicile_building = mystical_yurt_01
+			}
+		}
+	}
+}

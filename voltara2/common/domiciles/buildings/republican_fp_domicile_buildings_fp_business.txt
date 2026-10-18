@@ -1,0 +1,539 @@
+﻿@business_slot_construction_time = 90
+@business_slot_cost = 30
+
+fp_business_01 = {
+	allowed_domicile_types = { family_palace }
+	construction_time = 180
+	internal_slots = 1
+
+	cost = {
+		gold = 400
+	}
+
+	parameters = {
+		local_business = yes
+	}
+
+	character_modifier = {
+		development_growth_factor = 0.02
+		domicile_monthly_gold_add = 0.4
+	}
+
+	on_complete = {
+		fp_update_business_slots = yes
+		domicile_location = {
+			county = { update_local_plutocratic_business = yes }
+		}
+		set_variable = {
+			name = last_location
+			value = domicile_location
+		}
+	}
+
+	ai_value = {
+		value = 100
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_storage
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_warehouse.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_storage_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_wine
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_vineyard.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_vinyard_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_olives
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_grain.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_olive_plantation_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_grain
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_grain.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grain_fields_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_horses
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_stable.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_stable_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_flowers
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_herbalists.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_garden_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_workshop
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_workshop.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_workshop_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_camp
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_trophy.dds"
+		texture = "gfx/interface/window_domiciles/laamp_building_pavillion_tribal_level_03.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_mason.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_construction_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_business_02 = {
+	allowed_domicile_types = { family_palace }
+	construction_time = 180
+	internal_slots = 2
+	previous_building = fp_business_01
+
+	cost = {
+		gold = 800
+	}
+
+	parameters = {
+		local_business = yes
+	}
+
+	character_modifier = {
+		development_growth_factor = 0.03
+		domicile_monthly_gold_add = 0.6
+	}
+	ai_value = {
+		value = 100
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_storage
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_warehouse.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_storage_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_wine
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_vineyard.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_vinyard_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_olives
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_olive.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_olive_plantation_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_grain
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_grain.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grain_fields_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_horses
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_stable.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_stable_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_flowers
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_herbalists.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_garden_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_workshop
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_workshop.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_workshop_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		trigger = {
+			has_domicile_building_or_higher = fp_business_camp
+		}
+		icon = "gfx/interface/icons/domicile_building/domicile_building_trophy.dds"
+		texture = "gfx/interface/window_domiciles/laamp_building_pavillion_tribal_level_03.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_mason.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_construction_byzantine.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_business_storage = {
+	construction_time = @business_slot_construction_time
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_business_01
+
+	cost = {
+		gold = @business_slot_cost
+	}
+
+	can_construct = {
+		domicile = {
+			domicile_location = {
+				county = { development_level > fp_urban_dev_level }
+			}
+		}
+	}
+
+	parameters = {
+		trade_depot = yes
+	}
+
+	character_modifier = {
+		domicile_monthly_gold_add = 0.7
+	}
+	
+	ai_value = {
+		value = 8
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_warehouse.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grain_fields_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_business_wine = {
+	construction_time = @business_slot_construction_time
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_business_01
+
+	cost = {
+		gold = @business_slot_cost
+	}
+
+	can_construct = {
+		domicile = {
+			domicile_location = {
+				geographical_region = material_woods_mediterranean
+				OR = {
+					terrain = plains
+					terrain = farmlands
+					terrain = steppe
+				}
+			}
+		}
+	}
+
+	character_modifier = {
+		domicile_monthly_prestige_add = 1
+		domicile_monthly_gold_add = 0.7
+	}
+	
+	ai_value = {
+		value = 8
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_vineyard.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grain_fields_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_business_olives = {
+	construction_time = @business_slot_construction_time
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_business_01
+
+	cost = {
+		gold = @business_slot_cost
+	}
+
+	can_construct = {
+		domicile = {
+			domicile_location = {
+				geographical_region = material_woods_mediterranean
+				OR = {
+					terrain = hills
+					terrain = drylands
+					terrain = desert_mountains
+				}
+			}
+		}
+	}
+
+	character_modifier = {
+		domicile_monthly_piety_add = 1
+		domicile_monthly_gold_add = 0.55
+	}
+	
+	ai_value = {
+		value = 8
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_olive.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grain_fields_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_business_grain = {
+	construction_time = @business_slot_construction_time
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_business_01
+
+	cost = {
+		gold = @business_slot_cost
+	}
+
+	can_construct = {
+		domicile = {
+			domicile_location = {
+				OR = {
+					terrain = plains
+					terrain = farmlands
+					terrain = floodplains
+					terrain = drylands
+				}
+			}
+		}
+	}
+
+	character_modifier = {
+		domicile_monthly_gold_add = 0.5
+		supply_limit_mult = 0.1
+		farmlands_tax_mult = 0.1
+		farmlands_supply_limit_mult = 0.1
+	}
+	
+	ai_value = {
+		value = 8
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_grain.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grain_fields_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_business_horses = {
+	construction_time = @business_slot_construction_time
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_business_01
+
+	cost = {
+		gold = @business_slot_cost
+	}
+
+	can_construct = {
+		domicile = {
+			domicile_location = {
+				terrain = steppe
+			}
+		}
+	}
+
+	parameters = {
+		estate_unlock_mount_travel_option = yes
+		estate_increase_master_of_horse_aptitude = yes
+	}
+
+	character_modifier = {
+		domicile_monthly_gold_add = 0.4
+		light_cavalry_pursuit_mult = 0.05
+		light_cavalry_screen_mult = 0.05
+		heavy_cavalry_pursuit_mult = 0.05
+		heavy_cavalry_screen_mult = 0.05
+	}
+	
+	ai_value = {
+		value = 8
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_stable.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grain_fields_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_business_flowers = {
+	construction_time = @business_slot_construction_time
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_business_01
+
+	cost = {
+		gold = @business_slot_cost
+	}
+
+	can_construct = {
+		domicile = {
+			domicile_location = {
+				OR = {
+					terrain = oasis
+					terrain = wetlands
+				}
+			}
+		}
+	}
+
+	parameters = {
+		estate_increase_physician_aptitude = yes
+		increased_gardener_aptitude_2 = yes
+	}
+
+	character_modifier = {
+		domicile_monthly_gold_add = 0.3
+		stress_loss_mult = 0.2
+		attraction_opinion = 10
+	}
+	
+	ai_value = {
+		value = 8
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_herbalists.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grain_fields_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_business_camp = {
+	construction_time = @business_slot_construction_time
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_business_01
+
+	cost = {
+		gold = @business_slot_cost
+	}
+
+	can_construct = {
+		domicile = {
+			domicile_location = {
+				OR = {
+					terrain = forest
+					terrain = taiga
+					terrain = mountains
+					terrain = desert_mountains
+					terrain = jungle
+				}
+			}
+		}
+	}
+
+	parameters = {
+		estate_cheaper_hunt_cost = yes
+		estate_increase_master_of_hunt_aptitude = yes
+	}
+
+	character_modifier = {
+		domicile_monthly_gold_add = 0.4
+		forest_supply_limit_mult = 0.2
+		taiga_supply_limit_mult = 0.2
+		mountains_supply_limit_mult = 0.1
+		desert_mountains_supply_limit_mult = 0.1
+		jungle_supply_limit_mult = 0.2
+	}
+	
+	ai_value = {
+		value = 8
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_trophy.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grain_fields_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}
+
+fp_business_workshop = {
+	construction_time = @business_slot_construction_time
+	allowed_domicile_types = { family_palace }
+	slot_type = internal
+	previous_building = fp_business_01
+
+	cost = {
+		gold = @business_slot_cost
+	}
+
+	character_modifier = {
+		domicile_monthly_gold_add = 0.4
+		domicile_build_gold_cost = -0.1
+	}
+	
+	ai_value = {
+		value = 8
+	}
+	
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_workshop.dds"
+		texture = "gfx/interface/window_domiciles/estate_building_grain_fields_western.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/estate_building_market_mena_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/domicile_buildings/ep3_ui_domicile_buildings_market"
+	}
+}

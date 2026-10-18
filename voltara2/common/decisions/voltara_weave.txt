@@ -1,0 +1,36 @@
+﻿vt_weave_consult = { picture = { reference = "gfx/interface/illustrations/weave/banner.dds" } decision_group_type = major
+ desc = vt_weave_consult_desc selection_tooltip = vt_weave_consult_tooltip confirm_text = vt_weave_consult_confirm
+ is_shown = { exists = situation:voltara_weave  }
+ is_valid = { is_adult = yes is_imprisoned = no is_incapable = no }
+ effect = { trigger_event = voltara_weave.1 }
+ ai_check_interval = 36 ai_will_do = { base = 0 }
+ ai_potential = { always = no } }
+vt_weave_ward = { picture = { reference = "gfx/interface/illustrations/weave/banner.dds" } decision_group_type = major
+ desc = vt_weave_ward_desc selection_tooltip = vt_weave_ward_tooltip confirm_text = vt_weave_ward_confirm
+ is_shown = { exists = situation:voltara_weave vt_weave_order = yes }
+ is_valid = { is_adult = yes is_imprisoned = no is_incapable = no }
+ effect = { vt_weave_shift = { VALUE = -3 } add_character_modifier = { modifier = vt_weave_warded years = 5 } }
+ ai_check_interval = 36 ai_will_do = { base = 60 }
+ cost = { gold = 100 piety = 150 } cooldown = { years = 5 } }
+vt_weave_bargain = { picture = { reference = "gfx/interface/illustrations/weave/banner.dds" } decision_group_type = major
+ desc = vt_weave_bargain_desc selection_tooltip = vt_weave_bargain_tooltip confirm_text = vt_weave_bargain_confirm
+ is_shown = { exists = situation:voltara_weave vt_weave_khaos = yes }
+ is_valid = { is_adult = yes is_imprisoned = no is_incapable = no }
+ effect = { vt_weave_shift = { VALUE = 3 } add_character_modifier = { modifier = vt_weave_ember_strength years = 5 } }
+ ai_check_interval = 36 ai_will_do = { base = 50 }
+ cost = { gold = 100 piety = 150 } cooldown = { years = 5 } }
+vt_weave_reconcile = { picture = { reference = "gfx/interface/illustrations/weave/banner.dds" } decision_group_type = major
+ desc = vt_weave_reconcile_desc selection_tooltip = vt_weave_reconcile_tooltip confirm_text = vt_weave_reconcile_confirm
+ is_shown = { exists = situation:voltara_weave global_var:vt_weave_balance >= 30 }
+ is_valid = { is_adult = yes is_imprisoned = no is_incapable = no }
+ effect = { vt_weave_shift = { VALUE = -4 } add_character_modifier = { modifier = vt_weave_open_inquiry years = 5 } }
+ ai_check_interval = 36 ai_will_do = { base = 30 }
+ cost = { gold = 150 prestige = 150 } cooldown = { years = 5 } }
+
+vt_weave_unravel = { picture = { reference = "gfx/interface/illustrations/weave/banner.dds" } decision_group_type = major
+ desc = vt_weave_unravel_desc selection_tooltip = vt_weave_unravel_tooltip confirm_text = vt_weave_unravel_confirm
+ is_shown = { exists = situation:voltara_weave global_var:vt_weave_balance <= -30 }
+ is_valid = { is_adult = yes is_imprisoned = no is_incapable = no }
+ effect = { vt_weave_shift = { VALUE = 4 } add_character_modifier = { modifier = vt_weave_open_inquiry years = 5 } }
+ ai_check_interval = 36 ai_will_do = { base = 30 }
+ cost = { gold = 150 prestige = 150 } cooldown = { years = 5 } }

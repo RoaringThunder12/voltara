@@ -1,0 +1,58 @@
+﻿republican_magistrate_salary = {
+	add = {
+		value = 0.1
+		desc = COURT_POSITION_SALARY_BREAKDOWN_BASE
+		format = "BASE_VALUE_FORMAT_DECIMALS"
+	}
+	if = {
+		limit = { exists = scope:liege }
+		if = {
+			limit = {
+				scope:liege.culture = {
+					has_cultural_era_or_later = culture_era_late_medieval
+				}
+			}
+			multiply =  {
+				value =  1.75
+				desc = culture_era_late_medieval_salary_mod
+				format = "BASE_VALUE_FORMAT_DECIMALS_PLUS_NEGATIVE"
+			}
+		}
+		else_if = {
+			limit = {
+				scope:liege.culture = {
+					has_cultural_era_or_later = culture_era_high_medieval
+				}
+			}
+			multiply = {
+				value = 1.5
+				desc = culture_era_high_medieval_salary_mod
+				format = "BASE_VALUE_FORMAT_DECIMALS_PLUS_NEGATIVE"
+			}
+		}
+		else_if = {
+			limit = {
+				scope:liege.culture = {
+					has_cultural_era_or_later = culture_era_early_medieval
+				}
+			}
+			multiply = {
+				value = 1.25
+				desc = culture_era_early_medieval_salary_mod
+				format = "BASE_VALUE_FORMAT_DECIMALS_PLUS_NEGATIVE"
+			} 
+		}
+		if = {
+			limit = {
+				scope:liege = {
+					highest_held_title_tier >= tier_empire
+				}
+			}
+			multiply = {
+				value = 1.25
+				desc = empire_salary_mod
+				format = "BASE_VALUE_FORMAT_DECIMALS_PLUS_NEGATIVE"
+			} 
+		}
+	}
+}

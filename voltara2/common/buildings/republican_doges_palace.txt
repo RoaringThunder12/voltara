@@ -1,0 +1,57 @@
+﻿##########
+# Doge's Palace
+##########
+
+doges_palace_01 = { # Should technically be burnt down/rebuilt, but this is mostly here to make Venice awesome, so...
+	construction_time = very_slow_construction_time
+	effect_desc = feast_cost_discount_max_desc
+
+	type_icon = "icon_structure_doges_palace.dds"
+	
+	can_construct_potential = {
+		building_requirement_tribal = no
+	}
+	
+	is_enabled = {
+		scope:holder = {
+			custom_tooltip = {
+				text = government_is_not_republic_or_admin_or_pluto_desc
+				OR = {
+					government_has_flag = government_is_republic
+					government_has_flag = government_is_active_republic
+					government_has_flag = government_is_administrative
+				}
+			}
+		}
+	}
+	
+	cost_gold = 1000
+	
+	county_modifier = {
+		development_growth_factor = 0.5
+		development_growth = 0.4
+		hostile_raid_time = 0.5
+	}
+	
+	province_modifier = {
+		garrison_size = 1
+		fort_level = 3
+		levy_size = 1
+		monthly_income = 5
+		defender_holding_advantage = 10
+		travel_danger = -55
+		supply_limit_mult = 0.25
+	}
+	
+	ai_value = {
+		base = 100
+		modifier = { # Fill all building slots before going for special buildings
+			factor = 0
+			free_building_slots > 0
+		}
+	}
+	
+	type = special
+
+	flag = travel_point_of_interest_economic
+}

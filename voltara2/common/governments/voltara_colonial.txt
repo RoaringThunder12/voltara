@@ -1,0 +1,34 @@
+﻿voltara_colonial_government = {
+	primary_holding = city_holding
+	valid_holdings = { castle_holding }
+	required_county_holdings = { city_holding castle_holding church_holding }
+
+	government_rules = {
+		inherit_from_dynastic_government = no
+		rulers_should_have_dynasty = no
+		legitimacy = yes
+
+		#treasury = yes
+		#replace_gold_cost_by_treasury = yes
+		#barter = yes
+	}
+
+	royal_court = none
+
+	ai = {
+		use_lifestyle = yes
+		arrange_marriage = yes
+		use_decisions = yes
+		use_legends = no
+	}
+
+	vassal_contract_group = voltara_republic_vassal
+
+	flags = {
+		government_is_active_republic
+		government_is_communal_republic
+		government_is_settled
+		government_allows_nomad_domicile_titles
+	}
+	color = hsv{ 0.02 0.95 1 }
+}

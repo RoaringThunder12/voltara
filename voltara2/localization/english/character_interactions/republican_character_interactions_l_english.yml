@@ -1,0 +1,27 @@
+﻿l_english:
+ propose_war_interaction: "Declare War"
+ propose_war_interaction_extra_icon: "#size:15;Warning;bold;glow_color:{0,0,0,0.5} @sin_icon! Insufficient Republican Support ([GetPlayer.MakeScope.Var('republican_government_story').GetVariable('republican_support').GetValue|1%]):#!\n[GetScriptedGui( 'republican_declare_war' ).ExecuteTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ buy_into_the_consortium_interaction: "Buy into the Consortium"
+ buy_into_the_consortium_interaction_desc: "Gain a [domicile|E] and a [merchant_family|E] [title|e] within an [merchant_republic|E] [realm|E], becoming an [unlanded|E] [merchant_republic|E] [vassal|E]."
+ buy_into_the_consortium_interaction_extra_icon: "$hook_extra_icon$"
+
+ laamp_to_merchant_republic_prestige_option_desc: "Impress with your [prestige|E]"
+ laamp_to_merchant_republic_gold_option_desc: "Bribe with [gold|E]"
+ laamp_to_merchant_republic_piety_option_desc: "Assure with your [piety|E]"
+
+ buy_into_the_consortium_message_title: "Adventurer Becomes Merchant Family Head"
+ buy_into_the_consortium_message_tt: "[actor.GetShortUIName|U] bought into the consortium and has been given a role in our politics by [recipient.GetUIName]"
+
+ BUY_INTO_THE_CONSORTIUM_FAITH_REASON: "Your [faith|E] differs from [recipient.GetShortUINamePossessive] [faith|E]: $VALUE|=+0$"
+ BUY_INTO_THE_CONSORTIUM_SAME_CULTURE_AS_CAPITAL_REASON: "[actor.GetShortUIName|U] [culture|E] is shared by [recipient.GetShortUINamePossessive] [capital|E]: $VALUE|=+0$"
+ BUY_INTO_THE_CONSORTIUM_DYNASTY_PRESTIGE_LEVEL_REASON: "[actor.GetShortUINamePossessive|U] [dynasty|E]'s [dynasty_prestige_level|E]: $VALUE|=+0$"
+ BUY_INTO_THE_CONSORTIUM_SHARED_RELATIVES_REASON: "[actor.GetShortUIName|U] and [recipient.GetShortUIName] have no familial ties: $VALUE|=+0$"
+ BUY_INTO_THE_CONSORTIUM_LEGITIMISTS_REASON: "$camp_purpose$ is [GetLaw('camp_purpose_legitimists').GetName]: $VALUE|=+0$"
+ BUY_INTO_THE_CONSORTIUM_BRIGANDS_REASON: "$camp_purpose$ is [GetLaw('camp_purpose_brigands').GetName]: $VALUE|=+0$"
+ BUY_INTO_THE_CONSORTIUM_GALLOWSBAIT_REASON: "[GetTrait('gallowsbait').GetName( GetNullCharacter )]: $VALUE|=+0$"
+ BUY_INTO_THE_CONSORTIUM_CLAIMS_REASON: "[actor.GetShortUINamePossessive|U] [claims|E] in [recipient.GetTopLiege.GetPrimaryTitle.GetNameNoTier]: $VALUE|=+0$"
+ BUY_INTO_THE_CONSORTIUM_RIVAL_CLAIMANT_REASON: "[actor.GetShortUINamePossessive|U] [claims|E] on [recipient.GetShortUINamePossessive] [titles|E]: $VALUE|=+0$"
+ BUY_INTO_THE_CONSORTIUM_NEEDS_GOLD_REASON: "[recipient.GetShortUIName] needs [gold|E]: $VALUE|=+0$"
+ BUY_INTO_THE_CONSORTIUM_NEEDS_PIETY_REASON: "[recipient.GetShortUIName] needs [piety|E]: $VALUE|=+0$"
+ BUY_INTO_THE_CONSORTIUM_NEEDS_PRESTIGE_REASON: "[recipient.GetShortUIName] needs [prestige|E]: $VALUE|=+0$"
+ BUY_INTO_THE_CONSORTIUM_AT_WAR_TT: "You are at war with this [ruler|E]"

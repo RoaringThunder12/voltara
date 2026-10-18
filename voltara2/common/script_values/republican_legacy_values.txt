@@ -1,0 +1,30 @@
+﻿republican_legacy_cost = {
+	value = 250
+	add = {
+		value = republican_legacies_unlocked
+		multiply = 500
+	}
+}
+
+republican_legacies_unlocked = {
+	value = 0
+	if = { limit = { has_variable = legacy_level_trade } add = var:legacy_level_trade }
+	if = { limit = { has_variable = legacy_level_diplomacy } add = var:legacy_level_diplomacy }
+	if = { limit = { has_variable = legacy_level_civic } add = var:legacy_level_civic }
+	if = { limit = { has_variable = legacy_level_militia } add = var:legacy_level_militia }
+	if = { limit = { has_variable = legacy_level_prosperity } add = var:legacy_level_prosperity }
+}
+
+republican_prestige_gain = {
+	value = {
+		value = 5
+		desc = "BASE"
+	}
+	multiply = {
+		value = var:republican_government_story.var:republican_support
+		subtract = 0.5
+		divide = 2
+		add = 1
+		desc = "republican_support"
+	}
+}

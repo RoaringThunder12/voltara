@@ -1,0 +1,163 @@
+﻿#Scope: Character
+add_character_to_trade_deals = {
+	$RULER$ = {
+		add_character_modifier = trade_deal_recipient_modifier
+	}
+	if = {
+		limit = { has_variable = republican_government_story }
+		var:republican_government_story = {
+			add_to_variable_list = {
+				name = trade_deals
+				target = $RULER$
+			}
+		}
+		if = {
+			limit = {
+				var:republican_government_story = {
+					NOT = { story_owner = this }
+					owner = { government_has_flag = government_is_merchant_republic }
+				}
+			}
+			reverse_add_opinion = {
+				target = var:republican_government_story.story_owner
+				modifier = pleased_opinion
+				opinion = 10
+			}
+		}
+	}
+}
+
+#Scope: republican_government_story (scope:story)
+update_trade_variables_effect = {
+	#Let's update the trade_strength if Merchant Republic
+	set_variable = {
+		name = trade_strength
+		value = republic_trade_strength
+	}
+
+	#Let's update the the total trade value for the republican_government_story
+	set_variable = {
+		name = total_trade_value
+		value = realm_owned_trade_value
+	}
+
+	if = { #If non-merchant republic
+		limit = { story_owner = { NOT = { government_has_flag = government_is_merchant_republic } } }
+		story_owner = {
+			remove_character_modifier = income_from_trade_modifier
+			add_character_modifier = income_from_trade_modifier
+		}
+	}
+	else_if = { #If merchant republic
+		limit = { story_owner = { government_has_flag = government_is_merchant_republic } }
+		story_owner = {
+			if = {
+				limit = { is_merchant_family = no }
+				set_variable = {
+					name = trade_share
+					value = {
+						value = non_merchant_family_merchant_republic_ruler_trade_strength
+						divide = root.var:trade_strength
+					}
+				}
+				set_variable = {
+					name = owned_trade_value
+					value = {
+						value = 0
+						add = root.var:total_trade_value
+						multiply = var:trade_share
+					}
+				}
+				remove_character_modifier = income_from_trade_modifier
+				add_character_modifier = income_from_trade_modifier
+			}
+		}
+		every_in_list = {
+			variable = merchant_families
+			set_variable = {
+				name = trade_share
+				value = {
+					value = merchant_family_trade_strength
+					divide = root.var:trade_strength
+				}
+			}
+			set_variable = {
+				name = owned_trade_value
+				value = {
+					value = 0
+					add = root.var:total_trade_value
+					multiply = var:trade_share
+				}
+			}
+			remove_character_modifier = domicile_income_from_trade_modifier
+			add_character_modifier = domicile_income_from_trade_modifier
+		}
+	}
+}
+
+#Scope: Character
+remove_trade_variables = {
+	if = { limit = { has_variable = trade_share	} remove_variable = trade_share }
+	if = { limit = { has_variable = owned_trade_value	} remove_variable = owned_trade_value }
+	remove_character_modifier = domicile_income_from_trade_modifier
+	remove_character_modifier = income_from_trade_modifier
+}
+
+#Scope: republican_government_story (scope:story)
+republican_end_trade_effect = {
+	story_owner = { remove_trade_variables = yes }
+	if = {
+		limit = { story_owner = { government_has_flag = government_is_merchant_republic } }
+		every_in_list = {
+			variable = merchant_families
+			remove_trade_variables = yes
+		}
+	}
+}
+
+#Scope: republican_government_story (scope:story)
+remove_dead_rulers_from_trade_deals_effect = {
+	if = {
+		limit = {
+			has_variable_list = trade_deals
+		}
+		every_in_list = {
+			variable = trade_deals
+			limit = {
+				is_alive = no
+			}
+			scope:story = {
+				remove_list_variable = {
+					name = trade_deals
+					target = prev
+				}
+			}
+			#Maybe renegotiate with new holder of title
+			primary_title.holder = { save_scope_as = recipient }
+			save_scope_as = dead_ruler
+			prev.story_owner = { trigger_event = republican_trade.1000 }
+		}
+	}
+}
+
+#Scope: republican_government_story (scope:story)
+remove_non_independent_rulers_from_trade_deals_effect = {
+	if = {
+		limit = {
+			has_variable_list = trade_deals
+		}
+		every_in_list = {
+			variable = trade_deals
+			limit = {
+				is_independent_ruler = no
+			}
+			scope:story = {
+				remove_list_variable = {
+					name = trade_deals
+					target = prev
+				}
+			}
+			remove_character_modifier = trade_deal_recipient_modifier
+		}
+	}
+}

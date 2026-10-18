@@ -1,0 +1,31 @@
+﻿#Scope: republican_government_story
+merchant_family_capacity = {
+	story_owner = {
+		add = {
+			value = sub_realm_size
+			divide = 15
+			min = 3
+			max = 8
+		}
+		if = { limit = { primary_title.tier = tier_empire } add = 2 }
+		if = { limit = { primary_title.tier = tier_kingdom } add = 1 }
+	}
+}
+
+#Scope: republican_government_story
+merchant_family_current = {
+	story_owner = {
+		if = { limit = { is_merchant_family = yes } add = 1 }
+		every_vassal_or_below = {
+			limit = { is_merchant_family = yes }
+			add = 1
+		}
+	}
+}
+
+#Scope: republican_government_story
+merchant_family_balance_percentage = { #Useful multiplier for weights, etc.
+	value = merchant_family_current 
+	divide = merchant_family_capacity
+}
+

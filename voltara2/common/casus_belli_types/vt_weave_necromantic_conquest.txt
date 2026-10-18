@@ -1,0 +1,27 @@
+﻿vt_weave_necromantic_conquest = {
+ icon = county_conquest_cb group = conquest target_titles = all target_title_tier = county
+ war_name = vt_weave_necromantic_conquest_name cb_name = vt_weave_necromantic_conquest
+ allowed_for_character = { vt_weave_necromancer = yes is_landed = yes }
+ allowed_against_character = { scope:defender = { is_landed = yes NOT = { voltara_is_ruins_placeholder = yes } } }
+ valid_to_start = { scope:attacker = { vt_weave_necromancer = yes is_landed = yes } scope:target = { tier = tier_county vt_weave_order = yes } scope:target = { any_neighboring_county = { holder = { OR = { this = scope:attacker target_is_liege_or_above = scope:attacker } } } } }
+ on_primary_attacker_death = inherit on_primary_defender_death = inherit
+ should_invalidate = { NOT = { any_in_list = { list = target_titles holder = { OR = { this = scope:defender target_is_liege_or_above = scope:defender } } } } }
+ attacker_capital_gives_war_score = no full_occupation_by_defender_gives_victory = no
+ max_defender_score_from_battles = 100 max_attacker_score_from_battles = 100
+ attacker_score_from_occupation_scale = 150
+ cost = { prestige = 150 }
+ on_victory_desc = { desc = vt_weave_conquest_victory }
+ on_white_peace_desc = { desc = vt_weave_conquest_white_peace }
+ on_defeat_desc = { desc = vt_weave_conquest_defeat }
+ on_invalidated_desc = { desc = vt_weave_conquest_invalidated }
+ on_victory = {
+  create_title_and_vassal_change = { type = conquest save_scope_as = change add_claim_on_loss = yes }
+  every_in_list = { list = target_titles change_title_holder = { holder = scope:attacker change = scope:change } }
+  resolve_title_and_vassal_change = scope:change
+  scope:attacker = { add_prestige = 150 vt_weave_shift = { VALUE = 4 } }
+  add_truce_attacker_victory_effect = yes
+ }
+ on_white_peace = { scope:attacker = { add_prestige = -100 }  }
+ on_defeat = { scope:defender = { add_piety = 150 vt_weave_shift = { VALUE = -4 } }  }
+ on_invalidated = {  }
+}

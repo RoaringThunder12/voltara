@@ -1,0 +1,255 @@
+﻿marriage_of_the_sea_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/terrain_types/sea.dds"
+	}
+	decision_group_type = major
+	desc = marriage_of_the_sea_decision_desc
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 4
+		duchy = 8
+		kingdom = 8
+		empire = 8
+		hegemony = 8
+	}
+
+	is_shown = {
+		government_has_flag = government_is_active_republic
+		title:c_voltara_11336 = {
+			holder = root
+			NOT = { has_county_modifier = married_the_sea_modifier }
+		}
+		title:c_voltara_11336.holder = root
+	}
+
+	is_valid = {
+		completely_controls = title:d_voltara_test_301
+		is_at_war = no
+	}
+
+	cost = {
+		prestige = {
+			value = 500
+		}
+		gold = {
+			value = 100
+		}
+	}
+
+	effect = {
+		custom_tooltip = { text = marry_the_sea_effect_tt.1 }
+		custom_tooltip = { text = marry_the_sea_effect_tt.2 }
+		title:c_voltara_11336 = { add_county_modifier = married_the_sea_modifier }
+	}
+
+	ai_potential = {
+		always = yes
+	}
+
+	ai_will_do = {
+		base = 1000
+		
+	}
+}
+
+proclaim_venetian_maritime_empire_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/event_scenes/docks.dds"
+	}
+	decision_group_type = major
+	desc = proclaim_venetian_maritime_empire_decision_desc
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 4
+		duchy = 8
+		kingdom = 8
+		empire = 8
+		hegemony = 8
+	}
+
+	is_shown = {
+		government_has_flag = government_is_active_republic
+		title:d_voltara_test_11336.holder = root
+		title:c_voltara_11336 = {
+			holder = root
+			has_county_modifier = married_the_sea_modifier
+		}
+		NOT = {
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:proclaim_venetian_maritime_empire_decision
+			}
+		}
+	}
+
+	is_valid = {
+		completely_controls = title:d_voltara_test_301
+		completely_controls = title:d_voltara_test_488
+		completely_controls = title:d_voltara_test_492
+		completely_controls = title:d_voltara_test_445
+		completely_controls = title:c_voltara_492
+		completely_controls = title:d_voltara_test_300
+		is_at_war = no
+	}
+
+	cost = {
+		prestige = {
+			value = 1000
+		}
+		gold = {
+			value = 300
+		}
+	}
+
+	effect = {
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:proclaim_venetian_maritime_empire_decision
+		}
+		root.dynasty = { add_dynasty_prestige = 500 }
+		root.house = { add_house_modifier = republican_house_modifier_maritime_empire_founder }
+		create_title_and_vassal_change = {
+			type = created
+			save_scope_as = title_change
+			add_claim_on_loss = no
+		}
+		title:e_voltara_maritime_league = {
+			change_title_holder = {
+				holder = root
+				change = scope:title_change
+			}
+		}
+		title:k_voltara_maritime_colonies = { change_title_holder = { holder = root change = scope:title_change } }
+ resolve_title_and_vassal_change = scope:title_change
+		title:k_voltara_maritime_colonies = { set_de_jure_liege_title = title:e_voltara_maritime_league }
+ title:d_voltara_test_11336 = { set_de_jure_liege_title = title:k_voltara_maritime_colonies }
+		title:d_voltara_test_301 = { set_de_jure_liege_title = title:k_voltara_maritime_colonies }
+		title:d_voltara_test_488 = { set_de_jure_liege_title = title:k_voltara_maritime_colonies }
+		title:d_voltara_test_492 = { set_de_jure_liege_title = title:k_voltara_maritime_colonies }
+		title:d_voltara_test_445 = { set_de_jure_liege_title = title:k_voltara_maritime_colonies }
+		title:d_voltara_test_300 = { set_de_jure_liege_title = title:k_voltara_maritime_colonies }
+		gain_heroic_legend_seed_tooltip_effect = yes
+		hidden_effect = {
+			legend_seed_new_title_effect = yes
+		}
+		if = {
+			limit = {
+				is_ai = no
+				NOT = { exists = global_var:found_empire_decision  }
+			}
+			set_global_variable = {
+				name = found_empire_decision
+				value = root
+			}
+			set_global_variable = {
+				name = found_empire_decision_empire
+				value = root.primary_title
+			}
+		}
+
+	}
+
+	ai_potential = {
+		always = yes
+	}
+
+	ai_will_do = {
+		base = 1000
+		
+	}
+}
+
+secure_the_domini_di_terraferma_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/terrain_types/mountains.dds"
+	}
+	decision_group_type = major
+	desc = secure_the_domini_di_terraferma_decision_desc
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 4
+		duchy = 8
+		kingdom = 8
+		empire = 8
+		hegemony = 8
+	}
+
+	is_shown = {
+		government_has_flag = government_is_active_republic
+		title:d_voltara_test_11336.holder = root
+		title:c_voltara_11336 = {
+			holder = root
+			has_county_modifier = married_the_sea_modifier
+		}
+		NOT = {
+			is_target_in_global_variable_list = {
+				name = unavailable_unique_decisions
+				target = flag:secure_the_domini_di_terraferma_decision
+			}
+		}
+	}
+
+	is_valid = {
+		completely_controls = title:d_voltara_test_302
+		completely_controls = title:d_voltara_test_444
+		is_at_war = no
+	}
+
+	cost = {
+		prestige = {
+			value = 500
+		}
+		gold = {
+			value = 100
+		}
+	}
+
+	effect = {
+		add_to_global_variable_list = {
+			name = unavailable_unique_decisions
+			target = flag:secure_the_domini_di_terraferma_decision
+		}
+		root.dynasty = { add_dynasty_prestige = 250 }
+		title:d_voltara_test_302 = { set_de_jure_liege_title = title:k_voltara_maritime_colonies }
+		title:d_voltara_test_444 = { set_de_jure_liege_title = title:k_voltara_maritime_colonies }
+		title:d_voltara_test_302 = {
+			every_de_jure_county = {
+				limit = {
+					OR = {
+						duchy = title:d_voltara_test_302
+						duchy = title:d_voltara_test_444
+					}
+				}
+				every_neighboring_county = {
+					limit = { culture = culture:voltara_38 }
+					prev = { set_county_culture = culture:voltara_38 }
+				}
+			}
+		}
+		title:d_voltara_test_444 = {
+			every_de_jure_county = {
+				limit = {
+					OR = {
+						duchy = title:d_voltara_test_302
+						duchy = title:d_voltara_test_444
+					}
+				}
+				every_neighboring_county = {
+					limit = { culture = culture:voltara_38 }
+					prev = { set_county_culture = culture:voltara_38 }
+				}
+			}
+		}
+	}
+
+	ai_potential = {
+		always = yes
+	}
+
+	ai_will_do = {
+		base = 1000
+	}
+}

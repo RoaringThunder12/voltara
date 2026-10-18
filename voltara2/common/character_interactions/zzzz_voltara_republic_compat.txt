@@ -1,0 +1,5412 @@
+﻿grant_titles_interaction = {
+is_valid = {
+ # Voltara: ruins are colonized through the county panel, not character diplomacy.
+ scope:actor = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+ scope:recipient = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+}
+
+
+	category = interaction_category_vassal
+	common_interaction = yes
+
+	desc = grant_titles_interaction_desc
+
+	special_interaction = grant_titles_interaction
+	interface = grant_titles
+	target_type = title
+	target_source = puppet_or_actor
+	target_filter = domain_titles
+	interface_priority = 60
+
+	# actor character giving the titles
+	# recipient character receiving the titles
+
+	is_shown = {
+ scope:recipient = { NOT = { has_trait = voltara_slave } }
+
+ # Voltara: ruins are colonized through the county panel, not character diplomacy.
+ scope:actor = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+ scope:recipient = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+
+		scope:puppet_or_actor != scope:recipient
+		scope:puppet_or_actor ?= {
+			NOT = {
+				government_has_flag = cannot_be_vassal_or_liege
+			}
+		}
+		scope:recipient = {
+			OR = {
+				target_is_liege_or_above = scope:puppet_or_actor
+				is_pool_guest_of = scope:puppet_or_actor
+				AND = {
+					scope:puppet_or_actor.faith.religious_head ?= scope:recipient
+					top_liege ?= this
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				scope:puppet_or_actor = { government_has_mechanic = administrative }
+			}
+			scope:recipient = { NOT = { government_has_mechanic = administrative } }
+		}
+		trigger_if = {
+			limit = {
+				scope:puppet_or_actor = { government_has_flag = government_is_nomadic }
+			}
+			scope:recipient = { NOT = { government_has_flag = government_is_herder } }
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:recipient = {
+			custom_tooltip = {
+				text = can_be_granted_titles_interaction_tt
+				OR = {
+					can_be_granted_titles_by = { RULER = scope:puppet_or_actor }
+					can_be_granted_theocratic_titles_by = { RULER = scope:puppet_or_actor }
+					AND = {
+						is_diarch_of_target = scope:puppet_or_actor
+						scope:puppet_or_actor = { has_diarchy_active_parameter = diarchy_is_co_rulership }
+					}
+				}
+			}
+			NOT = { is_at_war_with = scope:puppet_or_actor }
+			OR = { # Monks are disinherited from secular land; the exemption keys on the granter's government because the titles are picked after this check
+				NOT = { has_trait = devoted }
+				scope:puppet_or_actor = { government_has_flag = government_is_theocracy }
+			}
+			bp2_valid_for_standard_interactions_trigger = yes
+			trigger_if = {
+				limit = { is_ruler = no }
+				is_imprisoned = no
+			}
+			# DON'T TAKE OTHER PLAYERS' ACCLAIMED KNIGHTS
+			custom_description = {
+				text = grant_title_stealing_acclaimed_knight
+				subject = scope:recipient
+				NOR = {
+					AND = {
+						is_acclaimed = yes
+						liege ?= {
+							is_ai = no
+							this != scope:puppet_or_actor
+						}
+					}
+					AND = {
+						is_acclaimed = yes
+						scope:actor = { is_ai = yes }
+					}
+				}
+			}
+			# Gallivanters won't accept additional responsibilities.
+			NOT = { has_trait = gallivanter }
+			# TGP JAPAN
+			tgp_japan_grant_titles_restriction_trigger = {
+				GRANTER = scope:puppet_or_actor
+				GRANTEE = scope:recipient
+			}
+		}
+		custom_description = {
+			text = is_not_theocratic_court_chaplain
+			subject = scope:recipient
+			NAND = {
+				scope:puppet_or_actor.rite = {
+					rite_has_doctrine = doctrine_theocracy_temporal
+				}
+				scope:puppet_or_actor = { NOT = { government_has_flag = government_is_theocracy } }
+				scope:recipient = {
+					rite = {
+						rite_has_doctrine = doctrine_theocracy_temporal
+					}
+					has_council_position = councillor_court_chaplain
+				}
+				scope:puppet_or_actor.faith.religious_head != scope:recipient
+			}
+		}
+		scope:puppet_or_actor = {
+			any_held_title = {
+				count > 1
+			}
+		}
+	}
+
+	can_send = {
+		trigger_if = {
+			limit = {
+				scope:puppet_or_actor = {
+					highest_held_title_tier >= tier_kingdom
+					has_diarchy_active_parameter = primeminister_requires_duchy
+					diarch = scope:recipient
+				}
+			}
+			custom_tooltip = {
+				text = primeminister_requires_duchy.tt.blocked_grant
+				any_in_list = {
+					list = target_titles
+					tier >= tier_duchy
+				}
+			}
+		}
+	}
+
+	can_be_picked_title = {
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+		scope:target = {
+			is_leased_out = no
+
+			trigger_if = {
+				limit = { is_noble_family_title = yes }
+				custom_tooltip = {
+					text = GRANT_TITLES_ITEM_CANT_GIVE_NOBLE_FAMILY
+					always = no
+				}
+			}
+
+			trigger_if = {
+				limit = {
+					scope:puppet_or_actor = {
+						NOT = {
+							has_government = nomad_government
+						}
+					}
+					title_province = {
+						OR = {
+							has_holding_type = nomad_holding
+							has_holding_type = herder_holding
+						}
+					}
+					scope:recipient = {
+						is_ruler = no
+					}
+				}
+				custom_tooltip = {
+					text = GRANT_TITLES_ITEM_CANT_GIVE_NOMADIC_TITLES_TO_NON_NOMADS_TITLE
+					always = no
+				}
+			}
+
+			trigger_if = {
+				limit = { is_nomad_title = yes }
+				custom_tooltip = {
+					text = GRANT_TITLES_ITEM_CANT_GIVE_NOMAD_TITLE
+					always = no
+				}
+			}
+
+			trigger_if = {
+				limit = {
+					is_head_of_faith = yes
+					scope:recipient.faith.religious_head != scope:puppet_or_actor.faith.religious_head
+				}
+				custom_tooltip = {
+					text = GRANT_TITLES_ITEM_CANT_HEAD_OF_FAITH_TO_INFIDEL
+					scope:recipient.faith.religious_head = scope:puppet_or_actor.faith.religious_head
+				}
+			}
+
+			trigger_if = {
+				limit = {
+					scope:recipient = scope:puppet_or_actor.player_heir
+					scope:puppet_or_actor = { has_partition_succession_realm_law_trigger = yes }
+				}
+				custom_description = {
+					text = partition_primary_heir_unfair
+					subject = scope:recipient
+					object = scope:puppet_or_actor
+					current_heir = scope:recipient
+				}
+			}
+			trigger_if = {
+				limit = { scope:target = title:k_fashion }
+				NOT = { scope:target = title:k_fashion }
+			}
+			custom_tooltip = {
+				text = cannot_grant_ceremonial_title
+				NOT = { exists = var:ceremonial_title }
+			}
+
+			trigger_if = {
+				limit = { has_clerical_region = yes }
+				custom_tooltip = {
+					text = GRANT_TITLES_ITEM_CANT_GIVE_CLERICAL_TITLE
+					always = no
+				}
+			}
+
+			trigger_if = {
+				limit = { pam_title_is_clerical_elector_trigger = yes }
+				custom_tooltip = {
+					text = GRANT_TITLES_ITEM_CANT_GIVE_CLERICAL_ELECTOR
+					always = no
+				}
+			}
+
+			trigger_if = {
+				limit = { pam_title_is_antipope_office_trigger = yes }
+				custom_tooltip = {
+					text = GRANT_TITLES_ITEM_CANT_GIVE_ANTIPOPE_TITLE
+					always = no
+				}
+			}
+
+			trigger_if = {
+				limit = {
+					exists = situation:the_christian_church
+					this = title:k_papal_state
+				}
+				custom_tooltip = {
+					text = GRANT_TITLES_ITEM_CANT_HEAD_OF_FAITH
+					always = no
+				}
+			}
+		}
+
+		custom_description = {
+			text = grant_titles_interaction_can_only_give_diarch_de_jure_liege_to_diarch
+			subject = scope:puppet_or_actor.diarch
+			NAND = {
+				# Only applies if we have an active diarchy.
+				scope:puppet_or_actor = { has_active_diarchy = yes }
+				# Now, prevent us from giving away our diarch's land to invalidate them...
+				scope:target = {
+					any_dejure_vassal_title_holder = { this = scope:puppet_or_actor.diarch }
+					# ... _unless_ we're giving it _to_ the diarch.
+					scope:recipient != scope:puppet_or_actor.diarch
+					# Plus we only care if the title is below our tier.
+					tier < scope:puppet_or_actor.highest_held_title_tier
+				}
+			}
+		}
+
+		custom_description = {
+			text = grant_titles_interaction_children_not_allowed_temple
+			subject = scope:recipient
+			NOR = {
+				AND = {
+					scope:recipient = {
+						is_adult = no
+					}
+					scope:target = {
+						tier = tier_barony
+						title_province = { has_building_with_flag = temple }
+					}
+				}
+				AND = {
+					scope:recipient = {
+						is_adult = no
+					}
+					scope:target = {
+						tier = tier_county
+
+						title_province = {
+							is_county_capital = yes
+							has_building_with_flag = temple
+						}
+					}
+				}
+			}
+		}
+
+		custom_description = {
+			text = grant_titles_interaction_title_being_wagered
+			NOT = {
+				scope:target = { has_variable = wagered_county }
+			}
+		}
+	}
+
+	auto_accept = yes
+
+	on_auto_accept = {
+		scope:recipient = {
+			trigger_event = char_interaction.0110
+		}
+	}
+
+	on_accept = {
+		if = {
+			limit = {
+				scope:puppet_or_actor = {
+					government_has_flag = government_is_nomadic
+					vassal_limit_available <= 0
+					is_independent_ruler = yes
+					scope:recipient = {
+						NOT = { is_vassal_of = scope:puppet_or_actor }
+					}
+				}
+			}
+			custom_tooltip = grant_title_nomad_and_at_vassal_limit
+		}
+		scope:recipient = {
+			add_character_flag = {
+				flag = domicile_culture_and_faith_check
+				days = 1
+			}
+		}
+		if = {
+			limit = {
+				scope:recipient = {
+					is_acclaimed = yes
+					liege = {
+						this = scope:puppet_or_actor
+					}
+				}
+				scope:target = {
+					tier > tier_barony
+				}
+			}
+			custom_tooltip = grant_title_landing_acclaimed_knight_warning
+		}
+
+		grant_title_holy_order_patronage_warning_effect = yes
+		scope:recipient = {
+			if = {
+				limit = {
+					top_liege = this
+					save_temporary_scope_as = recipient_is_independent
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_relation_friend = scope:puppet_or_actor
+					}
+				}
+				if = {
+					# then verify the right struggle phase
+					limit = {
+						is_diff_faith_or_culture_trigger = {
+							CHAR = scope:puppet_or_actor
+							STATUS = involved
+						}
+						any_character_struggle = {
+							involvement = involved
+							has_struggle_phase_parameter = struggle_grant_titles_diff_faith_culture_to_leads_to_friendship
+						}
+					}
+					progress_towards_friend_effect = {
+						REASON = friend_granted_title
+						CHARACTER = scope:puppet_or_actor
+						OPINION = 0
+					}
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				OR = {
+					any_in_list = {
+						list = target_titles
+						tier = tier_county
+						culture = scope:recipient.culture
+						NOR = {
+							culture = scope:puppet_or_actor.culture
+							recent_history = {
+								type = granted
+								years = 10
+							}
+						}
+					}
+					any_in_list = {
+						list = target_titles
+						tier >= tier_duchy
+						title_capital_county = {
+							culture != scope:puppet_or_actor.culture
+							culture = scope:recipient.culture
+						}
+						NOT = {
+							recent_history = {
+								type = granted
+								years = 10
+							}
+						}
+					}
+				}
+			}
+			scope:recipient.culture = {
+				change_cultural_acceptance = {
+					target = scope:puppet_or_actor.culture
+					value = grant_title_cultural_acceptance_impact
+					desc = cultural_acceptance_gain_granted_title
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_in_list = {
+					list = target_titles
+					tier = tier_county
+				}
+				scope:puppet_or_actor.culture = { has_cultural_parameter = grants_to_lowborns_bonuses }
+				scope:recipient = {
+					is_lowborn = yes
+				}
+			}
+			every_in_list = {
+				list = target_titles
+				limit = { tier = tier_county }
+				change_county_control = 30
+			}
+			scope:recipient = {
+				add_trait = peasant_leader
+			}
+		}
+		if = {
+			limit = {
+				any_in_list = {
+					list = target_titles
+					tier >= tier_county
+				}
+				scope:puppet_or_actor.culture = { has_cultural_parameter = landing_house_members_give_prestige }
+				exists = scope:puppet_or_actor.house
+				exists = scope:recipient.house
+				scope:puppet_or_actor.house = scope:recipient.house
+			}
+			scope:puppet_or_actor = {
+				add_prestige = {
+					value = 0
+					every_in_list = {
+						list = target_titles
+						limit = { tier = tier_hegemony }
+						add = monumental_prestige_gain
+					}
+					every_in_list = {
+						list = target_titles
+						limit = { tier = tier_empire }
+						add = massive_prestige_gain
+					}
+					every_in_list = {
+						list = target_titles
+						limit = { tier = tier_kingdom }
+						add = major_prestige_gain
+					}
+					every_in_list = {
+						list = target_titles
+						limit = { tier = tier_duchy }
+						add = medium_prestige_gain
+					}
+					every_in_list = {
+						list = target_titles
+						limit = { tier = tier_county }
+						add = minor_prestige_gain
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_in_list = {
+					list = target_titles
+					tier >= tier_county
+				}
+				scope:puppet_or_actor.culture = { has_cultural_parameter = landing_house_members_gives_renown }
+				exists = scope:puppet_or_actor.house
+				exists = scope:recipient.house
+				scope:puppet_or_actor.house = scope:recipient.house
+			}
+			scope:puppet_or_actor.dynasty = {
+				add_dynasty_prestige = {
+					value = 0
+					every_in_list = {
+						list = target_titles
+						limit = { tier = tier_hegemony }
+						add = scope:puppet_or_actor.dynasty.monumental_dynasty_prestige_gain
+					}
+					every_in_list = {
+						list = target_titles
+						limit = { tier = tier_empire }
+						add = scope:puppet_or_actor.dynasty.massive_dynasty_prestige_gain
+					}
+					every_in_list = {
+						list = target_titles
+						limit = { tier = tier_kingdom }
+						add = scope:puppet_or_actor.dynasty.major_dynasty_prestige_gain
+					}
+					every_in_list = {
+						list = target_titles
+						limit = { tier = tier_duchy }
+						add = scope:puppet_or_actor.dynasty.medium_dynasty_prestige_gain
+					}
+					every_in_list = {
+						list = target_titles
+						limit = { tier = tier_county }
+						add = scope:puppet_or_actor.dynasty.minor_dynasty_prestige_gain
+					}
+				}
+			}
+		}
+
+		# Iterate over all given titles
+		#  - Add opinion modifiers
+		#  - Collect titles that discontent reduction can later be derived from
+		every_in_list = {
+			list = target_titles
+			save_temporary_scope_as = this_title
+			if = {
+				limit = {
+					exists = scope:landed_title
+				}
+				scope:recipient = {
+					if = {
+						limit = {
+							scope:this_title.tier = tier_barony
+						}
+
+						hidden_effect = {
+							add_opinion = {
+								target = scope:puppet_or_actor
+								modifier = received_title_barony
+							}
+						}
+
+						scope:this_title = { add_to_temporary_list = titles_to_grant }
+					}
+
+					else_if = {
+						limit = {
+							scope:this_title.tier = tier_county
+						}
+
+						hidden_effect = {
+							add_opinion = {
+								target = scope:puppet_or_actor
+								modifier = received_title_county
+							}
+							if = {
+								limit = {
+									is_lowborn = yes
+								}
+								scope:puppet_or_actor = {
+									if = {
+										limit = {
+											scope:actor = { is_ai = no }
+										}
+										every_vassal = {
+											vassal_stance = courtly
+											add_opinion = {
+												target = scope:puppet_or_actor
+												modifier = courtly_lowborn_grant_opinion
+												opinion = -5
+											}
+										}
+									}
+									else = { # Can't really stop the AI from landing lowborns, so throttle it a bit so that great conquerors don't annihilate their opinion
+										random = {
+											chance = 25
+											every_vassal = {
+												vassal_stance = courtly
+												add_opinion = {
+													target = scope:puppet_or_actor
+													modifier = courtly_lowborn_grant_opinion
+													opinion = -5
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+
+						scope:this_title = { add_to_temporary_list = titles_to_grant }
+					}
+
+					else_if = {
+						limit = {
+							scope:this_title.tier = tier_duchy
+						}
+
+						hidden_effect = {
+							add_opinion = {
+								target = scope:puppet_or_actor
+								modifier = received_title_duchy
+							}
+							if = {
+								limit = {
+									is_lowborn = yes
+								}
+								scope:puppet_or_actor = {
+									every_vassal = {
+										vassal_stance = courtly
+										add_opinion = {
+											target = scope:puppet_or_actor
+											modifier = courtly_lowborn_grant_opinion
+											opinion = -20
+										}
+									}
+								}
+							}
+						}
+
+						scope:this_title = { add_to_temporary_list = titles_to_grant }
+					}
+
+					else_if = {
+						limit = {
+							scope:this_title.tier = tier_kingdom
+						}
+
+						hidden_effect = {
+							add_opinion = {
+								target = scope:puppet_or_actor
+								modifier = received_title_kingdom
+							}
+							if = {
+								limit = {
+									is_lowborn = yes
+								}
+								scope:puppet_or_actor = {
+									every_vassal = {
+										vassal_stance = courtly
+										add_opinion = {
+											target = scope:puppet_or_actor
+											modifier = courtly_lowborn_grant_opinion
+											opinion = -50
+										}
+									}
+								}
+							}
+						}
+
+						scope:this_title = { add_to_temporary_list = titles_to_grant }
+					}
+
+					else_if = {
+						limit = {
+							scope:this_title.tier >= tier_empire
+						}
+
+						hidden_effect = {
+							add_opinion = {
+								target = scope:puppet_or_actor
+								modifier = received_title_empire
+							}
+							if = {
+								limit = {
+									is_lowborn = yes
+								}
+								scope:puppet_or_actor = {
+									every_vassal = {
+										vassal_stance = courtly
+										add_opinion = {
+											target = scope:puppet_or_actor
+											modifier = courtly_lowborn_grant_opinion
+											opinion = -80
+										}
+									}
+								}
+							}
+							if = {
+								limit = {
+									is_a_faction_member = yes
+								}
+								add_joined_faction_discontent = -60
+							}
+						}
+
+						scope:this_title = { add_to_temporary_list = titles_to_grant }
+					}
+				}
+
+				#Promised a vassal this title they had a claim on (vassal.2901)
+				if = {
+					limit = {
+						scope:puppet_or_actor = {
+							exists = var:was_promised_title
+							var:was_promised_title = scope:recipient
+						}
+					}
+					if = {
+						limit = {
+							scope:recipient = {
+								exists = var:promised_title
+							}
+							scope:landed_title = scope:recipient.var:promised_title
+						}
+						scope:puppet_or_actor = {
+							trigger_event = {
+								id = vassal.2910
+								days = { 7 14 }
+							}
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					scope:recipient = {
+						has_trait = bastard
+					}
+				}
+				custom_tooltip = grant_title_to_bastard_dynasty_warning
+			}
+		} # every_in_list
+
+
+		# The accumulated discontent reduction of the recipient
+		scope:recipient = {
+			if = {
+				limit = {
+					is_a_faction_member = yes
+				}
+				add_joined_faction_discontent = grant_title_opinion_sum_discontent_calc
+			}
+		}
+
+		# Viziers may be booted from their job.
+		scope:puppet_or_actor = {
+			if = {
+				limit = {
+					# Assuming this is relevant at all.
+					diarch ?= scope:recipient
+					# And that scope:puppet_or_actor can do without a supervisor atm.
+					can_leave_diarchy_trigger = yes
+					# Aaaaand that their diarchy supports this type of thing.
+					OR = {
+						has_diarchy_parameter = primeminister_requires_county
+						has_diarchy_parameter = primeminister_requires_duchy
+					}
+				}
+				# Is this a duchy?
+				if = {
+					limit = {
+						any_in_list = {
+							list = target_titles
+							tier >= tier_duchy
+						}
+					}
+					custom_tooltip = grant_titles_interaction.tt.primeminister_title_grant.duchy_sufficient
+					end_diarchy = yes
+				}
+				# Is this a county?
+				else_if = {
+					limit = {
+						any_in_list = {
+							list = target_titles
+							tier = tier_county
+						}
+					}
+					# Is that insufficient?
+					if = {
+						limit = { has_diarchy_active_parameter = primeminister_requires_duchy }
+						custom_tooltip = grant_titles_interaction.tt.primeminister_title_grant.county_insufficient
+					}
+					# Is that sufficient?
+					else = {
+						custom_tooltip = grant_titles_interaction.tt.primeminister_title_grant.county_sufficient
+						end_diarchy = yes
+					}
+				}
+				# Is this a barony?
+				else_if = {
+					limit = {
+						any_in_list = {
+							list = target_titles
+							count = all
+							tier = tier_barony
+						}
+					}
+					custom_tooltip = grant_titles_interaction.tt.primeminister_title_grant.barony_doesnt_end
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				any_in_list = {
+					list = target_titles
+					tier >= tier_empire
+				}
+			}
+			custom_tooltip = grant_title_modifier_stack_empires
+		}
+		if = {
+			limit = {
+				any_in_list = {
+					list = target_titles
+					tier = tier_kingdom
+				}
+			}
+			custom_tooltip = grant_title_modifier_stack_kingdoms
+		}
+		if = {
+			limit = {
+				any_in_list = {
+					list = titles_to_grant
+					tier = tier_duchy
+				}
+			}
+			custom_tooltip = grant_title_modifier_stack_duchies
+		}
+		if = {
+			limit = {
+				any_in_list = {
+					list = titles_to_grant
+					tier = tier_county
+				}
+			}
+			custom_tooltip = grant_title_modifier_stack_counties
+		}
+		if = {
+			limit = {
+				any_in_list = {
+					list = titles_to_grant
+					tier = tier_barony
+				}
+			}
+			custom_tooltip = grant_title_modifier_stack_baronies
+		}
+		if = {
+			limit = {
+				trigger_if = {
+					limit = { scope:actor = { is_ai = no } }
+					scope:puppet_or_actor = {
+						any_vassal = {
+							vassal_stance = courtly
+						}
+					}
+				}
+				scope:recipient = {
+					is_lowborn = yes
+				}
+				any_in_list = {
+					list = titles_to_grant
+					tier >= tier_county
+				}
+			}
+			custom_tooltip = grant_title_modifier_courtly_lowborn_grant_penalty
+		}
+		if = {
+			limit = {
+				scope:recipient = { is_a_faction_member = yes }
+			}
+			custom_tooltip = grant_title_modifier_stack_discontent
+		}
+
+		# Jealousy check
+		if = {
+			limit = {
+				any_in_list = {
+					list = titles_to_grant
+					any_claimant = { grant_title_rivalry_trigger = yes }
+				}
+			}
+			hidden_effect = {
+				random = {
+					chance = 25
+					ordered_in_list = {
+						list = titles_to_grant
+						limit = {
+							any_claimant = { grant_title_rivalry_trigger = yes }
+						}
+						order_by = tier
+						save_scope_as = claim_title
+						ordered_claimant = {
+							limit = { grant_title_rivalry_trigger = yes }
+							order_by = primary_title.tier
+							save_scope_as = claim_vassal
+							if = {
+								limit = {
+									scope:recipient = { is_lowborn = yes }
+								}
+								scope:recipient = { save_scope_as = lowborn_scope }
+							}
+							else_if = {
+								limit = {
+									scope:recipient = { has_claim_on = scope:claim_title }
+								}
+								scope:recipient = { save_scope_as = claimant_scope }
+							}
+							scope:puppet_or_actor = {
+								trigger_event = {
+									id = bp1_yearly.8070
+									days = 5
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		#Stress impact
+		scope:puppet_or_actor = {
+			if = {
+				limit = {
+					any_in_list = {
+						list = target_titles
+						trigger_if = {
+							limit = { tier = tier_barony }
+							title_province.barony = {
+								has_wrong_holding_type = no
+							}
+						}
+						count >= 1
+					}
+				}
+
+				# Generous characters enjoy giving away titles
+				if = {
+					limit = {
+						has_trait = generous
+					}
+					add_stress = generous_title_grant_value
+				}
+
+				# Gnostics lose stress for giving away titles.
+				if = {
+					limit = {
+						scope:puppet_or_actor.rite = {
+							rite_has_parameter = granting_titles_gives_stress
+						}
+					}
+					scope:puppet_or_actor = {
+						add_stress = {
+							value = 0
+
+							# Base stress value scaled on title tier.
+							every_in_list = {
+								list = target_titles
+
+								add = {
+									value = 0
+
+									if = {
+										limit = { this.tier = tier_county }
+										add = minor_stress_loss # 10 base
+									}
+									else_if = {
+										limit = { this.tier = tier_duchy }
+										add = {
+											value = medium_stress_loss
+											multiply = 1.25 # 25 base
+										}
+									}
+									else_if = {
+										limit = { this.tier = tier_kingdom }
+										add = {
+											value = major_stress_loss
+											multiply = 2 # 80 base
+										}
+									}
+									else_if = {
+										limit = { this.tier >= tier_empire }
+										add = {
+											value = monumental_stress_loss
+											multiply = 2 # 200 base
+										}
+									}
+
+									# Lose more stress for giving away titles of your primary tier; lose less stress for giving away titles far below your primary in tier.
+									multiply = {
+										value = this.tier
+										add = 1
+										divide = scope:puppet_or_actor.primary_title.tier
+									}
+
+									# Round to the nearest multiple of 5.
+									divide = 5
+									round = yes
+									multiply = 5
+
+									# For a Duke, this will be x1.25 for Duchies (-30) and x1 for Counties(-10)
+									# For a King, this will be x1.25 for a Kingdom (-100), x1 for a Duchy (-25) and x0.75 for Counties(-10)
+									# For an Emperor, this will be x1.25 for an Empire(-200), x1 for a Kingdom(-80), x0.75 for a Duchy(-20) and x0.4 for a Counties (-5)
+								}
+							}
+						}
+					}
+				}
+
+				# Greedy & ambitious ruler gain stress for giving away titles if they would normally be able to keep them.
+				if = {
+					limit = {
+						# Pre-filter
+						OR = {
+							has_trait = greedy
+							has_trait = ambitious
+						}
+						domain_size <= domain_limit # Not over my domain limit
+						any_in_list = {
+							list = target_titles
+							tier <= tier_county # At least 1 selected title counts toward domain limit
+						}
+
+						# Special exemption for lieges who are over their held duchy limit, which are giving away that duchy (and associated counties) specifically
+						trigger_if = {
+							limit = {
+								has_too_many_held_duchies_trigger = yes
+							}
+							NOT = {
+								# Granting at least 1 duchy
+								any_in_list = {
+									list = target_titles
+									title_counts_towards_too_many_duchies_trigger = yes
+									save_temporary_scope_as = granted_duchy
+
+									# All counties being granted are De Jure part of the duchy that is being granted
+									any_in_list = {
+										list = target_titles
+										count = all
+										trigger_if = {
+											limit = { tier = tier_county }
+											de_jure_liege = scope:granted_duchy
+										}
+									}
+								}
+							}
+						}
+					}
+					# Actual stress gain effects
+					if = {
+						limit = {
+							domain_size = domain_limit
+						}
+						stress_and_fulfillment_impact = {
+							greedy = minor_stress_impact_gain
+							ambitious = minor_stress_impact_gain
+						}
+					}
+					else_if = {
+						limit = {
+							domain_size < domain_limit
+						}
+						stress_and_fulfillment_impact = {
+							greedy = medium_stress_impact_gain
+							ambitious = medium_stress_impact_gain
+						}
+					}
+				}
+			}
+
+			# Maintenance for runestones
+			if = {
+				limit = {
+					# Use expanded version if we have FP1.
+					has_fp1_dlc_trigger = yes
+					fp1_remove_stele_new_holder_trigger = {
+						TITLE = scope:target
+						PREVIOUS_HOLDER = scope:puppet_or_actor
+						NEW_HOLDER = scope:recipient
+					}
+				}
+				# Actually removed in fp1_other_decisions.0113
+				custom_tooltip = runestone_grant_title_warning
+			}
+			else_if = {
+				limit = {
+					scope:target = {
+						exists = var:ancestor_to_bury
+						has_county_modifier = county_raised_runestone_modifier
+					}
+					NOT = { scope:recipient.dynasty = var:ancestor_to_bury.dynasty } #We only have to change something if the new holder is of a different dynasty
+				}
+				# Actually removed in religious_decision.0312
+				custom_tooltip = runestone_grant_title_warning
+			}
+			if = { # Maintenance for khachkar decision
+				limit = {
+					has_pam_dlc_trigger = yes
+					scope:target = {
+						exists = var:pam_khachkar_ancestor
+						has_county_modifier = pam_khachkar_ancestral_county
+					}
+					NOT = { scope:recipient.dynasty = scope:target.var:pam_khachkar_ancestor.dynasty }
+				}
+				custom_tooltip = pam_khachkar_grant_title_warning
+			}
+
+			if = {
+				limit = {
+					exists = scope:puppet_or_actor.dynasty
+					scope:puppet_or_actor.dynasty = {
+						has_dynasty_perk = ep1_culture_legacy_3
+					}
+					scope:recipient = {
+						is_playable_character = no
+						culture != scope:puppet_or_actor.culture
+						any_in_list = {
+							list = target_titles
+							OR = {
+								tier = tier_county
+								tier = tier_barony
+							}
+							culture = scope:recipient.culture
+						}
+					}
+				}
+				scope:puppet_or_actor = {
+					if = {
+						limit = {
+							can_add_hook = {
+								target = scope:recipient
+								type = favor_hook
+							}
+						}
+						add_hook = {
+							type = favor_hook
+							target = scope:recipient
+						}
+					}
+				}
+			}
+
+			#Feedback for actor
+			hidden_effect = {
+				if = {
+					limit = {
+						government_has_flag = government_is_nomadic
+						vassal_limit_available <= 0
+						is_independent_ruler = yes
+						scope:recipient = {
+							NOT = { is_vassal_of = scope:puppet_or_actor }
+						}
+					}
+					send_interface_toast = {
+						type = event_toast_effect_neutral
+						title = grant_titles_interaction_notification
+
+						left_icon = scope:puppet_or_actor
+						right_icon = scope:recipient
+
+						custom_tooltip = grant_titles_interaction_notification_effect_7
+					}
+				}
+				else_if = {
+					limit = {
+						any_in_list = {
+							list = target_titles
+							count = 1
+							NOT = { tier = scope:puppet_or_actor.highest_held_title_tier }
+						}
+						NOT = { exists = scope:recipient_is_independent }
+						scope:recipient = {
+							any_held_title = {
+								title_tier > barony
+								NOT = {
+									is_in_list = target_titles
+								}
+							}
+						}
+					}
+					random_in_list = {
+						list = target_titles
+						save_temporary_scope_as = loc_title
+					}
+					send_interface_toast = {
+						type = event_toast_effect_neutral
+						title = grant_titles_interaction_notification
+
+						left_icon = scope:puppet_or_actor
+						right_icon = scope:recipient
+
+						custom_tooltip = grant_titles_interaction_notification_effect_2
+						if = {
+							limit = {
+								exists = dynasty
+								is_diff_faith_or_culture_trigger = {
+									CHAR = scope:recipient
+									STATUS = involved
+								}
+								any_character_struggle = {
+									involvement = involved
+									has_struggle_phase_parameter = struggle_grant_titles_diff_faith_culture_gives_prestige
+
+								}
+							}
+							dynasty = {
+								add_dynasty_prestige = minor_dynasty_prestige_gain
+							}
+
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						any_in_list = {
+							list = target_titles
+							count > 1
+							NOT = { tier = scope:puppet_or_actor.highest_held_title_tier }
+						}
+						NOT = { exists = scope:recipient_is_independent }
+						scope:recipient = {
+							any_held_title = {
+								title_tier > barony
+								NOT = {
+									is_in_list = target_titles
+								}
+							}
+						}
+					}
+					random_in_list = {
+						list = target_titles
+						save_temporary_scope_as = loc_title
+					}
+					send_interface_toast = {
+						type = event_toast_effect_neutral
+						title = grant_titles_interaction_notification
+
+						left_icon = scope:puppet_or_actor
+						right_icon = scope:recipient
+
+						custom_tooltip = grant_titles_interaction_notification_effect_3
+					}
+				}
+				else_if = {
+					limit = {
+						exists = scope:recipient_is_independent
+					}
+
+					random_in_list = {
+						list = target_titles
+						save_temporary_scope_as = loc_title
+					}
+					send_interface_toast = {
+						type = event_toast_effect_neutral
+						title = grant_titles_interaction_notification
+
+						left_icon = scope:puppet_or_actor
+						right_icon = scope:recipient
+
+						custom_tooltip = grant_titles_interaction_notification_effect_6
+					}
+				}
+				else_if = {
+					limit = {
+						scope:recipient = {
+							any_in_list = { #Became independent from you, but still have the same liege
+								list = target_titles
+								tier = scope:puppet_or_actor.highest_held_title_tier
+							}
+							top_liege = scope:puppet_or_actor.top_liege
+						}
+					}
+					send_interface_toast = {
+						type = event_toast_effect_neutral
+						title = grant_titles_interaction_notification
+
+						left_icon = scope:puppet_or_actor
+						right_icon = scope:recipient
+
+						custom_tooltip = grant_titles_interaction_notification_effect_5
+					}
+				}
+				else_if = {
+					limit = {
+						scope:recipient = {
+							any_in_list = { #Became independent
+								list = target_titles
+								tier = scope:puppet_or_actor.highest_held_title_tier
+							}
+						}
+					}
+					send_interface_toast = {
+						type = event_toast_effect_neutral
+						title = grant_titles_interaction_notification
+
+						left_icon = scope:puppet_or_actor
+						right_icon = scope:recipient
+
+						custom_tooltip = grant_titles_interaction_notification_effect_4
+					}
+				}
+				else = {
+					send_interface_toast = {
+						type = event_toast_effect_neutral
+						title = grant_titles_interaction_notification
+
+						left_icon = scope:puppet_or_actor
+						right_icon = scope:recipient
+
+						custom_tooltip = grant_titles_interaction_notification_effect
+					}
+				}
+			}
+		}
+
+		hidden_effect = {
+			# Struggle Catalyst
+			if = {
+				limit = {
+					scope:puppet_or_actor = {
+						is_diff_faith_or_culture_trigger = {
+							CHAR = scope:recipient
+							STATUS = involved
+						}
+						any_character_struggle = {
+							involvement = involved
+							activate_struggle_catalyst_secondary_character_involvement_involved_trigger = {
+								CATALYST = catalyst_grant_privilege_to_diff_faith_culture_vassal
+								CHAR = scope:recipient
+							}
+						}
+					}
+				}
+				scope:puppet_or_actor = {
+					every_character_struggle = {
+						involvement = involved
+						limit = {
+							activate_struggle_catalyst_secondary_character_involvement_involved_trigger = {
+								CATALYST = catalyst_grant_privilege_to_diff_faith_culture_vassal
+								CHAR = scope:recipient
+							}
+						}
+						activate_struggle_catalyst = {
+							catalyst = catalyst_grant_privilege_to_diff_faith_culture_vassal
+							character = scope:puppet_or_actor
+						}
+					}
+				}
+			}
+		}
+
+		# Achievements.
+		scope:actor = {
+			if = {
+				limit = {
+					has_variable_list = candidate_a_knights_tale_achievement
+					is_target_in_variable_list = {
+						name = candidate_a_knights_tale_achievement
+						target = scope:recipient
+					}
+				}
+				set_global_variable = {
+					name = finished_a_knights_tale_achievement
+					value = yes
+				}
+			}
+		}
+
+		# Government type grant cooldown: prevents rapidly granting multiple government-type vassals.
+		if = {
+			limit = {
+				exists = scope:government_type
+			}
+			scope:puppet_or_actor = {
+				set_variable = {
+					name = grant_vassal_government_cooldown
+					value = yes
+					days = 365
+				}
+			}
+		}
+		#Opinion loss with underlings who think they should get the title you're granting
+		if = {
+			limit = {
+				#AI will usually grant title to de jure holders, it's players who could use this steering
+				scope:actor = {
+					is_ai = no
+				}
+			}
+			if = {
+				limit = {
+					any_in_list = {
+						list = titles_to_grant
+						any_claimant = {
+							this = scope:recipient
+						}
+					}
+				}
+				ordered_in_list = {
+					order_by = tier
+					list = titles_to_grant
+					limit = {
+						any_claimant = {
+							this = scope:recipient
+						}
+					}
+					save_scope_as = highest_claim
+				}
+				scope:recipient = { claimant_jealousy_immunity_effect = yes }
+			}
+			every_in_list = {
+				list = titles_to_grant
+				save_scope_as = title_granted
+				scope:puppet_or_actor = {
+					title_granting_controversy_effect = {
+						TITLE = scope:title_granted
+						INTERACTION = grant_titles_interaction
+					}
+				}
+			}
+			every_in_list = {
+				list = strong_claimants
+				limit = {
+					NOT = { this = scope:recipient }
+				}
+				save_scope_as = claimer
+				ordered_in_list = {
+					order_by = tier
+					list = titles_to_grant
+					limit = {
+						any_claimant = {
+							this = scope:claimer
+						}
+					}
+					save_scope_as = highest_denied_claim
+				}
+				claimant_rivalry_mercy_effect = yes
+			}
+		}
+	}
+}
+buy_claim_interaction = {
+is_valid = {
+ # Voltara: ruins are colonized through the county panel, not character diplomacy.
+ scope:actor = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+ scope:recipient = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+}
+
+	category = interaction_category_diplomacy
+	icon = vassal_claim_liege_title_interaction
+
+	desc = buy_claim_interaction_desc
+	target_type = title
+	target_filter = recipient_domain_titles
+	ignores_pending_interaction_block = yes
+
+	is_shown = {
+ # Voltara: ruins are colonized through the county panel, not character diplomacy.
+ scope:actor = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+ scope:recipient = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+
+		scope:puppet_or_actor ?= {
+			is_landless_adventurer = no
+			OR = {
+				AND = {
+					has_perk = sanctioned_loopholes_perk
+					NOR = {
+						government_has_flag = government_has_merit
+						#Beseech claim interaction improved instead
+						pam_beseech_claims_access_trigger = yes
+						government_has_flag = government_is_japan_feudal
+						government_has_flag = government_is_japan_administrative
+					}
+				}
+				AND = {
+					any_character_struggle = {
+						involvement = involved
+						has_struggle_phase_parameter = unlocks_buy_claim_for_all
+						is_secondary_character_involvement_either_trigger = {
+							CHAR = scope:recipient
+						}
+					}
+				}
+			}
+			NOT = { target_is_liege_or_above = scope:recipient }
+		}
+		NOT = {
+			scope:puppet_or_actor ?= scope:recipient
+			AND = {
+				scope:recipient = scope:puppet_or_actor.faith.religious_head
+				scope:puppet_or_actor.rite ?= {
+					NOT = { rite_has_doctrine = doctrine_theocracy_temporal }
+				}
+			}
+		}
+		scope:recipient = {
+			is_playable_character = yes
+			primary_title.tier > tier_barony
+			NOT = {
+				target_is_liege_or_above = scope:puppet_or_actor
+			}
+		}
+	}
+
+	can_be_picked_title = {
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+		scope:target = {
+			tier >= tier_county
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		trigger_if = { # Can't request on titles you already have a claim on
+			limit = {
+				scope:target ?= {
+					any_claimant = { this = scope:puppet_or_actor }
+				}
+			}
+			custom_description = {
+				text = buy_claim_has_pressed_claim_already
+				always = no
+			}
+		}
+		trigger_if = { # Can't request claims on baronies
+			limit = {
+				scope:target ?= { tier = tier_barony }
+			}
+			custom_description = {
+				text = buy_claim_has_pressed_claim_already
+				always = no
+			}
+		}
+		trigger_if = { # Can't buy Kingdom or Empire Claims if you're a King
+			limit = {
+				scope:target ?= { tier = tier_kingdom }
+				scope:puppet_or_actor.highest_held_title_tier >= tier_kingdom
+			}
+			custom_description = {
+				text = buy_claim_no_king_or_emperor_kingdom
+				always = no
+			}
+		}
+		trigger_if = { # Can't buy Empire Claims if you're an Emperor
+			limit = {
+				scope:target ?= { tier >= tier_empire }
+				scope:puppet_or_actor.highest_held_title_tier >= tier_empire
+			}
+			custom_description = {
+				text = buy_claim_no_emperor_empire
+				always = no
+			}
+		}
+		trigger_if = { # Can't buy claims on head of faith titles
+			limit = {
+				scope:target ?= { is_head_of_faith = yes }
+			}
+			custom_description = {
+				text = buy_claim_no_religious_titles
+				always = no
+			}
+		}
+		trigger_if = {
+			limit = {
+				scope:target ?= { has_clerical_region = yes }
+			}
+			custom_description = {
+				text = buy_claim_no_religious_titles
+				always = no
+			}
+		}
+		trigger_if = { # Can't buy claims on noble families
+			limit = {
+				scope:target ?= { is_noble_family_title = yes }
+			}
+			custom_description = {
+				text = buy_claim_no_noble_family_titles
+				always = no
+			}
+		}
+		trigger_if = { # Can't buy claims on landless adventurer titles
+			limit = {
+				scope:target ?= { has_variable = adventurer_creation_reason }
+			}
+			custom_description = {
+				text = buy_claim_no_landless_adventurer_title
+				always = no
+			}
+		}
+		scope:puppet_or_actor = { # Variable piety cost depending on tier
+			trigger_if = {
+				limit = {
+					exists = scope:target
+					scope:target = {
+						tier = tier_county
+					}
+				}
+				piety >= {
+					value = minor_buy_claim_piety_value
+					if = {
+						limit = {
+							government_has_mechanic = administrative
+						}
+						multiply = 1.5
+					}
+				}
+			}
+			trigger_if = {
+				limit = {
+					exists = scope:target
+					scope:target = {
+						tier = tier_duchy
+					}
+				}
+				piety >= {
+					value = medium_buy_claim_piety_value
+					if = {
+						limit = {
+							government_has_mechanic = administrative
+						}
+						multiply = 1.5
+					}
+				}
+			}
+			trigger_if = {
+				limit = {
+					exists = scope:target
+					scope:target = {
+						tier = tier_kingdom
+					}
+				}
+				piety >= {
+					value = major_buy_claim_piety_value
+					if = {
+						limit = {
+							government_has_mechanic = administrative
+						}
+						multiply = 1.5
+					}
+				}
+			}
+			trigger_if = {
+				limit = {
+					exists = scope:target
+					scope:target = {
+						tier = tier_empire
+					}
+				}
+				piety >= {
+					value = massive_buy_claim_piety_value
+					if = {
+						limit = {
+							government_has_mechanic = administrative
+						}
+						multiply = 1.5
+					}
+				}
+			}
+			trigger_if = {
+				limit = {
+					exists = scope:target
+					scope:target = {
+						tier = tier_hegemony
+					}
+				}
+				piety >= {
+					value = monumental_buy_claim_piety_value
+					if = {
+						limit = {
+							government_has_mechanic = administrative
+						}
+						multiply = 1.5
+					}
+				}
+			}
+		}
+		scope:recipient = { NOT = { has_strong_hook = scope:puppet_or_actor } }
+		tgp_blocked_action_against_tenno_trigger = {
+			ACTOR = scope:puppet_or_actor
+			TARGET = scope:recipient
+		}
+	}
+
+	auto_accept = yes
+
+	on_accept = {
+		scope:puppet_or_actor = {
+			send_interface_toast = {
+				type = event_toast_effect_good
+				title = buy_claim_interaction.message
+				left_icon = scope:puppet_or_actor
+				right_icon = scope:recipient
+				add_piety = {
+					value = 0
+					if = {
+						limit = {
+							scope:target = {
+								tier = tier_county
+							}
+						}
+						add = minor_buy_claim_piety_loss
+					}
+					if = {
+						limit = {
+							scope:target = {
+								tier = tier_duchy
+							}
+						}
+						add = medium_buy_claim_piety_loss
+					}
+					if = {
+						limit = {
+							scope:target = {
+								tier = tier_kingdom
+							}
+						}
+						add = major_buy_claim_piety_loss
+					}
+					if = {
+						limit = {
+							scope:target = {
+								tier = tier_empire
+							}
+						}
+						add = massive_buy_claim_piety_loss
+					}
+					if = {
+						limit = {
+							scope:target = {
+								tier = tier_hegemony
+							}
+						}
+						add = monumental_buy_claim_piety_loss
+					}
+					if = {
+						limit = {
+							government_has_mechanic = administrative
+						}
+						multiply = 1.5
+					}
+				}
+				add_unpressed_claim = scope:target
+			}
+			stress_and_fulfillment_impact = {
+				just = medium_stress_impact_gain
+				honest = medium_stress_impact_gain
+			}
+		}
+		if = {
+			limit = {
+				scope:is_puppet_action ?= yes
+				scope:actor != scope:recipient
+			}
+			scope:actor = {
+				send_interface_toast = {
+					type = event_toast_effect_good
+					title = buy_claim_interaction.message_puppeteer
+					left_icon = scope:puppet_or_actor
+					right_icon = scope:recipient
+				}
+			}
+		}
+		scope:recipient = {
+			add_opinion = {
+				target = scope:puppet_or_actor
+				modifier = claimed_my_title_opinion
+				opinion = -60
+			}
+			trigger_event = perk_interaction.0002
+		}
+
+		# If we're a clan this interaction affects unity
+		add_clan_unity_interaction_effect = {
+			CHARACTER = scope:puppet_or_actor
+			TARGET = scope:recipient
+			VALUE = minor_unity_loss
+			DESC = clan_unity_bought_claim.desc
+			REVERSE_NON_HOUSE_TARGET = no
+		}
+	}
+}
+hof_ask_for_claim_interaction = {
+is_valid = {
+scope:target ?= { is_merchant_family_title = no }
+
+scope:target ?= { is_merchant_family_title = no }
+
+scope:target ?= { is_merchant_family_title = no }
+
+scope:target ?= { is_merchant_family_title = no }
+
+scope:target ?= { is_merchant_family_title = no }
+
+ # Voltara: ruins are colonized through the county panel, not character diplomacy.
+ scope:actor = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+ scope:recipient = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+}
+
+	category = interaction_category_diplomacy
+	icon = icon_clergy_claim_title
+	interface_priority = 35
+
+	desc = hof_ask_for_claim_interaction_desc
+	notification_text = hof_ask_for_claim_interaction_notification
+	target_type = title
+	target_filter = secondary_recipient_domain_titles
+	redirect = {
+		if = {
+			limit = {
+				exists = scope:actor.religious_head_or_challenger
+			}
+			scope:recipient = {
+				save_scope_as = secondary_recipient
+			}
+			scope:actor.religious_head_or_challenger = {
+				save_scope_as = recipient
+			}
+		}
+	}
+
+	has_valid_target_showing_failures_only = {
+		scope:target = {
+			tier >= tier_county
+			is_landless_type_title = no
+		}
+		trigger_if = { # Admin can't request claim on other admin titles, only the top liege's primary title is up for grabs
+			limit = {
+				scope:secondary_recipient = {
+					government_has_mechanic = administrative
+					top_liege = this
+				}
+				scope:actor = {
+					government_has_mechanic = administrative
+				}
+			}
+			scope:target = {
+				this = scope:secondary_recipient.primary_title
+			}
+		}
+	}
+
+	cooldown_against_recipient = { years = 3 }
+
+	is_available = {
+		trigger_if = {
+			limit = { is_ai = yes }
+			piety >= major_piety_value
+			exists = religious_head_or_challenger
+			is_playable_character = yes
+			OR = {
+				ai_greed >= 50
+				ai_has_warlike_personality = yes
+			}
+			NOR = {
+				has_trait = excommunicated
+				has_character_flag = hof_request_cooldown
+			}
+		}
+		NOT = {
+			has_character_modifier = promised_pilgrimage_to_clergy_modifier
+		}
+	}
+
+	is_shown = {
+ # Voltara: ruins are colonized through the county panel, not character diplomacy.
+ scope:actor = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+ scope:recipient = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+
+		#Pam DLC has new version
+		has_pam_dlc_trigger = no
+		exists = scope:actor.religious_head_or_challenger
+		scope:actor != scope:actor.religious_head_or_challenger
+		scope:recipient.religious_head_or_challenger ?= scope:actor.religious_head_or_challenger
+		scope:actor.faith ?= scope:secondary_recipient.faith
+		NOR = {
+			scope:actor = scope:secondary_recipient
+			scope:secondary_recipient ?= scope:recipient
+		}
+		scope:actor.faith ?= {
+			has_doctrine = doctrine_spiritual_head
+		}
+		scope:secondary_recipient ?= {
+			is_landed_or_landless_administrative = yes
+			primary_title ?= { tier >= tier_county }
+			NOT = { government_has_flag = government_is_holy_order }
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			pam_antipope_clerical_request_trigger = { RECIPIENT = scope:recipient }
+		}
+		pam_not_promised_pilgrimage_trigger = { ACTOR = scope:actor }
+		trigger_if = { # Can't request on titles you already have a pressed claim on
+			limit = {
+				exists = scope:target
+				scope:actor = {
+					has_strong_claim_on = scope:target
+				}
+			}
+			custom_description = {
+				text = "hof_ask_for_claim_has_pressed_claim_already"
+				always = no
+			}
+		}
+		trigger_if = { # Can't request claims on baronies
+			limit = {
+				OR = {
+					scope:recipient.highest_held_title_tier = tier_barony
+					AND = {
+						exists = scope:target
+						scope:target = {
+							tier = tier_barony
+						}
+					}
+				}
+			}
+			custom_description = {
+				text = "hof_ask_for_claim_no_baronies"
+				always = no
+			}
+		}
+		trigger_if = { # Can't request claims on theocratic lessees or theocracies (= Prince-Bishops)
+			limit = {
+				scope:secondary_recipient = {
+					government_has_flag = government_is_theocracy
+				}
+			}
+			custom_description = {
+				text = "hof_ask_for_claim_theocratic_lessee"
+				always = no
+			}
+		}
+		trigger_if = { # Admin can't request claims on other admin titles
+			limit = {
+				scope:secondary_recipient = {
+					government_has_mechanic = administrative
+					NOT = { top_liege = this }
+				}
+				scope:actor = {
+					government_has_mechanic = administrative
+				}
+			}
+			custom_description = {
+				text = "hof_ask_for_claim_on_admin_titles"
+				always = no
+			}
+		}
+		scope:actor = { # Variable piety cost depending on tier
+			trigger_if = {
+				limit = {
+					exists = scope:target
+				}
+				piety >= claim_piety_value
+			}
+			custom_description = {
+				text = "hof_ask_for_claim_excommunicated"
+				NOT = { has_trait = excommunicated }
+			}
+			NOT = {
+				is_at_war_with = scope:recipient
+			}
+		}
+		scope:actor = {
+			custom_tooltip = {
+				text = HOF_INTERACTION_UNREFORMED_FAITH
+				NOT = {
+					faith = { has_doctrine_parameter = unreformed }
+				}
+			}
+		}
+		scope:secondary_recipient = { NOT = { has_strong_hook = scope:actor } }
+		# Ceremonial Monarchs cannot do this
+		scope:actor = { tgp_is_ceremonial_liege_trigger = no }
+	}
+
+	cost = {
+		influence = {
+			value = 0
+			if = {
+				limit = { scope:influence_send_option = yes }
+				add = scope:actor.medium_influence_value
+				desc = INFLUENCE_INTERACTION_ACCEPTANCE_SEND_OPTION
+			}
+		}
+	}
+
+	ai_targets = {
+		ai_recipients = neighboring_rulers
+		ai_recipients = peer_vassals
+		ai_recipients = liege
+	}
+	ai_frequency_by_tier = {
+		barony = 0
+		county = 108
+		duchy = 36
+		kingdom = 12
+		empire = 12
+		hegemony = 12
+	}
+
+	ai_will_do = {
+		base = 0
+
+		modifier = {
+			add = scope:actor.ai_greed
+		}
+
+		modifier = {
+			add = scope:target.tier
+		}
+
+		modifier = {
+			add = 500
+			has_variable = conqueror
+			NOR = {
+				has_relation_friend = scope:secondary_recipient
+				has_relation_lover = scope:secondary_recipient
+			}
+		}
+
+		modifier = {
+			add = -100
+			scope:actor = {
+				OR = {
+					has_relation_friend = scope:secondary_recipient
+					has_relation_lover = scope:secondary_recipient
+					opinion = {
+						target = scope:secondary_recipient
+						value >= high_positive_opinion
+					}
+				}
+			}
+		}
+
+		modifier = {
+			factor = 0
+			NOT = {
+				scope:target = {
+					is_neighbor_to_realm = scope:actor
+				}
+			}
+		}
+	}
+
+	ai_accept = {
+		base = 0 # Should be 0 for all interactions
+
+		celestial_hierarchy_acceptance_modifier = {
+			ACTOR = scope:actor
+			RECIPIENT = scope:recipient
+		}
+
+		modifier = { # By God Alone - Secular Faith: the petitioner holds the ear of the clergy
+			add = 25
+			desc = pam_sf_ear_of_clergy_accept_reason
+			trigger = {
+				scope:actor = { has_character_modifier = pam_sf_ear_of_clergy_modifier }
+			}
+		}
+
+		modifier = {
+			scope:claim_hook ?= yes
+			add = 100
+			desc = SCHEME_WEAK_HOOK_USED
+		}
+
+		modifier = {
+			add = -100
+			desc = BASE_RELUCTANCE
+		}
+
+		modifier = { # Very difficult to claim Kingdoms/Empires when already King/Emperor
+			add = -100
+			desc = I_AM_ALREADY_HIGH_TIER
+			scope:actor.primary_title ?= {
+				tier >= tier_kingdom
+			}
+			scope:target = {
+				tier >= tier_kingdom
+			}
+		}
+
+		modifier = { # Characters with a pressed claim on a kingdom or empire already has a reduced chance of getting a claim on a kingdom or empire
+			add = -50
+			desc = I_ALREADY_HAVE_A_KINGDOM_OR_EMPIRE_CLAIM
+			scope:actor = {
+				any_claim = {
+					pressed = yes
+					tier >= tier_kingdom
+				}
+			}
+			scope:target = {
+				tier >= tier_kingdom
+			}
+		}
+
+		opinion_modifier = { # More likely if Recipient likes Actor
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 0.5
+			desc = AI_OPINION_REASON
+		}
+
+		modifier = { # Same language
+			add = 5
+			desc = speaks_same_language_interaction_reason
+			trigger = {
+				scope:actor = {
+					knows_language_of_culture = scope:recipient.culture
+				}
+			}
+		}
+		modifier = { # Easier claims from HoF during instability
+			add = 25
+			desc = CHRISTIAN_CHURCH_PHASE_REASON
+			situation:the_christian_church ?= {
+				situation_participant_group:christian_regular_main_power_rulers = {
+					participant_group_has_character = scope:actor
+					has_participant_group_parameter = the_christian_church_easier_claims_from_hof
+				}
+			}
+		}
+		modifier = { # Unlikely if recipient likes Secondary Recipient
+			desc = AI_OPINION_RECIPIENT_REASON
+			add = {
+				if = {
+					limit = {
+						scope:recipient != scope:secondary_recipient
+					}
+					subtract = "scope:recipient.opinion(scope:secondary_recipient)"
+				}
+			}
+		}
+
+		modifier = { # Less likely the lower their tier is compared to you
+			add = {
+				add = -10
+				if = {
+					limit = {
+						scope:actor = {
+							tier_difference = {
+								target = scope:secondary_recipient
+								value >= 2
+							}
+						}
+					}
+					add = -10
+				}
+				if = {
+					limit = {
+						scope:actor = {
+							tier_difference = {
+								target = scope:secondary_recipient
+								value >= 3
+							}
+						}
+					}
+					add = -10
+				}
+			}
+			desc = THEY_ARE_LOWER_TIER
+			scope:actor = {
+				tier_difference = {
+					target = scope:secondary_recipient
+					value >= 1
+				}
+			}
+		}
+
+		modifier = { # Penalty for asking claims on your own vassals
+			add = -50
+			desc = THEY_ARE_YOUR_VASSAL
+			scope:actor = {
+				any_vassal_or_below = {
+					this = scope:secondary_recipient
+				}
+			}
+		}
+
+		modifier = { # Bonus for adults to ask on children
+			add = 25
+			desc = THEY_ARE_A_CHILD
+			scope:secondary_recipient = {
+				is_adult = no
+			}
+			scope:actor = {
+				is_adult = yes
+			}
+		}
+
+		modifier = { # Penalty for children to ask on adults
+			add = -25
+			desc = I_AM_A_CHILD
+			scope:secondary_recipient = {
+				is_adult = yes
+			}
+			scope:actor = {
+				is_adult = no
+			}
+		}
+
+		modifier = { # Bonus for men if a woman under male preference
+			add = 15
+			desc = THEY_ARE_FEMALE_WHEN_MALE_IS_PREFERRED
+			scope:secondary_recipient = {
+				is_adult = yes
+				is_female = yes
+			}
+			scope:actor = {
+				is_adult = yes
+				is_female = no
+				rite = {
+					rite_has_doctrine = doctrine_gender_male_dominated
+				}
+			}
+		}
+
+		modifier = { # Bonus for women if a man under female preference
+			add = 15
+			desc = THEY_ARE_MALE_WHEN_FEMALE_IS_PREFERRED
+			scope:secondary_recipient = {
+				is_adult = yes
+				is_female = no
+			}
+			scope:actor = {
+				is_adult = yes
+				is_female = yes
+				rite = {
+					rite_has_doctrine = doctrine_gender_female_dominated
+				}
+			}
+		}
+
+		modifier = { # Penalty for women to ask claims on men under male preference
+			add = -15
+			desc = I_AM_FEMALE_WHEN_MALE_IS_PREFERRED
+			scope:actor = {
+				is_adult = yes
+				is_female = yes
+				rite = {
+					rite_has_doctrine = doctrine_gender_male_dominated
+				}
+			}
+			scope:secondary_recipient = {
+				is_adult = yes
+				is_female = no
+			}
+		}
+
+		modifier = { # Penalty for men to ask claims on women under female preference
+			add = -15
+			desc = I_AM_MALE_WHEN_FEMALE_IS_PREFERRED
+			scope:actor = {
+				is_adult = yes
+				is_female = no
+				rite = {
+					rite_has_doctrine = doctrine_gender_female_dominated
+				}
+			}
+			scope:secondary_recipient = {
+				is_adult = yes
+				is_female = yes
+			}
+		}
+
+		modifier = { # They are Excommunicated
+			add = 25
+			desc = THEY_ARE_EXCOMMUNICATED
+			scope:secondary_recipient = {
+				has_trait = excommunicated
+			}
+		}
+
+		modifier = { # I am Adulterer/Fornicator
+			add = -25
+			desc = I_AM_ADULTERER
+			scope:actor = {
+				OR = {
+					AND = {
+						has_trait = fornicator
+						trait_is_shunned_or_criminal_in_rite_trigger = { RITE = rite TRAIT = trait:fornicator GENDER_CHARACTER = scope:actor }
+					}
+					AND = {
+						has_trait = adulterer
+						trait_is_shunned_or_criminal_in_rite_trigger = { RITE = rite TRAIT = trait:adulterer GENDER_CHARACTER = scope:actor }
+					}
+				}
+			}
+		}
+
+		modifier = { # They are Adulterer/Fornicator
+			add = 15
+			desc = THEY_ARE_ADULTERER
+			scope:secondary_recipient = {
+				OR = {
+					AND = {
+						has_trait = fornicator
+						trait_is_shunned_or_criminal_in_rite_trigger = { RITE = rite TRAIT = trait:fornicator GENDER_CHARACTER = scope:secondary_recipient }
+					}
+					AND = {
+						has_trait = adulterer
+						trait_is_shunned_or_criminal_in_rite_trigger = { RITE = rite TRAIT = trait:adulterer GENDER_CHARACTER = scope:secondary_recipient }
+					}
+				}
+			}
+		}
+
+		modifier = { # I am Incestous
+			add = -50
+			desc = I_AM_INCESTOUS
+			scope:actor = {
+				NOT = { scope:recipient = { rite = { rite_has_doctrine = doctrine_consanguinity_unrestricted } } }
+				has_trait = incestuous
+			}
+		}
+
+		modifier = { # I am a Murderer
+			add = -50
+			desc = I_AM_MURDERER
+			scope:actor = {
+				has_trait = murderer
+			}
+		}
+
+		modifier = { # They are a Murderer
+			add = 15
+			desc = THEY_ARE_MURDERER
+			scope:secondary_recipient = {
+				has_trait = murderer
+			}
+		}
+
+		modifier = { # They are Incestous
+			add = 15
+			desc = THEY_ARE_INCESTOUS
+			scope:secondary_recipient = {
+				NOT = { scope:recipient = { rite = { rite_has_doctrine = doctrine_consanguinity_unrestricted } } }
+				has_trait = incestuous
+			}
+		}
+
+		modifier = { # I am a Kinslayer
+			add = -50
+			desc = I_AM_A_KINSLAYER
+			scope:actor = {
+				OR = {
+					AND = {
+						has_trait = kinslayer_1
+						trait_is_shunned_or_criminal_in_rite_trigger = { RITE = rite TRAIT = trait:kinslayer_1 GENDER_CHARACTER = scope:actor }
+					}
+					AND = {
+						has_trait = kinslayer_2
+						trait_is_shunned_or_criminal_in_rite_trigger = { RITE = rite TRAIT = trait:kinslayer_2 GENDER_CHARACTER = scope:actor }
+					}
+					AND = {
+						has_trait = kinslayer_3
+						trait_is_shunned_or_criminal_in_rite_trigger = { RITE = rite TRAIT = trait:kinslayer_3 GENDER_CHARACTER = scope:actor }
+					}
+				}
+			}
+		}
+
+		modifier = { # They are a Kinslayer
+			add = 15
+			desc = THEY_ARE_A_KINSLAYER
+			scope:secondary_recipient = {
+				OR = {
+					AND = {
+						has_trait = kinslayer_1
+						trait_is_shunned_or_criminal_in_rite_trigger = { RITE = rite TRAIT = trait:kinslayer_1 GENDER_CHARACTER = scope:secondary_recipient }
+					}
+					AND = {
+						has_trait = kinslayer_2
+						trait_is_shunned_or_criminal_in_rite_trigger = { RITE = rite TRAIT = trait:kinslayer_2 GENDER_CHARACTER = scope:secondary_recipient }
+					}
+					AND = {
+						has_trait = kinslayer_3
+						trait_is_shunned_or_criminal_in_rite_trigger = { RITE = rite TRAIT = trait:kinslayer_3 GENDER_CHARACTER = scope:secondary_recipient }
+					}
+				}
+			}
+		}
+
+		modifier = { # They are of the same dynasty as the Head of Faith
+			add = -50
+			desc = THEY_ARE_MY_DYNASTY_MEMBER
+			scope:recipient = {
+				is_lowborn = no
+				dynasty = scope:secondary_recipient.dynasty
+				NOR = {
+					house = scope:secondary_recipient.house
+					is_close_or_extended_family_of = scope:actor
+					is_cousin_of = scope:actor
+					is_child_of = scope:actor
+					scope:recipient.dynasty = scope:actor.dynasty
+				}
+			}
+		}
+
+		modifier = { # You are of the same dynasty as the Head of Faith
+			add = 10
+			desc = YOU_ARE_MY_DYNASTY_MEMBER
+			scope:recipient = {
+				is_lowborn = no
+				dynasty = scope:actor.dynasty
+				NOR = {
+					is_close_or_extended_family_of = scope:actor
+					is_cousin_of = scope:actor
+					is_child_of = scope:actor
+					scope:recipient.dynasty = scope:secondary_recipient.dynasty
+				}
+			}
+		}
+
+		modifier = { # They are of the same house as the Head of Faith
+			add = -50
+			desc = THEY_ARE_MY_HOUSE_MEMBER
+			scope:recipient = {
+				is_lowborn = no
+				house = scope:secondary_recipient.house
+				NOR = {
+					house = scope:actor.house
+					is_close_or_extended_family_of = scope:actor
+					is_cousin_of = scope:actor
+					is_child_of = scope:actor
+					scope:recipient.house = scope:actor.house
+				}
+			}
+		}
+
+		modifier = { # You are of the same house as the Head of Faith
+			add = 10
+			desc = YOU_ARE_MY_HOUSE_MEMBER
+			scope:recipient = {
+				is_lowborn = no
+				house = scope:actor.house
+				NOR = {
+					is_close_or_extended_family_of = scope:actor
+					is_cousin_of = scope:actor
+					is_child_of = scope:actor
+					scope:recipient.house = scope:secondary_recipient.house
+				}
+			}
+		}
+
+		modifier = { # Related to the Head of Faith
+			add = 25
+			desc = YOU_ARE_MY_RELATIVE
+			scope:recipient = {
+				OR = {
+					is_close_or_extended_family_of = scope:actor
+					is_cousin_of = scope:actor
+				}
+				NOT = { is_child_of = scope:actor }
+			}
+		}
+
+		modifier = { # Parent of the Head of Faith
+			add = 50
+			desc = YOU_ARE_MY_PARENT
+			scope:recipient = {
+				is_child_of = scope:actor
+			}
+		}
+
+		modifier = { # Friend of the Head of Faith
+			add = 15
+			desc = WE_ARE_FRIENDS
+			scope:recipient = {
+				has_relation_friend = scope:actor
+			}
+		}
+
+		modifier = { # Best Friend of the Head of Faith
+			add = 20
+			desc = WE_ARE_BEST_FRIENDS
+			scope:recipient = {
+				has_relation_best_friend = scope:actor
+			}
+		}
+
+		modifier = { # Lover of the Head of Faith
+			add = 10
+			desc = WE_ARE_LOVERS
+			scope:recipient = {
+				has_relation_lover = scope:actor
+			}
+		}
+
+		modifier = { # Rival of the Head of Faith
+			add = -100
+			desc = WE_ARE_RIVALS
+			scope:recipient = {
+				has_relation_rival = scope:actor
+			}
+		}
+
+		modifier = { # Nemesis of the Head of Faith
+			add = -500
+			desc = WE_ARE_NEMESES
+			scope:recipient = {
+				has_relation_nemesis = scope:actor
+			}
+		}
+
+		modifier = {
+			add = {
+				add = 5
+				multiply = scope:actor.num_virtuous_traits
+			}
+			scope:actor.num_virtuous_traits > 0
+			desc = I_AM_VIRTUOUS
+		}
+
+		modifier = {
+			add = {
+				add = -10
+				multiply = scope:secondary_recipient.num_virtuous_traits
+			}
+			scope:secondary_recipient.num_virtuous_traits > 0
+			desc = THEY_ARE_VIRTUOUS
+		}
+
+		modifier = {
+			add = {
+				add = -20
+				multiply = scope:actor.num_sinful_traits
+			}
+			scope:actor.num_sinful_traits > 0
+			desc = I_AM_SINFUL
+		}
+
+		modifier = {
+			add = {
+				add = 10
+				multiply = scope:secondary_recipient.num_sinful_traits
+			}
+			scope:secondary_recipient.num_sinful_traits > 0
+			desc = THEY_ARE_SINFUL
+		}
+		modifier = {
+			desc = RELIGIOUS_HEAD_INTERACTION_SAVIOR
+			add = 15
+			scope:actor = {
+				has_trait = savior
+			}
+		}
+		modifier = {
+			desc = RELIGIOUS_HEAD_INTERACTION_DIVINE_BLOOD
+			add = 5
+			scope:actor = {
+				has_trait = divine_blood
+			}
+		}
+		modifier = {
+			desc = RELIGIOUS_HEAD_INTERACTION_PARAGON
+			add = 15
+			scope:actor = {
+				has_trait = paragon
+			}
+		}
+		modifier = {
+			desc = RELIGIOUS_HEAD_INTERACTION_CONSECRATED_BLOOD
+			add = 5
+			scope:actor = {
+				has_trait = consecrated_blood
+			}
+		}
+		modifier = {
+			add = 25
+			scope:influence_send_option = yes
+			desc = INFLUENCE_INTERACTION_ACCEPTANCE_SEND_OPTION
+		}
+	}
+
+	auto_accept = {
+		custom_description = {
+			text = "spending_hook"
+			subject = scope:actor
+			object = scope:recipient
+			scope:claim_hook = yes
+			scope:actor = { has_strong_hook = scope:recipient }
+		}
+	}
+
+	send_option = { # EP3 Influence
+		is_shown = { # Actor must have a government that uses influence
+			scope:actor = {
+				government_has_flag = government_has_influence
+			}
+		}
+		is_valid = {
+			# Actor has enough influence
+			scope:actor = { influence >= medium_influence_value }
+			# Both characters are within the same top realm
+			custom_tooltip = {
+				text = not_same_realm_tt
+				scope:recipient.top_liege = scope:actor.top_liege
+			}
+		}
+		flag = influence_send_option
+		localization = TRADE_INFLUENCE_FOR_BETTER_AI_ACCEPTANCE
+	}
+	send_option = {
+		is_shown = {
+			scope:actor != scope:recipient
+		}
+		is_valid = {
+			scope:actor = {
+				has_usable_hook = scope:recipient
+			}
+		}
+		flag = claim_hook
+		localization = GENERIC_SPEND_A_HOOK
+	}
+	should_use_extra_icon = {
+		scope:actor = { has_usable_hook = scope:recipient }
+	}
+	extra_icon = "gfx/interface/icons/character_interactions/hook_icon.dds"
+
+	send_options_exclusive = no
+
+	ai_min_reply_days = 1
+	ai_max_reply_days = 5
+
+	can_send = {
+		# Anti-spam AI blockers
+		ai_religious_request_blocker_trigger = { INTERACTION = hof_ask_for_claim_interaction }
+	}
+
+	on_send = {
+		# Anti-spam AI blockers
+		ai_religious_request_blocker_effect = { INTERACTION = hof_ask_for_claim_interaction }
+	}
+
+	on_accept = {
+		hof_ask_for_claim_interaction_effect = yes
+		hof_request_accept_consequences_effect = {
+			HOF = scope:recipient
+		}
+		scope:secondary_recipient = {
+			trigger_event = religious_interaction.5
+		}
+		scope:actor = {
+			trigger_event = religious_interaction.4
+		}
+
+		# If we're a clan this interaction affects unity
+		add_clan_unity_interaction_effect = {
+			CHARACTER = scope:actor
+			TARGET = scope:secondary_recipient
+			VALUE = minor_unity_loss
+			DESC = clan_unity_granted_claim.desc
+			REVERSE_NON_HOUSE_TARGET = no
+		}
+	}
+
+	on_decline = {
+		hof_request_refuse_consequences_effect = {
+			HOF = scope:recipient
+			REQUESTER = scope:actor
+		}
+		scope:actor = {
+			trigger_event = religious_interaction.42
+		}
+	}
+}
+revoke_title_interaction = {
+is_valid = {
+ # Voltara: ruins are colonized through the county panel, not character diplomacy.
+ scope:actor = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+ scope:recipient = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+}
+
+	category = interaction_category_vassal
+	common_interaction = yes
+	highlighted_reason = HIGHLIGHTED_HAS_REVOKE_TITLE_REASON
+	notification_text = REVOKE_TITLE_PROPOSAL
+	interface_priority = 110
+
+	name = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:puppet_or_actor = {
+						government_has_mechanic = administrative
+					}
+					scope:recipient = {
+						government_has_mechanic = administrative
+					}
+				}
+				desc = revoke_governorship_interaction
+			}
+			desc = revoke_title_interaction
+		}
+	}
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:puppet_or_actor = {
+						government_has_mechanic = administrative
+					}
+					scope:recipient = {
+						government_has_mechanic = administrative
+					}
+				}
+				desc = revoke_governorship_interaction_desc
+			}
+			desc = revoke_title_interaction_desc
+		}
+	}
+
+	icon = {
+		trigger = {
+			scope:puppet_or_actor = {
+				government_has_mechanic = administrative
+			}
+			scope:recipient = {
+				government_has_mechanic = administrative
+			}
+		}
+		reference = revoke_governorship
+	}
+	icon = revoke_title
+
+	special_interaction = revoke_title_interaction
+	interface = revoke_title
+	target_type = title
+	target_filter = recipient_domain_titles
+	ai_maybe = yes
+	can_send_despite_rejection = yes
+	popup_on_receive = yes
+	pause_on_receive = yes
+
+	ai_min_reply_days = 4
+	ai_max_reply_days = 9
+
+	on_decline_summary = general_rebellion_decline_summary
+
+	# actor character giving the titles
+	# recipient character receiving the titles
+
+	is_shown = {
+ # Voltara: ruins are colonized through the county panel, not character diplomacy.
+ scope:actor = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+ scope:recipient = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+
+		scope:recipient = {
+			NOT = { government_has_flag = government_is_herder } # They have their own interaction without cooldowns/maluses
+			is_landed_or_landless_administrative = yes
+			# should be shown but be disabled for indirect vassals
+			target_is_liege_or_above = scope:puppet_or_actor
+			# is_vassal_of = scope:puppet_or_actor
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		title_revocation_standard_valid_showing_failures_only_trigger = yes
+		# Plus make sure there's a legal right to revoke.
+		scope:puppet_or_actor = {
+			trigger_if = {
+				limit = { government_has_flag = government_is_tribal }
+				custom_description = {
+					text = "has_law_allowing_title_revocation_tribal"
+					has_realm_law_flag = title_revocation_allowed
+				}
+			}
+			trigger_else_if = {
+				limit = { government_is_japanese_trigger = yes }
+				custom_description = {
+					text = "has_law_allowing_title_revocation_soryo"
+					has_realm_law_flag = title_revocation_allowed
+				}
+			}
+			trigger_else_if = {
+				limit = { government_has_mechanic = administrative }
+			}
+			trigger_else_if = {
+				limit = { realm_law_use_church_authority = yes }
+				custom_description = {
+					text = "has_law_allowing_title_revocation_church"
+					has_realm_law_flag = title_revocation_allowed
+				}
+			}
+			trigger_else = {
+				custom_description = {
+					text = "has_law_allowing_title_revocation_crown"
+					has_realm_law_flag = title_revocation_allowed
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				scope:recipient = {
+					vassal_contract_has_flag = vassal_contract_cannot_revoke_titles
+				}
+			}
+			custom_description = {
+				text = vassal_contract_forbids_revocation
+				scope:recipient = {
+					NOT = { vassal_contract_has_flag = vassal_contract_cannot_revoke_titles }
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				scope:recipient = {
+					vassal_contract_has_flag = admin_cannot_revoke_titles_without_cause
+				}
+				scope:puppet_or_actor = {
+					NOT = { has_revoke_title_reason = scope:recipient }
+				}
+			}
+			custom_tooltip = {
+				text = admin_contract_forbids_revocation_desc
+				scope:recipient = {
+					NOT = { vassal_contract_has_flag = admin_cannot_revoke_titles_without_cause }
+				}
+			}
+		}
+		# And uhh... the sensible check.
+		scope:recipient = {
+			is_vassal_of = scope:puppet_or_actor
+			NOT = { has_strong_hook = scope:puppet_or_actor }
+			trigger_if = { # If admin, they need to hold a title that isn't their noble family title
+				limit = { government_has_mechanic = administrative }
+				custom_tooltip = {
+					text = admin_no_valid_appointment
+					any_held_title = { is_landless_type_title = no }
+				}
+			}
+		}
+		custom_tooltip = {
+			text = cannot_take_overt_hostile_actions_against_diarch.tt
+			NOT = { scope:recipient ?= scope:puppet_or_actor.diarch }
+		}
+		custom_tooltip = {
+			text = protected_from_revocation.tt
+			NOT = { scope:recipient = { has_character_flag = titles_protected } }
+		}
+	}
+
+	can_send = {
+		scope:puppet_or_actor = {
+			custom_description = {
+				text = "character_interactions_hostile_actions_disabled_delay"
+				NOT = { has_character_flag = flag_hostile_actions_disabled_delay }
+			}
+		}
+		scope:recipient ?= {
+			custom_tooltip = {
+				text = petition_liege_house_fief_allowed_flag_tt
+				trigger_if = {
+					limit = {
+						government_has_flag = government_is_japan_feudal
+						var:petition_liege_house_fief_allowed_flag ?= scope:puppet_or_actor
+					}
+					NOT = {
+						ask_for_pardon_available_trigger = { ACTOR = scope:recipient }
+					}
+				}
+			}
+		}
+		# TGP
+		tgp_ceremonial_title_revoke_restriction_trigger = yes
+	}
+
+	# Highlighted in the interaction menu when right-clicking a character
+	is_highlighted = {
+		OR = {
+			scope:puppet_or_actor = {
+				has_revoke_title_reason = scope:recipient
+			}
+			scope:recipient = {
+			 	any_held_title = {
+					scope:puppet_or_actor = {
+						has_claim_on = prev
+					}
+				}
+				NOT = {
+					any_ally = {
+						this = scope:puppet_or_actor
+					}
+				}
+			}
+		}
+	}
+
+	can_be_picked_title = {
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+		scope:target = {
+			title_revocation_standard_can_pick_title_trigger = yes
+			trigger_if = {
+				limit = {
+					scope:puppet_or_actor = { government_has_mechanic = administrative }
+					scope:recipient = { government_has_mechanic = administrative }
+				}
+				custom_description = {
+					text = "admin_revoke_primary_tier_only"
+					subject = scope:puppet_or_actor
+					object = scope:target
+					scope:target.tier = scope:recipient.highest_held_title_tier
+				}
+			}
+		}
+	}
+
+	has_valid_target = {
+		scope:target = {
+			NOR = {
+				is_noble_family_title = yes
+				is_nomad_title = yes
+				is_head_of_faith = yes
+				has_clerical_region = yes
+				pam_title_is_clerical_elector_trigger = yes
+				pam_title_is_antipope_office_trigger = yes
+			}
+		}
+	}
+
+	#Use hook
+	send_option = {
+		is_valid = {
+			scope:puppet_or_actor = {
+				has_usable_hook = scope:recipient
+			}
+		}
+		flag = hook
+		localization = SCHEME_HOOK
+	}
+	should_use_extra_icon = {
+		scope:puppet_or_actor = { has_usable_hook = scope:recipient }
+	}
+	extra_icon = "gfx/interface/icons/character_interactions/hook_icon.dds"
+
+	send_options_exclusive = no
+
+	on_send = {
+		scope:puppet_or_actor = {
+			add_character_flag = {
+				flag = flag_hostile_actions_disabled_delay
+				days = 10
+			}
+		}
+	}
+
+	cost = {
+		# Usually, this action is free, but during certain diarchies, we want it to cost.
+		prestige = {
+			value = liege_diarchy_surcharge_interaction_revoke_title_interaction_value
+
+			if = {
+				limit = { scope:is_puppet_action ?= yes }
+				multiply = 0
+			}
+		}
+
+		# Admin has to pay an influence cost unless they have a revocation reason on the recipient
+		influence = {
+			value = 0
+			if = {
+				limit = {
+					scope:puppet_or_actor = {
+						government_has_flag = government_has_influence
+						government_has_mechanic = administrative
+						NOT = { has_revoke_title_reason = scope:recipient }
+						scope:recipient = {
+							government_has_mechanic = administrative
+						}
+					}
+					scope:recipient.highest_held_title_tier >= tier_county
+				}
+				scope:recipient ?= {
+					if = {
+						limit = {
+							any_held_title = {
+								title_tier = kingdom
+								is_landless_type_title = no
+								is_noble_family_title = no
+							}
+						}
+						add = {
+							add = {
+								value = scope:recipient.massive_influence_value
+								multiply = 3
+							}
+							desc = GOVERNOR_RESIGNATION_KINGDOM_COST
+						}
+					}
+					else_if = {
+						limit = {
+							any_held_title = {
+								title_tier = duchy
+								is_landless_type_title = no
+								is_noble_family_title = no
+							}
+						}
+						add = {
+							add = scope:recipient.massive_influence_value
+							desc = GOVERNOR_RESIGNATION_DUCHY_COST
+						}
+					}
+					else = {
+						add = {
+							add = scope:recipient.major_influence_value
+							desc = concept_county
+						}
+					}
+					if = {
+						limit = { house ?= { is_powerful_family = yes } }
+						add = {
+							value = scope:recipient.massive_influence_value
+							desc = GOVERNOR_RESIGNATION_POWERFUL_COST
+						}
+					}
+					else_if = {
+						limit = { house ?= { is_dominant_family = yes } }
+						add = {
+							value = scope:recipient.monumental_influence_value
+							desc = GOVERNOR_RESIGNATION_DOMINANT_COST
+						}
+					}
+					if = {
+						limit = { scope:recipient.governor_efficiency < 1 }
+						add = {
+							value = -100
+							add = {
+								value = scope:recipient.governor_efficiency
+								multiply = 100
+							}
+							desc = GOVERNOR_RESIGNATION_EFFICIENCY_COST
+						}
+					}
+					else_if = {
+						limit = { scope:recipient.governor_efficiency > 1 }
+						add = {
+							value = -100
+							add = {
+								value = scope:recipient.governor_efficiency
+								multiply = 100
+							}
+							desc = GOVERNOR_RESIGNATION_EFFICIENCY_COST
+						}
+					}
+					if = {
+						limit = {
+							influence_level != 1
+						}
+						add = {
+							value = {
+								value = influence_level
+								subtract = 1
+							}
+							multiply = 50
+							desc = GOVERNOR_RESIGNATION_INFLUENCE_LEVEL_COST
+						}
+					}
+					multiply = 1.25
+				}
+			}
+			if = {
+				limit = {
+					scope:puppet_or_actor = {
+						scope:recipient.top_liege ?= this
+						any_character_situation = {
+							OR = {
+								situation_type = natural_disaster_earthquake
+								situation_type = natural_disaster_flood
+							}
+							has_situation_top_phase_parameter = natural_disaster_governorships_more_easily_revoked
+							any_participant_group = {
+								participant_group_type = affected_vassal
+								participant_group_has_character = scope:recipient
+							}
+						}
+					}
+				}
+				multiply = {
+	  				value = 0.5
+	  				desc = vassal_in_disaster_situation
+	  			}
+			}
+			if = {
+				limit = {
+					scope:puppet_or_actor = { has_realm_law_flag = manor_reform_law }
+				}
+				multiply = 0.5
+			}
+			if = {
+				limit = { scope:is_puppet_action ?= yes }
+				multiply = 0
+			}
+		}
+	}
+
+	on_auto_accept = {
+		scope:recipient = {
+			trigger_event = char_interaction.0200
+		}
+	}
+
+	on_accept = {
+		save_scope_value_as = {
+			name = revoke_title_interaction
+			value = yes
+		}
+		if = { # Safety flag to ensure admin revocations behave properly
+			limit = {
+				scope:puppet_or_actor = { government_has_mechanic = administrative }
+				scope:recipient = { government_has_mechanic = administrative }
+			}
+			save_scope_value_as = {
+				name = administrative_revocation
+				value = yes
+			}
+			scope:puppet_or_actor = {
+				trigger_event = char_interaction.0199
+			}
+		}
+		revoke_title_interaction_effect = yes
+
+		if = {
+			limit = {
+				scope:puppet_or_actor = { has_character_flag = flag_hostile_actions_disabled_delay }
+			}
+			scope:puppet_or_actor = { remove_character_flag = flag_hostile_actions_disabled_delay }
+		}
+
+		# Harrying logic.
+		scope:puppet_or_actor = {
+			if = {
+				limit = {
+					character_is_valid_for_harrying_of_the_north_trigger = yes
+					scope:recipient = {
+						character_is_valid_for_harrying_of_the_north_trigger = yes
+						is_important_or_vip_struggle_character = yes
+					}
+					culture != scope:recipient.culture
+				}
+				global_var:harrying_of_the_north = { save_scope_as = story }
+				if = {
+					limit = {
+						character_is_valid_norman_for_harrying_of_the_north_trigger = yes
+						scope:recipient = { character_is_valid_anglo_saxon_for_harrying_of_the_north_trigger = yes }
+					}
+					ep3_increase_pacification_effect = { AMOUNT = harrying_minor_increase_value }
+				}
+				else_if = {
+					limit = {
+						character_is_valid_anglo_saxon_for_harrying_of_the_north_trigger = yes
+						scope:recipient = { character_is_valid_norman_for_harrying_of_the_north_trigger = yes }
+					}
+					ep3_increase_resistance_effect = { AMOUNT = harrying_minor_increase_value }
+				}
+			}
+		}
+	}
+
+	on_decline = {
+		scope:puppet_or_actor = {
+			if = { # Admin has to pay an influence cost unless they have a revocation reason on the recipient
+				limit = {
+					NOT = { scope:is_puppet_action ?= yes }
+					government_has_mechanic = administrative
+					government_has_flag = government_has_influence
+					NOT = { has_revoke_title_reason = scope:recipient }
+					scope:recipient = {
+						highest_held_title_tier >= tier_county
+						government_has_mechanic = administrative
+					}
+					NOT = { has_realm_law_flag = manor_reform_law }
+				}
+				show_as_tooltip = { # Actual cost is deducted in the the interaction cost
+					change_influence = {
+						scope:recipient ?= {
+							if = {
+								limit = {
+									any_held_title = {
+										title_tier = kingdom
+										is_landless_type_title = no
+										is_noble_family_title = no
+									}
+								}
+								add = {
+									add = {
+										value = scope:recipient.massive_influence_value
+										multiply = 3
+									}
+									desc = GOVERNOR_RESIGNATION_KINGDOM_COST
+								}
+							}
+							else_if = {
+								limit = {
+									any_held_title = {
+										title_tier = duchy
+										is_landless_type_title = no
+										is_noble_family_title = no
+									}
+								}
+								add = {
+									add = scope:recipient.massive_influence_value
+									desc = GOVERNOR_RESIGNATION_DUCHY_COST
+								}
+							}
+							else = {
+								add = {
+									add = scope:recipient.major_influence_value
+									desc = concept_county
+								}
+							}
+							if = {
+								limit = { house ?= { is_powerful_family = yes } }
+								add = {
+									value = scope:recipient.massive_influence_value
+									desc = GOVERNOR_RESIGNATION_POWERFUL_COST
+								}
+							}
+							else_if = {
+								limit = { house ?= { is_dominant_family = yes } }
+								add = {
+									value = scope:recipient.monumental_influence_value
+									desc = GOVERNOR_RESIGNATION_DOMINANT_COST
+								}
+							}
+							if = {
+								limit = { scope:recipient.governor_efficiency < 1 }
+								add = {
+									value = -100
+									add = {
+										value = scope:recipient.governor_efficiency
+										multiply = 100
+									}
+									desc = GOVERNOR_RESIGNATION_EFFICIENCY_COST
+								}
+							}
+							else_if = {
+								limit = { scope:recipient.governor_efficiency > 1 }
+								add = {
+									value = -100
+									add = {
+										value = scope:recipient.governor_efficiency
+										multiply = 100
+									}
+									desc = GOVERNOR_RESIGNATION_EFFICIENCY_COST
+								}
+							}
+							if = {
+								limit = {
+									influence_level != 1
+								}
+								add = {
+									value = {
+										value = influence_level
+										subtract = 1
+									}
+									multiply = 50
+									desc = GOVERNOR_RESIGNATION_INFLUENCE_LEVEL_COST
+								}
+							}
+						}
+						multiply = -1.25
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				scope:landed_title.tier != tier_barony
+				NOT = {
+					scope:recipient = { government_has_flag = government_is_herder }
+				}
+			}
+			scope:puppet_or_actor = {
+				revocation_tyranny_effect = { VASSAL = scope:recipient }
+				title_revocation_stress_effect = { VASSAL = scope:recipient }
+			}
+		}
+		if = {
+			limit = {
+				scope:recipient = { government_has_flag = government_is_herder }
+			}
+			scope:recipient = {
+				add_opinion = {
+					target = scope:puppet_or_actor
+					opinion = -10 # Herders don't care much
+					modifier = revoked_title
+				}
+			}
+		}
+		else = {
+			war_for_revoke_effect = {
+				LIEGE = scope:puppet_or_actor
+				REBEL = scope:recipient
+			}
+			scope:recipient = {
+				add_opinion = {
+					target = scope:puppet_or_actor
+					modifier = revoked_title
+				}
+			}
+		}
+		if = {
+			limit = {
+				scope:puppet_or_actor = { has_realm_law_flag = vassal_refusal_is_treason }
+				NOT = {
+					scope:recipient = { government_has_flag = government_is_herder }
+				}
+			}
+			scope:puppet_or_actor = {
+				add_opinion = {
+					target = scope:recipient
+					modifier = treasonous_revoke_refusal
+				}
+			}
+		}
+
+		# Harrying logic.
+		scope:puppet_or_actor = {
+			if = {
+				limit = {
+					character_is_valid_for_harrying_of_the_north_trigger = yes
+					scope:recipient = {
+						character_is_valid_for_harrying_of_the_north_trigger = yes
+						is_important_or_vip_struggle_character = yes
+					}
+					culture != scope:recipient.culture
+				}
+				global_var:harrying_of_the_north = { save_scope_as = story }
+				if = {
+					limit = {
+						character_is_valid_norman_for_harrying_of_the_north_trigger = yes
+						scope:recipient = { character_is_valid_anglo_saxon_for_harrying_of_the_north_trigger = yes }
+					}
+					ep3_increase_resistance_effect = { AMOUNT = harrying_minor_increase_value }
+				}
+				else_if = {
+					limit = {
+						character_is_valid_anglo_saxon_for_harrying_of_the_north_trigger = yes
+						scope:recipient = { character_is_valid_norman_for_harrying_of_the_north_trigger = yes }
+					}
+					ep3_increase_pacification_effect = { AMOUNT = harrying_minor_increase_value }
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				scope:puppet_or_actor = { has_character_flag = flag_hostile_actions_disabled_delay }
+			}
+			scope:puppet_or_actor = { remove_character_flag = flag_hostile_actions_disabled_delay }
+		}
+	}
+
+	auto_accept = {
+		scope:recipient = {
+			trigger_if = {
+				limit = {
+					scope:hook = yes
+					scope:puppet_or_actor = { has_strong_hook = scope:recipient }
+				}
+				custom_description = {
+					text = "spending_hook"
+					subject = scope:puppet_or_actor
+					object = scope:recipient
+					scope:hook = yes
+					scope:puppet_or_actor = { has_strong_hook = scope:recipient }
+				}
+			}
+			trigger_else_if = {
+				limit = { is_imprisoned_by = scope:puppet_or_actor }
+				custom_description = {
+					text = "prisoner_revocation"
+					is_imprisoned_by = scope:puppet_or_actor
+				}
+			}
+			trigger_else_if = {
+				limit = { is_imprisoned = yes }
+				custom_description = {
+					text = "foreign_prison_revocation"
+					subject = scope:puppet_or_actor
+					object = scope:recipient
+					scope:recipient = {
+						is_imprisoned = yes
+						NOT = { is_imprisoned_by = scope:puppet_or_actor }
+					}
+				}
+			}
+			trigger_else_if = {
+				limit = {
+					scope:puppet_or_actor = { government_has_mechanic = administrative }
+					scope:recipient = {
+						government_has_mechanic = administrative
+						highest_held_title_tier = tier_county
+						is_ai = yes
+					}
+				}
+				custom_tooltip = {
+					text = "has_admin_gov"
+					scope:puppet_or_actor = { government_has_mechanic = administrative }
+					scope:recipient = {
+						government_has_mechanic = administrative
+						highest_held_title_tier = tier_county
+						is_ai = yes
+					}
+				}
+			}
+			trigger_else = {
+				custom_description = {
+					text = "baron_revocation"
+					highest_held_title_tier = tier_barony
+				}
+			}
+		}
+	}
+	ai_accept = {
+		base = 0 # Try to make it 0 for most interactions
+
+		legalism_lawful_authority_acceptance_modifier = {
+			ACTOR = scope:puppet_or_actor
+		}
+
+		modifier = {
+			has_game_rule = hard_difficulty
+			scope:actor = { is_ai = no }
+			add = -50
+			desc = game_rule_base_value
+		}
+
+		modifier = {
+			has_game_rule = very_hard_difficulty
+			scope:actor = { is_ai = no }
+			add = -100
+			desc = game_rule_base_value
+		}
+
+		modifier = {
+			has_game_rule = hard_difficulty
+			scope:actor = { is_ai = yes }
+			add = 50
+		}
+
+		modifier = {
+			has_game_rule = very_hard_difficulty
+			scope:actor = { is_ai = yes }
+			add = 100
+		}
+
+		modifier = {
+			scope:hook = yes
+			add = 40
+			desc = SCHEME_WEAK_HOOK_USED
+		}
+
+		modifier = {
+			scope:recipient = {
+				government_has_flag = government_is_herder
+			}
+			add = 40
+			desc = MIGRATION_INTERACTION_HERDER
+		}
+
+		opinion_modifier = { # Opinion Factor
+			who = scope:recipient
+			opinion_target = scope:puppet_or_actor
+			multiplier = 0.8
+			desc = AI_OPINION_REASON
+		}
+
+		modifier = {
+			add = 20
+			scope:puppet_or_actor = {
+				has_realm_law_flag = vassal_refusal_is_treason
+			}
+			desc = AI_REFUSAL_IS_TREASON
+		}
+
+		modifier = {
+			add = 20
+			scope:recipient = {
+				has_trait = trusting
+			}
+			desc = TAKE_THE_VOWS_TRUSTING
+		}
+
+		modifier = {
+			add = 20
+			scope:recipient = {
+				has_trait = content
+			}
+			desc = INTERACTION_CONTENT
+		}
+
+		modifier = {
+			add = 20
+			scope:puppet_or_actor.current_military_strength > scope:recipient.current_military_strength
+			scope:recipient = {
+				has_trait = craven
+			}
+			desc = INTERACTION_CRAVEN
+		}
+
+		modifier = {
+			exists = scope:puppet_or_actor.primary_title.title_capital_county
+			OR = {
+				scope:landed_title = scope:puppet_or_actor.primary_title.title_capital_county
+				scope:landed_title = scope:puppet_or_actor.primary_title.title_capital_county.de_jure_liege
+			}
+			add = 50
+			desc = AI_TITLE_IS_REALM_CAPITAL
+		}
+
+		modifier = {
+			exists = scope:puppet_or_actor.primary_title.title_capital_county
+			NOR = {
+				scope:landed_title = scope:puppet_or_actor.primary_title.title_capital_county
+				scope:landed_title = scope:puppet_or_actor.primary_title.title_capital_county.de_jure_liege
+			}
+			scope:landed_title.de_jure_liege = scope:puppet_or_actor.primary_title.title_capital_county.de_jure_liege
+			add = 30
+			desc = AI_TITLE_IS_IN_CAPITAL_DUCHY
+		}
+
+		modifier = {
+			add = 30
+			scope:puppet_or_actor = {
+				has_claim_on = scope:landed_title
+			}
+			desc = AI_LIEGE_HAS_CLAIM_ON_TITLE
+		}
+
+		ai_value_modifier = {
+			who = scope:recipient
+			ai_greed = {
+				if = {
+					limit = {
+						scope:recipient = { NOT = { ai_greed = 0 } }
+					}
+					value = -0.75
+				}
+			}
+			ai_honor  = {
+				if = {
+					limit = {
+						scope:recipient = { #If AI is honorable and the law compels to obey the liege, AI will be more likely to obey.
+							ai_honor > 0
+						}
+						scope:puppet_or_actor = {
+							has_realm_law_flag = vassal_refusal_is_treason
+						}
+					}
+					value = 0.5
+				}
+			}
+		}
+		modifier = { #I am a King!
+			desc = offer_vassalization_interaction_aibehavior_hightier_tt
+			trigger = {
+				scope:recipient = { highest_held_title_tier = tier_kingdom }
+			}
+			add = -20
+		}
+		modifier = { #Title is part of vassal's primary title de-jure. Not relevant for Admin.
+			add = -25
+			NOT = { scope:recipient = { government_has_mechanic = administrative } }
+			scope:recipient.primary_title.tier > tier_county
+			OR = {
+				scope:recipient.primary_title = {
+					is_de_jure_liege_or_above_target = scope:landed_title
+				}
+				scope:recipient.primary_title = scope:landed_title
+			}
+			desc = AI_REFUSAL_IS_DE_JURE_UNDER
+		}
+		modifier = {
+			add = intimidated_halved_reason_value
+			scope:recipient = {
+				has_dread_level_towards = {
+					target = scope:puppet_or_actor
+					level = 1
+				}
+			}
+			desc = INTIMIDATED_REASON
+		}
+		modifier = {
+			add = cowed_halved_reason_value
+			scope:recipient = {
+				has_dread_level_towards = {
+					target = scope:puppet_or_actor
+					level = 2
+				}
+			}
+			desc = COWED_REASON
+		}
+		modifier = { #Comparative military strength.
+			desc = offer_vassalization_interaction_aibehavior_power_tt
+	  	  	add = {
+				value = 1
+				subtract = {
+					value = scope:recipient.current_military_strength
+					divide = { value = scope:puppet_or_actor.current_military_strength min = 1 }
+				}
+				multiply = 50
+				max = 20
+	  		}
+		}
+		modifier = { # Legalistic tradition
+			desc = tradition_legalistic_name
+			scope:puppet_or_actor = {
+				has_revoke_title_reason = scope:recipient
+				culture = { has_cultural_parameter = vassals_more_likely_accept_punishments }
+			}
+			add = legalistic_vassal_punishment_acceptance
+		}
+		modifier = { # AI Mongols, tyranny wars just delay the inevitable fun!
+			scope:puppet_or_actor = {
+				is_ai = yes
+				OR = {
+					has_trait = greatest_of_khans
+					has_character_modifier = the_great_khan_modifier
+					ai_should_get_conqueror_bonuses = yes
+				}
+			}
+			scope:recipient = {
+				is_ai = yes
+			}
+			add = 500
+		}
+		modifier = {
+			add = -25
+			scope:recipient = {
+				culture = { has_cultural_parameter = vassals_more_likely_to_refuse_demands }
+			}
+			desc = VASSALS_REFUSAL_indomitable_azatani
+		}
+	}
+
+	# AI
+	ai_targets = {
+		ai_recipients = vassals
+	}
+	ai_frequency = 0 # This is handled via code instead; see REVOKE_TITLE_TICK in the AI defines. All the logic for *if* to send a revoke though is scripted below
+
+	ai_potential = {
+		has_realm_law_flag = title_revocation_allowed
+		primary_title.tier >= tier_county
+	}
+
+	ai_will_do = {
+		base = -1000
+
+		# We want to avoid tyranny unless we've got a good reason
+		# And even if we can avoid tyranny we don't want to revoke just because we can, so this only gets us to -10
+		# Certain characters will revoke despite tyranny, if their rationality is sufficiently low
+		modifier = {
+			scope:puppet_or_actor = {
+				OR = {
+					NOT = {
+						title_revocation_is_tyrannical_trigger = { VASSAL = scope:recipient }
+					}
+					AND = {
+						ai_rationality <= very_high_negative_ai_value
+						OR = {
+							has_trait = lunatic
+							has_trait = possessed
+							has_trait = arbitrary
+						}
+					}
+				}
+			}
+
+			add = 990
+		}
+		# Only certain rulers won't revoke vassals who have revolted against them
+		modifier = {
+			scope:puppet_or_actor = {
+				ai_compassion <= 75
+				ai_greed >= -50
+				ai_honor <= 50
+				scope:recipient = {
+					is_imprisoned = yes
+					trigger_if = {
+						limit = {
+							NOT = { has_dlc_feature = landless_playable }
+						}
+						# Be kinder to players if they'd get game overed.
+						is_ai = yes
+					}
+					opinion = {
+						target = scope:puppet_or_actor
+						value <= 0
+					}
+				}
+				NOT = {
+					title_revocation_is_tyrannical_trigger = { VASSAL = scope:recipient }
+				}
+				OR = {
+					has_opinion_modifier = {
+						modifier = rebellious_vassal_opinion
+						target = scope:recipient
+					}
+					has_opinion_modifier = {
+						modifier = vassal_lost_faction_revolt_war
+						target = scope:recipient
+					}
+					has_opinion_modifier = {
+						modifier = vassal_wp_faction_revolt_war
+						target = scope:recipient
+					}
+				}
+			}
+			add = {
+				value = 100
+				add = scope:puppet_or_actor.ai_greed
+				add = {
+					value = scope:puppet_or_actor.ai_honor
+					multiply = -1
+				}
+				if = {
+					limit = {
+						scope:puppet_or_actor.ai_vengefulness > 0
+					}
+					add = scope:puppet_or_actor.ai_vengefulness
+				}
+			}
+		}
+		# Vengeful AI's want to revoke
+		modifier = {
+			scope:puppet_or_actor = {
+				ai_vengefulness > 0
+				scope:recipient = {
+					is_imprisoned = yes
+				}
+				NOT = {
+					title_revocation_is_tyrannical_trigger = { VASSAL = scope:recipient }
+				}
+			}
+			add = {
+				value = scope:puppet_or_actor.ai_vengefulness
+				multiply = 2
+			}
+		}
+		# Always revoke preferred capital and capital duchy
+		modifier = {
+			years_from_game_start >= 3
+			OR = {
+				scope:puppet_or_actor = {
+					is_at_war = no
+					OR = {
+						AND = {
+							has_treasury = no
+							gold > 0
+						}
+						AND = {
+							has_treasury = yes
+							treasury > 0
+						}
+					}
+				}
+				scope:recipient = {
+					is_imprisoned_by = scope:puppet_or_actor
+				}
+			}
+			scope:puppet_or_actor = { # The HRE doesn't need endless civil wars
+				NOT = {
+					primary_title = title:e_hre
+				}
+			}
+			exists = scope:puppet_or_actor.primary_title.title_capital_county
+			OR = {
+				scope:landed_title = scope:puppet_or_actor.primary_title.title_capital_county
+				scope:landed_title = scope:puppet_or_actor.primary_title.title_capital_county.de_jure_liege
+			}
+			NAND = { # Don't revoke player titles tyranically, it must be possible to play and succeed as Ulm!
+				scope:landed_title.holder = {
+					is_ai = no
+				}
+				scope:puppet_or_actor = {
+					title_revocation_is_tyrannical_trigger = { VASSAL = scope:recipient }
+				}
+			}
+			add = 1100
+		}
+		# If below domain limit, try to revoke counties in your capital duchy despite tyranny, sometimes
+		modifier = {
+			years_from_game_start >= 3
+			OR = {
+				scope:puppet_or_actor = {
+					is_at_war = no
+					OR = {
+						AND = {
+							has_treasury = no
+							gold > 0
+						}
+						AND = {
+							has_treasury = yes
+							treasury > 0
+						}
+					}
+				}
+				scope:recipient = {
+					is_imprisoned_by = scope:puppet_or_actor
+				}
+			}
+			scope:puppet_or_actor = { # The HRE doesn't need endless civil wars
+				NOT = {
+					primary_title = title:e_hre
+				}
+			}
+			scope:puppet_or_actor.domain_size < scope:puppet_or_actor.domain_limit
+			scope:puppet_or_actor.primary_title.tier > tier_county
+			trigger_if = {
+				limit = {
+					scope:puppet_or_actor = {
+						title_revocation_is_tyrannical_trigger = { VASSAL = scope:recipient }
+						domain_size > 3
+					}
+				}
+				scope:puppet_or_actor = {
+					NOR = {
+						has_trait = generous
+						has_trait = just
+					}
+				}
+			}
+			exists = scope:puppet_or_actor.primary_title.title_capital_county
+			OR = {
+				scope:puppet_or_actor.primary_title.title_capital_county.holder = scope:puppet_or_actor # You have your de jure capital already
+				NOT = {
+					scope:puppet_or_actor.primary_title.title_capital_county.holder.top_liege = scope:puppet_or_actor.top_liege # Or your De Jure capital isn't in your realm
+				}
+			}
+			scope:landed_title.tier = tier_county # Only Counties
+			OR = { # The AI gives away wrong-holding counties almost instantly, so we restrict to counties with holdings they can hold
+				scope:landed_title.title_province = { has_holding_type = castle_holding } # Everyone is valid for castles
+				AND = {
+					scope:puppet_or_actor = {
+						government_has_flag = government_is_tribal
+					}
+					scope:landed_title.title_province = { has_holding_type = tribal_holding }
+				}
+				AND = {
+					scope:puppet_or_actor = {
+						government_has_flag = government_is_republic
+					}
+					scope:landed_title.title_province = { has_holding_type = city_holding }
+				}
+				AND = {
+					scope:puppet_or_actor = {
+						OR = {
+							government_has_flag = government_is_clan
+							government_has_flag = government_is_theocracy
+						}
+					}
+					scope:landed_title.title_province = { has_holding_type = church_holding }
+				}
+			}
+			OR = { # And the capital duchy, if it exists at all
+				AND = {
+					exists = scope:puppet_or_actor.primary_title.title_capital_county.de_jure_liege.holder
+					scope:puppet_or_actor.primary_title.title_capital_county.de_jure_liege.holder = scope:puppet_or_actor
+				}
+				AND = {
+					exists = scope:puppet_or_actor.primary_title.title_capital_county.de_jure_liege.holder
+					scope:puppet_or_actor.primary_title.title_capital_county.de_jure_liege.holder.top_liege != scope:puppet_or_actor.top_liege
+				}
+				scope:puppet_or_actor.primary_title.title_capital_county.de_jure_liege = {
+					is_title_created = no
+				}
+			}
+
+			scope:landed_title.de_jure_liege = scope:puppet_or_actor.primary_title.title_capital_county.de_jure_liege # Under the same Duchy as your capital
+
+			scope:recipient = { # Not from players
+				is_ai = yes
+			}
+
+			OR = { # Tyranny tolerance is based on rationality
+				AND = {
+					scope:puppet_or_actor.ai_rationality < 0
+					scope:puppet_or_actor.tyranny <= 15 # Don't go crazy with tyranny, just a bit is fine
+				}
+				AND = {
+					scope:puppet_or_actor.ai_rationality >= 0
+					scope:puppet_or_actor.ai_rationality < 50
+					scope:puppet_or_actor.tyranny <= 5 # Don't go crazy with tyranny, just a bit is fine
+				}
+				AND = {
+					scope:puppet_or_actor.ai_rationality >= 50
+					scope:puppet_or_actor.tyranny <= 0 # Don't go crazy with tyranny, just a bit is fine
+				}
+				AND = {
+					scope:puppet_or_actor.ai_rationality >= 0
+					scope:recipient = {
+						is_imprisoned_by = scope:puppet_or_actor
+					}
+					scope:puppet_or_actor = { has_revoke_title_reason = scope:recipient }
+				}
+				AND = {
+					scope:puppet_or_actor.ai_rationality < 0
+					scope:recipient = {
+						is_imprisoned_by = scope:puppet_or_actor
+					}
+				}
+			}
+			# To do this, the target must be weak or willing in some way
+			OR = {
+				scope:puppet_or_actor.current_military_strength > scope:recipient.current_military_strength # Must be stronger
+				scope:recipient = {
+					is_imprisoned_by = scope:puppet_or_actor
+				}
+			}
+			scope:recipient = {
+				OR = {
+					AND = {
+						scope:recipient.primary_title.tier <= tier_county
+						scope:puppet_or_actor.primary_title.tier >= tier_duchy
+					}
+					has_trait = craven
+					has_trait = content
+					has_trait = trusting
+					has_dread_level_towards = {
+						target = scope:puppet_or_actor
+						level >= 1
+					}
+					opinion = { target = scope:puppet_or_actor value >= 40 }
+					is_imprisoned_by = scope:puppet_or_actor
+					scope:puppet_or_actor = { has_revoke_title_reason = scope:recipient }
+				}
+			}
+
+			add = 1100
+		}
+		# Revoke counties we're dejure liege of if below domain limit
+		modifier = {
+			scope:puppet_or_actor.domain_size < scope:puppet_or_actor.domain_limit
+			scope:landed_title.tier = tier_county
+			scope:landed_title.de_jure_liege.holder = scope:puppet_or_actor
+			add = 500
+		}
+		# Revoke appropriate baronies if below domain limit, it's tyranny free
+		modifier = {
+			scope:puppet_or_actor.domain_size < scope:puppet_or_actor.domain_limit
+			scope:recipient = { highest_held_title_tier = tier_barony }
+			scope:landed_title.tier = tier_barony
+			OR = {
+				scope:landed_title.title_province = { has_holding_type = castle_holding }
+				scope:landed_title.title_province = { has_holding_type = temple_citadel_holding }
+				AND = {
+					scope:landed_title.title_province = { has_holding_type = church_holding }
+					OR = {
+						scope:puppet_or_actor = { government_has_flag = government_is_clan }
+						scope:puppet_or_actor = { government_has_flag = government_is_theocracy }
+						scope:puppet_or_actor = { government_has_flag = government_is_mandala }
+						scope:puppet_or_actor.rite = { rite_has_parameter = lay_clergy }
+					}
+				}
+				AND = {
+					scope:landed_title.title_province = { has_holding_type = city_holding }
+					scope:puppet_or_actor = { government_has_mechanic = administrative }
+				}
+			}
+			add = 1100
+		}
+		# Revoke from vassals of the wrong faith if you can do it without tyranny
+		modifier = {
+			scope:puppet_or_actor.faith != scope:recipient.faith
+			scope:recipient.primary_title.tier > tier_barony
+			OR = {
+				scope:puppet_or_actor.faith.religion != scope:recipient.faith.religion
+				scope:puppet_or_actor.ai_zeal >= low_negative_ai_value
+				NOT = {
+					scope:puppet_or_actor.rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
+				}
+			}
+			OR = { # Chill a bit until you've dealth with the ones already in your prison
+				scope:recipient = {
+					is_imprisoned_by = scope:puppet_or_actor
+				}
+				NOT = {
+					any_vassal = {
+						faith != scope:puppet_or_actor.faith
+						primary_title.tier > tier_barony
+						is_imprisoned_by = scope:puppet_or_actor
+						time_in_prison = { years < 1 }
+					}
+				}
+			}
+			add = 100
+		}
+		# Revoke from characters you dislike if you can do it without tyranny
+		modifier = {
+			scope:puppet_or_actor = {
+				OR = {
+					has_relation_rival = scope:recipient
+					has_relation_nemesis = scope:recipient
+				}
+			}
+			add = 100
+		}
+		# Slight preference for higher-tier titles
+		modifier = {
+			add = scope:landed_title.tier
+		}
+		# Do not revoke titles from certain characters
+		modifier = {
+			scope:puppet_or_actor = {
+				OR = {
+					has_relation_friend = scope:recipient
+					has_relation_best_friend = scope:recipient
+					has_relation_lover = scope:recipient
+					has_relation_soulmate = scope:recipient
+					is_parent_of = scope:recipient
+					is_grandparent_of = scope:recipient
+					is_great_grandparent_of = scope:recipient
+				}
+			}
+			add = -5000
+		}
+		# Do not revoke titles when the chance of success if exceedingly low
+		modifier = {
+			NOR = {
+				scope:recipient = {
+					is_imprisoned_by = scope:puppet_or_actor
+				}
+				scope:recipient = {
+					highest_held_title_tier = tier_barony
+				}
+			}
+			scope:puppet_or_actor = {
+				OR = {
+					AND = {
+						has_treasury = no
+						OR = {
+							gold < minimum_ai_gold_value_for_tyranny_wars
+							AND = {
+								scope:puppet_or_actor.current_military_strength < scope:recipient.current_military_strength
+								gold < comfortable_ai_gold_value_for_tyranny_wars
+							}
+						}
+					}
+					AND = {
+						has_treasury = yes
+						OR = {
+							gold < minimum_ai_treasury_value_for_tyranny_wars
+							AND = {
+								scope:puppet_or_actor.current_military_strength < scope:recipient.current_military_strength
+								treasury < comfortable_ai_treasury_value_for_tyranny_wars
+							}
+						}
+					}
+				}
+			}
+			add = -2000
+		}
+
+		modifier = { # The AI will always use a Hook if they can
+			scope:hook = yes
+			add = 1
+		}
+
+		modifier = { # The AI shouldn't ruin the player's fun
+			add = -5000
+			scope:recipient = { has_character_flag = is_party_baron }
+		}
+
+		# Revoke from prisoners whose deaths would diminish the realm through inheritance
+		modifier = {
+			add = 1000
+			scope:recipient = {
+				is_vassal_or_below_of = scope:puppet_or_actor
+				any_held_title = {
+					is_landless_type_title = no
+					tier >= tier_county
+					current_heir ?= {
+						is_ruler = yes
+						is_landed = yes
+						top_liege != scope:puppet_or_actor.top_liege
+					}
+				}
+			}
+		}
+
+		# Clan Government: Avoid revoking titles from house members if the AI wants to have high unity
+		modifier = {
+			scope:puppet_or_actor = {
+				government_has_flag = government_is_clan
+				exists = house
+				ai_wants_high_unity = yes
+			}
+			scope:recipient = {
+				government_has_flag = government_is_clan
+				house ?= scope:puppet_or_actor.house
+			}
+			add = -1000
+		}		# Admin Government: Do not revoke titles from your house unless it's really needed
+		modifier = {
+			scope:puppet_or_actor = { government_has_mechanic = administrative }
+			exists = scope:recipient.house
+			scope:puppet_or_actor.house ?= scope:recipient.house
+			add = -500
+		}
+		# Japanese Admin wants to revoke Japanese Feudal if they have a reason
+		modifier = {
+			add = 5000
+			scope:puppet_or_actor = {
+				government_has_flag = government_is_japan_administrative
+				exists = house
+				has_revoke_title_reason = scope:recipient
+				NOT = { has_relation_friend = scope:recipient }
+			}
+			scope:recipient = {
+				government_has_flag = government_is_japan_feudal
+				is_imprisoned = yes
+				house != scope:puppet_or_actor.house
+			}
+		}
+		# And Japanese Feudal wants to revoke Japanese Admin if they have a reason
+		modifier = {
+			add = 5000
+			scope:puppet_or_actor = {
+				government_has_flag = government_is_japan_feudal
+				exists = house
+				has_revoke_title_reason = scope:recipient
+				NOT = { has_relation_friend = scope:recipient }
+			}
+			scope:recipient = {
+				government_has_flag = government_is_japan_administrative
+				is_imprisoned = yes
+				house != scope:puppet_or_actor.house
+			}
+		}
+		# TGP Be more careful with blocs generally
+		house_bloc_tyranny_war_modifiers = yes
+
+		modifier = { # Avoid triggering Tyranny wars mid-war
+			factor = 0
+			scope:puppet_or_actor = {
+				is_at_war = yes
+			}
+			NOR = {
+				scope:recipient = {
+					is_imprisoned_by = scope:puppet_or_actor
+				}
+				scope:recipient = {
+					highest_held_title_tier = tier_barony
+				}
+			}
+		}
+
+		# Don't take a title off anyone when refusing would raise half the realm against us. A prisoner, baron and lawful revocations are exempt, because they don't cause civil wars
+		modifier = {
+			factor = 0
+			scope:recipient = {
+				NOR = {
+					is_imprisoned_by = scope:puppet_or_actor
+					highest_held_title_tier = tier_barony
+					government_has_flag = government_is_ecclesiastical
+				}
+			}
+			scope:puppet_or_actor = {
+				title_revocation_is_tyrannical_trigger = { VASSAL = scope:recipient }
+				revoke_refusal_war_would_be_massive_trigger = { VASSAL = scope:recipient }
+			}
+		}
+
+		# Recipient Ecclesiastical: Don't revoke if not excommunicated
+		modifier = {
+			factor = 0
+			scope:recipient = {
+				government_has_flag = government_is_ecclesiastical
+				NOT = { has_trait = excommunicated }
+			}
+			scope:puppet_or_actor = {
+				title_revocation_is_tyrannical_trigger = { VASSAL = scope:recipient }
+				revoke_refusal_war_would_be_massive_trigger = { VASSAL = scope:recipient }
+			}
+		}
+
+		modifier = { # Avoid triggering Tyranny wars mid-grand activity
+			factor = 0
+			scope:puppet_or_actor = {
+				has_ongoing_grand_activity_trigger = yes
+			}
+			NOR = {
+				scope:recipient = {
+					is_imprisoned_by = scope:puppet_or_actor
+				}
+				scope:recipient = {
+					highest_held_title_tier = tier_barony
+				}
+			}
+		}
+
+		# Admin rulers should be less likely to revoke titles without a revocation reason, as they should prefer to depose governors
+		modifier = {
+			scope:puppet_or_actor = {
+				government_has_mechanic = administrative
+				NOT = { has_revoke_title_reason = scope:recipient }
+			}
+			scope:recipient = {
+				NOT = { highest_held_title_tier = tier_barony }
+				government_has_mechanic = administrative
+				trigger_if = {
+					limit = {
+						scope:puppet_or_actor = { has_government = japan_administrative_government }
+					}
+					highest_held_title_tier >= tier_county
+				}
+				trigger_else = { highest_held_title_tier >= tier_duchy }
+			}
+			factor = { # Honorable AI's will never revoke titles without a reason
+				value = 0
+				if = {
+					limit = {
+						ai_honor < 0
+					}
+					add = 0.5
+				}
+			}
+		}
+
+		#Don't revoke titles from the frankokratia leader
+		modifier = {
+			scope:recipient = {
+				any_owned_story = {
+					type = frankokratia_story
+					NOT = { has_variable = franko_war_complete }
+				}
+			}
+			factor = 0
+		}
+	}
+}
+purchase_land_interaction = {
+is_valid = {
+ # Voltara: ruins are colonized through the county panel, not character diplomacy.
+ scope:actor = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+ scope:recipient = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+}
+
+	category = interaction_category_laamp
+	icon = purchase_land_interaction
+
+	desc = purchase_land_interaction_desc
+	target_type = title
+	target_filter = recipient_de_jure_titles
+
+	cooldown_against_recipient = { years = 10 }
+
+	notification_text = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:recipient = { top_liege != this }
+					scope:target = {
+						trigger_if = {
+							limit = { tier = tier_duchy }
+							scope:recipient.highest_held_title_tier = tier_duchy
+						}
+						trigger_else = { scope:recipient.highest_held_title_tier = tier_county }
+					}
+				}
+				desc = PURCHASE_LAND_PROPOSAL_FELLOW_VASSAL
+			}
+			triggered_desc = {
+				trigger = {
+					scope:target = {
+						trigger_if = {
+							limit = { tier = tier_duchy }
+							scope:recipient.highest_held_title_tier >= tier_kingdom
+						}
+						trigger_else = { scope:recipient.highest_held_title_tier >= tier_duchy }
+					}
+				}
+				desc = PURCHASE_LAND_PROPOSAL_LIEGE
+			}
+			desc = PURCHASE_LAND_PROPOSAL
+		}
+	}
+
+	popup_on_receive = yes
+	pause_on_receive = yes
+
+	interface_priority = 60
+	ai_min_reply_days = 4
+	ai_max_reply_days = 9
+
+	send_options_exclusive = no
+
+	is_available = {
+		government_has_flag = government_is_landless_adventurer
+	}
+
+	is_shown = {
+ # Voltara: ruins are colonized through the county panel, not character diplomacy.
+ scope:actor = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+ scope:recipient = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+
+		has_ep3_dlc_trigger = yes
+		scope:recipient = {
+			is_landed = yes
+			# Need to own the land/cannot directly buy a governorship (procure estate first)
+			NOT = { government_allows = noble_families }
+		}
+		scope:recipient != scope:actor
+	}
+
+	has_valid_target = {
+		custom_tooltip = { #prevent unwanted trigger tooltip
+			text = blank_line
+			scope:target ?= {
+				is_title_created = yes
+				holder = {
+					is_ai = yes
+					this = scope:recipient
+				}
+				OR = { #flatten the selection
+					tier = tier_duchy
+					tier = tier_county
+				}
+				NOR = {
+					this = scope:recipient.capital_county
+					this = scope:recipient.capital_county.duchy
+				}
+			}
+		}
+	}
+
+	send_option = {
+		flag = offer_gold
+		localization = purchase_land_interaction_offer_gold
+		current_description = purchase_land_interaction_offer_gold_desc
+	}
+
+	send_option = {
+		flag = hook
+		is_valid = {
+			scope:actor = {
+				has_usable_hook = scope:recipient
+			}
+		}
+		localization = GENERIC_SPEND_A_HOOK
+	}
+
+	send_option = {
+		flag = offer_hook
+		is_valid = {
+			NOT = {
+				scope:recipient = {
+					has_usable_hook = scope:actor
+				}
+			}
+		}
+		localization = purchase_land_interaction_offer_hook
+		current_description = purchase_land_interaction_offer_hook_desc
+	}
+
+	send_option = {
+		flag = vassal_obligation
+		is_shown = {
+			scope:recipient = {
+				government_has_flag = government_is_feudal
+			}
+		}
+		localization = purchase_land_interaction_offer_obligations
+		current_description = purchase_land_interaction_offer_obligations_desc
+	}
+
+	can_be_picked_title = {
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+scope:target = { is_merchant_family_title = no }
+
+		custom_tooltip = {
+			text = purchase_land_tier_tt
+			scope:target = {
+				tier >= tier_county
+				tier <= tier_duchy
+			}
+		}
+		custom_tooltip = {
+			text = purchase_land_capital_tt
+			scope:target != scope:recipient.capital_county
+		}
+		custom_tooltip = {
+			text = purchase_land_primary_tt
+			scope:target != scope:recipient.primary_title
+		}
+		custom_tooltip = {
+			text = purchase_land_duchy_tt
+			scope:target = {
+				trigger_if = {
+					limit = { tier = tier_duchy }
+					scope:actor = {
+						prestige_level >= 3
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			text = PURCHASE_LAND_COMPLETE_CONTROL_TT
+			trigger_if = {
+				limit = { scope:target = { tier = tier_duchy } }
+				scope:recipient = {
+					completely_controls = scope:target
+				}
+			}
+		}
+		trigger_if = {
+			limit = { exists = scope:target.holder }
+			scope:target.holder = scope:recipient
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			top_liege = this
+			prestige_level >= 2
+			NOR = {
+				has_trait = gallowsbait
+				has_trait = gallivanter
+			}
+		}
+		scope:recipient = {
+			is_contact_of = scope:actor
+			is_at_war = no
+			NOT = { has_strong_hook = scope:actor }
+		}
+		trigger_if = { # Can't purchase Baronies
+			limit = {
+				scope:target ?= { tier = tier_barony }
+			}
+			custom_description = {
+				text = purchase_land_barony_tt
+				always = no
+			}
+		}
+		trigger_if = { # Can't purchase Kingdoms or Empires
+			limit = {
+				scope:target ?= { tier >= tier_kingdom }
+			}
+			custom_description = {
+				text = purchase_land_kingdom_tt
+				always = no
+			}
+		}
+		trigger_if = { # Can't purchase HoF titles
+			limit = {
+				scope:target ?= { is_head_of_faith = yes }
+			}
+			custom_description = {
+				text = purchase_land_religious_tt
+				always = no
+			}
+		}
+		trigger_if = { # Can't purchase nf titles
+			limit = {
+				scope:target ?= { is_noble_family_title = yes }
+			}
+			custom_description = {
+				text = purchase_land_noble_family_tt
+				always = no
+			}
+		}
+		trigger_if = { # Can't purchase laamp titles
+			limit = {
+				scope:target ?= { has_variable = adventurer_creation_reason }
+			}
+			custom_description = {
+				text = purchase_land_landless_adventurer_tt
+				always = no
+			}
+		}
+		trigger_if = {
+			limit = {
+				scope:recipient = {
+					any_held_county = { count < 2 }
+				}
+			}
+			custom_description = {
+				text = purchase_land_minimum_county_tt
+				object = scope:recipient
+				always = no
+			}
+		}
+		#Has to be used instead of diplo range checks in laamp to landed interactions
+		ep3_laamp_diplo_range_trigger = {
+			TARGET = scope:recipient
+			LAAMP = scope:actor
+		}
+		# Adventurers can't join wars in places they're exiled from.
+		custom_tooltip = {
+			text = the_wake_1
+			NOT = {
+				is_laamp_exiled_from_province_trigger = {
+					PROVINCE = scope:recipient.capital_province
+					LAAMP = scope:actor
+				}
+			}
+		}
+	}
+
+	cost = {
+		gold = {
+			if = {
+				limit = { scope:target.tier = tier_county }
+				add = purchase_land_county_cost_value
+			}
+			else = {
+				add = purchase_land_duchy_cost_value
+				scope:target = {
+					every_de_jure_county = {
+						limit = { ep3_purchase_land_valid_county_trigger = yes }
+						add = purchase_land_county_cost_value
+					}
+				}
+			}
+			if = {
+				limit = {
+					scope:actor = { has_variable = ep3_grace_to_the_family_var }
+				}
+				multiply = 0.5
+			}
+			if = {
+				limit = { scope:offer_gold = yes }
+				multiply = 2
+			}
+		}
+	}
+
+	on_accept = {
+		scope:actor = { save_scope_as = adventurer }
+		scope:target = {
+			save_scope_as = purchase_land_target
+			add_to_list = purchased_titles
+			if = {
+				limit = { tier = tier_duchy }
+				every_de_jure_county = {
+					limit = {
+						holder ?= {
+							OR = {
+								this = scope:recipient
+								target_is_liege_or_above = scope:recipient
+							}
+						}
+					}
+					if = {
+						limit = { holder = scope:recipient }
+						add_to_list = purchased_titles
+					}
+					else_if = {
+						limit = {
+							holder ?= {
+								highest_held_title_tier < scope:purchase_land_target.tier
+								NOT = { government_has_flag = government_is_administrative }
+								target_is_liege_or_above = scope:recipient
+							}
+						}
+						holder = {
+							if = {
+								limit = {
+									NOT = { is_in_list = purchase_land_vassals_taken }
+								}
+								add_to_list = purchase_land_vassals_taken
+							}
+						}
+					}
+					else = {
+						add_to_list = purchased_titles
+					}
+				}
+			}
+		}
+		ordered_in_list = {
+			list = purchased_titles
+			order_by = tier
+			save_scope_as = new_primary_title
+		}
+		save_scope_value_as = {
+			name = purchase_land_cost
+			value = {
+				if = {
+					limit = { scope:target.tier = tier_county }
+					add = purchase_land_county_cost_value
+				}
+				else = {
+					add = purchase_land_duchy_cost_value
+					scope:target = {
+						every_de_jure_county = {
+							limit = { ep3_purchase_land_valid_county_trigger = yes }
+							add = purchase_land_county_cost_value
+						}
+					}
+				}
+				if = {
+					limit = {
+						scope:actor = { has_variable = ep3_grace_to_the_family_var }
+					}
+					multiply = 0.5
+				}
+				if = {
+					limit = { scope:offer_gold = yes }
+					multiply = 2
+				}
+			}
+		}
+		save_scope_value_as = {
+			name = purchase_land_legitimacy_cost
+			value = {
+				value = 0
+				if = {
+					limit = {
+						scope:target.holder != scope:recipient
+					}
+					every_in_list = {
+						list = purchased_titles
+						if = {
+							limit = { tier = tier_county }
+							add = minor_legitimacy_loss
+						}
+						else = { add = medium_legitimacy_loss }
+					}
+				}
+			}
+		}
+		show_as_tooltip = {
+			scope:actor = { purchase_land_interaction_effect = yes }
+		}
+		if = {
+			limit = { always = scope:hook }
+			scope:actor = { use_hook = scope:recipient }
+		}
+		hidden_effect = { # will be paid again so refund same amount as cost
+			scope:actor = {
+				add_gold = scope:purchase_land_cost
+			}
+		}
+		scope:actor = { trigger_event = ep3_laamps.0100 }
+	}
+
+	on_decline = {
+		scope:actor = {
+			save_scope_as = adventurer
+			trigger_event = ep3_laamps.0102
+		}
+	}
+
+	ai_targets = {
+		ai_recipients = domicile_location_top_ruler
+		ai_recipients = contacts
+	}
+
+	ai_targets = {
+		ai_recipients = domicile_location_neighboring_top_realm_vassals
+		ai_recipients = domicile_location_top_realm_vassals
+		ai_recipients = domicile_location_neighboring_top_rulers
+		max = 20
+	}
+	ai_frequency_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 60
+		kingdom = 0
+		empire = 0
+		hegemony = 0
+	}
+
+	ai_accept = {
+		base = 0 # Try to make it 0 for most interactions
+
+		opinion_modifier = { # Opinion Factor
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 1
+			desc = AI_OPINION_REASON
+		}
+		modifier = { # Num of counties/duchy
+			add = {
+				value = 0
+				scope:target = {
+					if = {
+						limit = { tier = tier_county }
+						add = -30
+					}
+					else = {
+						add = -60
+						every_de_jure_county = {
+							limit = { ep3_purchase_land_valid_county_trigger = yes }
+							add = -30
+						}
+					}
+				}
+			}
+			desc = PURCHASE_LAND_NUM_TITLES_REASON
+		}
+		modifier = { # Too close to capital
+			add = -50
+			desc = PURCHASE_LAND_DE_JURE_DUCHY_REASON
+			scope:target.duchy = scope:recipient.capital_county.duchy
+		}
+		modifier = { # Province value
+			add = {
+				value = 0
+				if = {
+					limit = { scope:target.tier = tier_county }
+					add = scope:target.development_level
+					scope:target = {
+						every_county_province = { add = num_buildings }
+					}
+				}
+				else = {
+					scope:target = {
+						every_de_jure_county = {
+							limit = { ep3_purchase_land_valid_county_trigger = yes }
+							add = development_level
+							every_county_province = { add = num_buildings }
+						}
+					}
+				}
+				multiply = -2
+			}
+			#add = 1
+			desc = PURCHASE_LAND_VALUE_REASON
+		}
+		modifier = { # Land is foreign
+			add = 10
+			add = {
+				value = 0
+				if = {
+					limit = { scope:target.tier = tier_county }
+					add = 10
+				}
+				else = {
+					scope:target = {
+						every_de_jure_county = {
+							limit = {
+								ep3_purchase_land_valid_county_trigger = yes
+								culture != scope:recipient.culture
+							}
+							add = 10
+						}
+					}
+				}
+				max = 30
+			}
+			desc = PURCHASE_LAND_FOREIGN_CULTURE_REASON
+			trigger_if = {
+				limit = { scope:target.tier = tier_county }
+				scope:target.culture != scope:recipient.culture
+			}
+			trigger_else = {
+				scope:target = {
+					any_de_jure_county = {
+						ep3_purchase_land_valid_county_trigger = yes
+						culture != scope:recipient.culture
+					}
+				}
+			}
+		}
+		modifier = { # Different faith
+			add = {
+				value = 0
+				if = {
+					limit = { scope:target.tier = tier_county }
+					add = 10
+				}
+				else = {
+					scope:target = {
+						every_de_jure_county = {
+							limit = {
+								ep3_purchase_land_valid_county_trigger = yes
+								faith != scope:recipient.faith
+							}
+							add = 10
+						}
+					}
+				}
+				max = 30
+			}
+			desc = PURCHASE_LAND_DIFFERENT_FAITH_REASON
+			trigger_if = {
+				limit = { scope:target.tier = tier_county }
+				scope:target.faith != scope:recipient.faith
+			}
+			trigger_else = {
+				scope:target = {
+					any_de_jure_county = {
+						ep3_purchase_land_valid_county_trigger = yes
+						faith != scope:recipient.faith
+					}
+				}
+			}
+		}
+		modifier = { # My culture's lands
+			add = {
+				value = 0
+				if = {
+					limit = { scope:target.tier = tier_county }
+					add = -40
+				}
+				else = {
+					scope:target = {
+						every_de_jure_county = {
+							limit = {
+								ep3_purchase_land_valid_county_trigger = yes
+								culture != scope:recipient.culture
+							}
+							add = -40
+						}
+					}
+				}
+				if = {
+					limit = { scope:acceptance != 0 }
+					divide = scope:acceptance
+				}
+				multiply = 2
+				min = -200
+			}
+			desc = PURCHASE_LAND_MY_CULTURE_REASON
+			scope:actor.culture != scope:recipient.culture
+			trigger_if = {
+				limit = {
+					scope:target.tier = tier_county
+				}
+				scope:target.culture = scope:recipient.culture
+			}
+			trigger_else = {
+				scope:target = {
+					any_de_jure_county = {
+						ep3_purchase_land_valid_county_trigger = yes
+						culture = scope:recipient.culture
+					}
+				}
+			}
+			scope:recipient.culture = {
+				save_temporary_scope_value_as = {
+					name = acceptance
+					value = {
+						value = "cultural_acceptance(scope:actor.culture)"
+						divide = 25
+						ceiling = yes
+					}
+				}
+			}
+		}
+		modifier = { # My faith's lands
+			add = {
+				value = 0
+				if = {
+					limit = { scope:target.tier = tier_county }
+					add = -40
+				}
+				else = {
+					scope:target = {
+						every_de_jure_county = {
+							limit = {
+								ep3_purchase_land_valid_county_trigger = yes
+								faith != scope:recipient.faith
+							}
+							add = -40
+						}
+					}
+				}
+				if = {
+					limit = { scope:hostility != 0 }
+					multiply = scope:hostility
+				}
+				multiply = 2
+				min = -200
+			}
+			desc = PURCHASE_LAND_MY_FAITH_REASON
+			scope:actor.faith != scope:recipient.faith
+			trigger_if = {
+				limit = { scope:target.tier = tier_county }
+				scope:target.faith = scope:recipient.faith
+			}
+			trigger_else = {
+				scope:target = {
+					any_de_jure_county = {
+						ep3_purchase_land_valid_county_trigger = yes
+						faith = scope:recipient.faith
+					}
+				}
+			}
+			scope:recipient.faith = {
+				save_temporary_scope_value_as = {
+					name = hostility
+					value = "faith_hostility_level(scope:actor.faith)"
+				}
+			}
+		}
+		modifier = { # Too close
+			add = {
+				value = 0
+				add = scope:distance
+				divide = scope:recipient.highest_held_title_tier
+				if = {
+					limit = { scope:distance <= squared_distance_medium }
+					multiply = -0.01
+				}
+				else = { multiply = 0.0005 }
+				min = -25
+				max = 50
+			}
+			desc = PURCHASE_LAND_DISTANCE_REASON
+			trigger_if = {
+				limit = { scope:target.tier = tier_county }
+				scope:target = { save_temporary_scope_as = distance_target }
+			}
+			trigger_else = {
+				scope:target.title_capital_county = { save_temporary_scope_as = distance_target }
+			}
+			scope:recipient.capital_county = {
+				save_temporary_scope_value_as = {
+					name = distance
+					value = "squared_distance(scope:distance_target)"
+				}
+			}
+		}
+		opinion_modifier = { # Opinion Factor of title holder
+			trigger = {
+				NOT = {
+					scope:target.holder ?= scope:recipient
+				}
+			}
+			who = scope:recipient
+			opinion_target = scope:target.holder
+			multiplier = -1
+			desc = AI_OPINION_REASON
+		}
+		modifier = {
+			add = {
+				value = scope:actor.prestige_level
+				multiply = 20
+			}
+			scope:actor.prestige_level >= 4
+			desc = PURCHASE_LAND_PRESTIGE_LEVEL_REASON
+		}
+		modifier = {
+			add = 40
+			trigger = {
+				scope:actor.culture != scope:recipient.culture
+				OR = {
+					AND = {
+						scope:target.tier = tier_county
+						scope:target.culture = scope:recipient.culture
+					}
+					scope:target = {
+						any_de_jure_county = {
+							ep3_purchase_land_valid_county_trigger = yes
+							culture = scope:recipient.culture
+						}
+					}
+				}
+			}
+			scope:actor.primary_spouse ?= {
+				culture = scope:recipient.culture
+				dynasty ?= {
+					dynasty_prestige_level >= 2
+				}
+			}
+			desc = PURCHASE_LAND_MARRIED_TO_CULTURE_NOBLE_REASON
+		}
+		modifier = {
+			add = 40
+			trigger = {
+				scope:actor.faith != scope:recipient.faith
+			}
+			scope:actor.primary_spouse ?= {
+				faith = scope:recipient.faith
+				dynasty ?= {
+					dynasty_prestige_level >= 2
+				}
+			}
+			desc = PURCHASE_LAND_MARRIED_TO_FAITH_NOBLE_REASON
+		}
+		modifier = {
+			add = 80
+			scope:actor.primary_spouse ?= {
+				house ?= scope:recipient.house
+			}
+			desc = PURCHASE_LAND_MARRIED_TO_HOUSE_REASON
+		}
+		modifier = {
+			add = 20
+			trigger = {
+				OR = {
+					AND = {
+						scope:target.tier = tier_county
+						scope:target.culture = scope:recipient.culture
+					}
+					scope:target = {
+						any_de_jure_county = {
+							ep3_purchase_land_valid_county_trigger = yes
+							culture = scope:recipient.culture
+						}
+					}
+				}
+			}
+			scope:actor = {
+				knows_language_of_culture = scope:recipient.culture
+				culture != scope:recipient.culture
+			}
+			desc = PURCHASE_LAND_SPEAKS_LANGUAGE_REASON
+		}
+		modifier = {
+			add = -40
+			scope:actor = {
+				NOT = {
+					knows_language_of_culture = scope:recipient.culture
+					culture = scope:recipient.culture
+				}
+			}
+			desc = PURCHASE_LAND_DOES_NOT_SPEAK_LANGUAGE_REASON
+		}
+		modifier = {
+			add = {
+				value = 40
+				multiply = scope:recipient.debt_level
+			}
+			trigger = {
+				scope:recipient = {
+					OR = {
+						debt_level > 0
+						treasury_debt_level > 0
+					}
+				}
+			}
+			desc = PURCHASE_LAND_IS_IN_DEBT_REASON
+		}
+		modifier = {
+			add = 60
+			scope:actor = {
+				has_any_moderate_good_relationship_with_character_trigger = { CHARACTER = scope:recipient }
+			}
+			desc = PURCHASE_LAND_RELATIONSHIP_REASON
+		}
+		modifier = {
+			add = 80
+			scope:offer_gold = yes
+			desc = PURCHASE_LAND_DOUBLE_GOLD_REASON
+		}
+		modifier = {
+			add = 160
+			scope:hook = yes
+			desc = YOU_HAVE_HOOK_REASON
+		}
+		modifier = {
+			add = 60
+			scope:offer_hook = yes
+			desc = PURCHASE_LAND_OFFER_HOOK_REASON
+		}
+		modifier = {
+			add = 80
+			scope:vassal_obligation = yes
+			desc = PURCHASE_LAND_OBLIGATIONS_REASON
+		}
+	}
+
+	ai_will_do = {
+		base = -25
+		ai_value_modifier = {
+			ai_boldness = -0.5
+			ai_energy = -0.5
+			ai_greed = 0.5
+		}
+		modifier = {
+			gold < 1000
+			factor = 0
+		}
+		modifier = {
+			gold > 2000
+			add = 50
+		}
+	}
+}
+declare_war_interaction = {
+is_valid = {
+ # Voltara: ruins are colonized through the county panel, not character diplomacy.
+ scope:actor = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+ scope:recipient = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+}
+
+	category = interaction_category_diplomacy
+	common_interaction = yes
+	special_interaction = declare_war_interaction
+	interface = declare_war
+	interface_priority = 80
+	popup_on_receive = yes
+	pause_on_receive = no # this is handled by the interface instead
+
+	desc = declare_war_desc
+
+	is_shown = {
+scope:actor = { NOT = { government_has_flag = government_is_active_republic } }
+
+scope:actor = { NOT = { government_has_flag = government_is_active_republic } }
+
+scope:actor = { NOT = { government_has_flag = government_is_active_republic } }
+
+scope:actor = { NOT = { government_has_flag = government_is_active_republic } }
+
+scope:actor = { NOT = { government_has_flag = government_is_active_republic } }
+
+ scope:actor = { trigger_if = { limit = { voltara_keeper_realm = yes } scope:recipient = { OR = { culture = culture:voltara_southorion culture = culture:voltara_desert_southron } } } }
+ scope:recipient = { trigger_if = { limit = { voltara_keeper_realm = yes } scope:actor = { NOT = { voltara_in_hegemony = yes } } } }
+
+ # Voltara: ruins are colonized through the county panel, not character diplomacy.
+ scope:actor = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+ scope:recipient = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
+
+		scope:recipient != scope:puppet_or_actor
+		# Only differs from puppet_or_actor on puppet actions; a puppet cannot be ordered to attack their own puppeteer
+		scope:recipient != scope:actor
+		scope:recipient = {
+			is_playable_character = yes
+		}
+		scope:puppet_or_actor ?= {
+			NOT = {
+				is_at_war_with = scope:recipient
+			}
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:puppet_or_actor = {
+			trigger_if = {
+				limit = { government_has_flag = government_is_theocracy }
+				custom_tooltip = {
+					text = theocratic_government_war_restriction
+					has_any_display_cb_on = scope:recipient
+				}
+			}
+			trigger_else = {
+				has_any_display_cb_on = scope:recipient
+			}
+			allows_declaring_war_against_target_trigger = { TARGET = scope:recipient }
+		}
+	}
+
+	has_valid_target_showing_failures_only = {
+		custom_description = {
+			text = "declare_war_hook_on_liege"
+			OR = {
+				scope:puppet_or_actor = { war_declarer_needs_hook_on_liege = no }
+				always = scope:hook
+			}
+		}
+		scope:puppet_or_actor = {
+			NOR = {
+				is_at_war_with = scope:recipient
+				custom_description = { #A vassal cannot go to war against someone their Liege is already at war with
+					text = liege_is_at_war_with_recipient
+					object = scope:recipient
+					liege = {
+						is_at_war_with = scope:recipient
+					}
+				}
+			}
+		}
+	}
+
+	send_options_exclusive = no
+	send_option = {
+		is_shown = {
+			scope:puppet_or_actor = { war_declarer_needs_hook_on_liege = yes }
+		}
+		is_valid = {
+			scope:puppet_or_actor = {
+				has_usable_hook = liege
+			}
+		}
+		flag = hook
+		localization = WAR_LIEGE_HOOK
+		can_invalidate_interaction = yes
+	}
+	should_use_extra_icon = {
+		scope:puppet_or_actor = { war_declarer_needs_hook_on_liege = yes }
+		scope:puppet_or_actor = { has_usable_hook = liege }
+	}
+	extra_icon = "gfx/interface/icons/character_interactions/hook_icon.dds"
+
+	on_accept = {
+		scope:puppet_or_actor = {
+			#Feedback!
+			hidden_effect = {
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					title = declare_war_interaction_notification
+
+					left_icon = scope:puppet_or_actor
+					right_icon = scope:recipient
+
+					custom_tooltip = declare_war_interaction_notification_tooltip
+
+					show_as_tooltip = {
+						if = {
+							limit = { always = scope:hook }
+							use_hook = liege
+						}
+					}
+				}
+			}
+
+			#Has the instigator promised a vassal a war (vassal.2601)?
+			if = {
+				limit = {
+					exists = var:promised_war
+					var:promised_war = {
+						is_alive = yes
+						this != scope:recipient
+					}
+				}
+				trigger_event = {
+					id = vassal.2610
+					days = { 7 10 }
+				}
+			}
+
+			if = {
+				limit = { always = scope:hook }
+				use_hook = liege
+			}
+
+			#Send break up event if they are your lover
+			if = {
+				limit = {
+					has_relation_lover = scope:recipient
+					NOT = { has_relation_rival = scope:recipient } #To enable really strange love stories
+					any_character_war = {
+						casus_belli = {
+							primary_attacker = scope:puppet_or_actor
+							primary_defender = scope:recipient
+							any_target_title = { }
+						}
+					}
+				}
+				scope:recipient = {
+					trigger_event = {
+						id = lover.0103
+						days = { 14 30 }
+					}
+				}
+			}
+
+			#Invalidate any wars your vassals have going against recipient atm
+			scope:recipient = {
+				if = {
+					limit = {
+						any_character_war = {
+							primary_attacker = {
+								is_vassal_or_below_of = scope:puppet_or_actor
+								trigger_if = { #Ai should never invalidate a player's war!
+									limit = {
+										this = { is_ai = no }
+									}
+									scope:actor = {
+										is_ai = no
+									}
+								}
+							}
+						}
+					}
+					every_character_war = {
+						limit = {
+							primary_attacker = {
+								is_vassal_or_below_of = scope:puppet_or_actor
+								trigger_if = { #Ai should never invalidate a player's war!
+									limit = {
+										this = { is_ai = no }
+									}
+									scope:actor = {
+										is_ai = no
+									}
+								}
+							}
+						}
+						show_as_tooltip = { end_war = invalidated } #Actually ended in the event
+						primary_attacker = { trigger_event = war_event.1001 }
+					}
+				}
+			}
+			#Notify defender's vassals if the war is targeting one or more of their titles
+			scope:recipient = {
+				if = {
+					limit = {
+						any_vassal = {
+							save_temporary_scope_as = attacked_vassal
+							any_character_war = {
+								casus_belli = {
+									primary_attacker = scope:puppet_or_actor
+									primary_defender = scope:recipient
+									any_target_title = {
+										holder = {
+											OR = {
+												this = scope:attacked_vassal
+												is_vassal_or_below_of = scope:attacked_vassal
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					every_vassal = {
+						save_temporary_scope_as = attacked_vassal
+						limit = {
+							any_character_war = {
+								casus_belli = {
+									primary_attacker = scope:puppet_or_actor
+									primary_defender = scope:recipient
+									any_target_title = {
+										holder = {
+											OR = {
+												this = scope:attacked_vassal
+												is_vassal_or_below_of = scope:attacked_vassal
+											}
+										}
+									}
+								}
+							}
+						}
+						send_interface_toast = {
+							type = msg_war_declared_on_liege
+							title = declare_war_interaction_notification
+
+							left_icon = scope:puppet_or_actor
+							right_icon = scope:recipient
+
+							custom_tooltip = declare_war_interaction_notification_tooltip
+						}
+					}
+				}
+			}
+
+			# If you are admin and had permission to start war, spend said permission
+			if = {
+				limit = {
+					has_variable = admin_permission_to_declare_war
+				}
+				remove_variable = admin_permission_to_declare_war
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					scope:is_puppet_action ?= yes
+				}
+				scope:actor = {
+					send_interface_toast = {
+						type = event_toast_effect_neutral
+						title = declare_war_interaction_notification
+
+						left_icon = scope:puppet_or_actor
+						right_icon = scope:recipient
+
+						custom_tooltip = declare_war_interaction_notification_tooltip
+					}
+				}
+			}
+		}
+	}
+
+	auto_accept = yes
+}

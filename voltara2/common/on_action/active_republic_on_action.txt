@@ -1,0 +1,303 @@
+﻿on_death = {
+	on_actions = {
+		on_republican_diarch_death_designate_new_diarch
+		on_merchant_republic_ruler_death
+		on_merchant_family_death
+		on_death_republican_ruler
+		on_republican_election_candidate_death
+	}
+}
+on_game_start_after_lobby = {
+	on_actions = {
+		on_game_after_lobby_active_republic
+	}
+}
+
+on_title_gain = {
+	on_actions = {
+		on_title_gain_as_ai_active_republic
+	}
+}
+
+on_title_gain_inheritance = {
+	on_actions = {
+		on_title_gain_inheritance_interim_republican_ruler
+	}
+}
+
+yearly_playable_pulse = {
+	on_actions = {
+		yearly_playable_pulse_make_player_republic_active_republic
+	}
+}
+
+on_diarch_change = {
+	on_actions = {
+		on_diarch_change_set_as_heir
+	}
+}
+
+on_diarch_designation = {
+	on_actions = {
+		on_diarch_designation_set_as_heir
+	}
+}
+
+on_vassal_change = {
+	on_actions = {
+		on_vassal_change_nested_republic_check
+		on_vassal_change_merchant_republic_split
+	}
+}
+
+on_rank_down = {
+	on_actions = {
+		on_rank_down_downgrade_merchant_republic
+	}
+}
+
+on_republican_diarch_death_designate_new_diarch = {
+	trigger = {
+		OR = {
+			is_designated_diarch = yes
+			is_diarch = yes
+		}
+		liege = {
+			government_has_flag = government_is_active_republic
+			is_republican_government_story_owner = yes
+		}
+	}
+	effect = {
+		liege = {
+			republic_government_designate_diarch = yes
+		}
+	}
+}
+
+on_merchant_republic_ruler_death = {
+	trigger = {
+		is_merchant_family = yes
+		is_republican_government_story_owner = yes
+		NOT = { primary_title.current_heir.house = house }
+	}
+	effect = {
+		pass_merchant_family_title_to_house_heir_effect = yes
+	}
+}
+
+on_merchant_family_death = {
+	trigger = {
+		is_merchant_family = yes
+		is_republican_government_story_owner = no
+	}
+	effect = {
+		var:republican_government_story = { save_scope_as = republican_government_story }
+		if = {
+			limit = {
+				any_held_title = {
+					is_merchant_family_title = yes
+					current_heir.house = root.house
+				}
+			}
+			every_held_title = {
+				limit = {
+					is_merchant_family_title = yes
+					current_heir.house = root.house
+				}
+				scope:republican_government_story = {
+					remove_list_variable = { name = merchant_families target = root }
+					add_to_variable_list = { name = merchant_families target = prev.current_heir }
+				}
+				current_heir = {
+					set_variable = {
+						name = republican_government_story
+						value = scope:republican_government_story
+					}
+				}
+			}
+		}
+		else = { remove_merchant_family_effect = yes }
+	}
+}
+
+on_republican_election_candidate_death = {
+	trigger = {
+		has_variable = republican_election_candidate
+	}
+	effect = {
+		republican_candidate_remove = yes
+	}
+}
+
+on_game_after_lobby_active_republic = {
+	effect = {
+		every_ruler = {
+			limit = {
+				government_has_flag = government_is_republic
+ NOT = { has_variable = republican_government_story }
+				is_ai = no
+			}
+			create_story = republican_government_story
+		}
+	}
+}
+
+on_title_gain_as_ai_active_republic = {
+	trigger = {
+		is_ai = yes
+		government_has_flag = government_is_active_republic
+		highest_held_title_tier < tier_county
+		is_republican_government_story_owner = yes
+	}
+	effect = {
+		var:republican_government_story = { end_story = yes }
+		change_government = republic_government
+	}
+}
+
+on_death_republican_ruler = { #Game over can still happen if loads die in a single day
+	trigger = {
+		government_has_flag = government_is_active_republic
+		has_variable = republican_government_story
+		is_republican_government_story_owner = yes
+	}
+	effect = {
+		if = {
+			limit = {
+				is_merchant_family = yes
+				player_heir.house = house
+			}
+			var:republican_government_story = {
+				add_to_variable_list = {
+					name = merchant_families
+					target = prev.player_heir
+				}
+			}
+		}
+	}
+}
+on_title_gain_inheritance_interim_republican_ruler = {
+	trigger = {
+		has_variable = interim_republican_ruler_title
+		scope:title = var:interim_republican_ruler_title
+	}
+	effect = {
+		remove_variable = interim_republican_ruler_title
+		trigger_event = republican_election.0001
+		trigger_event = republican_core.1004
+		var:republican_government_story = { republican_government_populate_candidate_list_effect = yes }
+	}
+}
+
+yearly_playable_pulse_make_player_republic_active_republic = {
+	trigger = {
+		is_ai = no
+		government_has_flag = government_is_republic
+ NOT = { has_variable = republican_government_story }
+	}
+	effect = {
+		create_story = republican_government_story
+	}
+}
+
+on_diarch_change_set_as_heir = {
+	trigger = {
+		government_has_flag = government_is_active_republic
+	}
+	effect = {
+		set_designated_heir_unsafe = diarch
+	}
+}
+
+on_diarch_designation_set_as_heir = {
+	trigger = {
+		government_has_flag = government_is_active_republic
+	}
+	effect = {
+		set_designated_heir_unsafe = designated_diarch
+	}
+}
+
+on_vassal_change_nested_republic_check = {
+	trigger = {
+		is_independent_ruler = no
+		any_liege_or_above = {
+			has_subject_active_republic_character = yes
+		}
+	}
+	effect = {
+		every_liege_or_above = {
+			limit = { has_subject_active_republic_character = yes }
+			trigger_event = republican_core.1002
+		}
+	}
+}
+
+on_vassal_change_merchant_republic_split = {
+	trigger = {
+		OR = {
+			is_independent_ruler = yes
+			liege ?= { NOT = { government_has_flag = government_is_merchant_republic } }
+		}
+		is_landed = yes
+		government_has_flag = government_is_merchant_republic
+		is_republican_government_story_owner = no
+	}
+	effect = {
+		save_scope_value_as = {
+			name = legacy_level_trade
+			value = var:republican_government_story.var:legacy_level_trade
+		}
+		save_scope_value_as = {
+			name = legacy_level_diplomacy
+			value = var:republican_government_story.var:legacy_level_diplomacy
+		}
+		save_scope_value_as = {
+			name = legacy_level_civic
+			value = var:republican_government_story.var:legacy_level_civic
+		}
+		save_scope_value_as = {
+			name = legacy_level_militia
+			value = var:republican_government_story.var:legacy_level_militia
+		}
+		save_scope_value_as = {
+			name = legacy_level_prosperity
+			value = var:republican_government_story.var:legacy_level_prosperity
+		}
+		convert_to_merchant_republic_government_effect = yes
+		var:republican_government_story = {
+			set_variable = {
+				name = legacy_level_trade
+				value = scope:legacy_level_trade
+			}
+			set_variable = {
+				name = legacy_level_diplomacy
+				value = scope:legacy_level_diplomacy
+			}
+			set_variable = {
+				name = legacy_level_civic
+				value = scope:legacy_level_civic
+			}
+			set_variable = {
+				name = legacy_level_militia
+				value = scope:legacy_level_militia
+			}
+			set_variable = {
+				name = legacy_level_prosperity
+				value = scope:legacy_level_prosperity
+			}
+		}
+	}
+}
+
+on_rank_down_downgrade_merchant_republic = {
+	trigger = {
+		government_has_flag = government_is_merchant_republic
+		is_independent_ruler = yes
+		is_republican_government_story_owner = yes
+		highest_held_title_tier < tier_duchy
+	}
+	effect = {
+		republican_convert_merchant_republic_to_communal_republic = yes
+	}
+}

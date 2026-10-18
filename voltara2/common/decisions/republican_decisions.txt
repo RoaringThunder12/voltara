@@ -1,0 +1,593 @@
+﻿convert_to_merchant_republic_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/republican_decision_become_merchant_republic.dds"
+	}
+	decision_group_type = major
+	desc = convert_to_merchant_republic_decision_desc
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 8
+		kingdom = 4
+		empire = 0
+		hegemony = 0
+	}
+
+	is_shown = {
+		has_ep3_dlc_trigger = yes
+		OR = {
+			AND = {
+				is_independent_ruler = yes
+				NOT = {	government_has_flag = government_is_landless_adventurer }
+				NOT = {	government_has_flag = government_is_active_republic }
+				NOT = { government_has_flag = government_is_tribal }
+			}
+			AND = {
+				government_has_flag = government_is_active_republic
+				NOT = {	government_has_flag = government_is_merchant_republic }
+			}
+		}
+		NAND = { #We'd rather show Hanseatic League decision if this is the case
+			OR = {
+				is_independent_ruler = yes
+				liege ?= { highest_held_title_tier = tier_empire }
+			}
+			has_sea_access = yes
+			capital_county = title:c_voltara_11371
+		}
+	}
+
+	is_valid = {
+		has_ep3_dlc_trigger = yes
+		OR = {
+			AND = {
+				can_convert_to_merchant_republic_trigger = yes
+				is_independent_ruler = yes
+			}
+			AND = {
+				has_sea_access = yes
+				custom_description = {
+					text = has_trade_legacy_4
+					AND = {
+						government_has_flag = government_is_active_republic
+						NOT = {	government_has_flag = government_is_merchant_republic }
+						is_republican_government_story_owner = yes
+						var:republican_government_story.var:legacy_level_trade >= 4
+					}
+				}
+			}
+		}
+	}
+	
+	is_valid_showing_failures_only = {
+		is_at_war = no
+	}
+
+	cost = {
+		prestige = {
+			value = 500
+		}
+		gold = {
+			value = 200
+			#Income
+			if = {
+				limit = { root.monthly_character_income >= 100 }
+				multiply = 3
+			}
+			else_if = {
+				limit = { root.monthly_character_income >= 80 }
+				multiply = 2.5
+			}
+			else_if = {
+				limit = { root.monthly_character_income >= 60 }
+				multiply = 2
+			}
+			else_if = {
+				limit = { root.monthly_character_income >= 40 }
+				multiply = 1.5
+			}
+			else_if = {
+				limit = { root.monthly_character_income >= 20 }
+				multiply = 1.1
+			}
+		}
+	}
+
+	effect = {
+		convert_to_merchant_republic_government_effect = yes
+	}
+
+	ai_potential = {
+		OR = {
+			is_independent_ruler = yes
+			AND = {
+				government_has_flag = government_is_active_republic
+				NOT = {	government_has_flag = government_is_merchant_republic }
+				is_republican_government_story_owner = yes
+				var:republican_government_story.var:legacy_level_trade >= 4
+			}
+		}
+	}
+
+	ai_will_do = {
+		base = -50
+		ai_value_modifier = {
+			ai_greed = 1
+		}
+		modifier = {
+			add = 100
+			has_trait = greedy
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_pillar = ethos_bureaucratic 
+					has_cultural_pillar = ethos_courtly 
+					has_cultural_pillar = ethos_egalitarian 
+				}
+			}
+			add = 50
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_tradition = tradition_legalistic
+					has_cultural_tradition = tradition_hereditary_hierarchy 
+				}
+			}
+			add = 50
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_tradition = tradition_fp3_enlightened_magnates 
+					has_cultural_tradition = tradition_loyal_soldiers 
+				}
+			}
+			add = 20
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_tradition = tradition_staunch_traditionalists
+					has_cultural_tradition = tradition_ep3_audacious_cadets
+				}
+			}
+			add = -20
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_tradition = tradition_ep3_indomitable_azatani
+					has_cultural_tradition = tradition_quarrelsome
+					has_cultural_tradition = tradition_warrior_culture
+					has_cultural_tradition = tradition_fp3_fierce_independence
+				}
+			}
+			add = -50
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_pillar = ethos_stoic
+					has_cultural_pillar = ethos_bellicose 
+					has_cultural_pillar = ethos_communal 
+				}
+			}
+			add = -50
+		}
+	}
+}
+
+convert_to_republic_from_tribal_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/ep3_decision_city.dds"
+	}
+	decision_group_type = major
+	desc = convert_to_republic_from_tribal_decision_desc
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 8
+		kingdom = 4
+		empire = 0
+		hegemony = 0
+	}
+
+	is_shown = {
+		has_ep3_dlc_trigger = yes
+		is_independent_ruler = yes
+		government_has_flag = government_is_tribal
+	}
+
+	is_valid = {
+		has_ep3_dlc_trigger = yes
+		has_realm_law = tribal_authority_3
+		custom_description = {
+			text = faith_is_reformed
+			subject = root
+			faith = { NOT = { has_doctrine_parameter = unreformed } }
+		}
+		prestige_level >= 2
+		capital_province.county = {
+			development_level >= convert_to_feudalism_development_requirement
+		}
+
+		custom_description = { #You need to have 70% of all (non-regional/unique) tribal innovations!
+			text = has_all_tribal_innovations
+			subject = root.culture
+			culture = {
+				calc_true_if = {
+					amount >= 9
+					has_innovation = innovation_motte
+					has_innovation = innovation_catapult
+					has_innovation = innovation_barracks
+					has_innovation = innovation_mustering_grounds
+					has_innovation = innovation_bannus
+					has_innovation = innovation_quilted_armor
+					has_innovation = innovation_gavelkind
+					has_innovation = innovation_crop_rotation
+					has_innovation = innovation_city_planning
+					has_innovation = innovation_casus_belli
+					has_innovation = innovation_plenary_assemblies
+					has_innovation = innovation_ledger
+					has_innovation = innovation_development_01
+					has_innovation = innovation_currency_01
+				}
+			}
+		}
+		is_independent_ruler = yes
+	}
+	
+	is_valid_showing_failures_only = {
+		is_at_war = no
+	}
+
+	cost = {
+		prestige = {
+			value = 500
+		}
+		gold = {
+			value = 200
+			#Income
+			if = {
+				limit = { root.monthly_character_income >= 100 }
+				multiply = 3
+			}
+			else_if = {
+				limit = { root.monthly_character_income >= 80 }
+				multiply = 2.5
+			}
+			else_if = {
+				limit = { root.monthly_character_income >= 60 }
+				multiply = 2
+			}
+			else_if = {
+				limit = { root.monthly_character_income >= 40 }
+				multiply = 1.5
+			}
+			else_if = {
+				limit = { root.monthly_character_income >= 20 }
+				multiply = 1.1
+			}
+		}
+	}
+
+	effect = {
+		show_as_tooltip = {
+			change_government = voltara_colonial_government
+		}
+		hidden_effect = {
+			every_realm_province = {
+				limit = {
+					has_holding_type = tribal_holding
+					barony.holder = prev
+				}
+				set_holding_type = city_holding
+			}
+			create_story = republican_government_story
+		}
+	}
+
+	ai_potential = {
+		is_independent_ruler = yes
+	}
+
+	ai_will_do = {
+		base = -50
+		ai_value_modifier = {
+			ai_greed = 1
+		}
+		modifier = {
+			add = 50
+			has_trait = greedy
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_pillar = ethos_bureaucratic 
+					has_cultural_pillar = ethos_courtly 
+					has_cultural_pillar = ethos_egalitarian 
+				}
+			}
+			add = 50
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_tradition = tradition_legalistic
+					has_cultural_tradition = tradition_hereditary_hierarchy 
+				}
+			}
+			add = 50
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_tradition = tradition_fp3_enlightened_magnates 
+					has_cultural_tradition = tradition_loyal_soldiers 
+				}
+			}
+			add = 20
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_tradition = tradition_staunch_traditionalists
+					has_cultural_tradition = tradition_ep3_audacious_cadets
+				}
+			}
+			add = -20
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_tradition = tradition_ep3_indomitable_azatani
+					has_cultural_tradition = tradition_quarrelsome
+					has_cultural_tradition = tradition_warrior_culture
+					has_cultural_tradition = tradition_fp3_fierce_independence
+				}
+			}
+			add = -50
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_pillar = ethos_stoic
+					has_cultural_pillar = ethos_bellicose 
+					has_cultural_pillar = ethos_communal 
+				}
+			}
+			add = -50
+		}
+	}
+}
+
+form_the_hanseatic_league_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/republican_decision_form_hansa.dds"
+	}
+	decision_group_type = major
+	desc = form_the_hanseatic_league_decision_desc
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 8
+		kingdom = 4
+		empire = 0
+		hegemony = 0
+	}
+
+	is_shown = {
+		has_ep3_dlc_trigger = yes
+		NOT = {	government_has_flag = government_is_merchant_republic }
+		NOT = { government_has_flag = government_is_tribal }
+		has_sea_access = yes
+		capital_county = title:c_voltara_11371
+	}
+
+	is_valid = {
+		has_ep3_dlc_trigger = yes
+		OR = {
+			is_independent_ruler = yes
+			liege ?= { highest_held_title_tier = tier_empire }
+		}
+		has_sea_access = yes
+		capital_county = title:c_voltara_11371
+	}
+	
+	is_valid_showing_failures_only = {
+		is_at_war = no
+	}
+
+	cost = {
+		prestige = {
+			value = 500
+		}
+		gold = {
+			value = 200
+			#Income
+			if = {
+				limit = { root.monthly_character_income >= 100 }
+				multiply = 3
+			}
+			else_if = {
+				limit = { root.monthly_character_income >= 80 }
+				multiply = 2.5
+			}
+			else_if = {
+				limit = { root.monthly_character_income >= 60 }
+				multiply = 2
+			}
+			else_if = {
+				limit = { root.monthly_character_income >= 40 }
+				multiply = 1.5
+			}
+			else_if = {
+				limit = { root.monthly_character_income >= 20 }
+				multiply = 1.1
+			}
+		}
+	}
+
+	effect = {
+		save_scope_as = founder
+		capital_county.empire = { save_scope_as = empire }
+		create_title_and_vassal_change = {
+			type = created
+			save_scope_as = title_change
+			add_claim_on_loss = no
+		}
+		title:k_voltara_chartered_league = {
+			change_title_holder = {
+				holder = root
+				change = scope:title_change
+			}
+		}
+		resolve_title_and_vassal_change = scope:title_change
+		convert_to_merchant_republic_government_effect = yes
+		title:d_voltara_test_11371 = { set_de_jure_liege_title = title:k_voltara_chartered_league }
+		if = {
+			limit = {
+				is_independent_ruler = no
+				liege ?= { highest_held_title_tier = tier_empire }
+			}
+			title:k_voltara_chartered_league = {
+				set_de_jure_liege_title = scope:founder.top_liege.primary_title
+			}
+		}
+		else_if = {
+			limit = { is_independent_ruler = yes }
+			title:k_voltara_chartered_league = {
+				set_de_jure_liege_title = scope:empire
+			}
+		}
+		house ?= { add_house_modifier = republican_house_modifier_hanseatic_founder }
+	}
+
+	ai_potential = {
+		always = yes
+	}
+
+	ai_will_do = {
+		base = 0
+		ai_value_modifier = {
+			ai_greed = 1
+		}
+		modifier = {
+			add = 100
+			has_trait = greedy
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_pillar = ethos_bureaucratic 
+					has_cultural_pillar = ethos_courtly 
+					has_cultural_pillar = ethos_egalitarian 
+				}
+			}
+			add = 50
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_tradition = tradition_legalistic
+					has_cultural_tradition = tradition_hereditary_hierarchy 
+				}
+			}
+			add = 50
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_tradition = tradition_fp3_enlightened_magnates 
+					has_cultural_tradition = tradition_loyal_soldiers 
+				}
+			}
+			add = 20
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_tradition = tradition_staunch_traditionalists
+					has_cultural_tradition = tradition_ep3_audacious_cadets
+				}
+			}
+			add = -20
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_tradition = tradition_ep3_indomitable_azatani
+					has_cultural_tradition = tradition_quarrelsome
+					has_cultural_tradition = tradition_warrior_culture
+					has_cultural_tradition = tradition_fp3_fierce_independence
+				}
+			}
+			add = -50
+		}
+		modifier = {
+			culture = {
+				OR = {
+					has_cultural_pillar = ethos_stoic
+					has_cultural_pillar = ethos_bellicose 
+					has_cultural_pillar = ethos_communal 
+				}
+			}
+			add = -50
+		}
+	}
+}
+
+ai_purchase_republican_legacy_perk = {
+picture = { reference = "gfx/interface/illustrations/decisions/republican_decision_become_merchant_republic.dds" }
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 8
+		duchy = 8
+		kingdom = 8
+		empire = 8
+		hegemony = 8
+	}
+	sort_order = 10
+
+	is_shown = {
+		is_ai = yes
+		government_has_flag = government_is_active_republic
+		var:republican_government_story = {
+			var:republican_prestige >= republican_legacy_cost
+		}
+	}
+
+	effect = {
+		random_list = {
+			20 = {
+				republican_legacy_purchase_perk_effect = { TRACK = trade }
+			}
+			20 = {
+				republican_legacy_purchase_perk_effect = { TRACK = diplomacy }
+			}
+			20 = {
+				republican_legacy_purchase_perk_effect = { TRACK = civic }
+			}
+			20 = {
+				republican_legacy_purchase_perk_effect = { TRACK = militia }
+			}
+			20 = {
+				republican_legacy_purchase_perk_effect = { TRACK = prosperity }
+			}
+		}
+	}
+	
+	ai_potential = {
+		always = yes
+	}
+
+	ai_will_do = {
+		base = 100
+	}
+}

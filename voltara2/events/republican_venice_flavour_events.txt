@@ -1,0 +1,805 @@
+﻿namespace = republican_venice
+
+# Venice begins
+republican_venice.1000 = {
+	type = character_event
+	window = fullscreen_event
+ queue_icon = "gfx/interface/icons/event_types/type_republican.dds"
+	title = republican_venice.1000.t
+	desc = republican_venice.1000.desc
+	theme = realm
+	override_background = { reference = republican_fullscreen_venice_start }
+
+	immediate = {
+		play_music_cue = republican_ecco_la_primavera
+		play_sound_effect = "event:/SFX/UI/Notifications/Alerts/sfx_ui_notification_alert_shimmer"
+	}
+ 	
+	option = {
+		name = republican_venice.1000.a
+	}
+}
+
+#NARENTINE
+republican_venice.2000 = {
+	type = character_event
+	window = fullscreen_event
+ queue_icon = "gfx/interface/icons/event_types/type_republican.dds"
+	title = republican_venice.2000.t
+	desc = republican_venice.2000.desc
+	theme = realm
+	override_background = { reference = republican_fullscreen_narentine_start }
+
+	immediate = {
+		play_music_cue = mx_cue_succession
+		create_story = { type = story_narentine }
+	}
+ 	
+	option = {
+		name = republican_venice.2000.a
+	}
+}
+
+#START WAR WITH VENICE?
+republican_venice.2010 = {
+	type = character_event
+	title = republican_venice.2010.t
+	desc = republican_venice.2010.desc
+	theme = war
+	override_background = { reference = republican_narentine_shore }
+
+	left_portrait = {
+		character = root
+		animation = aggressive_sword
+	}
+	immediate = { play_sound_effect = "event:/SFX/UI/Notifications/Popup/sfx_ui_popup_theme_neutral" }
+
+	option = { #Go to war
+		name = republican_venice.2010.a
+		var:narentine_story = {
+			set_variable = {
+				name = narentine_war_triggered
+				value = yes
+			}
+		}
+		spawn_army = {
+			name = event_troop_default_name
+			men_at_arms = {
+				type = pikemen_unit
+				stacks = 4
+			}
+			men_at_arms = {
+				type = armored_footmen
+				stacks = 5
+			}
+			men_at_arms = {
+				type = mangonel
+				stacks = 3
+			}
+			location = root.location
+			origin = root.location
+			inheritable = no
+		}
+		#Declare war on Venice
+		start_war = {
+			cb = republican_sack_venice
+			target = title:d_voltara_test_11336.holder
+			target_title = title:d_voltara_test_11336
+		}
+		play_sound_effect = "event:/SFX/UI/War/sfx_ui_war_declare_war"
+		play_music_cue = mx_cue_war_declared
+		
+
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+   				ai_boldness = 2
+   				ai_compassion = -1
+			}
+			modifier = {
+				add = -15
+				has_trait = compassionate
+			}
+			modifier = {
+				add = -15
+				has_trait = craven
+			}
+		}
+	}
+
+	option = { #We must wait
+		name = republican_venice.2010.b
+		trigger = { var:narentine_story.var:narentine_war_delays < 3 }
+		var:narentine_story = {
+			change_variable = {
+				name = narentine_war_delays
+				add = 1
+			}
+		}
+		ai_chance = {
+			ai_value_modifier = {
+				ai_energy = -1
+			}
+			modifier = {
+				add = 30
+				has_trait = patient
+			}
+			modifier = {
+				add = 50
+				is_at_war = yes
+			}
+		}
+	}
+
+	option = { #We have no interest in fighting the Venetians
+		name = republican_venice.2010.c
+		var:narentine_story = {
+			set_variable = {
+				name = narentine_war_triggered
+				value = yes
+			}
+		}
+		ai_chance = {
+			ai_value_modifier = {
+				ai_energy = -1
+			}
+			modifier = {
+				add = 15
+				has_trait = compassionate
+			}
+			modifier = {
+				add = 15
+				has_trait = craven
+			}
+			modifier = {
+				add = 15
+				is_at_war = yes
+			}
+		}
+	}
+}
+
+#NARENTINE WON
+republican_venice.2020 = {
+	type = character_event
+	title = republican_venice.2020.t
+	desc = republican_venice.2020.desc
+	theme = war
+	override_background = { reference = republican_narentine_sack_venice }
+
+	left_portrait = {
+		character = root
+		animation = aggressive_sword
+	}
+
+	option = { #Sack the city for money
+		name = republican_venice.2020.a
+		scope:defender = {
+			play_sound_effect = "event:/SFX/UI/Generic/sfx_ui_generic_gamespeed"
+		}
+		play_sound_effect = "event:/SFX/UI/Generic/sfx_ui_generic_gamespeed"
+		play_sound_effect = "event:/SFX/UI/Character/Lifestyle/OLD/sfx_ui_character_lifestyle_skillpoint_shimmer"
+		add_war_chest_gold = {
+			title:d_voltara_test_11336.holder = {
+				value = monthly_character_income
+				multiply = 24
+			}
+		}
+		title:d_voltara_test_11336.holder.capital_county = {
+			change_development_level = -5
+			change_county_control = massive_county_control_loss
+		}
+
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_greed = 1
+				ai_vengefulness = 1
+				ai_compassion = 1
+			}
+			modifier = {
+				add = -15
+				has_trait = compassionate
+			}
+			modifier = {
+				add = -15
+				has_trait = craven
+			}
+		}
+	}
+
+	option = { #Dismantle the Plutocracy
+		name = republican_venice.2020.b
+		title:d_voltara_test_11336.holder = {
+			every_held_title = {
+				limit = {
+					tier = prev.highest_held_title_tier
+				}
+				prev = { destroy_title = prev }
+			}
+		}
+		scope:defender = {
+			play_sound_effect = "event:/DLC/EP2/SFX/UI/Grand_Activity/Weddings/ep2_grand_wedding_murder_fest"
+		}
+		play_sound_effect = "event:/SFX/UI/Character/Lifestyle/OLD/sfx_ui_character_lifestyle_skillpoint_shimmer"
+		play_sound_effect = "event:/DLC/EP2/SFX/UI/Grand_Activity/Weddings/ep2_grand_wedding_murder_fest"
+		add_war_chest_gold = {
+			title:d_voltara_test_11336.holder = {
+				value = monthly_character_income
+				multiply = 12
+			}
+		}
+		title:d_voltara_test_11336.holder.capital_county = {
+			change_development_level = -2
+			change_county_control = massive_county_control_loss
+		}
+		ai_chance = {
+			ai_value_modifier = {
+				ai_vengefulness = 2
+				ai_compassion = -2
+			}
+			modifier = {
+				add = -15
+				has_trait = compassionate
+			}
+			modifier = {
+				add = -50
+				has_trait = greedy
+			}
+		}
+	}
+
+	option = { #Enter as a merchant family, converting religion and culture
+		name = republican_venice.2020.c
+		play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_ending_decision_confirm"
+		play_sound_effect = "event:/SFX/UI/Character/Lifestyle/OLD/sfx_ui_character_lifestyle_skillpoint_shimmer"
+		scope:defender = {
+			play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_ending_decision_confirm"
+		}
+		var:narentine_story = {
+			story_owner = { play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_ending_decision_confirm" }
+			end_story = yes
+		}
+
+		create_title_and_vassal_change = {
+			type = granted
+			save_scope_as = change
+			add_claim_on_loss = no
+		}
+		every_held_title = { #Give all top tier titles
+			limit = {
+				tier >= title:d_voltara_test_11336.holder.primary_title.tier
+			}
+			change_title_holder = {
+				holder = title:d_voltara_test_11336.holder
+				change = scope:change
+			} 
+		}
+		save_scope_as = character
+		resolve_title_and_vassal_change = scope:change
+
+		hidden_effect = {
+			title:d_voltara_test_11336.holder.var:republican_government_story = { save_scope_as = republican_government_story }
+			add_merchant_family_effect = yes
+
+		}
+		title:d_voltara_test_11336.holder = { #Let's pardon him
+			if = {
+				limit = { has_imprisonment_reason = root }
+				consume_imprisonment_reasons = root
+			}
+			if = {
+				limit = { has_execute_reason = root }
+				consume_execute_reasons = root
+			}
+			if = {
+				limit = { has_revoke_title_reason = root }
+				consume_revoke_title_reason = root
+			}
+			if = {
+				limit = { has_banish_reason = root }
+				consume_banish_reasons = root
+			}
+			if = {
+				limit = { has_banish_reason = scope:actor }
+					consume_banish_reasons = scope:actor
+			}
+		}
+		set_culture = title:d_voltara_test_11336.holder.culture
+		set_character_faith = title:d_voltara_test_11336.holder.faith
+
+		ai_chance = {
+			ai_value_modifier = {
+				ai_greed = 2
+				ai_vengefulness = -1
+				ai_compassion = 1
+			}
+			modifier = {
+				add = 15
+				has_trait = compassionate
+			}
+			modifier = {
+				add = 50
+				has_trait = greedy
+			}
+		}
+	}
+}
+
+#VENICE WON
+republican_venice.2030 = {
+	type = character_event
+	title = republican_venice.2030.t
+	desc = republican_venice.2030.desc
+	theme = war
+	override_background = { reference = republican_venice_victory }
+
+	left_portrait = {
+		character = root
+		animation = aggressive_sword
+	}
+
+	option = { #Annex, Narentine ruler becomes adventurer
+		name = republican_venice.2030.a
+		play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_ending_decision_confirm"
+		scope:attacker = {
+			var:narentine_story = {
+				end_story = yes
+			}
+			play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_ending_decision_confirm"
+		}
+		scope:attacker = { #Destroy all titles above duchy-level
+			every_held_title = {
+				limit = { tier > tier_duchy}
+				scope:attacker = { destroy_title = prev }
+			}
+			create_title_and_vassal_change = {
+				type = conquest
+				save_scope_as = change
+				add_claim_on_loss = yes
+			}
+			every_held_title = { #Give all remaining titles
+				change_title_holder = {
+					holder = scope:defender
+					change = scope:change
+				} 
+			}
+			resolve_title_and_vassal_change = scope:change
+			create_landless_adventurer_title_effect = {
+				REASON = flag:conquest
+				FLAVOR_CHAR = scope:recipient
+			}
+		}
+
+
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_vengefulness = 1
+				ai_compassion = 1
+				ai_zeal = -1
+			}
+			modifier = {
+				add = -15
+				has_trait = compassionate
+			}
+			modifier = {
+				add = -15
+				has_trait = craven
+			}
+		}
+	}
+
+	option = { #Annex, Dev -10, culture convert Narentine ruler becomes adventurer
+		name = republican_venice.2030.b
+		play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_ending_decision_confirm"
+		scope:attacker = {
+			var:narentine_story = {
+				end_story = yes
+			}
+			play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_ending_decision_confirm"
+		}
+		scope:attacker = {
+			every_sub_realm_county = {
+				limit = {
+					culture = culture:voltara_western_corsairs
+				}
+				set_county_culture = scope:defender.culture
+				set_county_faith = scope:defender.faith
+				scope:defender = { add_short_term_gold = minor_gold_value }
+				change_development_level = -10
+			}
+			every_held_title = { #Destroy all titles above duchy-level
+				limit = { tier > tier_duchy}
+				scope:attacker = { destroy_title = prev }
+			}
+			create_title_and_vassal_change = {
+				type = conquest
+				save_scope_as = change
+				add_claim_on_loss = yes
+			}
+			every_held_title = { #Give all remaining titles
+				change_title_holder = {
+					holder = scope:defender
+					change = scope:change
+				} 
+			}
+			resolve_title_and_vassal_change = scope:change
+			create_landless_adventurer_title_effect = {
+				REASON = flag:conquest
+				FLAVOR_CHAR = scope:recipient
+			}
+		}
+
+		ai_chance = {
+			ai_value_modifier = {
+				ai_vengefulness = 2
+				ai_compassion = -2
+				ai_greed = 2
+				ai_zeal = 1
+			}
+			modifier = {
+				add = -15
+				has_trait = compassionate
+			}
+		}
+	}
+
+	option = { #Vassalize, remove piracy from their culture and convert them to the religion of Venice
+		name = republican_venice.2030.c
+		play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_ending_decision_confirm"
+		scope:attacker = {
+			play_sound_effect = "event:/DLC/FP2/SFX/UI/fp2_struggle_ending_decision_confirm"
+			var:narentine_story = {
+				end_story = yes
+			}
+		}
+		
+		scope:attacker = {
+			every_held_title = { #Destroy all empire titles
+				limit = { tier > tier_kingdom}
+				scope:attacker = { destroy_title = prev }
+			}
+			create_title_and_vassal_change = {
+				type = conquest
+				save_scope_as = change
+				add_claim_on_loss = yes
+			}
+			every_held_title = { #Give all remaining titles
+				limit = {
+					NOT = { tier = tier_county }
+					tier = scope:attacker.primary_title.tier
+				}
+				change_title_holder = {
+					holder = scope:defender
+					change = scope:change
+				} 
+			}
+			change_liege = {
+				liege = scope:defender
+				change = scope:change
+			}
+			resolve_title_and_vassal_change = scope:change
+			set_character_faith = scope:defender.faith
+			culture:voltara_western_corsairs = {
+				remove_culture_tradition = tradition_practiced_pirates
+			}
+			every_sub_realm_county = {
+				limit = {
+					culture = culture:voltara_western_corsairs
+				}
+				set_county_faith = scope:defender.faith
+			}
+		}
+
+		ai_chance = {
+			ai_value_modifier = {
+				ai_greed = 1
+				ai_vengefulness = -2
+				ai_compassion = 2
+				ai_zeal = 1
+			}
+			modifier = {
+				add = 15
+				has_trait = compassionate
+			}
+		}
+	}
+}
+
+#Festa della Sensa
+republican_venice.3000 = { #Procession
+	type = activity_event
+	title = republican_venice.3000.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { root = scope:host }
+				desc = republican_venice.3000.host.desc
+			}
+			desc = republican_venice.3000.guest.desc
+		}
+	}
+	theme = republican_festa_della_sensa
+
+	left_portrait = {
+		character = scope:guest
+		camera = camera_event_very_left
+		animation = honorable
+	}
+	center_portrait = {
+		character = scope:host
+		camera = camera_event_center_forward
+		animation = personality_rational
+	}
+	right_portrait = {
+		trigger = { exists = scope:host.cp:councillor_court_chaplain }
+		character = scope:host.cp:councillor_court_chaplain
+		camera = camera_event_right_pointing_right
+		animation = personality_zealous
+	}
+
+	immediate = {
+		if = {
+			limit = { root = scope:host }
+			involved_activity = {
+				random_attending_character = { save_scope_as = guest }
+			}
+		}
+		else = { save_scope_as = guest }
+	}
+
+	option = {
+		name = republican_venice.3000.a
+
+		ai_chance = { base = 100 }
+	}
+}
+
+republican_venice.3010 = { #Blessing
+	type = activity_event
+	title = republican_venice.3010.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { root = scope:host }
+				desc = republican_venice.3010.host.desc
+			}
+			desc = republican_venice.3010.guest.desc
+		}
+	}
+	override_background = { reference = fp1_ocean }
+	theme = republican_festa_della_sensa
+
+	left_portrait = {
+		character = scope:guest
+		camera = camera_event_very_left
+		animation = honorable
+	}
+	center_portrait = {
+		character = scope:host
+		camera = camera_event_center_forward
+		animation = personality_rational
+	}
+	right_portrait = {
+		trigger = { exists = scope:host.cp:councillor_court_chaplain }
+		character = scope:host.cp:councillor_court_chaplain
+		camera = camera_event_right_pointing_right
+		animation = scepter
+	}
+
+	immediate = {
+		if = {
+			limit = { root = scope:host }
+			involved_activity = {
+				random_attending_character = { save_scope_as = guest }
+			}
+		}
+		else = { save_scope_as = guest }
+	}
+
+	option = {
+		name = republican_venice.3010.a
+
+		ai_chance = { base = 100 }
+	}
+}
+
+republican_venice.3020 = { #Marriage Ritual
+	type = activity_event
+	title = republican_venice.3020.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { root = scope:host }
+				desc = republican_venice.3020.host.desc
+			}
+			desc = republican_venice.3020.guest.desc
+		}
+	}
+	override_background = { reference = fp1_ocean }
+	theme = republican_festa_della_sensa
+
+	left_portrait = {
+		character = scope:guest
+		camera = camera_event_left_away_3_4
+		animation = map_ecstasy
+	}
+	center_portrait = {
+		character = scope:host
+		camera = camera_event_left_away_3_4
+		animation = debating
+	}
+	right_portrait = {
+		trigger = { exists = scope:host.cp:councillor_court_chaplain }
+		character = scope:host.cp:councillor_court_chaplain
+		camera = camera_event_center_away
+		animation = scepter
+	}
+
+	immediate = {
+		if = {
+			limit = { root = scope:host }
+			involved_activity = {
+				random_attending_character = { save_scope_as = guest }
+			}
+		}
+		else = { save_scope_as = guest }
+	}
+
+	option = {
+		trigger = { root = scope:host }
+		name = republican_venice.3020.host
+		custom_tooltip = republican_venice.3020.host.tt
+		play_sound_effect = "event:/GoldenDominion/SFX/water_splash"
+		add_prestige = 100
+		ai_chance = { base = 100 }
+	}
+
+	option = {
+		trigger = { NOT = { root = scope:host } }
+		name = republican_venice.3020.guest
+		custom_tooltip = republican_venice.3020.guest.tt
+		play_sound_effect = "event:/GoldenDominion/SFX/water_splash"
+		add_prestige = 50
+		ai_chance = { base = 100 }
+	}
+}
+
+republican_venice.3030 = { #Celebration
+	type = activity_event
+	title = republican_venice.3030.t
+	desc = republican_venice.3030.desc
+	theme = republican_festa_della_sensa
+	override_background = { reference = ep3_mediterranean_estate }
+
+	left_portrait = {
+		character = scope:guest
+		camera = camera_event_very_left
+		animation = map_ecstasy
+	}
+	center_portrait = {
+		character = scope:host
+		camera = camera_event_center
+		animation = debating
+	}
+	right_portrait = {
+		trigger = { exists = scope:host.cp:councillor_court_chaplain }
+		character = scope:host.cp:councillor_court_chaplain
+		camera = camera_event_right
+		animation = scepter
+	}
+
+	immediate = {
+		involved_activity = {
+			random_attending_character = { save_scope_as = guest }
+		}
+	}
+
+	option = { #Feast
+		name = republican_venice.3030.a
+		add_prestige = 100
+		remove_short_term_gold = 10
+		add_character_modifier = { modifier = festa_della_sensa_feast_modifier years = 1 }
+		involved_activity = { add_activity_log_entry = {
+			key = festa_della_sensa_feast_log
+			character = scope:host
+			score = 10
+		} }
+		ai_chance = { base = 100 }
+	}
+
+	option = { #Regatta
+		name = republican_venice.3030.b
+		add_prestige = 100
+		remove_short_term_gold = 10
+		add_character_modifier = { modifier = festa_della_sensa_regatta_modifier years = 1 }
+		involved_activity = { add_activity_log_entry = {
+			key = festa_della_sensa_regatta_log
+			character = scope:host
+			score = 10
+		} }
+		ai_chance = { base = 100 }
+	}
+	option = { #Distribute alms
+		name = republican_venice.3030.c
+		add_piety = 100
+		remove_short_term_gold = 5
+		add_character_modifier = { modifier = festa_della_sensa_alms_modifier years = 1 }
+		involved_activity = { add_activity_log_entry = {
+			key = festa_della_sensa_alms_log
+			character = scope:host
+			score = 10
+		} }
+		ai_chance = { base = 100 }
+	}
+	option = { #Modest celebration
+		name = republican_venice.3030.d
+		add_prestige = 50
+		involved_activity = { add_activity_log_entry = {
+			key = festa_della_sensa_modest_log
+			character = scope:host
+			score = 10
+		} }
+		ai_chance = { base = 100 }
+	}
+}
+
+republican_venice.3040 = { #End
+	type = activity_event
+	title = republican_venice.3040.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { root = scope:host }
+				desc = republican_venice.3040.host.desc
+			}
+			desc = republican_venice.3040.guest.desc
+		}
+	}
+	theme = republican_festa_della_sensa
+	override_background = { reference = ep3_mediterranean_estate }
+
+	left_portrait = {
+		character = scope:guest
+		camera = camera_event_very_left
+		animation = map_ecstasy
+	}
+	center_portrait = {
+		trigger = { exists = scope:host.cp:councillor_court_chaplain }
+		character = scope:host.cp:councillor_court_chaplain
+		camera = camera_event_center_pointing_left
+		animation = scepter
+	}
+	right_portrait = {
+		character = scope:host
+		camera = camera_event_right
+		animation = thinking
+	}
+
+	immediate = {
+		involved_activity = {
+			random_attending_character = { save_scope_as = guest }
+		}
+	}
+
+	option = { #Host
+		trigger = { root = scope:host }
+		name = republican_venice.3040.host
+		add_character_modifier = { modifier = festa_della_sensa_feast_modifier years = 1 }
+		show_as_tooltip = { #we give these out in the on_complete of the activity
+			disburse_festa_della_sensa_activity_rewards = yes
+		}
+		ai_chance = { base = 100 }
+	}
+
+	option = { #Guest
+		trigger = { NOT = { root = scope:host } }
+		name = republican_venice.3040.guest
+		show_as_tooltip = { #we give these out in the on_complete of the activity
+			disburse_festa_della_sensa_activity_rewards = yes
+		}
+		ai_chance = { base = 100 }
+	}
+
+}

@@ -1,0 +1,30 @@
+﻿realm_law_use_crown_authority = {
+realm_law_use_republican_authority = no
+
+realm_law_use_republican_authority = no
+
+realm_law_use_republican_authority = no
+
+realm_law_use_republican_authority = no
+
+realm_law_use_republican_authority = no
+
+	government_has_flag = government_uses_crown_authority
+}
+is_landed_or_landless_administrative = {
+	OR = {
+ is_landless_republican = yes
+
+ is_landless_republican = yes
+
+ is_landless_republican = yes
+
+ is_landless_republican = yes
+
+ is_landless_republican = yes
+
+		is_landed = yes
+		is_landless_administrative = yes
+		tgp_is_any_minister = yes	# ministers should receive admin events and activity even if they are not house head
+	}
+}

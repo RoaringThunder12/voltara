@@ -1,0 +1,109 @@
+﻿disburse_festa_della_sensa_activity_rewards = {
+	# for the loc
+	save_scope_as = root_scope
+
+	title:c_voltara_11336 = {
+		add_county_modifier = {
+			modifier = festa_della_sensa_modifier
+			years = 1
+		}
+	}
+
+	#Accolade glory gain
+	accolades_activity_complete_feast_glory_effect = yes
+	#Stress loss
+	if = {
+		limit = {
+			OR = {
+				has_trait = shy
+				has_trait = reclusive
+			}
+		}
+		custom_tooltip = host_feast_decision_desc_shy
+	}
+	else = {
+		if = {
+			limit = {
+				has_royal_court = yes
+				has_dlc_feature = royal_court
+					amenity_level = { target = court_food_quality value >= 5 }
+			}
+			stress_impact = {
+				base = exotic_feast_stress_loss_value
+				gluttonous = feast_stress_loss_value
+				gregarious = feast_stress_loss_value
+				lifestyle_reveler = feast_stress_loss_value
+				drunkard = feast_stress_loss_value
+				comfort_eater = feast_stress_loss_value
+				generous = feast_stress_loss_value
+				greedy = activity_stress_gain_impact
+			}
+		}
+		else_if = {
+			limit = {
+				has_royal_court = yes
+				has_dlc_feature = royal_court
+				amenity_level = { target = court_food_quality value >= 4 }
+			}
+			stress_impact = {
+				base = lavish_feast_stress_loss_value
+				gluttonous = feast_stress_loss_value
+				gregarious = feast_stress_loss_value
+				lifestyle_reveler = feast_stress_loss_value
+				drunkard = feast_stress_loss_value
+				comfort_eater = feast_stress_loss_value
+				generous = feast_stress_loss_value
+				greedy = activity_stress_gain_impact
+			}
+		}
+	    else_if = {
+			limit = {
+				has_royal_court = yes
+				has_dlc_feature = royal_court
+				amenity_level = { target = court_food_quality value >= 3 }
+			}
+			stress_impact = {
+				base = medium_feast_stress_loss_value
+				gluttonous = feast_stress_loss_value
+				gregarious = feast_stress_loss_value
+				lifestyle_reveler = feast_stress_loss_value
+				drunkard = feast_stress_loss_value
+				comfort_eater = feast_stress_loss_value
+				generous = feast_stress_loss_value
+				greedy = activity_stress_gain_impact
+			}
+		}
+		else_if = {
+			limit = {
+				has_royal_court = yes
+				has_dlc_feature = royal_court
+				amenity_level = { target = court_food_quality value <= 1 }
+			}
+			stress_impact = {
+				base = meager_feast_stress_loss_value
+				gluttonous = feast_stress_loss_value
+				gregarious = feast_stress_loss_value
+				lifestyle_reveler = feast_stress_loss_value
+				drunkard = feast_stress_loss_value
+				comfort_eater = feast_stress_loss_value
+				generous = feast_stress_loss_value
+				greedy = activity_stress_gain_impact
+			}
+		}
+		else = {
+			stress_impact = {
+				base = feast_stress_loss_value
+				gluttonous = activity_stress_loss_impact
+				gregarious = activity_stress_loss_impact
+				lifestyle_reveler = feast_stress_loss_value
+				drunkard = activity_stress_loss_impact
+				comfort_eater = activity_stress_loss_impact
+				generous = activity_stress_loss_impact
+				greedy = activity_stress_gain_impact
+			}
+		}
+	}
+
+	# Remove strife if relevant.
+	remove_strife_per_invited_powerful_vassal_effect = yes
+}

@@ -1,0 +1,16 @@
+﻿family_palaces_in_county = {
+	value = 0
+	every_county_province = {
+		every_province_domicile = {
+			limit = {
+				is_domicile_type = family_palace
+				has_domicile_parameter = local_business
+			}
+			add = 1
+		}
+	}
+}
+
+fp_urban_dev_level = {
+	value = 25
+}

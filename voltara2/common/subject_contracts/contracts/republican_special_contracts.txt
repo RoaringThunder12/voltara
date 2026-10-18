@@ -1,0 +1,54 @@
+﻿@ai_standard_liege_desire = 2
+@ai_standard_vassal_desire = 1
+
+republic_special_contract = {
+	display_mode = radiobutton
+	is_shown = {
+		scope:subject.primary_title.tier >= tier_county
+		scope:subject = { OR = { government_has_flag = government_is_republic government_has_flag = government_is_active_republic } }
+	}
+	obligation_levels = {
+		republic_special_contract_none = {
+			position = { 0 1 }
+			default = yes
+			score = 0
+
+			ai_subject_desire = 0
+			ai_liege_desire = 0
+		}
+		republic_special_contract_free_city = {
+			is_shown = {
+				scope:subject.primary_title.tier >= tier_county
+				scope:subject = { OR = { government_has_flag = government_is_republic government_has_flag = government_is_active_republic } }
+				scope:liege = {
+					top_liege = { has_title = title:h_voltara_severos }
+					
+				}
+			}
+			is_valid = {
+				scope:liege = {
+					top_liege = { has_title = title:h_voltara_severos }
+					
+				}
+			}
+			parent = republic_special_contract_none
+			position = { 1 1 }
+			score = 0
+
+			tax_factor = 0.1
+			levies_factor = 0.1
+
+			subject_modifier = {
+				domain_limit_max = 1
+				men_at_arms_maintenance = -0.2
+				build_speed = 0.1
+				character_capital_county_monthly_development_growth_add = 0.2
+				vassal_limit_max = 0
+				domain_tax_mult_even_if_baron = 0.3
+			}
+
+			ai_liege_desire = 0
+			ai_subject_desire = 0
+		}
+	}
+}

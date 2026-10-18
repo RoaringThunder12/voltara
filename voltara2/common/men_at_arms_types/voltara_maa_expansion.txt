@@ -763,50 +763,9 @@ vmaa_voltara_culture_31_2 = {
  illustration = vmaa_art_2291024373_hadorim_forest_wardens
 }
 
-vmaa_voltara_culture_32_1 = {
- type = skirmishers
- damage = 24
- toughness = 16
- pursuit = 26
- screen = 16
- stack = 100
- buy_cost = { gold = 90 }
- low_maintenance_cost = { gold = 0.32 }
- high_maintenance_cost = { gold = 1.05 }
- provision_cost = 8
- counters = { archers = 1 }
- terrain_bonus = { mountains = { damage = 4 toughness = 3 } }
- 
- can_recruit = { culture = culture:voltara_culture_32
- NOT = { has_government = voltara_ruins_government } }
- access_through_subject = { always = no }
- allowed_in_hired_troops = no
- ai_quality = { value = 20 }
- illustration = vmaa_art_2291024373_clan_axemen
-}
 
-vmaa_voltara_culture_32_2 = {
- type = heavy_infantry
- damage = 40
- toughness = 32
- pursuit = 0
- screen = 10
- stack = 100
- buy_cost = { gold = 176 }
- low_maintenance_cost = { gold = 0.58 }
- high_maintenance_cost = { gold = 1.95 }
- provision_cost = 8
- counters = { pikemen = 1 }
- terrain_bonus = { mountains = { damage = 7 toughness = 6 } }
- 
- can_recruit = { culture = culture:voltara_culture_32
- culture = { has_innovation = innovation_men_at_arms }
- NOT = { has_government = voltara_ruins_government } }
- access_through_subject = { always = no }
- allowed_in_hired_troops = no
- ai_quality = { value = 20 }
- illustration = vmaa_art_2291024373_dunlending_huscarl
-}
+
+
 
 vmaa_voltara_culture_33_1 = {
  type = skirmishers
@@ -4434,7 +4393,7 @@ vmaa_order_voltara_old_ones_religion_2 = {
  illustration = vmaa_art_2887120253_orc_champions
 }
 
-vmaa_order_voltara_embers_religion_1 = {
+vmaa_order_voltara_khaos_religion_1 = {
  type = skirmishers
  damage = 24
  toughness = 16
@@ -4448,7 +4407,7 @@ vmaa_order_voltara_embers_religion_1 = {
  counters = { archers = 1 }
  terrain_bonus = { plains = { damage = 4 toughness = 3 } }
  
- can_recruit = { has_religion = religion:voltara_embers_religion
+ can_recruit = { has_religion = religion:voltara_khaos_religion
  piety_level >= 2
  NOT = { has_government = voltara_ruins_government } }
  access_through_subject = { always = no }
@@ -4457,7 +4416,7 @@ vmaa_order_voltara_embers_religion_1 = {
  illustration = vmaa_art_3059124362_goblin_skirmishers
 }
 
-vmaa_order_voltara_embers_religion_2 = {
+vmaa_order_voltara_khaos_religion_2 = {
  type = archers
  damage = 36
  toughness = 15
@@ -4471,7 +4430,7 @@ vmaa_order_voltara_embers_religion_2 = {
  counters = { skirmishers = 1 }
  terrain_bonus = { plains = { damage = 6 toughness = 3 } }
  
- can_recruit = { has_religion = religion:voltara_embers_religion
+ can_recruit = { has_religion = religion:voltara_khaos_religion
  piety_level >= 2
  culture = { has_innovation = innovation_advanced_bowmaking }
  NOT = { has_government = voltara_ruins_government } }

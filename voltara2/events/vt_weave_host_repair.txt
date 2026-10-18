@@ -1,0 +1,24 @@
+﻿namespace = vt_weave_host_repair
+vt_weave_host_repair.1 = {
+ type = character_event hidden = yes
+ trigger = { has_character_flag = vt_weave_demon_revolt NOT = { has_character_flag = vt_weave_host_troops_v2 } }
+ immediate = {
+  random_character_war = {
+   limit = { using_cb = vt_weave_demon_incursion primary_attacker = root }
+   save_scope_as = vt_weave_host_war
+  }
+  if = { limit = { exists = scope:vt_weave_host_war }
+   add_character_flag = vt_weave_host_troops_v2
+   random_list = {
+1 = { spawn_army = { men_at_arms = { type = demonic_knights stacks = 20 } location = capital_province war = scope:vt_weave_host_war name = vt_weave_rift_host inheritable = no } }
+1 = { spawn_army = { men_at_arms = { type = demonic_knights stacks = 25 } location = capital_province war = scope:vt_weave_host_war name = vt_weave_rift_host inheritable = no } }
+1 = { spawn_army = { men_at_arms = { type = demonic_knights stacks = 30 } location = capital_province war = scope:vt_weave_host_war name = vt_weave_rift_host inheritable = no } }
+   }
+   spawn_army = {
+    levies = { value = scope:vt_weave_host_war.primary_defender.max_military_strength multiply = 0.35 min = 800 max = 6000 }
+    location = capital_province war = scope:vt_weave_host_war
+    name = vt_weave_rift_host inheritable = no
+   }
+  }
+ }
+}

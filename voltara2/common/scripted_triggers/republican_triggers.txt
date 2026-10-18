@@ -1,0 +1,128 @@
+﻿can_have_republican_law_trigger = {
+	government_has_flag = government_is_active_republic
+}
+
+is_eligible_magistrate_trigger = {
+	age >= 25
+	OR = {
+		AND = {
+			liege = { has_realm_law = male_only_law }
+			is_male = yes
+		}
+		AND = {
+			liege = { has_realm_law = female_only_law }
+			is_female = yes
+		}
+		AND = {
+			liege = {
+				NOT = { has_realm_law = male_only_law }
+				NOT = { has_realm_law = female_only_law }
+			}
+		}
+	}
+	NOT = { has_council_position = councillor_court_chaplain }
+}
+
+#Scope: character
+republican_ruler_has_law = {
+	government_has_flag = government_is_active_republic
+	has_variable = republican_government_story
+	var:republican_government_story = {
+		republican_government_has_law = { LAW = $LAW$ }
+	}
+}
+
+#Scope: republican_government_story
+republican_government_has_law = {
+	story_owner = {
+		has_realm_law = $LAW$
+	}
+}
+
+#ELECTIONS
+#Scope: republican_government_story
+#republican_election_is_due = {
+#	republican_government_has_law = {}
+#	
+#}
+
+
+realm_law_use_republican_authority = {
+	government_has_flag = government_is_active_republic
+}
+
+has_republican_faction_support = {
+	var:republican_government_story.var:republican_support >= 0.5
+}
+
+republican_election_ongoing = {
+	var:republican_government_story = {
+		prev.current_date >= var:election_date
+	}
+}
+
+can_use_trade = {
+	OR = {
+		AND = {
+			government_has_flag = government_is_active_republic
+			var:republican_government_story ?= {
+				var:legacy_level_trade >= 2
+			}
+		}
+		government_has_flag = government_is_merchant_republic
+	}
+}
+
+eligble_merchant_family_heir = {
+	OR = {
+		is_vassal_or_below_of = scope:republican_government_story.story_owner
+		is_landed = no
+	}
+	OR = {
+		AND = {
+			scope:republican_government_story = { republican_government_has_law = { LAW = male_only_law } }
+			is_male = yes
+		}
+		AND = {
+			scope:republican_government_story = { republican_government_has_law = { LAW = female_only_law } }
+			is_female = yes
+		}
+		AND = {
+			scope:republican_government_story = { NOT = { republican_government_has_law = { LAW = male_only_law } } NOT = { republican_government_has_law = { LAW = female_only_law } } }
+		}
+	}
+}
+
+is_nested_active_republic_character = {
+	government_has_flag = government_is_active_republic
+	any_liege_or_above = {
+		government_has_flag = government_is_active_republic
+		NOR = {
+			has_variable = republican_government_story
+			var:republican_government_story ?= prev.var:republican_government_story
+		}
+	}
+}
+
+has_subject_active_republic_character = {
+	government_has_flag = government_is_active_republic
+	has_variable = republican_government_story
+	any_vassal_or_below = {
+		government_has_flag = government_is_active_republic
+		NOR = {
+			has_variable = republican_government_story
+			var:republican_government_story ?= prev.var:republican_government_story
+		}
+	}
+}
+
+is_republican_government_story_owner = {
+	has_variable = republican_government_story
+	var:republican_government_story.story_owner ?= this
+}
+
+is_landless_republican = {
+	government_has_flag = government_is_active_republic
+	is_landed = no
+	is_merchant_family = yes
+}

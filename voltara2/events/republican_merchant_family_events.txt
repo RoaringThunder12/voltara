@@ -1,0 +1,367 @@
+﻿namespace = republican_core
+#Offer to become merchant family
+republican_core.1000 = {
+	type = character_event
+	title = republican_core.1000.t
+	desc = republican_core.1000.desc
+	theme = realm
+	override_background = { reference = republican_maritime_republic }
+
+	left_portrait = {
+		character = this
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:liege
+		animation = admiration
+	}
+
+	trigger = {
+		NOT = { has_character_flag = declined_merchant_family_offer	}
+	}
+
+	option = { #Become a merchant family
+		name = republican_core.1000.a
+		custom_tooltip = {
+			text = you_become_merchant_family
+			scope:liege.var:republican_government_story = { save_scope_as = republican_government_story }
+			add_merchant_family_effect = yes
+		}
+		every_realm_province = {
+			limit = { has_holding_type = tribal_holding	}
+			set_holding_type = city_holding
+		}
+
+		ai_chance = {
+			base = 0
+			ai_value_modifier = {
+				ai_greed = 2
+			}
+		}
+	}
+	option = { #Reject the offer
+		name = republican_core.1000.b
+		custom_tooltip = {
+			text = republican_core.1000.b.tt
+			add_character_flag = { #You won't be asked again for 2 years.
+				flag = declined_merchant_family_offer
+				days = 730
+			}
+		}
+		ai_chance = {
+			base = 0
+			ai_value_modifier = {
+				ai_greed = -2
+			}
+		}
+	}
+
+	option = { #Don't ask me again
+		name = republican_core.1000.c
+		trigger = { is_ai = no }
+		custom_tooltip = {
+			text = republican_core.1000.c.tt
+			add_character_flag = declined_merchant_family_offer
+		}
+	}
+}
+
+republican_core.1001 = {
+	hidden = yes
+	trigger = {
+		is_merchant_family = yes
+		is_ai = yes
+		NOT = { any_held_title = { is_merchant_family_title = no } }
+		any_courtier = {
+			is_physically_able_adult = yes
+			is_married = no
+			is_concubine = no
+			can_marry_trigger = yes
+			can_have_children = yes
+			house = root.house
+			save_temporary_scope_as = lonely_courtier
+		}
+		OR = {
+			scope:lonely_courtier = {
+				any_relation = {
+					type = lover
+					is_courtier_of = root
+					is_physically_able_adult = yes
+					is_married = no
+					is_concubine = no
+					can_marry_trigger = yes
+					can_have_children = yes
+					can_marry_character_trigger = { CHARACTER = scope:lonely_courtier }
+					NOR = {
+						is_close_family_of = root
+						has_relation_lover = root
+					}
+					NOT = { this = scope:lonely_courtier }
+				}
+			}
+			any_pool_character = {
+				province = root.location
+				can_have_children_with = { CHARACTER = scope:lonely_courtier }
+				is_physically_able_adult = yes
+				age <= 35
+				is_married = no
+				can_marry_trigger = yes
+				can_have_children = yes
+				can_marry_character_trigger = { CHARACTER = scope:lonely_courtier }
+				is_concubine = no
+			}
+		}
+	}
+	
+	immediate = {
+		random_courtier = {
+			limit = {
+				is_physically_able_adult = yes
+				is_married = no
+				is_concubine = no
+				can_marry_trigger = yes
+				can_have_children = yes
+				house = root.house
+				save_temporary_scope_as = lonely_courtier
+				OR = {
+					any_relation = {
+						type = lover
+						is_courtier_of = root
+						is_physically_able_adult = yes
+						is_married = no
+						is_concubine = no
+						can_marry_trigger = yes
+						can_have_children = yes
+						can_marry_character_trigger = { CHARACTER = scope:lonely_courtier }
+						NOR = {
+							is_close_family_of = root
+							has_relation_lover = root
+						}
+						NOT = { this = scope:lonely_courtier }
+					}
+					any_pool_character = {
+						province = root.location
+						can_have_children_with = { CHARACTER = scope:lonely_courtier }
+						is_physically_able_adult = yes
+						age <= 35
+						is_married = no
+						can_marry_trigger = yes
+						can_have_children = yes
+						can_marry_character_trigger = { CHARACTER = scope:lonely_courtier }
+						is_concubine = no
+					}
+				}
+			}
+			save_scope_as = courtier_to_marry
+			if = {
+				limit = {
+					any_relation = {
+						type = lover
+						is_courtier_of = root
+						is_physically_able_adult = yes
+						is_married = no
+						is_concubine = no
+						can_marry_trigger = yes
+						can_have_children = yes
+						can_marry_character_trigger = { CHARACTER = scope:courtier_to_marry }
+						NOR = {
+							is_close_family_of = root
+							has_relation_lover = root
+						}
+						NOT = { this = scope:courtier_to_marry }
+					}
+				}
+				random_relation = {
+					type = lover
+					limit = {
+						is_courtier_of = root
+						is_physically_able_adult = yes
+						is_married = no
+						is_concubine = no
+						can_marry_trigger = yes
+						can_have_children = yes
+						can_marry_character_trigger = { CHARACTER = scope:courtier_to_marry }
+						NOR = {
+							is_close_family_of = root
+							has_relation_lover = root
+						}
+						NOT = { this = scope:courtier_to_marry }
+					}
+					save_scope_as = marriage_material
+				}
+			}
+			else = {
+				random_pool_character = {
+					province = root.location
+					limit = {
+						can_have_children_with = { CHARACTER = scope:lonely_courtier }
+						is_physically_able_adult = yes
+						age <= 35
+						is_married = no
+						can_marry_trigger = yes
+						can_have_children = yes
+						can_marry_character_trigger = { CHARACTER = scope:lonely_courtier }
+						is_concubine = no
+					}
+					save_scope_as = marriage_material
+				}
+			}
+		}
+		if = {
+			limit = { exists = scope:marriage_material}
+			scope:courtier_to_marry = {
+				if = {
+					limit = {
+						is_female = yes
+						is_lowborn = no
+					}
+					marry_matrilineal = scope:marriage_material
+				}
+				else = {
+					marry = scope:marriage_material
+				}
+				add_opinion = {
+					target = root
+					modifier = kindness_opinion
+					opinion = 30
+				}
+			}
+		}
+	}
+}
+
+republican_core.1002 = {
+	hidden = yes
+	immediate = {
+		handle_nested_republics_effect = yes
+	}
+}
+
+republican_core.1003 = {
+	hidden = yes
+	immediate = {
+		random_court_position_holder = {
+			type = republican_magistrate
+			limit = {
+				NOT = {
+					liege.designated_diarch = this
+					government_has_flag = government_is_republic
+				}
+			}
+			save_scope_as = new_designated_diarch
+		}
+		designate_diarch = scope:new_designated_diarch
+	}
+}
+
+republican_core.1004 = {
+	hidden = yes
+	immediate = {
+		republic_government_designate_diarch = yes
+	}
+}
+
+
+republican_core.1010 = { #Defensive War, liege calls merchant families to help
+	type = character_event
+	title = republican_core.1010.t
+	desc = republican_core.1010.desc
+	theme = war
+
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:defender
+		animation = personality_compassionate
+	}
+	lower_center_portrait = { character = scope:attacker }
+
+	trigger = {
+		liege = { is_at_war_as_defender = yes }
+	}
+
+	option = { #Help your liege
+		name = republican_core.1010.a
+		scope:war = {
+			add_defender = root
+		}
+
+		reverse_add_opinion = {
+			target = liege
+			modifier = pleased_opinion
+			opinion = 10
+		}
+		stress_impact = {
+			craven = medium_stress_impact_gain
+			diligent = medium_stress_impact_loss
+			brave = medium_stress_impact_loss
+		}
+
+		ai_chance = {
+			base = 0
+			ai_value_modifier = {
+				ai_honor = 0.5
+			}
+			modifier = { #More likely if worse than astray faith
+				add = {
+					value = ai_zeal
+					min = 0
+					divide = 2
+				}
+				faith = {
+					faith_hostility_level = {
+						target = scope:attacker.faith
+						value > faith_astray_level
+					}
+				}
+			}
+			opinion_modifier = {
+				who = root
+				opinion_target = liege
+				multiplier = 0.5
+			}
+			modifier = {
+				add = 20
+				has_trait = brave
+			}
+		}
+	}
+
+	option = { #To hell with him
+		name = republican_core.1010.b
+
+		reverse_add_opinion = {
+			modifier = irritated_opinion
+			target = liege
+			opinion = -10
+		}
+
+		stress_impact = {
+			lazy = medium_stress_impact_loss
+			craven = medium_stress_impact_loss
+			brave = medium_stress_impact_gain
+		}
+
+		ai_chance = {
+			base = 0
+			ai_value_modifier = {
+				ai_honor = -0.5
+			}
+			opinion_modifier = {
+				who = root
+				opinion_target = liege
+				multiplier = -0.5
+			}
+			modifier = {
+				add = 20
+				has_trait = lazy
+			}
+			modifier = {
+				add = 20
+				has_trait = craven
+			}
+		}
+	}
+}

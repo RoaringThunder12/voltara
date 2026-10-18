@@ -1,0 +1,62 @@
+﻿story_narentine = {
+	on_setup = {
+		story_owner = {
+			set_variable = {
+				name = narentine_story
+				value = root
+			}
+		}
+		set_variable = {
+			name = narentine_war_triggered
+			value = no
+		}
+		set_variable = {
+			name = narentine_war_delays
+			value = 0
+		}
+	}
+	
+	on_end = {
+		story_owner = { remove_variable = narentine_story }
+	}
+
+	on_owner_death = {
+		# Should be inherited, so transfer to heir
+		if = {
+			limit = {
+				exists = story_owner.player_heir
+			}
+			make_story_owner = story_owner.player_heir
+			story_owner.player_heir = {
+				set_variable = {
+					name = narentine_story
+					value = root
+				}
+			}
+		}
+		# Or destroy
+		else = {
+			end_story = yes
+		}
+	}
+	
+	effect_group = {
+		years = { 2 8 }
+		chance = 50
+		first_valid = {
+			triggered_effect = {
+				trigger = {
+					var:narentine_war_triggered = no
+					title:d_voltara_test_11336.holder = { government_has_flag = government_is_merchant_republic	}
+					NOR = {
+						story_owner = { is_at_war_with = title:d_voltara_test_11336.holder }
+						story_owner = { any_truce_target = { this = title:d_voltara_test_11336.holder } }
+					}
+				}
+				effect = {
+					story_owner = { trigger_event = republican_venice.2010 }
+				}
+			}
+		}
+	}
+}
