@@ -1,0 +1,11 @@
+﻿vt_unify_vampire = { # Legacy traits have been removed.
+}
+
+vt_vampire_turning_fever = {
+ if = { limit = { has_trait = supernatural_vampire NOT = { has_character_flag = vt_vampire_established } NOT = { has_character_flag = vt_vampire_merging } }
+  add_character_flag = vt_vampire_established
+  add_trait = sanguinare_vampiris
+  add_character_flag = { flag = vt_sanguinare_active days = 180 }
+  trigger_event = { id = vt_vampire_unified.2 days = 180 }
+ }
+}

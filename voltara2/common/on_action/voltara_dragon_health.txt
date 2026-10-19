@@ -1,0 +1,25 @@
+﻿on_trait_gained = { on_actions = { voltara_dragon_health_on_trait } }
+on_game_start_after_lobby = { on_actions = { voltara_dragon_health_migration voltara_marques_starting_egg } }
+voltara_dragon_health_on_trait = {
+ trigger = { has_trait = dragon }
+ effect = { voltara_dragon_health_immunity = yes }
+}
+voltara_dragon_health_migration = {
+ effect = { every_living_character = { limit = { has_trait = dragon } voltara_dragon_health_immunity = yes } }
+}
+voltara_marques_starting_egg = {
+ effect = {
+  if = { limit = { current_date <= 3781.1.2 exists = character:19060029 }
+   character:19060029 = {
+    if = { limit = { is_alive = yes NOT = { has_character_flag = voltara_marques_starting_egg } }
+     if = { limit = { NOT = { any_character_artifact = { has_variable = voltara_dragon_egg } } }
+      voltara_create_egg_effect = yes
+      scope:voltara_new_egg = { remove_variable = dud_egg }
+     }
+     add_character_flag = voltara_marques_starting_egg
+    }
+   }
+  }
+ }
+}
+

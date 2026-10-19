@@ -539,7 +539,7 @@ can_fire_councillor = {
 # root: the potential raider
 can_raid = {
 	#Scripted trigger used so that we can call on the same conditions in script.
-	can_raid_trigger = yes
+	OR = { voltara_overseas_raider = yes can_raid_trigger = yes }
 }
 
 # Can this character start a new raid right now? (can_raid will always get checked first)
@@ -560,7 +560,7 @@ can_start_bartering = {
 # root: the potential raider
 can_raid_across_water = {
  OR = { voltara_keeper_realm = yes AND = {
- can_raid_across_water_trigger = yes 
+ OR = { voltara_overseas_raider = yes can_raid_across_water_trigger = yes } 
 } }
 }
 

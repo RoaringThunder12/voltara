@@ -1,0 +1,17 @@
+﻿on_game_start = { on_actions = { vt_weave_awakening_baseline } }
+on_game_start_after_lobby = { on_actions = { vt_weave_awakening_baseline } }
+on_trait_gained = { on_actions = { vt_weave_awakening_schedule } }
+on_character_created = { on_actions = { vt_weave_awakening_schedule } }
+vt_weave_awakening_baseline = { effect = {
+ if = { limit = { NOT = { has_global_variable = vt_weave_awakenings_initialized } }
+  every_living_character = { vt_weave_remember_awakening = yes }
+  set_global_variable = { name = vt_weave_awakenings_initialized value = yes }
+ }
+} }
+vt_weave_awakening_schedule = {
+ trigger = { has_global_variable = vt_weave_awakenings_initialized has_global_variable = vt_weave_ready
+  NOT = { has_character_flag = vt_weave_awakening_pending }
+  OR = { is_vampire = yes is_lycan = yes vt_weave_awakened_magic = yes }
+ }
+ effect = { add_character_flag = vt_weave_awakening_pending trigger_event = { id = vt_weave_awakening.1 days = 1 } }
+}

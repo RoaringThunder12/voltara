@@ -1,0 +1,5 @@
+﻿namespace = vt_weave_awakening
+vt_weave_awakening.1 = { hidden = yes immediate = {
+ remove_character_flag = vt_weave_awakening_pending
+ if = { limit = { has_global_variable = vt_weave_ready } vt_weave_count_awakening = yes }
+} }

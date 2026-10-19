@@ -378,6 +378,7 @@ ansf_is_learning_trait = {
 }
 
 ansf_filter_gui_traits = {
+    always = yes
 	trigger_if = {
 		limit = { var:trait_start ?= flag:personality_start }
 		scope:trait = { ansf_is_personality_trait = yes } 

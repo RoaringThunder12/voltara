@@ -1,0 +1,19 @@
+﻿on_game_start = { on_actions = { vt_unified_vampire_migration } }
+on_game_start_after_lobby = { on_actions = { vt_unified_vampire_migration } }
+on_trait_gained = { on_actions = { vt_unified_vampire_gain } }
+vt_unified_vampire_gain = {
+ trigger = { is_vampire = yes NOT = { has_character_flag = vt_vampire_merging } }
+ effect = { vt_unify_vampire = yes
+  if = { limit = { NOT = { has_character_flag = vt_vampire_established } } trigger_event = { id = vt_vampire_unified.1 days = 1 } }
+ }
+}
+vt_unified_vampire_migration = { effect = {
+ every_living_character = { limit = { is_vampire = yes }
+  add_character_flag = vt_vampire_established
+  vt_unify_vampire = yes
+  if = { limit = { has_trait = sanguinare_vampiris NOT = { has_character_flag = vt_sanguinare_active } }
+   add_character_flag = { flag = vt_sanguinare_active days = 180 }
+   trigger_event = { id = vt_vampire_unified.2 days = 180 }
+  }
+ }
+} }

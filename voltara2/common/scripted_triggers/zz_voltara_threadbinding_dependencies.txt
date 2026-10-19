@@ -95,14 +95,14 @@ is_undead_character = {
 	}
 }
 
-is_vampire = { OR = { has_trait = supernatural_vampire has_trait = vampire_character has_trait = reclusive_vampire } }
+is_vampire = { has_trait = supernatural_vampire }
 
 potential_undead_thrall = {
 	# these are groups that cannot be made into undead
 	NOR = {
 		has_character_flag = corpse_can_not_be_claimed # if the character is killed through execution, name-biting or the turn into thrall character interaction, don't apply the effect again
 		is_undead_character = yes # duh
-		has_trait = vampire_character # vamps just kinda turn to dust when killed
+		is_vampire = yes # vamps just kinda turn to dust when killed
 		is_daedric_character = yes # daedra don't stick around when killed
 	}
 }
@@ -262,7 +262,7 @@ trait_is_criminal_in_faith_trigger = {
 		}
 		# VAMPIRE
 		AND = {
-			$TRAIT$ = trait:vampire_character
+			$TRAIT$ = trait:supernatural_vampire
 			$FAITH$ = { has_doctrine_parameter = vampirism_criminal }
 		}
 		# LYCAN
@@ -396,7 +396,7 @@ trait_is_shunned_in_faith_trigger = {
 		}
 		# VAMPIRE
 		AND = {
-			$TRAIT$ = trait:vampire_character	
+			$TRAIT$ = trait:supernatural_vampire	
 			$FAITH$ = { has_doctrine_parameter = vampirism_shunned }
 		}
 		# LYCAN

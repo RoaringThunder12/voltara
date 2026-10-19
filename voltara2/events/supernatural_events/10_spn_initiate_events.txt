@@ -13,6 +13,10 @@ spn_initiate.0001 { #Initialize Vampire
 		# so a clause here covers every route in -- interactions, AI actions, activities, and
 		# anything added later -- not just the buttons that were known about when it was written.
 		spn_is_valid_supernatural_target = yes
+        # Shared EK2/Supernatural identity: do not stack a second vampire state.
+        is_vampire = no
+        vt_ek_is_undead = no
+        NOR = { has_trait = hagraven has_trait = briarheart }
 	}
 
 	immediate = {
@@ -68,6 +72,7 @@ spn_initiate.0001 { #Initialize Vampire
 
 		# 2.34: the turning memory (and the maker's). Last, after the sire bond is settled. Idempotent.
 		spn_write_vampire_turning_memory_effect = yes
+        vt_vampire_turning_fever = yes
 		
 	}
 }
@@ -82,6 +87,8 @@ spn_initiate.0002 { #Remove Vampire
 
 	immediate = {
 		remove_trait = supernatural_vampire
+        remove_trait = sanguinare_vampiris
+        remove_character_flag = vt_sanguinare_active
 		remove_trait = spn_known_vampire
 		remove_variable = spn_age_aquired_immortality
 		remove_variable = spn_yearly_pulses_since_trait_upgrade

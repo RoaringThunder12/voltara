@@ -1,0 +1,8 @@
+﻿vt_coven_eligible_mortal = {
+ is_adult = yes is_alive = yes is_imprisoned = no is_incapable = no
+ spn_is_valid_supernatural_target = yes spn_has_supernatural_trait = no spn_has_hunter_trait = no
+ is_vampire = no is_lycan = no
+ NOR = { has_trait = dragon has_trait = hagraven has_trait = briarheart vt_ek_is_undead = yes }
+}
+vt_coven_available_patron = { has_character_flag = vt_mountain_coven_patron is_vampire = yes is_alive = yes is_imprisoned = no }
+vt_khaotist_necromancy_access = { vt_weave_khaos = yes has_trait = witch has_arcana = { VALUE >= 10 } }

@@ -5,7 +5,7 @@ can_raid = {
 
 	# 2.38 (Supernatural): the Black Fortress branch (has_building_with_flag = wc_evil_fortress_flag) is off until the
 	# buildings file is merged from Witchcraft 2.171+; mage_tower_021 carries the flag there. Drop this entry at that merge.
-	can_raid_trigger = yes
+	OR = { voltara_overseas_raider = yes can_raid_trigger = yes }
 
 } }
 }

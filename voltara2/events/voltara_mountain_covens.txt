@@ -1,0 +1,17 @@
+﻿namespace = vt_mountain_covens
+vt_mountain_covens.1 = {
+ type = character_event title = vt_mountain_covens.1.t desc = vt_mountain_covens.1.desc
+ theme = intrigue
+ left_portrait = { character = root animation = personality_rational }
+ right_portrait = { character = scope:vt_coven_patron animation = personality_bold }
+ option = {
+  name = vt_mountain_covens.1.a
+  trigger = { vt_coven_eligible_mortal = yes gold >= 150 exists = scope:vt_coven_patron scope:vt_coven_patron = { vt_coven_available_patron = yes } }
+  remove_short_term_gold = 150
+  add_trait = witch
+  set_variable = { name = spn_vampire_blood_donor value = scope:vt_coven_patron }
+  trigger_event = spn_initiate.0001
+  custom_tooltip = vt_coven_embrace_tt
+ }
+ option = { name = vt_mountain_covens.1.b }
+}

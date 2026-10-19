@@ -58,7 +58,7 @@ voltara_ravenbound_6_perk = {
 
 voltara_ravenbound_7_perk = {
  lifestyle = dark_arts_lifestyle tree = ravenbound position = { 1 4 } icon = trait_voltara_hagraven
- can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes NOT = { has_trait = briarheart } NOT = { has_trait = vt_ek_undead_character } NOT = { has_trait = vt_ek_lich_character } NOT = { has_trait = vampire_character } NOT = { has_trait = lycan_character } }
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes NOT = { has_trait = briarheart } NOT = { has_trait = vt_ek_undead_character } NOT = { has_trait = vt_ek_lich_character } NOT = { is_vampire = yes } NOT = { is_lycan = yes } }
  parent = voltara_ravenbound_5_perk
  parent = voltara_ravenbound_6_perk
  trait = hagraven
@@ -125,7 +125,7 @@ voltara_thornheart_6_perk = {
 
 voltara_thornheart_7_perk = {
  lifestyle = dark_arts_lifestyle tree = thornheart position = { 1 4 } icon = trait_voltara_briarheart
- can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes NOT = { has_trait = hagraven } NOT = { has_trait = vt_ek_undead_character } NOT = { has_trait = vt_ek_lich_character } NOT = { has_trait = vampire_character } NOT = { has_trait = lycan_character } has_arcana = { VALUE >= 10 } prowess >= 10 }
+ can_be_picked = { voltara_is_trained_threadbinder = yes is_adult = yes NOT = { has_trait = hagraven } NOT = { has_trait = vt_ek_undead_character } NOT = { has_trait = vt_ek_lich_character } NOT = { is_vampire = yes } NOT = { is_lycan = yes } has_arcana = { VALUE >= 10 } prowess >= 10 }
  parent = voltara_thornheart_5_perk
  parent = voltara_thornheart_6_perk
  trait = briarheart

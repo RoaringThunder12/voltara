@@ -1,0 +1,25 @@
+﻿voltara_finish_interrupted_hatching = {
+ picture = { reference = "gfx/interface/illustrations/weave/banner.dds" }
+ desc = voltara_finish_interrupted_hatching_desc
+ selection_tooltip = voltara_finish_interrupted_hatching_tooltip
+ confirm_text = voltara_finish_interrupted_hatching_confirm
+ is_shown = {
+  is_ai = no
+  NOT = { has_character_flag = voltara_hatching_recovery_used }
+  any_character_artifact = { has_variable = voltara_dragon_egg has_variable = agot_artifact_cannot_gift var:egg_color = flag:weirwood }
+ }
+ is_valid = { is_in_activity = no NOT = { voltara_has_living_dragon = yes } }
+ effect = {
+  random_character_artifact = {
+   limit = { has_variable = voltara_dragon_egg has_variable = agot_artifact_cannot_gift var:egg_color = flag:weirwood }
+   save_scope_as = egg
+  }
+  voltara_hatch_egg_effect = yes
+  if = { limit = { exists = scope:dragon scope:dragon = { is_alive = yes has_trait = dragon } }
+   add_character_flag = voltara_hatching_recovery_used
+  }
+ }
+ ai_check_interval = 0
+ ai_potential = { always = no }
+ ai_will_do = { base = 0 }
+}

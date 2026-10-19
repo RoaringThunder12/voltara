@@ -1,4 +1,17 @@
 ﻿supernatural_vampire = {
+ flag = immortal_incapability
+ monthly_vt_threadbinding_magic_lifestyle_xp_gain_add = 5
+ flag = immune_to_disease
+ monthly_lifestyle_xp_gain_mult = -0.5
+ monthly_prestige_gain_mult = -0.45
+ monthly_piety_gain_mult = -0.45
+ monthly_influence_mult = -0.45
+ stress_loss_mult = -0.35
+ stress_gain_mult = -0.35
+ long_reign_bonus_mult = -0.6
+ triggered_opinion = { parameter = vampirism_criminal opinion_modifier = vampirism_crime ignore_opinion_value_if_same_trait = yes }
+ triggered_opinion = { parameter = vampirism_shunned opinion_modifier = vampirism_intolerant ignore_opinion_value_if_same_trait = yes }
+
 	flag = blocks_getting_non_epidemic_disease # vanilla can_get_non_epidemic_disease_trigger reads this
 	icon = supernatural_vampire.dds
 	immortal = yes
@@ -6,7 +19,7 @@
 	intrigue = 3
 	stewardship = 2
 	learning = 1
-	prowess_no_portrait = 10
+	prowess_no_portrait = 13
 	can_have_children = no
 	no_prowess_loss_from_age = yes
 	

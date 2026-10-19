@@ -28,7 +28,7 @@ briarheart = {
 
 	opposites = {
 		vt_ek_undead_character
-		vampire_character
+		supernatural_vampire
 		lycan_character
 		vt_ek_lich_character
 		hagraven
@@ -167,7 +167,7 @@ hagraven = {
 
 	opposites = {
 		vt_ek_undead_character
-		vampire_character
+		supernatural_vampire
 		lycan_character
 		vt_ek_lich_character
 		briarheart
@@ -399,7 +399,7 @@ lycan_character = {
 
 	opposites = {
 		# doesn't combine well with other transformation traits
-		vampire_character
+		supernatural_vampire
 		vt_ek_lich_character
 		irritable_lycan #shouldn't be combined with secret variant
 		briarheart
@@ -1085,76 +1085,16 @@ racial_blindness = { #not only do they not see color, they also just cant see li
 	same_opinion = 10
 }
 
-reclusive_vampire = { # Hides away from relationships and responsibilities (because you secretly are a vampire).
-	category = fame
-	immortal = yes
-	flag = immune_to_disease
-	diplomacy = -2
-	stewardship = -1
-	stress_loss_mult = 0.2
-	can_have_children = no
-	
-	shown_in_ruler_designer = no
 
-	# EK NOTE: this trait is intentionally not opposite to its open variant since it's an immortality trait and we cannot risk not applying the open immortality trait prior to removing the secret one
-	# opposites = {
-	# 	vampire_character #shouldn't be combined with open variant
-	# }
-
-	name = {
-		first_valid = {
-			triggered_desc = {
-				trigger = { NOT = { exists = this } }
-				desc = trait_reclusive
-			}
-			triggered_desc = {
-				trigger = { is_local_player = yes }
-				desc = reclusive_vampire_player_desc
-			}
-			desc = trait_reclusive
-		}
-	}
-
-	desc = {
-		first_valid = {
-			triggered_desc = {
-				trigger = {	NOT = { exists = this }	}
-				desc = trait_reclusive_desc
-			}
-			triggered_desc = {
-				trigger = { is_local_player = yes }
-				desc = trait_vampire_player_desc
-			}
-			desc = trait_reclusive_character_desc
-		}
-	}
-
-	compatibility = {
-		gregarious = -5
-	}	
-}
 
 sanguinare_vampiris = {
-	health = -1
-	child_health = -5
-	prowess_mult = -0.4
-	fertility = -0.2
-
-	category = health
-
-	shown_in_ruler_designer = no
-
-	dread_baseline_add = -10
-	dread_loss_mult = 1
-
-	ai_energy = -25
-
-	flag = illness
-	flag = debilitating_illness
-	flag = blocks_getting_non_epidemic_disease
-
-	flag = curable_disease
+ icon = sanguinare_vampiris.dds
+ health = -0.5 prowess_mult = -0.4 fertility = -0.2
+ category = health shown_in_ruler_designer = no
+ dread_baseline_add = -10 dread_loss_mult = 1 ai_energy = -25
+ # A timed transformation condition, not an ordinary curable disease.
 }
+
 
 sanies_lupinus = {
 	health = -1
@@ -1693,58 +1633,7 @@ tsaesci_4 = {
 	level = 4
 }
 
-vampire_character = {
-	immortal = yes
-	
-	flag = is_immortal	
-	flag = immortal_incapability
-	flag = immune_to_disease
 
-	prowess = 3
-
-	monthly_lifestyle_xp_gain_mult = -0.5
-	monthly_prestige_gain_mult = -0.45
-	monthly_piety_gain_mult = -0.45
-	monthly_influence_mult = -0.45
-	stress_loss_mult = -0.35
-	stress_gain_mult = -0.35
-	can_have_children = no
-	long_reign_bonus_mult = -0.6 #for reference the vanilla trait has -1000
-	no_prowess_loss_from_age = yes
-	
-	opposites = {
-		# doesn't combine well with other transformation traits
-		lycan_character
-		vt_ek_lich_character
-		reclusive_vampire #shouldn't be combined with secret variant
-		briarheart
-		hagraven
-		#reclusive_vampire # EK NOTE: this trait is intentionally not opposite to its secret variant since it's an immortality trait and we cannot risk not applying the open immortality trait prior to removing the secret one
-	}
-
-	triggered_opinion = {
-		parameter = vampirism_criminal
-		opinion_modifier = vampirism_crime
-		ignore_opinion_value_if_same_trait = yes
-	}
-	triggered_opinion = {
-		parameter = vampirism_shunned
-		opinion_modifier = vampirism_intolerant
-		ignore_opinion_value_if_same_trait = yes
-	}
-
-	desc = {
-		first_valid = {
-			triggered_desc = {
-				trigger = {
-					NOT = { exists = this }
-				}
-				desc = trait_vampire_character_desc
-			}
-			desc = trait_vampire_character_character_desc
-		}
-	}
-}
 
 irritable_lycan = { # Prone to outbursts and tantrums (because you're secretly a werething)
 	category = fame

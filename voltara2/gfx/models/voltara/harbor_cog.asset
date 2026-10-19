@@ -1,0 +1,52 @@
+﻿pdxmesh = {
+	name = "voltara_harbor_cog_mesh"
+	file = "gfx/models/units/ships/unit_western_ship_01_cog/unit_western_ship_01_cog.mesh"
+
+	animation = { id = "idle_animation" type = "gfx/models/units/ships/unit_western_ship_01_cog/unit_western_ship_01_cog_idle.anim" }
+	animation = { id = "moving_animation" type = "gfx/models/units/ships/unit_western_ship_01_cog/unit_western_ship_01_cog_moving.anim" }
+	animation = { id = "start_moving_animation" type = "gfx/models/units/ships/unit_western_ship_01_cog/unit_western_ship_01_cog_start_moving.anim" }
+
+	cull_distance = 3000
+	scale = 0.02
+
+	meshsettings = {
+		name = "unit_western_ship_01_cog_sailsShape"
+		index = 0
+		texture_diffuse = "gfx/models/units/ships/unit_western_ship_01_cog/western_ship_01_cog_sails_diffuse.dds"
+		texture_normal = "gfx/models/units/ships/unit_western_ship_01_cog/western_ship_01_cog_sails_normal.dds"
+		texture_specular = "gfx/models/units/ships/unit_western_ship_01_cog/western_ship_01_cog_sails_properties.dds"
+		shader = "standard_alpha_to_coverage"
+		shader_file = "gfx/FX/pdxmesh.shader"
+		additional_shader_defines = {
+			"MAP_LIGHTING_HACK"
+		}
+	}
+
+	meshsettings = {
+		name = "unit_western_ship_01_cog_sailsShape"
+		index = 1
+		texture_diffuse = "gfx/models/units/ships/unit_western_ship_01_cog/western_ship_01_cog_sails_diffuse.dds"
+		texture_normal = "gfx/models/units/ships/unit_western_ship_01_cog/western_ship_01_cog_sails_normal.dds"
+		texture_specular = "gfx/models/units/ships/unit_western_ship_01_cog/western_ship_01_cog_sails_properties.dds"
+		shader = "standard_alpha_to_coverage"
+		shader_file = "gfx/FX/pdxmesh.shader"
+		additional_shader_defines = {
+			"MAP_LIGHTING_HACK"
+		}
+	}
+
+	meshsettings = {
+		name = "unit_western_ship_01_cogShape"
+		index = 0
+		texture_diffuse = "gfx/models/units/ships/unit_western_ship_01_cog/western_ship_01_cog_diffuse.dds"
+		texture_normal = "gfx/models/units/ships/unit_western_ship_01_cog/western_ship_01_cog_normal.dds"
+		texture_specular = "gfx/models/units/ships/unit_western_ship_01_cog/western_ship_01_cog_properties.dds"
+		shader = "standard_alpha_to_coverage"
+		shader_file = "gfx/FX/pdxmesh.shader"
+		additional_shader_defines = {
+			"MAP_LIGHTING_HACK"
+		}
+	}
+}
+
+entity = { name = "voltara_harbor_cog_entity" pdxmesh = "voltara_harbor_cog_mesh" default_state = "idle" state = { name = "idle" animation = "idle_animation" } }

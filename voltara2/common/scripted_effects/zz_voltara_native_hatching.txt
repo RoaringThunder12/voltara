@@ -1,5 +1,46 @@
 ﻿agot_inform_dragon_egg_hatched_effect = { if = { limit = { exists = scope:dragon } scope:dragon = { add_character_flag = voltara_dragon } } }
+agot_spawn_owned_hatchling_from_egg_effect = {
+ $OWNER$ = { save_scope_as = owner }
+ $EGG$ = { save_scope_as = egg }
+ create_character = {
+  location = scope:owner.location
+  template = voltara_agot_hatchling_template
+  faith = scope:owner.faith
+  random_traits = no
+  save_scope_as = dragon
+ }
+ if = { limit = { exists = scope:dragon }
+  scope:dragon = {
+   voltara_register_dragon_effect = yes
+   set_variable = { name = voltara_hatched_by value = scope:owner }
+   if = { limit = { exists = scope:egg.var:egg_color } set_variable = { name = egg_color value = scope:egg.var:egg_color } }
+   if = { limit = { exists = scope:egg.var:dragon_mother } set_mother = scope:egg.var:dragon_mother }
+   else_if = { limit = { exists = scope:egg.var:dragon_parent }
+    if = { limit = { scope:egg.var:dragon_parent = { is_female = yes } } set_mother = scope:egg.var:dragon_parent }
+    else = { set_father = scope:egg.var:dragon_parent }
+   }
+  }
+  scope:owner = { add_courtier = scope:dragon }
+  destroy_artifact = scope:egg
+ }
+}
+agot_spawn_bonded_hatchling_from_egg_effect = {
+ agot_spawn_owned_hatchling_from_egg_effect = { OWNER = $OWNER$ EGG = $EGG$ }
+ if = { limit = { exists = scope:dragon }
+  $OWNER$ = { voltara_bond_dragon_effect = yes }
+  if = { limit = { exists = scope:cradlemate } scope:dragon = { set_variable = { name = cradlemate value = scope:cradlemate } } }
+ }
+}
+agot_spawn_wild_hatchling_from_egg_effect = {
+ $EGG$ = { save_scope_as = egg }
+ create_character = { location = location template = voltara_agot_hatchling_template faith = faith random_traits = no save_scope_as = dragon }
+ if = { limit = { exists = scope:dragon }
+  scope:dragon = {
+   voltara_register_dragon_effect = yes
+   if = { limit = { exists = scope:egg.var:egg_color } set_variable = { name = egg_color value = scope:egg.var:egg_color } }
+   if = { limit = { exists = scope:egg.var:dragon_mother } set_mother = scope:egg.var:dragon_mother }
+  }
+  destroy_artifact = scope:egg
+ }
+}
 
-agot_spawn_bonded_hatchling_from_egg_effect = { $OWNER$ = { $EGG$ = { save_scope_as = egg } voltara_hatch_egg_effect = yes } }
-
-agot_spawn_wild_hatchling_from_egg_effect = { $EGG$ = { save_scope_as = egg } voltara_spawn_hatchling_effect = yes destroy_artifact = scope:egg }

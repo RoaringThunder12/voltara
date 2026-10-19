@@ -1,0 +1,17 @@
+﻿vt_hatch_01 = {
+ character_target = 19060001
+ assert = { exists = this }
+ effect = {
+  voltara_create_egg_effect = yes
+  scope:voltara_new_egg = { save_scope_as = vt_test_egg }
+  agot_spawn_bonded_hatchling_from_egg_effect = { OWNER = root EGG = scope:vt_test_egg }
+ }
+ expect = { exists = scope:dragon scope:dragon = { age = 0 has_trait = dragon is_alive = yes } }
+ expect = { NOT = { any_character_artifact = { this = scope:vt_test_egg } } }
+}
+vt_hatch_02_burns = {
+ character_target = 19060001
+ effect = { add_trait = burned add_trait_xp = { trait = burned track = burned value = 100 } }
+ expect = { has_trait = burned has_trait_xp = { trait = burned track = burned value >= 100 } }
+}
+

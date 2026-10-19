@@ -1,0 +1,36 @@
+﻿vt_request_vampirism = {
+ category = interaction_category_friendly
+ common_interaction = yes icon = vampire_blood
+ desc = vt_request_vampirism_desc
+ greeting = positive notification_text = vt_request_vampirism_notification
+ is_shown = {
+  NOT = { scope:actor = scope:recipient }
+  scope:actor = { vt_coven_eligible_mortal = yes NOT = { voltara_is_ruins_placeholder = yes } }
+  scope:recipient = { has_trait = supernatural_vampire is_alive = yes }
+ }
+ is_valid = {
+  scope:actor = { vt_coven_eligible_mortal = yes is_available = yes }
+  scope:recipient = { has_trait = supernatural_vampire is_alive = yes is_imprisoned = no is_incapable = no }
+ }
+ cooldown_against_recipient = { years = 1 }
+ ai_min_reply_days = 1 ai_max_reply_days = 5
+ ai_potential = { always = no }
+ ai_will_do = { base = 0 }
+ ai_accept = {
+  base = -20
+  opinion_modifier = { who = scope:recipient opinion_target = scope:actor multiplier = 0.5 }
+  modifier = { desc = vt_request_vampirism_coven add = 40 trigger = { scope:recipient = { has_character_flag = vt_mountain_coven_patron } } }
+  modifier = { desc = vt_request_vampirism_friend add = 30 trigger = { scope:recipient = { has_relation_friend = scope:actor } } }
+  modifier = { desc = vt_request_vampirism_family add = 25 trigger = { scope:recipient = { is_close_family_of = scope:actor } } }
+  modifier = { desc = vt_request_vampirism_lover add = 40 trigger = { scope:recipient = { has_relation_lover = scope:actor } } }
+ }
+ on_accept = {
+  if = { limit = { scope:actor = { vt_coven_eligible_mortal = yes } scope:recipient = { has_trait = supernatural_vampire is_alive = yes } }
+   scope:actor = {
+    spn_assign_vampire_blood_donor = { CHARACTER = scope:recipient }
+    trigger_event = spn_initiate.0001
+    custom_tooltip = vt_request_vampirism_effect
+   }
+  }
+ }
+}

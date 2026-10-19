@@ -4054,7 +4054,7 @@ ek_on_start_arcana_effect = {
         }
     }
     if = {
-        limit = { can_magic_trigger = yes }
+        limit = { can_magic_trigger = yes NOT = { has_variable = magicka } }
         set_variable = { name = magicka value = half_maximum_magicka }
     }
 }

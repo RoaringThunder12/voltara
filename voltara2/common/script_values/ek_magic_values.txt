@@ -204,6 +204,7 @@ arcana_base = {
 
 arcana = {
 	value = arcana_base
+    if = { limit = { has_trait = supernatural_vampire } add = { value = 5 desc = vt_arcana_vampire } }
 	if = {
 		limit = { has_trait = vt_ek_education_magic_1 }
 		add = {

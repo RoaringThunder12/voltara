@@ -1,0 +1,48 @@
+﻿on_game_start_after_lobby = { on_actions = { vt_mountain_covens_start } }
+vt_mountain_covens_start = { effect = { if = { limit = { NOT = { exists = global_var:vt_mountain_covens_seeded } }
+character:18990260 = { if = { limit = { is_alive = yes has_trait = supernatural_vampire }
+ add_character_flag = vt_mountain_coven_patron
+ add_character_flag = immune_to_disease
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes
+ spn_track_current_visual_age = { VISUALAGE = age }
+ house = { add_house_modifier = { modifier = witch_coven } }
+ add_courtier = character:19188000
+ add_courtier = character:19188001
+ } }
+character:18990390 = { if = { limit = { is_alive = yes has_trait = supernatural_vampire }
+ add_character_flag = vt_mountain_coven_patron
+ add_character_flag = immune_to_disease
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes
+ spn_track_current_visual_age = { VISUALAGE = age }
+ house = { add_house_modifier = { modifier = witch_coven } }
+ add_courtier = character:19188010
+ add_courtier = character:19188011
+ } }
+character:18990400 = { if = { limit = { is_alive = yes has_trait = supernatural_vampire }
+ add_character_flag = vt_mountain_coven_patron
+ add_character_flag = immune_to_disease
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes
+ spn_track_current_visual_age = { VISUALAGE = age }
+ house = { add_house_modifier = { modifier = witch_coven } }
+ add_courtier = character:19188020
+ add_courtier = character:19188021
+ } }
+character:18990450 = { if = { limit = { is_alive = yes has_trait = supernatural_vampire }
+ add_character_flag = vt_mountain_coven_patron
+ add_character_flag = immune_to_disease
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes
+ spn_track_current_visual_age = { VISUALAGE = age }
+ house = { add_house_modifier = { modifier = witch_coven } }
+ add_courtier = character:19188030
+ add_courtier = character:19188031
+ } }
+set_global_variable = { name = vt_mountain_covens_seeded value = yes }
+} } }

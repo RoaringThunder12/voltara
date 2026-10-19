@@ -8,20 +8,21 @@
 	decision_group_type = major
 
 	is_shown = {
-		has_perk = conjuration_novice_perk
-		custom_tooltip = {
-			text = can_magic_tt
-			can_magic_trigger = yes
-		}
-		NOR = {
-			vt_ek_is_necromancer = yes
-			has_character_modifier = learning_necromancy
-			has_character_flag = failed_necromancy
-		}
-	}
+ OR = {
+  AND = { vt_weave_khaos = yes has_trait = witch }
+  AND = { has_perk = conjuration_novice_perk can_magic_trigger = yes }
+ }
+ vt_ek_is_necromancer = no
+ }
+
 	is_valid = {
-		has_perk = conjuration_novice_perk
+        can_magic_trigger = yes
+        NOT = { has_character_modifier = learning_necromancy }
+        NOT = { has_character_flag = failed_necromancy }
+
+		OR = { has_perk = conjuration_novice_perk vt_khaotist_necromancy_access = yes }
 		OR = {
+            vt_khaotist_necromancy_access = yes
 			faith = {
 				custom_description = {
 					text = doctrine_necromancy_accepted_custom_desc

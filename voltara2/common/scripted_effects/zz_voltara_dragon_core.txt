@@ -1,4 +1,5 @@
 ﻿voltara_register_dragon_effect = {
+ voltara_dragon_health_immunity = yes
  add_trait = dragon add_character_flag = voltara_dragon set_culture = culture:dragon_culture
  set_variable = { name = dragon_size value = { value = age multiply = 1.5 min = 1 max = 400 } }
  random_list = { 1 = { add_trait = dragon_aggressive } 1 = { add_trait = dragon_friendly } }
@@ -93,10 +94,9 @@ voltara_create_egg_effect = { random_list = {
  random = { chance = 10 scope:voltara_new_egg = { set_variable = { name = dud_egg value = yes } } }
 }
 voltara_hatch_egg_effect = {
- if = { limit = { exists = scope:egg scope:egg = { owner = root } }
- voltara_spawn_hatchling_effect = yes
- destroy_artifact = scope:egg
- if = { limit = { NOT = { voltara_has_living_dragon = yes } } voltara_bond_dragon_effect = yes }
+ save_scope_as = voltara_egg_hatcher
+ if = { limit = { exists = scope:egg }
+  agot_spawn_bonded_hatchling_from_egg_effect = { OWNER = scope:voltara_egg_hatcher EGG = scope:egg }
  }
 }
 voltara_spawn_hatchling_effect = {
@@ -142,3 +142,4 @@ voltara_dragon_duel_victory = {
  }
  voltara_dragon_duel_cleanup = yes
 }
+

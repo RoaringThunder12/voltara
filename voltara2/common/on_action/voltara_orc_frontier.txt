@@ -401,7 +401,7 @@ voltara_orc_undead_hatred = {
  trigger = { culture = culture:voltara_culture_20 }
  effect = {
   save_scope_as = voltara_orc_observer
-  every_living_character = { limit = { OR = { has_trait = supernatural_vampire has_trait = vampire_character vt_ek_is_undead = yes } }
+  every_living_character = { limit = { OR = { has_trait = supernatural_vampire has_trait = supernatural_vampire vt_ek_is_undead = yes } }
    save_scope_as = voltara_undead_target
    scope:voltara_orc_observer = { add_opinion = { target = scope:voltara_undead_target modifier = voltara_orc_abhors_undeath years = 2 } }
   }
