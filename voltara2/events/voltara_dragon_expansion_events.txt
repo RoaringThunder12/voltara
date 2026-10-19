@@ -1,12 +1,4 @@
 ﻿namespace = voltara_dragon_expansion
-voltara_dragon_expansion.1 = {
- type = character_event title = voltara_dragon_expansion.1.t desc = voltara_dragon_expansion.1.desc theme = dragon
- trigger = { is_alive = yes exists = scope:egg scope:egg = { owner = root NOT = { has_variable = agot_artifact_cannot_gift } } }
- immediate = { remove_character_flag = voltara_cradling_egg }
- option = { name = voltara_dragon_expansion.1.a
- random_list = { 40 = { voltara_hatch_egg_effect = yes trigger_event = voltara_dragons.11 } 60 = { add_learning_lifestyle_xp = 75 trigger_event = voltara_dragons.12 } }
- }
-}
 voltara_dragon_expansion.20 = {
  type = character_event title = voltara_dragon_expansion.20.t desc = voltara_dragon_expansion.20.desc theme = dragon
  trigger = { is_alive = yes voltara_has_living_dragon = yes }

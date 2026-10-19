@@ -1,0 +1,48 @@
+﻿window = {
+ name = "vt_living_dragons"
+ visible = "[And(GetPlayer.IsValid, GetVariableSystem.Exists('vt_living_dragons_open'))]"
+ parentanchor = center widgetanchor = center size = { 1100 640 } layer = middle
+ using = Window_Background using = Window_Decoration_Spike
+ state = { name = _show using = Animation_FadeIn_Standard on_start = "[PdxGuiWidget.StackTop]" }
+ vbox = {
+  size = { 100% 100% }
+  margin = { 24 20 } spacing = 12
+  hbox = {
+   layoutpolicy_horizontal = expanding
+   text_single = { text = "vt_living_dragons_title" using = Font_Size_Large }
+   expand = { }
+   button_standard = { size = { 90 32 } text = "vt_egg_close" onclick = "[GetVariableSystem.Clear('vt_living_dragons_open')]" }
+  }
+  text_multi = { text = "vt_living_dragons_help" max_width = 1020 autoresize = yes }
+scrollbox = {
+ size = { 1040 510 }
+ blockoverride "scrollbox_content" {
+  flowcontainer = {
+   wrap_count = 2 spacing = 8 datamodel = "[GetGlobalList('voltara_living_dragons')]"
+   item = {
+    button_standard = {
+     size = { 510 130 } datacontext = "[Scope.GetCharacter]" visible = "[Character.IsAlive]"
+     hbox = {
+      margin = { 10 8 } spacing = 12
+      portrait_head_small = { }
+      vbox = {
+       text_single = { text = "[Character.GetUINameNotMeNoTooltip]" using = Font_Size_Medium }
+       text_single = { text = "vt_dragon_card_age" using = Font_Size_Small }
+       text_single = { text = "vt_dragon_card_rider" using = Font_Size_Small visible = "[Character.MakeScope.Var('current_rider').IsSet]" }
+       flowcontainer = {
+        datamodel = "[Character.GetTraitIndices]" spacing = 2
+        item = { icon_trait = {
+         datacontext = "[GetTraitForIndex(int32.GetInt)]"
+         visible = "[Or(Trait.IsGenetic, Trait.IsInheritable)]"
+         blockoverride "icon_size" { size = { 20 20 } }
+        } }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}
+ }
+}

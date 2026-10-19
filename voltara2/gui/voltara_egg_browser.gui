@@ -1,0 +1,66 @@
+﻿window = {
+ name = "vt_egg_browser"
+ visible = "[And(GetPlayer.IsValid, GetVariableSystem.Exists('vt_egg_browser_open'))]"
+ parentanchor = center widgetanchor = center size = { 1100 640 } layer = middle
+ using = Window_Background using = Window_Decoration_Spike
+ state = { name = _show using = Animation_FadeIn_Standard on_start = "[PdxGuiWidget.StackTop]" }
+ vbox = {
+  size = { 100% 100% }
+  margin = { 24 20 } spacing = 12
+  hbox = {
+   layoutpolicy_horizontal = expanding
+   text_single = { text = "vt_egg_browser_title" using = Font_Size_Large }
+   expand = { }
+   button_standard = { size = { 90 32 } text = "vt_egg_close" onclick = "[GetVariableSystem.Clear('vt_egg_browser_open')]" }
+  }
+  text_multi = { text = "vt_egg_browser_help" max_width = 1020 autoresize = yes }
+scrollbox = {
+ size = { 1040 510 }
+ blockoverride "scrollbox_content" {
+  flowcontainer = {
+   wrap_count = 2 spacing = 8 datamodel = "[GetGlobalList('dragon_eggs')]"
+   item = {
+    button_standard = {
+     size = { 510 158 } datacontext = "[Scope.Artifact]" visible = "[Artifact.IsValid]"
+     vbox = {
+      margin = { 10 8 } spacing = 6
+      hbox = {
+       spacing = 12
+       button_artifact = { size = { 72 72 } }
+       vbox = {
+        text_multi = { text = "[Artifact.GetNameNoTooltip]" max_width = 340 autoresize = yes using = Font_Size_Medium }
+        text_single = { text = "vt_egg_card_owner" using = Font_Size_Small }
+        text_single = { text = "vt_egg_card_status" using = Font_Size_Small }
+       }
+       portrait_head_small = { datacontext = "[Artifact.GetOwner]" scale = 0.6 }
+      }
+      hbox = { spacing = 5 button_standard = {
+ size = { 132 30 } text = "vt_egg_cradle"
+ visible = "[GetScriptedGui('vt_egg_browser_cradle').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('gui_egg', Artifact.MakeScope).End)]"
+ enabled = "[GetScriptedGui('vt_egg_browser_cradle').IsValid(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('gui_egg', Artifact.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_egg_browser_cradle').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('gui_egg', Artifact.MakeScope).End)]"
+ tooltip = "vt_egg_cradle_tip"
+}
+button_standard = {
+ size = { 132 30 } text = "vt_egg_stop"
+ visible = "[GetScriptedGui('vt_egg_browser_stop').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('gui_egg', Artifact.MakeScope).End)]"
+ enabled = "[GetScriptedGui('vt_egg_browser_stop').IsValid(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('gui_egg', Artifact.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_egg_browser_stop').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('gui_egg', Artifact.MakeScope).End)]"
+ tooltip = "vt_egg_stop_tip"
+}
+button_standard = {
+ size = { 132 30 } text = "vt_egg_incubate"
+ visible = "[GetScriptedGui('vt_egg_browser_incubate').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('gui_egg', Artifact.MakeScope).End)]"
+ enabled = "[GetScriptedGui('vt_egg_browser_incubate').IsValid(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('gui_egg', Artifact.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_egg_browser_incubate').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('gui_egg', Artifact.MakeScope).End)]"
+ tooltip = "vt_egg_incubate_tip"
+}
+ }
+     }
+    }
+   }
+  }
+ }
+}
+ }
+}

@@ -1,0 +1,25 @@
+﻿vt_egg_browser_refresh = {
+ scope = character
+ effect = {
+  clear_global_variable_list = dragon_eggs
+  every_artifact = { limit = { has_variable = dragon_egg exists = artifact_owner } add_to_global_variable_list = { name = dragon_eggs target = this } }
+ }
+}
+vt_egg_browser_cradle = {
+ scope = character
+ is_shown = { scope:gui_egg = { artifact_owner = root } }
+ is_valid = { vt_can_cradle_egg = yes scope:gui_egg = { vt_egg_is_viable = yes NOT = { has_variable = cradled_egg } artifact_owner = root } }
+ effect = { scope:gui_egg = { save_scope_as = egg } vt_egg_begin_cradling = yes }
+}
+vt_egg_browser_stop = {
+ scope = character
+ is_shown = { scope:gui_egg = { artifact_owner = root } }
+ is_valid = { scope:gui_egg = { vt_egg_is_unlocked = yes artifact_owner = root OR = { has_variable = cradled_egg has_variable = pitted_egg } } }
+ effect = { scope:gui_egg = { vt_egg_clear_care = yes } }
+}
+vt_egg_browser_incubate = {
+ scope = character
+ is_shown = { scope:gui_egg = { artifact_owner = root } }
+ is_valid = { vt_can_incubate_egg = yes scope:gui_egg = { vt_egg_is_viable = yes artifact_owner = root NOT = { has_variable = pitted_egg } } }
+ effect = { scope:gui_egg = { save_scope_as = egg } vt_egg_begin_incubating = yes }
+}

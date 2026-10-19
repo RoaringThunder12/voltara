@@ -89,21 +89,41 @@ voltara_thornfell_hunters = {
 }
 
 voltara_orc_warband = {
- type = heavy_infantry
- damage = 14
- toughness = 13
- pursuit = 0
- screen = 0
- stack = 200
- provision_cost = 3
- buy_cost = { gold = 35 }
- low_maintenance_cost = { gold = 0.23 }
- high_maintenance_cost = { gold = 0.7 }
- counters = { pikemen = 1 }
- terrain_bonus = { mountains = { damage = 3 toughness = 2 } desert_mountains = { damage = -7 toughness = -6 } hills = { damage = 3 toughness = 2 } desert = { damage = -7 toughness = -6 } }
- can_recruit = { OR = { culture = culture:voltara_culture_20 } }
+	type = heavy_infantry
+	
+	damage = 48
+	toughness = 34
+	pursuit = 10
+	screen = 0
+
+	terrain_bonus = {
+		mountains = { damage = 5 toughness = 5 pursuit = 5 }
+		forest = { damage = 5 toughness = 5 pursuit = 5 }
+		taiga = { damage = 5 toughness = 5 pursuit = 5 }
+		hills = { damage = 4 toughness = 4 pursuit = 4 }
+		steppe = { damage = -6 toughness = -5 }
+		plains = { damage = -6 toughness = -5 }
+		farmlands = { damage = -6 toughness = -5 }
+	}
+	
+	counters = {
+		pikemen = 1
+		heavy_cavalry = 1
+	}
+
+ can_recruit = { vt_orc_roster_access = yes }
+	
+	buy_cost = { gold = 150 }
+	low_maintenance_cost = { gold = 0.55 }
+	high_maintenance_cost = { gold = 1.8 }
+	provision_cost = 8
+
+	stack = 100
+	ai_quality = { value = 30 }
+
+	illustration = vt_ek_orc_marauders
  access_through_subject = { always = no }
- icon = voltara_orc_warband
+ allowed_in_hired_troops = no
 }
 
 voltara_giant_breakers = {

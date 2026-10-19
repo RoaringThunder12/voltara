@@ -1,0 +1,59 @@
+﻿vt_orc_wood_skirmishers = {
+	type = skirmishers
+	
+	damage = 32
+	toughness = 18
+	pursuit = 10
+	screen = 0
+	
+	terrain_bonus = {
+		forest = { damage = 6 toughness = 4 pursuit = 3 screen = 5 }
+		jungle = { damage = 6 toughness = 4 pursuit = 3 screen = 5 }
+		hills = { damage = 5 toughness = 4 }
+	}
+	
+ can_recruit = { vt_orc_roster_access = yes }
+
+	counters = {
+		heavy_infantry = 1
+	}
+
+	buy_cost = { gold = 110 }
+	low_maintenance_cost = { gold = 0.4 }
+	high_maintenance_cost = { gold = 1.3 }
+	provision_cost = 8
+
+	stack = 100
+	ai_quality = { value = 30 }
+
+	illustration = vt_ek_orc_wood
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+}
+
+# Custom Voltara monster regiment; EK2 has no troll MAA definition.
+vt_orc_war_trolls = {
+ type = heavy_infantry
+ damage = 150
+ toughness = 100
+ pursuit = 0
+ screen = 0
+ stack = 50
+ buy_cost = { gold = 350 }
+ low_maintenance_cost = { gold = 1.5 }
+ high_maintenance_cost = { gold = 5 }
+ provision_cost = 18
+ counters = { heavy_infantry = 1 pikemen = 1 }
+ terrain_bonus = {
+  mountains = { damage = 20 toughness = 20 }
+  hills = { damage = 15 toughness = 10 }
+  forest = { toughness = 15 }
+  desert = { damage = -35 toughness = -25 }
+  desert_mountains = { damage = -25 toughness = -20 }
+ }
+ can_recruit = { vt_orc_roster_access = yes culture = { has_innovation = innovation_men_at_arms } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 25 }
+ illustration = { reference = heavy_infantry }
+}

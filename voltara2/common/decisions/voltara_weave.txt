@@ -11,14 +11,14 @@ vt_weave_ward = { picture = { reference = "gfx/interface/illustrations/weave/ban
  is_valid = { is_adult = yes is_imprisoned = no is_incapable = no }
  effect = { vt_weave_shift = { VALUE = -3 } add_character_modifier = { modifier = vt_weave_warded years = 5 } }
  ai_check_interval = 36 ai_will_do = { base = 60 }
- cost = { gold = 100 piety = 150 } cooldown = { years = 5 } }
+ cost = { gold = 50 piety = 150 } cooldown = { years = 5 } }
 vt_weave_bargain = { picture = { reference = "gfx/interface/illustrations/weave/banner.dds" } decision_group_type = major
  desc = vt_weave_bargain_desc selection_tooltip = vt_weave_bargain_tooltip confirm_text = vt_weave_bargain_confirm
  is_shown = { exists = situation:voltara_weave vt_weave_khaos = yes }
  is_valid = { is_adult = yes is_imprisoned = no is_incapable = no }
  effect = { vt_weave_shift = { VALUE = 3 } add_character_modifier = { modifier = vt_weave_ember_strength years = 5 } }
  ai_check_interval = 36 ai_will_do = { base = 50 }
- cost = { gold = 100 piety = 150 } cooldown = { years = 5 } }
+ cost = { gold = 50 piety = 150 } cooldown = { years = 5 } }
 vt_weave_reconcile = { picture = { reference = "gfx/interface/illustrations/weave/banner.dds" } decision_group_type = major
  desc = vt_weave_reconcile_desc selection_tooltip = vt_weave_reconcile_tooltip confirm_text = vt_weave_reconcile_confirm
  is_shown = { exists = situation:voltara_weave global_var:vt_weave_balance >= 30 }

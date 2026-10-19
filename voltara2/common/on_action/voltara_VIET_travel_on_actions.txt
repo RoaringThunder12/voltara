@@ -1,0 +1,228 @@
+﻿on_travel_plan_movement = { on_actions = { delay = { days = { 2 28 } } VIET_travel_event_tombola } }
+VIET_travel_event_tombola = {
+	random_on_action = {
+		6 = VIET_travel_events_common
+		4 = VIET_travel_events_uncommon
+		2 = VIET_travel_events_rare
+	}
+}
+
+VIET_travel_events_common = {
+	trigger = {
+ NOT = { has_trait = dragon }
+		NOT = { has_character_flag = in_pilgrimage_event_chain }
+		#Barons don't need travel events - to avoid them bloating their court when getting add_courtier events
+		highest_held_title_tier >= tier_county
+		# Basic checks
+		is_available_travelling = yes
+		is_playable_character = yes
+	}
+
+	random_events = {
+		chance_of_no_event = {
+			value = 65
+			if = {
+				limit = {
+					has_game_rule = VIET_event_frequency_low
+				}
+				add = 10
+			}
+			if = {
+				limit = {
+					has_game_rule = VIET_event_frequency_very_low
+				}
+				add = 20
+			}
+			if = {
+				limit = {
+					has_game_rule = VIET_event_frequency_high
+				}
+				subtract = 10
+			}
+			if = {
+				limit = {
+					has_game_rule = VIET_event_frequency_very_high
+				}
+				subtract = 20
+			}
+			# if = {
+			# 	limit = {
+			# 		is_at_war = yes # Won't get spammed while at war
+			# 	}
+			# 	add = 10
+			# }
+		}
+
+		7000 = 0 
+
+		# Older
+
+		# Generic
+		# Generic 2
+		# Water
+		# Desert
+		100 = VIETmisc.7023		# Find remains of travelers in the desert
+		# VIET Word Contest
+		# Generic 3
+		# Generic 4
+		# Oblivion Remaster
+		# Strawberries
+
+		# Horses
+
+		# Earth Day
+
+		# Byzantine and Turkish
+
+		# Generic
+
+		###################################
+		# TRANSFERRED - events created before Travel was a thing
+		###################################
+
+		# Animals
+
+		# 34
+	}
+}
+
+VIET_travel_events_uncommon = {
+	trigger = {
+ NOT = { has_trait = dragon }
+		NOT = { has_character_flag = in_pilgrimage_event_chain }
+		#Barons don't need travel events - to avoid them bloating their court when getting add_courtier events
+		highest_held_title_tier >= tier_county
+		# Basic checks
+		is_available_travelling = yes
+		is_playable_character = yes
+	}
+
+	random_events = {
+		chance_of_no_event = {
+			value = 65
+			if = {
+				limit = {
+					has_game_rule = VIET_event_frequency_low
+				}
+				add = 10
+			}
+			if = {
+				limit = {
+					has_game_rule = VIET_event_frequency_very_low
+				}
+				add = 20
+			}
+			if = {
+				limit = {
+					has_game_rule = VIET_event_frequency_high
+				}
+				subtract = 10
+			}
+			if = {
+				limit = {
+					has_game_rule = VIET_event_frequency_very_high
+				}
+				subtract = 20
+			}
+			# if = {
+			# 	limit = {
+			# 		is_at_war = yes # Won't get spammed while at war
+			# 	}
+			# 	add = 10
+			# }
+		}
+
+		9000 = 0 
+
+		# Generic
+		# Generic 2
+		# Water
+		# Desert
+		100 = VIETmisc.7024		# Think you are at a mirage, but it's a real oasis
+		# VIET Word Contest
+		100 = VIETmisc.7027		# Braggadocio - meet some dumbass boasting about himself in a tavern # No discord username provided
+		# Generic 3
+		100 = VIETmisc.7031		# Learning interesting local dances
+		# Generic 4
+		# Peaches
+		# Strange Tales from a Chinese Studio
+		# Backgrounds
+		100 = VIETmisc.7057		# Entourage member sees strange eyes in a cave
+		# Horses
+ 
+
+		###################################
+		# TRANSFERRED - events created before Travel was a thing
+		###################################
+
+		# Animals
+
+		# 22
+	}
+}
+
+VIET_travel_events_rare = {
+	trigger = {
+ NOT = { has_trait = dragon }
+		NOT = { has_character_flag = in_pilgrimage_event_chain }
+		#Barons don't need travel events - to avoid them bloating their court when getting add_courtier events
+		highest_held_title_tier >= tier_county
+		# Basic checks
+		is_available_travelling = yes
+		is_playable_character = yes
+	}
+
+	random_events = {
+		chance_of_no_event = {
+			value = 65
+			if = {
+				limit = {
+					has_game_rule = VIET_event_frequency_low
+				}
+				add = 10
+			}
+			if = {
+				limit = {
+					has_game_rule = VIET_event_frequency_very_low
+				}
+				add = 20
+			}
+			if = {
+				limit = {
+					has_game_rule = VIET_event_frequency_high
+				}
+				subtract = 10
+			}
+			if = {
+				limit = {
+					has_game_rule = VIET_event_frequency_very_high
+				}
+				subtract = 20
+			}
+			# if = {
+			# 	limit = {
+			# 		is_at_war = yes # Won't get spammed while at war
+			# 	}
+			# 	add = 10
+			# }
+		}
+
+		13000 = 0 
+
+		# Generic
+		# Generic 2
+		100 = VIETmisc.7018		# Village is having a wedding 
+		# Desert
+		# Generic 3
+		# Generic 4
+		# Coconut
+		# Oblivion Remaster
+		100 = VIETmisc.7051		# Come across a grove of dead trees (an alternate take on this site)
+		# Strange Tales from a Chinese Studio
+		# Backgrounds
+		100 = VIETmisc.7058		# Pass by an abandoned village that is supposedly cursed, that even the devil avoids
+		# Generic
+
+		# 15
+	}
+}

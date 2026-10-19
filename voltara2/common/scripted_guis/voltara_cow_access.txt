@@ -1,0 +1,16 @@
+﻿vt_cow_establish = {
+ scope = character
+ is_shown = {
+  is_landed = yes is_ai = no
+  NOR = { has_trait = dragon has_trait = voltara_ruins_keeper has_government = voltara_ruins_government }
+  scope:holding = { this = root.capital_province }
+ }
+ is_valid = { vt_cow_can_establish = yes gold >= 200 prestige >= 200 }
+ effect = {
+  if = {
+   limit = { vt_cow_can_establish = yes gold >= 200 prestige >= 200 scope:holding = { this = root.capital_province } }
+   remove_short_term_gold = 200 add_prestige = -200
+   trigger_event = cow_build_common_buildings.9999
+  }
+ }
+}

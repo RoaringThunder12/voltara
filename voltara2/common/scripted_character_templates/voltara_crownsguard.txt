@@ -1,0 +1,106 @@
+﻿agot_potential_kingsguard_character = {
+	age = { 16 40 }
+	culture = scope:king.culture
+
+	faith = scope:king.faith #Needs to be for knighthood
+	gender = male
+	dynasty = none
+	trait = squire #Or so he claims...
+	# education
+	random_traits_list = {
+		count = 1
+		education_martial_3 = {
+			weight = { base = 15 }
+		}
+		education_martial_4 = {
+			weight = { base = 5 }
+		}
+	}
+	random_traits_list = {
+		count = 1
+		education_martial_prowess_3 = {
+			weight = { base = 10 }
+		}
+	}
+
+	# personality
+	random_traits_list = { #Something nice
+		count = 1
+		honest = {}
+		gregarious = {}
+		trusting = {}
+		compassionate = {}
+		generous = {}
+		humble = {}
+		calm = {}
+		brave = {}
+		just = {}
+		chaste = {}
+		forgiving = {}
+		diligent = {}
+		patient = {}
+	}
+	random_traits_list = { #Something less nice
+		count = 1
+		lustful = {}
+		wrathful = {}
+		arrogant = {}
+		impatient = {}
+		ambitious = {}
+		cynical = {}
+		zealous = {}
+		stubborn = {}
+		vengeful = {}
+		callous = {}
+		arbitrary = {}
+		deceitful = {}
+	}
+	random_traits_list = {
+		count = { 0 1 }
+		lifestyle_blademaster = {}
+		lifestyle_hunter = {}
+		strategist = {}
+		gallant = {}
+		athletic = {}
+		strong = {}
+		shrewd = {}
+		giant = {}
+		beauty_good_1 = {}
+		intellect_good_1 = {}
+		intellect_good_2 = {}
+		physique_good_1 = {}
+		physique_good_2 = {}
+		physique_good_3 = {}
+	}
+	prowess = {
+		min_template_very_high_skill
+		max_template_very_high_skill
+	}
+	#Commander
+	after_creation = {
+		#Chance of receiving an extra commander trait
+		random = {
+			chance = 25
+			give_random_commander_trait_effect = yes
+		}
+
+		if = {
+			limit = { has_trait = lifestyle_blademaster }
+			add_random_tiered_trait_xp_effect = {
+				TRAIT = lifestyle_blademaster
+				LEVEL_1 = yes
+				LEVEL_3 = no
+			}
+		}
+
+		if = {
+			limit = { has_trait = lifestyle_hunter }
+			add_random_tiered_trait_track_xp_effect = {
+				TRAIT = lifestyle_hunter
+				TRACK = hunter
+				LEVEL_1 = yes
+				LEVEL_3 = no
+			}
+		}
+	}
+}

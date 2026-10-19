@@ -1,0 +1,354 @@
+﻿namespace = VIETmisc
+
+VIETmisc.0407 = {
+	type = character_event
+	title = VIETmisc.0407.t
+	desc = VIETmisc.0407.desc
+	theme = VIET_theme_courtyard_generic
+	override_icon = { reference = "gfx/interface/icons/event_types/type_chivalry.dds" }
+
+
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = {	
+		is_healthy = yes
+		
+		is_landed = yes 
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = -0.2
+			has_trait = craven
+		}
+	}
+	
+	option = { 
+		name = VIETmisc.0407.a
+		VIET_huge_prestige_gain_effect = yes
+	}	
+	
+	option = { 
+		name = VIETmisc.0407.b
+		VIET_medium_prestige_loss_effect = yes
+		add_character_modifier = {
+			modifier = VIET_learned_about_warhorse_rearing
+			years = 7
+		}
+		stress_impact = {
+			arrogant = miniscule_stress_impact_gain
+			craven = minor_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+			paranoid = miniscule_stress_impact_gain
+			shy = miniscule_stress_impact_gain
+		}
+	}	
+	
+	option = { 
+		name = VIETmisc.0407.c
+		trigger = {
+			prowess >= decent_skill_rating			
+		}
+		skill = prowess
+		show_as_unavailable = {
+			prowess < decent_skill_rating
+		}
+		VIET_huge_prestige_loss_effect = yes
+		add_character_modifier = {
+			modifier = VIET_experience_handling_young_horses
+			years = 7
+		}
+		stress_impact = {
+			arrogant = minor_stress_impact_gain
+			craven = minor_stress_impact_gain
+			lazy = minor_stress_impact_gain
+			paranoid = miniscule_stress_impact_gain
+			shy = miniscule_stress_impact_gain
+		}
+	}	
+
+
+	after = {		
+		if = {
+			limit = {
+				always = no
+			}
+			custom_tooltip = VIETmisc.0407.info
+		}
+	}
+
+}
+
+VIETmisc.0408 = {
+	type = character_event
+	title = VIETmisc.0408.t
+	desc = VIETmisc.0408.desc
+	theme = VIET_theme_courtyard_generic
+	override_icon = { reference = "gfx/interface/icons/event_types/type_chivalry.dds" }
+
+
+	right_portrait = root
+
+	trigger = {	
+		
+		is_landed = yes 
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = just
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arbitrary
+		}
+	}
+	
+	option = { 
+		name = VIETmisc.0408.a
+		add_character_modifier = {
+			modifier = VIET_did_not_do_horse_bloodletting
+			years = 5
+		}
+		stress_impact = {
+			diligent = minor_stress_impact_gain
+			brave = miniscule_stress_impact_gain
+			ambitious = minor_stress_impact_gain
+			paranoid = miniscule_stress_impact_gain
+		}
+	}	
+	
+	option = { 
+		name = VIETmisc.0408.b
+		trigger = {
+			OR = {
+				gold >= 50
+				is_ai = no
+			}
+		}
+		remove_short_term_gold = 50
+		add_character_modifier = {
+			modifier = VIET_did_horse_bloodletting
+			years = 5
+		}
+		stress_impact = {
+			content = miniscule_stress_impact_gain
+			greedy = minor_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}	
+	
+	option = { 
+		name = VIETmisc.0408.c
+		trigger = {
+			learning >= high_skill_rating			
+		}
+		skill = learning
+		show_as_unavailable = {
+			learning < high_skill_rating
+		}
+		VIET_huge_prestige_loss_effect = yes
+		add_character_modifier = {
+			modifier = VIET_did_horse_bloodletting
+			years = 5
+		}
+		stress_impact = {
+			base = miniscule_stress_impact_gain
+			arrogant = minor_stress_impact_gain
+			craven = miniscule_stress_impact_gain
+			lazy = minor_stress_impact_gain
+			paranoid = miniscule_stress_impact_gain
+		}
+	}	
+
+
+	after = {		
+		if = {
+			limit = {
+				always = no
+			}
+			custom_tooltip = VIETmisc.0408.info
+		}
+	}
+
+}
+
+VIETmisc.0424 = {
+	type = character_event
+	title = VIETmisc.0424.t
+	desc = VIETmisc.0424.desc
+	theme = friendly
+
+
+	left_portrait = {
+		character = root
+		animation = personality_compassionate
+	}
+
+	right_portrait = {
+		character = scope:friend
+		animation = personality_forgiving
+	}
+
+	trigger = {
+		OR = {
+			any_relation = {
+				type = friend
+				is_available_ai_adult = yes
+			}
+			any_relation = {
+				type = best_friend
+				is_available_ai_adult = yes
+			}
+		}		
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+		modifier = {
+			add = 0.2
+			has_trait = generous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = greedy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+
+	immediate = {
+		random_list = {
+			50 = {
+				trigger = {
+					any_relation = {
+						type = friend
+						is_available_ai_adult = yes
+					}
+				}
+				random_relation = {
+					type = friend
+					limit = {
+						is_available_ai_adult = yes
+					}
+					save_scope_as = friend
+				}
+			}
+			50 = {
+				trigger = {
+					any_relation = {
+						type = best_friend
+						is_available_ai_adult = yes
+					}
+				}
+				random_relation = {
+					type = best_friend
+					limit = {
+						is_available_ai_adult = yes
+					}
+					save_scope_as = friend
+				}
+			}
+		}
+	}
+
+	option = { 
+		name = VIETmisc.0424.a
+		scope:friend = {
+			add_stress = minor_stress_impact_loss
+			add_opinion = {
+				target = root
+				modifier = friendliness_opinion
+				opinion = 15
+			}				
+			reverse_add_opinion = {
+				target = root
+				modifier = friendliness_opinion
+				opinion = 15
+			}				
+		}
+		stress_impact = {
+			base = minor_stress_impact_loss
+			arrogant = medium_stress_impact_gain
+			paranoid = medium_stress_impact_gain
+			sadistic = medium_stress_impact_gain
+			callous = medium_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETmisc.0424.b
+		VIET_huge_prestige_gain_effect = yes
+		scope:friend = {
+			add_opinion = {
+				modifier = sadness_opinion
+				opinion = -10
+				target = root
+			}
+		}
+		stress_impact = {
+			humble = minor_stress_impact_gain
+			trusting = minor_stress_impact_gain
+			patient = minor_stress_impact_gain
+			compassionate = medium_stress_impact_gain
+			gregarious = medium_stress_impact_gain
+		}
+	}
+
+}

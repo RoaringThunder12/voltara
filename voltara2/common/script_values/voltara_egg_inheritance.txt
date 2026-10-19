@@ -1,0 +1,101 @@
+﻿# Adapted from installed AGOT / More Dragon Eggs.
+agot_dragon_inactive_inheritance_both_parents_have_inactive_trait_value = {
+	value = 50
+}
+
+agot_dragon_inheritance_both_parents_active_trait_value = {
+	value = 80
+	if = {
+		limit = {
+			has_game_rule = agot_dragon_trait_inheritance_reduced
+		}
+		multiply = agot_dragon_inheritance_reduced_value
+	}
+	if = {
+		limit = {
+			has_game_rule = agot_dragon_trait_inheritance_half
+		}
+		multiply = agot_dragon_inheritance_half_value
+	}
+}
+
+agot_dragon_inheritance_one_parent_has_inactive_trait_value = {
+	value = 2
+	if = {
+		limit = {
+			has_game_rule = agot_dragon_trait_inheritance_reduced
+		}
+		multiply = agot_dragon_inheritance_reduced_value
+	}
+	if = {
+		limit = {
+			has_game_rule = agot_dragon_trait_inheritance_half
+		}
+		multiply = agot_dragon_inheritance_half_value
+	}
+}
+
+agot_dragon_inactive_inheritance_one_parent_has_active_trait_value = {
+	value = 75
+}
+
+agot_dragon_inactive_inheritance_one_parent_has_inactive_trait_value = {
+	value = 25
+}
+
+agot_dragon_inactive_inheritance_both_parents_have_active_or_inactive_trait_value = {
+	value = 100
+}
+
+agot_dragon_inheritance_both_parents_have_active_or_inactive_trait_value = {
+	value = 50
+	if = {
+		limit = {
+			has_game_rule = agot_dragon_trait_inheritance_reduced
+		}
+		multiply = agot_dragon_inheritance_reduced_value
+	}
+	if = {
+		limit = {
+			has_game_rule = agot_dragon_trait_inheritance_half
+		}
+		multiply = agot_dragon_inheritance_half_value
+	}
+}
+
+agot_dragon_inheritance_both_parents_have_inactive_trait_value = {
+	value = 10
+	if = {
+		limit = {
+			has_game_rule = agot_dragon_trait_inheritance_reduced
+		}
+		multiply = agot_dragon_inheritance_reduced_value
+	}
+	if = {
+		limit = {
+			has_game_rule = agot_dragon_trait_inheritance_half
+		}
+		multiply = agot_dragon_inheritance_half_value
+	}
+}
+
+agot_dragon_inactive_inheritance_both_parents_active_trait_value = {
+	value = 150
+	max = 100
+}
+
+agot_dragon_inheritance_one_parent_has_active_trait_value = {
+	value = 25
+	if = {
+		limit = {
+			has_game_rule = agot_dragon_trait_inheritance_reduced
+		}
+		multiply = agot_dragon_inheritance_reduced_value
+	}
+	if = {
+		limit = {
+			has_game_rule = agot_dragon_trait_inheritance_half
+		}
+		multiply = agot_dragon_inheritance_half_value
+	}
+}

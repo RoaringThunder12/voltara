@@ -1,0 +1,25 @@
+﻿on_game_start = { on_actions = { vt_seed_titania_city_of_wonder } }
+vt_seed_titania_city_of_wonder = {
+ effect = {
+  province:323 = {
+   if = {
+    limit = { has_holding = yes }
+    if = {
+     limit = { has_game_rule = use_backgrounds }
+     cow_add_city_of_wonder_modifier_effect = yes
+    }
+    else = { cow_add_city_of_wonder_NO_modifier_effect = yes }
+    if = {
+     limit = { NOT = { has_building_or_higher = cow_generic_library_01 } }
+     add_province_modifier = extra_building_slot
+     barony.holder = { save_scope_as = character }
+     add_building = cow_generic_library_01
+    }
+    if = {
+     limit = { OR = { has_province_modifier = city_of_wonder_modifier has_province_modifier = city_of_wonder_NO_modifier } has_building_or_higher = cow_generic_library_01 }
+     debug_log = "VT_COW: Titania initialized with City of Wonder status and library."
+    }
+   }
+  }
+ }
+}

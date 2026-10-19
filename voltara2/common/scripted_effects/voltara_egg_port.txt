@@ -1,0 +1,135 @@
+﻿# Artifact scope. MDE ownership-transfer cleanup, also used when switching care.
+vt_egg_clear_care = {
+ remove_variable = cradled_egg
+ remove_variable = cradled_egg_year
+ remove_variable = vt_egg_caretaker
+ remove_variable = pitted_egg
+ remove_variable = vt_egg_incubation_year
+}
+vt_egg_stop_all_cradling = {
+ every_character_artifact = {
+  limit = { has_variable = dragon_egg has_variable = cradled_egg }
+  vt_egg_clear_care = yes
+ }
+}
+# Character scope; scope:egg is the selected artifact, not a delayed event scope.
+vt_egg_begin_cradling = {
+ save_scope_as = vt_egg_owner
+ if = {
+  limit = { vt_can_cradle_egg = yes exists = scope:egg scope:egg = { vt_egg_is_viable = yes artifact_owner = scope:vt_egg_owner } }
+  vt_egg_stop_all_cradling = yes
+  scope:egg = {
+   vt_egg_clear_care = yes
+   set_variable = { name = cradled_egg value = yes }
+   set_variable = { name = cradled_egg_year value = current_year }
+   set_variable = { name = vt_egg_caretaker value = scope:vt_egg_owner }
+   equip_artifact_to_owner_replace = yes
+  }
+ }
+}
+vt_egg_begin_incubating = {
+ save_scope_as = vt_egg_owner
+ if = {
+  limit = { vt_can_incubate_egg = yes exists = scope:egg scope:egg = { vt_egg_is_viable = yes artifact_owner = scope:vt_egg_owner } }
+  random_realm_county = {
+   limit = { any_county_province = { voltara_active_dragonpit = yes } }
+   save_scope_as = vt_egg_pit
+  }
+  scope:egg = {
+   vt_egg_clear_care = yes
+   set_variable = { name = pitted_egg value = scope:vt_egg_pit }
+   set_variable = { name = vt_egg_incubation_year value = current_year }
+   set_variable = { name = vt_egg_caretaker value = scope:vt_egg_owner }
+  }
+ }
+}
+vt_egg_petrify = {
+ vt_egg_clear_care = yes
+ set_variable = { name = dud_egg value = yes }
+ set_artifact_description = vt_egg_petrified_desc
+ set_artifact_rarity = illustrious
+}
+# One atomic hatch entry point: validate, create newborn, preserve parents, consume.
+vt_egg_resolve_cradle_hatch = {
+ save_scope_as = vt_egg_owner
+ if = {
+  limit = { vt_can_cradle_egg = yes exists = scope:egg scope:egg = { vt_egg_is_viable = yes has_variable = cradled_egg artifact_owner = scope:vt_egg_owner } }
+  save_scope_as = cradlemate
+  agot_spawn_bonded_hatchling_from_egg_effect = { OWNER = scope:vt_egg_owner EGG = scope:egg }
+  if = { limit = { exists = scope:dragon } trigger_event = vt_egg_port.1 }
+ }
+}
+vt_egg_resolve_pit_hatch = {
+ save_scope_as = vt_egg_owner
+ if = {
+  limit = { exists = scope:egg scope:egg = { vt_egg_is_viable = yes has_variable = pitted_egg artifact_owner = scope:vt_egg_owner } }
+  scope:egg.var:pitted_egg = { save_scope_as = vt_egg_pit }
+  agot_spawn_owned_hatchling_from_egg_effect = { OWNER = scope:vt_egg_owner EGG = scope:egg }
+  if = {
+   limit = { exists = scope:dragon }
+   agot_send_to_dragonpit_no_event = { DRAGON = scope:dragon DRAGONPIT_COUNTY = scope:vt_egg_pit }
+   scope:dragon = { set_location = scope:vt_egg_pit.title_province }
+   trigger_event = vt_egg_port.2
+  }
+ }
+}
+# Artifact scope, AGOT annual cradle weights with MDE likelihood rules.
+vt_egg_year_check = {
+ save_scope_as = egg
+ if = { limit = { exists = artifact_owner } artifact_owner = { save_scope_as = vt_egg_owner } }
+ if = {
+  limit = { OR = { NOT = { exists = artifact_owner } NOT = { artifact_owner = { is_alive = yes } } has_variable = dud_egg } }
+  vt_egg_clear_care = yes
+ }
+ else_if = {
+  limit = { exists = var:vt_egg_caretaker NOT = { var:vt_egg_caretaker = scope:vt_egg_owner } }
+  vt_egg_clear_care = yes
+ }
+ else_if = {
+  limit = { vt_egg_is_viable = yes has_variable = cradled_egg }
+  if = { limit = { NOT = { artifact_owner = { vt_can_cradle_egg = yes } } } vt_egg_clear_care = yes }
+  else_if = {
+   limit = { var:cradled_egg_year < current_year }
+   random_list = {
+    44 = { modifier = { has_game_rule = vt_egg_cradle_guaranteed factor = 0 } }
+    0 = {
+     modifier = { add = { value = 46 subtract = vt_egg_cradle_age subtract = vt_egg_cradle_age min = 2 } }
+     modifier = { artifact_owner = { has_trait = dragonrider } factor = 1.25 }
+     modifier = { artifact_owner = { has_trait = witch } factor = 1.25 }
+     modifier = { has_game_rule = vt_egg_cradle_rare factor = 0.25 }
+     modifier = { has_game_rule = vt_egg_cradle_never factor = 0 }
+     artifact_owner = { vt_egg_resolve_cradle_hatch = yes }
+    }
+    0 = {
+     modifier = { add = { value = 10 add = vt_egg_cradle_age add = vt_egg_cradle_age } }
+     modifier = { OR = { has_game_rule = vt_egg_cradle_guaranteed has_game_rule = vt_egg_cradle_never } factor = 0 }
+     vt_egg_petrify = yes
+     artifact_owner = { trigger_event = vt_egg_port.3 }
+    }
+   }
+  }
+ }
+ else_if = {
+  limit = { vt_egg_is_viable = yes has_variable = pitted_egg }
+  if = {
+   limit = { NOT = { var:pitted_egg = { exists = holder holder.top_liege = scope:vt_egg_owner.top_liege any_county_province = { voltara_active_dragonpit = yes } } } }
+   vt_egg_clear_care = yes
+  }
+  else_if = {
+   limit = { var:vt_egg_incubation_year < current_year }
+   random_list = {
+    97 = { modifier = { has_game_rule = vt_egg_pit_guaranteed factor = 0 } }
+    2 = {
+     modifier = { has_game_rule = vt_egg_pit_frequent factor = 5 }
+     modifier = { has_game_rule = vt_egg_pit_never factor = 0 }
+     artifact_owner = { vt_egg_resolve_pit_hatch = yes }
+    }
+    1 = {
+     modifier = { OR = { has_game_rule = vt_egg_pit_guaranteed has_game_rule = vt_egg_pit_never } factor = 0 }
+     vt_egg_petrify = yes
+     artifact_owner = { trigger_event = vt_egg_port.3 }
+    }
+   }
+  }
+ }
+}

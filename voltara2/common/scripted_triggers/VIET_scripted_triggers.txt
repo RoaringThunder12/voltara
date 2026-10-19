@@ -1,0 +1,65 @@
+﻿VIET_basic_is_available_adult_trigger = {
+	# is_playable_character = yes
+	basic_is_valid_for_yearly_events_trigger = yes
+	is_adult = yes
+}
+
+VIET_basic_is_available_child_trigger = {
+	is_ruler = yes
+	is_available_child = yes
+	age >= childhood_education_start_age
+}
+
+VIET_has_2_clutter_artifacts_trigger = {
+	any_character_artifact = {
+		count >= 2
+		artifact_type = VIET_clutter
+	}
+}
+
+VIET_has_4_clutter_artifacts_trigger = {
+	any_character_artifact = {
+		count >= 4
+		artifact_type = VIET_clutter
+	}
+}
+
+VIET_is_a_literate_society = {
+	NOR = {
+		government_has_flag = government_is_tribal
+		government_has_flag = government_is_nomadic
+	}
+}
+
+VIET_is_unattractive_trigger = {
+	OR = {
+		has_trait = leper
+		has_trait = maimed
+		has_trait = disfigured
+		has_trait = infirm
+		is_eunuch_trigger = yes
+		has_trait = blind
+		has_trait = beauty_bad_1
+		has_trait = beauty_bad_2
+		has_trait = beauty_bad_3
+		has_trait = physique_bad_2
+		has_trait = physique_bad_3
+		has_trait = clubfooted
+		has_trait = hunchbacked
+		has_trait = lisping
+		has_trait = stuttering
+		has_trait = dwarf
+		has_trait = giant
+		has_trait = weak
+		has_trait = spindly
+		has_trait = scaly
+		has_trait = albino
+		has_trait = wheezing
+	}
+}
+
+VIET_sexual_character_trigger = {
+	NOT = { is_eunuch_trigger = yes }
+	NOT = { has_trait = celibate }
+	NOT = { has_sexuality = asexual }
+}

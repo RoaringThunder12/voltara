@@ -1,0 +1,723 @@
+﻿GetWhiteBookPageTitle = {
+	type = character
+
+	text = {
+		trigger = {
+			exists = house
+			NOT = { agot_bastard_surname_trigger = yes }
+		}
+		localization_key = agot_kingsguard_white_book_title_house
+	}
+
+	text = {
+		trigger = {
+			agot_bastard_surname_trigger = yes
+		}
+		localization_key = agot_kingsguard_white_book_title_bastard
+	}
+
+	text = {
+		trigger = {
+			has_any_nickname = yes
+		}
+		localization_key = agot_kingsguard_white_book_title_nickname
+	}
+
+	text = {
+		localization_key = agot_kingsguard_white_book_title_fallback
+		fallback = yes
+	}
+}
+
+GetWhiteBookContentsTitle = {
+	type = character
+
+	text = {
+		trigger = {
+			OR = {
+				exists = house
+				agot_bastard_surname_trigger = yes
+			}
+		}
+		localization_key = agot_kingsguard_white_book_title_surname
+	}
+
+	text = {
+		trigger = {
+			has_any_nickname = yes
+		}
+		localization_key = agot_kingsguard_white_book_title_nickname
+	}
+
+	text = {
+		localization_key = agot_kingsguard_white_book_title_fallback
+		fallback = yes
+	}
+}
+
+GetAgeOrdinal = {
+	type = character
+
+	text = {
+		trigger = {
+			OR = {
+				age = 1
+				# age = 11
+				age = 21
+				age = 31
+				age = 41
+				age = 51
+				age = 61
+				age = 71
+				age = 81
+				age = 91
+				age = 101
+				# age = 111
+				age = 121
+				age = 131
+				age = 141
+				age = 151
+				age = 161
+				age = 171
+				age = 181
+				age = 191
+			}
+		}
+		localization_key = agot_age_ordinal_st
+	}
+
+	text = {
+		trigger = {
+			OR = {
+				age = 2
+				# age = 12
+				age = 22
+				age = 32
+				age = 42
+				age = 52
+				age = 62
+				age = 72
+				age = 82
+				age = 92
+				age = 102
+				# age = 112
+				age = 122
+				age = 132
+				age = 142
+				age = 152
+				age = 162
+				age = 172
+				age = 182
+				age = 192
+			}
+		}
+		localization_key = agot_age_ordinal_nd
+	}
+
+	text = {
+		trigger = {
+			OR = {
+				age = 3
+				# age = 13
+				age = 23
+				age = 33
+				age = 43
+				age = 53
+				age = 63
+				age = 73
+				age = 83
+				age = 93
+				age = 103
+				# age = 113
+				age = 123
+				age = 133
+				age = 143
+				age = 153
+				age = 163
+				age = 173
+				age = 183
+				age = 193
+			}
+		}
+		localization_key = agot_age_ordinal_rd
+	}
+
+	text = {
+		localization_key = agot_age_ordinal_th
+		fallback = yes
+	}
+}
+
+GetWhiteBookParents = {
+	type = character
+
+	text = {
+		trigger = {
+			exists = father
+			exists = mother
+		}
+		localization_key = agot_kingsguard_white_book_page_join_parents
+	}
+
+	text = {
+		trigger = {
+			exists = father
+		}
+		localization_key = agot_kingsguard_white_book_page_join_father
+	}
+
+	text = {
+		trigger = {
+			exists = mother
+		}
+		localization_key = agot_kingsguard_white_book_page_join_mother
+	}
+
+	text = {
+		localization_key = agot_kingsguard_white_book_page_empty
+		fallback = yes
+	}
+}
+
+GetWhiteBookPage = {
+	type = character
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	#Died Day of Joining
+	# text = {
+	# 	trigger = {
+	# 		exists = character:Darklyn_43
+	# 		this = character:Darklyn_43
+	# 		game_start_date >= 8236.3.2
+	# 	}
+	# 	localization_key = agot_kingsguard_white_book_Darklyn_43_on_join
+	# }
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	# text = {
+	# 	trigger = {
+	# 		exists = character:Lannister_7
+	# 		this = character:Lannister_7
+	# 		game_start_date >= 8299.12.2
+	# 	}
+	# 	localization_key = agot_kingsguard_white_book_Lannister_7_latest
+	# }
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = agot_kingsguard_white_book_fallback_after_death
+	}
+
+	text = {
+		localization_key = agot_kingsguard_white_book_fallback_on_join
+		fallback = yes
+	}
+}

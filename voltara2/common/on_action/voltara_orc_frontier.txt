@@ -4,7 +4,7 @@ on_16th_birthday = { on_actions = { voltara_orc_character_setup } }
 voltara_orc_character_setup = { effect = { voltara_ironcoil_traits = yes voltara_orc_spiritual_life = yes } }
 on_game_start_after_lobby = { on_actions = { voltara_orc_frontier_start } }
 voltara_orc_frontier_start = { effect = {
- every_living_character = { voltara_ironcoil_traits = yes voltara_orc_spiritual_life = yes if = { limit = { is_ruler = yes culture = culture:voltara_culture_20 } voltara_orc_undead_opinions = yes } }
+ every_living_character = { voltara_ironcoil_traits = yes voltara_orc_spiritual_life = yes if = { limit = { is_ruler = yes culture = { has_cultural_pillar = language_voltara_orc } } voltara_orc_undead_opinions = yes } }
  if = { limit = { NOT = { exists = global_var:voltara_orc_captive_setup } }
   every_independent_ruler = { limit = { voltara_historical_slavery_realm = yes } add_realm_law = voltara_slavery_legal }
 character:19031014 = { if = { limit = { voltara_slavery_is_legal = yes } save_scope_as = voltara_owner character:19040000 = { voltara_enslave_character = yes } } }
@@ -398,7 +398,7 @@ character:19060031 = { if = { limit = { voltara_slavery_is_legal = yes } save_sc
 } }
 yearly_playable_pulse = { on_actions = { voltara_orc_undead_hatred } }
 voltara_orc_undead_hatred = {
- trigger = { culture = culture:voltara_culture_20 }
+ trigger = { culture = { has_cultural_pillar = language_voltara_orc } }
  effect = {
   save_scope_as = voltara_orc_observer
   every_living_character = { limit = { OR = { has_trait = supernatural_vampire has_trait = supernatural_vampire vt_ek_is_undead = yes } }

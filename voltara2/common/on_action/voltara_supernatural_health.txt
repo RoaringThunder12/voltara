@@ -1,0 +1,15 @@
+﻿on_trait_gained = { on_actions = { vt_supernatural_health_on_gain } }
+on_game_start = { on_actions = { vt_supernatural_health_migrate } }
+on_game_start_after_lobby = { on_actions = { vt_supernatural_health_migrate } }
+vt_supernatural_health_on_gain = {
+ trigger = { vt_supernatural_health_protected = yes }
+ effect = { vt_supernatural_health_cleanup = yes }
+}
+vt_supernatural_health_migrate = {
+ effect = {
+  every_living_character = {
+   limit = { vt_supernatural_health_protected = yes }
+   vt_supernatural_health_cleanup = yes
+  }
+ }
+}

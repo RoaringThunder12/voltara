@@ -5,7 +5,7 @@
  }
 }
 voltara_orc_spiritual_life = {
- if = { limit = { culture = culture:voltara_culture_20 is_adult = yes NOT = { has_character_flag = voltara_orc_shaman_checked } }
+ if = { limit = { culture = { has_cultural_pillar = language_voltara_orc } is_adult = yes NOT = { has_character_flag = voltara_orc_shaman_checked } }
   add_character_flag = voltara_orc_shaman_checked
   if = { limit = { NOT = { has_trait = education_magic } }
    random = { chance = 30 add_trait = vt_ek_education_magic_2 add_trait = voltara_orc_shaman voltara_initialize_threadbinder = yes }

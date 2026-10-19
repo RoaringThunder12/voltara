@@ -588,6 +588,15 @@ vbox = { name = "voltara_county_colonization" layoutpolicy_horizontal = expandin
  text_multi = { max_width = 510 autoresize = yes text = "voltara_colonization_blocked"
  visible = "[HoldingView.GetCountyTitle.MakeScope.Var('voltara_uncolonisable').IsSet]" }
  }
+button_standard = {
+ name = "voltara_establish_city_of_wonder"
+ size = { 0 36 } layoutpolicy_horizontal = expanding
+ text = "vt_cow_establish_button"
+ visible = "[GetScriptedGui('vt_cow_establish').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('holding',HoldingView.GetProvince.MakeScope).End)]"
+ enabled = "[GetScriptedGui('vt_cow_establish').IsValid(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('holding',HoldingView.GetProvince.MakeScope).End)]"
+ tooltip = "[GetScriptedGui('vt_cow_establish').BuildTooltip(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('holding',HoldingView.GetProvince.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_cow_establish').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('holding',HoldingView.GetProvince.MakeScope).End)]"
+}
 text_single = { text = "voltara_city_of_wonder_badge" fontsize = 18
  visible = "[GetScriptedGui('holding_is_cow').IsShown(GuiScope.SetRoot(HoldingView.GetProvince.MakeScope).End)]" }
 

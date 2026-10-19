@@ -1,0 +1,30 @@
+﻿yearly_global_pulse = { on_actions = { vt_egg_yearly_pulse } }
+vt_egg_yearly_pulse = {
+ effect = { every_artifact = { limit = { has_variable = dragon_egg } vt_egg_year_check = yes } }
+}
+on_artifact_changed_owner = { on_actions = { vt_egg_transfer_cleanup } }
+vt_egg_transfer_cleanup = {
+ trigger = { has_variable = dragon_egg }
+ effect = {
+  vt_egg_clear_care = yes
+  remove_variable = already_demanded
+  remove_variable = selected_egg_for_hatching
+  remove_variable = agot_artifact_cannot_gift
+  remove_variable = agot_swiper_no_swiping
+ }
+}
+on_birth_child = { on_actions = { vt_egg_offer_newborn_cradle } }
+vt_egg_offer_newborn_cradle = {
+ trigger = { NOT = { has_trait = dragon } }
+ effect = {
+  save_scope_as = vt_egg_child
+  if = {
+   limit = { exists = mother mother = { is_alive = yes any_character_artifact = { vt_egg_is_viable = yes NOT = { has_variable = cradled_egg } NOT = { has_variable = pitted_egg } } } }
+   mother = { trigger_event = { id = vt_egg_port.10 days = 1 } }
+  }
+  else_if = {
+   limit = { exists = father father = { is_alive = yes any_character_artifact = { vt_egg_is_viable = yes NOT = { has_variable = cradled_egg } NOT = { has_variable = pitted_egg } } } }
+   father = { trigger_event = { id = vt_egg_port.10 days = 1 } }
+  }
+ }
+}

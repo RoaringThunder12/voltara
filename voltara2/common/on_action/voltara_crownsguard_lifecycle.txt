@@ -1,0 +1,61 @@
+﻿
+on_game_start = { on_actions = { vt_crownsguard_start } }
+on_death = { on_actions = { vt_crownsguard_death } }
+vt_crownsguard_death = { events = { agot_kingsguard.1000 } }
+on_leave_court = { on_actions = { vt_crownsguard_recall } }
+vt_crownsguard_recall = { events = { agot_kingsguard.9003 } }
+on_title_destroyed = { on_actions = { vt_crownsguard_title_destroyed } }
+vt_crownsguard_title_destroyed = { events = { agot_kingsguard.9004 } }
+on_16th_birthday = { on_actions = { vt_crownsguard_training_check } }
+vt_crownsguard_training_check = { events = { agot_kingsguard.1014 } }
+yearly_playable_pulse = { on_actions = { vt_crownsguard_maintenance } }
+vt_crownsguard_maintenance = {
+ trigger = { ruler_has_kingsguard_trigger = yes }
+ events = { agot_kingsguard.9007 }
+ on_actions = { vt_crownsguard_ai_recruitment }
+}
+vt_crownsguard_ai_recruitment = {
+ trigger = { is_ai = yes }
+ events = { agot_kingsguard.9000 }
+}
+vt_crownsguard_start = {
+ effect = {
+  if = {
+   limit = { NOT = { has_global_variable = vt_crownsguard_initialized } exists = character:19060001 exists = character:19060034 }
+   set_global_variable = vt_crownsguard_initialized
+   character:19060001 = {
+    save_scope_as = vt_crownsguard_sovereign
+    primary_title = { set_variable = kingsguard }
+    character:19060034 = { add_character_flag = lord_commander }
+    agot_join_kingsguard_effect = { KINGSGUARD = character:19060034 KING = scope:vt_crownsguard_sovereign }
+    agot_assign_lord_commander_effect = { COMMANDER = character:19060034 KING = scope:vt_crownsguard_sovereign }
+    agot_join_kingsguard_effect = { KINGSGUARD = character:19060039 KING = scope:vt_crownsguard_sovereign }
+    agot_join_kingsguard_effect = { KINGSGUARD = character:19060040 KING = scope:vt_crownsguard_sovereign }
+    while = {
+     count = 4
+     create_character = {
+      age = { 24 40 } gender = male culture = scope:vt_crownsguard_sovereign.culture faith = scope:vt_crownsguard_sovereign.faith
+      employer = scope:vt_crownsguard_sovereign
+      trait = brave trait = loyal trait = education_martial_3
+      prowess = { 18 26 } martial = { 12 18 }
+      save_scope_as = vt_new_crownsguard
+     }
+     agot_join_kingsguard_effect = { KINGSGUARD = scope:vt_new_crownsguard KING = scope:vt_crownsguard_sovereign }
+    }
+    if = {
+ limit = {
+  exists = cp:kingsguard_lord_commander
+  cp:kingsguard_lord_commander = character:19060034
+  exists = cp:kingsguard_1 exists = cp:kingsguard_2 exists = cp:kingsguard_3
+  exists = cp:kingsguard_4 exists = cp:kingsguard_5 exists = cp:kingsguard_6
+  character:19060034 = { has_title = title:b_crownsguard_keep highest_held_title_tier = tier_barony }
+  character:19069901 = { has_title = title:k_voltara_blackwood has_title = title:d_voltara_test_287 has_title = title:c_voltara_287 }
+ }
+ debug_log = "VT_CROWNSGUARD_VALIDATED: Lucius commands seven guards and holds only the Keep; Roland holds all three Blackwood titles."
+}
+else = { debug_log = "VT_CROWNSGUARD_FAILED: Check initial roster or Blackwood titles." }
+
+   }
+  }
+ }
+}

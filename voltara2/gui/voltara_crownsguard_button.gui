@@ -1,0 +1,11 @@
+﻿window = {
+ name = "voltara_crownsguard_button" parentanchor = bottom|right widgetanchor = bottom|right
+ position = { -820 -8 } size = { 48 48 } alwaystransparent = yes
+ visible = "[And(IsDefaultGUIMode,Not(IsGameViewOpen('barbershop')))]"
+ button_round = {
+  size = { 44 44 } tooltip = "SHOW_KINGSGUARD"
+  onclick = "[GetScriptedGui('mde_show_kingsguard_button').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+  onclick = "[GetVariableSystem.Toggle('kingsguard_viewer_toggle')]"
+  icon = { size = { 30 30 } parentanchor = center widgetanchor = center texture = "gfx/interface/icons/flat_icons/kingsguard_flat_black.dds" }
+ }
+}

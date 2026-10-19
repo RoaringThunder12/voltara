@@ -1,0 +1,10 @@
+﻿on_game_start_after_lobby = { on_actions = { vt_orc_clan_government_setup } }
+vt_orc_clan_government_setup = {
+ effect = {
+  every_living_character = {
+   limit = { is_landed = yes voltara_orc_government_culture = yes NOT = { has_government = voltara_ruins_government } }
+   change_government = mandala_government
+   vt_orc_mandala_capital_support = yes
+  }
+ }
+}

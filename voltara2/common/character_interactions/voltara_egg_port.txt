@@ -1,0 +1,91 @@
+﻿vt_cradle_egg_interaction = {
+ category = interaction_category_friendly common_interaction = yes interface_priority = 80 icon = icon_scheme_dragon
+ desc = vt_cradle_egg_interaction_desc show_all_targets = no
+ target_type = artifact target_filter = actor_artifacts
+ can_be_picked_artifact = { scope:target = { vt_egg_is_viable = yes NOT = { has_variable = cradled_egg } } }
+ is_shown = { scope:actor = { this = scope:recipient NOT = { has_trait = dragon } any_character_artifact = { vt_egg_is_viable = yes } } }
+ is_valid_showing_failures_only = { scope:actor = { vt_can_cradle_egg = yes } }
+ on_accept = { scope:target = { save_scope_as = egg } scope:actor = { vt_egg_begin_cradling = yes } }
+ auto_accept = yes ai_will_do = { base = 0 }
+}
+vt_stop_cradling_interaction = {
+ category = interaction_category_friendly common_interaction = yes interface_priority = 80 icon = icon_scheme_dragon
+ desc = vt_stop_cradling_interaction_desc
+ is_shown = { scope:actor = { this = scope:recipient any_character_artifact = { has_variable = dragon_egg has_variable = cradled_egg } } }
+ on_accept = { scope:actor = { vt_egg_stop_all_cradling = yes } }
+ auto_accept = yes ai_will_do = { base = 0 }
+}
+vt_give_dragon_egg = {
+ category = interaction_category_friendly common_interaction = yes interface_priority = 80 icon = icon_scheme_dragon
+ desc = vt_give_dragon_egg_desc show_all_targets = no
+ target_type = artifact target_filter = actor_artifacts
+ can_be_picked_artifact = { scope:target = { vt_egg_is_unlocked = yes } }
+ is_shown = {
+  scope:actor = { NOT = { this = scope:recipient } NOT = { has_trait = dragon } any_character_artifact = { vt_egg_is_unlocked = yes } }
+  scope:recipient = { is_alive = yes NOT = { has_trait = dragon } }
+ }
+ on_accept = {
+  scope:target = { vt_egg_clear_care = yes set_owner = scope:recipient save_scope_as = egg }
+  scope:recipient = {
+   add_opinion = { target = scope:actor modifier = gift_artifact_opinion opinion = 60 }
+   if = { limit = { vt_can_cradle_egg = yes NOT = { any_character_artifact = { has_variable = cradled_egg } } scope:egg = { vt_egg_is_viable = yes } } vt_egg_begin_cradling = yes }
+  }
+ }
+ auto_accept = yes
+ ai_targets = { ai_recipients = children }
+ ai_frequency = 60
+ ai_will_do = {
+  base = 0
+  modifier = { add = 50 scope:recipient = { is_child_of = scope:actor NOT = { voltara_has_living_dragon = yes } NOT = { any_character_artifact = { has_variable = dragon_egg } } } }
+  modifier = { factor = 0 scope:target = { OR = { has_variable = cradled_egg has_variable = pitted_egg has_variable = dud_egg } } }
+ }
+}
+vt_incubate_dragon_egg = {
+ category = interaction_category_friendly common_interaction = yes interface_priority = 80 icon = icon_scheme_dragon
+ desc = vt_incubate_dragon_egg_desc show_all_targets = no
+ target_type = artifact target_filter = actor_artifacts
+ can_be_picked_artifact = { scope:target = { vt_egg_is_viable = yes NOT = { has_variable = pitted_egg } } }
+ is_shown = { scope:actor = { this = scope:recipient any_character_artifact = { vt_egg_is_viable = yes } } }
+ is_valid_showing_failures_only = { scope:actor = { vt_can_incubate_egg = yes } }
+ on_accept = { scope:target = { save_scope_as = egg } scope:actor = { vt_egg_begin_incubating = yes } }
+ auto_accept = yes ai_will_do = { base = 0 }
+}
+vt_retrieve_dragon_egg = {
+ category = interaction_category_friendly common_interaction = yes interface_priority = 80 icon = icon_scheme_dragon
+ desc = vt_retrieve_dragon_egg_desc show_all_targets = no
+ target_type = artifact target_filter = actor_artifacts
+ can_be_picked_artifact = { scope:target = { vt_egg_is_unlocked = yes has_variable = pitted_egg } }
+ is_shown = { scope:actor = { this = scope:recipient any_character_artifact = { vt_egg_is_unlocked = yes has_variable = pitted_egg } } }
+ on_accept = { scope:target = { vt_egg_clear_care = yes } }
+ auto_accept = yes ai_will_do = { base = 0 }
+}
+vt_demand_dragon_egg = {
+ category = interaction_category_hostile common_interaction = yes interface_priority = 80 icon = icon_scheme_dragon
+ desc = vt_demand_dragon_egg_desc show_all_targets = no
+ target_type = artifact target_filter = recipient_artifacts
+ can_be_picked_artifact = { scope:target = { vt_egg_is_unlocked = yes } }
+ is_shown = {
+  scope:actor = { is_adult = yes is_landed = yes NOT = { has_trait = dragon } NOT = { this = scope:recipient } }
+  scope:recipient = { is_alive = yes NOT = { has_trait = dragon } any_character_artifact = { vt_egg_is_unlocked = yes } }
+ }
+ cost = { prestige = 2000 }
+ cooldown_against_recipient = { years = 1 }
+ on_accept = { scope:target = { vt_egg_clear_care = yes set_owner = scope:actor } }
+ ai_accept = {
+  base = -70
+  opinion_modifier = { who = scope:recipient opinion_target = scope:actor multiplier = 0.5 }
+  modifier = { add = 50 scope:recipient = { is_vassal_or_below_of = scope:actor } }
+  modifier = { add = 30 scope:recipient = { is_close_family_of = scope:actor } }
+  modifier = { add = -60 scope:target = { has_variable = cradled_egg } }
+ }
+ ai_will_do = { base = 0 }
+}
+vt_take_prisoner_dragon_egg = {
+ category = interaction_category_prison common_interaction = yes interface_priority = 80 icon = icon_scheme_dragon
+ desc = vt_take_prisoner_dragon_egg_desc show_all_targets = no
+ target_type = artifact target_filter = recipient_artifacts
+ can_be_picked_artifact = { scope:target = { vt_egg_is_unlocked = yes } }
+ is_shown = { scope:recipient = { is_imprisoned_by = scope:actor any_character_artifact = { vt_egg_is_unlocked = yes } } }
+ on_accept = { scope:target = { vt_egg_clear_care = yes set_owner = scope:actor } }
+ auto_accept = yes ai_will_do = { base = 0 }
+}

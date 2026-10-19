@@ -74,6 +74,12 @@ voltara_dragon_year_effect = {
  if = { limit = { has_trait = dragon_wounded_1 } random = { chance = 50 remove_trait = dragon_wounded_1 } }
  if = { limit = { is_female = yes age >= 15 age < 200 exists = employer NOT = { has_character_flag = voltara_clutch_cooldown } }
   save_scope_as = egg_mother
+  clear_saved_scope = egg_father
+  random_in_global_list = {
+   variable = voltara_living_dragons
+   limit = { is_alive = yes is_female = no age >= 10 location = scope:egg_mother.location }
+   save_scope_as = egg_father
+  }
   random = { chance = { value = 20 if = { limit = { has_trait = dragon_fertile } add = 15 } if = { limit = { has_game_rule = voltara_clutches_rare } multiply = 0.25 } }
    add_character_flag = { flag = voltara_clutch_cooldown years = 3 }
    employer = {

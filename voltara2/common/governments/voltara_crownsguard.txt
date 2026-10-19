@@ -1,0 +1,34 @@
+﻿kingsguard_government = {
+	government_rules = {
+		create_cadet_branches = no
+		court_generate_spouses = no
+		council = no
+		rulers_should_have_dynasty = no
+		dynasty_named_realms = no
+		allow_accolades = no
+	}
+
+	court_generate_commanders = no
+
+	primary_holding = castle_holding
+
+	can_get_government = {
+		has_trait = kingsguard
+		has_title = title:b_crownsguard_keep
+	}
+
+	ai = {
+		arrange_marriage = no
+		use_goals = no
+		use_decisions = no
+		perform_religious_reformation = no
+	}
+
+	flags = {
+		government_is_kg
+		government_is_settled
+		government_is_default #For grouping governments that should use the regular lifestyle perks.
+	}
+
+	color = rgb{ 214 245 250 }
+}

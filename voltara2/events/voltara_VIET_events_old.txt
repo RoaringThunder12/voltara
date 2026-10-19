@@ -1,0 +1,8492 @@
+﻿namespace = VIETold
+
+VIETold.2001 = {
+	type = character_event
+	title = VIETold.2001.t
+	desc = VIETold.2001.desc
+	theme = VIET_theme_oblivion_pastoral_dream
+	
+	right_portrait = {
+		character = root
+		animation = personality_content
+	}	
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = content
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = chaste
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lustful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+	}
+	
+	option = { 
+		name = VIETold.2001.a	
+		stress_impact = {
+			calm = miniscule_stress_impact_loss
+			patient = miniscule_stress_impact_loss
+		}
+		add_character_modifier = {
+			modifier = VIET_lake_rumare_dream_lake
+			days = 1095
+		}		
+	}	
+	option = { 
+		name = VIETold.2001.b
+		stress_impact = {
+			zealous = miniscule_stress_impact_loss
+			humble = miniscule_stress_impact_loss
+		}
+		add_character_modifier = {
+			modifier = VIET_lake_rumare_dream_wayshrine
+			days = 1095
+		}		
+	}	
+	option = { 
+		name = VIETold.2001.c
+		stress_impact = {
+			brave = miniscule_stress_impact_loss
+			trusting = miniscule_stress_impact_loss
+		}
+		add_character_modifier = {
+			modifier = VIET_lake_rumare_dream_forest
+			days = 1095
+		}		
+	}	
+	option = { 
+		name = VIETold.2001.d
+		stress_impact = {
+			gluttonous = miniscule_stress_impact_loss
+			shy = miniscule_stress_impact_loss
+		}
+		add_character_modifier = {
+			modifier = VIET_lake_rumare_dream_cottage
+			days = 1095
+		}		
+	}
+}
+
+VIETold.2003 = {
+	type = character_event
+	title = VIETold.2003.t
+	desc = VIETold.2003.desc
+	theme = stewardship_duty_focus
+	
+	left_portrait = {
+		character = root
+		animation = worry
+	}	
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = -0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = 0.2
+			has_trait = just
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arbitrary
+		}
+	}
+	
+	option = { 
+		name = VIETold.2003.a
+		random_list = {
+			10 = { VIET_tiny_piety_gain_effect = yes }
+			10 = { VIET_tiny_prestige_gain_effect = yes }
+		}
+		stress_impact = {
+			just = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_loss
+			lazy = miniscule_stress_impact_gain
+			arbitrary = miniscule_stress_impact_gain
+		}		
+	}	
+	option = { 
+		name = VIETold.2003.b
+		VIET_tiny_prestige_gain_effect = yes
+		stress_impact = {
+			arrogant = miniscule_stress_impact_loss
+			ambitious = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_gain
+			humble = miniscule_stress_impact_gain
+		}		
+	}	
+	option = { 
+		name = VIETold.2003.c
+		VIET_tiny_piety_gain_effect = yes
+		stress_impact = {
+			compassionate = miniscule_stress_impact_loss
+			calm = miniscule_stress_impact_loss
+			vengeful = miniscule_stress_impact_gain
+			wrathful = miniscule_stress_impact_gain
+		}		
+	}	
+	option = { 
+		name = VIETold.2003.d
+		add_dread = 4
+		stress_impact = {
+			cynical = miniscule_stress_impact_loss
+			lazy = miniscule_stress_impact_loss
+			ambitious = miniscule_stress_impact_gain
+			diligent = miniscule_stress_impact_gain
+		}		
+	}
+}
+
+VIETold.2004 = {
+	type = character_event
+	title = VIETold.2004.t
+	desc = VIETold.2004.desc
+	theme = VIET_theme_oblivion_pastoral_dream
+	
+	left_portrait = {
+		character = root
+		animation = personality_content
+	}	
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = sadistic
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+	}
+	
+	option = { 
+		name = VIETold.2004.a
+		stress_impact = {
+			zealous = miniscule_stress_impact_loss
+			diligent = miniscule_stress_impact_loss
+		}
+		add_character_modifier = {
+			modifier = VIET_oblivion_dream_bruma
+			days = 1095
+		}
+	}	
+	option = { 
+		name = VIETold.2004.b
+		stress_impact = {
+			gregarious = miniscule_stress_impact_loss
+			lustful = miniscule_stress_impact_loss
+		}
+		add_character_modifier = {
+			modifier = VIET_oblivion_dream_anvil
+			days = 1095
+		}
+	}	
+	option = { 
+		name = VIETold.2004.c
+		stress_impact = {
+			deceitful = miniscule_stress_impact_loss
+			brave = miniscule_stress_impact_loss
+		}
+		add_character_modifier = {
+			modifier = VIET_oblivion_dream_leyawiin
+			days = 1095
+		}
+	}	
+	option = { 
+		name = VIETold.2004.d
+		stress_impact = {
+			compassionate = miniscule_stress_impact_loss
+			shy = miniscule_stress_impact_loss
+		}
+		add_character_modifier = {
+			modifier = VIET_oblivion_dream_east_lake_rumare
+			days = 1095
+		}
+	}
+}
+
+VIETold.2005 = {
+	type = character_event
+	title = VIETold.2005.t
+	desc = VIETold.2005.desc
+	theme = vassal
+	
+	right_portrait = {
+		character = root
+		animation = boredom
+	}	
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = content
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+	}
+	
+	option = { 
+		name = VIETold.2005.a
+		custom_tooltip = VIETold.2005.a.tooltip
+		VIET_tiny_piety_gain_effect = yes
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			calm = miniscule_stress_impact_loss
+			lazy = miniscule_stress_impact_loss
+			shy = miniscule_stress_impact_loss
+			humble = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_loss
+			arrogant = miniscule_stress_impact_gain
+			diligent = miniscule_stress_impact_gain
+			gregarious = miniscule_stress_impact_gain
+			ambitious = miniscule_stress_impact_gain
+			paranoid = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2005.b
+		custom_tooltip = VIETold.2005.b.tooltip
+		VIET_tiny_prestige_gain_effect = yes
+		stress_impact = {
+			calm = miniscule_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+			shy = miniscule_stress_impact_gain
+			humble = miniscule_stress_impact_gain
+			content = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2006 = {
+	type = character_event
+	title = VIETold.2006.t
+	desc = VIETold.2006.desc
+	theme = friendly	
+	override_background = { reference = corridor_day }
+	
+	right_portrait = root
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+	
+	option = { 
+		name = VIETold.2006.a
+		VIET_small_prestige_gain_effect = yes
+	}	
+	option = { 
+		name = VIETold.2006.b
+		random_list = {
+			30 = { }
+			30 = { VIET_small_prestige_gain_effect = yes }
+			10 = { add_dread = 5 }
+		}
+		stress_impact = {
+			humble = miniscule_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2006.c
+		random_list = {
+			30 = { }
+			10 = { VIET_small_prestige_gain_effect = yes }
+			30 = { add_dread = 5 }
+		}
+		stress_impact = {
+			trusting = miniscule_stress_impact_gain
+			patient = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2008 = {
+	type = character_event
+	title = VIETold.2008.t
+	desc = VIETold.2008.desc
+	theme = family
+	
+	right_portrait = {
+		character = root
+		animation = personality_cynical
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = generous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = greedy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gluttonous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = temperate
+		}
+	}
+	
+	option = { 
+		name = VIETold.2008.a
+		add_character_modifier = {
+			modifier = VIET_moved_to_tears
+			days = 730
+		}
+	}	
+	option = { 
+		name = VIETold.2008.b
+		add_character_modifier = {
+			modifier = VIET_unmoved_by_art
+			days = 730
+		}
+	}
+}
+
+VIETold.2012 = {
+	type = character_event
+	title = VIETold.2012.t
+	desc = VIETold.2012.desc
+	theme = realm
+	
+	left_portrait = {
+		character = root
+		animation = personality_content
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = just
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arbitrary
+		}
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+	
+	option = { 
+		name = VIETold.2012.a
+		VIET_tiny_piety_gain_effect = yes
+		stress_impact = {
+			zealous = miniscule_stress_impact_loss
+			cynical = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2012.b
+		if = {
+			limit = {
+				faith = {
+					OR = {
+						trait_is_virtue = calm					
+					}
+				}
+			}
+			VIET_tiny_piety_gain_effect = yes
+		}
+		else_if = {
+			limit = {
+				faith = {
+					OR = {
+						trait_is_virtue = wrathful					
+					}
+				}
+			}
+			VIET_tiny_prestige_loss_effect = yes
+		}
+		else = {
+			VIET_tiny_piety_gain_effect = yes
+		}		
+		stress_impact = {
+			calm = miniscule_stress_impact_loss
+			wrathful = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2012.c
+		VIET_tiny_prestige_gain_effect = yes
+		stress_impact = {
+			cynical = miniscule_stress_impact_loss
+		}
+	}
+}
+
+VIETold.2013 = {
+	type = character_event
+	title = VIETold.2013.t
+	desc = VIETold.2013.desc
+	theme = secret
+	
+	right_portrait = {
+		character = root
+		animation = admiration
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = -0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = 0.2
+			has_trait = chaste
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lustful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+	
+	option = { 
+		name = VIETold.2013.a
+		add_character_modifier = {
+			modifier = VIET_read_book_hotel_del_luna
+			years = 8
+		}
+	}
+}
+
+VIETold.2014 = {
+	type = character_event
+	title = VIETold.2014.t
+	desc = VIETold.2014.desc
+	theme = seduction
+	override_background = { reference = market }
+	
+	left_portrait = {
+		character = root
+		animation = personality_content
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lustful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = chaste
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+	}
+	
+	option = { 
+		name = VIETold.2014.a
+		VIET_medium_prestige_gain_effect = yes
+		stress_impact = {
+			humble = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2014.b
+		VIET_medium_piety_gain_effect = yes
+		stress_impact = {
+			arrogant = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2016 = {
+	type = character_event
+	title = VIETold.2016.t
+	desc = VIETold.2016.desc
+	theme = learning
+	
+	right_portrait = {
+		character = root
+		animation = disbelief
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = stubborn
+		}
+		modifier = {
+			add = -0.2
+			has_trait = fickle
+		}
+	}
+	
+	option = { 
+		name = VIETold.2016.a
+		add_character_modifier = {
+			modifier = VIET_mysterious_vision_past
+			days = 888
+		}
+		random_list = {
+			10 = { add_stress = 1 }
+			10 = { add_stress = 5 }
+			10 = { add_stress = 10 }
+			10 = { add_stress = 15 }
+			10 = { add_stress = 20 }
+			10 = { add_stress = 25 }
+		}
+	}
+}
+
+VIETold.2017 = {
+	type = character_event
+	title = VIETold.2017.t
+	desc = VIETold.2017.desc
+	theme = learning
+	
+	right_portrait = {
+		character = root
+		animation = personality_bold
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = -0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = just
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arbitrary
+		}
+	}
+	
+	option = { 
+		name = VIETold.2017.a
+		random = {
+			chance = 20
+			add_martial_skill = 1
+		}
+	}	
+	option = { 
+		name = VIETold.2017.b
+		VIET_medium_piety_gain_effect = yes
+		stress_impact = {
+			brave = miniscule_stress_impact_loss
+			craven = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2017.c
+		VIET_medium_piety_gain_effect = yes
+		stress_impact = {
+			just = miniscule_stress_impact_loss
+			arbitrary = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2018 = {
+	type = character_event
+	title = VIETold.2018.t
+	desc = VIETold.2018.desc
+	theme = seduction
+	
+	right_portrait = {
+		character = root
+		animation = happiness
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = -0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = just
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arbitrary
+		}
+	}
+	
+	option = { 
+		name = VIETold.2018.a
+		add_dread = 5
+		stress_impact = {
+			base = miniscule_stress_impact_gain
+			compassionate = miniscule_stress_impact_gain
+			lustful = miniscule_stress_impact_gain
+			cynical = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2018.b
+		add_character_modifier = {
+			modifier = VIET_read_cute_love_story
+			days = 365
+		}
+		stress_impact = {
+			cynical = miniscule_stress_impact_gain
+			sadistic = miniscule_stress_impact_gain
+			lustful = miniscule_stress_impact_loss
+			humble = miniscule_stress_impact_loss
+			compassionate = miniscule_stress_impact_loss
+		}
+	}
+}
+
+VIETold.2019 = {
+	type = character_event
+	title = VIETold.2019.t
+	desc = VIETold.2019.desc
+	theme = realm	
+	override_background = { reference = corridor_day }
+	
+	left_portrait = {
+		character = root
+		animation = boredom
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = 0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+	}
+	
+	option = { 
+		name = VIETold.2019.a
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			calm = miniscule_stress_impact_loss
+			humble = miniscule_stress_impact_loss
+			wrathful = miniscule_stress_impact_gain
+			greedy = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2019.b
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			compassionate = miniscule_stress_impact_loss
+			trusting = miniscule_stress_impact_loss
+			sadistic = miniscule_stress_impact_gain
+			callous = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2019.c
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			brave = miniscule_stress_impact_loss
+			diligent = miniscule_stress_impact_loss
+			craven = miniscule_stress_impact_gain
+			impatient = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2019.d
+		trigger = {
+			NOR = {
+				has_trait = celibate
+				has_sexuality = asexual
+			}		
+		}
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			lustful = miniscule_stress_impact_loss
+			gregarious = miniscule_stress_impact_loss
+			chaste = miniscule_stress_impact_gain
+			shy = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2020 = {
+	type = character_event
+	title = VIETold.2020.t
+	desc = VIETold.2020.desc
+	theme = friendly
+	
+	right_portrait = root
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+	}
+	
+	option = { 
+		name = VIETold.2020.a
+		VIET_tiny_prestige_gain_effect = yes
+		stress_impact = {
+			ambitious = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2020.b
+		VIET_tiny_piety_gain_effect = yes
+		stress_impact = {
+			patient = miniscule_stress_impact_loss
+			impatient = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2020.c
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			lazy = miniscule_stress_impact_loss
+			diligent = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2022 = {
+	type = character_event
+	title = VIETold.2022.t
+	desc = VIETold.2022.desc
+	theme = family
+	
+	left_portrait = {
+		character = root
+		animation = pain
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = -0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = 0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+	}
+	
+	option = { 
+		name = VIETold.2022.a
+		add_stress = 2
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+}
+
+VIETold.2023 = {
+	type = character_event
+	title = VIETold.2023.t
+	desc = VIETold.2023.desc
+	theme = family
+	
+	left_portrait = {
+		character = root
+		animation = pain
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = sadistic
+		}
+	}
+	
+	option = { 
+		name = VIETold.2023.a
+		VIET_small_piety_gain_effect = yes
+		stress_impact = {
+			wrathful = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2023.b
+		VIET_small_prestige_gain_effect = yes
+		stress_impact = {
+			craven = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2023.c
+		VIET_small_piety_gain_effect = yes
+		stress_impact = {
+			sadistic = miniscule_stress_impact_gain
+			callous = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2023.d
+		VIET_small_prestige_gain_effect = yes
+		stress_impact = {
+			trusting = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2024 = {
+	type = character_event
+	title = VIETold.2024.t
+	desc = VIETold.2024.desc
+	theme = seduction
+	
+	right_portrait = {
+		character = root
+		animation = shock
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = 0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = -0.2
+			has_trait = craven
+		}
+	}
+	
+	option = { 
+		name = VIETold.2024.a
+		add_dread = 4
+		stress_impact = {
+			forgiving = miniscule_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2024.b
+		add_character_modifier = {
+			modifier = VIET_lustful_ruler
+			days = 365
+		}
+		stress_impact = {
+			lustful = miniscule_stress_impact_gain
+			just = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2024.c
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+		}
+	}	
+	option = { 
+		name = VIETold.2024.d
+		random_list = {
+			10 = { VIET_small_piety_gain_effect = yes }
+			10 = { VIET_small_prestige_gain_effect = yes }
+		}
+		stress_impact = {
+			wrathful = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2025 = {
+	type = character_event
+	title = VIETold.2025.t
+	desc = VIETold.2025.desc
+	theme = unfriendly	
+	override_background = { reference = corridor_day }
+	
+	right_portrait = {
+		character = root
+		animation = paranoia
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = -0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = 0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+	}
+	
+	option = { 
+		name = VIETold.2025.a
+		add_stress = 3
+	}
+}
+
+VIETold.2026 = {
+	type = character_event
+	title = VIETold.2026.t
+	desc = VIETold.2026.desc
+	theme = intrigue
+	
+	right_portrait = {
+		character = root
+		animation = boredom
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+	}
+	
+	option = { 
+		name = VIETold.2026.a
+		stress_impact = {
+			base = minor_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2026.b
+		add_character_modifier = {
+			modifier = VIET_late_night_work
+			days = 1111
+		}
+		stress_impact = {
+			base = medium_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2027 = {
+	type = character_event
+	title = VIETold.2027.t
+	desc = VIETold.2027.desc
+	theme = learning
+	
+	right_portrait = {
+		character = root
+		animation = personality_cynical
+	}
+
+	trigger = {
+		faith = {
+			NOR = {
+				has_doctrine = doctrine_consanguinity_unrestricted
+			}		
+		}
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lustful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = chaste
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+	}
+	
+	option = { 
+		name = VIETold.2027.a
+		VIET_tiny_piety_gain_effect = yes
+		stress_impact = {
+			humble = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2027.b
+		add_character_modifier = {
+			modifier = VIET_open_minded_about_incest
+			days = 730
+		}
+		VIET_tiny_piety_loss_effect = yes
+		stress_impact = {
+			zealous = minor_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2027.c
+		trigger = {
+			NOR = {
+				has_trait = chaste
+				has_trait = celibate
+				has_sexuality = asexual
+			}
+		}
+		VIET_tiny_piety_loss_effect = yes
+		VIET_tiny_prestige_loss_effect = yes
+		add_character_modifier = {
+			modifier = VIET_deviant_opinion
+			days = 730
+		}
+		stress_impact = {
+			zealous = minor_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2027.d
+		
+		
+		
+		add_character_modifier = {
+			modifier = VIET_skeptical_about_fantasy_stories
+			days = 730
+		}
+		stress_impact = {
+			trusting = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2028 = {
+	type = character_event
+	title = VIETold.2028.t
+	desc = VIETold.2028.desc
+	theme = crown
+	
+	left_portrait = root
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+	
+	option = { 
+		name = VIETold.2028.a
+		add_character_modifier = {
+			modifier = VIET_skeptical_about_fantasy_stories
+			days = 365
+		}
+		stress_impact = {
+			trusting = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2028.b
+		add_character_modifier = {
+			modifier = VIET_heard_fantasy_stories
+			days = 365
+		}
+	}	
+	option = { 
+		name = VIETold.2028.c
+		trigger = {
+			learning >= decent_skill_rating			
+		}
+		skill = learning
+		add_character_modifier = {
+			modifier = VIET_impressed_others_with_knowledge
+			days = 365
+		}
+	}
+}
+
+VIETold.2031 = {
+	type = character_event
+	title = VIETold.2031.t
+	desc = VIETold.2031.desc
+	theme = realm
+	
+	right_portrait = {
+		character = root
+		animation = personality_cynical
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+	}
+	
+	option = { 
+		name = VIETold.2031.a
+		add_character_modifier = {
+			modifier = VIET_open_to_new_ideas
+			days = 555
+		}
+	}	
+	option = { 
+		name = VIETold.2031.b
+		add_character_modifier = {
+			modifier = VIET_skeptical_about_fantasy_stories
+			days = 555
+		}
+		stress_impact = {
+			trusting = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2031.c
+		add_character_modifier = {
+			modifier = VIET_thinking_about_foreign_lands
+			days = 555
+		}
+	}
+}
+
+VIETold.2032 = {
+	type = character_event
+	title = VIETold.2032.t
+	desc = VIETold.2032.desc
+	theme = realm
+	
+	right_portrait = {
+		character = root
+		animation = personality_cynical
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = just
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arbitrary
+		}
+		modifier = {
+			add = 0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = -0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = 0.2
+			has_trait = sadistic
+		}
+		modifier = {
+			add = -0.2
+			has_trait = compassionate
+		}
+	}
+	
+	option = { 
+		name = VIETold.2032.a
+		VIET_small_prestige_gain_effect = yes
+		add_dread = -3
+		stress_impact = {
+			callous = miniscule_stress_impact_gain
+			sadistic = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2032.b
+		VIET_small_piety_gain_effect = yes
+		add_dread = -3
+		stress_impact = {
+			callous = miniscule_stress_impact_gain
+			sadistic = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2032.c
+		add_dread = 6
+		stress_impact = {
+			compassionate = miniscule_stress_impact_gain
+			just = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2033 = {
+	type = character_event
+	title = VIETold.2033.t
+	desc = VIETold.2033.desc
+	theme = learning
+	
+	left_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = lustful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = chaste
+		}
+		modifier = {
+			add = 0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = -0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+	}
+	
+	option = { 
+		name = VIETold.2033.a
+		random_list = {
+			10 = { VIET_tiny_prestige_gain_effect = yes }
+			10 = { VIET_tiny_piety_gain_effect = yes }
+		}
+		stress_impact = {
+			paranoid = miniscule_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2033.b
+		VIET_tiny_prestige_gain_effect = yes
+		stress_impact = {
+			craven = miniscule_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}	
+	option = { 
+		name = VIETold.2033.c
+		VIET_tiny_piety_gain_effect = yes
+		stress_impact = {
+			ambitious = miniscule_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2036 = {
+	type = character_event
+	title = VIETold.2036.t
+	desc = VIETold.2036.desc
+	theme = skull	
+	override_background = { reference = corridor_day }
+	
+	left_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = -0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = 0.2
+			has_trait = honest
+		}
+		modifier = {
+			add = -0.2
+			has_trait = deceitful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+	
+
+	
+	option = { 
+		name = VIETold.2036.a
+		add_character_modifier = {
+			modifier = VIET_amused_ruler
+			days = 365
+		}
+		stress_impact = {
+			craven = miniscule_stress_impact_gain
+			compassionate = miniscule_stress_impact_gain
+		}
+		if = {
+			limit = {
+				always = no
+			}
+			custom_tooltip = VIETold.2036.info
+		}
+	}	
+	option = { 
+		name = VIETold.2036.b
+		add_character_modifier = {
+			modifier = VIET_heard_eerie_story
+			days = 365
+		}
+		stress_impact = {
+			brave = miniscule_stress_impact_gain
+		}
+		if = {
+			limit = {
+				always = no
+			}
+			custom_tooltip = VIETold.2036.info
+		}
+	}
+}
+
+
+
+VIETold.2040 = {
+	type = character_event
+	title = VIETold.2040.t
+	desc = VIETold.2040.desc
+	theme = realm
+	
+	left_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = deceitful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = honest
+		}
+		modifier = {
+			add = 0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = -0.2
+			has_trait = humble
+		}
+	}
+	
+
+	
+	option = { 
+		name = VIETold.2040.a
+		trigger = {
+			has_trait = cynical
+		}
+		trait = cynical
+		random_list = {
+			10 = { VIET_small_prestige_gain_effect = yes }
+			10 = { VIET_small_piety_gain_effect = yes }
+		}
+		stress_impact = {
+			cynical = miniscule_stress_impact_loss
+		}
+	}	
+	option = { 
+		name = VIETold.2040.b
+		VIET_small_prestige_gain_effect = yes
+	}	
+	option = { 
+		name = VIETold.2040.c
+		VIET_small_piety_gain_effect = yes
+	}	
+	option = { 
+		name = VIETold.2040.d
+		random_list = {
+			10 = { VIET_small_prestige_gain_effect = yes }
+			5 = { VIET_small_piety_gain_effect = yes }
+		}
+	}	
+	option = { 
+		name = VIETold.2040.e
+		random_list = {
+			5 = { VIET_small_prestige_gain_effect = yes }
+			10 = { VIET_small_piety_gain_effect = yes }
+		}
+	}
+}
+
+VIETold.2051 = {
+	type = character_event
+	title = VIETold.2051.t
+	desc = VIETold.2051.desc
+	theme = faith
+	override_background = { reference = market }
+	
+	left_portrait = {
+		character = root
+		animation = personality_callous
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+	}
+
+	option = { 
+		name = VIETold.2051.a
+		stress_impact = {
+			paranoid = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2051.b
+		random_list = {
+			10 = { VIET_medium_piety_gain_effect = yes }
+			10 = { VIET_medium_piety_loss_effect = yes }
+		}
+		stress_impact = {
+			base = minor_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2053 = {
+	type = character_event
+	title = VIETold.2053.t
+	desc = VIETold.2053.desc
+	theme = VIET_theme_garden_generic
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+	}
+
+	option = { 
+		name = VIETold.2053.a
+		VIET_tiny_piety_gain_effect = yes
+		VIET_tiny_prestige_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_navel_gazing
+			days = 180
+		}
+		stress_impact = {
+			cynical = miniscule_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2053.b
+		add_dread = 4
+		add_character_modifier = {
+			modifier = VIET_navel_gazing
+			days = 180
+		}
+		stress_impact = {
+			compassionate = miniscule_stress_impact_gain
+			trusting = miniscule_stress_impact_gain
+			humble = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2054 = {
+	type = character_event
+	title = VIETold.2054.t
+	desc = VIETold.2054.desc
+	theme = friendly	
+	override_background = { reference = tavern }
+	
+	right_portrait = root
+	
+	trigger = {
+		VIET_is_unattractive_trigger = no
+		is_female = no
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = honest
+		}
+		modifier = {
+			add = -0.2
+			has_trait = deceitful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+
+	option = { 
+		name = VIETold.2054.a
+		if = {
+			limit = {
+				faith = {
+					trait_is_virtue = chaste
+				}
+			}
+			VIET_small_piety_gain_effect = yes
+		}
+		VIET_small_prestige_gain_effect = yes
+	}
+
+	option = { 
+		name = VIETold.2054.b
+		if = {
+			limit = {
+				faith = {
+					trait_is_virtue = chaste
+				}
+			}
+			VIET_small_piety_gain_effect = yes
+		}
+		add_character_modifier = {
+			modifier = VIET_interesting_talk_with_stranger
+			days = 365
+		}
+		stress_impact = {
+			gregarious = miniscule_stress_impact_loss
+		}
+	}
+
+	option = { 
+		name = VIETold.2054.c
+		trigger = {
+			NOR = {
+				has_sexuality = homosexual
+				has_sexuality = asexual
+			}
+		}
+		add_character_modifier = {
+			modifier = VIET_interesting_talk_with_stranger
+			days = 365
+		}
+		stress_impact = {
+			chaste = miniscule_stress_impact_gain
+			lustful = miniscule_stress_impact_loss
+		}
+	}
+
+	option = { 
+		name = VIETold.2054.d
+		trigger = {
+			has_trait = lustful
+			NOR = {
+				has_sexuality = homosexual
+				has_sexuality = asexual
+			}
+		}
+		trait = lustful
+		if = {
+			limit = {
+				faith = {
+					trait_is_virtue = chaste
+				}
+			}
+			VIET_medium_piety_loss_effect = yes
+		}
+		add_character_modifier = {
+			modifier = VIET_one_time_lovemaking
+			days = 365
+		}
+		stress_impact = {
+			lustful = minor_stress_impact_loss
+		}
+	}
+}
+
+VIETold.2057 = {
+	type = character_event
+	title = VIETold.2057.t
+	desc = VIETold.2057.desc
+	theme = martial_strategy_focus
+	
+	left_portrait = {
+		character = root
+		animation = personality_cynical
+	}
+	
+	trigger = {
+		NOT = { has_character_flag = VIET_jenassa_mercenary_event }
+		NOT = { has_game_rule = VIET_serious_events }
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = -0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = 0.2
+			has_trait = fickle
+		}
+		modifier = {
+			add = -0.2
+			has_trait = stubborn
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+	
+	immediate = {
+		add_character_flag = VIET_jenassa_mercenary_event 
+	}
+
+	option = { 
+		name = VIETold.2057.a
+		trigger = {
+			OR = {
+				is_ai = no
+				gold >= 30
+			}
+		}
+		remove_short_term_gold = 30
+		add_character_modifier = {
+			modifier = VIET_strange_female_bodyguard
+			years = 20
+		}
+	}
+	option = { 
+		name = VIETold.2057.b
+		VIET_medium_prestige_gain_effect = yes
+	}
+	option = { 
+		name = VIETold.2057.c
+		trigger = {
+			NOT = { faith = { has_doctrine = doctrine_gender_female_dominated } }
+		}
+		add_character_modifier = {
+			modifier = VIET_amused_ruler
+			days = 365
+		}
+	}
+}
+
+VIETold.2065 = {
+	type = character_event
+	title = VIETold.2065.t
+	desc = VIETold.2065.desc
+	theme = martial_strategy_focus	
+	override_background = { reference = tavern }
+	
+	left_portrait = root
+	
+	trigger = {
+		NOT = { has_game_rule = VIET_serious_events }
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = honest
+		}
+		modifier = {
+			add = -0.2
+			has_trait = deceitful
+		}
+	}
+
+	option = { 
+		name = VIETold.2065.a
+		VIET_medium_prestige_loss_effect = yes
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			wrathful = miniscule_stress_impact_gain
+			arrogant = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2065.b
+		random_list = {
+			10 = {
+				add_character_modifier = {
+					modifier = VIET_sinmir_good_defense_advice
+					years = 7
+				}
+			}
+			10 = {
+				add_character_modifier = {
+					modifier = VIET_sinmir_bad_defense_advice
+					years = 7
+				}
+			}
+		}
+	}
+	option = { 
+		name = VIETold.2065.c
+		add_dread = 5
+	}
+}
+
+VIETold.2068 = {
+	type = character_event
+	title = VIETold.2068.t
+	desc = VIETold.2068.desc
+	theme = family
+	
+	left_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = 0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+	}
+
+	option = { 
+		name = VIETold.2068.a
+		VIET_small_piety_gain_effect = yes
+	}
+	option = { 
+		name = VIETold.2068.b
+		add_character_modifier = {
+			modifier = VIET_ate_good_food
+			days = 365
+		}
+	}
+	option = { 
+		name = VIETold.2068.c
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			lazy = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_loss
+		}
+	}
+	option = { 
+		name = VIETold.2068.d
+		VIET_small_prestige_gain_effect = yes
+	}
+}
+
+VIETold.2073 = {
+	type = character_event
+	title = VIETold.2073.t
+	desc = VIETold.2073.desc
+	theme = VIET_theme_garden_generic
+	
+	left_portrait = {
+		character = root
+		animation = disapproval
+	}	
+	right_portrait = {
+		character = scope:scope_VIET_sun_starer
+		animation = grief
+	}
+	
+	trigger = {
+		any_courtier_or_guest = {
+			is_available_ai_adult = yes
+		}
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = -0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = honest
+		}
+		modifier = {
+			add = -0.2
+			has_trait = deceitful
+		}
+	}
+	
+	immediate = {
+		random_courtier_or_guest = {
+			limit = {
+				is_available_ai_adult = yes
+			}
+			save_scope_as = scope_VIET_sun_starer
+		}
+	}
+
+	option = { 
+		name = VIETold.2073.a
+		scope:scope_VIET_sun_starer = {
+			random_list = {
+				75 = {
+					add_character_modifier = {
+						modifier = VIET_stared_at_sun
+						years = 1
+					}
+				}
+				25 = {
+					add_character_modifier = {
+						modifier = VIET_permanent_sun_damage
+					}
+				}
+			}
+		}
+	}
+}
+
+VIETold.2074 = {
+	type = character_event
+	title = VIETold.2074.t
+	desc = VIETold.2074.desc
+	theme = VIET_theme_garden_generic
+	
+	left_portrait = {
+		character = root
+		animation = shock 
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = -0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = 0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = 0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = -0.2
+			has_trait = zealous
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2074.a
+		add_stress = 8
+	}
+}
+
+VIETold.2075 = {
+	type = character_event
+	title = VIETold.2075.t	
+	desc = {
+		desc = VIETold.2075.desc
+		triggered_desc = {
+			trigger = {
+				OR = {
+					learning >= medium_skill_rating
+					has_trait = lifestyle_physician
+					has_trait = lifestyle_herbalist
+				}
+			}
+			desc = VIETold.2075.desc.educated
+		}
+	}
+	theme = medicine
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = -0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2075.a
+		trigger = {
+			OR = {
+				is_ai = no
+				gold >= 15
+			}
+		}
+		remove_short_term_gold = 15
+		add_character_modifier = {
+			modifier = VIET_purchase_herbs_small
+			years = 4
+		}
+	}
+	option = { 
+		name = VIETold.2075.d
+		trigger = {
+			OR = {
+				is_ai = no
+				gold >= 45
+			}
+		}
+		remove_short_term_gold = 45
+		add_character_modifier = {
+			modifier = VIET_purchase_herbs_large
+			years = 4
+		}
+	}
+	option = { 
+		name = VIETold.2075.b
+		VIET_medium_prestige_gain_effect = yes
+	}
+	option = { 
+		name = VIETold.2075.c
+		add_character_modifier = {
+			modifier = VIET_skeptical_ruler
+			days = 777
+		}
+	}
+}
+
+VIETold.2077 = {
+	type = character_event
+	title = VIETold.2077.t	
+	desc = VIETold.2077.desc
+	theme = intrigue
+	
+	
+	right_portrait = {
+		character = root
+		animation = paranoia
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = forgiving
+		}
+		modifier = {
+			add = -0.2
+			has_trait = vengeful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2077.a
+		add_character_modifier = {
+			modifier = VIET_guards_on_alert
+			years = 3
+		}
+		stress_impact = {
+			base = minor_stress_impact_gain
+			paranoid = medium_stress_impact_gain
+			craven = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2077.b
+		trigger = {
+			NOT = { has_trait = paranoid }
+		}
+		stress_impact = {
+			base = minor_stress_impact_loss
+			vengeful = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2077.c
+		trigger = {
+			has_trait = brave
+		}
+		trait = brave
+		VIET_medium_prestige_gain_effect = yes
+		stress_impact = {
+			paranoid = minor_stress_impact_loss
+		}
+	}
+	option = { 
+		name = VIETold.2077.d
+		trigger = {
+			learning >= decent_skill_rating			
+		}
+		skill = learning
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		add_character_modifier = {
+			modifier = VIET_impressed_reasoning_skills
+			years = 3
+		}
+		stress_impact = {
+			paranoid = minor_stress_impact_loss
+		}
+	}
+}
+
+VIETold.2078 = {
+	type = character_event
+	title = VIETold.2078.t	
+	desc = VIETold.2078.desc
+	theme = martial_strategy_focus
+	
+	left_portrait = {
+		character = root
+		animation = personality_content
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = -0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2078.a
+		VIET_medium_prestige_gain_effect = yes
+		stress_impact = {
+			arrogant = miniscule_stress_impact_gain
+			sadistic = miniscule_stress_impact_gain
+			callous = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2078.b
+		add_dread = 10
+		stress_impact = {
+			humble = miniscule_stress_impact_gain
+			compassionate = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2079 = {
+	type = character_event
+	title = VIETold.2079.t	
+	desc = VIETold.2079.desc
+	theme = party
+	
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2079.a
+		add_diplomacy_lifestyle_xp = minor_lifestyle_xp
+		add_character_modifier = {
+			modifier = VIET_interesting_talk_with_stranger
+			days = 365
+		}
+	}
+}
+
+VIETold.2080 = {
+	type = character_event
+	title = VIETold.2080.t	
+	desc = VIETold.2080.desc
+	theme = realm
+	override_background = { reference = sitting_room }
+	
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = -0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2080.a
+		add_character_modifier = {
+			modifier = VIET_magnificent_castle_dream
+			years = 3
+		}
+	}
+}
+
+VIETold.2081 = {
+	type = character_event
+	title = VIETold.2081.t	
+	desc = VIETold.2081.desc
+	theme = seduction
+	
+	left_portrait = {
+		character = scope:scope_VIET_courtier_perving_on_maid
+		animation = personality_dishonorable
+	}
+	
+	trigger = {
+		any_courtier = {
+			is_available_ai_adult = yes
+			has_trait = lustful
+			is_female = no
+			NOT = { has_sexuality = homosexual }
+			NOT = { has_sexuality = asexual }
+		}
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = arbitrary
+		}
+		modifier = {
+			add = -0.2
+			has_trait = just
+		}
+		modifier = {
+			add = 0.2
+			has_trait = forgiving
+		}
+		modifier = {
+			add = -0.2
+			has_trait = vengeful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+	}
+
+	immediate = {
+		random_courtier = {
+			limit = {
+				is_available_ai_adult = yes
+				has_trait = lustful
+				is_female = no
+				NOT = { has_sexuality = homosexual }
+				NOT = { has_sexuality = asexual }
+			}
+			save_scope_as = scope_VIET_courtier_perving_on_maid
+		}
+	}
+
+	option = { 
+		name = VIETold.2081.a
+		VIET_medium_piety_loss_effect = yes
+		scope:scope_VIET_courtier_perving_on_maid = {
+			add_character_modifier = {
+				modifier = VIET_loves_cute_maids
+				years = 8
+			}
+			add_opinion = {
+				target = root
+				modifier = VIET_opinion_ignore_maid_harassment
+			}
+			reverse_add_opinion = {
+				target = root
+				modifier = VIET_opinion_maid_harasser
+			}			
+		}
+		stress_impact = {
+			compassionate = minor_stress_impact_gain
+			chaste = minor_stress_impact_gain
+			just = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2081.b
+		VIET_medium_piety_gain_effect = yes
+		scope:scope_VIET_courtier_perving_on_maid = {
+			add_character_modifier = {
+				modifier = VIET_loves_cute_maids
+				years = 8
+			}
+			add_opinion = {
+				target = root
+				modifier = VIET_opinion_warned_about_maids
+			}
+			reverse_add_opinion = {
+				target = root
+				modifier = VIET_opinion_maid_harasser
+			}			
+		}
+		progress_towards_rival_effect = {
+			CHARACTER = scope:scope_VIET_courtier_perving_on_maid
+			OPINION = 0
+			REASON = VIET_rival_reason_placeholder
+		}
+		stress_impact = {
+			callous = minor_stress_impact_gain
+			shy = minor_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2082 = {
+	type = character_event
+	title = VIETold.2082.t	
+	desc = VIETold.2082.desc
+	theme = medicine
+	override_background = { reference = throne_room }
+	
+	left_portrait = {
+		character = root
+		animation = boredom
+	}
+	
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = honest
+		}
+		modifier = {
+			add = -0.2
+			has_trait = deceitful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = just
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arbitrary
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2082.a
+		trigger = {
+			learning < medium_skill_rating
+		}
+		add_dread = 10
+		VIET_large_prestige_gain_effect = yes
+		stress_impact = {
+			forgiving = miniscule_stress_impact_gain
+			compassionate = miniscule_stress_impact_gain
+			calm = miniscule_stress_impact_gain
+			patient = miniscule_stress_impact_gain
+			trusting = miniscule_stress_impact_gain
+			just = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2082.b
+		trigger = {
+			learning < medium_skill_rating
+		}
+		VIET_large_prestige_gain_effect = yes
+		stress_impact = {
+			vengeful = miniscule_stress_impact_gain
+			wrathful = miniscule_stress_impact_gain
+			paranoid = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2082.c
+		trigger = {
+			learning < medium_skill_rating
+		}
+		VIET_large_prestige_gain_effect = yes
+		stress_impact = {
+			vengeful = miniscule_stress_impact_gain
+			wrathful = miniscule_stress_impact_gain
+			paranoid = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2082.d
+		trigger = {
+			learning >= medium_skill_rating
+		}
+		skill = learning
+		VIET_huge_prestige_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_impressed_medical_skills
+			years = 4
+		}
+	}
+}
+
+VIETold.2083 = {
+	type = character_event
+	title = VIETold.2083.t	
+	desc = VIETold.2083.desc
+	theme = dread
+	
+	left_portrait = {
+		character = root
+		animation = grief
+	}	
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = arbitrary
+		}
+		modifier = {
+			add = -0.2
+			has_trait = just
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2083.a
+		add_character_modifier = {
+			modifier = VIET_notorious_jailbreak
+			years = 8
+		}
+	}
+}
+
+VIETold.2086 = {
+	type = character_event
+	title = VIETold.2086.t	
+	desc = VIETold.2086.desc
+	theme = realm
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}	
+	right_portrait = {
+		character = scope:scope_VIET_courtier_noise_complainer
+		animation = dismissal
+	}
+	
+	trigger = {
+		any_courtier = {
+			is_available_ai_adult = yes
+			OR = {
+				has_trait = arrogant
+				has_trait = impatient
+				has_trait = wrathful
+				has_trait = paranoid
+				has_trait = arbitrary
+			}
+			NOR = {
+				has_trait = shy
+				has_trait = humble
+				has_trait = forgiving
+			}
+			NOT = { is_close_family_of = root }
+		}		
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = just
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arbitrary
+		}
+	}
+
+	immediate = {
+		random_courtier = {
+			limit = {
+				is_available_ai_adult = yes
+				OR = {
+					has_trait = arrogant
+					has_trait = impatient
+					has_trait = wrathful
+					has_trait = paranoid
+					has_trait = arbitrary
+				}
+				NOR = {
+					has_trait = shy
+					has_trait = humble
+					has_trait = forgiving
+				}
+				NOT = { is_close_family_of = root }
+			}
+			save_scope_as = scope_VIET_courtier_noise_complainer
+		}
+	}
+
+	option = { 
+		name = VIETold.2086.a
+		add_character_modifier = {
+			modifier = VIET_reduce_construction_noise
+			years = 5
+		}
+		scope:scope_VIET_courtier_noise_complainer = {
+			add_opinion = {
+				target = root
+				modifier = VIET_opinion_supported_construction_noise
+			}
+		}
+	}
+	option = { 
+		name = VIETold.2086.b
+		scope:scope_VIET_courtier_noise_complainer = {
+			add_opinion = {
+				target = root
+				modifier = VIET_opinion_ignored_construction_noise
+			}
+		}
+	}
+	option = { 
+		name = VIETold.2086.c
+		trigger = {
+			stewardship >= decent_skill_rating			
+		}
+		skill = stewardship
+		VIET_medium_prestige_loss_effect = yes
+		scope:scope_VIET_courtier_noise_complainer = {
+			add_opinion = {
+				target = root
+				modifier = VIET_opinion_compromise_construction_noise
+			}
+		}		
+	}
+	option = { 
+		name = VIETold.2086.d
+		add_diplomacy_lifestyle_xp = minor_lifestyle_xp
+		duel = {
+			skill = diplomacy
+			target = scope:scope_VIET_courtier_noise_complainer
+			10 = { 
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -1.1
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				desc = VIETold.2086.d.a
+				send_interface_toast = {
+					left_icon = ROOT
+					title = VIETold.2086.d.toast.failure
+					scope:scope_VIET_courtier_noise_complainer = {
+						add_opinion = {
+							target = root
+							modifier = VIET_opinion_ignored_construction_noise
+						}
+					}
+				}
+			}
+			10 = { 
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 1.1
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				desc = VIETold.2086.d.b
+				send_interface_toast = {
+					left_icon = ROOT
+					title = VIETold.2086.d.toast.success
+					scope:scope_VIET_courtier_noise_complainer = {
+						add_opinion = {
+							target = root
+							modifier = VIET_opinion_compromise_construction_noise
+						}
+					}
+				}
+			}
+		}		
+	}
+}
+
+VIETold.2087 = {
+	type = character_event
+	title = VIETold.2087.t	
+	desc = VIETold.2087.desc
+	theme = corruption
+	
+	left_portrait = {
+		character = root
+		animation = personality_callous
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = 0.2
+			has_trait = arbitrary
+		}
+		modifier = {
+			add = -0.2
+			has_trait = just
+		}
+	}
+
+	option = { 
+		name = VIETold.2087.a
+		VIET_large_prestige_loss_effect = yes
+		stress_impact = {
+			just = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2087.b
+		remove_short_term_gold = 15
+		stress_impact = {
+			arbitrary = miniscule_stress_impact_gain
+			arrogant = minor_stress_impact_gain
+			greedy = minor_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2090 = {
+	type = character_event
+	title = VIETold.2090.t	
+	desc = VIETold.2090.desc
+	theme = learning
+	
+	left_portrait = {
+		character = root
+		animation = personality_callous
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = greedy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = generous
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gluttonous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = temperate
+		}
+	}
+
+	option = { 
+		name = VIETold.2090.a
+		VIET_medium_piety_gain_effect = yes
+		VIET_medium_prestige_loss_effect = yes
+	}
+	option = { 
+		name = VIETold.2090.b
+		VIET_medium_piety_loss_effect = yes
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		random = {
+			chance = 33
+			add_learning_skill = 1
+		}		
+	}
+	option = { 
+		name = VIETold.2090.c
+	}
+	option = { 
+		name = VIETold.2090.d
+		VIET_medium_piety_loss_effect = yes
+		add_character_modifier = {
+			modifier = VIET_discussed_mysterious_scroll_with_scholars
+			years = 4
+		}
+	}
+}
+
+VIETold.2092 = {
+	type = character_event
+	title = VIETold.2092.t	
+	desc = VIETold.2092.desc
+	theme = battle
+	
+	left_portrait = {
+		character = root
+		animation = fear
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = -0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+	}
+
+	option = { 
+		name = VIETold.2092.a
+		stress_impact = {
+			base = miniscule_stress_impact_gain
+			craven = miniscule_stress_impact_gain
+			paranoid = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2094 = {
+	type = character_event
+	title = VIETold.2094.t	
+	desc = VIETold.2094.desc
+	theme = VIET_theme_oblivion_pastoral_dream
+	
+	right_portrait = {
+		character = root
+		animation = personality_content
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = 0.2
+			has_trait = fickle
+		}
+		modifier = {
+			add = -0.2
+			has_trait = stubborn
+		}
+	}
+
+	option = { 
+		name = VIETold.2094.a
+		VIET_tiny_prestige_gain_effect = yes
+		stress_impact = {
+			zealous = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2094.b
+		random_list = {
+			20 = { VIET_tiny_prestige_gain_effect = yes }
+			10 = { VIET_tiny_piety_gain_effect = yes }
+		}
+		stress_impact = {
+			content = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2094.c
+		random_list = {
+			10 = { VIET_tiny_prestige_gain_effect = yes }
+			20 = { VIET_tiny_piety_gain_effect = yes }
+		}
+		stress_impact = {
+			ambitious = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2094.d
+		VIET_tiny_piety_gain_effect = yes
+		stress_impact = {
+			cynical = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2095 = {
+	type = character_event
+	title = VIETold.2095.t	
+	desc = VIETold.2095.desc
+	theme = VIET_theme_good_dream
+	
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+	}
+
+	option = { 
+		name = VIETold.2095.a
+		stress_impact = {
+			base = minor_stress_impact_loss
+			compassionate = miniscule_stress_impact_loss
+			humble = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_loss
+		}
+		add_character_modifier = {
+			modifier = VIET_comforting_dream_deceased
+			days = 888
+		}
+	}
+}
+
+VIETold.2096 = {
+	type = character_event
+	title = VIETold.2096.t	
+	desc = VIETold.2096.desc
+	theme = family
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+	}
+
+	option = { 
+		name = VIETold.2096.a
+		add_character_modifier = {
+			modifier = VIET_deathbed_wisdom
+			years = 3
+		}
+	}
+}
+
+VIETold.2097 = {
+	type = character_event
+	title = VIETold.2097.t	
+	desc = VIETold.2097.desc
+	theme = faith
+	override_background = { reference = VIET_background_oblivion_pastoral_dream }
+	
+	left_portrait = {
+		character = root
+		animation = personality_compassionate
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+	}
+
+	option = { 
+		name = VIETold.2097.a
+		VIET_tiny_piety_gain_effect = yes
+	}
+}
+
+VIETold.2107 = {
+	type = character_event
+	title = VIETold.2107.t	
+	desc = VIETold.2107.desc
+	theme = death
+	override_background = { reference = throne_room }
+	
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = -0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = 0.2
+			has_trait = fickle
+		}
+		modifier = {
+			add = -0.2
+			has_trait = stubborn
+		}
+	}
+
+	option = { 
+		name = VIETold.2107.a
+		VIET_tiny_prestige_gain_effect = yes
+		stress_impact = {
+			brave = miniscule_stress_impact_gain
+			content = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2107.b
+		VIET_tiny_piety_gain_effect = yes
+		stress_impact = {
+			craven = miniscule_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2108 = {
+	type = character_event
+	title = VIETold.2108.t	
+	desc = VIETold.2108.desc
+	theme = realm
+	
+	left_portrait = {
+		character = root
+		animation = personality_callous
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = just
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arbitrary
+		}
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+	}
+
+	option = { 
+		name = VIETold.2108.a
+		VIET_medium_piety_loss_effect = yes
+		stress_impact = {
+			base = minor_stress_impact_loss
+			just = minor_stress_impact_gain
+			callous = miniscule_stress_impact_gain
+			sadistic = miniscule_stress_impact_gain
+			wrathful = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2108.b
+		VIET_large_prestige_gain_effect = yes
+		stress_impact = {
+			compassionate = miniscule_stress_impact_gain
+			forgiving = miniscule_stress_impact_gain
+			trusting = miniscule_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2109 = {
+	type = character_event
+	title = VIETold.2109.t	
+	desc = VIETold.2109.desc
+	theme = intrigue
+	
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = 0.2
+			has_trait = fickle
+		}
+		modifier = {
+			add = -0.2
+			has_trait = stubborn
+		}
+	}
+
+	option = { 
+		name = VIETold.2109.a
+		VIET_small_piety_gain_effect = yes
+	}
+}
+
+VIETold.2112 = {
+	type = character_event
+	title = VIETold.2112.t	
+	desc = VIETold.2112.desc
+	theme = realm
+	
+	right_portrait = {
+		character = root
+		animation = personality_cynical
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = 0.2
+			has_trait = fickle
+		}
+		modifier = {
+			add = -0.2
+			has_trait = stubborn
+		}
+	}
+
+	option = { 
+		name = VIETold.2112.a
+		VIET_small_piety_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_amused_ruler
+			days = 365
+		}
+	}
+	option = { 
+		name = VIETold.2112.b
+		VIET_small_prestige_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_amused_ruler
+			days = 365
+		}
+	}
+}
+
+VIETold.2116 = {
+	type = character_event
+	title = VIETold.2116.t	
+	desc = VIETold.2116.desc
+	theme = realm
+	
+	right_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+	}
+
+	option = { 
+		name = VIETold.2116.a
+		add_character_modifier = {
+			modifier = VIET_amused_ruler
+			days = 730
+		}
+	}
+	option = { 
+		name = VIETold.2116.b
+		add_character_modifier = {
+			modifier = VIET_skeptical_ruler
+			days = 730
+		}
+	}
+}
+
+VIETold.2117 = {
+	type = character_event
+	title = VIETold.2117.t	
+	desc = VIETold.2117.desc
+	theme = death
+	override_background = { reference = throne_room }
+	
+	right_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = 0.2
+			has_trait = honest
+		}
+		modifier = {
+			add = -0.2
+			has_trait = deceitful
+		}
+	}
+
+	option = { 
+		name = VIETold.2117.a
+		VIET_medium_piety_gain_effect = yes
+		capital_county = {
+			add_county_modifier = {
+				modifier = VIET_zombie_outbreak_stories
+				years = 3
+			}		
+		}
+		stress_impact = {
+			paranoid = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2117.b
+		VIET_medium_prestige_gain_effect = yes
+		capital_county = {
+			add_county_modifier = {
+				modifier = VIET_zombie_outbreak_stories
+				years = 3
+			}		
+		}
+		stress_impact = {
+			cynical = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2118 = {
+	type = character_event
+	title = VIETold.2118.t	
+	desc = VIETold.2118.desc
+	theme = faith
+	override_background = { reference = study }
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+
+	option = { 
+		name = VIETold.2118.a
+		add_character_modifier = {
+			modifier = VIET_navel_gazing
+			days = 365
+		}
+	}
+}
+
+VIETold.2119 = {
+	type = character_event
+	title = VIETold.2119.t	
+	desc = VIETold.2119.desc
+	theme = faith
+	override_background = { reference = sitting_room }
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = -0.2
+			has_trait = humble
+		}
+	}
+
+	option = { 
+		name = VIETold.2119.a
+		VIET_tiny_prestige_gain_effect = yes
+		stress_impact = {
+			humble = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2119.b
+		VIET_tiny_piety_gain_effect = yes
+	}
+	option = { 
+		name = VIETold.2119.c
+		add_dread = 5
+		stress_impact = {
+			arrogant = miniscule_stress_impact_gain
+			ambitious = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2119.d
+		stress_impact = {
+			base = minor_stress_impact_loss
+			arrogant = miniscule_stress_impact_gain
+			ambitious = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2120 = {
+	type = character_event
+	title = VIETold.2120.t	
+	desc = VIETold.2120.desc
+	theme = friendly
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = content
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+	}
+
+	option = { 
+		name = VIETold.2120.a
+		VIET_medium_piety_gain_effect = yes
+	}
+}
+
+VIETold.2121 = {
+	type = character_event
+	title = VIETold.2121.t	
+	desc = VIETold.2121.desc
+	theme = friendly
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = content
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+	}
+
+	option = { 
+		name = VIETold.2121.a
+		VIET_medium_piety_gain_effect = yes
+	}
+}
+
+VIETold.2122 = {
+	type = character_event
+	title = VIETold.2122.t	
+	desc = VIETold.2122.desc
+	theme = friendly
+	
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	
+	trigger = {
+		NOT = {
+			any_parent = {
+				is_alive = yes
+			}		
+		}
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = sadistic
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = forgiving
+		}
+		modifier = {
+			add = -0.2
+			has_trait = vengeful
+		}
+	}
+
+	option = { 
+		name = VIETold.2122.a
+		add_character_modifier = {
+			modifier = VIET_happy_memory_of_parents
+			days = 365
+		}
+	}
+}
+
+VIETold.2123 = {
+	type = character_event
+	title = VIETold.2123.t	
+	desc = VIETold.2123.desc
+	theme = battle
+	
+	left_portrait = {
+		character = root
+		animation = sadness
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = -0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+	}
+
+	option = { 
+		name = VIETold.2123.a
+		VIET_medium_prestige_gain_effect = yes
+		stress_impact = {
+			humble = minor_stress_impact_gain
+			compassionate = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2123.b
+		VIET_medium_piety_gain_effect = yes
+		stress_impact = {
+			callous = minor_stress_impact_gain
+			arrogant = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2123.c
+		VIET_huge_piety_gain_effect = yes
+		VIET_medium_prestige_loss_effect = yes
+		stress_impact = {
+			callous = medium_stress_impact_gain
+			arrogant = medium_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2124 = {
+	type = character_event
+	title = VIETold.2124.t	
+	desc = VIETold.2124.desc
+	theme = faith
+	override_background = { reference = market }
+	
+	left_portrait = {
+		character = root
+		animation = paranoia
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+		modifier = {
+			add = 0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = -0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+	}
+
+	option = { 
+		name = VIETold.2124.a
+		add_character_modifier = {
+			modifier = VIET_friendly_ghost_stalker
+			years = 3
+		}
+	}
+}
+
+VIETold.2125 = {
+	type = character_event
+	title = VIETold.2125.t	
+	desc = VIETold.2125.desc
+	theme = death
+	override_background = { reference = throne_room }
+	
+	left_portrait = {
+		character = root
+		animation = personality_callous
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = just
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arbitrary
+		}
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+	}
+
+	option = { 
+		name = VIETold.2125.a
+		VIET_huge_prestige_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_let_necrophiliac_go
+			years = 5
+		}
+		stress_impact = {
+			vengeful = minor_stress_impact_gain
+			impatient = minor_stress_impact_gain
+			wrathful = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2125.b
+		VIET_huge_piety_gain_effect = yes
+		add_dread = 10
+		add_character_modifier = {
+			modifier = VIET_executed_necrophiliac
+			years = 5
+		}
+		stress_impact = {
+			calm = minor_stress_impact_gain
+			compassionate = minor_stress_impact_gain
+			forgiving = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2125.c
+		random_list = {
+			10 = { VIET_huge_piety_gain_effect = yes }
+			10 = { VIET_huge_prestige_gain_effect = yes }
+		}
+		add_character_modifier = {
+			modifier = VIET_imprisoned_necrophiliac
+			years = 5
+		}
+		stress_impact = {
+			calm = miniscule_stress_impact_gain
+			compassionate = miniscule_stress_impact_gain
+			forgiving = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2126 = {
+	type = character_event
+	title = VIETold.2126.t	
+	desc = VIETold.2126.desc
+	theme = unfriendly
+	override_background = { reference = corridor_day }
+	
+	right_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = honest
+		}
+		modifier = {
+			add = -0.2
+			has_trait = deceitful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+	}
+
+	option = { 
+		name = VIETold.2126.a
+		add_character_modifier = {
+			modifier = VIET_heartless_towards_servants
+			days = 730
+		}
+		stress_impact = {
+			compassionate = minor_stress_impact_gain
+			humble = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2126.b
+		trigger = {
+			NOT = { has_trait = compassionate }
+		}
+		add_dread = 10
+		add_character_modifier = {
+			modifier = VIET_heartless_towards_servants
+			days = 1460
+		}
+		stress_impact = {
+			compassionate = minor_stress_impact_gain
+			humble = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2126.c
+		VIET_small_prestige_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_comforted_servant
+			days = 1095
+		}
+		stress_impact = {
+			callous = minor_stress_impact_gain
+			sadistic = minor_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2126.d
+		VIET_small_piety_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_comforted_servant
+			days = 1095
+		}
+		stress_impact = {
+			callous = minor_stress_impact_gain
+			sadistic = minor_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2128 = {
+	type = character_event
+	title = VIETold.2128.t	
+	desc = VIETold.2128.desc
+	theme = VIET_theme_good_dream
+	
+	left_portrait = {
+		character = root
+		animation = ecstasy
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = content
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+	}
+
+	option = { 
+		name = VIETold.2128.a
+		VIET_tiny_piety_gain_effect = yes
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			calm = miniscule_stress_impact_loss
+			compassionate = miniscule_stress_impact_loss
+			humble = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_loss
+			patient = miniscule_stress_impact_loss
+		}
+	}
+}
+
+VIETold.2129 = {
+	type = character_event
+	title = VIETold.2129.t	
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					OR = {
+						AND = {
+							is_female = yes
+							NOT = { has_sexuality = homosexual }
+						}
+						AND = {
+							is_female = no
+							has_sexuality = homosexual
+						}
+					}
+				}
+				desc = VIETold.2129.desc.male
+			}
+			desc = VIETold.2129.desc.female
+		}
+	}
+	theme = seduction
+	
+	left_portrait = {
+		character = root
+		animation = personality_content
+	}
+	
+	trigger = {
+		NOR = {
+			has_trait = celibate
+			has_sexuality = asexual
+		}	
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = stubborn
+		}
+		modifier = {
+			add = -0.2
+			has_trait = fickle
+		}
+	}
+
+	option = { 
+		name = VIETold.2129.a
+		add_character_modifier = {
+			modifier = VIET_remembering_childhood_love
+			years = 5
+		}
+	}
+}
+
+VIETold.2130 = {
+	type = character_event
+	title = VIETold.2130.t	
+	desc = VIETold.2130.desc
+	theme = seduction
+	override_background = { reference = throne_room }
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+	}
+
+	option = { 
+		name = VIETold.2130.a
+		VIET_small_piety_gain_effect = yes
+		stress_impact = {
+			cynical = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2130.b		
+		add_dread = 5
+		stress_impact = {
+			compassionate = miniscule_stress_impact_gain
+			trusting = miniscule_stress_impact_gain
+			lustful = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2130.c
+		VIET_small_prestige_gain_effect = yes
+		stress_impact = {
+			cynical = minor_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2131 = {
+	type = character_event
+	title = VIETold.2131.t	
+	desc = VIETold.2131.desc
+	theme = friendly
+	
+	left_portrait = {
+		character = root
+		animation = ecstasy
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = content
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+	}
+
+	option = { 
+		name = VIETold.2131.a
+		stress_impact = {
+			base = minor_stress_impact_loss
+		}
+	}
+}
+
+VIETold.2134 = {
+	type = character_event
+	title = VIETold.2134.t	
+	desc = VIETold.2134.desc
+	theme = unfriendly
+	
+	left_portrait = {
+		character = root
+		animation = shock
+	}
+
+	right_portrait = scope:scope_VIET_inappropriate_courtier
+	
+	trigger = {
+		any_courtier = {
+			is_available_ai_adult = yes
+		}
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = arbitrary
+		}
+		modifier = {
+			add = -0.2
+			has_trait = just
+		}
+		modifier = {
+			add = 0.2
+			has_trait = forgiving
+		}
+		modifier = {
+			add = -0.2
+			has_trait = vengeful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+	}
+
+	immediate = {
+		random_courtier = {
+			limit = {
+				is_available_ai_adult = yes
+			}
+			save_scope_as = scope_VIET_inappropriate_courtier
+			VIET_medium_piety_loss_effect = yes
+		}
+	}
+
+	option = { 
+		name = VIETold.2134.a
+		scope:scope_VIET_inappropriate_courtier = {
+			add_opinion = {
+				target = root
+				modifier = VIET_opinion_chastised_me_in_public
+			}
+			reverse_add_opinion = {
+				target = root
+				modifier = VIET_opinion_inappropriate_speech
+			}			
+		}
+		stress_impact = {
+			content = miniscule_stress_impact_gain
+			forgiving = minor_stress_impact_gain
+			patient = minor_stress_impact_gain
+			shy = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2134.b
+		VIET_small_prestige_loss_effect = yes
+		scope:scope_VIET_inappropriate_courtier = {
+			reverse_add_opinion = {
+				target = root
+				modifier = VIET_opinion_inappropriate_speech
+			}			
+		}
+		stress_impact = {
+			wrathful = miniscule_stress_impact_gain
+			vengeful = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2134.c
+		VIET_large_prestige_loss_effect = yes
+		stress_impact = {
+			wrathful = minor_stress_impact_gain
+			vengeful = minor_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2139 = {
+	type = character_event
+	title = VIETold.2139.t	
+	desc = VIETold.2139.desc
+	theme = death
+	override_background = { reference = fp1_ocean }
+	
+	left_portrait = {
+		character = root
+		animation = disbelief
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = stubborn
+		}
+		modifier = {
+			add = -0.2
+			has_trait = fickle
+		}
+	}
+	
+	immediate = {
+		play_music_cue = mx_cue_stress 
+	}
+
+	option = { 
+		name = VIETold.2139.a
+		VIET_tiny_piety_gain_effect = yes
+		stress_impact = {
+			craven = minor_stress_impact_gain
+			cynical = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2139.b
+		VIET_tiny_prestige_gain_effect = yes
+		stress_impact = {
+			brave = minor_stress_impact_gain
+			arrogant = minor_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2141 = {
+	type = character_event
+	title = VIETold.2141.t	
+	desc = VIETold.2141.desc
+	theme = realm
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gluttonous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = temperate
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+	}
+	
+	immediate = {
+		add_character_modifier = {
+			modifier = VIET_thinking_about_foreign_lands
+			years = 3
+		}
+	}
+
+	option = { 
+		name = VIETold.2141.a
+		VIET_small_prestige_gain_effect = yes
+		stress_impact = {
+			trusting = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2141.b
+		VIET_small_piety_gain_effect = yes
+		stress_impact = {
+			cynical = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2141.c
+		random_list = {
+			10 = { VIET_small_prestige_gain_effect = yes }
+			10 = { VIET_small_piety_gain_effect = yes }
+		}
+		stress_impact = {
+			cynical = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2142 = {
+	type = character_event
+	title = VIETold.2142.t	
+	desc = VIETold.2142.desc
+	theme = friendly
+	
+	left_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gluttonous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = temperate
+		}
+		modifier = {
+			add = 0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = -0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = 0.2
+			has_trait = deceitful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = honest
+		}
+	}
+
+	option = { 
+		name = VIETold.2142.a
+		add_character_modifier = {
+			modifier = VIET_minty_fresh_breath
+			years = 4
+		}
+	}
+	option = { 
+		name = VIETold.2142.b
+		VIET_medium_prestige_gain_effect = yes
+		stress_impact = {
+			base = minor_stress_impact_loss
+			content = minor_stress_impact_loss
+		}
+	}
+	option = { 
+		name = VIETold.2142.c
+		VIET_medium_piety_gain_effect = yes
+		stress_impact = {
+			arrogant = medium_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2142.d
+		trigger = {
+			learning >= decent_skill_rating			
+		}
+		skill = learning
+		add_character_modifier = {
+			modifier = VIET_herbal_mouth_cleaning_other
+			years = 12
+		}
+	}
+}
+
+VIETold.2143 = {
+	type = character_event
+	title = VIETold.2143.t	
+	desc = VIETold.2143.desc
+	theme = VIET_theme_good_dream
+	
+	left_portrait = {
+		character = root
+		animation = ecstasy
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = generous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = greedy
+		}
+	}
+
+	option = { 
+		name = VIETold.2143.a
+		VIET_tiny_piety_gain_effect = yes
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			calm = miniscule_stress_impact_loss
+		}
+	}
+}
+
+VIETold.2144 = {
+	type = character_event
+	title = VIETold.2144.t	
+	desc = VIETold.2144.desc
+	theme = unfriendly
+	override_background = { reference = corridor_day }
+	
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	
+	trigger = {
+		is_female = yes
+		NOT = { has_trait = celibate }
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = lustful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = chaste
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = sadistic
+		}
+		modifier = {
+			add = -0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.7
+			has_sexuality = asexual
+		}
+	}
+	
+	immediate = {
+		add_character_modifier = {
+			modifier = VIET_female_rumors_bodyguards
+			years = 6
+		}
+	}
+
+	option = { 
+		name = VIETold.2144.a
+		if = {
+			limit = {
+				faith = {
+					trait_is_virtue = chaste
+				}
+			}
+			VIET_large_piety_gain_effect = yes
+		}
+		else_if = {
+			limit = {
+				faith = {
+					trait_is_virtue = lustful
+				}
+			}
+			VIET_large_piety_gain_effect = yes
+		}
+		else = {
+			VIET_medium_piety_gain_effect = yes
+		}
+		stress_impact = {
+			forgiving = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2144.b
+		if = {
+			limit = {
+				faith = {
+					trait_is_virtue = chaste
+				}
+			}
+			VIET_medium_piety_loss_effect = yes
+		}
+		else_if = {
+			limit = {
+				faith = {
+					trait_is_virtue = lustful
+				}
+			}
+			VIET_medium_piety_gain_effect = yes
+		}
+		VIET_medium_prestige_gain_effect = yes
+		stress_impact = {
+			chaste = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2144.c
+		if = {
+			limit = {
+				faith = {
+					trait_is_virtue = chaste
+				}
+			}
+			VIET_large_piety_loss_effect = yes
+		}
+		else_if = {
+			limit = {
+				faith = {
+					trait_is_virtue = lustful
+				}
+			}
+			VIET_large_piety_gain_effect = yes
+		}
+		add_character_modifier = {
+			modifier = VIET_lustful_ruler
+			years = 3
+		}
+		stress_impact = {
+			chaste = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2144.d
+		VIET_medium_prestige_gain_effect = yes
+		stress_impact = {
+			humble = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2145 = {
+	type = character_event
+	title = VIETold.2145.t	
+	desc = VIETold.2145.desc
+	theme = seduction
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	
+	trigger = {
+		is_female = yes
+		NOT = { has_trait = celibate }
+		NOR = {
+			has_sexuality = asexual
+			has_sexuality = homosexual
+		}
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+	}
+
+	option = { 
+		name = VIETold.2145.a
+		VIET_small_piety_gain_effect = yes
+	}
+	option = { 
+		name = VIETold.2145.b
+		random_list = {
+			10 = { VIET_small_piety_gain_effect = yes }
+			10 = { VIET_small_prestige_gain_effect = yes }
+		}
+	}
+	option = { 
+		name = VIETold.2145.c
+		VIET_small_prestige_gain_effect = yes
+	}
+}
+
+VIETold.2147 = {
+	type = character_event
+	title = VIETold.2147.t	
+	desc = VIETold.2147.desc
+	theme = stewardship_duty_focus
+	
+	left_portrait = {
+		character = root
+		animation = boredom
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gluttonous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = temperate
+		}
+	}
+
+	option = { 
+		name = VIETold.2147.a
+		VIET_huge_prestige_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_lack_of_good_sleep
+			years = 3
+		}
+		stress_impact = {
+			base = minor_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2147.b
+		VIET_huge_prestige_loss_effect = yes
+		add_character_modifier = {
+			modifier = VIET_quick_nap
+			years = 3
+		}
+		stress_impact = {
+			base = minor_stress_impact_loss
+		}
+	}
+}
+
+VIETold.2148 = {
+	type = character_event
+	title = VIETold.2148.t	
+	desc = VIETold.2148.desc
+	theme = unfriendly
+	
+	left_portrait = {
+		character = root
+		animation = pain
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = patient
+		}
+	}
+
+	option = { 
+		name = VIETold.2148.a
+		add_character_modifier = {
+			modifier = VIET_sore_muscles
+			days = 888
+		}
+	}
+}
+
+VIETold.2149 = {
+	type = character_event
+	title = VIETold.2149.t	
+	desc = VIETold.2149.desc
+	theme = diplomacy_foreign_affairs_focus
+	
+	left_portrait = {
+		character = root
+		animation = pain
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = patient
+		}
+	}
+
+	option = { 
+		name = VIETold.2149.a
+		VIET_medium_prestige_loss_effect = yes
+		stress_impact = {
+			arrogant = miniscule_stress_impact_gain
+			diligent = miniscule_stress_impact_gain
+			ambitious = miniscule_stress_impact_gain
+			impatient = miniscule_stress_impact_gain
+			wrathful = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2150 = {
+	type = character_event
+	title = VIETold.2150.t	
+	desc = VIETold.2150.desc
+	theme = learning_scholarship_focus
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = honest
+		}
+		modifier = {
+			add = -0.2
+			has_trait = deceitful
+		}
+	}
+
+	option = { 
+		name = VIETold.2150.a
+		add_character_modifier = {
+			modifier = VIET_read_book_romance
+			years = 7
+		}
+	}
+	option = { 
+		name = VIETold.2150.b
+		add_character_modifier = {
+			modifier = VIET_read_book_gritty
+			years = 7
+		}
+	}
+	option = { 
+		name = VIETold.2150.c
+		add_character_modifier = {
+			modifier = VIET_read_book_fantasy
+			years = 7
+		}
+	}
+	option = { 
+		name = VIETold.2150.d
+		add_character_modifier = {
+			modifier = VIET_read_book_slice_of_life
+			years = 7
+		}
+	}
+}
+
+VIETold.2151 = {
+	type = character_event
+	title = VIETold.2151.t	
+	desc = VIETold.2151.desc
+	theme = unfriendly
+	override_background = { reference = corridor_night }
+	
+	right_portrait = {
+		character = root
+		animation = grief
+	}
+	
+	trigger = {
+		OR = {
+			has_trait_emotional_trigger = yes
+			stress_level >= 1
+			
+		}
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+	}
+
+	option = { 
+		name = VIETold.2151.a
+		stress_impact = {
+			base = minor_stress_impact_loss
+		}
+	}
+}
+
+VIETold.2155 = {
+	type = character_event
+	title = VIETold.2155.t	
+	desc = VIETold.2155.desc
+	theme = feast_activity
+	
+	left_portrait = {
+		character = root
+		animation = disgust
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gluttonous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = temperate
+		}
+		modifier = {
+			add = 0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+	}
+
+	option = { 
+		name = VIETold.2155.a
+		VIET_tiny_prestige_loss_effect = yes
+	}
+	option = { 
+		name = VIETold.2155.b
+		stress_impact = {
+			base = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2156 = {
+	type = character_event
+	title = VIETold.2156.t	
+	desc = VIETold.2156.desc
+	theme = feast_activity
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gluttonous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = temperate
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = fickle
+		}
+		modifier = {
+			add = -0.2
+			has_trait = stubborn
+		}
+	}
+
+	option = { 
+		name = VIETold.2156.a
+		VIET_small_piety_gain_effect = yes
+	}
+	option = { 
+		name = VIETold.2156.b
+		VIET_small_prestige_gain_effect = yes
+	}
+	option = { 
+		name = VIETold.2156.c
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			calm = miniscule_stress_impact_loss
+			trusting = miniscule_stress_impact_loss
+		}
+	}
+}
+
+VIETold.2157 = {
+	type = character_event
+	title = VIETold.2157.t	
+	desc = VIETold.2157.desc
+	theme = feast_activity
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	
+	trigger = {
+		any_held_county = {
+			is_landless_type_title = no
+			is_coastal_county = yes	
+		}
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = greedy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+	}
+
+	option = { 
+		name = VIETold.2157.a
+		add_character_modifier = {
+			modifier = VIET_interesting_talk_with_stranger
+			years = 3
+		}
+	}
+}
+
+VIETold.2160 = {
+	type = character_event
+	title = VIETold.2160.t	
+	desc = VIETold.2160.desc
+	theme = party
+	
+	right_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gluttonous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = temperate
+		}
+		modifier = {
+			add = 0.2
+			has_trait = callous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = 0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = patient
+		}
+	}
+
+	option = { 
+		name = VIETold.2160.a
+		add_character_modifier = {
+			modifier = VIET_ate_good_food
+			days = 421
+		}
+	}
+}
+
+VIETold.2161 = {
+	type = character_event
+	title = VIETold.2161.t	
+	desc = VIETold.2161.desc
+	theme = faith
+	override_background = { reference = garden }
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	
+	trigger = {
+		NOT = { has_game_rule = VIET_serious_events }
+		faith = { has_doctrine = doctrine_consanguinity_unrestricted }
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lustful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = chaste
+		}
+	}
+	
+	immediate = {
+		VIET_large_piety_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_incest_debate
+			years = 3
+		}		
+	}
+
+	option = { 
+		name = VIETold.2161.a
+		custom_tooltip = VIETold.2161.a.tooltip
+	}
+	option = { 
+		name = VIETold.2161.b
+		custom_tooltip = VIETold.2161.b.tooltip
+	}
+	option = { 
+		name = VIETold.2161.c
+		custom_tooltip = VIETold.2161.c.tooltip
+	}
+	option = { 
+		name = VIETold.2161.d
+		trigger = {
+			has_trait = zealous
+		}
+		trait = zealous
+		VIET_large_prestige_gain_effect = yes
+		custom_tooltip = VIETold.2161.d.tooltip
+	}
+	option = { 
+		name = VIETold.2161.d
+		trigger = {
+			learning >= decent_skill_rating
+			NOT = { has_trait = zealous }
+		}
+		skill = learning
+		VIET_large_prestige_gain_effect = yes
+		custom_tooltip = VIETold.2161.d.tooltip
+	}
+}
+
+VIETold.2162 = {
+	type = character_event
+	title = VIETold.2162.t	
+	desc = VIETold.2162.desc
+	theme = medicine
+	
+	left_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+	}
+
+	option = { 
+		name = VIETold.2162.a
+		add_character_modifier = {
+			modifier = VIET_drinking_basic_tonic
+			years = 10
+		}
+	}
+}
+
+VIETold.2163 = {
+	type = character_event
+	title = VIETold.2163.t	
+	desc = VIETold.2163.desc
+	theme = corruption
+	override_icon = {
+		reference = "gfx/interface/icons/event_types/type_medicine.dds"
+	}
+	
+	left_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = just
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arbitrary
+		}
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+	}
+
+	option = { 
+		name = VIETold.2163.a
+		VIET_huge_prestige_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_punished_quack_doctor
+			years = 7
+		}
+	}
+	option = { 
+		name = VIETold.2163.b
+		if = {
+			limit = {
+				has_trait = sadistic
+			}	
+			stress_impact = {
+				sadistic = minor_stress_impact_loss
+			}
+		}
+		else = {	
+			stress_impact = {
+				compassionate = medium_stress_impact_gain
+				forgiving = medium_stress_impact_gain
+			}		
+		}		
+		if = {
+			limit = {
+				faith = {
+					OR = {
+						trait_is_sin = vengeful
+						trait_is_sin = wrathful
+						trait_is_sin = sadistic
+					}
+				}
+			}
+			VIET_huge_piety_loss_effect = yes
+		}		
+		else_if = {
+			limit = {
+				faith = {
+					OR = {
+						trait_is_virtue = vengeful
+						trait_is_virtue = wrathful
+						trait_is_virtue = sadistic
+					}
+				}
+			}
+			VIET_large_piety_gain_effect = yes
+		}
+		else = {
+			VIET_large_piety_loss_effect = yes
+		}
+		VIET_large_prestige_gain_effect = yes
+		add_dread = 15
+		add_character_modifier = {
+			modifier = VIET_punished_quack_doctor
+			years = 7
+		}
+	}
+	option = { 
+		name = VIETold.2163.c
+		stress_impact = {
+			compassionate = minor_stress_impact_gain
+			just = medium_stress_impact_gain
+		}
+		add_dread = 15
+		add_character_modifier = {
+			modifier = VIET_arbitrary_ruling
+			years = 7
+		}
+	}
+}
+
+VIETold.2164 = {
+	type = character_event
+	title = VIETold.2164.t	
+	desc = VIETold.2164.desc
+	theme = medicine
+	override_background = { reference = council_chamber }
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = fickle
+		}
+		modifier = {
+			add = -0.2
+			has_trait = stubborn
+		}
+	}
+
+	option = { 
+		name = VIETold.2164.a
+		trigger = {
+			learning < high_skill_rating			
+		}
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		random = {
+			chance = 33
+			add_learning_skill = 1
+		}
+	}
+	option = { 
+		name = VIETold.2164.b
+		trigger = {
+			learning >= high_skill_rating			
+		}
+		skill = learning
+		VIET_large_prestige_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_impressed_others_medical_knowledge
+			years = 5
+		}
+	}
+}
+
+VIETold.2165 = {
+	type = character_event
+	title = VIETold.2165.t	
+	desc = VIETold.2165.desc
+	theme = medicine
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	
+	trigger = {
+		NOT = { has_character_modifier = VIET_surgery_lesson }
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = -0.2
+			has_trait = craven
+		}
+	}
+
+	option = { 
+		name = VIETold.2165.a
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		random = {
+			chance = 33
+			add_learning_skill = 1
+		}
+		add_character_modifier = {
+			modifier = VIET_surgery_lesson
+			years = 10
+		}
+		stress_impact = {
+			craven = major_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2165.b
+		VIET_huge_prestige_gain_effect = yes
+		stress_impact = {
+			craven = miniscule_stress_impact_loss
+			diligent = miniscule_stress_impact_loss
+		}
+	}
+	option = { 
+		name = VIETold.2165.c
+		trigger = {
+			learning >= high_skill_rating			
+		}
+		skill = learning
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		random = {
+			chance = 33
+			add_learning_skill = 1
+		}
+		VIET_huge_prestige_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_surgery_lesson
+			years = 10
+		}
+		stress_impact = {
+			craven = major_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}
+}
+
+VIETold.2166 = {
+	type = character_event
+	title = VIETold.2166.t	
+	desc = VIETold.2166.desc
+	theme = medicine	
+	override_background = { reference = corridor_day }
+	
+	right_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+	}
+
+	option = { 
+		name = VIETold.2166.a
+		VIET_small_piety_gain_effect = yes
+		stress_impact = {
+			sadistic = miniscule_stress_impact_gain
+			callous = miniscule_stress_impact_gain
+			wrathful = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2166.b
+		add_dread = 5
+		stress_impact = {
+			compassionate = miniscule_stress_impact_gain
+			patient = miniscule_stress_impact_gain
+			humble = miniscule_stress_impact_gain
+		}
+	}
+	option = { 
+		name = VIETold.2166.c
+		trigger = {
+			learning >= decent_skill_rating			
+		}
+		skill = learning
+		VIET_small_prestige_gain_effect = yes
+		VIET_small_piety_gain_effect = yes
+	}
+}
+
+VIETold.2167 = {
+	type = character_event
+	title = VIETold.2167.t	
+	desc = VIETold.2167.desc
+	theme = family
+	override_icon = {
+		reference = "gfx/interface/icons/event_types/type_medicine.dds"
+	}
+	
+	left_portrait = root
+	right_portrait = {
+		character = scope:scope_VIET_courtier_medicine_wrong
+		animation = worry
+	}
+	
+	trigger = {
+		any_courtier = {
+			is_available_ai_adult = yes
+		}
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = 0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = 0.2
+			has_trait = callous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = compassionate
+		}
+	}
+
+
+	
+	immediate = {
+		random_courtier = {
+			limit = {
+				is_available_ai_adult = yes
+			}
+			save_scope_as = scope_VIET_courtier_medicine_wrong
+		}
+	}
+
+	option = { 
+		name = VIETold.2167.a
+		scope:scope_VIET_courtier_medicine_wrong = {
+			add_character_modifier = {
+				modifier = VIET_wrong_medicine_order
+				days = 456
+			}
+		}
+	}
+}
+
+VIETold.2168 = {
+	type = character_event
+	title = VIETold.2168.t	
+	desc = VIETold.2168.desc
+	theme = feast_activity
+	
+	right_portrait = {
+		character = root
+		animation = pain
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+	}
+	
+	immediate = {
+		play_music_cue = mx_cue_stress
+	}
+
+	option = { 
+		name = VIETold.2168.a
+		add_character_modifier = {
+			modifier = VIET_mild_burns_tea
+			days = 345
+		}
+		VIET_small_prestige_loss_effect = yes
+		stress_impact = {
+			base = miniscule_stress_impact_gain
+			impatient = miniscule_stress_impact_gain
+			wrathful = miniscule_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+		}		
+	}
+}
+
+VIETold.2169 = {
+	type = character_event
+	title = VIETold.2169.t	
+	desc = VIETold.2169.desc
+	theme = medicine
+	override_background = { reference = tavern }
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+
+	option = { 
+		name = VIETold.2169.a
+		VIET_small_prestige_gain_effect = yes
+		stress_impact = {
+			zealous = miniscule_stress_impact_gain
+			patient = miniscule_stress_impact_gain
+			craven = miniscule_stress_impact_gain
+		}	
+		if = {
+			limit = {
+				always = no
+			}
+			custom_tooltip = VIETold.2169.info
+		}		
+	}
+	option = { 
+		name = VIETold.2169.b
+		VIET_small_piety_gain_effect = yes
+		stress_impact = {
+			cynical = miniscule_stress_impact_gain
+			impatient = miniscule_stress_impact_gain
+			brave = miniscule_stress_impact_gain
+		}
+		if = {
+			limit = {
+				always = no
+			}
+			custom_tooltip = VIETold.2169.info
+		}			
+	}
+	option = { 
+		name = VIETold.2169.c
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+		}
+		if = {
+			limit = {
+				always = no
+			}
+			custom_tooltip = VIETold.2169.info
+		}		
+	}
+}
+
+VIETold.2170 = {
+	type = character_event
+	title = VIETold.2170.t	
+	desc = VIETold.2170.desc
+	theme = friendly
+	override_icon = {
+		reference = "gfx/interface/icons/event_types/type_medicine.dds"
+	}
+	
+	right_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = -0.2
+			has_trait = humble
+		}
+	}
+
+	option = { 
+		name = VIETold.2170.a
+		add_character_modifier = {
+			modifier = VIET_sore_throat_medicine
+			days = 365
+		}
+	}
+}
+
+VIETold.2174 = {
+	type = character_event
+	title = VIETold.2174.t	
+	desc = VIETold.2174.desc
+	theme = friendly
+	override_background = { reference = docks }
+	
+	right_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = honest
+		}
+		modifier = {
+			add = -0.2
+			has_trait = deceitful
+		}
+	}
+
+	option = { 
+		name = VIETold.2174.a
+		add_character_modifier = {
+			modifier = VIET_harbor_dream
+			years = 5
+		}
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			brave = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_loss
+		}
+	}
+}
+
+VIETold.2184 = {
+	type = character_event
+	title = VIETold.2184.t	
+	desc = VIETold.2184.desc
+	theme = VIET_scarborough_fair
+	
+	
+	
+	
+	
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = content
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+	}
+
+	option = { 
+		name = VIETold.2184.a
+		VIET_tiny_piety_gain_effect = yes
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			zealous = miniscule_stress_impact_loss
+			calm = miniscule_stress_impact_loss
+			patient = miniscule_stress_impact_loss
+			gregarious = miniscule_stress_impact_loss
+			humble = miniscule_stress_impact_loss
+		}
+	}
+}
+
+VIETold.2206 = {
+	type = character_event
+	title = VIETold.2206.t	
+	desc = VIETold.2206.desc
+	theme = unfriendly
+	override_background = { reference = corridor_day }
+	
+	right_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	
+	
+	
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+	}
+
+	option = { 
+		name = VIETold.2206.a
+		trigger = {
+			OR = {
+				is_ai = no
+				gold >= 20
+			}
+		}
+		remove_short_term_gold = 20
+		add_character_modifier = {
+			modifier = VIET_charity_to_servant
+			years = 5
+		}
+		stress_impact = {
+			callous = minor_stress_impact_gain
+			sadistic = minor_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2206.b
+		stress_impact = {
+			compassionate = minor_stress_impact_gain
+			humble = minor_stress_impact_gain
+			just = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2206.c
+		trigger = {
+			diplomacy >= medium_skill_rating
+		}
+		skill = diplomacy
+		VIET_medium_prestige_gain_effect = yes
+		add_character_modifier = {
+			modifier = VIET_gave_servants_advice
+			years = 5
+		}
+		stress_impact = {
+			callous = minor_stress_impact_gain
+			sadistic = minor_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+			cynical = miniscule_stress_impact_gain
+		}
+	}
+	
+}
+
+VIETold.2208 = {
+	type = character_event
+	title = VIETold.2208.t	
+	desc = VIETold.2208.desc
+	theme = friendly
+	override_background = { reference = relaxing_room }
+	
+	right_portrait = {
+		character = root
+		animation = ecstasy
+	}
+
+	
+	
+	
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = gluttonous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = temperate
+		}
+		modifier = {
+			add = 0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = patient
+		}
+	}
+
+	option = { 
+		name = VIETold.2208.a
+		add_character_modifier = {
+			modifier = VIET_lavender_eating_drinking
+			years = 2
+		}
+		stress_impact = {
+			gluttonous = miniscule_stress_impact_loss
+		}
+	}
+	
+}
+
+VIETold.2210 = {
+	type = character_event
+	title = VIETold.2210.t	
+	desc = VIETold.2210.desc
+	theme = faith
+	
+	right_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+
+	
+	
+	
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+	}
+
+	option = { 
+		name = VIETold.2210.a
+		VIET_large_piety_gain_effect = yes
+		stress_impact = {
+			cynical = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2210.b
+		VIET_large_prestige_gain_effect = yes
+		stress_impact = {
+			zealous = miniscule_stress_impact_gain
+		}
+	}
+	
+}
+
+VIETold.2211 = {
+	type = character_event
+	title = VIETold.2211.t	
+	desc = VIETold.2211.desc
+	theme = stewardship_duty_focus
+	override_background = { reference = study }
+	
+	left_portrait = {
+		character = root
+		animation = boredom
+	}
+
+	
+	
+	
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = stubborn
+		}
+		modifier = {
+			add = -0.2
+			has_trait = fickle
+		}
+	}
+
+	option = { 
+		name = VIETold.2211.a
+		stress_impact = {
+			base = minor_stress_impact_loss
+			gluttonous = miniscule_stress_impact_loss
+			lazy = miniscule_stress_impact_loss
+		}
+	}
+
+	option = { 
+		name = VIETold.2211.b
+		VIET_large_prestige_gain_effect = yes
+		stress_impact = {
+			base = minor_stress_impact_gain
+			gluttonous = miniscule_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}
+
+}
+
+VIETold.2212 = {
+	type = character_event
+	title = VIETold.2212.t	
+	desc = VIETold.2212.desc
+	theme = diplomacy_majesty_focus
+	
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	
+	
+	
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = -0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lustful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = chaste
+		}
+	}
+
+	option = { 
+		name = VIETold.2212.a
+		trigger = {
+			OR = {
+				is_ai = no
+				gold >= 25
+			}
+		}
+		remove_short_term_gold = 25
+		add_character_modifier = {
+			modifier = VIET_rose_water_ointment
+			years = 10
+		}
+		stress_impact = {
+			greedy = miniscule_stress_impact_gain
+			temperate = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2212.b
+		stress_impact = {
+			arrogant = miniscule_stress_impact_gain
+			lustful = miniscule_stress_impact_gain
+		}
+	}
+
+}
+
+VIETold.2213 = {
+	type = character_event
+	title = VIETold.2213.t	
+	desc = VIETold.2213.desc
+	theme = faith
+	
+	left_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+
+	
+	
+	
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+	}
+
+	option = { 
+		name = VIETold.2213.a
+		VIET_large_piety_gain_effect = yes
+	}
+
+}
+
+VIETold.2214 = {
+	type = character_event
+	title = VIETold.2214.t	
+	desc = VIETold.2214.desc
+	theme = memory_diplomacy
+	override_background = { reference = relaxing_room }
+	
+	right_portrait = {
+		character = root
+		animation = eavesdrop
+	}
+
+	trigger = {
+		NOT = { has_game_rule = VIET_serious_events }
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = 0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+	}
+
+	option = { 
+		name = VIETold.2214.a
+		VIET_small_prestige_gain_effect = yes
+	}
+
+	option = { 
+		name = VIETold.2214.b
+		trigger = {
+			intrigue >= decent_skill_rating			
+		}
+		skill = intrigue
+		VIET_large_prestige_gain_effect = yes
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			paranoid = minor_stress_impact_loss
+		}
+	}
+
+}
+
+VIETold.2219 = {
+	type = character_event
+	title = VIETold.2219.t	
+	desc = VIETold.2219.desc
+	theme = martial
+	override_background = { reference = corridor_day }
+	
+	left_portrait = root
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = 0.2
+			has_trait = honest
+		}
+		modifier = {
+			add = -0.2
+			has_trait = deceitful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = content
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+	}
+
+	option = { 
+		name = VIETold.2219.a
+		VIET_small_piety_gain_effect = yes
+		stress_impact = {
+			callous = miniscule_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2219.b
+		VIET_small_prestige_gain_effect = yes
+		stress_impact = {
+			trusting = miniscule_stress_impact_gain
+			humble = miniscule_stress_impact_gain
+		}
+	}
+
+}
+
+VIETold.2221 = {
+	type = character_event
+	title = VIETold.2221.t	
+	desc = VIETold.2221.desc
+	theme = faith
+	override_background = { reference = tavern }
+	
+	right_portrait = {
+		character = root
+		animation = personality_cynical
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lustful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = chaste
+		}
+	}
+
+	option = { 
+		name = VIETold.2221.a
+		VIET_huge_piety_gain_effect = yes
+		VIET_huge_prestige_loss_effect = yes
+		stress_impact = {
+			cynical = minor_stress_impact_gain
+			forgiving = minor_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2221.b
+		stress_impact = {
+			zealous = minor_stress_impact_gain
+			diligent = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2221.c
+		trigger = {
+			has_trait = cynical
+		}
+		trait = cynical
+		VIET_huge_prestige_gain_effect = yes
+		VIET_huge_piety_loss_effect = yes
+	}
+
+}
+
+VIETold.2224 = {
+	type = character_event
+	title = VIETold.2224.t	
+	desc = VIETold.2224.desc
+	theme = memory_positive
+	override_background = { reference = docks }
+	
+	left_portrait = {
+		character = root
+		animation = personality_forgiving
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = content
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+	}
+
+	option = { 
+		name = VIETold.2224.a
+		add_character_modifier = {
+			modifier = VIET_anvil_dream_gold_coast
+			years = 5
+		}
+	}
+
+	option = { 
+		name = VIETold.2224.b
+		add_character_modifier = {
+			modifier = VIET_anvil_dream_ladys_stone
+			years = 5
+		}
+	}
+
+	option = { 
+		name = VIETold.2224.c
+		add_character_modifier = {
+			modifier = VIET_anvil_dream_docks
+			years = 5
+		}
+	}
+
+	option = { 
+		name = VIETold.2224.d
+		add_character_modifier = {
+			modifier = VIET_anvil_dream_streets
+			years = 5
+		}
+	}
+
+}
+
+VIETold.2225 = {
+	type = character_event
+	title = VIETold.2225.t	
+	desc = VIETold.2225.desc
+	theme = seduction
+	override_background = { reference = relaxing_room }
+	
+	right_portrait = {
+		character = root
+		animation = disgust
+	}
+
+	
+	trigger = {
+		NOT = { has_game_rule = VIET_serious_events }
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+	}
+
+	option = { 
+		name = VIETold.2225.a
+		add_character_modifier = {
+			modifier = VIET_mysterious_rose_gift
+			years = 10
+		}
+		stress_impact = {
+			paranoid = medium_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2225.b
+		stress_impact = {
+			base = minor_stress_impact_loss
+			paranoid = minor_stress_impact_loss
+		}
+	}
+
+}
+
+VIETold.2226 = {
+	type = character_event
+	title = VIETold.2226.t	
+	desc = VIETold.2226.desc
+	theme = seduction
+	override_background = { reference = relaxing_room }
+	
+	right_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	trigger = {
+		is_female = yes
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = lustful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = chaste
+		}
+		modifier = {
+			add = 0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = -0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+	}
+
+	option = { 
+		name = VIETold.2226.a
+		trigger = {
+			OR = {
+				is_ai = no
+				gold >= 40
+			}
+		}
+		remove_short_term_gold = 40
+		add_character_modifier = {
+			modifier = VIET_rosehip_oil
+			years = 10
+		}
+		stress_impact = {
+			temperate = minor_stress_impact_gain
+			humble = miniscule_stress_impact_gain
+			greedy = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2226.b
+		stress_impact = {
+			lustful = minor_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+			ambitious = miniscule_stress_impact_gain
+		}
+	}
+
+}
+
+VIETold.2227 = {
+	type = character_event
+	title = VIETold.2227.t	
+	desc = VIETold.2227.desc
+	theme = love
+	override_background = { reference = garden }
+	
+	right_portrait = {
+		character = root
+		animation = eavesdrop
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+	}
+
+	option = { 
+		name = VIETold.2227.a
+		VIET_medium_piety_gain_effect = yes
+		stress_impact = {
+			cynical = minor_stress_impact_gain
+			callous = miniscule_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2227.b
+		VIET_medium_prestige_gain_effect = yes
+		stress_impact = {
+			chaste = miniscule_stress_impact_gain
+			trusting = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2227.c
+		VIET_medium_prestige_gain_effect = yes
+		stress_impact = {
+			chaste = miniscule_stress_impact_gain
+			trusting = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2227.d
+		VIET_huge_prestige_loss_effect = yes
+		add_character_modifier = {
+			modifier = VIET_charity_to_servant
+			years = 5
+		}
+		stress_impact = {
+			greedy = minor_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+			callous = miniscule_stress_impact_gain
+			cynical = miniscule_stress_impact_gain
+		}
+	}
+
+}
+
+VIETold.2228 = {
+	type = character_event
+	title = VIETold.2228.t	
+	desc = VIETold.2228.desc
+	theme = friendly
+	override_background = { reference = relaxing_room }
+	
+	right_portrait = {
+		character = root
+		animation = drink_goblet
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = content
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+	}
+
+	option = { 
+		name = VIETold.2228.a
+		add_character_modifier = {
+			modifier = VIET_rose_tea
+			years = 7
+		}
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_loss
+			calm = miniscule_stress_impact_loss
+		}
+	}
+
+}
+
+VIETold.2229 = {
+	type = character_event
+	title = VIETold.2229.t	
+	desc = VIETold.2229.desc
+	theme = faith
+	override_background = { reference = garden }
+	
+	right_portrait = {
+		character = root
+		animation = personality_content
+	}
+
+	trigger = {
+		religion = religion:christianity_religion
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+	}
+
+	option = { 
+		name = VIETold.2229.a
+		VIET_large_prestige_gain_effect = yes
+		stress_impact = {
+			arrogant = miniscule_stress_impact_gain
+			impatient = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2229.b
+		VIET_large_piety_gain_effect = yes
+		stress_impact = {
+			content = miniscule_stress_impact_gain
+			cynical = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2229.c
+		random = {
+			chance = 15
+			add_stewardship_skill = 1
+		}
+		stress_impact = {
+			zealous = miniscule_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}
+
+}
+
+VIETold.2232 = {
+	type = character_event
+	title = VIETold.2232.t
+	desc = VIETold.2232.desc
+	theme = memory_formative
+
+	right_portrait = {
+		character = root
+		animation = happiness
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = bossy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = charming
+		}
+		modifier = {
+			add = 0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = content
+		}
+		modifier = {
+			add = 0.2
+			has_trait = diligent
+		}
+		modifier = {
+			add = -0.2
+			has_trait = lazy
+		}
+	}
+	
+	option = { 
+		name = VIETold.2232.a
+		add_diplomacy_skill = 1
+		stress_impact = {
+			shy = minor_stress_impact_gain
+			arrogant = minor_stress_impact_gain
+		}
+	}
+	
+	option = { 
+		name = VIETold.2232.b
+		add_martial_skill = 1
+		stress_impact = {
+			craven = minor_stress_impact_gain
+			lazy = minor_stress_impact_gain
+		}
+	}
+	
+	option = { 
+		name = VIETold.2232.c
+		add_stewardship_skill = 1
+		stress_impact = {
+			generous = minor_stress_impact_gain
+			temperate = minor_stress_impact_gain
+		}
+	}
+	
+	option = { 
+		name = VIETold.2232.d
+		add_intrigue_skill = 1
+		stress_impact = {
+			just = minor_stress_impact_gain
+			zealous = minor_stress_impact_gain
+		}
+	}
+	
+	option = { 
+		name = VIETold.2232.e
+		add_learning_skill = 1
+		stress_impact = {
+			callous = minor_stress_impact_gain
+			arbitrary = minor_stress_impact_gain
+		}
+	}
+
+}
+
+VIETold.2233 = {
+	type = character_event
+	title = VIETold.2233.t
+	desc = VIETold.2233.desc
+	theme = intrigue_skulduggery_focus
+	override_background = { reference = bp1_kitchen_western }
+
+	right_portrait = {
+		character = root
+		animation = scheme
+	}
+	
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = rowdy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = pensive
+		}
+		modifier = {
+			add = 0.2
+			has_trait = sadistic
+		}
+		modifier = {
+			add = -0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = 0.2
+			has_trait = arbitrary
+		}
+		modifier = {
+			add = -0.2
+			has_trait = just
+		}
+	}
+	
+	option = { 
+		name = VIETold.2233.a
+		add_character_modifier = {
+			modifier = VIET_alkanet_prank
+			years = 10
+		}
+		stress_impact = {
+			just = minor_stress_impact_gain
+			compassionate = minor_stress_impact_gain
+		}
+	}
+	
+	option = { 
+		name = VIETold.2233.b
+		VIET_medium_piety_gain_effect = yes
+		VIET_medium_prestige_gain_effect = yes
+		stress_impact = {
+			rowdy = minor_stress_impact_gain
+			sadistic = minor_stress_impact_gain
+			callous = minor_stress_impact_gain
+			arbitrary = minor_stress_impact_gain
+		}
+	}
+	
+	option = { 
+		name = VIETold.2233.c
+		add_character_modifier = {
+			modifier = VIET_alkanet_study
+			years = 10
+		}
+		stress_impact = {
+			rowdy = minor_stress_impact_gain
+			impatient = minor_stress_impact_gain
+			arrogant = minor_stress_impact_gain
+			sadistic = minor_stress_impact_gain
+			callous = minor_stress_impact_gain
+		}
+	}
+
+}
+
+VIETold.2237 = {
+	type = character_event
+	title = VIETold.2237.t	
+	desc = VIETold.2237.desc
+	theme = unfriendly
+	override_background = { reference = corridor_night }
+	
+	right_portrait = {
+		character = root
+		outfit_tags = { nightgown }
+		animation = pain
+	}
+
+
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = 0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+	}
+	
+	immediate = {
+		increase_wounds_no_death_effect = { REASON = fall }
+	}
+
+	option = { 
+		name = VIETold.2237.a
+	}
+
+}
+
+VIETold.2238 = {
+	type = character_event
+	title = VIETold.2238.t	
+	desc = VIETold.2238.desc
+	theme = unfriendly
+	override_background = { reference = corridor_night }
+	
+	right_portrait = {
+		character = root
+		outfit_tags = { nightgown }
+		animation = paranoia
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = pensive
+		}
+		modifier = {
+			add = -0.2
+			has_trait = curious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = craven
+		}
+		modifier = {
+			add = -0.2
+			has_trait = brave
+		}
+		modifier = {
+			add = 0.2
+			has_trait = paranoid
+		}
+		modifier = {
+			add = -0.2
+			has_trait = trusting
+		}
+	}
+
+	option = { 
+		name = VIETold.2238.a
+		stress_impact = {
+			
+			brave = minor_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2238.b
+		VIET_small_prestige_gain_effect = yes
+		stress_impact = {
+			base = miniscule_stress_impact_gain
+			brave = minor_stress_impact_loss
+			craven = minor_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2238.c
+		VIET_small_piety_gain_effect = yes
+		stress_impact = {
+			base = miniscule_stress_impact_gain
+			zealous = minor_stress_impact_loss
+			cynical = minor_stress_impact_gain
+		}
+	}
+
+}
+
+VIETold.2239 = {
+	type = character_event
+	title = VIETold.2239.t	
+	desc = VIETold.2239.desc
+	theme = feast_activity
+	override_background = { reference = corridor_night }
+	
+	right_portrait = {
+		character = root
+		outfit_tags = { nightgown }
+		animation = thinking
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = bossy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = pensive
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gluttonous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = temperate
+		}
+		modifier = {
+			add = 0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = -0.2
+			has_trait = shy
+		}
+	}
+
+	option = { 
+		name = VIETold.2239.a
+		random = {
+			chance = 10
+			add_intrigue_skill = 1
+		}
+		stress_impact = {
+			lazy = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2239.b
+		VIET_medium_prestige_gain_effect = yes
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			diligent = minor_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2239.c
+		VIET_huge_piety_gain_effect = yes
+		stress_impact = {
+			gluttonous = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2239.d
+		stress_impact = {
+			base = minor_stress_impact_loss
+			lazy = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_loss
+			pensive = miniscule_stress_impact_loss
+		}
+	}
+
+}
+
+VIETold.2240 = {
+	type = character_event
+	title = VIETold.2240.t	
+	desc = VIETold.2240.desc
+	theme = unfriendly
+	override_background = { reference = corridor_night }
+	
+	right_portrait = {
+		character = root
+		outfit_tags = { nightgown }
+		animation = boredom
+	}
+
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = 0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = trusting
+		}
+		modifier = {
+			add = -0.2
+			has_trait = paranoid
+		}
+	}
+
+	immediate = {
+		stress_impact = {
+			base = miniscule_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+		add_character_modifier = {
+			modifier = VIET_poor_nights_rest
+			years = 3
+		}
+	}
+
+	option = { 
+		name = VIETold.2240.a
+		VIET_tiny_piety_gain_effect = yes
+	}
+
+	option = { 
+		name = VIETold.2240.b
+		VIET_tiny_prestige_gain_effect = yes
+	}
+
+}
+
+VIETold.2241 = {
+	type = character_event
+	title = VIETold.2241.t	
+	desc = VIETold.2241.desc
+	theme = unfriendly
+	override_background = { reference = corridor_night }
+	
+	right_portrait = {
+		character = root
+		outfit_tags = { nightgown }
+		animation = personality_content
+	}
+
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2241.a
+		stress_impact = {
+			base = minor_stress_impact_loss
+			lazy = miniscule_stress_impact_loss
+			humble = miniscule_stress_impact_loss
+			calm = miniscule_stress_impact_loss
+			scholar = minor_stress_impact_loss
+			education_learning_3 = minor_stress_impact_loss
+			education_learning_4 = minor_stress_impact_loss
+		}
+	}
+
+	option = { 
+		name = VIETold.2241.b
+		add_character_modifier = {
+			modifier = VIET_observing_the_constellations
+			years = 6
+		}
+	}
+
+}
+
+VIETold.2243 = {
+	type = character_event
+	title = VIETold.2243.t	
+	desc = VIETold.2243.desc
+	theme = death
+	
+	
+	right_portrait = {
+		character = root
+		triggered_animation = {
+			trigger = { 
+				OR = {
+					has_trait = callous
+					has_trait = sadistic
+				}	
+			}
+			animation = eyeroll
+		}
+		triggered_animation = {
+			trigger = {
+				has_trait = compassionate	
+			} 
+			animation = sadness
+		}
+		animation = disapproval
+	}
+
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = arbitrary
+		}
+		modifier = {
+			add = -0.2
+			has_trait = just
+		}
+		modifier = {
+			add = 0.2
+			has_trait = callous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lazy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = diligent
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2243.a
+		VIET_large_piety_gain_effect = yes
+		stress_impact = {
+			callous = minor_stress_impact_gain
+			sadistic = minor_stress_impact_gain
+			arrogant = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2243.b
+		VIET_large_prestige_gain_effect = yes
+		stress_impact = {
+			compassionate = medium_stress_impact_gain
+			humble = minor_stress_impact_gain
+		}
+	}
+
+}
+
+VIETold.2244 = {
+	type = character_event
+	title = VIETold.2244.t	
+	desc = VIETold.2244.desc
+	theme = VIET_theme_night_beach
+	
+	
+	right_portrait = {
+		character = root
+		animation = admiration
+	}
+
+	trigger = {
+		capital_county = { is_coastal_county = yes }
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = calm
+		}
+		modifier = {
+			add = -0.2
+			has_trait = wrathful
+		}
+		modifier = {
+			add = 0.2
+			has_trait = humble
+		}
+		modifier = {
+			add = -0.2
+			has_trait = arrogant
+		}
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = callous
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2244.a
+		stress_impact = {
+			base = minor_stress_impact_loss
+			humble = miniscule_stress_impact_loss
+			lazy = miniscule_stress_impact_loss
+			calm = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_loss
+		}
+		add_character_modifier = {
+			modifier = VIET_night_beach_visit
+			years = 5
+		}
+	}
+
+}
+
+VIETold.2246 = {
+	type = character_event
+	title = VIETold.2246.t	
+	desc = VIETold.2246.desc
+	theme = memory_positive
+	override_background = { reference = VIET_background_oblivion_pastoral_dream }
+	
+	right_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = sadistic
+		}
+		modifier = {
+			add = 0.2
+			has_trait = content
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = zealous
+		}
+		modifier = {
+			add = -0.2
+			has_trait = cynical
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2246.a
+		add_character_modifier = {
+			modifier = VIET_cozy_cottage_dream
+			years = 4
+		}
+		stress_impact = {
+			base = miniscule_stress_impact_loss
+			humble = miniscule_stress_impact_loss
+			lazy = miniscule_stress_impact_loss
+			calm = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_loss
+		}
+	}
+
+
+}
+
+VIETold.2247 = {
+	type = character_event
+	title = VIETold.2247.t	
+	desc = VIETold.2247.desc
+	theme = memory_positive
+	override_background = { reference = corridor_night }
+	
+	right_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = compassionate
+		}
+		modifier = {
+			add = -0.2
+			has_trait = sadistic
+		}
+		modifier = {
+			add = 0.2
+			has_trait = content
+		}
+		modifier = {
+			add = -0.2
+			has_trait = ambitious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = patient
+		}
+		modifier = {
+			add = -0.2
+			has_trait = impatient
+		}
+	}
+
+
+	option = { 
+		name = VIETold.2247.a
+		add_character_modifier = {
+			modifier = VIET_spectacular_sunset
+			years = 4
+		}
+		stress_impact = {
+			base = minor_stress_impact_loss
+			humble = miniscule_stress_impact_loss
+			lazy = miniscule_stress_impact_loss
+			calm = miniscule_stress_impact_loss
+			content = miniscule_stress_impact_loss
+		}
+	}
+
+
+}
+
+VIETold.2248 = {
+	type = character_event
+	title = VIETold.2248.t	
+	desc = VIETold.2248.desc
+	theme = realm
+	override_background = { reference = docks }
+	
+	left_portrait = {
+		character = scope:courtier
+		animation = throne_room_conversation_3
+	}
+	right_portrait = {
+		character = root
+		animation = personality_cynical
+	}
+
+	trigger = {
+		any_held_county = {
+			is_landless_type_title = no
+			is_coastal_county = yes	
+		}
+		OR = {
+			any_courtier_or_guest = {
+				is_available_ai_adult = yes
+			}
+			any_vassal = {
+				is_available_ai_adult = yes
+			}
+		}
+	}
+
+	weight_multiplier = {
+		base = 1
+		modifier = {
+			add = 0.2
+			has_trait = shy
+		}
+		modifier = {
+			add = -0.2
+			has_trait = gregarious
+		}
+		modifier = {
+			add = 0.2
+			has_trait = lustful
+		}
+		modifier = {
+			add = -0.2
+			has_trait = chaste
+		}
+		modifier = {
+			add = 0.2
+			has_trait = honest
+		}
+		modifier = {
+			add = -0.2
+			has_trait = deceitful
+		}
+	}
+
+	immediate = {
+		every_courtier_or_guest = {
+			limit = {
+				is_available_ai_adult = yes
+			}
+			add_to_list = candidate_characters
+		}
+		every_vassal = {
+			limit = {
+				is_available_ai_adult = yes
+			}
+			add_to_list = candidate_characters
+		}
+		random_in_list = {
+			list = candidate_characters
+			save_scope_as = courtier
+		}
+		scope:courtier = {			
+			add_character_modifier = {
+				modifier = VIET_thinking_about_foreign_lands
+				years = 3
+			}
+		}
+	}
+
+	option = { 
+		name = VIETold.2248.a
+		add_character_modifier = {
+			modifier = VIET_skeptical_ruler
+			years = 3
+		}
+		stress_impact = {
+			trusting = miniscule_stress_impact_gain
+			ambitious = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2248.b
+		add_character_modifier = {
+			modifier = VIET_thinking_about_foreign_lands
+			years = 3
+		}
+		stress_impact = {
+			craven = miniscule_stress_impact_gain
+			lazy = miniscule_stress_impact_gain
+		}
+	}
+
+	option = { 
+		name = VIETold.2248.c
+		add_character_modifier = {
+			modifier = VIET_religion_in_faraway_lands
+			years = 3
+		}
+		stress_impact = {
+			cynical = miniscule_stress_impact_gain
+			arbitrary = miniscule_stress_impact_gain
+		}
+	}
+
+
+}

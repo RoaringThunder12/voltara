@@ -314,48 +314,76 @@ vmaa_voltara_culture_19_2 = {
 }
 
 vmaa_voltara_culture_20_1 = {
- type = heavy_infantry
- damage = 44
- toughness = 22
- pursuit = 4
- screen = 5
- stack = 100
- buy_cost = { gold = 145 }
- low_maintenance_cost = { gold = 0.51 }
- high_maintenance_cost = { gold = 1.7 }
- provision_cost = 8
- counters = { pikemen = 1 }
- terrain_bonus = { plains = { damage = 8 toughness = 4 } }
- 
- can_recruit = { culture = culture:voltara_culture_20
- NOT = { has_government = voltara_ruins_government } }
+	type = heavy_infantry
+	
+	damage = 58
+	toughness = 22
+	pursuit = 0
+	screen = 0
+	
+	counters = {
+		heavy_infantry = 1
+		skirmishers = 1
+	}
+
+	terrain_bonus = {
+		mountains = { damage = 5 toughness = 15 screen = 30 }
+		forest = { damage = 5 toughness = 10 screen = 30 }
+		taiga = { damage = 5 toughness = 10 screen = 30 }
+		hills = { damage = 4 toughness = 10 screen = 30 }
+		plains = { damage = -6 toughness = -5 }
+		farmlands = { damage = -6 toughness = -5 }
+	}
+	
+ can_recruit = { vt_orc_roster_access = yes }
+	
+	
+	buy_cost = { gold = 175 }
+	low_maintenance_cost = { gold = 0.65 }
+	high_maintenance_cost = { gold = 2.1 }
+	provision_cost = 8
+	
+	stack = 100
+	ai_quality = { value = 30 }
+
+	illustration = vt_ek_orc_berserkers
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
- ai_quality = { value = 20 }
- illustration = vmaa_art_2887120253_orc_berserkers
 }
 
 vmaa_voltara_culture_20_2 = {
- type = heavy_infantry
- damage = 48
- toughness = 25
- pursuit = 0
- screen = 20
- stack = 75
- buy_cost = { gold = 216 }
- low_maintenance_cost = { gold = 0.74 }
- high_maintenance_cost = { gold = 2.47 }
- provision_cost = 15
- counters = { heavy_infantry = 1 }
- terrain_bonus = { plains = { damage = 9 toughness = 4 } }
- 
- can_recruit = { culture = culture:voltara_culture_20
- culture = { has_innovation = innovation_men_at_arms }
- NOT = { has_government = voltara_ruins_government } }
+	type = skirmishers
+	
+	damage = 42
+	toughness = 24
+	pursuit = 12
+	screen = 15
+	
+	terrain_bonus = {
+		drylands = { damage = 8 toughness = 4 pursuit = 10 screen = 10 }
+		desert = { damage = 8 toughness = 4 pursuit = 10 screen = 10 }
+		desert_mountains = { damage = 8 toughness = 4 pursuit = 10 screen = 10 }
+	}
+
+
+ can_recruit = { vt_orc_roster_access = yes culture = { has_innovation = innovation_men_at_arms } }
+	
+	counters = {
+		archers = 1
+		heavy_infantry = 1
+	}
+	
+	buy_cost = { gold = 220 }
+	low_maintenance_cost = { gold = 0.8 }
+	high_maintenance_cost = { gold = 2.6 }
+	provision_cost = 8
+
+	stack = 100
+	ai_quality = { value = 30 }
+
+	illustration = vt_ek_orc_marauders
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
- ai_quality = { value = 20 }
- illustration = vmaa_art_3059124362_orc_war_mages
 }
 
 vmaa_voltara_culture_21_1 = {
@@ -4366,7 +4394,7 @@ vmaa_order_voltara_old_ones_religion_1 = {
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = 20 }
- illustration = vmaa_art_3059124362_orc_war_mages
+ illustration = vt_ek_mages
 }
 
 vmaa_order_voltara_old_ones_religion_2 = {
@@ -4390,7 +4418,7 @@ vmaa_order_voltara_old_ones_religion_2 = {
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = 20 }
- illustration = vmaa_art_2887120253_orc_champions
+ illustration = vt_ek_orc_marauders
 }
 
 vmaa_order_voltara_khaos_religion_1 = {

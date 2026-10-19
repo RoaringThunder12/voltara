@@ -1,0 +1,75 @@
+﻿former_kingsguard = {
+	category = fame
+
+	shown_in_ruler_designer = no
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_former_kingsguard_desc
+			}
+			desc = trait_former_kingsguard_character_desc
+		}
+	}
+}
+
+kingsguard = {
+	category = fame
+
+	shown_in_ruler_designer = no
+
+	same_opinion = 5
+	liege_opinion = 30
+	diplomacy = 1
+	prowess = 4
+	monthly_prestige_gain_mult = 0.2
+	monthly_piety_gain_mult = 0.01
+
+	inheritance_blocker = all
+	claim_inheritance_blocker = all
+
+	flag = can_not_marry
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_kingsguard_desc
+			}
+			desc = trait_kingsguard_character_desc
+		}
+	}
+}
+
+education_martial_prowess_5 = {
+	minimum_age = 16
+	prowess = 10
+
+	culture_modifier = {
+		parameter = prowess_traits_more_valued
+		same_culture_opinion = 5
+		monthly_prestige = 0.5
+	}
+
+	group = education_martial_prowess
+	level = 5
+
+	shown_in_ruler_designer = no
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_education_martial_prowess_5_desc
+			}
+			desc = trait_education_martial_prowess_5_character_desc
+		}
+	}
+}

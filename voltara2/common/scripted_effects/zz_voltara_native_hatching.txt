@@ -2,6 +2,8 @@
 agot_spawn_owned_hatchling_from_egg_effect = {
  $OWNER$ = { save_scope_as = owner }
  $EGG$ = { save_scope_as = egg }
+ clear_saved_scope = dragon
+ if = { limit = { exists = scope:egg scope:owner = { is_alive = yes } scope:egg = { artifact_owner = scope:owner } }
  create_character = {
   location = scope:owner.location
   template = voltara_agot_hatchling_template
@@ -21,7 +23,18 @@ agot_spawn_owned_hatchling_from_egg_effect = {
    }
   }
   scope:owner = { add_courtier = scope:dragon }
+  scope:dragon = { add_character_flag = owned_dragon }
+  if = { limit = { exists = scope:egg.var:dragon_parent_other }
+   scope:dragon = { set_father = scope:egg.var:dragon_parent_other }
+  }
+  if = { limit = { NOT = { has_game_rule = agot_dragon_trait_inheritance_disabled } }
+   agot_transfer_parent_congenital_traits_to_dragon = { DRAGON_EGG = scope:egg DRAGON = scope:dragon }
+   agot_dragon_assign_parent_congenital_traits = { DRAGON = scope:dragon }
+  }
+  scope:egg = { remove_list_global_variable = { name = dragon_eggs target = this } }
   destroy_artifact = scope:egg
+ }
+
  }
 }
 agot_spawn_bonded_hatchling_from_egg_effect = {
@@ -40,6 +53,14 @@ agot_spawn_wild_hatchling_from_egg_effect = {
    if = { limit = { exists = scope:egg.var:egg_color } set_variable = { name = egg_color value = scope:egg.var:egg_color } }
    if = { limit = { exists = scope:egg.var:dragon_mother } set_mother = scope:egg.var:dragon_mother }
   }
+  if = { limit = { exists = scope:egg.var:dragon_parent_other }
+   scope:dragon = { set_father = scope:egg.var:dragon_parent_other }
+  }
+  if = { limit = { NOT = { has_game_rule = agot_dragon_trait_inheritance_disabled } }
+   agot_transfer_parent_congenital_traits_to_dragon = { DRAGON_EGG = scope:egg DRAGON = scope:dragon }
+   agot_dragon_assign_parent_congenital_traits = { DRAGON = scope:dragon }
+  }
+  scope:egg = { remove_list_global_variable = { name = dragon_eggs target = this } }
   destroy_artifact = scope:egg
  }
 }

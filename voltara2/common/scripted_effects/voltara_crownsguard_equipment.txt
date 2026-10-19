@@ -1,0 +1,18 @@
+﻿vt_crownsguard_issue_sword = {
+ if = {
+  limit = { NOT = { any_character_artifact = { has_variable = kingsguard_sword_artifact } } }
+  agot_create_artifact_kingsguard_sword_effect = { OWNER = this }
+ }
+}
+
+vt_crownsguard_issue_equipment = {
+ vt_crownsguard_issue_sword = yes
+ if = {
+  limit = { NOT = { any_character_artifact = { has_variable = kingsguard_armor } } }
+  agot_create_artifact_kingsguard_armor_effect = { OWNER = this }
+ }
+ if = {
+  limit = { any_equipped_character_artifact = { has_variable = kingsguard_armor } }
+  debug_log = "VT_CROWNSGUARD_ARMOR: Guard has equipped Crownsguard armor."
+ }
+}

@@ -33,9 +33,7 @@
 			remove_global_variable = cow_custom_map_mode_changing
 		}
 	}
-	is_shown = {
-		global_var:cow_custom_map_mode = flag:highlight_cow_provinces_map
-	}
+	is_shown = { OR = { NOT = { has_global_variable = cow_custom_map_mode } global_var:cow_custom_map_mode = flag:highlight_cow_provinces_map } }
 	is_valid = {
 		NOT = { exists = global_var:cow_custom_map_mode_changing }
 	}

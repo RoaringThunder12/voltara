@@ -1,0 +1,68 @@
+﻿mde_rider_has_dragon = { scope = character is_shown = { exists = var:current_dragon var:current_dragon = { is_alive = yes } } }
+mde_show_kingsguard_button = {
+ scope = character
+ is_shown = { exists = title:b_crownsguard_keep.holder }
+ effect = {
+  mde_build_current_kingsguard_list_effect = yes
+  if = { limit = { has_title = title:h_voltara_severos } mde_update_kingsguard_candidates_effect = yes }
+ }
+}
+mde_is_kingsguard_relevant_trait = {
+    scope = character
+    is_valid = {
+		root = {
+            has_trait = scope:relevant_trait
+        }
+	}
+}
+
+mde_is_training_for_kingsguard = {
+    scope = character
+    is_valid = {
+        has_character_modifier = training_for_kingsguard
+    }
+}
+
+mde_can_send_invite_for_kingsguard_sgui = {
+    scope = character
+    is_shown = {
+       scope:owner = {
+            ruler_primary_title_has_kingsguard_trigger = yes
+            NAND = {
+                primary_title = { exists = var:kingsguard_1 }
+                primary_title = { exists = var:kingsguard_2 }
+                primary_title = { exists = var:kingsguard_3 }
+                primary_title = { exists = var:kingsguard_4 }
+                primary_title = { exists = var:kingsguard_5 }
+                primary_title = { exists = var:kingsguard_6 }
+            }
+            NOT = { has_character_flag = choosing_kingsguard }
+       }
+    }
+}
+
+mde_is_lord_of_seven_kingdoms = {
+    scope = character
+    is_shown = {
+        has_title = title:h_voltara_severos
+    }
+}
+
+mde_open_white_book = {
+    scope = character
+    effect = {
+        if = {
+            limit = {
+                NOT = { has_variable = selected_white_book_page }
+                OR = {
+                    AND = {
+                        has_title = title:h_voltara_severos
+                        title:h_voltara_severos = { title_has_kingsguard_trigger = yes }
+                    }
+                    NOT = { has_multiple_players = yes }
+                }
+            }
+            trigger_event = agot_kingsguard_white_book.0001
+        }
+    }
+}

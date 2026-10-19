@@ -1,0 +1,23 @@
+﻿# Adapted from AGOT and More Dragon Eggs; no Westerosi ancestry restriction.
+vt_egg_is_unlocked = {
+ has_variable = dragon_egg
+ NOT = { has_variable = agot_artifact_cannot_gift }
+ NOT = { has_variable = selected_egg_for_hatching }
+}
+vt_egg_is_viable = {
+ vt_egg_is_unlocked = yes
+ NOT = { has_variable = dud_egg }
+}
+vt_can_cradle_egg = {
+ is_alive = yes
+ is_imprisoned = no
+ is_incapable = no
+ NOT = { has_trait = dragon }
+ NOT = { has_trait_with_flag = can_not_bond_dragon }
+ NOT = { voltara_has_living_dragon = yes }
+}
+vt_can_incubate_egg = {
+ is_alive = yes
+ is_imprisoned = no
+ any_realm_county = { any_county_province = { voltara_active_dragonpit = yes } }
+}

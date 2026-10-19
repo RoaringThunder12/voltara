@@ -1,0 +1,29 @@
+﻿is_kingsguard_trigger = {
+	OR = {
+		has_council_position = kingsguard_1
+		has_council_position = kingsguard_2
+		has_council_position = kingsguard_3
+		has_council_position = kingsguard_4
+		has_council_position = kingsguard_5
+		has_council_position = kingsguard_6
+		has_council_position = kingsguard_lord_commander
+	}
+}
+
+agot_valid_potential_nw_member = { is_alive = yes is_adult = yes }
+
+agot_is_councillor_available_trigger = {
+	trigger_if = {
+		limit = {
+			NOR = {
+				has_variable = agot_councillor_target_court
+				current_travel_plan ?= {
+					has_variable = agot_councillor_travel
+				}
+			}
+		}
+		is_available = yes
+	}
+}
+
+agot_bastard_surname_trigger = { OR = { has_trait = bastard has_trait = legitimized_bastard } }

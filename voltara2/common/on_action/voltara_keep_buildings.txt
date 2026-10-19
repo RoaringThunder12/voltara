@@ -1,0 +1,6 @@
+﻿on_game_start = { on_actions = { vt_keep_finish_buildings } }
+vt_keep_finish_buildings = { effect = { province:11458 = {
+ add_building = curtain_walls_02
+ add_building = military_camps_02
+ if = { limit = { has_building = vt_crownsguard_white_keep_01 has_building = curtain_walls_02 has_building = military_camps_02 } debug_log = "VT_KEEP_BUILDINGS: White Keep and both additional military buildings verified." }
+} } }

@@ -1,0 +1,40 @@
+﻿namespace = vt_egg_port
+vt_egg_port.1 = {
+ type = character_event title = vt_egg_port.1.t desc = vt_egg_port.1.desc theme = dragon
+ left_portrait = { character = root }
+ right_portrait = { character = scope:dragon }
+ option = { name = vt_egg_port.1.a }
+}
+vt_egg_port.2 = {
+ type = character_event title = vt_egg_port.2.t desc = vt_egg_port.2.desc theme = dragon
+ left_portrait = { character = root }
+ right_portrait = { character = scope:dragon }
+ option = { name = vt_egg_port.2.a }
+}
+vt_egg_port.3 = {
+ type = character_event title = vt_egg_port.3.t desc = vt_egg_port.3.desc theme = dragon
+ left_portrait = { character = root }
+ option = { name = vt_egg_port.3.a }
+}
+vt_egg_port.10 = {
+ type = character_event title = vt_egg_port.10.t desc = vt_egg_port.10.desc theme = dragon
+ trigger = {
+  is_alive = yes
+  exists = scope:vt_egg_child
+  scope:vt_egg_child = { vt_can_cradle_egg = yes NOT = { any_character_artifact = { has_variable = dragon_egg } } }
+  any_character_artifact = { vt_egg_is_viable = yes NOT = { has_variable = cradled_egg } NOT = { has_variable = pitted_egg } }
+ }
+ left_portrait = { character = root }
+ right_portrait = { character = scope:vt_egg_child }
+ option = {
+  name = vt_egg_port.10.a
+  random_character_artifact = {
+   limit = { vt_egg_is_viable = yes NOT = { has_variable = cradled_egg } NOT = { has_variable = pitted_egg } }
+   save_scope_as = egg
+   set_owner = scope:vt_egg_child
+  }
+  scope:vt_egg_child = { vt_egg_begin_cradling = yes }
+  ai_chance = { base = 50 }
+ }
+ option = { name = vt_egg_port.10.b ai_chance = { base = 50 } }
+}

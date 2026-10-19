@@ -1,0 +1,24 @@
+﻿vt_orc_spirit_lodge_01 = {
+ type_icon = "icon_building_warcamps.dds"
+ construction_time = 365 cost_gold = 100 cost_piety = 50
+ can_construct_potential = { scope:holder = { voltara_orc_government_culture = yes } OR = { has_holding_type = tribal_holding has_holding_type = castle_holding has_holding_type = temple_citadel_holding has_holding_type = church_holding } }
+ province_modifier = { levy_size = 0.05 stationed_maa_damage_mult = 0.03 }
+ character_modifier = { monthly_piety = 0.15 }
+ next_building = vt_orc_spirit_lodge_02
+}
+vt_orc_spirit_lodge_02 = {
+ type_icon = "icon_building_warcamps.dds"
+ construction_time = 730 cost_gold = 200 cost_piety = 100
+ can_construct_potential = { scope:holder = { voltara_orc_government_culture = yes } OR = { has_holding_type = tribal_holding has_holding_type = castle_holding has_holding_type = temple_citadel_holding has_holding_type = church_holding } }
+ province_modifier = { levy_size = 0.10 stationed_maa_damage_mult = 0.06 }
+ character_modifier = { monthly_piety = 0.30 }
+ next_building = vt_orc_spirit_lodge_03
+}
+vt_orc_spirit_lodge_03 = {
+ type_icon = "icon_building_warcamps.dds"
+ construction_time = 1095 cost_gold = 300 cost_piety = 150
+ can_construct_potential = { scope:holder = { voltara_orc_government_culture = yes } OR = { has_holding_type = tribal_holding has_holding_type = castle_holding has_holding_type = temple_citadel_holding has_holding_type = church_holding } }
+ province_modifier = { levy_size = 0.15 stationed_maa_damage_mult = 0.09 }
+ character_modifier = { monthly_piety = 0.45 }
+ 
+}

@@ -1,0 +1,15 @@
+﻿vt_orc_mandala_capital_support = {
+ if = {
+  limit = { is_landed = yes voltara_orc_government_culture = yes has_government = mandala_government exists = capital_province }
+  capital_province = {
+   if = {
+    limit = { NOT = { has_building_with_flag = mandala_capital_building } }
+    if = { limit = { holding_is_tribal = yes } holding_pre_feudalize_effect = yes }
+    set_holding_type = temple_citadel_holding
+    add_great_building = mandala_capital_01
+    add_to_global_variable_list = { name = mandala_poi_list target = this }
+   }
+   if = { limit = { NOT = { has_building_or_higher = vt_orc_spirit_lodge_01 } } add_building = vt_orc_spirit_lodge_01 }
+  }
+ }
+}

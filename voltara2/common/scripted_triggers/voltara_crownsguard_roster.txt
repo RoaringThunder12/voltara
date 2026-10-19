@@ -1,0 +1,111 @@
+﻿mde_can_be_kingsguard_trigger = {
+    is_ruler = no
+    is_married = no
+	is_capable_adult = yes
+	NOT = { has_trait = dragon }
+	NOR = {
+        has_trait = kingsguard
+		has_trait = nightswatch
+		has_trait = order_member #Go away Areo Hotah
+		has_trait = devoted
+		has_trait = septon
+		has_trait = maester
+	}
+    OR = {
+        is_within_diplo_range = { CHARACTER = title:h_voltara_severos.holder }
+        is_vassal_or_below_of = title:h_voltara_severos.holder
+    }
+    valid_kingsguard_gender_trigger = yes
+}
+mde_player_holds_iron_throne_trigger = {
+    exists = title:h_voltara_severos.holder
+    title:h_voltara_severos.holder = {
+        is_ai = no
+    }
+}
+mde_kingsguard_candidate_faith_trigger = {
+    title:h_voltara_severos.holder ?= {
+        faith = prev.faith
+    }
+}
+mde_kingsguard_candidate_trigger = {
+    OR = {
+        mde_kingsguard_candidate_tier_1_trigger = yes
+        mde_kingsguard_candidate_tier_2_trigger = yes
+        mde_kingsguard_candidate_tier_3_trigger = yes
+        mde_kingsguard_candidate_tier_4_trigger = yes
+        mde_kingsguard_candidate_tier_5_trigger = yes
+        mde_kingsguard_candidate_tier_6_trigger = yes
+        mde_kingsguard_candidate_tier_7_trigger = yes
+        mde_kingsguard_candidate_tier_8_trigger = yes
+        mde_kingsguard_candidate_tier_9_trigger = yes
+        mde_kingsguard_candidate_tier_10_trigger = yes
+    }
+}
+mde_kingsguard_candidate_tier_1_trigger = {
+    has_character_modifier = training_for_kingsguard
+    NOT = { has_trait = kingsguard }
+}
+mde_kingsguard_candidate_tier_2_trigger = {
+    mde_can_be_kingsguard_trigger = yes
+    any_relation = {
+        type = agot_dragon
+        is_alive = yes
+    }
+}
+mde_kingsguard_candidate_tier_3_trigger = {
+    mde_can_be_kingsguard_trigger = yes
+    any_character_artifact = {
+        has_variable = valyrian_steel
+    }
+}
+mde_kingsguard_candidate_tier_4_trigger = {
+    mde_can_be_kingsguard_trigger = yes
+    mde_kingsguard_candidate_faith_trigger = yes
+    has_trait = education_martial_prowess_5
+}
+mde_kingsguard_candidate_tier_5_trigger = {
+    mde_can_be_kingsguard_trigger = yes
+    mde_kingsguard_candidate_faith_trigger = yes
+    has_trait = refusing_marriage
+}
+mde_kingsguard_candidate_tier_6_trigger = {
+    mde_can_be_kingsguard_trigger = yes
+    mde_kingsguard_candidate_faith_trigger = yes
+    has_trait = education_martial_prowess_4
+    OR = {
+        is_lowborn = no
+        prowess > 30
+    }
+}
+mde_kingsguard_candidate_tier_7_trigger = {
+    mde_can_be_kingsguard_trigger = yes
+    mde_kingsguard_candidate_faith_trigger = yes
+    is_lowborn = no
+    prowess > 30
+}
+mde_kingsguard_candidate_tier_8_trigger = {
+    mde_can_be_kingsguard_trigger = yes
+    mde_kingsguard_candidate_faith_trigger = yes
+    is_lowborn = no
+    prowess > 20
+}
+mde_kingsguard_candidate_tier_9_trigger = {
+    mde_can_be_kingsguard_trigger = yes
+    mde_kingsguard_candidate_faith_trigger = yes
+    is_lowborn = no
+    prowess > 15
+}
+mde_kingsguard_candidate_tier_10_trigger = {
+    mde_can_be_kingsguard_trigger = yes
+    OR = {
+        prowess > 35
+        AND = {
+            prowess > 25
+            OR = {
+                is_lowborn = no
+                has_trait = education_martial_4
+            }
+        }
+    }
+}

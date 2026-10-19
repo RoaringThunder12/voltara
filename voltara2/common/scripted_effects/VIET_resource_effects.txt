@@ -1,0 +1,703 @@
+﻿VIET_huge_piety_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_piety = 100
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_piety = 75
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_piety = 200
+	}
+	else = {
+		add_piety = 50
+	}
+}
+
+VIET_huge_piety_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_piety = -100
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_piety = -75
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_piety = -200
+	}
+	else = {
+		add_piety = -50
+	}
+}
+
+VIET_huge_prestige_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_prestige = 100
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_prestige = 75
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_prestige = 200
+	}
+	else = {
+		add_prestige = 50
+	}
+}
+
+VIET_huge_prestige_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_prestige = -100
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_prestige = -75
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_prestige = -200
+	}
+	else = {
+		add_prestige = -50
+	}
+}
+
+VIET_large_piety_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_piety = 70
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_piety = 55
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_piety = 140
+	}
+	else = {
+		add_piety = 35
+	}
+}
+
+VIET_large_piety_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_piety = -70
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_piety = -55
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_piety = -140
+	}
+	else = {
+		add_piety = -35
+	}
+}
+
+VIET_large_prestige_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_prestige = 70
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_prestige = 55
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_prestige = 140
+	}
+	else = {
+		add_prestige = 35
+	}
+}
+
+VIET_large_prestige_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_prestige = -70
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_prestige = -55
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_prestige = -140
+	}
+	else = {
+		add_prestige = -35
+	}
+}
+
+VIET_massive_prestige_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_prestige = 200
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_prestige = 150
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_prestige = 400
+	}
+	else = {
+		add_prestige = 100
+	}
+}
+
+VIET_massive_prestige_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_prestige = -200
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_prestige = -150
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_prestige = -400
+	}
+	else = {
+		add_prestige = -100
+	}
+}
+
+VIET_medium_piety_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_piety = 50
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_piety = 40
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_piety = 100
+	}
+	else = {
+		add_piety = 25
+	}
+}
+
+VIET_medium_piety_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_piety = -50
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_piety = -40
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_piety = -100
+	}
+	else = {
+		add_piety = -25
+	}
+}
+
+VIET_medium_prestige_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_prestige = 50
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_prestige = 40
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_prestige = 100
+	}
+	else = {
+		add_prestige = 25
+	}
+}
+
+VIET_medium_prestige_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_prestige = -50
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_prestige = -40
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_prestige = -100
+	}
+	else = {
+		add_prestige = -25
+	}
+}
+
+VIET_random_large_prestige_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		random_list = {
+			10 = { add_prestige = -60 }
+			10 = { add_prestige = -80 }
+			10 = { add_prestige = -100 }
+			10 = { add_prestige = -120 }
+		}
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		random_list = {
+			10 = { add_prestige = -45 }
+			10 = { add_prestige = -60 }
+			10 = { add_prestige = -75 }
+			10 = { add_prestige = -90 }
+		}
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		random_list = {
+			10 = { add_prestige = -120 }
+			10 = { add_prestige = -160 }
+			10 = { add_prestige = -200 }
+			10 = { add_prestige = -240 }
+		}
+	}
+	else = {
+		random_list = {
+			10 = { add_prestige = -30 }
+			10 = { add_prestige = -40 }
+			10 = { add_prestige = -50 }
+			10 = { add_prestige = -60 }
+		}
+	}
+}
+
+VIET_random_medium_prestige_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		random_list = {
+			10 = { add_prestige = 20 }
+			10 = { add_prestige = 40 }
+			10 = { add_prestige = 60 }
+			10 = { add_prestige = 80 }
+		}
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		random_list = {
+			10 = { add_prestige = 15 }
+			10 = { add_prestige = 30 }
+			10 = { add_prestige = 45 }
+			10 = { add_prestige = 60 }
+		}
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		random_list = {
+			10 = { add_prestige = 40 }
+			10 = { add_prestige = 80 }
+			10 = { add_prestige = 120 }
+			10 = { add_prestige = 160 }
+		}
+	}
+	else = {
+		random_list = {
+			10 = { add_prestige = 10 }
+			10 = { add_prestige = 20 }
+			10 = { add_prestige = 30 }
+			10 = { add_prestige = 40 }
+		}
+	}
+}
+
+VIET_random_medium_prestige_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		random_list = {
+			10 = { add_prestige = -20 }
+			10 = { add_prestige = -40 }
+			10 = { add_prestige = -60 }
+			10 = { add_prestige = -80 }
+		}
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		random_list = {
+			10 = { add_prestige = -15 }
+			10 = { add_prestige = -30 }
+			10 = { add_prestige = -45 }
+			10 = { add_prestige = -60 }
+		}
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		random_list = {
+			10 = { add_prestige = -40 }
+			10 = { add_prestige = -80 }
+			10 = { add_prestige = -120 }
+			10 = { add_prestige = -160 }
+		}
+	}
+	else = {
+		random_list = {
+			10 = { add_prestige = -10 }
+			10 = { add_prestige = -20 }
+			10 = { add_prestige = -30 }
+			10 = { add_prestige = -40 }
+		}
+	}
+}
+
+VIET_random_small_prestige_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		random_list = {
+			10 = { add_prestige = 10 }
+			10 = { add_prestige = 20 }
+			10 = { add_prestige = 30 }
+			10 = { add_prestige = 40 }
+		}
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		random_list = {
+			10 = { add_prestige = 10 }
+			10 = { add_prestige = 15 }
+			10 = { add_prestige = 25 }
+			10 = { add_prestige = 30 }
+		}
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		random_list = {
+			10 = { add_prestige = 20 }
+			10 = { add_prestige = 40 }
+			10 = { add_prestige = 60 }
+			10 = { add_prestige = 80 }
+		}
+	}
+	else = {
+		random_list = {
+			10 = { add_prestige = 5 }
+			10 = { add_prestige = 10 }
+			10 = { add_prestige = 15 }
+			10 = { add_prestige = 20 }
+		}
+	}
+}
+
+VIET_small_piety_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_piety = 20
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_piety = 15
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_piety = 40
+	}
+	else = {
+		add_piety = 10
+	}
+}
+
+VIET_small_piety_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_piety = -20
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_piety = -15
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_piety = -40
+	}
+	else = {
+		add_piety = -10
+	}
+}
+
+VIET_small_prestige_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_prestige = 20
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_prestige = 15
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_prestige = 40
+	}
+	else = {
+		add_prestige = 10
+	}
+}
+
+VIET_small_prestige_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_prestige = -20
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_prestige = -15
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_prestige = -40
+	}
+	else = {
+		add_prestige = -10
+	}
+}
+
+VIET_tiny_piety_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_piety = 10
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_piety = 8
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_piety = 20
+	}
+	else = {
+		add_piety = 5
+	}
+}
+
+VIET_tiny_piety_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_piety = -10
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_piety = -8
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_piety = -20
+	}
+	else = {
+		add_piety = -5
+	}
+}
+
+VIET_tiny_prestige_gain_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_prestige = 10
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_prestige = 8
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_prestige = 20
+	}
+	else = {
+		add_prestige = 5
+	}
+}
+
+VIET_tiny_prestige_loss_effect = {
+	if = {
+		limit = {
+			has_game_rule = VIET_resource_twice
+		}
+		add_prestige = -10
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_one_and_a_half
+		}
+		add_prestige = -8
+	}
+	else_if = {
+		limit = {
+			has_game_rule = VIET_resource_quadruple
+		}
+		add_prestige = -20
+	}
+	else = {
+		add_prestige = -5
+	}
+}

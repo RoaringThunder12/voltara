@@ -1,0 +1,10 @@
+﻿on_game_start = { on_actions = { vt_seed_orc_capital_support } }
+vt_seed_orc_capital_support = {
+ effect = {
+  every_living_character = {
+   limit = { is_landed = yes voltara_orc_government_culture = yes has_government = mandala_government }
+   vt_orc_mandala_capital_support = yes
+   if = { limit = { capital_province = { has_building_with_flag = mandala_capital_building has_building_or_higher = vt_orc_spirit_lodge_01 } } debug_log = "VT_ORC_CAPITAL: Shamanic capital has Mandala temple and Ancestor Lodge." }
+  }
+ }
+}

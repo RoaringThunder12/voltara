@@ -1,0 +1,18 @@
+﻿widget = {
+ name = "vt_egg_management_buttons"
+ parentanchor = bottom|hcenter widgetanchor = bottom|hcenter position = { 0 -12 }
+ size = { 176 48 } layer = bottom
+ visible = "[And(And(Not(IsPauseMenuShown), GetPlayer.IsValid), IsDefaultGUIMode)]"
+ hbox = { spacing = 16 button_round = { size = { 48 48 } tooltip = "SHOW_KINGSGUARD" onclick = "[GetScriptedGui('mde_show_kingsguard_button').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+onclick = "[GetVariableSystem.Clear('vt_living_dragons_open')]"
+onclick = "[GetVariableSystem.Clear('vt_egg_browser_open')]"
+onclick = "[GetVariableSystem.Toggle('kingsguard_viewer_toggle')]" button_icon_highlight = { texture = "gfx/interface/icons/traits/kingsguard.dds" parentanchor = center widgetanchor = center size = { 32 32 } alwaystransparent = yes } }
+button_round = { size = { 48 48 } tooltip = "vt_living_dragons_title" onclick = "[GetVariableSystem.Clear('kingsguard_viewer_toggle')]"
+onclick = "[GetVariableSystem.Clear('vt_egg_browser_open')]"
+onclick = "[GetVariableSystem.Toggle('vt_living_dragons_open')]" button_icon_highlight = { texture = "gfx/interface/icons/flat_icons/capture_wild_dragon.dds" parentanchor = center widgetanchor = center size = { 32 32 } alwaystransparent = yes } }
+button_round = { size = { 48 48 } tooltip = "vt_egg_browser_title" onclick = "[GetScriptedGui('vt_egg_browser_refresh').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+onclick = "[GetVariableSystem.Clear('kingsguard_viewer_toggle')]"
+onclick = "[GetVariableSystem.Clear('vt_living_dragons_open')]"
+onclick = "[GetVariableSystem.Toggle('vt_egg_browser_open')]" button_icon_highlight = { texture = "gfx/interface/icons/artifact/dragon_egg_black.dds" parentanchor = center widgetanchor = center size = { 32 32 } alwaystransparent = yes } }
+ }
+}

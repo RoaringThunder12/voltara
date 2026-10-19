@@ -1,0 +1,9 @@
+﻿vt_crownsguard_white_keep_01 = {
+ type = special type_icon = "icon_structure_tower_of_london.dds"
+ construction_time = 1095 cost_gold = 800
+ can_construct_potential = { this = province:11458 }
+ asset = { type = pdxmesh name = "building_western_castle_03_mesh" }
+ province_modifier = { building_slot_add = 2 fort_level = 3 garrison_size = 0.5 levy_size = 0.25 stationed_maa_damage_mult = 0.15 stationed_maa_toughness_mult = 0.15 }
+ county_modifier = { monthly_county_control_growth_add = 0.2 }
+ character_modifier = { knight_effectiveness_mult = 0.15 monthly_prestige = 0.5 }
+}

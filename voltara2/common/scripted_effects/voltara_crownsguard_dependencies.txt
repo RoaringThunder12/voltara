@@ -1,0 +1,194 @@
+﻿agot_send_to_nightswatch_effect = {
+ $ACTOR$ = { save_scope_as = vt_exiling_ruler }
+ $NIGHTSWATCH_CANDIDATE$ = {
+  remove_trait = kingsguard add_trait = former_kingsguard
+  add_character_modifier = kingsguard_oathbreaker
+  remove_character_flag = blocked_from_leaving
+  if = { limit = { is_imprisoned = yes } release_from_prison = yes }
+  move_to_pool = yes
+ }
+}
+
+agot_prowess_rank_up_effect = {
+	if = {
+		limit = {
+			NOT = { has_trait = dragon }
+		}
+		if = {
+			limit = {
+				NOT = { has_trait = education_martial_prowess }
+			}
+			add_trait = education_martial_prowess_1
+		}
+		else_if = {
+			limit = {
+				NOR = {
+					has_trait = education_martial_prowess_4
+					has_trait = education_martial_prowess_5
+				}
+			}
+			change_trait_rank = {
+				trait = education_martial_prowess
+				rank = 1
+			}
+		}
+	}
+}
+
+agot_become_a_knight_effect = {
+ $KNIGHT_MAKER$ = { save_scope_as = vt_knighting_mentor }
+ $KNIGHT_TO_BE$ = { add_trait = squire add_trait_xp = { trait = squire track = knight value = 100 } }
+}
+
+agot_create_artifact_kingsguard_sword_effect = {
+	$OWNER$ = {
+		save_scope_as = owner
+	}
+	set_artifact_rarity_masterwork = yes
+	create_artifact = {
+		name = kingsguard_sword_name
+		description = kingsguard_sword_description
+		visuals = longsword
+		type = sword
+		wealth = scope:wealth
+		quality = scope:quality
+		modifier = kingsguard_sword_modifier
+		save_scope_as = newly_created_artifact
+		decaying = no
+	}
+	scope:newly_created_artifact ?= {
+		if = {
+			limit = {
+				scope:owner = {
+					NOT = {
+						any_equipped_character_artifact = {
+							artifact_slot_type = primary_armament
+							OR = {
+								rarity = illustrious
+								rarity = famed
+								rarity = masterwork
+							}
+						}
+					}
+				}
+			}
+			equip_artifact_to_owner_replace = yes
+		}
+		set_variable = {
+			name = kingsguard_sword_artifact
+			value = yes
+		}
+		set_variable = {
+			name = historical_unique_artifact
+			value = yes
+		}
+	}
+}
+
+agot_create_artifact_kingsguard_armor_effect = {
+	# Get the character the artifact is being made for.
+	$OWNER$ = { save_scope_as = owner }
+
+	set_artifact_rarity_famed = yes
+
+	# Create the artifact
+	create_artifact = {
+		name = kingsguard_armor_name
+		description = kingsguard_armor_description
+		type = armor_plate
+		visuals = kingsguard_armor_visuals
+		wealth = scope:wealth
+		quality = scope:quality
+		template = kingsguard_armor_template
+		modifier = kingsguard_armor_modifier
+		save_scope_as = newly_created_artifact
+		decaying = no
+	}
+
+	scope:newly_created_artifact = {
+		set_variable = { name = historical_unique_artifact value = yes }
+		set_variable = { name = kingsguard_armor value = yes } #this connects the artifact to the 3D model via the 01_clothes.txt file under gfx/portraits/portrait_modifiers/
+		equip_artifact_to_owner_replace = yes
+	}
+}
+
+agot_cancel_councillor_travel_effect = {
+	if = {
+		limit = {
+			current_travel_plan ?= {
+				has_variable = agot_councillor_travel
+				is_cancelled = no
+			}
+		}
+		current_travel_plan = {
+			cancel_travel_plan = yes
+		}
+	}
+
+	remove_variable = agot_councillor_target_court
+}
+
+agot_start_councillor_travel_effect = {
+	# Save target character as agot_councillor_target_court
+	set_variable = {
+		name = agot_councillor_target_court
+		value = scope:target_character
+	}
+
+	if = {
+		limit = {
+			exists = scope:target_character
+			exists = scope:target_character.capital_province
+			NOT = { location = scope:target_character.capital_province }
+
+			# Either not traveling, or another councillor travel was cancelled
+			# and the councillor is traveling back home
+			OR = {
+				is_travelling = no
+				current_travel_plan ?= {
+					has_variable = agot_councillor_travel
+					is_cancelled = yes
+				}
+			}
+		}
+
+		# Abort previous councillor travel if needed
+		location = { save_temporary_scope_as = current_location }
+		current_travel_plan ?= {
+			abort_travel_plan = yes
+		}
+		set_location = scope:current_location
+
+		# Start new travel to target character's capital and mark it as councillor travel
+		start_travel_plan = {
+			destination = scope:target_character.capital_province
+			return_trip = yes
+			on_arrival_on_action = agot_on_arrival_councillor_travel
+			on_arrival_destinations = all_but_last
+		}
+		current_travel_plan = {
+			set_variable = agot_councillor_travel
+		}
+	}
+}
+
+agot_recreate_artifact_the_white_book_effect = {
+	set_artifact_rarity_illustrious = yes
+	create_artifact = {
+		name = the_white_book_name
+		visuals = white_book_visuals
+		description = the_white_book_desc
+		type = miscellaneous
+		wealth = 100
+		quality = 100
+		template = the_white_book_template
+		modifier = the_white_book_modifier
+		save_scope_as = white_book_created
+		decaying = no
+	}
+	scope:white_book_created = {
+		set_variable = white_book
+		set_variable = artifact_prevent_transfer
+		set_variable = historical_unique_artifact
+	}
+}
