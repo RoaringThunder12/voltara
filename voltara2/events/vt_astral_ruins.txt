@@ -1,0 +1,53 @@
+﻿namespace = vt_astral_ruins
+vt_astral_ruins.10 = {
+ type = character_event title = vt_astral_ruins.10.t desc = vt_astral_ruins.10.desc
+ theme = travel
+ left_portrait = { character = root animation = personality_rational }
+ immediate = {  }
+ option = { name = vt_astral_ruins.10.a }
+}
+vt_astral_ruins.11 = {
+ type = character_event title = vt_astral_ruins.11.t desc = vt_astral_ruins.11.desc
+ theme = travel
+ left_portrait = { character = root animation = personality_rational }
+ immediate = { vt_ruins_misc_effect = yes }
+ option = { name = vt_astral_ruins.11.a }
+}
+vt_astral_ruins.12 = {
+ type = character_event title = vt_astral_ruins.12.t desc = vt_astral_ruins.12.desc
+ theme = travel
+ left_portrait = { character = root animation = personality_rational }
+ immediate = { vt_create_astral_steel_effect = yes }
+ option = { name = vt_astral_ruins.12.a }
+}
+vt_astral_ruins.13 = {
+ type = character_event title = vt_astral_ruins.13.t desc = vt_astral_ruins.13.desc
+ theme = travel
+ left_portrait = { character = root animation = personality_rational }
+ immediate = { voltara_create_egg_effect = yes }
+ option = { name = vt_astral_ruins.13.a }
+}
+vt_astral_ruins.200 = {
+ type = character_event title = vt_astral_ruins.200.t desc = vt_astral_ruins.200.desc
+ theme = stewardship
+ widgets = {
+  widget = { gui = "vt_astral_design_selection" container = "custom_widgets_container" }
+  widget = {
+   gui = "vt_astral_enter_text" container = "dynamic_birth_name"
+   controller = {
+    type = text
+    data = { key = new_artifact_name default = { localization_key = vt_astral_weapon_name } }
+   }
+   setup_scope = { root = { save_scope_as = text_target } }
+  }
+ }
+ immediate = { add_character_flag = vt_astral_naming }
+ option = {
+  name = vt_astral_ruins.200.a
+  trigger = { vt_can_forge_astral_trigger = yes }
+  custom_tooltip = vt_astral_forge_tt
+  hidden_effect = { vt_forge_astral_weapon_effect = yes }
+ }
+ option = { name = vt_astral_ruins.200.b }
+ after = { vt_astral_menu_cleanup_effect = yes }
+}

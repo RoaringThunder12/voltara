@@ -1,0 +1,331 @@
+﻿
+vt_create_astral_steel_effect = {
+ create_artifact = {
+  name = vt_astral_steel_name description = vt_astral_steel_desc
+  type = miscellaneous template = vt_ruins_relic_template
+  visuals = vt_astral_steel_visuals rarity = illustrious quality = 100 wealth = 100
+  decaying = no modifier = vt_astral_steel_modifier save_scope_as = vt_new_astral_steel
+ }
+ scope:vt_new_astral_steel = { set_variable = { name = vt_astral_steel value = yes } }
+}
+vt_ruins_misc_effect = {
+ random_list = {
+  1 = { vt_create_ruins_brooch_effect = yes }
+  1 = { vt_create_ruins_ring_effect = yes }
+  1 = { vt_create_ruins_tablet_effect = yes }
+ }
+}
+vt_ruins_roll_effect = {
+ random_list = {
+  45 = { trigger_event = vt_astral_ruins.10 }
+  40 = { trigger_event = vt_astral_ruins.11 }
+  12 = { trigger_event = vt_astral_ruins.12 }
+  3 = { if = { limit = { has_game_rule = vt_elven_ruins_no_eggs } trigger_event = vt_astral_ruins.11 } else = { trigger_event = vt_astral_ruins.13 } }
+ }
+}
+
+vt_create_ruins_brooch_effect = {
+ create_artifact = {
+  name = vt_ruins_brooch_name description = vt_ruins_brooch_desc
+  type = miscellaneous template = vt_ruins_relic_template visuals = brooch
+  rarity = famed quality = 50 wealth = 20 modifier = vt_ruins_brooch_modifier
+  save_scope_as = vt_new_ruins_relic
+ }
+ scope:vt_new_ruins_relic = { set_variable = { name = vt_elven_ruin_relic value = yes } }
+}
+vt_create_ruins_ring_effect = {
+ create_artifact = {
+  name = vt_ruins_ring_name description = vt_ruins_ring_desc
+  type = miscellaneous template = vt_ruins_relic_template visuals = ring
+  rarity = famed quality = 50 wealth = 20 modifier = vt_ruins_ring_modifier
+  save_scope_as = vt_new_ruins_relic
+ }
+ scope:vt_new_ruins_relic = { set_variable = { name = vt_elven_ruin_relic value = yes } }
+}
+vt_create_ruins_tablet_effect = {
+ create_artifact = {
+  name = vt_ruins_tablet_name description = vt_ruins_tablet_desc
+  type = miscellaneous template = vt_ruins_relic_template visuals = artifact_scroll
+  rarity = famed quality = 50 wealth = 20 modifier = vt_ruins_tablet_modifier
+  save_scope_as = vt_new_ruins_relic
+ }
+ scope:vt_new_ruins_relic = { set_variable = { name = vt_elven_ruin_relic value = yes } }
+}
+vt_create_astral_weapon_1_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_andal_armingsword_gold_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 1 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_2_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_andal_armingsword_silver_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 2 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_3_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_andal_longsword_gold_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 3 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_4_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_andal_longsword_silver_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 4 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_5_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_firstman_armingsword_gold_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 5 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_6_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_firstman_armingsword_silver_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 6 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_7_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_firstman_armingsword_bronze_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 7 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_8_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_firstman_longsword_gold_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 8 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_9_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_firstman_longsword_silver_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 9 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_10_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_firstman_longsword_bronze_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 10 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_11_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_valyrian_armingsword_gold_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 11 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_12_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_valyrian_armingsword_silver_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 12 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_13_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_valyrian_longsword_gold_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 13 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_create_astral_weapon_14_effect = {
+ create_artifact = {
+  name = vt_astral_weapon_name description = vt_astral_weapon_desc
+  type = sword template = vt_astral_weapon_template visuals = vs_valyrian_longsword_silver_visuals
+  rarity = illustrious quality = 100 wealth = 100
+  modifier = vt_astral_weapon_modifier decaying = no
+  save_scope_as = vt_new_astral_weapon
+ }
+ scope:vt_new_astral_weapon = {
+  set_variable = { name = vt_astral_weapon value = yes }
+  set_variable = { name = vt_astral_design value = 14 }
+  equip_artifact_to_owner_replace = yes
+ }
+}
+vt_forge_astral_weapon_effect = {
+ if = {
+  limit = { vt_can_forge_astral_trigger = yes }
+  random_character_artifact = { limit = { has_variable = vt_astral_steel } save_scope_as = vt_forging_material }
+if = {
+ limit = { var:vt_astral_design = 1 }
+ vt_create_astral_weapon_1_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 2 }
+ vt_create_astral_weapon_2_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 3 }
+ vt_create_astral_weapon_3_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 4 }
+ vt_create_astral_weapon_4_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 5 }
+ vt_create_astral_weapon_5_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 6 }
+ vt_create_astral_weapon_6_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 7 }
+ vt_create_astral_weapon_7_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 8 }
+ vt_create_astral_weapon_8_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 9 }
+ vt_create_astral_weapon_9_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 10 }
+ vt_create_astral_weapon_10_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 11 }
+ vt_create_astral_weapon_11_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 12 }
+ vt_create_astral_weapon_12_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 13 }
+ vt_create_astral_weapon_13_effect = yes
+}
+else_if = {
+ limit = { var:vt_astral_design = 14 }
+ vt_create_astral_weapon_14_effect = yes
+}
+  else = { vt_create_astral_weapon_1_effect = yes }
+  if = {
+   limit = { exists = scope:vt_new_astral_weapon }
+   remove_short_term_gold = 150
+   destroy_artifact = scope:vt_forging_material
+   if = {
+    limit = { has_character_flag = vt_astral_naming }
+    if = {
+     limit = { has_variable = new_artifact_name }
+     scope:vt_new_astral_weapon = { set_artifact_name = rename_artifact_default_key }
+    }
+    else = { scope:vt_new_astral_weapon = { set_artifact_name = rename_artifact_entered_text } }
+   }
+  }
+ }
+}
+vt_astral_menu_cleanup_effect = {
+ remove_variable = vt_astral_design
+ remove_variable = new_artifact_name
+ remove_character_flag = vt_astral_naming
+ remove_character_flag = vt_astral_menu_open
+}

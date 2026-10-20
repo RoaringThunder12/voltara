@@ -1,0 +1,30 @@
+﻿vt_inquisitor_monster_trigger = {
+ OR = {
+  has_trait = supernatural_vampire
+  has_trait = supernatural_werewolf
+  has_trait = supernatural_hybrid
+  has_trait = lycan_character
+  has_trait = necromancer
+  has_trait = vt_ek_necromancer
+  has_trait = vt_ek_experimentalist_necromancer
+  has_trait = vt_ek_lich_character
+  has_trait = witch
+  voltara_is_trained_threadbinder = yes
+ }
+}
+vt_inquisitor_mortal_trigger = {
+ faith.religion = religion:voltara_religion
+ is_adult = yes
+ NOT = { has_trait = dragon }
+ vt_inquisitor_monster_trigger = no
+ spn_has_supernatural_trait = no
+}
+vt_inquisitor_candidate_trigger = {
+ vt_inquisitor_mortal_trigger = yes
+ NOT = { has_trait = supernatural_hunter }
+ OR = { learning >= 12 has_trait = zealous }
+}
+vt_inquisitor_warrior_trigger = {
+ vt_inquisitor_mortal_trigger = yes
+ has_trait = supernatural_hunter
+}

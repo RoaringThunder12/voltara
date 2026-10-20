@@ -1,0 +1,56 @@
+﻿maester_artifact_template = {
+	can_equip = {
+		trigger_if = { # I do this check to avoid weird warning loc
+			limit = {
+				scope:artifact.artifact_owner = this
+			}
+
+			trigger_if = {
+				limit = {
+					scope:artifact = {
+						OR = {
+							artifact_type = archmaester_mask
+							artifact_type = archmaester_rod
+							artifact_type = archmaester_ring
+						}
+					}
+				}
+				custom_tooltip = {
+					text = agot_must_be_archmaester_desc
+					has_trait = archmaester
+				}
+			}
+			trigger_else_if = {
+				limit = {
+					scope:artifact = {
+						artifact_type = grandmaester_chain
+					}
+				}
+				custom_tooltip = {
+					text = agot_must_be_grandmaester_desc
+					has_inactive_trait = grandmaester
+					AND = {
+						exists = title:h_voltara_severos.holder
+						employer ?= title:h_voltara_severos.holder
+						has_court_position = maester_court_position
+					}
+				}
+			}
+			trigger_else = {
+				custom_tooltip = {
+					text = agot_must_be_artifact_creator_desc
+					scope:artifact = {
+						var:creator = root
+					}
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+
+	ai_score = {
+		value = 100
+	}
+}

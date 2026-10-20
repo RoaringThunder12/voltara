@@ -1,0 +1,56 @@
+﻿
+vt_explore_elven_ruins = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_castle_view.dds" }
+ desc = vt_explore_elven_ruins_desc selection_tooltip = vt_explore_elven_ruins_tooltip confirm_text = vt_explore_elven_ruins_confirm
+ is_shown = { vt_ruins_territory_trigger = yes NOT = { has_trait = dragon } }
+ is_valid = { is_adult = yes is_imprisoned = no NOT = { has_trait = incapable } }
+ cooldown = { years = 5 }
+ cost = { gold = 50 }
+ effect = { if = { limit = { has_game_rule = vt_elven_ruins_no_eggs } custom_tooltip = vt_ruins_no_eggs_outcomes_tt } else = { custom_tooltip = vt_ruins_outcomes_tt } hidden_effect = { vt_ruins_roll_effect = yes } }
+ ai_check_interval = 24
+ ai_potential = { gold >= 250 }
+ ai_will_do = {
+  base = 15
+  modifier = { factor = 0.8 any_character_artifact = { has_variable = vt_elven_ruin_relic } }
+ }
+}
+vt_forge_astral_steel = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_castle_view.dds" }
+ desc = vt_forge_astral_steel_desc selection_tooltip = vt_forge_astral_steel_tooltip confirm_text = vt_forge_astral_steel_confirm
+ is_shown = { NOT = { has_game_rule = vt_rule_astral_forging_off } vt_has_astral_steel_trigger = yes NOT = { has_trait = dragon } }
+ is_valid = {
+  vt_can_forge_astral_trigger = yes
+  NOT = { has_character_flag = vt_astral_menu_open }
+ }
+ effect = {
+  if = {
+   limit = { is_ai = no }
+   set_variable = { name = vt_astral_design value = 1 }
+   add_character_flag = { flag = vt_astral_menu_open days = 30 }
+   trigger_event = vt_astral_ruins.200
+  }
+  else = {
+   random_list = {
+1 = { set_variable = { name = vt_astral_design value = 1 } }
+1 = { set_variable = { name = vt_astral_design value = 2 } }
+1 = { set_variable = { name = vt_astral_design value = 3 } }
+1 = { set_variable = { name = vt_astral_design value = 4 } }
+1 = { set_variable = { name = vt_astral_design value = 5 } }
+1 = { set_variable = { name = vt_astral_design value = 6 } }
+1 = { set_variable = { name = vt_astral_design value = 7 } }
+1 = { set_variable = { name = vt_astral_design value = 8 } }
+1 = { set_variable = { name = vt_astral_design value = 9 } }
+1 = { set_variable = { name = vt_astral_design value = 10 } }
+1 = { set_variable = { name = vt_astral_design value = 11 } }
+1 = { set_variable = { name = vt_astral_design value = 12 } }
+1 = { set_variable = { name = vt_astral_design value = 13 } }
+1 = { set_variable = { name = vt_astral_design value = 14 } }
+   }
+   vt_forge_astral_weapon_effect = yes
+   vt_astral_menu_cleanup_effect = yes
+  }
+ }
+ ai_check_interval = 12
+ ai_potential = { gold >= 350 NOT = { any_character_artifact = { has_variable = vt_astral_weapon } } }
+ ai_will_do = { base = 50 }
+}

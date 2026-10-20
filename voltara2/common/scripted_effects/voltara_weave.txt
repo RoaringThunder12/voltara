@@ -39,7 +39,7 @@ vt_weave_monthly = {
  }
  set_variable = { name = vt_weave_active_incursions value = 0 }
  every_ruler = { limit = { has_character_flag = vt_weave_demon_revolt is_at_war = yes } prev = { change_variable = { name = vt_weave_active_incursions add = 1 } } }
- if = { limit = { global_var:vt_weave_balance >= 30 var:vt_weave_active_incursions < 3 NOT = { has_variable = vt_weave_revolt_cooldown } }
+ if = { limit = { NOT = { has_game_rule = vt_rule_weave_incursions_off } global_var:vt_weave_balance >= 30 var:vt_weave_active_incursions < 3 NOT = { has_variable = vt_weave_revolt_cooldown } }
   random = { chance = 20
    random_situation_county = { limit = { vt_weave_eligible_county = yes } vt_weave_spawn_incursion = yes }
   }

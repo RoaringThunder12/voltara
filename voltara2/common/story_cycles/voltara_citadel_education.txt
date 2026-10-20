@@ -1,0 +1,14 @@
+﻿vt_citadel_education_story = {
+ on_owner_death = { end_story = yes }
+ effect_group = {
+  days = 30
+  triggered_effect = {
+   trigger = { story_owner = { NOT = { has_variable = vt_citadel_student } } }
+   effect = { end_story = yes }
+  }
+  triggered_effect = {
+   trigger = { story_owner = { is_adult = yes has_variable = vt_citadel_student } }
+   effect = { story_owner = { vt_citadel_finish_education_effect = yes } end_story = yes }
+  }
+ }
+}

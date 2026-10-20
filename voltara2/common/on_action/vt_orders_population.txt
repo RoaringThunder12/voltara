@@ -1,0 +1,12 @@
+﻿on_game_start_after_lobby = { on_actions = { vt_orders_population_start } }
+vt_orders_population_start = { effect = {
+ vt_seed_roaming_vampires = yes
+ vt_seed_inquisitor_adventurer = yes
+ vt_seed_aldren_steel = yes
+ vt_seed_expanded_orders = yes
+} }
+on_title_gain = { on_actions = { vt_khaotist_order_successor } }
+vt_khaotist_order_successor = {
+ trigger = { scope:title = { has_variable = vt_khaotist_order } }
+ effect = { add_trait = witch voltara_initialize_threadbinder = yes }
+}

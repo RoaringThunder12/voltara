@@ -1,0 +1,50 @@
+﻿on_game_start = { on_actions = { vt_citadel_start } }
+on_title_gain = { on_actions = { vt_citadel_head_succession } }
+on_16th_birthday = { on_actions = { vt_citadel_student_graduation } }
+yearly_playable_pulse = { on_actions = { vt_citadel_flavor } }
+vt_citadel_start = {
+ effect = {
+  set_global_variable = { name = citadel_title value = title:k_voltara_luminous_see }
+  title:k_voltara_luminous_see.holder ?= {
+   trigger_event = vt_citadel.0002
+  }
+ }
+}
+vt_citadel_head_succession = {
+ trigger = { has_title = title:k_voltara_luminous_see }
+ effect = { vt_citadel_luminary_effect = yes }
+}
+vt_citadel_student_graduation = {
+ trigger = { has_variable = vt_citadel_student }
+ effect = { vt_citadel_finish_education_effect = yes }
+}
+vt_citadel_flavor = {
+ trigger = { vt_aeliunist_clergy_eligible = yes vt_citadel_open = yes }
+ random_events = {
+  chance_to_happen = 20
+  100 = agot_maester.1000
+  100 = agot_maester.1005
+  100 = agot_silent_sisters.0003
+  100 = agot_silent_sisters.0004
+ }
+}
+
+on_death = { on_actions = { vt_order_funeral_events } }
+on_join_court = { on_actions = { vt_sisterhood_arrival } }
+on_title_gain = { on_actions = { vt_sisterhood_holder_check } }
+vt_sisterhood_arrival = { events = { agot_silent_sisters.0001 } }
+vt_sisterhood_holder_check = { events = { agot_silent_sisters.0002 } }
+vt_order_funeral_events = {
+ trigger = { vt_aeliunist_clergy_eligible = yes }
+ effect = {
+  save_scope_as = dead_relative
+  every_close_family_member = {
+   limit = { is_ruler = yes vt_aeliunist_clergy_eligible = yes }
+   random_list = {
+    100 = {}
+    1 = { trigger_event = { id = agot_silent_sisters.0007 days = { 5 7 } } }
+    1 = { trigger_event = { id = agot_silent_sisters.0005 days = { 2 4 } } }
+   }
+  }
+ }
+}

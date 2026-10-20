@@ -1,0 +1,346 @@
+﻿vta_goblin_scouts = {
+ type = skirmishers
+ damage = 10
+ toughness = 13
+ pursuit = 19
+ screen = 22
+ stack = 125
+ 
+ buy_cost = { gold = 64 }
+ low_maintenance_cost = { gold = 0.25 }
+ high_maintenance_cost = { gold = 0.80 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { hills = { damage = 2 toughness = 2 } plains = { damage = -2 toughness = -2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_goblin } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_goblin_skirmishers }
+}
+
+vta_goblin_bows = {
+ type = archers
+ damage = 24
+ toughness = 7
+ pursuit = 7
+ screen = 6
+ stack = 125
+ 
+ buy_cost = { gold = 85 }
+ low_maintenance_cost = { gold = 0.35 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 7
+ counters = { skirmishers = 1 }
+ terrain_bonus = { hills = { damage = 4 toughness = 2 } plains = { damage = -4 toughness = -1 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_goblin } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_archers add = 5 }
+ illustration = { reference = vta_3059124362_goblin_archers }
+}
+
+vta_goblin_spears = {
+ type = pikemen
+ damage = 19
+ toughness = 24
+ pursuit = 5
+ screen = 8
+ stack = 125
+ 
+ buy_cost = { gold = 102 }
+ low_maintenance_cost = { gold = 0.40 }
+ high_maintenance_cost = { gold = 1.35 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { hills = { damage = 3 toughness = 4 } plains = { damage = -3 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_goblin }  culture = { has_innovation = innovation_vt_goblin_warfare_1 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_goblin_pike_infantry }
+}
+
+vta_goblin_guard = {
+ type = heavy_infantry
+ damage = 29
+ toughness = 20
+ pursuit = 5
+ screen = 8
+ stack = 125
+ 
+ buy_cost = { gold = 128 }
+ low_maintenance_cost = { gold = 0.50 }
+ high_maintenance_cost = { gold = 1.70 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { hills = { damage = 5 toughness = 3 } plains = { damage = -5 toughness = -2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_goblin }  culture = { has_innovation = innovation_quilted_armor } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_goblin_heavy_infantry }
+}
+
+vta_goblin_pursuit = {
+ type = skirmishers
+ damage = 15
+ toughness = 13
+ pursuit = 39
+ screen = 30
+ stack = 125
+ 
+ buy_cost = { gold = 123 }
+ low_maintenance_cost = { gold = 0.50 }
+ high_maintenance_cost = { gold = 1.65 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { hills = { damage = 3 toughness = 2 } plains = { damage = -2 toughness = -2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_goblin }  culture = { has_innovation = innovation_vt_goblin_warfare_1 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_goblin_skirmishers }
+}
+
+vta_goblin_siege = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 1
+ siege_value = 0.16
+ buy_cost = { gold = 85 }
+ low_maintenance_cost = { gold = 0.30 }
+ high_maintenance_cost = { gold = 1.00 }
+ provision_cost = 6
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_goblin } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_3059124362_goblin_onager }
+}
+
+vta_goblin_elite = {
+ type = heavy_infantry
+ damage = 40
+ toughness = 29
+ pursuit = 9
+ screen = 12
+ stack = 125
+ 
+ buy_cost = { gold = 208 }
+ low_maintenance_cost = { gold = 0.85 }
+ high_maintenance_cost = { gold = 2.85 }
+ provision_cost = 12
+ counters = { pikemen = 1 skirmishers = 0.5 }
+ terrain_bonus = { hills = { damage = 7 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_goblin }
+ culture = { has_innovation = innovation_vt_goblin_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_goblin_house_guard }
+}
+
+vta_western_goblin_scouts = {
+ type = skirmishers
+ damage = 12
+ toughness = 13
+ pursuit = 19
+ screen = 28
+ stack = 125
+ 
+ buy_cost = { gold = 90 }
+ low_maintenance_cost = { gold = 0.34 }
+ high_maintenance_cost = { gold = 1.08 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { forest = { damage = 2 toughness = 2 } plains = { damage = -2 toughness = -2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_western_goblins }
+ culture = { has_innovation = innovation_vt_goblin_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_goblin_skirmishers }
+}
+
+vta_western_goblin_bows = {
+ type = archers
+ damage = 30
+ toughness = 6
+ pursuit = 7
+ screen = 12
+ stack = 125
+ 
+ buy_cost = { gold = 119 }
+ low_maintenance_cost = { gold = 0.47 }
+ high_maintenance_cost = { gold = 1.55 }
+ provision_cost = 7
+ counters = { skirmishers = 1 }
+ terrain_bonus = { forest = { damage = 5 toughness = 2 } plains = { damage = -5 toughness = -1 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_western_goblins }
+ culture = { has_innovation = innovation_vt_goblin_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_archers add = 5 }
+ illustration = { reference = vta_3059124362_goblin_archers }
+}
+
+vta_eastern_goblin_spears = {
+ type = pikemen
+ damage = 24
+ toughness = 28
+ pursuit = 5
+ screen = 8
+ stack = 125
+ 
+ buy_cost = { gold = 143 }
+ low_maintenance_cost = { gold = 0.54 }
+ high_maintenance_cost = { gold = 1.82 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { hills = { damage = 4 toughness = 4 } wetlands = { damage = -4 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_local_goblin_voltara_ironhold culture = culture:voltara_local_goblin_voltara_rhaulla culture = culture:voltara_local_goblin_voltara_test_1001 culture = culture:voltara_local_goblin_voltara_test_10113 culture = culture:voltara_local_goblin_voltara_test_102 culture = culture:voltara_local_goblin_voltara_test_10293 culture = culture:voltara_local_goblin_voltara_test_103 culture = culture:voltara_local_goblin_voltara_test_10354 culture = culture:voltara_local_goblin_voltara_test_10395 culture = culture:voltara_local_goblin_voltara_test_10396 culture = culture:voltara_local_goblin_voltara_test_10397 culture = culture:voltara_local_goblin_voltara_test_104 culture = culture:voltara_local_goblin_voltara_test_10498 culture = culture:voltara_local_goblin_voltara_test_10504 culture = culture:voltara_local_goblin_voltara_test_10627 culture = culture:voltara_local_goblin_voltara_test_10833 culture = culture:voltara_local_goblin_voltara_test_10971 culture = culture:voltara_local_goblin_voltara_test_10972 culture = culture:voltara_local_goblin_voltara_test_11051 culture = culture:voltara_local_goblin_voltara_test_11098 culture = culture:voltara_local_goblin_voltara_test_1111 culture = culture:voltara_local_goblin_voltara_test_113 culture = culture:voltara_local_goblin_voltara_test_114 culture = culture:voltara_local_goblin_voltara_test_124 culture = culture:voltara_local_goblin_voltara_test_128 culture = culture:voltara_local_goblin_voltara_test_1738 culture = culture:voltara_local_goblin_voltara_test_523 culture = culture:voltara_local_goblin_voltara_test_539 culture = culture:voltara_local_goblin_voltara_test_559 culture = culture:voltara_local_goblin_voltara_test_561 culture = culture:voltara_local_goblin_voltara_test_578 culture = culture:voltara_local_goblin_voltara_test_582 culture = culture:voltara_local_goblin_voltara_test_7741 culture = culture:voltara_local_goblin_voltara_test_867 culture = culture:voltara_local_goblin_voltara_test_9206 }
+ culture = { has_innovation = innovation_vt_goblin_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_goblin_pike_infantry }
+}
+
+vta_eastern_goblin_guard = {
+ type = heavy_infantry
+ damage = 36
+ toughness = 23
+ pursuit = 5
+ screen = 8
+ stack = 125
+ 
+ buy_cost = { gold = 179 }
+ low_maintenance_cost = { gold = 0.68 }
+ high_maintenance_cost = { gold = 2.29 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { hills = { damage = 6 toughness = 3 } wetlands = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_local_goblin_voltara_ironhold culture = culture:voltara_local_goblin_voltara_rhaulla culture = culture:voltara_local_goblin_voltara_test_1001 culture = culture:voltara_local_goblin_voltara_test_10113 culture = culture:voltara_local_goblin_voltara_test_102 culture = culture:voltara_local_goblin_voltara_test_10293 culture = culture:voltara_local_goblin_voltara_test_103 culture = culture:voltara_local_goblin_voltara_test_10354 culture = culture:voltara_local_goblin_voltara_test_10395 culture = culture:voltara_local_goblin_voltara_test_10396 culture = culture:voltara_local_goblin_voltara_test_10397 culture = culture:voltara_local_goblin_voltara_test_104 culture = culture:voltara_local_goblin_voltara_test_10498 culture = culture:voltara_local_goblin_voltara_test_10504 culture = culture:voltara_local_goblin_voltara_test_10627 culture = culture:voltara_local_goblin_voltara_test_10833 culture = culture:voltara_local_goblin_voltara_test_10971 culture = culture:voltara_local_goblin_voltara_test_10972 culture = culture:voltara_local_goblin_voltara_test_11051 culture = culture:voltara_local_goblin_voltara_test_11098 culture = culture:voltara_local_goblin_voltara_test_1111 culture = culture:voltara_local_goblin_voltara_test_113 culture = culture:voltara_local_goblin_voltara_test_114 culture = culture:voltara_local_goblin_voltara_test_124 culture = culture:voltara_local_goblin_voltara_test_128 culture = culture:voltara_local_goblin_voltara_test_1738 culture = culture:voltara_local_goblin_voltara_test_523 culture = culture:voltara_local_goblin_voltara_test_539 culture = culture:voltara_local_goblin_voltara_test_559 culture = culture:voltara_local_goblin_voltara_test_561 culture = culture:voltara_local_goblin_voltara_test_578 culture = culture:voltara_local_goblin_voltara_test_582 culture = culture:voltara_local_goblin_voltara_test_7741 culture = culture:voltara_local_goblin_voltara_test_867 culture = culture:voltara_local_goblin_voltara_test_9206 }
+ culture = { has_innovation = innovation_vt_goblin_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_goblin_heavy_infantry }
+}
+
+vta_goblin_marksmen = {
+ type = archers
+ damage = 38
+ toughness = 13
+ pursuit = 5
+ screen = 4
+ stack = 125
+ 
+ buy_cost = { gold = 149 }
+ low_maintenance_cost = { gold = 0.60 }
+ high_maintenance_cost = { gold = 2.00 }
+ provision_cost = 10
+ counters = { heavy_infantry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { hills = { damage = 7 toughness = 2 } plains = { damage = -6 toughness = -2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_goblin }
+ culture = { has_innovation = innovation_vt_goblin_warfare_3 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_crossbowmen add = 5 }
+ illustration = { reference = vta_3059124362_goblin_crossbowmen }
+}
+
+vta_goblin_siege_2 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 2
+ siege_value = 0.3
+ buy_cost = { gold = 150 }
+ low_maintenance_cost = { gold = 0.50 }
+ high_maintenance_cost = { gold = 1.70 }
+ provision_cost = 12
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_goblin }
+ culture = { has_innovation = innovation_mangonel } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_3059124362_goblin_onager }
+}
+
+vta_goblin_siege_3 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 3
+ siege_value = 0.4
+ buy_cost = { gold = 220 }
+ low_maintenance_cost = { gold = 0.70 }
+ high_maintenance_cost = { gold = 2.40 }
+ provision_cost = 18
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_goblin }
+ culture = { has_innovation = innovation_trebuchet } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_3059124362_goblin_onager }
+}
+
+vta_goblin_siege_4 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 4
+ siege_value = 0.6
+ buy_cost = { gold = 350 }
+ low_maintenance_cost = { gold = 1.10 }
+ high_maintenance_cost = { gold = 3.80 }
+ provision_cost = 24
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_goblin }
+   culture = { has_innovation = innovation_vt_goblin_warfare_4 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_3059124362_goblin_onager }
+}

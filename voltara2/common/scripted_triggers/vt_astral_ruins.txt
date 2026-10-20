@@ -1,0 +1,20 @@
+﻿
+vt_ruins_territory_trigger = {
+NOT = { has_game_rule = vt_elven_ruins_off }
+
+ OR = {
+  is_landless_adventurer = yes
+  AND = {
+   is_landed = yes
+   exists = capital_county
+   capital_county = { target_is_de_jure_liege_or_above = title:h_voltara_severos }
+  }
+ }
+}
+vt_has_astral_steel_trigger = { any_character_artifact = { has_variable = vt_astral_steel } }
+vt_can_forge_astral_trigger = {
+NOT = { has_game_rule = vt_rule_astral_forging_off }
+
+ is_alive = yes is_adult = yes is_imprisoned = no NOT = { has_trait = incapable }
+ vt_has_astral_steel_trigger = yes gold >= 150
+}

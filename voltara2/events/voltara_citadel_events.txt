@@ -1,0 +1,37 @@
+﻿namespace = vt_citadel
+vt_citadel.0001 = {
+ type = character_event title = vt_citadel.0001.t desc = vt_citadel.0001.desc
+ theme = learning_scholarship_focus left_portrait = root right_portrait = scope:vt_citadel_graduate
+ option = { name = vt_citadel.0001.a }
+}
+vt_citadel.0002 = {
+ hidden = yes
+ immediate = {
+  vt_citadel_luminary_effect = yes
+  if = {
+   limit = { NOT = { has_global_variable = vt_citadel_initialized } }
+   set_global_variable = vt_citadel_initialized
+   every_living_maester = {
+    limit = { has_trait = archmaester is_ruler = no }
+    root = { add_courtier = prev }
+   }
+   agot_seed_archmaesters_effect = yes
+   agot_seed_acolytes_effect = yes
+   while = { count = 12
+    create_character = { template = maester_character employer = root }
+   }
+  }
+  if = { limit = { has_trait = maester has_inactive_trait = grandmaester }
+   debug_log = "VT_CITADEL_HEAD: High Luminary leads Citadel."
+  }
+  if = { limit = { any_courtier = { has_trait = maester has_trait = archmaester } }
+   debug_log = "VT_CITADEL_FACULTY: Archpriests initialized."
+  }
+ }
+}
+
+vt_citadel.0003 = {
+ type = character_event title = vt_citadel.0003.t desc = vt_citadel.0003.desc
+ theme = learning_scholarship_focus left_portrait = root right_portrait = scope:vt_citadel_graduate
+ option = { name = vt_citadel.0003.a }
+}

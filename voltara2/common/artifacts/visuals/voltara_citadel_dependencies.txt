@@ -1,0 +1,185 @@
+﻿maester_link = {
+	icon = "artifact_pouch.dds" #"maester_link.dds"
+	asset = ep1_generic_jewelry_01_a_entity
+}
+
+maester_link_collection = {
+	icon = "artifact_pouch.dds" #"maester_link_collection.dds"
+	asset = ep1_generic_jewelry_01_a_entity
+}
+
+maester_chain = {
+	icon = {
+		trigger = {
+			OR = {
+				has_trait = archmaester
+				has_inactive_trait = grandmaester
+			}
+		}
+		reference = "maester_chain_level_4.dds"
+	}
+	icon = {
+		trigger = {
+			has_trait = maester
+			NOR = {
+				has_trait = archmaester
+				has_inactive_trait = grandmaester
+			}
+		}
+		reference = "maester_chain_level_1.dds"
+	}
+	asset = ep1_generic_jewelry_01_a_entity
+}
+
+grandmaester_chain = {
+	icon = "grandmaester_chain.dds"
+	asset = ep1_generic_jewelry_01_a_entity
+}
+
+archmaester_mask = { # Needs asset?
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_black_iron
+		}
+		reference = "archmaester_mask_black_iron.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_brass
+		}
+		reference = "archmaester_mask_brass.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_bronze
+		}
+		reference = "archmaester_mask_bronze.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_copper
+		}
+		reference = "archmaester_mask_copper.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_electrum
+		}
+		reference = "archmaester_mask_electrum.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_yellow_gold
+		}
+		reference = "archmaester_mask_yellow_gold.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_red_gold
+		}
+		reference = "archmaester_mask_red_gold.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_iron
+		}
+		reference = "archmaester_mask_iron.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_lead
+		}
+		reference = "archmaester_mask_lead.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_pewter
+		}
+		reference = "archmaester_mask_pewter.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_platinum
+		}
+		reference = "archmaester_mask_platinum.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_silver
+		}
+		reference = "archmaester_mask_silver.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_steel
+		}
+		reference = "archmaester_mask_steel.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_tin
+		}
+		reference = "archmaester_mask_tin.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_bismuth
+		}
+		reference = "archmaester_mask_bismuth.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_cast_iron
+		}
+		reference = "archmaester_mask_cast_iron.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_antimony
+		}
+		reference = "archmaester_mask_antimony.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_nickel
+		}
+		reference = "archmaester_mask_nickel.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_white_copper
+		}
+		reference = "archmaester_mask_white_copper.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_aluminum
+		}
+		reference = "archmaester_mask_aluminum.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_zinc
+		}
+		reference = "archmaester_mask_zinc.dds"
+	}
+	icon = {
+		trigger = {
+			has_inactive_trait = archmaester_vs
+		}
+		reference = "archmaester_mask_valyrian_steel.dds"
+	}
+	asset = ep1_generic_jewelry_01_a_entity
+
+ icon = "archmaester_mask_silver.dds"
+}
+
+archmaester_ring = { # Needs asset?
+	icon = "artifact_ring.dds" #"archmaester_ring.dds"
+	asset = ep1_generic_jewelry_01_a_entity
+}
+
+archmaester_rod = { # Needs asset?
+	icon = "artifact_regalia.dds" #"archmaester_rod.dds"
+	asset = ep1_generic_jewelry_01_a_entity
+}

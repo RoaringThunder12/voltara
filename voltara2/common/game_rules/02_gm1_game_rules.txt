@@ -1,11 +1,7 @@
-﻿##############################
-## GM1 game_rules
-##############################
+﻿gm1_prisoners_and_jailors_interaction_restriction = {
+ categories = { vt_courtiers }
 
-gm1_prisoners_and_jailors_interaction_restriction = {
-	categories = {
-		gm1_prisoners_and_jailors
-	}
+	
 
 	default = transfer_prisoner_default_interaction_allowed
 
@@ -20,9 +16,9 @@ gm1_prisoners_and_jailors_interaction_restriction = {
 }
 
 gm1_prisoners_and_jailors_penalties = {
-	categories = {
-		gm1_prisoners_and_jailors
-	}
+ categories = { vt_courtiers }
+
+	
 
 	default = transfer_prisoner_default_interaction_penalties
 
@@ -40,9 +36,9 @@ gm1_prisoners_and_jailors_penalties = {
 }
 
 gm1_prisoners_and_jailors_interaction_acceptance = {
-	categories = {
-		gm1_prisoners_and_jailors
-	}
+ categories = { vt_courtiers }
+
+	
 
 	default = transfer_prisoner_default_interaction_acceptance
 

@@ -273,55 +273,20 @@ spn_abandon_hybrid_decision = {
 
 #Become A Hunter
 spn_embrace_hunter_decision = {
-	decision_group_type = supernatural # 2.37
-	ai_check_interval = 0
-	picture = {
-		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
-	}
-	desc = spn_embrace_hunter_decision_desc
-	selection_tooltip = spn_embrace_hunter_decision_tooltip
-
-	is_shown = {
-		has_game_rule = spn_yes_embrace_decision
-		spn_has_supernatural_trait = no
-		spn_has_hunter_trait = no
-	}
-
-	is_valid = {
-		NOT = { has_trait = supernatural_hunter }
-		spn_has_supernatural_trait = no
-	}
-
-	effect = {
-		add_character_flag = {
-			flag = spn_embrace_hunter_dec
-		}
-		
-		if = {
-			limit = {
-				OR = {
-					has_game_rule = spn_yes_embrace_events 
-					has_game_rule = spn_only_embrace_events
-				}
-			}
-			trigger_event = spn_random_embrace.0004 #Random Hunter Event
-		}
-		else = {
-			trigger_event = spn_initiate.3003 #Choose Hunter Trait
-		}
-		
-		show_as_tooltip = {
-			custom_tooltip = spn_msg_tooltip_embrace_hunter_desc
-		}
-	}
-	
-	ai_potential = {
-		always = no
-	}
-
-	ai_will_do = {
-		base = 0
-	}
+ decision_group_type = supernatural
+ ai_check_interval = 24
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds" }
+ desc = spn_embrace_hunter_decision_desc
+ selection_tooltip = spn_embrace_hunter_decision_tooltip
+ is_shown = {
+  faith.religion = religion:voltara_religion
+  is_adult = yes
+  NOT = { has_trait = supernatural_hunter }
+ }
+ is_valid = { vt_inquisitor_candidate_trigger = yes is_imprisoned = no }
+ effect = { vt_inquisitor_initiation_effect = yes }
+ ai_potential = { has_trait = zealous }
+ ai_will_do = { base = 20 }
 }
 
 ### Remove Hunter

@@ -61,7 +61,7 @@ can_be_kingsguard_trigger = {
 }
 
 valid_kingsguard_gender_trigger = {
-	is_male = yes
+ OR = { is_male = yes has_game_rule = vt_crownsguard_any_gender }
 }
 
 highborn_kingsguard_candidate = {

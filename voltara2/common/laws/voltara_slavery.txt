@@ -6,9 +6,11 @@
   is_landed = yes
   custom_tooltip = {
    text = voltara_abolition_cassian_lock_tt
+   OR = { has_game_rule = vt_abolition_open
    NOT = {
     character:19060001 = { is_alive = yes }
     top_liege = { OR = { has_title = title:h_voltara_severos has_title = title:e_voltara_21 } }
+   }
    }
   }
   prestige_level >= 3

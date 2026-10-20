@@ -1,0 +1,346 @@
+﻿vta_stoneborn_scouts = {
+ type = skirmishers
+ damage = 15
+ toughness = 30
+ pursuit = 4
+ screen = 22
+ stack = 100
+ 
+ buy_cost = { gold = 94 }
+ low_maintenance_cost = { gold = 0.30 }
+ high_maintenance_cost = { gold = 0.96 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { mountains = { damage = 3 toughness = 4 } wetlands = { damage = -2 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_stoneborn } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_2291024373_broadbeam_skirmishers }
+}
+
+vta_stoneborn_bows = {
+ type = archers
+ damage = 29
+ toughness = 24
+ pursuit = 0
+ screen = 6
+ stack = 100
+ 
+ buy_cost = { gold = 125 }
+ low_maintenance_cost = { gold = 0.42 }
+ high_maintenance_cost = { gold = 1.38 }
+ provision_cost = 7
+ counters = { skirmishers = 1 }
+ terrain_bonus = { mountains = { damage = 5 toughness = 4 } wetlands = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_stoneborn } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_archers add = 5 }
+ illustration = { reference = vta_2291024373_broadbeam_crossbowmen }
+}
+
+vta_stoneborn_spears = {
+ type = pikemen
+ damage = 24
+ toughness = 41
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 150 }
+ low_maintenance_cost = { gold = 0.48 }
+ high_maintenance_cost = { gold = 1.62 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 6 } wetlands = { damage = -4 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_stoneborn }  culture = { has_innovation = innovation_vt_stoneborn_warfare_1 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_2291024373_broadbeam_pikemen }
+}
+
+vta_stoneborn_guard = {
+ type = heavy_infantry
+ damage = 34
+ toughness = 37
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 188 }
+ low_maintenance_cost = { gold = 0.60 }
+ high_maintenance_cost = { gold = 2.04 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 6 toughness = 6 } wetlands = { damage = -5 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_stoneborn }  culture = { has_innovation = innovation_quilted_armor } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_2291024373_broadbeam_heavy_infantry }
+}
+
+vta_stoneborn_pursuit = {
+ type = skirmishers
+ damage = 20
+ toughness = 30
+ pursuit = 24
+ screen = 30
+ stack = 100
+ 
+ buy_cost = { gold = 181 }
+ low_maintenance_cost = { gold = 0.60 }
+ high_maintenance_cost = { gold = 1.98 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { mountains = { damage = 4 toughness = 4 } wetlands = { damage = -3 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_stoneborn }  culture = { has_innovation = innovation_vt_stoneborn_warfare_1 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_2291024373_deeproad_lurkers }
+}
+
+vta_stoneborn_siege = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 1
+ siege_value = 0.16
+ buy_cost = { gold = 85 }
+ low_maintenance_cost = { gold = 0.30 }
+ high_maintenance_cost = { gold = 1.00 }
+ provision_cost = 6
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_stoneborn } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_2291024373_blacklock_engineers }
+}
+
+vta_stoneborn_elite = {
+ type = heavy_infantry
+ damage = 45
+ toughness = 46
+ pursuit = 0
+ screen = 12
+ stack = 100
+ 
+ buy_cost = { gold = 306 }
+ low_maintenance_cost = { gold = 1.02 }
+ high_maintenance_cost = { gold = 3.42 }
+ provision_cost = 12
+ counters = { pikemen = 1 skirmishers = 0.5 }
+ terrain_bonus = { mountains = { damage = 8 toughness = 7 } wetlands = { damage = -7 toughness = -6 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_stoneborn }
+ culture = { has_innovation = innovation_vt_stoneborn_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_2291024373_longbeard_heavy_infantry }
+}
+
+vta_forge_stoneborn_bows = {
+ type = archers
+ damage = 36
+ toughness = 28
+ pursuit = 0
+ screen = 6
+ stack = 100
+ 
+ buy_cost = { gold = 175 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.86 }
+ provision_cost = 7
+ counters = { skirmishers = 1 }
+ terrain_bonus = { mountains = { damage = 6 toughness = 4 } wetlands = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_local_stoneborn_voltara_iron_anvilcrown culture = culture:voltara_local_stoneborn_voltara_iron_basalthearth culture = culture:voltara_local_stoneborn_voltara_iron_bronzeoath culture = culture:voltara_local_stoneborn_voltara_iron_caverncoil culture = culture:voltara_local_stoneborn_voltara_iron_cinderburrow culture = culture:voltara_local_stoneborn_voltara_iron_copperdelve culture = culture:voltara_local_stoneborn_voltara_iron_deepgate culture = culture:voltara_local_stoneborn_voltara_iron_hearthguard culture = culture:voltara_local_stoneborn_voltara_iron_oathhammer culture = culture:voltara_local_stoneborn_voltara_iron_oldforge culture = culture:voltara_local_stoneborn_voltara_iron_runeward culture = culture:voltara_local_stoneborn_voltara_iron_silverhearth culture = culture:voltara_local_stoneborn_voltara_iron_stonelantern }
+ culture = { has_innovation = innovation_vt_stoneborn_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_archers add = 5 }
+ illustration = { reference = vta_2291024373_broadbeam_crossbowmen }
+}
+
+vta_forge_stoneborn_guard = {
+ type = heavy_infantry
+ damage = 42
+ toughness = 43
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 263 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.75 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { mountains = { damage = 8 toughness = 6 } wetlands = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_local_stoneborn_voltara_iron_anvilcrown culture = culture:voltara_local_stoneborn_voltara_iron_basalthearth culture = culture:voltara_local_stoneborn_voltara_iron_bronzeoath culture = culture:voltara_local_stoneborn_voltara_iron_caverncoil culture = culture:voltara_local_stoneborn_voltara_iron_cinderburrow culture = culture:voltara_local_stoneborn_voltara_iron_copperdelve culture = culture:voltara_local_stoneborn_voltara_iron_deepgate culture = culture:voltara_local_stoneborn_voltara_iron_hearthguard culture = culture:voltara_local_stoneborn_voltara_iron_oathhammer culture = culture:voltara_local_stoneborn_voltara_iron_oldforge culture = culture:voltara_local_stoneborn_voltara_iron_runeward culture = culture:voltara_local_stoneborn_voltara_iron_silverhearth culture = culture:voltara_local_stoneborn_voltara_iron_stonelantern }
+ culture = { has_innovation = innovation_vt_stoneborn_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_2291024373_broadbeam_heavy_infantry }
+}
+
+vta_march_stoneborn_scouts = {
+ type = skirmishers
+ damage = 19
+ toughness = 38
+ pursuit = 1
+ screen = 22
+ stack = 100
+ 
+ buy_cost = { gold = 132 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.30 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { hills = { damage = 3 toughness = 6 } desert = { damage = -3 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_local_stoneborn_voltara_mosaic_basalt culture = culture:voltara_local_stoneborn_voltara_mosaic_blackeagle culture = culture:voltara_local_stoneborn_voltara_mosaic_blackhammer culture = culture:voltara_local_stoneborn_voltara_mosaic_coppergate culture = culture:voltara_local_stoneborn_voltara_mosaic_cragward culture = culture:voltara_local_stoneborn_voltara_mosaic_darkanvil culture = culture:voltara_local_stoneborn_voltara_mosaic_deepanvil culture = culture:voltara_local_stoneborn_voltara_mosaic_deepanvilwatch culture = culture:voltara_local_stoneborn_voltara_mosaic_flinttooth culture = culture:voltara_local_stoneborn_voltara_mosaic_granitefist culture = culture:voltara_local_stoneborn_voltara_mosaic_granitefistwatch culture = culture:voltara_local_stoneborn_voltara_mosaic_hardrock culture = culture:voltara_local_stoneborn_voltara_mosaic_ironroot culture = culture:voltara_local_stoneborn_voltara_mosaic_ironrootwatch culture = culture:voltara_local_stoneborn_voltara_mosaic_lostbanner culture = culture:voltara_local_stoneborn_voltara_mosaic_oathstone culture = culture:voltara_local_stoneborn_voltara_mosaic_oathstonewatch culture = culture:voltara_local_stoneborn_voltara_mosaic_reedscale culture = culture:voltara_local_stoneborn_voltara_mosaic_silverpick culture = culture:voltara_local_stoneborn_voltara_mosaic_thornknife }
+ culture = { has_innovation = innovation_vt_stoneborn_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_2291024373_broadbeam_skirmishers }
+}
+
+vta_march_stoneborn_pursuit = {
+ type = skirmishers
+ damage = 25
+ toughness = 38
+ pursuit = 21
+ screen = 30
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { hills = { damage = 4 toughness = 6 } desert = { damage = -4 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_local_stoneborn_voltara_mosaic_basalt culture = culture:voltara_local_stoneborn_voltara_mosaic_blackeagle culture = culture:voltara_local_stoneborn_voltara_mosaic_blackhammer culture = culture:voltara_local_stoneborn_voltara_mosaic_coppergate culture = culture:voltara_local_stoneborn_voltara_mosaic_cragward culture = culture:voltara_local_stoneborn_voltara_mosaic_darkanvil culture = culture:voltara_local_stoneborn_voltara_mosaic_deepanvil culture = culture:voltara_local_stoneborn_voltara_mosaic_deepanvilwatch culture = culture:voltara_local_stoneborn_voltara_mosaic_flinttooth culture = culture:voltara_local_stoneborn_voltara_mosaic_granitefist culture = culture:voltara_local_stoneborn_voltara_mosaic_granitefistwatch culture = culture:voltara_local_stoneborn_voltara_mosaic_hardrock culture = culture:voltara_local_stoneborn_voltara_mosaic_ironroot culture = culture:voltara_local_stoneborn_voltara_mosaic_ironrootwatch culture = culture:voltara_local_stoneborn_voltara_mosaic_lostbanner culture = culture:voltara_local_stoneborn_voltara_mosaic_oathstone culture = culture:voltara_local_stoneborn_voltara_mosaic_oathstonewatch culture = culture:voltara_local_stoneborn_voltara_mosaic_reedscale culture = culture:voltara_local_stoneborn_voltara_mosaic_silverpick culture = culture:voltara_local_stoneborn_voltara_mosaic_thornknife }
+ culture = { has_innovation = innovation_vt_stoneborn_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_2291024373_deeproad_lurkers }
+}
+
+vta_stoneborn_marksmen = {
+ type = archers
+ damage = 43
+ toughness = 30
+ pursuit = 0
+ screen = 4
+ stack = 100
+ 
+ buy_cost = { gold = 219 }
+ low_maintenance_cost = { gold = 0.72 }
+ high_maintenance_cost = { gold = 2.40 }
+ provision_cost = 10
+ counters = { heavy_infantry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 8 toughness = 4 } wetlands = { damage = -7 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_stoneborn }
+ culture = { has_innovation = innovation_vt_stoneborn_warfare_3 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_crossbowmen add = 5 }
+ illustration = { reference = vta_2291024373_broadbeam_crossbowmen }
+}
+
+vta_stoneborn_siege_2 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 2
+ siege_value = 0.3
+ buy_cost = { gold = 150 }
+ low_maintenance_cost = { gold = 0.50 }
+ high_maintenance_cost = { gold = 1.70 }
+ provision_cost = 12
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_stoneborn }
+ culture = { has_innovation = innovation_mangonel } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_2291024373_blacklock_engineers }
+}
+
+vta_stoneborn_siege_3 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 3
+ siege_value = 0.4
+ buy_cost = { gold = 220 }
+ low_maintenance_cost = { gold = 0.70 }
+ high_maintenance_cost = { gold = 2.40 }
+ provision_cost = 18
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_stoneborn }
+ culture = { has_innovation = innovation_trebuchet } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_2291024373_blacklock_engineers }
+}
+
+vta_stoneborn_siege_4 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 4
+ siege_value = 0.6
+ buy_cost = { gold = 350 }
+ low_maintenance_cost = { gold = 1.10 }
+ high_maintenance_cost = { gold = 3.80 }
+ provision_cost = 24
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_stoneborn }
+   culture = { has_innovation = innovation_vt_stoneborn_warfare_4 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_2291024373_blacklock_engineers }
+}

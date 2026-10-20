@@ -1,0 +1,116 @@
+﻿# Adapted from AGOT's Valyrian steel customizer. Uses design IDs rather than temporary artifacts.
+widget = {
+ name = "vt_astral_design_selection"
+ size = { 440 250 }
+ vbox = {
+  layoutpolicy_horizontal = expanding layoutpolicy_vertical = expanding
+  scrollarea = {
+   layoutpolicy_horizontal = expanding layoutpolicy_vertical = expanding
+   scrollbarpolicy_vertical = always_on
+   scrollbarpolicy_horizontal = always_off
+   scrollbar_vertical = { using = Scrollbar_Vertical }
+   scrollwidget = {
+    vbox = { spacing = 4
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_1').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_1').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_andal_arming_gold.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_1 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_2').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_2').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_andal_arming_silver.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_2 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_3').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_3').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_andal_longsword_gold.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_3 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_4').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_4').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_andal_longsword_silver.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_4 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_5').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_5').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_firstman_arming_gold.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_5 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_6').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_6').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_firstman_arming_silver.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_6 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_7').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_7').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_firstman_arming_bronze.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_7 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_8').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_8').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_firstman_longsword_gold.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_8 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_9').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_9').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_firstman_longsword_silver.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_9 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_10').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_10').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_firstman_longsword_bronze.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_10 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_11').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_11').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_valyrian_arming_gold.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_11 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_12').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_12').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_valyrian_arming_silver.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_12 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_13').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_13').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_valyrian_longsword_gold.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_13 }
+}
+button_standard = {
+ size = { 400 76 }
+ down = "[GetScriptedGui('vt_astral_select_14').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ onclick = "[GetScriptedGui('vt_astral_select_14').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+ icon = { position = { 6 6 } size = { 64 64 } texture = "gfx/interface/icons/artifact/vs_valyrian_longsword_silver.dds" }
+ text_single = { position = { 80 0 } size = { 310 76 } align = left|vcenter text = vt_astral_design_14 }
+}
+    }
+   }
+  }
+ }
+}

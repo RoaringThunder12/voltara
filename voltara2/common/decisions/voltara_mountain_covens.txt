@@ -3,8 +3,8 @@
  desc = vt_seek_mountain_coven_decision_desc
  selection_tooltip = vt_seek_mountain_coven_decision_tooltip
  decision_group_type = major ai_check_interval = 0
- is_shown = { is_landed = yes vt_coven_eligible_mortal = yes }
- is_valid = { is_available = yes any_independent_ruler = { vt_coven_available_patron = yes } }
+ is_shown = { vt_weave_khaos = yes NOT = { has_game_rule = vt_rule_coven_oath_off } is_landed = yes vt_coven_eligible_mortal = yes }
+ is_valid = { vt_weave_khaos = yes is_available = yes custom_tooltip = { text = vt_coven_patron_available_tt any_independent_ruler = { vt_coven_available_patron = yes } } }
  cooldown = { years = 1 }
  effect = { random_independent_ruler = { limit = { vt_coven_available_patron = yes } save_scope_as = vt_coven_patron } trigger_event = vt_mountain_covens.1 }
  ai_potential = { always = no } ai_will_do = { base = 0 }

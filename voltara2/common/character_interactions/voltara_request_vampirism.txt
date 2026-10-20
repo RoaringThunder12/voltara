@@ -3,12 +3,12 @@
  common_interaction = yes icon = vampire_blood
  desc = vt_request_vampirism_desc
  greeting = positive notification_text = vt_request_vampirism_notification
- is_shown = {
+ is_shown = { NOT = { has_game_rule = vt_rule_request_turning_off }
   NOT = { scope:actor = scope:recipient }
   scope:actor = { vt_coven_eligible_mortal = yes NOT = { voltara_is_ruins_placeholder = yes } }
   scope:recipient = { has_trait = supernatural_vampire is_alive = yes }
  }
- is_valid = {
+ is_valid = { NOT = { has_game_rule = vt_rule_request_turning_off }
   scope:actor = { vt_coven_eligible_mortal = yes is_available = yes }
   scope:recipient = { has_trait = supernatural_vampire is_alive = yes is_imprisoned = no is_incapable = no }
  }

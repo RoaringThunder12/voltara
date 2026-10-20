@@ -4,6 +4,8 @@
  if = { limit = { vt_weave_awakened_magic = yes } add_character_flag = vt_weave_counted_magic }
 }
 vt_weave_count_awakening = {
+ if = { limit = { NOT = { has_game_rule = vt_rule_weave_awakenings_off } }
+
  if = { limit = { is_alive = yes NOT = { voltara_is_ruins_placeholder = yes } NOT = { has_trait = dragon } }
   # A single turning may grant several traits. Count the strongest change once.
   if = { limit = { is_vampire = yes NOT = { has_character_flag = vt_weave_counted_vampire } }
@@ -16,5 +18,7 @@ vt_weave_count_awakening = {
    vt_weave_shift = { VALUE = 0.5 }
   }
   vt_weave_remember_awakening = yes
+ }
+
  }
 }

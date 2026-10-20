@@ -1,0 +1,9 @@
+﻿vt_can_have_hand = {
+ is_landed = yes highest_held_title_tier >= tier_county
+ NOT = { has_trait = dragon }
+ NOT = { has_government = voltara_ruins_government }
+}
+vt_can_have_master_of_ships = {
+ vt_can_have_hand = yes
+ OR = { highest_held_title_tier >= tier_empire any_held_county = { is_coastal_county = yes } has_government = pirate_government }
+}

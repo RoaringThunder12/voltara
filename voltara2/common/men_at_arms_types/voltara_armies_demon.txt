@@ -1,0 +1,254 @@
+﻿vta_demon_scouts = {
+ type = skirmishers
+ damage = 22
+ toughness = 22
+ pursuit = 14
+ screen = 22
+ stack = 100
+ 
+ buy_cost = { gold = 98 }
+ low_maintenance_cost = { gold = 0.31 }
+ high_maintenance_cost = { gold = 1.00 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { drylands = { damage = 4 toughness = 3 } wetlands = { damage = -4 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_demon } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_dremora_skirmishers }
+}
+
+vta_demon_bows = {
+ type = archers
+ damage = 36
+ toughness = 16
+ pursuit = 2
+ screen = 6
+ stack = 100
+ 
+ buy_cost = { gold = 130 }
+ low_maintenance_cost = { gold = 0.44 }
+ high_maintenance_cost = { gold = 1.44 }
+ provision_cost = 7
+ counters = { skirmishers = 1 }
+ terrain_bonus = { drylands = { damage = 6 toughness = 2 } wetlands = { damage = -6 toughness = -2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_demon } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_archers add = 5 }
+ illustration = { reference = vta_3059124362_dremora_bowmen }
+}
+
+vta_demon_spears = {
+ type = pikemen
+ damage = 31
+ toughness = 33
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 156 }
+ low_maintenance_cost = { gold = 0.50 }
+ high_maintenance_cost = { gold = 1.69 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { drylands = { damage = 6 toughness = 5 } wetlands = { damage = -5 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_demon }  culture = { has_innovation = innovation_vt_demon_warfare_1 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_dremora_pikemen }
+}
+
+vta_demon_guard = {
+ type = heavy_infantry
+ damage = 41
+ toughness = 29
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 195 }
+ low_maintenance_cost = { gold = 0.62 }
+ high_maintenance_cost = { gold = 2.12 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { drylands = { damage = 7 toughness = 4 } wetlands = { damage = -7 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_demon }  culture = { has_innovation = innovation_quilted_armor } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_dremora_heavy_infantry }
+}
+
+vta_demon_pursuit = {
+ type = skirmishers
+ damage = 27
+ toughness = 22
+ pursuit = 34
+ screen = 30
+ stack = 100
+ 
+ buy_cost = { gold = 188 }
+ low_maintenance_cost = { gold = 0.62 }
+ high_maintenance_cost = { gold = 2.06 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { drylands = { damage = 5 toughness = 3 } wetlands = { damage = -4 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_demon }  culture = { has_innovation = innovation_vt_demon_warfare_1 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_dremora_light_cavalry }
+}
+
+vta_demon_siege = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 1
+ siege_value = 0.16
+ buy_cost = { gold = 85 }
+ low_maintenance_cost = { gold = 0.30 }
+ high_maintenance_cost = { gold = 1.00 }
+ provision_cost = 6
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_demon } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_3059124362_dremora_onager }
+}
+
+vta_demon_elite = {
+ type = heavy_infantry
+ damage = 52
+ toughness = 38
+ pursuit = 4
+ screen = 12
+ stack = 100
+ 
+ buy_cost = { gold = 318 }
+ low_maintenance_cost = { gold = 1.06 }
+ high_maintenance_cost = { gold = 3.56 }
+ provision_cost = 12
+ counters = { pikemen = 1 skirmishers = 0.5 }
+ terrain_bonus = { drylands = { damage = 9 toughness = 6 } wetlands = { damage = -8 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_demon }
+ culture = { has_innovation = innovation_vt_demon_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_dremora_house_guard }
+}
+
+vta_demon_marksmen = {
+ type = archers
+ damage = 50
+ toughness = 22
+ pursuit = 0
+ screen = 4
+ stack = 100
+ 
+ buy_cost = { gold = 228 }
+ low_maintenance_cost = { gold = 0.75 }
+ high_maintenance_cost = { gold = 2.50 }
+ provision_cost = 10
+ counters = { heavy_infantry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { drylands = { damage = 9 toughness = 3 } wetlands = { damage = -8 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_demon }
+ culture = { has_innovation = innovation_vt_demon_warfare_3 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_crossbowmen add = 5 }
+ illustration = { reference = vta_3059124362_dremora_crossbowmen }
+}
+
+vta_demon_siege_2 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 2
+ siege_value = 0.3
+ buy_cost = { gold = 150 }
+ low_maintenance_cost = { gold = 0.50 }
+ high_maintenance_cost = { gold = 1.70 }
+ provision_cost = 12
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_demon }
+ culture = { has_innovation = innovation_mangonel } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_3059124362_dremora_onager }
+}
+
+vta_demon_siege_3 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 3
+ siege_value = 0.4
+ buy_cost = { gold = 220 }
+ low_maintenance_cost = { gold = 0.70 }
+ high_maintenance_cost = { gold = 2.40 }
+ provision_cost = 18
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_demon }
+ culture = { has_innovation = innovation_trebuchet } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_3059124362_dremora_onager }
+}
+
+vta_demon_siege_4 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 4
+ siege_value = 0.6
+ buy_cost = { gold = 350 }
+ low_maintenance_cost = { gold = 1.10 }
+ high_maintenance_cost = { gold = 3.80 }
+ provision_cost = 24
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_demon }
+   culture = { has_innovation = innovation_vt_demon_warfare_4 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_3059124362_dremora_onager }
+}

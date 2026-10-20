@@ -439,7 +439,6 @@ innovation_war_camels = {
 
 	icon = @camel
 
-	unlock_maa = camel_rider
 	unlock_building = camel_farms_01
 
 	custom = eligible_accolade_camelry_attribute
@@ -451,7 +450,7 @@ innovation_war_camels = {
 		value = 100
 	}
 
- potential = { OR = { this = culture:voltara_culture_26 this = culture:voltara_desert_southron any_parent_culture_or_above = { OR = { this = culture:voltara_culture_26 this = culture:voltara_desert_southron } } } }
+ potential = { vt_generic_human_culture_access = yes  OR = { this = culture:voltara_culture_26 this = culture:voltara_desert_southron any_parent_culture_or_above = { OR = { this = culture:voltara_culture_26 this = culture:voltara_desert_southron } } } }
 }
 
 innovation_wootz_steel = {

@@ -1,4 +1,4 @@
-window = {
+﻿window = {
 	name = "game_rules"
 	size = { 100% 100% }
 	movable = no
@@ -98,7 +98,7 @@ window = {
 					spacing = 5
 					text_single = {
 						text = "GAME_RULE_CATEGORIES"
-						max_width = 350
+						max_width = 800
 					}
 					
 					dropdown_menu_standard = {
@@ -135,19 +135,17 @@ window = {
 					margin_top = 30
 					margin_left = 25
 
-					fixedgridbox = {
+					vbox = {
+						ignoreinvisible = yes
+						spacing = 12
 						datamodel = "[JominiGameRules.GetVisibleSettings]"
-						addcolumn = 450
-						addrow = 170
-						datamodel_wrap = 2
-						maxhorizontalslots = 2
-						flipdirection = yes
 
 						item = {
 							widget = {
-								size = { 420 165 }
+								size = { 870 150 }
 								datacontext = "[GuiGameRule.GetRule]"
 								datacontext = "[GuiGameRule.GetSetting]"
+								visible = "[Not(GameRuleSetting.HasFlag('vt_hidden_compatibility_rule'))]"
 
 								background = {
 									using = Background_Area_With_Header
@@ -159,7 +157,7 @@ window = {
 								vbox = {
 									text_single = {
 										text = "[GameRule.GetName]"
-										max_width = 350
+										max_width = 800
 									}
 
 									spacer = {

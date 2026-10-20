@@ -1,4 +1,4 @@
-version="0.2.1"
+﻿version="0.2.1"
 name="Voltara2"
 tags={ "Total Conversion" }
 supported_version="1.20.*"
@@ -26,3 +26,5 @@ replace_path="map_data/geographical_regions"
 replace_path="gfx/map/map_object_data"
 replace_path="gfx/map/map_object_data/generated"
 replace_path="gfx/interface/illustrations/loading_screens"
+
+replace_path="common/game_rules"

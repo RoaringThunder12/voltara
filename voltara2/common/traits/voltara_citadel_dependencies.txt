@@ -1,0 +1,454 @@
+﻿silent_sister = {
+	physical = no
+	category = fame
+
+
+	flag = can_not_marry
+	inheritance_blocker = all
+	claim_inheritance_blocker = all
+	valid_sex = female
+
+	monthly_piety = 2
+	clergy_opinion = 5
+	general_opinion = -10
+	diplomacy = -5
+	learning = 2
+
+	shown_in_ruler_designer = no
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_silent_sister_desc
+			}
+			desc = trait_silent_sister_character_desc
+		}
+	}
+
+	ai_zeal = 30
+	ai_sociability = medium_negative_ai_value
+
+	compatibility = {
+		chaste = @pos_compat_low
+		celibate = @pos_compat_low
+		lustful = @neg_compat_low
+		deviant = @neg_compat_low
+		lovers_pox = @neg_compat_low
+		early_great_pox = @neg_compat_low
+		great_pox = @neg_compat_low
+		lifestyle_reveler = @neg_compat_low
+		seducer = @neg_compat_low
+	}
+}
+
+maester = {
+
+	shown_in_ruler_designer = no
+
+	inheritance_blocker = all
+	claim_inheritance_blocker = all
+
+	flag = can_not_marry
+
+	same_opinion = 10
+	opposite_opinion = -10
+
+	ai_rationality = 10
+	ai_greed = -10
+	ai_sociability = -5
+	ai_boldness = -5
+
+	opposites = {
+		disgraced_maester
+	}
+	name = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_maester
+			}
+			triggered_desc = {
+				trigger = {
+					has_trait_xp = {
+						trait = maester
+						value < 34
+					}
+				}
+				desc = trait_novice
+			}
+			triggered_desc = {
+				trigger = {
+					has_trait_xp = {
+						trait = maester
+						value < 100
+					}
+				}
+				desc = trait_acolyte
+			}
+			desc = trait_maester
+		}
+	}
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_maester_desc
+			}
+			triggered_desc = {
+				trigger = {
+					has_trait_xp = {
+						trait = maester
+						value < 34
+					}
+				}
+				desc = trait_novice_character_desc
+			}
+			triggered_desc = {
+				trigger = {
+					has_trait_xp = {
+						trait = maester
+						value < 100
+					}
+				}
+				desc = trait_acolyte_character_desc
+			}
+			desc = trait_maester_character_desc
+		}
+	}
+
+	track = {
+		34 = {}
+
+		100 = {
+			dynasty_house_opinion = 5
+			liege_opinion = 20
+		}
+	}
+}
+
+disgraced_maester = {
+	icon = maester_disgraced.dds
+
+	shown_in_ruler_designer = no
+
+	same_opinion = 10
+	opposite_opinion = -10
+
+	ai_rationality = 10
+	ai_greed = 10
+	ai_sociability = -5
+	ai_boldness = 5
+
+	opposites = {
+		maester
+	}
+	name = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_disgraced_maester
+			}
+			desc = trait_disgraced_maester
+		}
+	}
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_disgraced_maester_desc
+			}
+			desc = trait_disgraced_maester_character_desc
+		}
+	}
+}
+
+archmaester = {
+	shown_in_ruler_designer = no
+
+	icon = maester.dds
+
+	name = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					OR = {
+						NOT = { exists = this }
+					}
+				}
+				desc = trait_archmaester
+			}
+			triggered_desc = {
+				trigger = {
+					has_trait = archmaester
+				}
+				desc = trait_archmaester_typed
+			}
+			desc = trait_archmaester
+		}
+	}
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_archmaester_desc
+			}
+			triggered_desc = {
+				trigger = {
+					has_trait = archmaester
+				}
+				desc = trait_archmaester_typed_desc
+			}
+			desc = trait_archmaester_desc
+		}
+	}
+}
+
+grandmaester = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_vs = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_zinc = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_aluminum = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_white_copper = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_nickel = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_antimony = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_cast_iron = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_bismuth = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_tin = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_steel = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_silver = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_platinum = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_pewter = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_lead = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_iron = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_red_gold = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_yellow_gold = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_electrum = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_copper = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_bronze = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_brass = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+archmaester_black_iron = {
+	physical = no
+	shown_in_ruler_designer = no
+	shown_in_encyclopedia = no
+	name = trait_hidden
+	desc = trait_hidden_desc
+	icon = scholar.dds
+}
+
+
+
+
+
+widowed = {
+	same_opinion = 5
+	fertility = -0.2
+	health = -0.2
+
+	flag = can_not_marry
+
+	shown_in_ruler_designer = no
+
+	ai_energy = -15
+	ai_sociability = medium_negative_ai_value
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_widowed_desc
+			}
+			desc = trait_widowed_character_desc
+		}
+	}
+}

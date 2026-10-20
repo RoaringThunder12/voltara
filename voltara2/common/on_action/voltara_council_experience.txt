@@ -1,0 +1,13 @@
+﻿quarterly_playable_pulse = { on_actions = { vt_council_experience_quarterly } }
+vt_council_experience_quarterly = { effect = { vt_council_experience_tick = yes } }
+on_game_start = { on_actions = { vt_council_experience_initialize } }
+vt_council_experience_initialize = {
+ effect = {
+  every_living_character = { limit = { is_landed = yes } vt_council_experience_tick = yes }
+  character:19060001 = {
+   if = { limit = { exists = cp:councillor_castellan } debug_log = "VT_COUNCIL_HAND: Starting sovereign has a Hand." }
+   if = { limit = { exists = cp:councillor_admiral } debug_log = "VT_COUNCIL_SHIPS: Starting sovereign has a Master of Ships." }
+   cp:councillor_steward ?= { if = { limit = { has_trait_xp = { trait = lifestyle_councillor track = steward value >= 2 } } debug_log = "VT_COUNCIL_XP: Starting steward gained council experience." } }
+  }
+ }
+}

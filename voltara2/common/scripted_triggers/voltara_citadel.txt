@@ -1,0 +1,14 @@
+﻿vt_aeliunist_clergy_eligible = {
+ faith.religion = religion:voltara_religion NOT = { has_trait = dragon }
+}
+
+vt_citadel_open = {
+ NOT = { has_global_variable = vt_citadel_destroyed }
+ exists = title:k_voltara_luminous_see.holder
+}
+vt_controls_citadel_county = {
+ OR = {
+  has_title = title:c_voltara_4435
+  title:c_voltara_4435.holder = { is_vassal_or_below_of = root }
+ }
+}

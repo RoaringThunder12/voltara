@@ -1,0 +1,70 @@
+﻿vt_inquisitor_initiation_effect = {
+ if = {
+  limit = { NOT = { has_trait = supernatural_hunter } }
+  add_trait = supernatural_hunter
+  set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+  spn_give_hunter_secret_or_trait_effect = yes
+  spn_write_hunter_memory_effect = yes
+ }
+}
+# Holy-war occupation: confiscate the target counties, including their baronies.
+# Do not retain supernatural defenders through pluralist vassalization.
+vt_inquisitor_title_transfer_effect = {
+ every_in_de_jure_hierarchy = {
+  continue = { tier > tier_county }
+  limit = {
+   tier = tier_county
+   holder ?= { OR = { this = scope:defender target_is_liege_or_above = scope:defender } }
+  }
+  add_to_list = titles_taken
+ }
+}
+vt_inquisitor_found_order_effect = {
+ if = { limit = { NOT = { has_game_rule = vt_rule_inquisitor_orders_off } }
+
+ save_scope_as = vt_order_patron
+ random_vassal = {
+  limit = {
+   primary_title.tier = tier_barony
+   any_held_title = {
+    NOT = { this = title:b_crownsguard_keep }
+    barony_is_valid_for_holy_order_lease_trigger = { CHARACTER = scope:vt_order_patron }
+   }
+  }
+  random_held_title = {
+   limit = {
+    NOT = { this = title:b_crownsguard_keep }
+    barony_is_valid_for_holy_order_lease_trigger = { CHARACTER = scope:vt_order_patron }
+   }
+   save_scope_as = barony
+  }
+ }
+ if = {
+  limit = { exists = scope:barony }
+  create_title_and_vassal_change = { type = leased_out save_scope_as = change add_claim_on_loss = no }
+  scope:barony = { change_title_holder_include_vassals = { holder = scope:vt_order_patron change = scope:change } }
+  resolve_title_and_vassal_change = scope:change
+  create_character = {
+   template = holy_order_leader_character
+   location = scope:barony.title_province
+   faith = scope:vt_order_patron.faith
+   culture = scope:vt_order_patron.culture
+   save_scope_as = leader
+  }
+  scope:leader = {
+   set_character_rite ?= scope:vt_order_patron.rite
+   add_trait = zealous
+   vt_inquisitor_initiation_effect = yes
+  }
+  set_variable = military_order_game_start_founder
+  set_variable = vt_inquisitorial_founder
+  create_holy_order_neutral_effect = {
+   LEADER = scope:leader CAPITAL = scope:barony NEW_HO_SCOPE = new_holy_order
+   FOUNDER = scope:vt_order_patron ORDER_TYPE = military
+  }
+  remove_variable = military_order_game_start_founder
+  remove_variable = vt_inquisitorial_founder
+ }
+
+ }
+}

@@ -1,0 +1,10 @@
+﻿on_trait_gained = { on_actions = { vt_clergy_remove_knighthood } }
+on_game_start_after_lobby = { on_actions = { vt_clergy_initial_knighthood } }
+vt_clergy_remove_knighthood = {
+ trigger = { vt_is_vowed_priest = yes OR = { has_trait = knight has_trait = squire } }
+ effect = { remove_trait = knight remove_trait = squire remove_variable = voltara_knight_mentor }
+}
+vt_clergy_initial_knighthood = { effect = { every_living_character = {
+ limit = { vt_is_vowed_priest = yes }
+ remove_trait = knight remove_trait = squire remove_variable = voltara_knight_mentor
+} } }

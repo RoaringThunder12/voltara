@@ -1,0 +1,32 @@
+﻿on_game_start = { on_actions = { vt_inquisitor_start } }
+on_title_gain = { on_actions = { vt_inquisitor_order_succession } }
+vt_inquisitor_start = {
+ effect = {
+  character:19060001 ?= { trigger_event = vt_inquisitors.0001 }
+  character:18000001 ?= { trigger_event = vt_inquisitors.0001 }
+ }
+}
+vt_inquisitor_order_succession = {
+ trigger = {
+  scope:title = { has_variable = vt_inquisitorial_order }
+  vt_inquisitor_mortal_trigger = yes
+ }
+ effect = { add_trait = zealous vt_inquisitor_initiation_effect = yes }
+}
+
+yearly_global_pulse = { on_actions = { vt_inquisitor_order_hunts } }
+vt_inquisitor_order_hunts = {
+ effect = {
+  every_ruler = {
+   limit = {
+    primary_title = { has_variable = vt_inquisitorial_order }
+    vt_inquisitor_warrior_trigger = yes
+   }
+   random_list = {
+    80 = {}
+    10 = { trigger_event = spn_hunters.0001 }
+    10 = { trigger_event = spn_hunters.0010 }
+   }
+  }
+ }
+}

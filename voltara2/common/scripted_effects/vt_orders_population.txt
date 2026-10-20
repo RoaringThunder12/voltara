@@ -1,0 +1,429 @@
+﻿vt_order_add_inquisitor_companions = {
+ if = { limit = { faith.religion = religion:voltara_religion NOT = { has_character_flag = vt_order_companions_seeded } }
+ add_character_flag = vt_order_companions_seeded
+ save_scope_as = vt_companion_leader
+create_character = {
+ age = 28 gender = female culture = scope:vt_companion_leader.culture faith = scope:vt_companion_leader.faith
+ employer = scope:vt_companion_leader
+ learning = 12 martial = 12 prowess = 15 random_traits = yes save_scope_as = vt_new_companion
+ }
+ scope:vt_new_companion = { add_trait = zealous vt_inquisitor_initiation_effect = yes add_character_flag = vt_order_inquisitor_companion }
+create_character = {
+ age = 28 gender = female culture = scope:vt_companion_leader.culture faith = scope:vt_companion_leader.faith
+ employer = scope:vt_companion_leader
+ learning = 12 martial = 12 prowess = 15 random_traits = yes save_scope_as = vt_new_companion
+ }
+ scope:vt_new_companion = { add_trait = zealous vt_inquisitor_initiation_effect = yes add_character_flag = vt_order_inquisitor_companion }
+create_character = {
+ age = 28 gender = female culture = scope:vt_companion_leader.culture faith = scope:vt_companion_leader.faith
+ employer = scope:vt_companion_leader
+ learning = 12 martial = 12 prowess = 15 random_traits = yes save_scope_as = vt_new_companion
+ }
+ scope:vt_new_companion = { add_trait = zealous vt_inquisitor_initiation_effect = yes add_character_flag = vt_order_inquisitor_companion }
+create_character = {
+ age = 28 gender = male culture = scope:vt_companion_leader.culture faith = scope:vt_companion_leader.faith
+ employer = scope:vt_companion_leader
+ learning = 12 martial = 12 prowess = 15 random_traits = yes save_scope_as = vt_new_companion
+ }
+ scope:vt_new_companion = { add_trait = zealous vt_inquisitor_initiation_effect = yes add_character_flag = vt_order_inquisitor_companion }
+create_character = {
+ age = 28 gender = male culture = scope:vt_companion_leader.culture faith = scope:vt_companion_leader.faith
+ employer = scope:vt_companion_leader
+ learning = 12 martial = 12 prowess = 15 random_traits = yes save_scope_as = vt_new_companion
+ }
+ scope:vt_new_companion = { add_trait = zealous vt_inquisitor_initiation_effect = yes add_character_flag = vt_order_inquisitor_companion }
+create_character = {
+ age = 28 gender = male culture = scope:vt_companion_leader.culture faith = scope:vt_companion_leader.faith
+ employer = scope:vt_companion_leader
+ learning = 12 martial = 12 prowess = 15 random_traits = yes save_scope_as = vt_new_companion
+ }
+ scope:vt_new_companion = { add_trait = zealous vt_inquisitor_initiation_effect = yes add_character_flag = vt_order_inquisitor_companion }
+} }
+vt_expanded_order_found_effect = {
+ if = { limit = { OR = { AND = { faith.religion = religion:voltara_religion NOT = { has_game_rule = vt_rule_inquisitor_orders_off } } AND = { faith.religion = religion:voltara_khaos_religion NOT = { has_game_rule = vt_khaotist_orders_off } } } }
+
+ clear_saved_scope = barony
+ save_scope_as = vt_order_patron
+ random_vassal = {
+  limit = {
+   primary_title.tier = tier_barony
+   any_held_title = {
+    NOT = { this = title:b_crownsguard_keep }
+    barony_is_valid_for_holy_order_lease_trigger = { CHARACTER = scope:vt_order_patron }
+   }
+  }
+  random_held_title = {
+   limit = {
+    NOT = { this = title:b_crownsguard_keep }
+    barony_is_valid_for_holy_order_lease_trigger = { CHARACTER = scope:vt_order_patron }
+   }
+   save_scope_as = barony
+  }
+ }
+ if = {
+  limit = { exists = scope:barony }
+  create_title_and_vassal_change = { type = leased_out save_scope_as = change add_claim_on_loss = no }
+  scope:barony = { change_title_holder_include_vassals = { holder = scope:vt_order_patron change = scope:change } }
+  resolve_title_and_vassal_change = scope:change
+  create_character = {
+   template = holy_order_leader_character
+   location = scope:barony.title_province
+   faith = scope:vt_order_patron.faith
+   culture = scope:vt_order_patron.culture
+   save_scope_as = leader
+  }
+  scope:leader = {
+   set_character_rite ?= scope:vt_order_patron.rite
+   add_trait = zealous
+   if = { limit = { faith.religion = religion:voltara_religion } vt_inquisitor_initiation_effect = yes }
+   else = { add_trait = witch voltara_initialize_threadbinder = yes }
+  }
+  set_variable = military_order_game_start_founder
+  set_variable = vt_order_expansion_founder
+  create_holy_order_neutral_effect = {
+   LEADER = scope:leader CAPITAL = scope:barony NEW_HO_SCOPE = new_holy_order
+   FOUNDER = scope:vt_order_patron ORDER_TYPE = military
+  }
+  remove_variable = military_order_game_start_founder
+  remove_variable = vt_order_expansion_founder
+ }
+
+ }
+}
+vt_seed_expanded_orders = {
+every_ruler = {
+ limit = { NOT = { has_global_variable = vt_order_lantern_vigil_founded } faith.religion = religion:voltara_religion
+ NOT = { has_government = holy_order_government } NOT = { has_government = voltara_ruins_government }
+ any_vassal = { primary_title.tier = tier_barony } }
+ if = { limit = { NOT = { has_global_variable = vt_order_lantern_vigil_founded } }
+ add_character_flag = vt_order_lantern_vigil_founding
+ vt_expanded_order_found_effect = yes
+ remove_character_flag = vt_order_lantern_vigil_founding
+ }
+}
+every_ruler = {
+ limit = { NOT = { has_global_variable = vt_order_ivory_seal_founded } faith.religion = religion:voltara_religion
+ NOT = { has_government = holy_order_government } NOT = { has_government = voltara_ruins_government }
+ any_vassal = { primary_title.tier = tier_barony } }
+ if = { limit = { NOT = { has_global_variable = vt_order_ivory_seal_founded } }
+ add_character_flag = vt_order_ivory_seal_founding
+ vt_expanded_order_found_effect = yes
+ remove_character_flag = vt_order_ivory_seal_founding
+ }
+}
+every_ruler = {
+ limit = { NOT = { has_global_variable = vt_order_last_dawn_founded } faith.religion = religion:voltara_religion
+ NOT = { has_government = holy_order_government } NOT = { has_government = voltara_ruins_government }
+ any_vassal = { primary_title.tier = tier_barony } }
+ if = { limit = { NOT = { has_global_variable = vt_order_last_dawn_founded } }
+ add_character_flag = vt_order_last_dawn_founding
+ vt_expanded_order_found_effect = yes
+ remove_character_flag = vt_order_last_dawn_founding
+ }
+}
+every_ruler = {
+ limit = { NOT = { has_global_variable = vt_order_unbound_ember_founded } faith.religion = religion:voltara_khaos_religion
+ NOT = { has_government = holy_order_government } NOT = { has_government = voltara_ruins_government }
+ any_vassal = { primary_title.tier = tier_barony } }
+ if = { limit = { NOT = { has_global_variable = vt_order_unbound_ember_founded } }
+ add_character_flag = vt_order_unbound_ember_founding
+ vt_expanded_order_found_effect = yes
+ remove_character_flag = vt_order_unbound_ember_founding
+ }
+}
+every_ruler = {
+ limit = { NOT = { has_global_variable = vt_order_frayed_veil_founded } faith.religion = religion:voltara_khaos_religion
+ NOT = { has_government = holy_order_government } NOT = { has_government = voltara_ruins_government }
+ any_vassal = { primary_title.tier = tier_barony } }
+ if = { limit = { NOT = { has_global_variable = vt_order_frayed_veil_founded } }
+ add_character_flag = vt_order_frayed_veil_founding
+ vt_expanded_order_found_effect = yes
+ remove_character_flag = vt_order_frayed_veil_founding
+ }
+}
+every_ruler = {
+ limit = { NOT = { has_global_variable = vt_order_thorned_star_founded } faith.religion = religion:voltara_khaos_religion
+ NOT = { has_government = holy_order_government } NOT = { has_government = voltara_ruins_government }
+ any_vassal = { primary_title.tier = tier_barony } }
+ if = { limit = { NOT = { has_global_variable = vt_order_thorned_star_founded } }
+ add_character_flag = vt_order_thorned_star_founding
+ vt_expanded_order_found_effect = yes
+ remove_character_flag = vt_order_thorned_star_founding
+ }
+}
+every_ruler = { limit = { has_government = holy_order_government faith.religion = religion:voltara_religion } vt_order_add_inquisitor_companions = yes }
+}
+vt_seed_roaming_vampires = {
+ if = { limit = { NOT = { has_global_variable = vt_roaming_vampires_seeded } }
+ set_global_variable = vt_roaming_vampires_seeded
+random_ruler = { limit = { culture = culture:voltara_western_corsairs NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_0 age = 32 gender = female
+ culture = culture:voltara_western_corsairs faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_island_freebooters NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_1 age = 33 gender = male
+ culture = culture:voltara_island_freebooters faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_culture_0 NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_2 age = 34 gender = female
+ culture = culture:voltara_culture_0 faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_culture_19 NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_3 age = 35 gender = male
+ culture = culture:voltara_culture_19 faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_culture_22 NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_4 age = 36 gender = female
+ culture = culture:voltara_culture_22 faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_culture_24 NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_5 age = 37 gender = male
+ culture = culture:voltara_culture_24 faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_culture_25 NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_6 age = 38 gender = female
+ culture = culture:voltara_culture_25 faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_culture_26 NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_7 age = 39 gender = male
+ culture = culture:voltara_culture_26 faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_culture_27 NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_8 age = 40 gender = female
+ culture = culture:voltara_culture_27 faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_culture_30 NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_9 age = 41 gender = male
+ culture = culture:voltara_culture_30 faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_culture_18 NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_10 age = 42 gender = female
+ culture = culture:voltara_culture_18 faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_local_stoneborn_voltara_38 NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_11 age = 43 gender = male
+ culture = culture:voltara_local_stoneborn_voltara_38 faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_local_goblin_voltara_ironhold NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_12 age = 44 gender = female
+ culture = culture:voltara_local_goblin_voltara_ironhold faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_orc_ashfist NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_13 age = 45 gender = male
+ culture = culture:voltara_orc_ashfist faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_ironcoil_naga NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_14 age = 46 gender = female
+ culture = culture:voltara_ironcoil_naga faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+random_ruler = { limit = { culture = culture:voltara_local_giant_voltara_test_1001 NOT = { has_government = voltara_ruins_government } } save_scope_as = vt_vampire_host }
+ if = { limit = { NOT = { exists = scope:vt_vampire_host } } character:19060012 = { save_scope_as = vt_vampire_host } }
+ scope:vt_vampire_host = { create_character = { name = vt_roaming_vampire_15 age = 47 gender = male
+ culture = culture:voltara_local_giant_voltara_test_1001 faith = faith:voltara_khaotism employer = scope:vt_vampire_host
+ random_traits = yes save_scope_as = vt_roaming_vampire
+ } }
+ scope:vt_roaming_vampire = {
+ add_character_flag = vt_vampire_established
+ add_trait = supernatural_vampire
+ add_character_flag = vt_roaming_vampire
+ set_variable = { name = spn_age_aquired_immortality value = age }
+ set_variable = { name = spn_yearly_pulses_since_trait_upgrade value = 0 }
+ spn_embrace_health_cleanup = yes spn_track_current_visual_age = { VISUALAGE = age }
+ }
+ clear_saved_scope = vt_vampire_host
+} }
+vt_seed_inquisitor_adventurer = {
+ if = { limit = { NOT = { has_global_variable = vt_inquisitor_adventurer_seeded } }
+ set_global_variable = vt_inquisitor_adventurer_seeded
+ character:19060012 = {
+ save_scope_as = vt_hunter_patron
+ create_character = { name = vt_inquisitor_wayfarer age = 34 gender = female
+ culture = scope:vt_hunter_patron.culture faith = scope:vt_hunter_patron.faith
+ employer = scope:vt_hunter_patron
+ learning = 16 martial = 17 prowess = 18 random_traits = yes save_scope_as = vt_hunter_adventurer }
+ }
+ scope:vt_hunter_adventurer = {
+ add_trait = zealous add_trait = brave vt_inquisitor_initiation_effect = yes
+ add_character_flag = vt_inquisitor_adventurer
+ if = { limit = { has_dlc_feature = roads_to_power }
+ create_adventurer_title = { name = vt_inquisitor_wayfarers holder = this save_scope_as = vt_hunter_camp }
+ change_government = landless_adventurer_government
+ if = { limit = { NOT = { has_realm_law = landless_adventurer_succession_law } } add_realm_law = landless_adventurer_succession_law }
+ domicile ?= { move_domicile = scope:vt_hunter_patron.capital_province }
+ add_gold = 250
+ }
+ vt_order_add_inquisitor_companions = yes
+ }
+ } }
+vt_seed_aldren_steel = {
+ character:19060012 = {
+ if = { limit = { NOT = { has_character_flag = vt_aldren_starting_steel } }
+ add_character_flag = vt_aldren_starting_steel vt_create_astral_steel_effect = yes
+ }
+ }
+}

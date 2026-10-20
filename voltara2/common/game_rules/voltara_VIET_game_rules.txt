@@ -1,9 +1,9 @@
 ﻿VIET_events_atmosphere = {
+ categories = { vt_viet }
+
 	default = VIET_balanced_events
 
-	categories = {
-		VIET game_modes flavor
-	}
+	
 
 	VIET_balanced_events = {
 		flag = GG_can_change_rule		
@@ -19,16 +19,20 @@
 	
 }
 
-VIET_universe_setting = { default = VIET_conversion_universe_events categories = { VIET game_modes flavor } VIET_conversion_universe_events = {} }
+VIET_universe_setting = { default = VIET_conversion_universe_events  VIET_conversion_universe_events = {
+ flag = vt_hidden_compatibility_rule
+} }
 
-VIET_historical_context = { default = VIET_historical_context_off categories = { VIET historicity flavor } VIET_historical_context_off = {} }
+VIET_historical_context = { default = VIET_historical_context_off  VIET_historical_context_off = {
+ flag = vt_hidden_compatibility_rule
+} }
 
 VIET_resource_amounts = {
+ categories = { vt_viet }
+
 	default = VIET_resource_default
 
-	categories = {
-		VIET tweaks difficulty
-	}
+	
 
 	VIET_resource_default = {
 		flag = GG_can_change_rule		
@@ -48,12 +52,12 @@ VIET_resource_amounts = {
 }
 
 VIET_event_frequency = {
+ categories = { vt_viet }
+
 	default = VIET_event_frequency_default
 
 
-	categories = {
-		VIET tweaks flavor
-	}
+	
 
 	VIET_event_frequency_default = {
 		flag = GG_can_change_rule		
@@ -77,12 +81,12 @@ VIET_event_frequency = {
 }
 
 VIET_clutter_artifacts = {
+ categories = { vt_viet }
+
 	default = VIET_clutter_artifacts_default
 
 
-	categories = {
-		VIET tweaks flavor
-	}
+	
 
 	VIET_clutter_artifacts_default = {
 		flag = GG_can_change_rule		

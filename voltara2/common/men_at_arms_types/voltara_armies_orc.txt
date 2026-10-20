@@ -1,0 +1,1496 @@
+﻿vta_orc_scouts = {
+ type = skirmishers
+ damage = 24
+ toughness = 23
+ pursuit = 14
+ screen = 22
+ stack = 100
+ 
+ buy_cost = { gold = 94 }
+ low_maintenance_cost = { gold = 0.30 }
+ high_maintenance_cost = { gold = 0.96 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { hills = { damage = 4 toughness = 3 } plains = { damage = -4 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_orc } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_bows = {
+ type = archers
+ damage = 38
+ toughness = 17
+ pursuit = 2
+ screen = 6
+ stack = 100
+ 
+ buy_cost = { gold = 125 }
+ low_maintenance_cost = { gold = 0.42 }
+ high_maintenance_cost = { gold = 1.38 }
+ provision_cost = 7
+ counters = { skirmishers = 1 }
+ terrain_bonus = { hills = { damage = 7 toughness = 3 } plains = { damage = -6 toughness = -2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_orc } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_archers add = 5 }
+ illustration = { reference = vta_3059124362_orc_bowmen }
+}
+
+vta_orc_spears = {
+ type = pikemen
+ damage = 33
+ toughness = 34
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 150 }
+ low_maintenance_cost = { gold = 0.48 }
+ high_maintenance_cost = { gold = 1.62 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { hills = { damage = 6 toughness = 5 } plains = { damage = -5 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_orc }  culture = { has_innovation = innovation_vt_orc_warfare_1 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_guard = {
+ type = heavy_infantry
+ damage = 43
+ toughness = 30
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 188 }
+ low_maintenance_cost = { gold = 0.60 }
+ high_maintenance_cost = { gold = 2.04 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { hills = { damage = 8 toughness = 4 } plains = { damage = -7 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_orc }  culture = { has_innovation = innovation_quilted_armor } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_orc_marauders }
+}
+
+vta_orc_pursuit = {
+ type = skirmishers
+ damage = 29
+ toughness = 23
+ pursuit = 34
+ screen = 30
+ stack = 100
+ 
+ buy_cost = { gold = 181 }
+ low_maintenance_cost = { gold = 0.60 }
+ high_maintenance_cost = { gold = 1.98 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { hills = { damage = 5 toughness = 3 } plains = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_orc }  culture = { has_innovation = innovation_vt_orc_warfare_1 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_siege = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 1
+ siege_value = 0.16
+ buy_cost = { gold = 85 }
+ low_maintenance_cost = { gold = 0.30 }
+ high_maintenance_cost = { gold = 1.00 }
+ provision_cost = 6
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_orc } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_3059124362_orc_onager }
+}
+
+vta_orc_elite = {
+ type = heavy_infantry
+ damage = 54
+ toughness = 39
+ pursuit = 4
+ screen = 12
+ stack = 100
+ 
+ buy_cost = { gold = 306 }
+ low_maintenance_cost = { gold = 1.02 }
+ high_maintenance_cost = { gold = 3.42 }
+ provision_cost = 12
+ counters = { pikemen = 1 skirmishers = 0.5 }
+ terrain_bonus = { hills = { damage = 10 toughness = 6 } plains = { damage = -9 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_orc }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_orc_berserkers }
+}
+
+vta_orc_ashfist_veterans = {
+ type = heavy_infantry
+ damage = 54
+ toughness = 34
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 263 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.75 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { drylands = { damage = 10 toughness = 5 } plains = { damage = -9 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_ashfist }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_orc_marauders }
+}
+
+vta_orc_blacktusk_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_blacktusk }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_flintjaw_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_flintjaw }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_redscar_veterans = {
+ type = heavy_infantry
+ damage = 54
+ toughness = 34
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 263 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.75 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { drylands = { damage = 10 toughness = 5 } plains = { damage = -9 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_redscar }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_orc_marauders }
+}
+
+vta_orc_bonebreaker_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_bonebreaker }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_stormhide_veterans = {
+ type = archers
+ damage = 54
+ toughness = 20
+ pursuit = 2
+ screen = 6
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.86 }
+ provision_cost = 7
+ counters = { skirmishers = 1 }
+ terrain_bonus = { hills = { damage = 10 toughness = 3 } plains = { damage = -9 toughness = -2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_stormhide }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_archers add = 5 }
+ illustration = { reference = vta_3059124362_orc_bowmen }
+}
+
+vta_orc_ironhand_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_ironhand }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_cragborn_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_cragborn }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_mirefang_veterans = {
+ type = skirmishers
+ damage = 30
+ toughness = 24
+ pursuit = 14
+ screen = 28
+ stack = 100
+ 
+ buy_cost = { gold = 132 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.30 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 4 } plains = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_mirefang }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_stoneheel_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_stoneheel }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_embermaw_veterans = {
+ type = heavy_infantry
+ damage = 54
+ toughness = 34
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 263 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.75 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { drylands = { damage = 10 toughness = 5 } plains = { damage = -9 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_embermaw }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_orc_marauders }
+}
+
+vta_orc_deepvoice_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_deepvoice }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_bloodreed_veterans = {
+ type = skirmishers
+ damage = 30
+ toughness = 24
+ pursuit = 14
+ screen = 28
+ stack = 100
+ 
+ buy_cost = { gold = 132 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.30 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 4 } plains = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_bloodreed }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_copperfang_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_copperfang }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_frostmaw_veterans = {
+ type = archers
+ damage = 54
+ toughness = 20
+ pursuit = 2
+ screen = 6
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.86 }
+ provision_cost = 7
+ counters = { skirmishers = 1 }
+ terrain_bonus = { hills = { damage = 10 toughness = 3 } plains = { damage = -9 toughness = -2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_frostmaw }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_archers add = 5 }
+ illustration = { reference = vta_3059124362_orc_bowmen }
+}
+
+vta_orc_thunderjaw_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_thunderjaw }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_mossfang_veterans = {
+ type = skirmishers
+ damage = 30
+ toughness = 24
+ pursuit = 14
+ screen = 28
+ stack = 100
+ 
+ buy_cost = { gold = 132 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.30 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 4 } plains = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_mossfang }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_nighttusk_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_nighttusk }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_grimstone_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_grimstone }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_firevein_veterans = {
+ type = heavy_infantry
+ damage = 54
+ toughness = 34
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 263 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.75 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { drylands = { damage = 10 toughness = 5 } plains = { damage = -9 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_firevein }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_orc_marauders }
+}
+
+vta_orc_bronzetooth_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_bronzetooth }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_ravenscar_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_ravenscar }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_dusthowl_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_dusthowl }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_wolfcrag_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_wolfcrag }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_sootbraid_veterans = {
+ type = heavy_infantry
+ damage = 54
+ toughness = 34
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 263 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.75 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { drylands = { damage = 10 toughness = 5 } plains = { damage = -9 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_sootbraid }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_orc_marauders }
+}
+
+vta_orc_cinderhide_veterans = {
+ type = heavy_infantry
+ damage = 54
+ toughness = 34
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 263 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.75 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { drylands = { damage = 10 toughness = 5 } plains = { damage = -9 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_cinderhide }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_orc_marauders }
+}
+
+vta_orc_thornjaw_veterans = {
+ type = skirmishers
+ damage = 30
+ toughness = 24
+ pursuit = 14
+ screen = 28
+ stack = 100
+ 
+ buy_cost = { gold = 132 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.30 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 4 } plains = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_thornjaw }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_snowtusk_veterans = {
+ type = archers
+ damage = 54
+ toughness = 20
+ pursuit = 2
+ screen = 6
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.86 }
+ provision_cost = 7
+ counters = { skirmishers = 1 }
+ terrain_bonus = { hills = { damage = 10 toughness = 3 } plains = { damage = -9 toughness = -2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_snowtusk }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_archers add = 5 }
+ illustration = { reference = vta_3059124362_orc_bowmen }
+}
+
+vta_orc_brokenhorn_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_brokenhorn }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_skullriver_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_skullriver }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_ironroot_veterans = {
+ type = skirmishers
+ damage = 30
+ toughness = 24
+ pursuit = 14
+ screen = 28
+ stack = 100
+ 
+ buy_cost = { gold = 132 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.30 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 4 } plains = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_ironroot }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_ashenclaw_veterans = {
+ type = heavy_infantry
+ damage = 54
+ toughness = 34
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 263 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.75 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { drylands = { damage = 10 toughness = 5 } plains = { damage = -9 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_ashenclaw }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_orc_marauders }
+}
+
+vta_orc_darkflint_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_darkflint }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_redmire_veterans = {
+ type = skirmishers
+ damage = 30
+ toughness = 24
+ pursuit = 14
+ screen = 28
+ stack = 100
+ 
+ buy_cost = { gold = 132 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.30 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 4 } plains = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_redmire }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_cloudfang_veterans = {
+ type = archers
+ damage = 54
+ toughness = 20
+ pursuit = 2
+ screen = 6
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.86 }
+ provision_cost = 7
+ counters = { skirmishers = 1 }
+ terrain_bonus = { hills = { damage = 10 toughness = 3 } plains = { damage = -9 toughness = -2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_cloudfang }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_archers add = 5 }
+ illustration = { reference = vta_3059124362_orc_bowmen }
+}
+
+vta_orc_highstone_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_highstone }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_coalheart_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_coalheart }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_marshfang_veterans = {
+ type = skirmishers
+ damage = 30
+ toughness = 24
+ pursuit = 14
+ screen = 28
+ stack = 100
+ 
+ buy_cost = { gold = 132 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.30 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 4 } plains = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_marshfang }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_deepdrum_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_deepdrum }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_riftwalker_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_riftwalker }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_stonetalon_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_stonetalon }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_rainfang_veterans = {
+ type = skirmishers
+ damage = 30
+ toughness = 24
+ pursuit = 14
+ screen = 28
+ stack = 100
+ 
+ buy_cost = { gold = 132 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.30 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 4 } plains = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_rainfang }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_sunscar_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_sunscar }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_mistcaller_veterans = {
+ type = archers
+ damage = 54
+ toughness = 20
+ pursuit = 2
+ screen = 6
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.57 }
+ high_maintenance_cost = { gold = 1.86 }
+ provision_cost = 7
+ counters = { skirmishers = 1 }
+ terrain_bonus = { hills = { damage = 10 toughness = 3 } plains = { damage = -9 toughness = -2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_mistcaller }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_archers add = 5 }
+ illustration = { reference = vta_3059124362_orc_bowmen }
+}
+
+vta_orc_bitterroot_veterans = {
+ type = skirmishers
+ damage = 30
+ toughness = 24
+ pursuit = 14
+ screen = 28
+ stack = 100
+ 
+ buy_cost = { gold = 132 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.30 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 4 } plains = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_bitterroot }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_redflame_veterans = {
+ type = heavy_infantry
+ damage = 54
+ toughness = 34
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 263 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.75 }
+ provision_cost = 8
+ counters = { pikemen = 1 }
+ terrain_bonus = { drylands = { damage = 10 toughness = 5 } plains = { damage = -9 toughness = -4 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_redflame }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
+ illustration = { reference = vta_3059124362_orc_marauders }
+}
+
+vta_orc_greyhorn_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_greyhorn }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_stormreed_veterans = {
+ type = skirmishers
+ damage = 30
+ toughness = 24
+ pursuit = 14
+ screen = 28
+ stack = 100
+ 
+ buy_cost = { gold = 132 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.30 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 4 } plains = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_stormreed }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_obsidianfang_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_obsidianfang }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_whitecrag_veterans = {
+ type = pikemen
+ damage = 41
+ toughness = 39
+ pursuit = 0
+ screen = 8
+ stack = 100
+ 
+ buy_cost = { gold = 210 }
+ low_maintenance_cost = { gold = 0.65 }
+ high_maintenance_cost = { gold = 2.19 }
+ provision_cost = 7
+ counters = { light_cavalry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { mountains = { damage = 7 toughness = 6 } plains = { damage = -7 toughness = -5 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_whitecrag }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_pikemen add = 5 }
+ illustration = { reference = vta_3059124362_orc_pikemen }
+}
+
+vta_orc_emberroot_veterans = {
+ type = skirmishers
+ damage = 30
+ toughness = 24
+ pursuit = 14
+ screen = 28
+ stack = 100
+ 
+ buy_cost = { gold = 132 }
+ low_maintenance_cost = { gold = 0.41 }
+ high_maintenance_cost = { gold = 1.30 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { wetlands = { damage = 5 toughness = 4 } plains = { damage = -5 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_emberroot }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_longtusk_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_longtusk }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_dawnfang_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_orc_dawnfang }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_culture_20_veterans = {
+ type = skirmishers
+ damage = 36
+ toughness = 24
+ pursuit = 34
+ screen = 36
+ stack = 100
+ 
+ buy_cost = { gold = 253 }
+ low_maintenance_cost = { gold = 0.81 }
+ high_maintenance_cost = { gold = 2.67 }
+ provision_cost = 7
+ counters = { archers = 1 }
+ terrain_bonus = { forest = { damage = 6 toughness = 4 } plains = { damage = -6 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ OR = { culture = culture:voltara_culture_20 }
+ culture = { has_innovation = innovation_vt_orc_warfare_2 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
+ illustration = { reference = vta_3059124362_orc_wood }
+}
+
+vta_orc_marksmen = {
+ type = archers
+ damage = 52
+ toughness = 23
+ pursuit = 0
+ screen = 4
+ stack = 100
+ 
+ buy_cost = { gold = 219 }
+ low_maintenance_cost = { gold = 0.72 }
+ high_maintenance_cost = { gold = 2.40 }
+ provision_cost = 10
+ counters = { heavy_infantry = 1 heavy_cavalry = 1 }
+ terrain_bonus = { hills = { damage = 9 toughness = 3 } plains = { damage = -8 toughness = -3 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_orc }
+ culture = { has_innovation = innovation_vt_orc_warfare_3 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = culture_ai_weight_crossbowmen add = 5 }
+ illustration = { reference = vta_3059124362_orc_crossbowmen }
+}
+
+vta_orc_siege_2 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 2
+ siege_value = 0.3
+ buy_cost = { gold = 150 }
+ low_maintenance_cost = { gold = 0.50 }
+ high_maintenance_cost = { gold = 1.70 }
+ provision_cost = 12
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_orc }
+ culture = { has_innovation = innovation_mangonel } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_3059124362_orc_onager }
+}
+
+vta_orc_siege_3 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 3
+ siege_value = 0.4
+ buy_cost = { gold = 220 }
+ low_maintenance_cost = { gold = 0.70 }
+ high_maintenance_cost = { gold = 2.40 }
+ provision_cost = 18
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_orc }
+ culture = { has_innovation = innovation_trebuchet } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_3059124362_orc_onager }
+}
+
+vta_orc_siege_4 = {
+ type = siege_weapon
+ damage = 0
+ toughness = 12
+ pursuit = 0
+ screen = 0
+ stack = 10
+ fights_in_main_phase = no
+ siege_tier = 4
+ siege_value = 0.6
+ buy_cost = { gold = 350 }
+ low_maintenance_cost = { gold = 1.10 }
+ high_maintenance_cost = { gold = 3.80 }
+ provision_cost = 24
+ counters = {  }
+ 
+ can_recruit = { NOT = { has_government = voltara_ruins_government }
+ culture = { has_cultural_pillar = heritage_voltara_orc }
+   culture = { has_innovation = innovation_vt_orc_warfare_4 } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = no
+ ai_quality = { value = 10 }
+ illustration = { reference = vta_3059124362_orc_onager }
+}

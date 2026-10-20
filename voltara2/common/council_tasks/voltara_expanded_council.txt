@@ -1,0 +1,43 @@
+﻿vt_hand_govern = {
+ position = councillor_castellan
+ skill = stewardship
+ default_task = yes
+ task_type = task_type_general task_progress = task_progress_infinite
+ asset = { icon = "gfx/interface/icons/council_task_types/task_collect_taxes.dds" background = "gfx/interface/buttons/button_round_bg.dds" frame = "gfx/interface/buttons/button_round_frame.dds" glow = "gfx/particles/halo.dds" }
+ effect_desc = { desc = vt_hand_govern_desc }
+ council_owner_modifier = { name = vt_hand_govern_modifier domain_tax_mult = 0.003 scale = { value = scope:councillor.stewardship max = 50 } }
+ ai_will_do = { value = 50 }
+}
+
+vt_hand_diplomacy = {
+ position = councillor_castellan
+ skill = diplomacy
+ 
+ task_type = task_type_general task_progress = task_progress_infinite
+ asset = { icon = "gfx/interface/icons/council_task_types/task_domestic_affairs.dds" background = "gfx/interface/buttons/button_round_bg.dds" frame = "gfx/interface/buttons/button_round_frame.dds" glow = "gfx/particles/halo.dds" }
+ effect_desc = { desc = vt_hand_diplomacy_desc }
+ council_owner_modifier = { name = vt_hand_diplomacy_modifier vassal_opinion = 0.4 scale = { value = scope:councillor.diplomacy max = 50 } }
+ ai_will_do = { value = 25 }
+}
+
+vt_ships_fleet = {
+ position = councillor_admiral
+ skill = martial
+ default_task = yes
+ task_type = task_type_general task_progress = task_progress_infinite
+ asset = { icon = "gfx/interface/icons/council_task_types/task_admiral_fleet.dds" background = "gfx/interface/buttons/button_round_bg.dds" frame = "gfx/interface/buttons/button_round_frame.dds" glow = "gfx/particles/halo.dds" }
+ effect_desc = { desc = vt_ships_fleet_desc }
+ council_owner_modifier = { name = vt_ships_fleet_modifier naval_movement_speed_mult = 0.01 embarkation_cost_mult = -0.01 scale = { value = scope:councillor.martial max = 50 } }
+ ai_will_do = { value = 50 }
+}
+
+vt_ships_trade = {
+ position = councillor_admiral
+ skill = stewardship
+ 
+ task_type = task_type_general task_progress = task_progress_infinite
+ asset = { icon = "gfx/interface/icons/council_task_types/task_admiral_maritime.dds" background = "gfx/interface/buttons/button_round_bg.dds" frame = "gfx/interface/buttons/button_round_frame.dds" glow = "gfx/particles/halo.dds" }
+ effect_desc = { desc = vt_ships_trade_desc }
+ council_owner_modifier = { name = vt_ships_trade_modifier domain_tax_mult = 0.002 supply_limit_mult = 0.005 scale = { value = scope:councillor.stewardship max = 50 } }
+ ai_will_do = { value = 25 }
+}

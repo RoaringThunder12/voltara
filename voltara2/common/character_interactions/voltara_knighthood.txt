@@ -3,10 +3,10 @@
  desc = voltara_grant_knighthood_desc
  is_shown = {
   scope:actor = { is_agot_knight_trigger = yes }
-  scope:recipient = { age >= 16 NOT = { is_agot_knight_trigger = yes } NOT = { voltara_is_ruins_placeholder = yes } NOT = { has_trait = voltara_slave } }
+  scope:recipient = { vt_is_vowed_priest = no age >= 16 NOT = { is_agot_knight_trigger = yes } NOT = { voltara_is_ruins_placeholder = yes } NOT = { has_trait = voltara_slave } }
   scope:actor != scope:recipient
  }
- is_valid_showing_failures_only = { scope:actor = { is_imprisoned = no in_diplomatic_range = scope:recipient } scope:recipient = { is_alive = yes is_imprisoned = no trigger_if = { limit = { has_variable = voltara_knight_mentor } var:voltara_knight_mentor = scope:actor } } }
+ is_valid_showing_failures_only = { scope:actor = { is_imprisoned = no in_diplomatic_range = scope:recipient } scope:recipient = { vt_is_vowed_priest = no is_alive = yes is_imprisoned = no trigger_if = { limit = { has_variable = voltara_knight_mentor } var:voltara_knight_mentor = scope:actor } } }
  ai_accept = { base = 100 }
  on_accept = {
   scope:recipient = { add_trait = squire add_trait_xp = { trait = squire track = knight value = 100 } remove_variable = voltara_knight_mentor }
@@ -21,7 +21,7 @@ voltara_take_squire = {
  desc = voltara_take_squire_desc
  is_shown = {
   scope:actor = { is_agot_knight_trigger = yes is_adult = yes }
-  scope:recipient = { is_courtier = yes is_female = no age > 6 NOT = { has_variable = voltara_knight_mentor } NOT = { is_agot_knight_trigger = yes } NOT = { has_trait = knight } NOT = { has_trait = voltara_slave } }
+  scope:recipient = { vt_is_vowed_priest = no is_courtier = yes is_female = no age > 6 NOT = { has_variable = voltara_knight_mentor } NOT = { is_agot_knight_trigger = yes } NOT = { has_trait = knight } NOT = { has_trait = voltara_slave } }
  }
  is_valid_showing_failures_only = { scope:actor = { is_imprisoned = no in_diplomatic_range = scope:recipient } scope:recipient = { is_imprisoned = no } }
  auto_accept = yes
@@ -72,7 +72,7 @@ voltara_arrange_knighting = {
  desc = voltara_arrange_knighting_desc
  is_shown = { scope:recipient = { voltara_in_squire_organizer_realm = yes is_squire_with_trait_xp = yes has_variable = voltara_knight_mentor age >= 16 } }
  is_valid_showing_failures_only = {
-  scope:recipient = { is_alive = yes is_imprisoned = no NOT = { has_trait = voltara_slave }
+  scope:recipient = { vt_is_vowed_priest = no is_alive = yes is_imprisoned = no NOT = { has_trait = voltara_slave }
    var:voltara_knight_mentor = { is_alive = yes is_imprisoned = no is_agot_knight_trigger = yes in_diplomatic_range = scope:recipient }
   }
  }

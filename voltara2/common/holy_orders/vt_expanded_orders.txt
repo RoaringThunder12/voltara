@@ -1,0 +1,84 @@
+﻿vt_order_lantern_vigil = {
+ type = military government = holy_order_government name = vt_order_lantern_vigil
+ trigger = { exists = scope:founder scope:founder = {
+ has_variable = vt_order_expansion_founder faith.religion = religion:voltara_religion
+ has_character_flag = vt_order_lantern_vigil_founding
+ } }
+ weight = { value = 1000000 } men_at_arms = { armored_footmen crossbowmen }
+ effect = {
+ set_variable = vt_order_lantern_vigil
+ set_variable = vt_inquisitorial_order
+ set_global_variable = vt_order_lantern_vigil_founded
+ scope:leader = { add_trait = zealous vt_inquisitor_initiation_effect = yes vt_order_add_inquisitor_companions = yes }
+ }
+}
+vt_order_ivory_seal = {
+ type = military government = holy_order_government name = vt_order_ivory_seal
+ trigger = { exists = scope:founder scope:founder = {
+ has_variable = vt_order_expansion_founder faith.religion = religion:voltara_religion
+ has_character_flag = vt_order_ivory_seal_founding
+ } }
+ weight = { value = 1000000 } men_at_arms = { armored_footmen pikemen_unit }
+ effect = {
+ set_variable = vt_order_ivory_seal
+ set_variable = vt_inquisitorial_order
+ set_global_variable = vt_order_ivory_seal_founded
+ scope:leader = { add_trait = zealous vt_inquisitor_initiation_effect = yes vt_order_add_inquisitor_companions = yes }
+ }
+}
+vt_order_last_dawn = {
+ type = military government = holy_order_government name = vt_order_last_dawn
+ trigger = { exists = scope:founder scope:founder = {
+ has_variable = vt_order_expansion_founder faith.religion = religion:voltara_religion
+ has_character_flag = vt_order_last_dawn_founding
+ } }
+ weight = { value = 1000000 } men_at_arms = { armored_footmen light_horsemen }
+ effect = {
+ set_variable = vt_order_last_dawn
+ set_variable = vt_inquisitorial_order
+ set_global_variable = vt_order_last_dawn_founded
+ scope:leader = { add_trait = zealous vt_inquisitor_initiation_effect = yes vt_order_add_inquisitor_companions = yes }
+ }
+}
+vt_order_unbound_ember = {
+ type = military government = holy_order_government name = vt_order_unbound_ember
+ trigger = { exists = scope:founder scope:founder = {
+ has_variable = vt_order_expansion_founder faith.religion = religion:voltara_khaos_religion
+ has_character_flag = vt_order_unbound_ember_founding
+ } }
+ weight = { value = 1000000 } men_at_arms = { armored_footmen bowmen }
+ effect = {
+ set_variable = vt_order_unbound_ember
+ set_variable = vt_khaotist_order
+ set_global_variable = vt_order_unbound_ember_founded
+ scope:leader = { add_trait = zealous add_trait = witch voltara_initialize_threadbinder = yes }
+ }
+}
+vt_order_frayed_veil = {
+ type = military government = holy_order_government name = vt_order_frayed_veil
+ trigger = { exists = scope:founder scope:founder = {
+ has_variable = vt_order_expansion_founder faith.religion = religion:voltara_khaos_religion
+ has_character_flag = vt_order_frayed_veil_founding
+ } }
+ weight = { value = 1000000 } men_at_arms = { armored_footmen crossbowmen }
+ effect = {
+ set_variable = vt_order_frayed_veil
+ set_variable = vt_khaotist_order
+ set_global_variable = vt_order_frayed_veil_founded
+ scope:leader = { add_trait = zealous add_trait = witch voltara_initialize_threadbinder = yes add_trait = vt_ek_education_magic_3 }
+ }
+}
+vt_order_thorned_star = {
+ type = military government = holy_order_government name = vt_order_thorned_star
+ trigger = { exists = scope:founder scope:founder = {
+ has_variable = vt_order_expansion_founder faith.religion = religion:voltara_khaos_religion
+ has_character_flag = vt_order_thorned_star_founding
+ } }
+ weight = { value = 1000000 } men_at_arms = { armored_footmen pikemen_unit }
+ effect = {
+ set_variable = vt_order_thorned_star
+ set_variable = vt_khaotist_order
+ set_global_variable = vt_order_thorned_star_founded
+ scope:leader = { add_trait = zealous add_trait = witch voltara_initialize_threadbinder = yes add_trait = briarheart }
+ }
+}

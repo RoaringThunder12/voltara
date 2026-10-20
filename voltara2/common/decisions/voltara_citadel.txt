@@ -1,0 +1,124 @@
+﻿decision_employ_maester = {
+	title = decision_employ_maester
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	decision_group_type = major
+	ai_goal = yes
+
+	selection_tooltip = decision_employ_maester_tooltip
+	desc = decision_employ_maester_desc
+	confirm_text = decision_employ_maester_confirm
+
+	is_shown = { vt_citadel_open = yes is_landed = yes vt_aeliunist_clergy_eligible = yes exists = title:k_voltara_luminous_see.holder }
+
+	is_valid = {
+		custom_tooltip = {
+			text = tooltip_employ_maester
+			NOT = {
+				any_courtier = {
+					OR = {
+						AND = {
+							is_incapable = no
+							has_trait_xp = {
+								trait = maester
+								value = 100
+							}
+							is_adult = yes
+						}
+						has_court_position = maester_court_position
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			text = tooltip_recently_employed_maester
+			NOT = {
+				has_character_flag = recently_employed_maester
+			}
+		}
+	}
+
+	effect = {
+		custom_tooltip = decision_employ_maester_effect
+		add_character_flag = {
+			flag = recently_employed_maester
+			days = 60
+		}
+		trigger_event = {
+			id = agot_maester.0001
+			days = 7
+		}
+	}
+
+	ai_potential = {
+		highest_held_title_tier > tier_barony
+		is_landed = yes
+		gold > low_skill_court_physician_cost
+		is_at_war = no
+		NOT = {
+			employs_court_position = maester_court_position
+		}
+	}
+
+
+	ai_will_do = {
+		base = 0
+
+		modifier = { # If the player is at war, do not bother them with offensive calls
+			NOT = {
+				any_courtier = {
+					AND = {
+						is_incapable = no
+						has_trait_xp = {
+							trait = maester
+							value = 100
+						}
+						is_adult = yes
+					}
+					has_court_position = maester_court_position
+				}
+			}
+			add = 100
+		}
+	}
+}
+vt_destroy_citadel_decision = {
+ ai_check_interval = 120
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_misc.dds" }
+ decision_group_type = major
+ desc = vt_destroy_citadel_decision_desc
+ selection_tooltip = vt_destroy_citadel_decision_tooltip
+ confirm_text = vt_destroy_citadel_decision_confirm
+ is_shown = { NOT = { has_game_rule = vt_rule_citadel_destruction_off }
+  is_landed = yes faith.religion = religion:voltara_khaos_religion
+  vt_citadel_open = yes vt_controls_citadel_county = yes
+ }
+ is_valid = { is_at_war = no is_imprisoned = no }
+ effect = { vt_citadel_destroy_effect = yes }
+ ai_potential = { always = yes }
+ ai_will_do = { base = 30 }
+
+}
+vt_restore_citadel_decision = {
+ ai_check_interval = 120
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_misc.dds" }
+ decision_group_type = major
+ desc = vt_restore_citadel_decision_desc
+ selection_tooltip = vt_restore_citadel_decision_tooltip
+ confirm_text = vt_restore_citadel_decision_confirm
+ is_shown = {
+  is_landed = yes vt_aeliunist_clergy_eligible = yes
+  has_global_variable = vt_citadel_destroyed vt_controls_citadel_county = yes
+ }
+ is_valid = { is_at_war = no exists = title:k_voltara_luminous_see.holder }
+ cost = { gold = 500 }
+ effect = {
+  remove_global_variable = vt_citadel_destroyed
+  remove_global_variable = vt_citadel_initialized
+  title:c_voltara_4435 = { remove_county_modifier = vt_citadel_ruins_modifier }
+  title:k_voltara_luminous_see.holder = { trigger_event = vt_citadel.0002 }
+ }
+ ai_potential = { always = yes }
+ ai_will_do = { base = 20 }
+}

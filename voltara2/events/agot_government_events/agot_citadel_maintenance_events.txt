@@ -1,0 +1,79 @@
+﻿namespace = agot_citadel_maintenance
+
+# Remove all women from court / The begone thots event
+agot_citadel_maintenance.0001 = { hidden = yes immediate = { } }
+
+###init the citadel
+agot_citadel_maintenance.0003 = { hidden = yes immediate = { agot_seed_acolytes_effect = yes } }
+
+#Incase we do pruning
+# agot_citadel_maintenance.0100 = {
+#	hidden = yes
+
+# 	immediate = {
+# 		agot_random_maester_death_effect = yes
+# 	}
+# }
+
+# Novices and Acolytes get up to three chain links per year
+agot_citadel_maintenance.0101 = {
+	hidden = yes
+
+	immediate = {
+		random_list = {
+			pick = 3
+			150 = {
+				trigger = {
+					has_trait_xp = {
+						trait = maester
+						value < 100
+					}
+				}
+				modifier = {
+					factor = 1.5
+					has_trait_rank = {
+						trait = intellect_good
+						rank > 0
+					}
+				}
+				modifier = {
+					factor = 0.5
+					has_trait_rank = {
+						trait = intellect_bad
+						rank > 0
+					}
+				}
+				modifier = {
+					factor = 1.25
+					OR = {
+						has_trait = inquisitive
+					}
+				}
+				modifier = {
+					factor = 1.15
+					OR = {
+						has_trait = diligent
+						has_trait = ambitious
+					}
+				}
+				modifier = {
+					factor = 0.5
+					OR = {
+						has_trait = lazy
+						has_trait = impatient
+					}
+				}
+				# I seperate them out through the year for two reasons
+				# 1. It makes more sense
+				# 2. When triggered at the same time we run into issues
+				trigger_event = {
+					id = agot_maester.0003
+					days = { 1 364 }
+				}
+			}
+			150 = {
+
+			}
+		}
+	}
+}

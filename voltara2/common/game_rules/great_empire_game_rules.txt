@@ -1,12 +1,18 @@
 ﻿great_empire_mode_game_rules = {
 	default = great_empire_only
 
-	great_empire_only = { }
+	great_empire_only = {
+ flag = vt_hidden_compatibility_rule
+ }
 	
-	great_empire_both = { }
+	great_empire_both = {
+ flag = vt_hidden_compatibility_rule
+ }
 }
 
 great_empire_call_game_rules = {
+ categories = { vt_government }
+
 	default = direct_only
 	
 	direct_only = { }
@@ -17,6 +23,8 @@ great_empire_call_game_rules = {
 }
 
 great_empire_shattering_game_rules = {
+ categories = { vt_government }
+
 	default = full_shatter
 
 	full_shatter = { }
@@ -27,6 +35,8 @@ great_empire_shattering_game_rules = {
 }
 
 great_empire_tribalism_game_rules = {
+ categories = { vt_government }
+
 	default = shattered_tribalism
 
 	shattered_tribalism = { }
@@ -35,6 +45,8 @@ great_empire_tribalism_game_rules = {
 }
 
 great_empire_restrictions_game_rules = {
+ categories = { vt_government }
+
 	default = full_restrictions
 
 	full_restrictions = { }

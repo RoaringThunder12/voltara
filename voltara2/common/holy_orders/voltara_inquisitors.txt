@@ -1,0 +1,28 @@
+﻿vt_order_of_the_cleansing_flame = {
+ type = military
+ government = holy_order_government
+ name = vt_order_of_the_cleansing_flame
+ trigger = { exists = scope:founder scope:founder ?= { faith.religion = religion:voltara_religion
+ NOT = { faith = { any_faith_holy_order = { title = { has_variable = vt_order_of_the_cleansing_flame } } } } } }
+ weight = { value = 1000 }
+ men_at_arms = { armored_footmen crossbowmen }
+ effect = {
+  set_variable = vt_inquisitorial_order
+  set_variable = vt_order_of_the_cleansing_flame
+  scope:leader = { add_trait = zealous vt_inquisitor_initiation_effect = yes vt_order_add_inquisitor_companions = yes }
+ }
+}
+vt_order_of_the_silver_dawn = {
+ type = military
+ government = holy_order_government
+ name = vt_order_of_the_silver_dawn
+ trigger = { exists = scope:founder scope:founder ?= { faith.religion = religion:voltara_religion
+ NOT = { faith = { any_faith_holy_order = { title = { has_variable = vt_order_of_the_silver_dawn } } } } } }
+ weight = { value = 1000 }
+ men_at_arms = { armored_footmen pikemen_unit }
+ effect = {
+  set_variable = vt_inquisitorial_order
+  set_variable = vt_order_of_the_silver_dawn
+  scope:leader = { add_trait = zealous vt_inquisitor_initiation_effect = yes vt_order_add_inquisitor_companions = yes }
+ }
+}

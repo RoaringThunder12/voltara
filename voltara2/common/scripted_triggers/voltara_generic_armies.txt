@@ -1,0 +1,16 @@
+﻿# Base-game armies are reserved for generic humans, not named Voltara cultures.
+vt_generic_human_maa_access = {
+ NOT = { has_government = voltara_ruins_government }
+ OR = { has_game_rule = vt_native_armies_open  culture = {
+  has_cultural_pillar = heritage_voltara_human
+  NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron this = culture:voltara_southorion }
+ }
+ }
+}
+
+vt_generic_human_culture_access = {
+ OR = { has_game_rule = vt_native_armies_open AND = { 
+  has_cultural_pillar = heritage_voltara_human
+  NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron this = culture:voltara_southorion }
+  } }
+}

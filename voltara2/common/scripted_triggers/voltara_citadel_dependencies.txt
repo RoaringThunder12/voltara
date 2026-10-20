@@ -1,0 +1,16 @@
+﻿agot_is_landless_nw_character = { always = no }
+
+agot_has_religious_trait = {
+	OR = {
+		agot_has_clergy_trait = yes
+		agot_has_religious_order_trait = yes
+	}
+}
+
+agot_has_religious_order_trait = {
+	OR = {
+		has_trait = devoted
+		has_trait = order_member
+		has_trait = silent_sister
+	}
+}

@@ -1,0 +1,84 @@
+﻿vt_citadel_luminary_effect = {
+ if = { limit = { NOT = { has_trait = maester } } add_trait = maester }
+ add_trait = archmaester
+ add_trait = archmaester_silver
+ make_trait_inactive = archmaester_silver
+ remove_trait = knight
+ remove_trait = squire
+ remove_variable = voltara_knight_mentor
+ if = { limit = { NOT = { has_inactive_trait = grandmaester } } add_trait = grandmaester make_trait_inactive = grandmaester }
+ if = { limit = { NOT = { any_character_artifact = { artifact_type = maester_chain } } } trigger_event = agot_maester.0004 }
+}
+vt_citadel_employ_priest_effect = {
+ $PHYSICIAN$ = { remove_character_flag = blocked_from_leaving }
+ $EMPLOYER$ = {
+  if = {
+   limit = { NOT = { $PHYSICIAN$.employer ?= $EMPLOYER$ } }
+   add_courtier = $PHYSICIAN$
+  }
+  appoint_court_position = { recipient = $PHYSICIAN$ court_position = maester_court_position }
+ }
+}
+
+vt_citadel_finish_education_effect = {
+ if = {
+  limit = { has_variable = vt_citadel_student }
+  save_scope_as = vt_citadel_graduate
+  every_relation = { type = guardian scope:vt_citadel_graduate = { remove_relation_guardian = prev } }
+  var:vt_citadel_student = {
+   if = { limit = { is_alive = yes is_landed = yes }
+    add_courtier = scope:vt_citadel_graduate
+    if = {
+     limit = { has_global_variable = vt_citadel_destroyed }
+     trigger_event = vt_citadel.0003
+    }
+    else = { trigger_event = vt_citadel.0001 }
+   }
+  }
+  remove_variable = vt_citadel_student
+  remove_character_modifier = vt_citadel_student_modifier
+ }
+}
+
+vt_citadel_enroll_effect = {
+  scope:recipient = {
+   set_variable = { name = vt_citadel_student value = scope:actor }
+   every_relation = { type = guardian scope:recipient = { remove_relation_guardian = prev } }
+   title:k_voltara_luminous_see.holder = {
+    random_courtier = {
+     limit = { has_trait = archmaester is_adult = yes is_imprisoned = no }
+     save_scope_as = vt_citadel_tutor
+    }
+   }
+   if = { limit = { NOT = { exists = scope:vt_citadel_tutor } }
+    title:k_voltara_luminous_see.holder = { save_scope_as = vt_citadel_tutor }
+   }
+   set_relation_guardian = scope:vt_citadel_tutor
+   title:k_voltara_luminous_see.holder = { add_courtier = scope:recipient }
+   add_character_modifier = { modifier = studying_at_university_modifier }
+   add_character_modifier = { modifier = vt_citadel_student_modifier }
+   create_story = vt_citadel_education_story
+  }
+ 
+}
+vt_citadel_destroy_effect = {
+  custom_tooltip = vt_destroy_citadel_consequences
+  hidden_effect = {
+   set_global_variable = vt_citadel_destroyed
+   title:c_voltara_4435 = { add_county_modifier = { modifier = vt_citadel_ruins_modifier } }
+   every_living_character = {
+    limit = { has_variable = vt_citadel_student }
+    remove_character_modifier = studying_at_university_modifier
+    vt_citadel_finish_education_effect = yes
+   }
+   title:k_voltara_luminous_see.holder = {
+    every_courtier = {
+     limit = { has_trait = maester }
+     remove_character_flag = blocked_from_leaving
+     move_to_pool = yes
+    }
+   }
+  }
+  add_piety = 250
+ 
+}

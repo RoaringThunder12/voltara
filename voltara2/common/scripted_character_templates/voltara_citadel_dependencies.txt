@@ -1,0 +1,34 @@
+﻿silent_sister_character = {
+ age = { 20 60 } gender = female
+ dynasty = none random_traits = yes faith = faith:voltara_aeluinist
+ culture = culture:voltara_culture_22 trait = silent_sister trait = education_learning_2
+ learning = { 12 22 } after_creation = {  }
+ }
+
+disgraced_maester_character = {
+ age = { 30 65 } gender = male
+ dynasty = none random_traits = yes faith = faith:voltara_aeluinist
+ culture = culture:voltara_culture_22 trait = disgraced_maester trait = education_learning_3
+ learning = { 12 22 } after_creation = {  }
+ }
+
+acolyte_character = {
+ age = { 18 25 } gender = male
+ dynasty = none random_traits = yes faith = faith:voltara_aeluinist
+ culture = culture:voltara_culture_22 trait = maester trait = education_learning_2
+ learning = { 12 22 } after_creation = { create_story = story_maester }
+ }
+
+archmaester_character = {
+ age = { 40 65 } gender = male
+ dynasty = none random_traits = yes faith = faith:voltara_aeluinist
+ culture = culture:voltara_culture_22 trait = maester trait = archmaester trait = education_learning_4
+ learning = { 12 22 } after_creation = { save_scope_as = archmaester_candidate agot_progress_to_archmaester_effect = { ARCHMAESTER_CANDIDATE = scope:archmaester_candidate } trigger_event = agot_maester.0004 create_story = story_maester }
+ }
+
+maester_character = {
+ age = { 30 65 } gender = male
+ dynasty = none random_traits = yes faith = faith:voltara_aeluinist
+ culture = culture:voltara_culture_22 trait = maester trait = education_learning_3
+ learning = { 12 22 } after_creation = { trigger_event = agot_maester.0004 create_story = story_maester }
+ }

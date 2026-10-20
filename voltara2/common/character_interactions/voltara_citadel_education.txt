@@ -1,0 +1,24 @@
+﻿vt_send_child_to_citadel = {
+ category = interaction_category_friendly icon = child
+ ai_frequency = 120
+ ai_targets = { ai_recipients = children }
+ interface_priority = 55 auto_accept = yes
+ desc = vt_send_child_to_citadel_desc
+ is_shown = { NOT = { has_game_rule = vt_rule_citadel_education_off } vt_citadel_open = yes
+  scope:actor = { is_landed = yes vt_aeliunist_clergy_eligible = yes }
+  scope:recipient = { is_child_of = scope:actor is_adult = no is_ruler = no }
+ }
+ is_valid_showing_failures_only = { NOT = { has_game_rule = vt_rule_citadel_education_off } vt_citadel_open = yes
+  exists = title:k_voltara_luminous_see.holder
+  scope:recipient = {
+   age >= 6 is_available = yes is_courtier_of = scope:actor
+   NOT = { has_variable = vt_citadel_student }
+   NOR = { has_trait = maester has_trait = silent_sister has_trait = kingsguard }
+  }
+ }
+ cost = { gold = 100 }
+ on_accept = { vt_citadel_enroll_effect = yes }
+ ai_potential = { always = yes }
+ ai_will_do = { base = 5 modifier = { factor = 0 scope:actor.gold < 300 } }
+
+}
