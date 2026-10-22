@@ -1,0 +1,12 @@
+﻿vic_review_crisis = { picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" }
+ desc = vic_review_crisis_desc selection_tooltip = vic_review_crisis_tooltip confirm_text = vic_review_crisis_confirm
+ decision_group_type = major ai_check_interval = 0
+ is_shown = { has_global_variable = vic_initialized vic_principal = yes } is_valid = { is_imprisoned = no }
+ cooldown = { days = 7 } effect = { if = { limit = { this = character:19060001 } trigger_event = vic_story.60 } if = { limit = { this = character:19060029 } trigger_event = vic_story.61 } if = { limit = { this = character:19060033 } trigger_event = vic_story.62 } if = { limit = { this = character:19060003 } trigger_event = vic_story.63 } if = { limit = { this = character:19060031 } trigger_event = vic_story.64 }  } ai_potential = { always = no } ai_will_do = { base = 0 }
+ }
+vic_present_accounts = { picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" }
+ desc = vic_present_accounts_desc selection_tooltip = vic_present_accounts_tooltip confirm_text = vic_present_accounts_confirm
+ decision_group_type = major ai_check_interval = 0
+ is_shown = { this = character:19060029 vic_active = yes has_variable = vic_clue_treasury global_var:vic_report_state = 0 } is_valid = { is_available = yes character:19060001 = { vic_participant_available = yes has_title = title:h_voltara_severos } }
+ cooldown = { days = 7 } effect = { vic_send_report = yes } ai_potential = { always = no } ai_will_do = { base = 0 }
+ }

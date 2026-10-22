@@ -1,0 +1,8 @@
+﻿yearly_global_pulse = { on_actions = { vkf_clan_year } }
+vkf_clan_year = { effect = {
+ every_living_character = { limit = { is_alive = yes age >= 14 age < 15 vkf_southron_culture = yes location = { geographical_region = world_voltara_southron_heartland } NOT = { has_character_flag = vkf_totem_chosen } } trigger_event = { id = vkf.170 days = 5 } }
+ every_ruler = { limit = { vkf_southron = yes } vkf_check_grazing = yes
+ if = { limit = { has_character_flag = vkf_totem_chosen NOT = { has_character_flag = vkf_totem_reflected } } trigger_event = { id = vkf.171 days = 10 } }
+ if = { limit = { has_variable = vkf_grazing_land NOT = { has_variable = vkf_grazing_grantor } } remove_variable = vkf_grazing_land remove_character_modifier = vkf_grazing_access }
+ }
+ } }

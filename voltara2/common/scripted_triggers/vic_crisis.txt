@@ -1,0 +1,30 @@
+﻿vic_active = {
+ has_global_variable = vic_initialized
+ global_var:vic_stage >= 1
+ global_var:vic_stage < 6
+}
+vic_scenario = {
+ current_date >= 3781.1.1 current_date < 3782.1.1
+ exists = character:19060001
+ character:19060001 = { is_alive = yes has_title = title:h_voltara_severos }
+ NOT = { has_global_variable = voltara_cassian_crisis_coup }
+}
+vic_principal = { OR = { this = character:19060001 this = character:19060029 this = character:19060033 this = character:19060003 this = character:19060031 } }
+vic_participant_available = { is_alive = yes NOT = { has_trait = incapable } is_imprisoned = no }
+
+vic_running = { has_global_variable = vic_full_version global_var:vic_stage >= 1 global_var:vic_stage < 7 }
+vic_politics = { vic_running = yes global_var:vic_stage < 5 }
+vic_tharn_ready = {
+ this = character:19060033 vic_participant_available = yes vic_politics = yes
+ global_var:vic_assassination = 1 global_var:vic_method > 0
+ global_var:vic_preparation >= 40 global_var:vic_access >= 25
+ character:19060001 = { is_alive = yes has_title = title:h_voltara_severos is_imprisoned = no }
+}
+vic_octavian_viable = { is_alive = yes is_landed = yes is_imprisoned = no NOT = { has_trait = incapable } NOT = { has_title = title:h_voltara_severos } }
+vic_strong_case = {
+ var:vic_clue_palace >= 3
+ OR = { var:vic_clue_cleric >= 3 var:vic_clue_letters >= 3 }
+ NOT = { has_character_flag = vic_evidence_compromised }
+}
+vic_investigator = { OR = { this = character:19060001 this = character:19060029 } vic_participant_available = yes vic_politics = yes }
+vic_has_new_evidence = { OR = { var:vic_clue_palace >= 1 var:vic_clue_cleric >= 1 var:vic_clue_letters >= 1 var:vic_clue_musters >= 1 } }

@@ -1,0 +1,18 @@
+﻿vic_imperial_claim = {
+ icon = claim_cb group = civil_war target_titles = none
+ war_name = vic_imperial_claim_name cb_name = vic_imperial_claim
+ allowed_for_character = { has_character_flag = vic_claimant }
+ allowed_against_character = { has_title = title:h_voltara_severos }
+ valid_to_start = { scope:attacker = { has_character_flag = vic_claimant } scope:defender = { has_title = title:h_voltara_severos } }
+ should_invalidate = { OR = { scope:attacker = { is_alive = no } NOT = { exists = title:h_voltara_severos.holder } scope:defender = { NOT = { has_title = title:h_voltara_severos } } } }
+ on_primary_attacker_death = invalidate on_primary_defender_death = inherit
+ attacker_capital_gives_war_score = yes max_attacker_score_from_battles = 100 max_defender_score_from_battles = 100
+ on_victory_desc = { desc = vic_war_victory }
+ on_defeat_desc = { desc = vic_war_defeat }
+ on_white_peace_desc = { desc = vic_war_white_peace }
+ on_invalidated_desc = { desc = vic_war_invalidated }
+ on_victory = { vic_transfer_crown = yes vic_war_end = { RESULT = 1 } }
+ on_defeat = { scope:attacker = { vic_return_rebel = yes } scope:defender = { if = { limit = { scope:attacker = { is_alive = yes is_imprisoned = no } } imprison = { target = scope:attacker type = dungeon } } } vic_war_end = { RESULT = 2 } }
+ on_white_peace = { scope:attacker = { vic_return_rebel = yes } vic_war_end = { RESULT = 3 } }
+ on_invalidated = { scope:attacker ?= { vic_return_rebel = yes } vic_war_end = { RESULT = 4 } }
+}

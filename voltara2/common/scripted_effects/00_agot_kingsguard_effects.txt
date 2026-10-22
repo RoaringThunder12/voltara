@@ -43,10 +43,10 @@
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_lord_commander
 					target = scope:kingsguard
-				}
+				} }
 				agot_kingsguard_update_white_book_page_lc = { KINGSGUARD = scope:kingsguard KING = scope:king }
 			}
 			primary_title = {
@@ -58,12 +58,12 @@
 		}
 		else_if = {
 			limit = {
-				NOT = { exists = cp:kingsguard_1 }
+				NOT = { exists = primary_title.var:kingsguard_1 }
 			}
-			assign_councillor_type = {
+			if = { limit = { scope:kingsguard = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 				type = kingsguard_1
 				target = scope:kingsguard
-			}
+			} }
 			primary_title = {
 				set_variable = {
 					name = kingsguard_1
@@ -73,12 +73,12 @@
 		}
 		else_if = {
 			limit = {
-				NOT = { exists = cp:kingsguard_2 }
+				NOT = { exists = primary_title.var:kingsguard_2 }
 			}
-			assign_councillor_type = {
+			if = { limit = { scope:kingsguard = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 				type = kingsguard_2
 				target = scope:kingsguard
-			}
+			} }
 			primary_title = {
 				set_variable = {
 					name = kingsguard_2
@@ -88,12 +88,12 @@
 		}
 		else_if = {
 			limit = {
-				NOT = { exists = cp:kingsguard_3 }
+				NOT = { exists = primary_title.var:kingsguard_3 }
 			}
-			assign_councillor_type = {
+			if = { limit = { scope:kingsguard = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 				type = kingsguard_3
 				target = scope:kingsguard
-			}
+			} }
 			primary_title = {
 				set_variable = {
 					name = kingsguard_3
@@ -103,12 +103,12 @@
 		}
 		else_if = {
 			limit = {
-				NOT = { exists = cp:kingsguard_4 }
+				NOT = { exists = primary_title.var:kingsguard_4 }
 			}
-			assign_councillor_type = {
+			if = { limit = { scope:kingsguard = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 				type = kingsguard_4
 				target = scope:kingsguard
-			}
+			} }
 			primary_title = {
 				set_variable = {
 					name = kingsguard_4
@@ -118,12 +118,12 @@
 		}
 		else_if = {
 			limit = {
-				NOT = { exists = cp:kingsguard_5 }
+				NOT = { exists = primary_title.var:kingsguard_5 }
 			}
-			assign_councillor_type = {
+			if = { limit = { scope:kingsguard = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 				type = kingsguard_5
 				target = scope:kingsguard
-			}
+			} }
 			primary_title = {
 				set_variable = {
 					name = kingsguard_5
@@ -133,12 +133,12 @@
 		}
 		else_if = {
 			limit = {
-				NOT = { exists = cp:kingsguard_6 }
+				NOT = { exists = primary_title.var:kingsguard_6 }
 			}
-			assign_councillor_type = {
+			if = { limit = { scope:kingsguard = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 				type = kingsguard_6
 				target = scope:kingsguard
-			}
+			} }
 			primary_title = {
 				set_variable = {
 					name = kingsguard_6
@@ -231,10 +231,10 @@ agot_assign_lord_commander_effect = {
 
 		if = {
  limit = { NOT = { $COMMANDER$ = { has_council_position = kingsguard_lord_commander } } }
- assign_councillor_type = {
+ if = { limit = { $COMMANDER$ = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 			type = kingsguard_lord_commander
 			target = $COMMANDER$
-		}
+		} }
 }
 	}
 	if = {
@@ -324,6 +324,8 @@ agot_remove_kingsguard_effect = {
 			}
 
 			remove_trait = kingsguard
+ remove_character_modifier = vt_cg_dual_commander_modifier
+ remove_character_modifier = vt_cg_dual_guard_modifier
 			add_character_modifier = agot_former_kingsguard
 			agot_kingsguard_destroy_artifacts = yes
 			add_character_flag = can_fire_kingsguard
@@ -457,6 +459,8 @@ agot_remove_kingsguard_effect = {
 }
 
 agot_on_get_kingsguard = {
+ remove_character_modifier = vt_cg_dual_commander_modifier
+ remove_character_modifier = vt_cg_dual_guard_modifier
 	got_council_position_effect = yes
 	add_character_flag = blocked_from_leaving
 	if = {
@@ -476,6 +480,8 @@ agot_on_get_kingsguard = {
 }
 
 agot_on_get_kingsguard_lord_commander = {
+ remove_character_modifier = vt_cg_dual_commander_modifier
+ remove_character_modifier = vt_cg_dual_guard_modifier
 	got_council_position_effect = yes
 	add_character_flag = lord_commander
 	add_character_flag = blocked_from_leaving
@@ -687,11 +693,18 @@ agot_kingsguard_destroy_artifacts = {
 }
 
 agot_on_fired_from_kingsguard = {
+ if = { limit = { is_alive = yes has_trait = kingsguard }
+ if = { limit = { has_character_flag = lord_commander } add_character_modifier = { modifier = vt_cg_dual_commander_modifier } }
+ else = { add_character_modifier = { modifier = vt_cg_dual_guard_modifier } }
+ }
+
 	if = {
-		limit = { is_alive = yes }
+		limit = { is_alive = yes NOT = { has_trait = kingsguard } }
 		fired_from_council_position_effect = yes
 		remove_character_flag = blocked_from_leaving
 		#remove_trait = kingsguard
+ remove_character_modifier = vt_cg_dual_commander_modifier
+ remove_character_modifier = vt_cg_dual_guard_modifier
 	}
 }
 
@@ -791,41 +804,43 @@ agot_end_kingsguard_effect = {
 	every_living_kingsguard = {
 		save_scope_as = current_kingsguard
 		remove_trait = kingsguard
+ remove_character_modifier = vt_cg_dual_commander_modifier
+ remove_character_modifier = vt_cg_dual_guard_modifier
 		agot_kingsguard_destroy_artifacts = yes
 	}
 	title:h_voltara_severos.holder ?= {
 		if = {
-			limit = { exists = cp:kingsguard_1 }
+			limit = { exists = primary_title.var:kingsguard_1 }
 			cp:kingsguard_1 = { add_character_flag = can_fire_kingsguard }
 			fire_councillor = cp:kingsguard_1
 		}
 		if = {
-			limit = { exists = cp:kingsguard_2 }
+			limit = { exists = primary_title.var:kingsguard_2 }
 			cp:kingsguard_2 = { add_character_flag = can_fire_kingsguard }
 			fire_councillor = cp:kingsguard_2
 		}
 		if = {
-			limit = { exists = cp:kingsguard_3 }
+			limit = { exists = primary_title.var:kingsguard_3 }
 			cp:kingsguard_3 = { add_character_flag = can_fire_kingsguard }
 			fire_councillor = cp:kingsguard_3
 		}
 		if = {
-			limit = { exists = cp:kingsguard_4 }
+			limit = { exists = primary_title.var:kingsguard_4 }
 			cp:kingsguard_4 = { add_character_flag = can_fire_kingsguard }
 			fire_councillor = cp:kingsguard_4
 		}
 		if = {
-			limit = { exists = cp:kingsguard_5 }
+			limit = { exists = primary_title.var:kingsguard_5 }
 			cp:kingsguard_5 = { add_character_flag = can_fire_kingsguard }
 			fire_councillor = cp:kingsguard_5
 		}
 		if = {
-			limit = { exists = cp:kingsguard_6 }
+			limit = { exists = primary_title.var:kingsguard_6 }
 			cp:kingsguard_6 = { add_character_flag = can_fire_kingsguard }
 			fire_councillor = cp:kingsguard_6
 		}
 		if = {
-			limit = { exists = cp:kingsguard_lord_commander }
+			limit = { exists = primary_title.var:kingsguard_lord_commander }
 			cp:kingsguard_lord_commander = { add_character_flag = can_fire_kingsguard }
 			fire_councillor = cp:kingsguard_lord_commander
 		}

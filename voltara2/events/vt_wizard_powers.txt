@@ -1,0 +1,12 @@
+﻿namespace = vt_wizard_powers
+vt_wizard_powers.1 = {
+ type = character_event theme = learning title = vt_wizard_powers.1.t desc = vt_wizard_powers.1.desc
+ left_portrait = { character = character:19066001 animation = personality_rational }
+ option = { name = vt_wizard_powers.1.a }
+}
+vt_wizard_powers.2 = {
+ type = character_event theme = intrigue title = vt_wizard_powers.2.t desc = vt_wizard_powers.2.desc
+ option = { name = vt_wizard_powers.2.a }
+}
+
+vt_wizard_powers.3 = { hidden = yes trigger = { is_alive = yes has_character_flag = vt_wizard_wrath_pending } immediate = { vt_wizard_execute_wrath = yes } }

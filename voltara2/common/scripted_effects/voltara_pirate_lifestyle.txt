@@ -1,11 +1,2 @@
-﻿voltara_pirate_enroll = {
- if = { limit = { age >= 16 is_alive = yes is_imprisoned = no voltara_pirate_court = yes NOT = { has_trait = voltara_slave } }
-  if = { limit = { NOT = { has_trait = voltara_pirate } } add_trait = voltara_pirate }
- }
-}
-voltara_pirate_service = {
- voltara_pirate_enroll = yes
- if = { limit = { has_trait = voltara_pirate age >= 16 is_imprisoned = no NOT = { has_trait = voltara_slave } }
-  add_trait_xp = { trait = voltara_pirate value = 2 }
- }
-}
+﻿voltara_pirate_enroll = { vt_outlaw_sync_pirate = yes }
+voltara_pirate_service = { if = { limit = { vt_outlaw_access = yes has_perk = vt_outlaw_pirate_1_perk } add_vt_outlaw_lifestyle_xp = 50 } }

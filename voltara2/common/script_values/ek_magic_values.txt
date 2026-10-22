@@ -1609,6 +1609,8 @@ magicka_mult = {
 magicka_regen = {
 	value = magicka_flat
 	multiply = magicka_mult
+	# Flat recovery after multipliers: exactly five per equipped crystal.
+	add = { value = vt_weave_crystal_recovery desc = vt_weave_crystal_recovery }
 }
 
 magicka_upkeep = {

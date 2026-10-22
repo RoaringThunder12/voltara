@@ -1,0 +1,37 @@
+﻿activity_vkf_war_council = {
+ is_shown = { vkf_leader = yes }
+ can_start_showing_failures_only = { is_available = yes is_at_war = no NOT = { is_activity_type_on_cooldown = activity_vkf_war_council } }
+ is_valid = { scope:host = { vkf_leader = yes } }
+ province_filter = capital ai_province_filter = capital max_province_icons = 1 allow_zero_guest_invites = no open_invite = no
+ cost = { gold = { value = 100 } } ui_predicted_cost = { gold = { value = 100 } } cooldown = { years = 3 }
+ province_description = { desc = vkf_council_location } province_score = { value = 50 }
+ max_guests = 40
+ max_guest_arrival_delay_time = { months = 6 }
+ can_be_activity_guest = { vkf_council_guest = yes }
+ guest_invite_rules = { defaults = { 1 = vkf_invite_southron } }
+ guest_join_chance = { base = 50 base_activity_modifier = yes }
+ ai_will_do = { value = 30 } ai_will_select_province = { value = 100 }
+ host_intents = { default = vkf_alliance_intent intents = { vkf_alliance_intent vkf_vengeance_intent vkf_peace_intent } }
+ guest_intents = { default = vkf_autonomy_intent intents = { vkf_protection_intent vkf_autonomy_intent vkf_spoils_intent vkf_alliance_intent vkf_challenge_intent vkf_vengeance_intent vkf_peace_intent vkf_intrigue_intent } }
+ on_start = { scope:host = { vkf_seed_leader = yes if = { limit = { has_variable = vkf_spoils var:vkf_spoils > 0 } add_gold = var:vkf_spoils set_variable = { name = vkf_spoils value = 0 } } add_character_flag = vkf_war_council_active remove_character_flag = vkf_spoils_decided remove_character_flag = vkf_strategy_decided } }
+ on_complete = { scope:host = { remove_character_flag = vkf_war_council_active vkf_recount = yes trigger_event = { id = vkf.125 days = 1 } } }
+ on_invalidated = { scope:host ?= { remove_character_flag = vkf_war_council_active } }
+ on_host_death = { scope:host ?= { remove_character_flag = vkf_war_council_active } }
+ header_background = "gfx/interface/illustrations/activity_header_backgrounds/activity_camp_party.dds"
+ background = { texture = "gfx/interface/illustrations/event_scenes/ep3_campfire.dds" environment = "environment_event_bp1_bonfire" ambience = "event:/SFX/Events/Backgrounds/burning_building" }
+ phases = {
+vkf_council_phase_1 = { order = 1 is_predefined = yes location_source = scripted select_scripted_location = { capital_province = { save_scope_as = province } } ai_will_do = { value = 100 }
+ on_phase_active = { if = { limit = { this = scope:host } scope:activity = { progress_activity_phase_after = { days = 14 } } }  } }
+vkf_council_phase_2 = { order = 2 is_predefined = yes location_source = scripted select_scripted_location = { capital_province = { save_scope_as = province } } ai_will_do = { value = 100 }
+ on_phase_active = { if = { limit = { this = scope:host } scope:activity = { progress_activity_phase_after = { days = 14 } } } if = { limit = { NOT = { this = scope:host } } set_variable = { name = vkf_council_host value = scope:host days = 120 } if = { limit = { has_activity_intent = vkf_protection_intent } set_variable = { name = vkf_demand value = 1 } } if = { limit = { has_activity_intent = vkf_autonomy_intent } set_variable = { name = vkf_demand value = 2 } } if = { limit = { has_activity_intent = vkf_spoils_intent } set_variable = { name = vkf_demand value = 3 } } if = { limit = { has_activity_intent = vkf_alliance_intent } set_variable = { name = vkf_demand value = 4 } } if = { limit = { has_activity_intent = vkf_challenge_intent } set_variable = { name = vkf_demand value = 5 } } if = { limit = { has_activity_intent = vkf_vengeance_intent } set_variable = { name = vkf_demand value = 6 } } if = { limit = { has_activity_intent = vkf_peace_intent } set_variable = { name = vkf_demand value = 7 } } if = { limit = { has_activity_intent = vkf_intrigue_intent } set_variable = { name = vkf_demand value = 8 } }  } } }
+vkf_council_phase_3 = { order = 3 is_predefined = yes location_source = scripted select_scripted_location = { capital_province = { save_scope_as = province } } ai_will_do = { value = 100 }
+ on_phase_active = { if = { limit = { this = scope:host } scope:activity = { progress_activity_phase_after = { days = 14 } } } if = { limit = { NOT = { this = scope:host } } trigger_event = vkf.120 } } }
+vkf_council_phase_4 = { order = 4 is_predefined = yes location_source = scripted select_scripted_location = { capital_province = { save_scope_as = province } } ai_will_do = { value = 100 }
+ on_phase_active = { if = { limit = { this = scope:host } scope:activity = { progress_activity_phase_after = { days = 14 } } } if = { limit = { NOT = { this = scope:host } } trigger_event = vkf.121 } } }
+vkf_council_phase_5 = { order = 5 is_predefined = yes location_source = scripted select_scripted_location = { capital_province = { save_scope_as = province } } ai_will_do = { value = 100 }
+ on_phase_active = { if = { limit = { this = scope:host } scope:activity = { progress_activity_phase_after = { days = 14 } } } if = { limit = { this = scope:host } trigger_event = vkf.123 } } }
+vkf_council_phase_6 = { order = 6 is_predefined = yes location_source = scripted select_scripted_location = { capital_province = { save_scope_as = province } } ai_will_do = { value = 100 }
+ on_phase_active = { if = { limit = { this = scope:host } scope:activity = { progress_activity_phase_after = { days = 14 } } } if = { limit = { this = scope:host } trigger_event = vkf.124 } } }
+vkf_council_phase_7 = { order = 7 is_predefined = yes location_source = scripted select_scripted_location = { capital_province = { save_scope_as = province } } ai_will_do = { value = 100 }
+ on_phase_active = { if = { limit = { this = scope:host } scope:activity = { progress_activity_phase_after = { days = 14 } } }  } }
+} }

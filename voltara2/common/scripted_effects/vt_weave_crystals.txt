@@ -1,0 +1,10 @@
+﻿vt_create_weave_crystal_effect = {
+ create_artifact = {
+  name = vt_weave_crystal_name description = vt_weave_crystal_desc
+  type = miscellaneous template = vt_weave_crystal_template
+  visuals = vt_weave_crystal_visuals rarity = masterwork quality = 25 wealth = 25
+  modifier = vt_weave_crystal_modifier
+  decaying = no save_scope_as = vt_new_weave_crystal
+ }
+ scope:vt_new_weave_crystal = { set_variable = { name = vt_weave_crystal value = yes } }
+}

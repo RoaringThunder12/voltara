@@ -1,0 +1,179 @@
+﻿vkf_initialize = {
+if = { limit = { NOT = { has_global_variable = vkf_initialized } } set_global_variable = { name = vkf_initialized value = yes } set_global_variable = { name = vkf_hostility value = 0 } }
+}
+vkf_hostility_change = {
+vkf_initialize = yes change_global_variable = { name = vkf_hostility add = $VALUE$ } if = { limit = { global_var:vkf_hostility > 100 } set_global_variable = { name = vkf_hostility value = 100 } } if = { limit = { global_var:vkf_hostility < 0 } set_global_variable = { name = vkf_hostility value = 0 } }
+}
+vkf_request_expedition = {
+if = { limit = { vkf_keeper = yes NOT = { has_global_variable = vkf_treaty } exists = scope:recipient scope:recipient = { vkf_chief = yes capital_province = { is_coastal = yes } NOT = { has_character_flag = vkf_raid_cooldown } } NOT = { has_variable = vkf_target } }
+ set_variable = { name = vkf_target value = scope:recipient days = 30 } trigger_event = { id = vkf.1 days = 1 } }
+}
+vkf_raid = {
+if = { limit = { vkf_keeper = yes NOT = { has_global_variable = vkf_treaty } gold >= 25 has_variable = vkf_target var:vkf_target = { vkf_chief = yes NOT = { has_character_flag = vkf_raid_cooldown } } }
+ save_scope_as = vkf_commander remove_short_term_gold = 25
+ var:vkf_target = { set_variable = { name = vkf_aggressor value = scope:vkf_commander days = 730 } add_character_flag = { flag = vkf_raid_cooldown days = 365 } add_character_flag = { flag = vkf_raid_response days = 90 }
+ if = { limit = { gold >= 20 } remove_short_term_gold = 20 scope:vkf_commander = { add_gold = 20 } }
+ add_character_modifier = { modifier = vkf_disrupted_supplies months = 12 } trigger_event = { id = vkf.10 days = 2 } }
+ if = { limit = { var:vkf_policy ?= 3 gold >= 25 } remove_short_term_gold = 25 var:vkf_target = { vkf_seed_leader = yes set_variable = { name = vkf_supplies value = 0 } add_character_modifier = { modifier = vkf_disrupted_supplies years = 2 } } vkf_hostility_change = { VALUE = 8 } } vkf_hostility_change = { VALUE = 8 } remove_variable = vkf_target }
+}
+vkf_compensate = {
+if = { limit = { vkf_keeper = yes gold >= 40 has_variable = vkf_claimant var:vkf_claimant = { vkf_available = yes has_variable = vkf_aggressor var:vkf_aggressor ?= title:k_voltara_22.holder } }
+ remove_short_term_gold = 40 var:vkf_claimant = { add_gold = 40 remove_character_modifier = vkf_disrupted_supplies remove_variable = vkf_aggressor trigger_event = { id = vkf.12 days = 2 } }
+ remove_variable = vkf_claimant vkf_hostility_change = { VALUE = -8 } }
+}
+vkf_open_council = {
+if = { limit = { vkf_chief = yes gold >= 50 NOT = { has_character_flag = vkf_council_open } }
+ remove_short_term_gold = 50 save_scope_as = vkf_host add_character_flag = { flag = vkf_council_open days = 90 }
+ set_variable = { name = vkf_invited_count value = 0 }
+ ordered_independent_ruler = { order_by = diplomacy max = 3 check_range_bounds = no limit = { vkf_chief = yes NOT = { this = scope:vkf_host } NOT = { has_variable = vkf_inviter } NOT = { has_variable = vkf_patron } }
+ set_variable = { name = vkf_inviter value = scope:vkf_host days = 60 } scope:vkf_host = { change_variable = { name = vkf_invited_count add = 1 } } trigger_event = { id = vkf.20 days = 3 } }
+ trigger_event = { id = vkf.30 days = 65 } }
+}
+vkf_pledge = {
+if = { limit = { vkf_pending_valid = yes NOT = { has_variable = vkf_patron } }
+ set_variable = { name = vkf_patron value = var:vkf_inviter days = 1825 } set_variable = { name = vkf_oath value = $TYPE$ days = 1825 }
+ var:vkf_inviter = { add_prestige = 25 }
+ remove_variable = vkf_inviter }
+}
+vkf_count_support = {
+save_scope_as = vkf_host set_variable = { name = vkf_support value = 0 }
+ every_independent_ruler = { limit = { vkf_chief = yes has_variable = vkf_patron var:vkf_patron ?= scope:vkf_host } scope:vkf_host = { change_variable = { name = vkf_support add = 1 } } }
+}
+vkf_form_mandate = {
+vkf_count_support = yes
+ if = { limit = { vkf_chief = yes has_character_flag = vkf_council_concluded var:vkf_support >= 2 prestige >= 500 gold >= 100 NOT = { exists = title:e_voltara_sixth_southron_invasion.holder } }
+ save_scope_as = vkf_founder remove_short_term_gold = 100 add_prestige = -500
+ create_title_and_vassal_change = { type = created save_scope_as = vkf_creation add_claim_on_loss = no }
+ title:e_voltara_sixth_southron_invasion = { change_title_holder = { holder = scope:vkf_founder change = scope:vkf_creation } }
+ resolve_title_and_vassal_change = scope:vkf_creation set_primary_title_to = title:e_voltara_sixth_southron_invasion
+ add_character_flag = vkf_recognized_leader remove_character_flag = vkf_council_concluded trigger_event = { id = vkf.32 days = 1 } }
+}
+vkf_submit = {
+if = { limit = { vkf_chief = yes has_variable = vkf_patron var:vkf_oath >= 2 var:vkf_patron = { vkf_available = yes has_title = title:e_voltara_sixth_southron_invasion } }
+ save_scope_as = vkf_sworn_chief
+ create_title_and_vassal_change = { type = swear_fealty save_scope_as = vkf_submission }
+ change_liege = { liege = var:vkf_patron change = scope:vkf_submission }
+ resolve_title_and_vassal_change = scope:vkf_submission
+ set_variable = { name = vkf_obligation_holder value = var:vkf_patron days = 1825 } set_variable = { name = vkf_promised_by value = var:vkf_patron days = 1825 } add_character_modifier = { modifier = vkf_promised_autonomy years = 5 }
+ remove_variable = vkf_oath remove_variable = vkf_patron remove_character_flag = vkf_fulfillment_pending }
+}
+vkf_seed_leader = {
+if = { limit = { NOT = { has_variable = vkf_supplies } } set_variable = { name = vkf_supplies value = 0 } set_variable = { name = vkf_intelligence value = 0 } set_variable = { name = vkf_cohesion value = 0 } set_variable = { name = vkf_strength value = 0 } set_variable = { name = vkf_strategy value = 0 } }
+}
+vkf_recount = {
+vkf_seed_leader = yes save_scope_as = vkf_counted_leader set_variable = { name = vkf_strength value = 0 } set_variable = { name = vkf_cohesion value = 0 }
+ every_ruler = { limit = { vkf_southron = yes NOT = { this = scope:vkf_counted_leader } OR = { var:vkf_patron ?= scope:vkf_counted_leader var:vkf_obligation_holder ?= scope:vkf_counted_leader } }
+ scope:vkf_counted_leader = { change_variable = { name = vkf_strength add = 1 } change_variable = { name = vkf_cohesion add = 15 } }
+ if = { limit = { has_character_modifier = vkf_broken_promise } scope:vkf_counted_leader = { change_variable = { name = vkf_cohesion add = -20 } } }
+ }
+ set_variable = { name = vkf_cohesion value = { value = var:vkf_cohesion min = 0 max = 100 } }
+ set_variable = { name = vkf_supplies value = { value = var:vkf_supplies min = 0 max = 100 } }
+ set_variable = { name = vkf_intelligence value = { value = var:vkf_intelligence min = 0 max = 100 } }
+
+}
+vkf_situation_init = {
+vkf_initialize = yes
+ if = { limit = { NOT = { exists = situation:vkf_frontier_situation } }
+ set_global_variable = { name = vkf_unity value = 0 } set_global_variable = { name = vkf_phase value = 1 } set_global_variable = { name = vkf_hostility_bar value = 0 } set_global_variable = { name = vkf_unity_bar value = 0 }
+ start_situation = { type = vkf_frontier_situation }
+ }
+
+}
+vkf_monthly = {
+vkf_initialize = yes
+ if = { limit = { global_var:vkf_hostility > 0 } vkf_hostility_change = { VALUE = -1 } }
+ set_global_variable = { name = vkf_unity value = 0 }
+ every_independent_ruler = { limit = { OR = { vkf_southron = yes vkf_leader = yes } }
+ vkf_recount = yes
+ if = { limit = { var:vkf_cohesion > global_var:vkf_unity } set_global_variable = { name = vkf_unity value = var:vkf_cohesion } }
+ }
+ set_global_variable = { name = vkf_phase value = 1 }
+ if = { limit = { global_var:vkf_hostility >= 35 } set_global_variable = { name = vkf_phase value = 2 } }
+ if = { limit = { global_var:vkf_unity >= 30 } set_global_variable = { name = vkf_phase value = 3 } }
+ if = { limit = { exists = title:e_voltara_sixth_southron_invasion.holder } set_global_variable = { name = vkf_phase value = 4 } }
+ if = { limit = { title:e_voltara_sixth_southron_invasion.holder ?= { vkf_war_ready = yes } global_var:vkf_hostility >= 50 } set_global_variable = { name = vkf_phase value = 5 } }
+ if = { limit = { exists = global_var:vkf_war } set_global_variable = { name = vkf_phase value = 6 } }
+ set_global_variable = { name = vkf_hostility_bar value = { value = global_var:vkf_hostility divide = 100 } }
+ set_global_variable = { name = vkf_unity_bar value = { value = global_var:vkf_unity divide = 100 } }
+ situation:vkf_frontier_situation ?= { every_situation_sub_region = {
+if = { limit = { global_var:vkf_phase = 1 NOT = { sub_region_current_phase = vkf_phase_1 } } change_phase = { phase = vkf_phase_1 } }
+if = { limit = { global_var:vkf_phase = 2 NOT = { sub_region_current_phase = vkf_phase_2 } } change_phase = { phase = vkf_phase_2 } }
+if = { limit = { global_var:vkf_phase = 3 NOT = { sub_region_current_phase = vkf_phase_3 } } change_phase = { phase = vkf_phase_3 } }
+if = { limit = { global_var:vkf_phase = 4 NOT = { sub_region_current_phase = vkf_phase_4 } } change_phase = { phase = vkf_phase_4 } }
+if = { limit = { global_var:vkf_phase = 5 NOT = { sub_region_current_phase = vkf_phase_5 } } change_phase = { phase = vkf_phase_5 } }
+if = { limit = { global_var:vkf_phase = 6 NOT = { sub_region_current_phase = vkf_phase_6 } } change_phase = { phase = vkf_phase_6 } }
+ } }
+ # Imperial news is public, never knowledge of the assassin.
+ if = { limit = { character:19060001 = { is_alive = no } NOT = { has_global_variable = vkf_eagle_news } }
+ set_global_variable = { name = vkf_eagle_news value = yes }
+ every_independent_ruler = { limit = { vkf_southron = yes } trigger_event = { id = vkf.210 days = 2 } }
+ }
+ title:k_voltara_22.holder ?= { if = { limit = { NOT = { has_variable = vkf_policy } } set_variable = { name = vkf_policy value = 1 } }
+ if = { limit = { is_ai = yes gold >= 50 NOT = { has_character_flag = vkf_ai_expedition_cooldown } var:vkf_policy > 1 }
+ random = { chance = 20 save_scope_as = vkf_ai_keeper random_independent_ruler = { limit = { vkf_chief = yes capital_province = { is_coastal = yes } NOT = { has_character_flag = vkf_raid_cooldown } } save_scope_as = recipient scope:vkf_ai_keeper = { vkf_request_expedition = yes add_character_flag = { flag = vkf_ai_expedition_cooldown days = 365 } } } }
+ }
+ }
+
+vkf_full_ai = yes
+title:e_voltara_sixth_southron_invasion.holder ?= { add_character_flag = vkf_recognized_leader }
+}
+vkf_council_oath = {
+if = { limit = { vkf_delegate_pending = yes }
+ set_variable = { name = vkf_patron value = var:vkf_council_host days = 1825 }
+ set_variable = { name = vkf_oath value = $TYPE$ days = 1825 }
+ add_character_flag = { flag = vkf_council_pledged days = 1095 }
+ if = { limit = { var:vkf_oath >= 2 } save_scope_as = vkf_oath_giver var:vkf_patron = { add_hook = { target = scope:vkf_oath_giver type = vkf_blood_oath_hook } } }
+ var:vkf_patron = { vkf_recount = yes }
+ }
+}
+vkf_clear_pledges = {
+save_scope_as = vkf_departing_leader every_ruler = { limit = { OR = { var:vkf_patron ?= scope:vkf_departing_leader var:vkf_obligation_holder ?= scope:vkf_departing_leader } } remove_variable = vkf_patron remove_variable = vkf_oath remove_variable = vkf_obligation_holder remove_character_flag = vkf_council_pledged } vkf_recount = yes
+}
+vkf_campaign_end = {
+remove_global_variable = vkf_war set_global_variable = { name = vkf_last_outcome value = $RESULT$ }
+ scope:attacker ?= { remove_character_flag = vkf_campaign_launched set_variable = { name = vkf_supplies value = 0 } set_variable = { name = vkf_intelligence value = 0 } add_character_flag = { flag = vkf_campaign_recovery days = 1825 } }
+ if = { limit = { scope:attacker = { has_character_flag = vkf_result_victory } } scope:attacker ?= { trigger_event = { id = vkf.201 days = 1 } } }
+ if = { limit = { scope:attacker = { has_character_flag = vkf_result_defeat } } scope:attacker ?= { vkf_clear_pledges = yes trigger_event = { id = vkf.202 days = 1 } } scope:defender ?= { add_prestige = 500 add_character_modifier = { modifier = vkf_keeper_defense years = 5 } } }
+ if = { limit = { scope:attacker = { has_character_flag = vkf_result_peace } } set_global_variable = { name = vkf_treaty value = yes days = 3650 } vkf_hostility_change = { VALUE = -40 } scope:attacker ?= { trigger_event = { id = vkf.203 days = 1 } } }
+ if = { limit = { scope:attacker = { has_character_flag = vkf_result_invalid } } scope:attacker ?= { vkf_clear_pledges = yes trigger_event = { id = vkf.204 days = 1 } } }
+
+}
+vkf_take_strait = {
+create_title_and_vassal_change = { type = conquest save_scope_as = vkf_strait_transfer add_claim_on_loss = yes }
+ title:c_voltara_471 = { change_title_holder = { holder = scope:attacker change = scope:vkf_strait_transfer } }
+ resolve_title_and_vassal_change = scope:vkf_strait_transfer
+ scope:attacker = { add_prestige = 750 }
+
+}
+vkf_launch = {
+clear_saved_scope = vkf_new_war
+vkf_recount = yes if = { limit = { vkf_war_ready = yes NOT = { has_character_flag = vkf_campaign_recovery } exists = title:c_voltara_471.holder NOT = { title:c_voltara_471.holder.top_liege = this } is_independent_ruler = yes }
+ save_scope_as = vkf_war_leader add_character_flag = vkf_campaign_authorized start_war = { casus_belli = vkf_great_invasion target = title:c_voltara_471.holder.top_liege }
+ remove_character_flag = vkf_campaign_authorized random_character_war = { limit = { using_cb = vkf_great_invasion primary_attacker = scope:vkf_war_leader } save_scope_as = vkf_new_war set_global_variable = { name = vkf_war value = this } }
+ if = { limit = { exists = scope:vkf_new_war } add_character_flag = vkf_campaign_launched change_variable = { name = vkf_supplies add = -60 } change_variable = { name = vkf_intelligence add = -30 }
+ every_independent_ruler = { limit = { vkf_southron = yes var:vkf_patron ?= scope:vkf_war_leader NOT = { this = scope:vkf_war_leader } is_at_war = no } set_variable = { name = vkf_called_war value = scope:vkf_new_war days = 90 } trigger_event = { id = vkf.190 days = 1 } }
+ } }
+}
+vkf_distribute_spoils = {
+save_scope_as = vkf_rewarding_leader if = { limit = { has_variable = vkf_spoils var:vkf_spoils > 0 } vkf_recount = yes if = { limit = { var:vkf_strength > 0 }
+ set_variable = { name = vkf_reward_share value = { value = var:vkf_spoils divide = var:vkf_strength } }
+ every_ruler = { limit = { vkf_southron = yes OR = { var:vkf_patron ?= scope:vkf_rewarding_leader var:vkf_obligation_holder ?= scope:vkf_rewarding_leader } } add_gold = scope:vkf_rewarding_leader.var:vkf_reward_share }
+ } else = { add_gold = var:vkf_spoils } set_variable = { name = vkf_spoils value = 0 } }
+}
+vkf_check_grazing = {
+clear_saved_scope = vkf_new_pasture_holder
+if = { limit = { has_variable = vkf_grazing_land OR = { NOT = { exists = var:vkf_grazing_grantor } var:vkf_grazing_grantor = { is_alive = no } NOT = { var:vkf_grazing_land.holder = var:vkf_grazing_grantor } } }
+ var:vkf_grazing_land.holder ?= { save_scope_as = vkf_new_pasture_holder } if = { limit = { exists = scope:vkf_new_pasture_holder } set_variable = { name = vkf_pasture_enemy value = scope:vkf_new_pasture_holder days = 730 } trigger_event = { id = vkf.161 days = 2 } }
+ remove_variable = vkf_grazing_land remove_variable = vkf_grazing_grantor remove_character_modifier = vkf_grazing_access }
+}
+vkf_full_ai = {
+title:e_voltara_sixth_southron_invasion.holder ?= {
+ if = { limit = { is_ai = yes vkf_available = yes NOT = { has_character_flag = vkf_ai_diplomacy } }
+ add_character_flag = { flag = vkf_ai_diplomacy days = 730 }
+ if = { limit = { global_var:vkf_hostility < 30 exists = title:k_voltara_22.holder is_at_war = no NOT = { has_global_variable = vkf_treaty } }
+ save_scope_as = vkf_ai_peacemaker title:k_voltara_22.holder = { if = { limit = { is_at_war = no NOT = { has_variable = vkf_treaty_offer } } set_variable = { name = vkf_treaty_offer value = scope:vkf_ai_peacemaker days = 60 } trigger_event = { id = vkf.206 days = 3 } } } }
+ else_if = { limit = { global_var:vkf_hostility >= 50 character:19060042 = { vkf_available = yes has_character_flag = vic_thorne_left_empire NOT = { has_character_flag = vkf_thorne_answered } } }
+ save_scope_as = vkf_ai_ally character:19060042 = { set_variable = { name = vkf_thorne_offer value = scope:vkf_ai_ally days = 60 } trigger_event = { id = vkf.211 days = 3 } } }
+ }
+ }
+}

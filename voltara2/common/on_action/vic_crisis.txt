@@ -1,0 +1,10 @@
+﻿on_game_start_after_lobby = { on_actions = { vic_initialize } }
+on_game_start = { on_actions = { vic_defer_initialize } }
+vic_defer_initialize = { effect = { trigger_event = { on_action = vic_initialize days = 1 } } }
+vic_initialize = { effect = { vic_initialize_effect = yes } }
+vic_monthly = { effect = { vic_tick_effect = yes if = { limit = { vic_running = yes } trigger_event = { on_action = vic_monthly days = 30 } } } }
+on_death = { on_actions = { vic_principal_death } }
+vic_principal_death = { trigger = { vic_running = yes vic_principal = yes } effect = { trigger_event = { on_action = vic_urgent_check days = 1 } } }
+vic_urgent_check = { effect = { vic_check_emergencies = yes } }
+
+vic_attempt_resolution = { effect = { character:19060033 = { remove_character_flag = vic_defense_window } vic_check_emergencies = yes vic_resolve_attempt = yes } }

@@ -1,17 +1,4 @@
-﻿on_game_start_after_lobby = { on_actions = { voltara_pirate_initialize } }
-on_game_start = { on_actions = { voltara_pirate_initialize } }
-voltara_pirate_initialize = { effect = { every_living_character = { limit = { voltara_pirate_court = yes } voltara_pirate_enroll = yes } } }
-yearly_playable_pulse = { on_actions = { voltara_pirate_year } }
-voltara_pirate_year = { trigger = { has_government = pirate_government }
- effect = { voltara_pirate_service = yes every_courtier = { voltara_pirate_service = yes } }
-}
+﻿yearly_playable_pulse = { on_actions = { voltara_pirate_year } }
+voltara_pirate_year = { trigger = { has_government = pirate_government } effect = { voltara_pirate_service = yes } }
 on_raid_action_completion = { on_actions = { voltara_pirate_raid_xp } }
-voltara_pirate_raid_xp = {
- trigger = { scope:raider = { has_government = pirate_government } }
- effect = {
-  scope:raider = { every_knight = { limit = { knight_army ?= root NOT = { this = root.army_commander } }
-   voltara_pirate_enroll = yes add_trait_xp = { trait = voltara_pirate value = 3 }
-  } }
-  army_commander ?= { voltara_pirate_enroll = yes if = { limit = { has_trait = voltara_pirate } add_trait_xp = { trait = voltara_pirate value = 3 } } }
- }
-}
+voltara_pirate_raid_xp = { effect = { scope:raider ?= { if = { limit = { vt_outlaw_access = yes NOT = { has_character_flag = vt_outlaw_raid_xp_cooldown } } add_vt_outlaw_lifestyle_xp = 25 add_character_flag = { flag = vt_outlaw_raid_xp_cooldown days = 90 } } } } }

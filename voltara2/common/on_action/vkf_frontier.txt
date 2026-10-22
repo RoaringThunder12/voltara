@@ -1,0 +1,5 @@
+﻿on_death = { on_actions = { vkf_patron_death } }
+vkf_patron_death = { trigger = { OR = { has_character_flag = vkf_recognized_leader has_character_flag = vkf_council_open has_character_flag = vkf_council_concluded } } effect = {
+ save_scope_as = vkf_lost_patron every_independent_ruler = { limit = { has_variable = vkf_patron var:vkf_patron ?= scope:vkf_lost_patron }
+ remove_variable = vkf_patron remove_variable = vkf_oath remove_character_flag = vkf_fulfillment_pending trigger_event = { id = vkf.50 days = 2 } }
+ } }

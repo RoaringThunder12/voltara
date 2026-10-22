@@ -1,0 +1,9 @@
+﻿
+on_fired_from_council = { on_actions = { vt_crownsguard_return_after_council } }
+vt_crownsguard_return_after_council = {
+ effect = { scope:councillor ?= {
+ if = { limit = { is_alive = yes has_trait = kingsguard }
+ trigger_event = { id = agot_kingsguard.1006 days = 1 }
+ }
+ } }
+}

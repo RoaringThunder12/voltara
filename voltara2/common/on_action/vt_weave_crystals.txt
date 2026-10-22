@@ -1,0 +1,6 @@
+﻿# Separate travel discovery roll; preserves the native and VIET travel pools.
+on_travel_plan_movement = { on_actions = { vt_weave_crystal_travel } }
+vt_weave_crystal_travel = {
+ trigger = { vt_weave_crystal_travel_eligible = yes }
+ random_events = { chance_to_happen = 2 100 = vt_weave_crystals.2 }
+}

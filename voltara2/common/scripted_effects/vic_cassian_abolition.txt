@@ -1,0 +1,9 @@
+﻿vic_cassian_enact_abolition = {
+ if = { limit = { vic_cassian_can_abolish = yes }
+ add_realm_law_skip_effects = voltara_slavery_banned
+ voltara_abolish_slavery = yes
+ vic_change = { KEY = popular_unrest AMOUNT = -30 }
+ vic_change = { KEY = noble_opposition AMOUNT = 20 }
+ add_character_modifier = { modifier = vic_reform_legacy years = 15 }
+ }
+}

@@ -1,0 +1,115 @@
+﻿vic_change = {
+ change_global_variable = { name = vic_$KEY$ add = $AMOUNT$ }
+ if = { limit = { global_var:vic_$KEY$ < 0 } set_global_variable = { name = vic_$KEY$ value = 0 } }
+ if = { limit = { global_var:vic_$KEY$ > 100 } set_global_variable = { name = vic_$KEY$ value = 100 } }
+}
+vic_initialize_effect = {
+ if = { limit = { NOT = { has_global_variable = vic_initialized } vic_scenario = yes }
+ set_global_variable = { name = vic_initialized value = yes }
+ set_global_variable = { name = vic_version value = 2 }
+set_global_variable = { name = vic_access value = 15 } 
+set_global_variable = { name = vic_secrecy value = 55 } 
+set_global_variable = { name = vic_groundwork value = 15 } 
+set_global_variable = { name = vic_method value = 0 } 
+set_global_variable = { name = vic_attempt_age value = 0 } 
+set_global_variable = { name = vic_war_started value = 0 } 
+set_global_variable = { name = vic_contact_state value = 0 } 
+set_global_variable = { name = vic_contact_age value = 0 } 
+set_global_variable = { name = vic_funding_state value = 0 } 
+set_global_variable = { name = vic_funding_age value = 0 } 
+set_global_variable = { name = vic_negotiation_state value = 0 } 
+set_global_variable = { name = vic_negotiation_age value = 0 } 
+set_global_variable = { name = vic_case_state value = 0 } 
+set_global_variable = { name = vic_case_age value = 0 } 
+set_global_variable = { name = vic_cleric_state value = 0 } 
+set_global_variable = { name = vic_cleric_age value = 0 } 
+set_global_variable = { name = vic_settlement value = 0 } 
+set_global_variable = { name = vic_aftermath_age value = 0 } 
+set_global_variable = { name = vic_quiet_ticks value = 0 } 
+set_global_variable = { name = vic_last_action_tick value = 0 } 
+set_global_variable = { name = vic_case_quality value = 0 } 
+set_global_variable = { name = vic_corruption_state value = 0 } 
+set_global_variable = { name = vic_persecution value = 0 } 
+set_global_variable = { name = vic_attempt_roll value = 0 } 
+set_global_variable = { name = vic_outcome value = 0 } 
+set_global_variable = { name = vic_palace_source value = 0 } 
+set_global_variable = { name = vic_cleric_source value = 0 } 
+set_global_variable = { name = vic_letters_source value = 0 } 
+set_global_variable = { name = vic_musters_source value = 0 } 
+set_global_variable = { name = vic_frame_source value = 0 } 
+set_global_variable = { name = vic_source_destroyed value = 0 } 
+set_global_variable = { name = vic_clue_public value = 0 } 
+set_global_variable = { name = vic_confront_state value = 0 } 
+set_global_variable = { name = vic_confront_age value = 0 } 
+set_global_variable = { name = vic_cleric_help value = 0 } 
+set_global_variable = { name = vic_family_safe value = 0 } 
+set_global_variable = { name = vic_funding_paid value = 0 } 
+set_global_variable = { name = vic_full_version value = 1 }
+set_global_variable = { name = vic_negotiation_recipient value = 19060003 } set_global_variable = { name = vic_draconis_state value = 0 } set_global_variable = { name = vic_draconis_age value = 0 } set_global_variable = { name = vic_public_case value = 0 } set_global_variable = { name = vic_regional_policy value = 0 } set_global_variable = { name = vic_palace_destroyed value = 0 } set_global_variable = { name = vic_musters_destroyed value = 0 } set_global_variable = { name = vic_cleric_destroyed value = 0 } set_global_variable = { name = vic_letters_destroyed value = 0 } 
+character:19060001 ?= { set_variable = { name = vic_clue_treasury value = 0 } set_variable = { name = vic_clue_musters value = 0 } set_variable = { name = vic_clue_palace value = 0 } set_variable = { name = vic_clue_cleric value = 0 } set_variable = { name = vic_clue_letters value = 0 }  }
+character:19060029 ?= { set_variable = { name = vic_clue_treasury value = 0 } set_variable = { name = vic_clue_musters value = 0 } set_variable = { name = vic_clue_palace value = 0 } set_variable = { name = vic_clue_cleric value = 0 } set_variable = { name = vic_clue_letters value = 0 }  }
+character:19060033 ?= { set_variable = { name = vic_clue_treasury value = 0 } set_variable = { name = vic_clue_musters value = 0 } set_variable = { name = vic_clue_palace value = 0 } set_variable = { name = vic_clue_cleric value = 0 } set_variable = { name = vic_clue_letters value = 0 }  }
+character:19060003 ?= { set_variable = { name = vic_clue_treasury value = 0 } set_variable = { name = vic_clue_musters value = 0 } set_variable = { name = vic_clue_palace value = 0 } set_variable = { name = vic_clue_cleric value = 0 } set_variable = { name = vic_clue_letters value = 0 }  }
+character:19060031 ?= { set_variable = { name = vic_clue_treasury value = 0 } set_variable = { name = vic_clue_musters value = 0 } set_variable = { name = vic_clue_palace value = 0 } set_variable = { name = vic_clue_cleric value = 0 } set_variable = { name = vic_clue_letters value = 0 }  }
+
+ set_global_variable = { name = vic_stage value = 1 }
+ set_global_variable = { name = vic_assassination value = 0 }
+ set_global_variable = { name = vic_ticks value = 0 }
+ set_global_variable = { name = vic_report_state value = 0 }
+ set_global_variable = { name = vic_legitimacy value = 65 }
+ set_global_variable = { name = vic_noble_opposition value = 35 }
+ set_global_variable = { name = vic_military_loyalty value = 60 }
+ set_global_variable = { name = vic_church_opposition value = 30 }
+ set_global_variable = { name = vic_popular_unrest value = 35 }
+ set_global_variable = { name = vic_mobilization value = 20 }
+ set_global_variable = { name = vic_preparation value = 10 }
+ set_global_variable = { name = vic_exposure value = 5 }
+ set_global_variable = { name = vic_security value = 20 }
+ character:19060001 ?= {
+ set_global_variable = { name = vic_cassian value = this }
+ if = { limit = { vic_participant_available = yes }
+ add_character_flag = vic_opening_pending
+ trigger_event = { id = vic_opening.1 days = 3 }
+ }
+ }
+ character:19060029 ?= {
+ set_global_variable = { name = vic_marques value = this }
+ if = { limit = { vic_participant_available = yes }
+ add_character_flag = vic_opening_pending
+ trigger_event = { id = vic_opening.2 days = 6 }
+ }
+ }
+ character:19060033 ?= {
+ set_global_variable = { name = vic_tharn value = this }
+ if = { limit = { vic_participant_available = yes }
+ add_character_flag = vic_opening_pending
+ trigger_event = { id = vic_opening.3 days = 9 }
+ }
+ }
+ character:19060003 ?= {
+ set_global_variable = { name = vic_octavian value = this }
+ if = { limit = { vic_participant_available = yes }
+ add_character_flag = vic_opening_pending
+ trigger_event = { id = vic_opening.4 days = 12 }
+ }
+ }
+ character:19060031 ?= {
+ set_global_variable = { name = vic_maxwell value = this }
+ if = { limit = { vic_participant_available = yes }
+ add_character_flag = vic_opening_pending
+ trigger_event = { id = vic_opening.5 days = 15 }
+ }
+ }
+ trigger_event = { on_action = vic_monthly days = 30 }
+ }
+}
+vic_tick_effect = { vic_full_tick = yes }
+
+vic_send_report = {
+ if = { limit = { this = character:19060029 vic_active = yes var:vic_clue_treasury >= 1 global_var:vic_report_state = 0 character:19060001 = { vic_participant_available = yes has_title = title:h_voltara_severos } }
+ set_global_variable = { name = vic_report_state value = 1 }
+ set_global_variable = { name = vic_report_age value = 0 }
+ set_global_variable = { name = vic_report_quality value = var:vic_clue_treasury }
+ character:19060001 = { trigger_event = { id = vic_opening.21 days = 2 } }
+ }
+}

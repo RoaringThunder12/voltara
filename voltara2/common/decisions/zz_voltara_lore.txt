@@ -12,19 +12,7 @@
     effect = { trigger_event = voltara_lore.1 }
 }
 
-voltara_uniter_council = {
-    picture = { reference = "gfx/interface/illustrations/decisions/decision_culture.dds" }
-    desc = voltara_uniter_council_desc
-    selection_tooltip = voltara_uniter_council_tooltip
-    confirm_text = voltara_uniter_council_confirm
-    ai_check_interval = 0
-    decision_group_type = major
-    is_shown = { is_landed = yes has_title = title:k_voltara_sixth_southron_invasion }
-    is_valid = { is_adult = yes is_imprisoned = no gold >= 100 }
-    cost = { gold = 100 }
-    cooldown = { years = 5 }
-    effect = { add_character_modifier = { modifier = voltara_coalition_modifier years = 5 } }
-}
+voltara_uniter_council = { is_shown = { always = no } is_valid = { always = no } effect = {} ai_check_interval = 0 }
 
 voltara_maintain_watch = {
     picture = { reference = "gfx/interface/illustrations/decisions/decision_castle_view.dds" }

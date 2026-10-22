@@ -1,0 +1,10 @@
+﻿vt_attempt_slave_escape = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_castle_view.dds" }
+ desc = vt_attempt_slave_escape_desc selection_tooltip = vt_attempt_slave_escape_tooltip confirm_text = vt_attempt_slave_escape_confirm
+ is_shown = { has_trait = voltara_slave }
+ is_valid = { vt_slave_escape_eligible = yes }
+ effect = { custom_tooltip = vt_slave_escape_risks hidden_effect = { vt_slave_escape_attempt = yes } }
+ ai_check_interval = 12
+ ai_potential = { always = no } # Unplayable courtiers use the yearly check below.
+ ai_will_do = { base = 0 }
+}

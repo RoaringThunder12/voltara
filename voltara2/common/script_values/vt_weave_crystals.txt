@@ -1,0 +1,10 @@
+﻿vt_weave_crystal_recovery = {
+ value = 0
+ if = {
+  limit = { can_magic_trigger = yes }
+  every_character_artifact = {
+   limit = { has_variable = vt_weave_crystal is_equipped = yes }
+   add = 5
+  }
+ }
+}

@@ -149,7 +149,7 @@ agot_kingsguard.1001 = { # Standard KG Member Death / Removal
 		}
 		if = {
 			limit = {
-				exists = cp:kingsguard_lord_commander
+				exists = primary_title.var:kingsguard_lord_commander
 			}
 			cp:kingsguard_lord_commander = {
 				save_scope_as = lord_commander
@@ -226,25 +226,25 @@ agot_kingsguard.1002 = { # Greatest Knights
 	lower_center_portrait = scope:kingsguard_candidate_2
 	lower_right_portrait = scope:kingsguard_candidate_3
 	trigger = {
-		exists = cp:kingsguard_lord_commander
+		exists = primary_title.var:kingsguard_lord_commander
 		OR = {
 			NOT = {
-				exists = cp:kingsguard_1
+				exists = primary_title.var:kingsguard_1
 			}
 			NOT = {
-				exists = cp:kingsguard_2
+				exists = primary_title.var:kingsguard_2
 			}
 			NOT = {
-				exists = cp:kingsguard_3
+				exists = primary_title.var:kingsguard_3
 			}
 			NOT = {
-				exists = cp:kingsguard_4
+				exists = primary_title.var:kingsguard_4
 			}
 			NOT = {
-				exists = cp:kingsguard_5
+				exists = primary_title.var:kingsguard_5
 			}
 			NOT = {
-				exists = cp:kingsguard_6
+				exists = primary_title.var:kingsguard_6
 			}
 		}
 		any_living_kingsguard = {
@@ -415,25 +415,25 @@ agot_kingsguard.1003 = { # Powerful Lordly Scions who will auto-accept
 	lower_center_portrait = scope:kingsguard_candidate_2
 	lower_right_portrait = scope:kingsguard_candidate_3
 	trigger = {
-		exists = cp:kingsguard_lord_commander
+		exists = primary_title.var:kingsguard_lord_commander
 		OR = {
 			NOT = {
-				exists = cp:kingsguard_1
+				exists = primary_title.var:kingsguard_1
 			}
 			NOT = {
-				exists = cp:kingsguard_2
+				exists = primary_title.var:kingsguard_2
 			}
 			NOT = {
-				exists = cp:kingsguard_3
+				exists = primary_title.var:kingsguard_3
 			}
 			NOT = {
-				exists = cp:kingsguard_4
+				exists = primary_title.var:kingsguard_4
 			}
 			NOT = {
-				exists = cp:kingsguard_5
+				exists = primary_title.var:kingsguard_5
 			}
 			NOT = {
-				exists = cp:kingsguard_6
+				exists = primary_title.var:kingsguard_6
 			}
 		}
 		any_living_kingsguard = {
@@ -859,6 +859,11 @@ agot_kingsguard.1006 = { # Actually give that loser the KG - recurring event
 		}
 	}
 	immediate = {
+ if = { limit = { has_trait = kingsguard vt_crownsguard_other_office = yes }
+ if = { limit = { has_character_flag = lord_commander } add_character_modifier = { modifier = vt_cg_dual_commander_modifier } }
+ else = { add_character_modifier = { modifier = vt_cg_dual_guard_modifier } }
+ }
+
 		top_liege = {
 			save_scope_as = king
 			random_held_title = {
@@ -893,10 +898,10 @@ agot_kingsguard.1006 = { # Actually give that loser the KG - recurring event
 				}
 			}
 			scope:king = {
-				assign_councillor_type = {
+				if = { limit = { root = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_lord_commander
 					target = root
-				}
+				} }
 			}
 		}
 		else_if = {
@@ -907,10 +912,10 @@ agot_kingsguard.1006 = { # Actually give that loser the KG - recurring event
 				}
 			}
 			scope:king = {
-				assign_councillor_type = {
+				if = { limit = { root = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_1
 					target = root
-				}
+				} }
 			}
 		}
 		else_if = {
@@ -921,10 +926,10 @@ agot_kingsguard.1006 = { # Actually give that loser the KG - recurring event
 				}
 			}
 			scope:king = {
-				assign_councillor_type = {
+				if = { limit = { root = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_2
 					target = root
-				}
+				} }
 			}
 		}
 		else_if = {
@@ -935,10 +940,10 @@ agot_kingsguard.1006 = { # Actually give that loser the KG - recurring event
 				}
 			}
 			scope:king = {
-				assign_councillor_type = {
+				if = { limit = { root = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_3
 					target = root
-				}
+				} }
 			}
 		}
 		else_if = {
@@ -949,10 +954,10 @@ agot_kingsguard.1006 = { # Actually give that loser the KG - recurring event
 				}
 			}
 			scope:king = {
-				assign_councillor_type = {
+				if = { limit = { root = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_4
 					target = root
-				}
+				} }
 			}
 		}
 		else_if = {
@@ -963,10 +968,10 @@ agot_kingsguard.1006 = { # Actually give that loser the KG - recurring event
 				}
 			}
 			scope:king = {
-				assign_councillor_type = {
+				if = { limit = { root = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_5
 					target = root
-				}
+				} }
 			}
 		}
 		else_if = {
@@ -977,10 +982,10 @@ agot_kingsguard.1006 = { # Actually give that loser the KG - recurring event
 				}
 			}
 			scope:king = {
-				assign_councillor_type = {
+				if = { limit = { root = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_6
 					target = root
-				}
+				} }
 			}
 		}
 		else = {
@@ -1528,7 +1533,7 @@ agot_kingsguard.1010 = { # Lord Commander Death / Removal
 		}
 		if = {
 			limit = {
-				exists = cp:kingsguard_1
+				exists = primary_title.var:kingsguard_1
 			}
 			cp:kingsguard_1 = {
 				save_scope_as = kingsguard_1
@@ -1537,7 +1542,7 @@ agot_kingsguard.1010 = { # Lord Commander Death / Removal
 		}
 		if = {
 			limit = {
-				exists = cp:kingsguard_2
+				exists = primary_title.var:kingsguard_2
 			}
 			cp:kingsguard_2 = {
 				save_scope_as = kingsguard_2
@@ -1546,7 +1551,7 @@ agot_kingsguard.1010 = { # Lord Commander Death / Removal
 		}
 		if = {
 			limit = {
-				exists = cp:kingsguard_3
+				exists = primary_title.var:kingsguard_3
 			}
 			cp:kingsguard_3 = {
 				save_scope_as = kingsguard_3
@@ -1555,7 +1560,7 @@ agot_kingsguard.1010 = { # Lord Commander Death / Removal
 		}
 		if = {
 			limit = {
-				exists = cp:kingsguard_4
+				exists = primary_title.var:kingsguard_4
 			}
 			cp:kingsguard_4 = {
 				save_scope_as = kingsguard_4
@@ -1564,7 +1569,7 @@ agot_kingsguard.1010 = { # Lord Commander Death / Removal
 		}
 		if = {
 			limit = {
-				exists = cp:kingsguard_5
+				exists = primary_title.var:kingsguard_5
 			}
 			cp:kingsguard_5 = {
 				save_scope_as = kingsguard_5
@@ -1573,7 +1578,7 @@ agot_kingsguard.1010 = { # Lord Commander Death / Removal
 		}
 		if = {
 			limit = {
-				exists = cp:kingsguard_6
+				exists = primary_title.var:kingsguard_6
 			}
 			cp:kingsguard_6 = {
 				save_scope_as = kingsguard_6
@@ -2620,13 +2625,13 @@ agot_kingsguard.3001 = {
 		top_liege = {
 			ruler_has_kingsguard_trigger = yes
 			OR = {
-				exists = cp:kingsguard_lord_commander
-				exists = cp:kingsguard_1
-				exists = cp:kingsguard_2
-				exists = cp:kingsguard_3
-				exists = cp:kingsguard_4
-				exists = cp:kingsguard_5
-				exists = cp:kingsguard_6
+				exists = primary_title.var:kingsguard_lord_commander
+				exists = primary_title.var:kingsguard_1
+				exists = primary_title.var:kingsguard_2
+				exists = primary_title.var:kingsguard_3
+				exists = primary_title.var:kingsguard_4
+				exists = primary_title.var:kingsguard_5
+				exists = primary_title.var:kingsguard_6
 			}
 		}
 		dynasty ?= {
@@ -3461,22 +3466,22 @@ agot_kingsguard.3005 = {
 		AND = {
 			OR = {
 				NOT = {
-					exists = cp:kingsguard_1
+					exists = primary_title.var:kingsguard_1
 				}
 				NOT = {
-					exists = cp:kingsguard_2
+					exists = primary_title.var:kingsguard_2
 				}
 				NOT = {
-					exists = cp:kingsguard_3
+					exists = primary_title.var:kingsguard_3
 				}
 				NOT = {
-					exists = cp:kingsguard_4
+					exists = primary_title.var:kingsguard_4
 				}
 				NOT = {
-					exists = cp:kingsguard_5
+					exists = primary_title.var:kingsguard_5
 				}
 				NOT = {
-					exists = cp:kingsguard_6
+					exists = primary_title.var:kingsguard_6
 				}
 			}
 			any_living_kingsguard = {
@@ -3507,22 +3512,22 @@ agot_kingsguard.3005 = {
 		trigger = {
 			OR = {
 				NOT = {
-					exists = cp:kingsguard_1
+					exists = primary_title.var:kingsguard_1
 				}
 				NOT = {
-					exists = cp:kingsguard_2
+					exists = primary_title.var:kingsguard_2
 				}
 				NOT = {
-					exists = cp:kingsguard_3
+					exists = primary_title.var:kingsguard_3
 				}
 				NOT = {
-					exists = cp:kingsguard_4
+					exists = primary_title.var:kingsguard_4
 				}
 				NOT = {
-					exists = cp:kingsguard_5
+					exists = primary_title.var:kingsguard_5
 				}
 				NOT = {
-					exists = cp:kingsguard_6
+					exists = primary_title.var:kingsguard_6
 				}
 			}
 		}
@@ -3947,22 +3952,22 @@ agot_kingsguard.3008 = {
 			AND = {
 				OR = {
 					NOT = {
-						exists = cp:kingsguard_1
+						exists = primary_title.var:kingsguard_1
 					}
 					NOT = {
-						exists = cp:kingsguard_2
+						exists = primary_title.var:kingsguard_2
 					}
 					NOT = {
-						exists = cp:kingsguard_3
+						exists = primary_title.var:kingsguard_3
 					}
 					NOT = {
-						exists = cp:kingsguard_4
+						exists = primary_title.var:kingsguard_4
 					}
 					NOT = {
-						exists = cp:kingsguard_5
+						exists = primary_title.var:kingsguard_5
 					}
 					NOT = {
-						exists = cp:kingsguard_6
+						exists = primary_title.var:kingsguard_6
 					}
 				}
 				any_living_kingsguard = {
@@ -4876,25 +4881,25 @@ agot_kingsguard.9000 = {
 		}
 		OR = {
 			NOT = {
-				exists = cp:kingsguard_lord_commander
+				exists = primary_title.var:kingsguard_lord_commander
 			}
 			NOT = {
-				exists = cp:kingsguard_1
+				exists = primary_title.var:kingsguard_1
 			}
 			NOT = {
-				exists = cp:kingsguard_2
+				exists = primary_title.var:kingsguard_2
 			}
 			NOT = {
-				exists = cp:kingsguard_3
+				exists = primary_title.var:kingsguard_3
 			}
 			NOT = {
-				exists = cp:kingsguard_4
+				exists = primary_title.var:kingsguard_4
 			}
 			NOT = {
-				exists = cp:kingsguard_5
+				exists = primary_title.var:kingsguard_5
 			}
 			NOT = {
-				exists = cp:kingsguard_6
+				exists = primary_title.var:kingsguard_6
 			}
 		}
 	}
@@ -4903,22 +4908,22 @@ agot_kingsguard.9000 = {
 			limit = {
 				OR = {
 					NOT = {
-						exists = cp:kingsguard_1
+						exists = primary_title.var:kingsguard_1
 					}
 					NOT = {
-						exists = cp:kingsguard_2
+						exists = primary_title.var:kingsguard_2
 					}
 					NOT = {
-						exists = cp:kingsguard_3
+						exists = primary_title.var:kingsguard_3
 					}
 					NOT = {
-						exists = cp:kingsguard_4
+						exists = primary_title.var:kingsguard_4
 					}
 					NOT = {
-						exists = cp:kingsguard_5
+						exists = primary_title.var:kingsguard_5
 					}
 					NOT = {
-						exists = cp:kingsguard_6
+						exists = primary_title.var:kingsguard_6
 					}
 				}
 			}
@@ -4927,7 +4932,7 @@ agot_kingsguard.9000 = {
 		else_if = {
 			limit = {
 				NOT = {
-					exists = cp:kingsguard_lord_commander
+					exists = primary_title.var:kingsguard_lord_commander
 				}
 			}
 			trigger_event = agot_kingsguard.9001
@@ -4942,7 +4947,7 @@ agot_kingsguard.9001 = {
 	immediate = {
 		if = {
 			limit = {
-				exists = cp:kingsguard_1
+				exists = primary_title.var:kingsguard_1
 			}
 			cp:kingsguard_1 = {
 				add_to_list = lord_commander_candidates
@@ -4950,7 +4955,7 @@ agot_kingsguard.9001 = {
 		}
 		if = {
 			limit = {
-				exists = cp:kingsguard_2
+				exists = primary_title.var:kingsguard_2
 			}
 			cp:kingsguard_2 = {
 				add_to_list = lord_commander_candidates
@@ -4958,7 +4963,7 @@ agot_kingsguard.9001 = {
 		}
 		if = {
 			limit = {
-				exists = cp:kingsguard_3
+				exists = primary_title.var:kingsguard_3
 			}
 			cp:kingsguard_3 = {
 				add_to_list = lord_commander_candidates
@@ -4966,7 +4971,7 @@ agot_kingsguard.9001 = {
 		}
 		if = {
 			limit = {
-				exists = cp:kingsguard_4
+				exists = primary_title.var:kingsguard_4
 			}
 			cp:kingsguard_4 = {
 				add_to_list = lord_commander_candidates
@@ -4974,7 +4979,7 @@ agot_kingsguard.9001 = {
 		}
 		if = {
 			limit = {
-				exists = cp:kingsguard_5
+				exists = primary_title.var:kingsguard_5
 			}
 			cp:kingsguard_5 = {
 				add_to_list = lord_commander_candidates
@@ -4982,7 +4987,7 @@ agot_kingsguard.9001 = {
 		}
 		if = {
 			limit = {
-				exists = cp:kingsguard_6
+				exists = primary_title.var:kingsguard_6
 			}
 			cp:kingsguard_6 = {
 				add_to_list = lord_commander_candidates
@@ -5083,22 +5088,22 @@ agot_kingsguard.9002 = {
 	trigger = {
 		OR = {
 			NOT = {
-				exists = cp:kingsguard_1
+				exists = primary_title.var:kingsguard_1
 			}
 			NOT = {
-				exists = cp:kingsguard_2
+				exists = primary_title.var:kingsguard_2
 			}
 			NOT = {
-				exists = cp:kingsguard_3
+				exists = primary_title.var:kingsguard_3
 			}
 			NOT = {
-				exists = cp:kingsguard_4
+				exists = primary_title.var:kingsguard_4
 			}
 			NOT = {
-				exists = cp:kingsguard_5
+				exists = primary_title.var:kingsguard_5
 			}
 			NOT = {
-				exists = cp:kingsguard_6
+				exists = primary_title.var:kingsguard_6
 			}
 		}
 	}
@@ -5440,10 +5445,10 @@ agot_kingsguard.9007 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_lord_commander = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_lord_commander
 					target = scope:kingsguard_title.var:kingsguard_lord_commander
-				}
+				} }
 			}
 		}
 		if = {
@@ -5472,10 +5477,10 @@ agot_kingsguard.9007 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_1 = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_1
 					target = scope:kingsguard_title.var:kingsguard_1
-				}
+				} }
 			}
 		}
 		if = {
@@ -5504,10 +5509,10 @@ agot_kingsguard.9007 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_2 = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_2
 					target = scope:kingsguard_title.var:kingsguard_2
-				}
+				} }
 			}
 		}
 		if = {
@@ -5536,10 +5541,10 @@ agot_kingsguard.9007 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_3 = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_3
 					target = scope:kingsguard_title.var:kingsguard_3
-				}
+				} }
 			}
 		}
 		if = {
@@ -5568,10 +5573,10 @@ agot_kingsguard.9007 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_4 = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_4
 					target = scope:kingsguard_title.var:kingsguard_4
-				}
+				} }
 			}
 		}
 		if = {
@@ -5600,10 +5605,10 @@ agot_kingsguard.9007 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_5 = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_5
 					target = scope:kingsguard_title.var:kingsguard_5
-				}
+				} }
 			}
 		}
 		if = {
@@ -5632,10 +5637,10 @@ agot_kingsguard.9007 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_6 = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_6
 					target = scope:kingsguard_title.var:kingsguard_6
-				}
+				} }
 			}
 		}
 		title:b_crownsguard_keep.holder ?= {
@@ -5647,8 +5652,8 @@ agot_kingsguard.9007 = {
 		#Succession Display
 		if = {
 			limit = {
-				exists = cp:kingsguard_lord_commander
-				cp:kingsguard_lord_commander = {
+				exists = primary_title.var:kingsguard_lord_commander
+				primary_title.var:kingsguard_lord_commander = {
 					scope:kingsguard_title = title:b_crownsguard_keep
 				}
 			}
@@ -5803,10 +5808,10 @@ agot_kingsguard.9008 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_lord_commander = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_lord_commander
 					target = scope:kingsguard_title.var:kingsguard_lord_commander
-				}
+				} }
 			}
 		}
 		if = {
@@ -5835,10 +5840,10 @@ agot_kingsguard.9008 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_1 = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_1
 					target = scope:kingsguard_title.var:kingsguard_1
-				}
+				} }
 			}
 		}
 		if = {
@@ -5867,10 +5872,10 @@ agot_kingsguard.9008 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_2 = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_2
 					target = scope:kingsguard_title.var:kingsguard_2
-				}
+				} }
 			}
 		}
 		if = {
@@ -5899,10 +5904,10 @@ agot_kingsguard.9008 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_3 = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_3
 					target = scope:kingsguard_title.var:kingsguard_3
-				}
+				} }
 			}
 		}
 		if = {
@@ -5931,10 +5936,10 @@ agot_kingsguard.9008 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_4 = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_4
 					target = scope:kingsguard_title.var:kingsguard_4
-				}
+				} }
 			}
 		}
 		if = {
@@ -5963,10 +5968,10 @@ agot_kingsguard.9008 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_5 = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_5
 					target = scope:kingsguard_title.var:kingsguard_5
-				}
+				} }
 			}
 		}
 		if = {
@@ -5995,10 +6000,10 @@ agot_kingsguard.9008 = {
 						}
 					}
 				}
-				assign_councillor_type = {
+				if = { limit = { scope:kingsguard_title.var:kingsguard_6 = { vt_crownsguard_other_office = no } } assign_councillor_type = {
 					type = kingsguard_6
 					target = scope:kingsguard_title.var:kingsguard_6
-				}
+				} }
 			}
 		}
 	}

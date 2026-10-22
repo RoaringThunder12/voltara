@@ -695,6 +695,11 @@ window = {
 									texture = "gfx/interface/progressbars/progress_red.dds"
 									alpha = 0.4
 								}
+								background = {
+									visible = "[EqualTo_string( Lifestyle.GetKey, 'vt_outlaw_lifestyle' )]"
+									texture = "gfx/interface/progressbars/progress_purple.dds"
+									alpha = 0.4
+								}
 																
 								background = {
 									visible = "[EqualTo_string( Lifestyle.GetKey, 'werewolf_lifestyle' )]"
@@ -898,6 +903,11 @@ window = {
 									progresstexture = "gfx/interface/progressbars/progress_red.dds"
 									noprogresstexture = "gfx/interface/progressbars/progress_red_bg.dds"
 								}
+								progressbar_lifestyle_xp = {
+									visible = "[EqualTo_string( Lifestyle.GetKey, 'vt_outlaw_lifestyle' )]"
+									progresstexture = "gfx/interface/progressbars/progress_purple.dds"
+									noprogresstexture = "gfx/interface/progressbars/progress_purple_bg.dds"
+								}
 
 								progressbar_lifestyle_xp = {
 									visible = "[EqualTo_string( Lifestyle.GetKey, 'werewolf_lifestyle' )]"
@@ -973,6 +983,10 @@ window = {
 
 								icon_lifestyle_unspent_points = {
 									visible = "[EqualTo_string( Lifestyle.GetKey, 'vampire_lifestyle' )]"
+									texture = "gfx/interface/icons/lifestyles_perks/node_martial.dds"
+								}
+								icon_lifestyle_unspent_points = {
+									visible = "[EqualTo_string( Lifestyle.GetKey, 'vt_outlaw_lifestyle' )]"
 									texture = "gfx/interface/icons/lifestyles_perks/node_martial.dds"
 								}
 								

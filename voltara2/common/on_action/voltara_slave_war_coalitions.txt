@@ -38,7 +38,7 @@ voltara_slave_war_coalitions = {
   if = { limit = { character:19060029 = { is_alive = yes is_landed = yes } } scope:war = { add_attacker = character:19060029 } }
   if = { limit = { exists = title:d_voltara_test_437.holder } scope:war = { add_attacker = title:d_voltara_test_437.holder } }
 
-  if = { limit = { exists = title:e_voltara_sixth_southron_invasion.holder title:e_voltara_sixth_southron_invasion.holder = { is_alive = yes NOT = { this = scope:defender } NOT = { this = scope:attacker } } }
+  if = { limit = { always = no exists = title:e_voltara_sixth_southron_invasion.holder title:e_voltara_sixth_southron_invasion.holder = { is_alive = yes NOT = { this = scope:defender } NOT = { this = scope:attacker } } }
    scope:war = { add_attacker = title:e_voltara_sixth_southron_invasion.holder }
   }
   if = { limit = { exists = title:e_voltara_thornfall.holder title:e_voltara_thornfall.holder = { is_alive = yes NOT = { this = scope:defender } NOT = { this = scope:attacker } } }

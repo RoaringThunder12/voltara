@@ -1,0 +1,5 @@
+﻿on_death = { on_actions = { vkf_coalition_succession } }
+vkf_coalition_succession = { trigger = { OR = { has_variable = vkf_obligation_holder has_character_flag = vkf_recognized_leader } } effect = {
+ save_scope_as = vkf_dead_leader
+ if = { limit = { has_character_flag = vkf_recognized_leader } every_ruler = { limit = { var:vkf_obligation_holder ?= scope:vkf_dead_leader } remove_variable = vkf_obligation_holder remove_character_flag = vkf_council_pledged trigger_event = { id = vkf.128 days = 40 } } }
+ } }

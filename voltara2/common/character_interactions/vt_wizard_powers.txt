@@ -1,0 +1,15 @@
+﻿vt_bestow_wizards_gift = {
+ category = interaction_category_friendly icon = gift_claim_interaction common_interaction = yes
+ desc = vt_bestow_wizards_gift_desc
+ is_shown = { scope:actor = { vt_is_the_wizard = yes } scope:recipient = { vt_wizard_gift_recipient = yes } }
+ is_valid_showing_failures_only = { scope:actor = { in_diplomatic_range = scope:recipient } }
+ auto_accept = yes
+ on_accept = {
+  if = { limit = { scope:actor = { vt_is_the_wizard = yes } scope:recipient = { vt_wizard_gift_recipient = yes } }
+   scope:recipient = { vt_receive_wizards_gift = yes }
+  }
+ }
+ ai_targets = { ai_recipients = courtiers }
+ ai_frequency = 60
+ ai_will_do = { base = 0 modifier = { add = 10 scope:actor = { has_relation_best_friend = scope:recipient } } }
+}

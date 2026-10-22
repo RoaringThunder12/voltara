@@ -1,14 +1,1 @@
-﻿on_game_start_after_lobby = { on_actions = { voltara_schedule_cassian_crisis } }
-voltara_schedule_cassian_crisis = {
- trigger = {
-  NOT = { has_global_variable = voltara_cassian_crisis_scheduled }
-  exists = character:19060001
-  exists = character:19060003
-  character:19060001 = { is_alive = yes has_title = title:h_voltara_severos }
-  character:19060003 = { is_alive = yes }
- }
- effect = {
-  set_global_variable = { name = voltara_cassian_crisis_scheduled value = yes }
-  character:19060003 = { trigger_event = { id = voltara_cassian_crisis.1 months = 4 } }
- }
-}
+﻿# Replaced by vic_initialize. No four-month murder timer.

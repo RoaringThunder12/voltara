@@ -9,12 +9,14 @@ voltara_mega_wars.1 = {
  option = {
   name = voltara_mega_wars.1.loyal
   voltara_mw_join_crown = yes
-  ai_chance = { base = 60 modifier = { add = 40 has_trait = loyal } modifier = { add = -30 has_trait = ambitious } }
+ add_character_flag = vic_wartime_crown
+  ai_chance = { base = 60 modifier = { add = 80 has_character_flag = vic_pledged_cassian } modifier = { add = -40 has_character_flag = vic_pledged_octavian } modifier = { add = 40 has_trait = loyal } modifier = { add = -30 has_trait = ambitious } }
  }
  option = {
   name = voltara_mega_wars.1.rebel
   voltara_mw_join_opposition = yes
-  ai_chance = { base = 10 modifier = { add = 30 has_trait = ambitious } modifier = { factor = 0 has_trait = loyal } }
+ add_character_flag = vic_wartime_opposition
+  ai_chance = { base = 10 modifier = { add = 80 has_character_flag = vic_pledged_octavian } modifier = { add = 35 has_character_flag = vic_funded_octavian } modifier = { add = -40 global_var:vic_case_quality ?= 3 } modifier = { add = 30 has_trait = ambitious } modifier = { factor = 0 has_trait = loyal } }
  }
  option = {
   name = voltara_mega_wars.1.neutral

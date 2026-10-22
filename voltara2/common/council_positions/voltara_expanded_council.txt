@@ -3,7 +3,7 @@
  name = { first_valid = { triggered_desc = { trigger = { highest_held_title_tier >= tier_kingdom } desc = vt_hand_title } desc = vt_grand_vizier_title } }
  tooltip = vt_castellan_desc
  valid_position = { vt_can_have_hand = yes }
- valid_character = { exists = root.liege_or_court_owner can_be_steward_trigger = { COURT_OWNER = root.liege_or_court_owner } NOT = { has_trait = kingsguard } NOT = { has_trait = dragon } }
+ valid_character = { exists = root.liege_or_court_owner can_be_steward_trigger = { COURT_OWNER = root.liege_or_court_owner } NOT = { has_trait = dragon } }
  on_get_position = { got_council_position_effect = yes if = { limit = { NOT = { has_trait = lifestyle_councillor } } add_trait = lifestyle_councillor } }
  on_fired_from_position = { fired_from_council_position_effect = yes }
  portrait_animation = steward
@@ -15,7 +15,7 @@ councillor_admiral = {
  name = councillor_admiral
  tooltip = vt_admiral_desc
  valid_position = { vt_can_have_master_of_ships = yes }
- valid_character = { exists = root.liege_or_court_owner can_be_steward_trigger = { COURT_OWNER = root.liege_or_court_owner } NOT = { has_trait = kingsguard } NOT = { has_trait = dragon } }
+ valid_character = { exists = root.liege_or_court_owner can_be_steward_trigger = { COURT_OWNER = root.liege_or_court_owner } NOT = { has_trait = dragon } }
  on_get_position = { got_council_position_effect = yes if = { limit = { NOT = { has_trait = lifestyle_councillor } } add_trait = lifestyle_councillor } }
  on_fired_from_position = { fired_from_council_position_effect = yes }
  portrait_animation = marshal

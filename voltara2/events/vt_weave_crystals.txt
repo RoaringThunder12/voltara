@@ -1,0 +1,16 @@
+﻿namespace = vt_weave_crystals
+vt_weave_crystals.1 = {
+ type = character_event theme = travel
+ title = vt_weave_crystals.1.t desc = vt_weave_crystals.1.desc
+ left_portrait = { character = root animation = personality_rational }
+ option = { name = vt_weave_crystals.take vt_create_weave_crystal_effect = yes }
+}
+vt_weave_crystals.2 = {
+ type = character_event theme = travel
+ title = vt_weave_crystals.2.t desc = vt_weave_crystals.2.desc
+ trigger = { vt_weave_crystal_travel_eligible = yes }
+ left_portrait = { character = root animation = personality_rational }
+ immediate = { add_character_flag = { flag = vt_found_travel_crystal years = 5 } }
+ option = { name = vt_weave_crystals.take vt_create_weave_crystal_effect = yes }
+ option = { name = vt_weave_crystals.leave }
+}

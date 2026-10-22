@@ -1,0 +1,28 @@
+﻿vt_outlaw_sync_pirate = { if = { limit = { has_perk = vt_outlaw_pirate_1_perk } if = { limit = { NOT = { has_trait = voltara_pirate } } add_trait = voltara_pirate } add_trait_xp = { trait = voltara_pirate value = -100 }
+if = { limit = { has_perk = vt_outlaw_pirate_2_perk } add_trait_xp = { trait = voltara_pirate value = 10 } }
+if = { limit = { has_perk = vt_outlaw_pirate_3_perk } add_trait_xp = { trait = voltara_pirate value = 10 } }
+if = { limit = { has_perk = vt_outlaw_pirate_4_perk } add_trait_xp = { trait = voltara_pirate value = 10 } }
+if = { limit = { has_perk = vt_outlaw_pirate_5_perk } add_trait_xp = { trait = voltara_pirate value = 10 } }
+if = { limit = { has_perk = vt_outlaw_pirate_6_perk } add_trait_xp = { trait = voltara_pirate value = 10 } }
+if = { limit = { has_perk = vt_outlaw_pirate_7_perk } add_trait_xp = { trait = voltara_pirate value = 10 } }
+if = { limit = { has_perk = vt_outlaw_pirate_8_perk } add_trait_xp = { trait = voltara_pirate value = 10 } }
+if = { limit = { has_perk = vt_outlaw_pirate_9_perk } add_trait_xp = { trait = voltara_pirate value = 100 } } } else = { if = { limit = { has_trait = voltara_pirate } remove_trait = voltara_pirate } } }
+vt_outlaw_sync_bandit = { if = { limit = { has_perk = vt_outlaw_bandit_1_perk } if = { limit = { NOT = { has_trait = vt_outlaw_bandit } } add_trait = vt_outlaw_bandit } add_trait_xp = { trait = vt_outlaw_bandit value = -100 }
+if = { limit = { has_perk = vt_outlaw_bandit_2_perk } add_trait_xp = { trait = vt_outlaw_bandit value = 10 } }
+if = { limit = { has_perk = vt_outlaw_bandit_3_perk } add_trait_xp = { trait = vt_outlaw_bandit value = 10 } }
+if = { limit = { has_perk = vt_outlaw_bandit_4_perk } add_trait_xp = { trait = vt_outlaw_bandit value = 10 } }
+if = { limit = { has_perk = vt_outlaw_bandit_5_perk } add_trait_xp = { trait = vt_outlaw_bandit value = 10 } }
+if = { limit = { has_perk = vt_outlaw_bandit_6_perk } add_trait_xp = { trait = vt_outlaw_bandit value = 10 } }
+if = { limit = { has_perk = vt_outlaw_bandit_7_perk } add_trait_xp = { trait = vt_outlaw_bandit value = 10 } }
+if = { limit = { has_perk = vt_outlaw_bandit_8_perk } add_trait_xp = { trait = vt_outlaw_bandit value = 10 } }
+if = { limit = { has_perk = vt_outlaw_bandit_9_perk } add_trait_xp = { trait = vt_outlaw_bandit value = 100 } } } else = { if = { limit = { has_trait = vt_outlaw_bandit } remove_trait = vt_outlaw_bandit } } }
+vt_outlaw_sync_smuggler = { if = { limit = { has_perk = vt_outlaw_smuggler_1_perk } if = { limit = { NOT = { has_trait = vt_outlaw_smuggler } } add_trait = vt_outlaw_smuggler } add_trait_xp = { trait = vt_outlaw_smuggler value = -100 }
+if = { limit = { has_perk = vt_outlaw_smuggler_2_perk } add_trait_xp = { trait = vt_outlaw_smuggler value = 10 } }
+if = { limit = { has_perk = vt_outlaw_smuggler_3_perk } add_trait_xp = { trait = vt_outlaw_smuggler value = 10 } }
+if = { limit = { has_perk = vt_outlaw_smuggler_4_perk } add_trait_xp = { trait = vt_outlaw_smuggler value = 10 } }
+if = { limit = { has_perk = vt_outlaw_smuggler_5_perk } add_trait_xp = { trait = vt_outlaw_smuggler value = 10 } }
+if = { limit = { has_perk = vt_outlaw_smuggler_6_perk } add_trait_xp = { trait = vt_outlaw_smuggler value = 10 } }
+if = { limit = { has_perk = vt_outlaw_smuggler_7_perk } add_trait_xp = { trait = vt_outlaw_smuggler value = 10 } }
+if = { limit = { has_perk = vt_outlaw_smuggler_8_perk } add_trait_xp = { trait = vt_outlaw_smuggler value = 10 } }
+if = { limit = { has_perk = vt_outlaw_smuggler_9_perk } add_trait_xp = { trait = vt_outlaw_smuggler value = 100 } } } else = { if = { limit = { has_trait = vt_outlaw_smuggler } remove_trait = vt_outlaw_smuggler } } }
+vt_outlaw_sync = { vt_outlaw_sync_pirate = yes vt_outlaw_sync_bandit = yes vt_outlaw_sync_smuggler = yes }

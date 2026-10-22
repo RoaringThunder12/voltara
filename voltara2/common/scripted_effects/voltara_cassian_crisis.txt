@@ -1,5 +1,7 @@
 ﻿# Octavian is the durable event root. All crisis stages are guarded against repetition.
 voltara_cassian_coup = {
+ if = { limit = { has_global_variable = vic_legacy_resolution_authorized }
+
  set_global_variable = { name = voltara_cassian_crisis_coup value = yes }
  save_scope_as = voltara_usurper
  character:19060001 = {
@@ -45,6 +47,8 @@ voltara_cassian_coup = {
  add_prestige = 250
  every_player = { trigger_event = { id = voltara_cassian_crisis.10 days = 1 } }
  trigger_event = { id = voltara_cassian_crisis.2 days = 7 }
+
+ }
 }
 voltara_begin_slave_revolt = {
  set_global_variable = { name = voltara_cassian_crisis_revolt value = yes }
@@ -88,6 +92,8 @@ voltara_begin_slave_revolt = {
  trigger_event = { id = voltara_cassian_crisis.3 days = 7 }
 }
 voltara_thorne_exile = {
+ if = { limit = { has_global_variable = vic_legacy_resolution_authorized }
+
  set_global_variable = { name = voltara_cassian_crisis_exile value = yes }
  if = { limit = { character:19060044 = { is_alive = yes } character:19060033 = { is_alive = yes } }
   character:19060044 = { death = { death_reason = death_murder_known killer = character:19060033 } }
@@ -124,6 +130,8 @@ voltara_thorne_exile = {
  }
  every_player = { trigger_event = { id = voltara_cassian_crisis.30 days = 1 } }
  if = { limit = { has_character_flag = voltara_choose_crisis_successor } trigger_event = { id = voltara_cassian_crisis.40 days = 2 } }
+
+ }
 }
 voltara_slave_revolt_cleanup = {
  every_living_character = { limit = { has_character_flag = voltara_slave_war_original_realm } remove_character_flag = voltara_slave_war_original_realm }

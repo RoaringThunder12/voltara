@@ -1,0 +1,1060 @@
+﻿namespace = vic_story
+vic_story.10 = { type = character_event title = vic_story.10.t desc = vic_story.10.desc theme = intrigue
+ trigger = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination != 2 }
+option = { name = vic_story.10.0
+trigger = { global_var:vic_assassination = 1 }
+custom_tooltip = vic_story.10.0.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination != 2 global_var:vic_assassination = 1 } trigger_event = vic_story.16 } }
+ai_chance = { base = 45  }
+}
+option = { name = vic_story.10.1
+trigger = { global_var:vic_cleric_state = 0 }
+custom_tooltip = vic_story.10.1.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination != 2 global_var:vic_cleric_state = 0 } vic_find_cleric = yes } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.10.2
+trigger = { global_var:vic_contact_state = 0 }
+custom_tooltip = vic_story.10.2.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination != 2 global_var:vic_contact_state = 0 } trigger_event = vic_story.20 } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.10.3
+custom_tooltip = vic_story.10.3.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination != 2  } trigger_event = vic_story.18 } }
+ai_chance = { base = 20 modifier = { factor = 3 global_var:vic_exposure >= 50 } }
+}
+option = { name = vic_story.10.4
+trigger = { vic_tharn_ready = yes }
+custom_tooltip = vic_story.10.4.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination != 2 vic_tharn_ready = yes } vic_queue_final_review = { DAYS = 1 } } }
+ai_chance = { base = 80  }
+}
+option = { name = vic_story.10.5
+custom_tooltip = vic_story.10.5.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination != 2  } vic_seek_house = yes vic_change = { KEY = groundwork AMOUNT = 10 }  } }
+ai_chance = { base = 15  }
+}
+option = { name = vic_story.10.6
+trigger = { global_var:vic_assassination = 1 }
+custom_tooltip = vic_story.10.6.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination != 2 global_var:vic_assassination = 1 } vic_close_attempt = yes add_character_flag = vic_abandoned_regicide  } }
+ai_chance = { base = 2 modifier = { factor = 8 global_var:vic_exposure >= 80 } }
+}
+option = { name = vic_story.10.7
+trigger = { global_var:vic_corruption_state = 0 }
+custom_tooltip = vic_story.10.7.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination != 2 global_var:vic_corruption_state = 0 } trigger_event = vic_story.70 } }
+ai_chance = { base = 15  }
+}
+option = { name = vic_story.10.8
+custom_tooltip = vic_story.10.8.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination != 2  }  } }
+ai_chance = { base = 1  }
+}
+after = { remove_character_flag = vic_action_pending add_character_flag = { flag = vic_action_cooldown days = 28 } vic_activity = yes }
+}
+vic_story.11 = { type = character_event title = vic_story.11.t desc = vic_story.11.desc theme = war
+ trigger = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete }
+option = { name = vic_story.11.0
+custom_tooltip = vic_story.11.0.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  } vic_muster = yes } }
+ai_chance = { base = 45 modifier = { factor = 0 global_var:vic_mobilization >= 80 } }
+}
+option = { name = vic_story.11.1
+custom_tooltip = vic_story.11.1.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  } vic_seek_house = yes vic_change = { KEY = groundwork AMOUNT = 5 }  } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.11.2
+trigger = { global_var:vic_negotiation_state = 0 }
+custom_tooltip = vic_story.11.2.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_negotiation_state = 0 } vic_offer_peace = yes } }
+ai_chance = { base = 8 modifier = { factor = 3 global_var:vic_legitimacy >= 75 } }
+}
+option = { name = vic_story.11.3
+trigger = { NOT = { has_character_flag = vic_manifesto } }
+custom_tooltip = vic_story.11.3.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_manifesto } } vic_change = { KEY = noble_opposition AMOUNT = 10 } set_global_variable = { name = vic_musters_source value = 1 } add_character_flag = vic_manifesto  } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.11.4
+trigger = { global_var:vic_mobilization >= 60 global_var:vic_war_started = 0 }
+custom_tooltip = vic_story.11.4.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_mobilization >= 60 global_var:vic_war_started = 0 } set_global_variable = { name = vic_rebellion_required value = yes } vic_start_rebellion = yes } }
+ai_chance = { base = 35 modifier = { factor = 0.1 global_var:vic_assassination = 1 global_var:vic_preparation >= 50 } modifier = { factor = 3 global_var:vic_noble_opposition >= 65 } }
+}
+option = { name = vic_story.11.5
+trigger = { has_character_flag = vic_murder_letter }
+custom_tooltip = vic_story.11.5.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_character_flag = vic_murder_letter } character:19060001 = { vic_gain_clue = { CLUE = letters LEVEL = 3 } } set_global_variable = { name = vic_clue_public value = 1 }  } }
+ai_chance = { base = 10  }
+}
+option = { name = vic_story.11.6
+custom_tooltip = vic_story.11.6.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  }  } }
+ai_chance = { base = 1  }
+}
+after = { remove_character_flag = vic_action_pending add_character_flag = { flag = vic_action_cooldown days = 28 } vic_activity = yes }
+}
+vic_story.12 = { type = character_event title = vic_story.12.t desc = vic_story.12.desc theme = stewardship
+ trigger = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete }
+option = { name = vic_story.12.0
+trigger = { gold >= 75 global_var:vic_funding_state = 0 }
+custom_tooltip = vic_story.12.0.tt
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete gold >= 75 global_var:vic_funding_state = 0 } vic_send_funding = yes } }
+ai_chance = { base = 35 modifier = { factor = 2 has_character_flag = vic_opposition_financier } }
+}
+option = { name = vic_story.12.1
+custom_tooltip = vic_story.12.1.tt
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  } vic_change = { KEY = noble_opposition AMOUNT = 10 } add_character_flag = vic_anti_abolition  vic_seek_house = yes } }
+ai_chance = { base = 35 modifier = { factor = 0 has_character_flag = vic_free_labor_transition } }
+}
+option = { name = vic_story.12.2
+custom_tooltip = vic_story.12.2.tt
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  } add_character_flag = vic_pledged_cassian  remove_character_flag = vic_pledged_octavian vic_change = { KEY = legitimacy AMOUNT = 10 } vic_change = { KEY = noble_opposition AMOUNT = -10 }  } }
+ai_chance = { base = 15 modifier = { factor = 3 global_var:vic_legitimacy >= 75 } }
+}
+option = { name = vic_story.12.3
+trigger = { has_character_flag = vic_funded_octavian NOT = { has_character_flag = vic_betrayed_opposition } }
+custom_tooltip = vic_story.12.3.tt
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_character_flag = vic_funded_octavian NOT = { has_character_flag = vic_betrayed_opposition } } add_character_flag = vic_betrayed_opposition  character:19060001 = { vic_gain_clue = { CLUE = musters LEVEL = 3 } } vic_change = { KEY = mobilization AMOUNT = -10 }  } }
+ai_chance = { base = 8  }
+}
+option = { name = vic_story.12.4
+trigger = { gold >= 50 NOT = { has_character_flag = vic_free_labor_transition } }
+custom_tooltip = vic_story.12.4.tt
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete gold >= 50 NOT = { has_character_flag = vic_free_labor_transition } } remove_short_term_gold = 50 add_character_modifier = { modifier = vic_estate_transition years = 5 } add_character_flag = vic_free_labor_transition vic_change = { KEY = popular_unrest AMOUNT = -10 }  } }
+ai_chance = { base = 10  }
+}
+option = { name = vic_story.12.5
+custom_tooltip = vic_story.12.5.tt
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  } add_character_flag = vic_neutral_house  remove_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian } }
+ai_chance = { base = 10  }
+}
+option = { name = vic_story.12.6
+trigger = { global_var:vic_draconis_state = 0 }
+custom_tooltip = vic_story.12.6.tt
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_draconis_state = 0 } vic_draconis_offer = yes } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.12.7
+custom_tooltip = vic_story.12.7.tt
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  }  } }
+ai_chance = { base = 1  }
+}
+after = { remove_character_flag = vic_action_pending add_character_flag = { flag = vic_action_cooldown days = 28 } vic_activity = yes }
+}
+vic_story.13 = { type = character_event title = vic_story.13.t desc = vic_story.13.desc theme = stewardship
+ trigger = { vic_investigator = yes }
+option = { name = vic_story.13.0
+trigger = { gold >= 20 var:vic_clue_palace < 1 }
+custom_tooltip = vic_story.13.0.tt
+hidden_effect = { if = { limit = { vic_investigator = yes gold >= 20 var:vic_clue_palace < 1 } vic_investigate = { CLUE = palace } } }
+ai_chance = { base = 30  }
+}
+option = { name = vic_story.13.1
+trigger = { gold >= 20 var:vic_clue_musters < 1 }
+custom_tooltip = vic_story.13.1.tt
+hidden_effect = { if = { limit = { vic_investigator = yes gold >= 20 var:vic_clue_musters < 1 } vic_investigate = { CLUE = musters } } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.13.2
+trigger = { gold >= 20 var:vic_clue_cleric < 1 }
+custom_tooltip = vic_story.13.2.tt
+hidden_effect = { if = { limit = { vic_investigator = yes gold >= 20 var:vic_clue_cleric < 1 } vic_investigate = { CLUE = cleric } } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.13.3
+trigger = { gold >= 20 var:vic_clue_letters < 1 }
+custom_tooltip = vic_story.13.3.tt
+hidden_effect = { if = { limit = { vic_investigator = yes gold >= 20 var:vic_clue_letters < 1 } vic_investigate = { CLUE = letters } } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.13.4
+trigger = { vic_has_new_evidence = yes }
+custom_tooltip = vic_story.13.4.tt
+hidden_effect = { if = { limit = { vic_investigator = yes vic_has_new_evidence = yes } trigger_event = vic_story.14 } }
+ai_chance = { base = 60  }
+}
+option = { name = vic_story.13.5
+trigger = { gold >= 30 vic_has_new_evidence = yes NOT = { has_character_flag = vic_witness_protected } }
+custom_tooltip = vic_story.13.5.tt
+hidden_effect = { if = { limit = { vic_investigator = yes gold >= 30 vic_has_new_evidence = yes NOT = { has_character_flag = vic_witness_protected } } vic_protect_witness = yes } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.13.6
+trigger = { this = character:19060029 vic_has_new_evidence = yes global_var:vic_case_state = 0 }
+custom_tooltip = vic_story.13.6.tt
+hidden_effect = { if = { limit = { vic_investigator = yes this = character:19060029 vic_has_new_evidence = yes global_var:vic_case_state = 0 } vic_share_case = yes } }
+ai_chance = { base = 70  }
+}
+option = { name = vic_story.13.7
+trigger = { global_var:vic_confront_state = 0 vic_has_new_evidence = yes }
+custom_tooltip = vic_story.13.7.tt
+hidden_effect = { if = { limit = { vic_investigator = yes global_var:vic_confront_state = 0 vic_has_new_evidence = yes } vic_send_confront = yes } }
+ai_chance = { base = 10  }
+}
+option = { name = vic_story.13.8
+trigger = { this = character:19060029 NOT = { has_character_flag = vic_joren_followup } }
+custom_tooltip = vic_story.13.8.tt
+hidden_effect = { if = { limit = { vic_investigator = yes this = character:19060029 NOT = { has_character_flag = vic_joren_followup } } trigger_event = vic_story.73 } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.13.9
+trigger = { this = character:19060029 NOT = { has_character_flag = vic_clerk_inquiry } }
+custom_tooltip = vic_story.13.9.tt
+hidden_effect = { if = { limit = { vic_investigator = yes this = character:19060029 NOT = { has_character_flag = vic_clerk_inquiry } } trigger_event = vic_story.71 } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.13.10
+trigger = { this = character:19060029 NOT = { has_character_flag = vic_salon_inquiry } }
+custom_tooltip = vic_story.13.10.tt
+hidden_effect = { if = { limit = { vic_investigator = yes this = character:19060029 NOT = { has_character_flag = vic_salon_inquiry } } trigger_event = vic_story.72 } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.13.11
+trigger = { vic_has_new_evidence = yes global_var:vic_public_case = 0 }
+custom_tooltip = vic_story.13.11.tt
+hidden_effect = { if = { limit = { vic_investigator = yes vic_has_new_evidence = yes global_var:vic_public_case = 0 } trigger_event = vic_story.75 } }
+ai_chance = { base = 15  }
+}
+option = { name = vic_story.13.12
+trigger = { this = character:19060029 global_var:vic_case_state = 2 NOT = { has_character_flag = vic_conscience_decided } }
+custom_tooltip = vic_story.13.12.tt
+hidden_effect = { if = { limit = { vic_investigator = yes this = character:19060029 global_var:vic_case_state = 2 NOT = { has_character_flag = vic_conscience_decided } } trigger_event = vic_story.74 } }
+ai_chance = { base = 15  }
+}
+option = { name = vic_story.13.13
+custom_tooltip = vic_story.13.13.tt
+hidden_effect = { if = { limit = { vic_investigator = yes  }  } }
+ai_chance = { base = 1  }
+}
+after = { remove_character_flag = vic_action_pending add_character_flag = { flag = vic_action_cooldown days = 28 } vic_activity = yes }
+}
+vic_story.14 = { type = character_event title = vic_story.14.t desc = vic_story.14.desc theme = stewardship
+ trigger = { vic_investigator = yes }
+option = { name = vic_story.14.0
+trigger = { gold >= 20 var:vic_clue_musters >= 1 var:vic_clue_musters < 3 }
+custom_tooltip = vic_story.14.0.tt
+hidden_effect = { if = { limit = { vic_investigator = yes gold >= 20 var:vic_clue_musters >= 1 var:vic_clue_musters < 3 } vic_authenticate = { CLUE = musters } } }
+ai_chance = { base = 30  }
+}
+option = { name = vic_story.14.1
+trigger = { gold >= 20 var:vic_clue_palace >= 1 var:vic_clue_palace < 3 }
+custom_tooltip = vic_story.14.1.tt
+hidden_effect = { if = { limit = { vic_investigator = yes gold >= 20 var:vic_clue_palace >= 1 var:vic_clue_palace < 3 } vic_authenticate = { CLUE = palace } } }
+ai_chance = { base = 30  }
+}
+option = { name = vic_story.14.2
+trigger = { gold >= 20 var:vic_clue_cleric >= 1 var:vic_clue_cleric < 3 }
+custom_tooltip = vic_story.14.2.tt
+hidden_effect = { if = { limit = { vic_investigator = yes gold >= 20 var:vic_clue_cleric >= 1 var:vic_clue_cleric < 3 } vic_authenticate = { CLUE = cleric } } }
+ai_chance = { base = 30  }
+}
+option = { name = vic_story.14.3
+trigger = { gold >= 20 var:vic_clue_letters >= 1 var:vic_clue_letters < 3 }
+custom_tooltip = vic_story.14.3.tt
+hidden_effect = { if = { limit = { vic_investigator = yes gold >= 20 var:vic_clue_letters >= 1 var:vic_clue_letters < 3 } vic_authenticate = { CLUE = letters } } }
+ai_chance = { base = 30  }
+}
+option = { name = vic_story.14.4
+custom_tooltip = vic_story.14.4.tt
+hidden_effect = { if = { limit = { vic_investigator = yes  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.15 = { type = character_event title = vic_story.15.t desc = vic_story.15.desc theme = realm
+ trigger = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos }
+option = { name = vic_story.15.0
+custom_tooltip = vic_story.15.0.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos  } trigger_event = vic_story.13 } }
+ai_chance = { base = 35  }
+}
+option = { name = vic_story.15.1
+custom_tooltip = vic_story.15.1.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos  } trigger_event = vic_story.40 } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.15.2
+trigger = { global_var:vic_negotiation_state = 0 character:19060003 = { vic_octavian_viable = yes } }
+custom_tooltip = vic_story.15.2.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_negotiation_state = 0 character:19060003 = { vic_octavian_viable = yes } } vic_offer_peace = yes } }
+ai_chance = { base = 30  }
+}
+option = { name = vic_story.15.3
+custom_tooltip = vic_story.15.3.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos  } vic_seek_house = yes vic_change = { KEY = military_loyalty AMOUNT = 10 }  } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.15.4
+trigger = { character:19060033 = { is_alive = yes is_imprisoned = no top_liege = character:19060001 } global_var:vic_ticks >= 2 }
+custom_tooltip = vic_story.15.4.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos character:19060033 = { is_alive = yes is_imprisoned = no top_liege = character:19060001 } global_var:vic_ticks >= 2 } vic_arrest_tharn = yes } }
+ai_chance = { base = 3 modifier = { factor = 20 vic_strong_case = yes } modifier = { factor = 0 NOT = { vic_strong_case = yes } has_trait = just } }
+}
+option = { name = vic_story.15.5
+trigger = { gold >= 50 }
+custom_tooltip = vic_story.15.5.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos gold >= 50 } remove_short_term_gold = 50 vic_change = { KEY = popular_unrest AMOUNT = -15 } vic_change = { KEY = legitimacy AMOUNT = 10 } vic_change = { KEY = noble_opposition AMOUNT = 5 }  } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.15.6
+trigger = { gold >= 25 }
+custom_tooltip = vic_story.15.6.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos gold >= 25 } remove_short_term_gold = 25 vic_change = { KEY = church_opposition AMOUNT = -15 } vic_change = { KEY = legitimacy AMOUNT = 5 }  add_character_modifier = { modifier = vic_clerical_dialogue years = 5 } } }
+ai_chance = { base = 15  }
+}
+option = { name = vic_story.15.7
+trigger = { gold >= 50 character:19060033 = { vic_participant_available = yes } }
+custom_tooltip = vic_story.15.7.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos gold >= 50 character:19060033 = { vic_participant_available = yes } } remove_short_term_gold = 30 vic_change = { KEY = exposure AMOUNT = 15 }  vic_investigate = { CLUE = palace } } }
+ai_chance = { base = 15  }
+}
+option = { name = vic_story.15.8
+custom_tooltip = vic_story.15.8.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos  }  } }
+ai_chance = { base = 1  }
+}
+after = { remove_character_flag = vic_action_pending add_character_flag = { flag = vic_action_cooldown days = 28 } vic_activity = yes }
+}
+vic_story.16 = { type = character_event title = vic_story.16.t desc = vic_story.16.desc theme = intrigue
+ trigger = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination = 1 }
+option = { name = vic_story.16.0
+custom_tooltip = vic_story.16.0.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination = 1  } set_global_variable = { name = vic_method value = 1 }  vic_prepare_access = yes add_character_flag = vic_tharn_method_chosen vic_tharn_method_followup = yes if = { limit = { is_ai = no has_character_flag = vic_tharn_preparation_done } vic_queue_final_review = { DAYS = 14 } } } }
+ai_chance = { base = 45  }
+}
+option = { name = vic_story.16.1
+custom_tooltip = vic_story.16.1.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination = 1  } set_global_variable = { name = vic_method value = 2 }  vic_prepare_access = yes add_character_flag = vic_tharn_method_chosen vic_tharn_method_followup = yes if = { limit = { is_ai = no has_character_flag = vic_tharn_preparation_done } vic_queue_final_review = { DAYS = 14 } } } }
+ai_chance = { base = 35  }
+}
+option = { name = vic_story.16.2
+trigger = { NOT = { has_game_rule = vic_methods_mundane } OR = { has_trait = archmage has_trait = lifestyle_mystic has_trait = witch has_trait = source has_trait = source2 } }
+custom_tooltip = vic_story.16.2.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination = 1 NOT = { has_game_rule = vic_methods_mundane } OR = { has_trait = archmage has_trait = lifestyle_mystic has_trait = witch has_trait = source has_trait = source2 } } set_global_variable = { name = vic_method value = 3 }  vic_prepare_access = yes add_character_flag = vic_tharn_method_chosen vic_tharn_method_followup = yes if = { limit = { is_ai = no has_character_flag = vic_tharn_preparation_done } vic_queue_final_review = { DAYS = 14 } } } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.16.3
+custom_tooltip = vic_story.16.3.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination = 1  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.17 = { type = character_event title = vic_story.17.t desc = vic_story.17.desc theme = intrigue
+ trigger = { has_character_flag = vic_procedural_cleric vic_participant_available = yes global_var:vic_cleric_state = 1 }
+option = { name = vic_story.17.0
+custom_tooltip = vic_story.17.0.tt
+hidden_effect = { if = { limit = { has_character_flag = vic_procedural_cleric vic_participant_available = yes global_var:vic_cleric_state = 1  } set_global_variable = { name = vic_cleric_state value = 2 } set_global_variable = { name = vic_cleric_help value = 2 } set_global_variable = { name = vic_cleric_source value = 1 } vic_change = { KEY = access AMOUNT = 15 } vic_change = { KEY = preparation AMOUNT = 10 } vic_change = { KEY = church_opposition AMOUNT = 10 }  character:19060033 ?= { if = { limit = { is_alive = yes } trigger_event = { id = vic_story.83 days = 3 } } } } }
+ai_chance = { base = 35 modifier = { factor = 2 has_trait = deceitful } }
+}
+option = { name = vic_story.17.1
+custom_tooltip = vic_story.17.1.tt
+hidden_effect = { if = { limit = { has_character_flag = vic_procedural_cleric vic_participant_available = yes global_var:vic_cleric_state = 1  } set_global_variable = { name = vic_cleric_state value = 2 } set_global_variable = { name = vic_cleric_help value = 1 } vic_change = { KEY = groundwork AMOUNT = 10 }  character:19060033 ?= { if = { limit = { is_alive = yes } trigger_event = { id = vic_story.83 days = 3 } } } } }
+ai_chance = { base = 35  }
+}
+option = { name = vic_story.17.2
+custom_tooltip = vic_story.17.2.tt
+hidden_effect = { if = { limit = { has_character_flag = vic_procedural_cleric vic_participant_available = yes global_var:vic_cleric_state = 1  } set_global_variable = { name = vic_cleric_state value = 3 } vic_change = { KEY = exposure AMOUNT = 5 }  character:19060033 ?= { if = { limit = { is_alive = yes } trigger_event = { id = vic_story.83 days = 3 } } } } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.17.3
+custom_tooltip = vic_story.17.3.tt
+hidden_effect = { if = { limit = { has_character_flag = vic_procedural_cleric vic_participant_available = yes global_var:vic_cleric_state = 1  } set_global_variable = { name = vic_cleric_state value = 3 } set_global_variable = { name = vic_cleric_source value = 1 }  character:19060001 = { vic_gain_clue = { CLUE = cleric LEVEL = 3 } add_character_flag = vic_witness_protected } vic_change = { KEY = exposure AMOUNT = 25 }  character:19060033 ?= { if = { limit = { is_alive = yes } trigger_event = { id = vic_story.83 days = 3 } } } } }
+ai_chance = { base = 10  }
+}
+}
+vic_story.18 = { type = character_event title = vic_story.18.t desc = vic_story.18.desc theme = intrigue
+ trigger = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete }
+option = { name = vic_story.18.0
+trigger = { gold >= 25 }
+custom_tooltip = vic_story.18.0.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete gold >= 25 } remove_short_term_gold = 25 vic_change = { KEY = secrecy AMOUNT = 15 } vic_change = { KEY = exposure AMOUNT = -10 }  } }
+ai_chance = { base = 35  }
+}
+option = { name = vic_story.18.1
+custom_tooltip = vic_story.18.1.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  } set_global_variable = { name = vic_source_destroyed value = 1 } vic_change = { KEY = preparation AMOUNT = -10 } vic_change = { KEY = exposure AMOUNT = 10 }  } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.18.2
+custom_tooltip = vic_story.18.2.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  } set_global_variable = { name = vic_frame_source value = 1 } vic_change = { KEY = secrecy AMOUNT = 10 } vic_change = { KEY = exposure AMOUNT = 10 }  } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.18.3
+custom_tooltip = vic_story.18.3.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  } set_global_variable = { name = vic_source_destroyed value = 0 } vic_change = { KEY = access AMOUNT = -10 } vic_change = { KEY = exposure AMOUNT = -15 }  } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.18.4
+custom_tooltip = vic_story.18.4.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.19 = { type = character_event title = vic_story.19.t desc = vic_story.19.desc theme = intrigue
+ trigger = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination = 1 has_character_flag = vic_final_review_pending }
+option = { name = vic_story.19.0
+trigger = { vic_tharn_ready = yes }
+custom_tooltip = vic_story.19.0.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination = 1 has_character_flag = vic_final_review_pending vic_tharn_ready = yes } remove_character_flag = vic_final_review_pending vic_commit_attempt = yes } }
+ai_chance = { base = 70 modifier = { factor = 2 global_var:vic_preparation >= 70 } modifier = { factor = 0.2 global_var:vic_exposure >= 70 } }
+}
+option = { name = vic_story.19.1
+custom_tooltip = vic_story.19.1.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination = 1 has_character_flag = vic_final_review_pending  } remove_character_flag = vic_final_review_pending vic_prepare_access = yes vic_change = { KEY = secrecy AMOUNT = 5 }  if = { limit = { is_ai = no } vic_queue_final_review = { DAYS = 30 } } } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.19.2
+custom_tooltip = vic_story.19.2.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination = 1 has_character_flag = vic_final_review_pending  } remove_character_flag = vic_final_review_pending trigger_event = vic_story.16 } }
+ai_chance = { base = 5  }
+}
+option = { name = vic_story.19.3
+custom_tooltip = vic_story.19.3.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_assassination = 1 has_character_flag = vic_final_review_pending  } remove_character_flag = vic_final_review_pending vic_close_attempt = yes add_character_flag = vic_abandoned_regicide  } }
+ai_chance = { base = 5  }
+}
+}
+vic_story.20 = { type = character_event title = vic_story.20.t desc = vic_story.20.desc theme = intrigue
+ trigger = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 0 }
+option = { name = vic_story.20.0
+custom_tooltip = vic_story.20.0.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 0  } set_global_variable = { name = vic_contact_detail value = 0 }  vic_send_contact = yes } }
+ai_chance = { base = 65  }
+}
+option = { name = vic_story.20.1
+custom_tooltip = vic_story.20.1.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 0  } set_global_variable = { name = vic_contact_detail value = 1 } set_global_variable = { name = vic_letters_source value = 1 }  vic_send_contact = yes } }
+ai_chance = { base = 35  }
+}
+option = { name = vic_story.20.2
+custom_tooltip = vic_story.20.2.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 0  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.21 = { type = character_event title = vic_story.21.t desc = vic_story.21.desc theme = intrigue
+ trigger = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 1 }
+option = { name = vic_story.21.0
+custom_tooltip = vic_story.21.0.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 1  } set_global_variable = { name = vic_contact_state value = 2 } vic_change = { KEY = groundwork AMOUNT = 15 }  if = { limit = { global_var:vic_contact_detail = 1 } add_character_flag = vic_murder_letter vic_gain_clue = { CLUE = letters LEVEL = 3 } } if = { limit = { global_var:vic_contact_state != 5 } character:19060033 ?= { trigger_event = { id = vic_story.28 days = 3 } } } } }
+ai_chance = { base = 45  }
+}
+option = { name = vic_story.21.1
+trigger = { global_var:vic_contact_detail = 1 }
+custom_tooltip = vic_story.21.1.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 1 global_var:vic_contact_detail = 1 } set_global_variable = { name = vic_contact_state value = 3 }  if = { limit = { global_var:vic_contact_detail = 1 } add_character_flag = vic_murder_letter vic_gain_clue = { CLUE = letters LEVEL = 3 } } vic_change = { KEY = exposure AMOUNT = 10 }  if = { limit = { global_var:vic_contact_state != 5 } character:19060033 ?= { trigger_event = { id = vic_story.28 days = 3 } } } } }
+ai_chance = { base = 30  }
+}
+option = { name = vic_story.21.2
+trigger = { NOT = { has_global_variable = vic_details_requested } }
+custom_tooltip = vic_story.21.2.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 1 NOT = { has_global_variable = vic_details_requested } } set_global_variable = { name = vic_contact_state value = 5 } set_global_variable = { name = vic_contact_age value = 0 }  set_global_variable = { name = vic_details_requested value = yes } character:19060033 = { trigger_event = { id = vic_story.82 days = 3 } } } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.21.3
+trigger = { global_var:vic_contact_detail = 0 }
+custom_tooltip = vic_story.21.3.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 1 global_var:vic_contact_detail = 0 } set_global_variable = { name = vic_contact_state value = 3 }  character:19060033 = { trigger_event = { id = vic_story.28 days = 3 } } } }
+ai_chance = { base = 30  }
+}
+}
+vic_story.22 = { type = character_event title = vic_story.22.t desc = vic_story.22.desc theme = intrigue
+ trigger = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_funding_state = 1 }
+option = { name = vic_story.22.0
+custom_tooltip = vic_story.22.0.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_funding_state = 1  } vic_accept_funding = yes character:19060031 ?= { trigger_event = { id = vic_story.29 days = 3 } } } }
+ai_chance = { base = 80  }
+}
+option = { name = vic_story.22.1
+custom_tooltip = vic_story.22.1.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_funding_state = 1  } set_global_variable = { name = vic_funding_state value = 3 }  character:19060031 ?= { trigger_event = { id = vic_story.29 days = 3 } } } }
+ai_chance = { base = 20  }
+}
+}
+vic_story.23 = { type = character_event title = vic_story.23.t desc = vic_story.23.desc theme = intrigue
+ trigger = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_negotiation_state = 1 }
+option = { name = vic_story.23.0
+custom_tooltip = vic_story.23.0.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_negotiation_state = 1  } vic_accept_peace = yes vic_notify_negotiation = yes } }
+ai_chance = { base = 55 modifier = { factor = 2 has_trait = patient } }
+}
+option = { name = vic_story.23.1
+custom_tooltip = vic_story.23.1.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_negotiation_state = 1  } set_global_variable = { name = vic_negotiation_state value = 3 } vic_change = { KEY = noble_opposition AMOUNT = 10 }  vic_notify_negotiation = yes } }
+ai_chance = { base = 45  }
+}
+option = { name = vic_story.23.2
+custom_tooltip = vic_story.23.2.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_negotiation_state = 1  } set_global_variable = { name = vic_negotiation_state value = 5 } set_global_variable = { name = vic_negotiation_age value = 0 }  character:19060001 = { trigger_event = { id = vic_story.76 days = 3 } } vic_notify_negotiation = yes } }
+ai_chance = { base = 20  }
+}
+}
+vic_story.26 = { type = character_event title = vic_story.26.t desc = vic_story.26.desc theme = intrigue
+ trigger = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_negotiation_state = 1 }
+option = { name = vic_story.26.0
+custom_tooltip = vic_story.26.0.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_negotiation_state = 1  } vic_accept_peace = yes vic_notify_negotiation = yes } }
+ai_chance = { base = 55 modifier = { factor = 2 has_trait = patient } }
+}
+option = { name = vic_story.26.1
+custom_tooltip = vic_story.26.1.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_negotiation_state = 1  } set_global_variable = { name = vic_negotiation_state value = 3 } vic_change = { KEY = noble_opposition AMOUNT = 10 }  vic_notify_negotiation = yes } }
+ai_chance = { base = 45  }
+}
+}
+vic_story.24 = { type = character_event title = vic_story.24.t desc = vic_story.24.desc theme = intrigue
+ trigger = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_case_state = 1 }
+option = { name = vic_story.24.0
+custom_tooltip = vic_story.24.0.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_case_state = 1  } vic_receive_case = yes character:19060029 = { trigger_event = { id = vic_story.74 days = 7 } } } }
+ai_chance = { base = 70  }
+}
+option = { name = vic_story.24.1
+custom_tooltip = vic_story.24.1.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_case_state = 1  } vic_receive_case = yes trigger_event = vic_story.15 character:19060029 = { trigger_event = { id = vic_story.74 days = 7 } } } }
+ai_chance = { base = 30  }
+}
+}
+vic_story.25 = { type = character_event title = vic_story.25.t desc = vic_story.25.desc theme = intrigue
+ trigger = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_confront_state = 1 }
+option = { name = vic_story.25.0
+custom_tooltip = vic_story.25.0.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_confront_state = 1  } set_global_variable = { name = vic_confront_state value = 2 } vic_change = { KEY = exposure AMOUNT = -5 } vic_change = { KEY = preparation AMOUNT = -10 }  global_var:vic_confront_sender ?= { if = { limit = { is_alive = yes } trigger_event = { id = vic_story.77 days = 3 } } } } }
+ai_chance = { base = 35  }
+}
+option = { name = vic_story.25.1
+custom_tooltip = vic_story.25.1.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_confront_state = 1  } set_global_variable = { name = vic_confront_state value = 3 } vic_change = { KEY = exposure AMOUNT = 5 }  global_var:vic_confront_sender ?= { if = { limit = { is_alive = yes } trigger_event = { id = vic_story.77 days = 3 } } } } }
+ai_chance = { base = 45  }
+}
+option = { name = vic_story.25.2
+custom_tooltip = vic_story.25.2.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_confront_state = 1  } set_global_variable = { name = vic_confront_state value = 3 } vic_change = { KEY = exposure AMOUNT = 15 } vic_change = { KEY = noble_opposition AMOUNT = 5 }  global_var:vic_confront_sender ?= { if = { limit = { is_alive = yes } trigger_event = { id = vic_story.77 days = 3 } } } } }
+ai_chance = { base = 20  }
+}
+}
+vic_story.28 = { type = character_event title = vic_story.28.t desc = vic_story.28.desc theme = realm
+ trigger = { vic_principal = yes is_alive = yes }
+option = { name = vic_story.28.0
+custom_tooltip = vic_story.28.0.tt
+hidden_effect = { if = { limit = { vic_principal = yes is_alive = yes  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.29 = { type = character_event title = vic_story.29.t desc = vic_story.29.desc theme = realm
+ trigger = { vic_principal = yes is_alive = yes }
+option = { name = vic_story.29.0
+custom_tooltip = vic_story.29.0.tt
+hidden_effect = { if = { limit = { vic_principal = yes is_alive = yes  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.30 = { type = character_event title = vic_story.30.t desc = vic_story.30.desc theme = intrigue
+ trigger = { is_alive = yes is_landed = yes exists = var:vic_house_petitioner vic_politics = yes NOT = { has_character_flag = vic_house_answered } }
+option = { name = vic_story.30.0
+custom_tooltip = vic_story.30.0.tt
+hidden_effect = { if = { limit = { is_alive = yes is_landed = yes exists = var:vic_house_petitioner vic_politics = yes NOT = { has_character_flag = vic_house_answered }  } add_character_flag = vic_pledged_cassian  remove_character_flag = vic_pledged_octavian vic_change = { KEY = military_loyalty AMOUNT = 5 }  add_character_flag = vic_house_answered set_variable = { name = vic_house_answer value = 1 } save_scope_as = vic_reply_house save_scope_value_as = { name = vic_reply_answer value = var:vic_house_answer } var:vic_house_petitioner = { trigger_event = { id = vic_story.89 days = 3 } } } }
+ai_chance = { base = 45 modifier = { factor = 2 has_trait = loyal } }
+}
+option = { name = vic_story.30.1
+custom_tooltip = vic_story.30.1.tt
+hidden_effect = { if = { limit = { is_alive = yes is_landed = yes exists = var:vic_house_petitioner vic_politics = yes NOT = { has_character_flag = vic_house_answered }  } add_character_flag = vic_pledged_octavian  remove_character_flag = vic_pledged_cassian vic_change = { KEY = mobilization AMOUNT = 5 } vic_change = { KEY = groundwork AMOUNT = 5 }  add_character_flag = vic_house_answered set_variable = { name = vic_house_answer value = 2 } save_scope_as = vic_reply_house save_scope_value_as = { name = vic_reply_answer value = var:vic_house_answer } var:vic_house_petitioner = { trigger_event = { id = vic_story.89 days = 3 } } } }
+ai_chance = { base = 35 modifier = { factor = 2 has_trait = ambitious } }
+}
+option = { name = vic_story.30.2
+custom_tooltip = vic_story.30.2.tt
+hidden_effect = { if = { limit = { is_alive = yes is_landed = yes exists = var:vic_house_petitioner vic_politics = yes NOT = { has_character_flag = vic_house_answered }  } add_character_flag = vic_neutral_house  add_character_flag = vic_house_answered set_variable = { name = vic_house_answer value = 3 } save_scope_as = vic_reply_house save_scope_value_as = { name = vic_reply_answer value = var:vic_house_answer } var:vic_house_petitioner = { trigger_event = { id = vic_story.89 days = 3 } } } }
+ai_chance = { base = 20  }
+}
+}
+vic_story.40 = { type = character_event title = vic_story.40.t desc = vic_story.40.desc theme = intrigue
+ trigger = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos }
+option = { name = vic_story.40.0
+custom_tooltip = vic_story.40.0.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos  } add_character_flag = vic_food_screening vic_change = { KEY = security AMOUNT = 10 }  } }
+ai_chance = { base = 35  }
+}
+option = { name = vic_story.40.1
+custom_tooltip = vic_story.40.1.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos  } add_character_flag = vic_changed_schedule vic_change = { KEY = security AMOUNT = 10 }  } }
+ai_chance = { base = 40  }
+}
+option = { name = vic_story.40.2
+trigger = { gold >= 30 }
+custom_tooltip = vic_story.40.2.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos gold >= 30 } add_character_flag = vic_warded_household  remove_short_term_gold = 30 vic_change = { KEY = security AMOUNT = 10 }  } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.40.3
+custom_tooltip = vic_story.40.3.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos  } vic_change = { KEY = legitimacy AMOUNT = 5 }  } }
+ai_chance = { base = 5  }
+}
+}
+vic_story.41 = { type = character_event title = vic_story.41.t desc = vic_story.41.desc theme = death
+ trigger = { is_alive = yes global_var:vic_assassination = 4 }
+option = { name = vic_story.41.0
+custom_tooltip = vic_story.41.0.tt
+hidden_effect = { if = { limit = { is_alive = yes global_var:vic_assassination = 4  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.42 = { type = character_event title = vic_story.42.t desc = vic_story.42.desc theme = intrigue
+ trigger = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_assassination = 3 }
+option = { name = vic_story.42.0
+custom_tooltip = vic_story.42.0.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_assassination = 3  } add_character_flag = vic_family_protection vic_change = { KEY = security AMOUNT = 15 }  } }
+ai_chance = { base = 50  }
+}
+option = { name = vic_story.42.1
+custom_tooltip = vic_story.42.1.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_assassination = 3  } trigger_event = vic_story.15 } }
+ai_chance = { base = 50  }
+}
+}
+vic_story.43 = { type = character_event title = vic_story.43.t desc = vic_story.43.desc theme = war
+ trigger = { is_alive = yes global_var:vic_war_started = 1 }
+option = { name = vic_story.43.0
+custom_tooltip = vic_story.43.0.tt
+hidden_effect = { if = { limit = { is_alive = yes global_var:vic_war_started = 1  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.70 = { type = character_event title = vic_story.70.t desc = vic_story.70.desc theme = intrigue
+ trigger = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_corruption_state = 0 }
+option = { name = vic_story.70.0
+custom_tooltip = vic_story.70.0.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_corruption_state = 0  } set_global_variable = { name = vic_corruption_state value = 1 } set_global_variable = { name = vic_letters_source value = 1 } vic_change = { KEY = preparation AMOUNT = 10 } vic_change = { KEY = exposure AMOUNT = 15 }  add_gold = 40 } }
+ai_chance = { base = 40  }
+}
+option = { name = vic_story.70.1
+custom_tooltip = vic_story.70.1.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_corruption_state = 0  } set_global_variable = { name = vic_corruption_state value = 2 } vic_change = { KEY = secrecy AMOUNT = 10 } vic_change = { KEY = access AMOUNT = 5 }  } }
+ai_chance = { base = 45  }
+}
+option = { name = vic_story.70.2
+custom_tooltip = vic_story.70.2.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_corruption_state = 0  } set_global_variable = { name = vic_corruption_state value = 3 }  } }
+ai_chance = { base = 15  }
+}
+}
+vic_story.71 = { type = character_event title = vic_story.71.t desc = vic_story.71.desc theme = stewardship
+ trigger = { this = character:19060029 vic_investigator = yes NOT = { has_character_flag = vic_clerk_inquiry } }
+option = { name = vic_story.71.0
+trigger = { gold >= 30 }
+custom_tooltip = vic_story.71.0.tt
+hidden_effect = { if = { limit = { this = character:19060029 vic_investigator = yes NOT = { has_character_flag = vic_clerk_inquiry } gold >= 30 } remove_short_term_gold = 30 add_character_flag = vic_clerk_inquiry add_character_flag = vic_witness_protected  vic_gain_clue = { CLUE = treasury LEVEL = 2 } } }
+ai_chance = { base = 70  }
+}
+option = { name = vic_story.71.1
+custom_tooltip = vic_story.71.1.tt
+hidden_effect = { if = { limit = { this = character:19060029 vic_investigator = yes NOT = { has_character_flag = vic_clerk_inquiry }  } add_character_flag = vic_clerk_inquiry vic_change = { KEY = exposure AMOUNT = 10 }  vic_gain_clue = { CLUE = treasury LEVEL = 1 } } }
+ai_chance = { base = 30  }
+}
+option = { name = vic_story.71.2
+custom_tooltip = vic_story.71.2.tt
+hidden_effect = { if = { limit = { this = character:19060029 vic_investigator = yes NOT = { has_character_flag = vic_clerk_inquiry }  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.72 = { type = character_event title = vic_story.72.t desc = vic_story.72.desc theme = intrigue
+ trigger = { this = character:19060029 vic_investigator = yes NOT = { has_character_flag = vic_salon_inquiry } }
+option = { name = vic_story.72.0
+trigger = { gold >= 20 }
+custom_tooltip = vic_story.72.0.tt
+hidden_effect = { if = { limit = { this = character:19060029 vic_investigator = yes NOT = { has_character_flag = vic_salon_inquiry } gold >= 20 } add_character_flag = vic_salon_inquiry  vic_investigate = { CLUE = musters } } }
+ai_chance = { base = 45  }
+}
+option = { name = vic_story.72.1
+trigger = { gold >= 20 }
+custom_tooltip = vic_story.72.1.tt
+hidden_effect = { if = { limit = { this = character:19060029 vic_investigator = yes NOT = { has_character_flag = vic_salon_inquiry } gold >= 20 } add_character_flag = vic_salon_inquiry  vic_investigate = { CLUE = palace } } }
+ai_chance = { base = 45  }
+}
+option = { name = vic_story.72.2
+custom_tooltip = vic_story.72.2.tt
+hidden_effect = { if = { limit = { this = character:19060029 vic_investigator = yes NOT = { has_character_flag = vic_salon_inquiry }  } add_character_flag = vic_salon_inquiry  } }
+ai_chance = { base = 10  }
+}
+}
+vic_story.73 = { type = character_event title = vic_story.73.t desc = vic_story.73.desc theme = stewardship
+ trigger = { this = character:19060029 vic_investigator = yes NOT = { has_character_flag = vic_joren_followup } }
+option = { name = vic_story.73.0
+trigger = { gold >= 20 }
+custom_tooltip = vic_story.73.0.tt
+hidden_effect = { if = { limit = { this = character:19060029 vic_investigator = yes NOT = { has_character_flag = vic_joren_followup } gold >= 20 } remove_short_term_gold = 20 add_character_flag = vic_joren_followup  vic_gain_clue = { CLUE = treasury LEVEL = 3 } } }
+ai_chance = { base = 75  }
+}
+option = { name = vic_story.73.1
+trigger = { gold >= 40 }
+custom_tooltip = vic_story.73.1.tt
+hidden_effect = { if = { limit = { this = character:19060029 vic_investigator = yes NOT = { has_character_flag = vic_joren_followup } gold >= 40 } remove_short_term_gold = 40 add_character_flag = vic_joren_followup vic_change = { KEY = popular_unrest AMOUNT = -15 }  vic_gain_clue = { CLUE = treasury LEVEL = 1 } } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.73.2
+custom_tooltip = vic_story.73.2.tt
+hidden_effect = { if = { limit = { this = character:19060029 vic_investigator = yes NOT = { has_character_flag = vic_joren_followup }  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.74 = { type = character_event title = vic_story.74.t desc = vic_story.74.desc theme = intrigue
+ trigger = { this = character:19060029 vic_investigator = yes has_global_variable = vic_case_delivered NOT = { has_character_flag = vic_conscience_decided } }
+option = { name = vic_story.74.0
+custom_tooltip = vic_story.74.0.tt
+hidden_effect = { if = { limit = { this = character:19060029 vic_investigator = yes has_global_variable = vic_case_delivered NOT = { has_character_flag = vic_conscience_decided }  } add_character_flag = vic_conscience_decided vic_change = { KEY = legitimacy AMOUNT = 5 }  } }
+ai_chance = { base = 65  }
+}
+option = { name = vic_story.74.1
+trigger = { global_var:vic_public_case = 0 }
+custom_tooltip = vic_story.74.1.tt
+hidden_effect = { if = { limit = { this = character:19060029 vic_investigator = yes has_global_variable = vic_case_delivered NOT = { has_character_flag = vic_conscience_decided } global_var:vic_public_case = 0 } add_character_flag = vic_conscience_decided  vic_publish_case = yes } }
+ai_chance = { base = 35  }
+}
+}
+vic_story.75 = { type = character_event title = vic_story.75.t desc = vic_story.75.desc theme = realm
+ trigger = { vic_investigator = yes vic_has_new_evidence = yes global_var:vic_public_case = 0 }
+option = { name = vic_story.75.0
+custom_tooltip = vic_story.75.0.tt
+hidden_effect = { if = { limit = { vic_investigator = yes vic_has_new_evidence = yes global_var:vic_public_case = 0  } vic_publish_case = yes } }
+ai_chance = { base = 60 modifier = { factor = 0.1 vic_strong_case = no } }
+}
+option = { name = vic_story.75.1
+custom_tooltip = vic_story.75.1.tt
+hidden_effect = { if = { limit = { vic_investigator = yes vic_has_new_evidence = yes global_var:vic_public_case = 0  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.76 = { type = character_event title = vic_story.76.t desc = vic_story.76.desc theme = realm
+ trigger = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_negotiation_state = 5 }
+option = { name = vic_story.76.0
+custom_tooltip = vic_story.76.0.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_negotiation_state = 5  } set_global_variable = { name = vic_negotiation_state value = 1 }  vic_accept_peace = yes add_character_modifier = { modifier = vic_regional_concessions years = 10 } vic_notify_negotiation = yes } }
+ai_chance = { base = 60  }
+}
+option = { name = vic_story.76.1
+custom_tooltip = vic_story.76.1.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_negotiation_state = 5  } set_global_variable = { name = vic_negotiation_state value = 3 } vic_change = { KEY = noble_opposition AMOUNT = 5 }  vic_notify_negotiation = yes } }
+ai_chance = { base = 40  }
+}
+}
+vic_story.77 = { type = character_event title = vic_story.77.t desc = vic_story.77.desc theme = intrigue
+ trigger = { vic_investigator = yes exists = global_var:vic_confront_sender this = global_var:vic_confront_sender }
+option = { name = vic_story.77.0
+custom_tooltip = vic_story.77.0.tt
+hidden_effect = { if = { limit = { vic_investigator = yes exists = global_var:vic_confront_sender this = global_var:vic_confront_sender  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.79 = { type = character_event title = vic_story.79.t desc = vic_story.79.desc theme = stewardship
+ trigger = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_draconis_state = 1 }
+option = { name = vic_story.79.0
+trigger = { gold >= 50 }
+custom_tooltip = vic_story.79.0.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_draconis_state = 1 gold >= 50 } vic_draconis_accept = yes character:19060031 ?= { trigger_event = { id = vic_story.78 days = 3 } } } }
+ai_chance = { base = 65  }
+}
+option = { name = vic_story.79.1
+custom_tooltip = vic_story.79.1.tt
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_draconis_state = 1  } set_global_variable = { name = vic_draconis_state value = 3 }  character:19060031 ?= { trigger_event = { id = vic_story.78 days = 3 } } } }
+ai_chance = { base = 35  }
+}
+}
+vic_story.78 = { type = character_event title = vic_story.78.t desc = vic_story.78.desc theme = stewardship
+ trigger = { this = character:19060031 is_alive = yes }
+option = { name = vic_story.78.0
+custom_tooltip = vic_story.78.0.tt
+hidden_effect = { if = { limit = { this = character:19060031 is_alive = yes  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.82 = { type = character_event title = vic_story.82.t desc = vic_story.82.desc theme = intrigue
+ trigger = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 5 }
+option = { name = vic_story.82.0
+custom_tooltip = vic_story.82.0.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 5  } set_global_variable = { name = vic_contact_detail value = 1 } set_global_variable = { name = vic_letters_source value = 1 } set_global_variable = { name = vic_contact_state value = 1 } set_global_variable = { name = vic_contact_age value = 0 }  character:19060003 = { trigger_event = { id = vic_story.21 days = 3 } } } }
+ai_chance = { base = 45  }
+}
+option = { name = vic_story.82.1
+custom_tooltip = vic_story.82.1.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 5  } set_global_variable = { name = vic_contact_detail value = 0 } set_global_variable = { name = vic_contact_state value = 1 } set_global_variable = { name = vic_contact_age value = 0 }  character:19060003 = { trigger_event = { id = vic_story.21 days = 3 } } } }
+ai_chance = { base = 35  }
+}
+option = { name = vic_story.82.2
+custom_tooltip = vic_story.82.2.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 5  } set_global_variable = { name = vic_contact_state value = 3 }  character:19060003 = { trigger_event = { id = vic_story.92 days = 3 } } } }
+ai_chance = { base = 20  }
+}
+}
+vic_story.83 = { type = character_event title = vic_story.83.t desc = vic_story.83.desc theme = intrigue
+ trigger = { this = character:19060033 is_alive = yes }
+option = { name = vic_story.83.0
+custom_tooltip = vic_story.83.0.tt
+hidden_effect = { if = { limit = { this = character:19060033 is_alive = yes  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.81 = { type = character_event title = vic_story.81.t desc = vic_story.81.desc theme = realm
+ trigger = { is_alive = yes has_title = title:h_voltara_severos has_global_variable = vic_aftermath_final global_var:vic_regional_policy = 0 }
+option = { name = vic_story.81.0
+custom_tooltip = vic_story.81.0.tt
+hidden_effect = { if = { limit = { is_alive = yes has_title = title:h_voltara_severos has_global_variable = vic_aftermath_final global_var:vic_regional_policy = 0  } vic_regional_settlement = { POLICY = 1 } } }
+ai_chance = { base = 35  }
+}
+option = { name = vic_story.81.1
+trigger = { gold >= 100 }
+custom_tooltip = vic_story.81.1.tt
+hidden_effect = { if = { limit = { is_alive = yes has_title = title:h_voltara_severos has_global_variable = vic_aftermath_final global_var:vic_regional_policy = 0 gold >= 100 } vic_regional_settlement = { POLICY = 2 } } }
+ai_chance = { base = 50  }
+}
+option = { name = vic_story.81.2
+custom_tooltip = vic_story.81.2.tt
+hidden_effect = { if = { limit = { is_alive = yes has_title = title:h_voltara_severos has_global_variable = vic_aftermath_final global_var:vic_regional_policy = 0  } vic_regional_settlement = { POLICY = 3 } } }
+ai_chance = { base = 15  }
+}
+}
+vic_story.80 = { type = character_event title = vic_story.80.t desc = vic_story.80.desc theme = realm
+ trigger = { this = character:19060003 is_alive = yes has_title = title:h_voltara_severos NOT = { has_character_flag = vic_patronage_settled } }
+option = { name = vic_story.80.0
+trigger = { gold >= 50 }
+custom_tooltip = vic_story.80.0.tt
+hidden_effect = { if = { limit = { this = character:19060003 is_alive = yes has_title = title:h_voltara_severos NOT = { has_character_flag = vic_patronage_settled } gold >= 50 } add_character_flag = vic_patronage_settled  if = { limit = { character:19060031 = { is_alive = yes has_character_flag = vic_funded_octavian } } remove_short_term_gold = 50 character:19060031 = { add_gold = 50 add_prestige = 150 } } } }
+ai_chance = { base = 50  }
+}
+option = { name = vic_story.80.1
+trigger = { character:19060033 = { vic_participant_available = yes } }
+custom_tooltip = vic_story.80.1.tt
+hidden_effect = { if = { limit = { this = character:19060003 is_alive = yes has_title = title:h_voltara_severos NOT = { has_character_flag = vic_patronage_settled } character:19060033 = { vic_participant_available = yes } } add_character_flag = vic_patronage_settled  character:19060033 = { add_prestige = 200 } if = { limit = { character:19060033 = { has_character_flag = vic_publicly_implicated } } vic_change = { KEY = legitimacy AMOUNT = -20 }  add_character_modifier = { modifier = vic_unsettled_realm years = 10 } } } }
+ai_chance = { base = 25  }
+}
+option = { name = vic_story.80.2
+custom_tooltip = vic_story.80.2.tt
+hidden_effect = { if = { limit = { this = character:19060003 is_alive = yes has_title = title:h_voltara_severos NOT = { has_character_flag = vic_patronage_settled }  } add_character_flag = vic_patronage_settled vic_change = { KEY = noble_opposition AMOUNT = 10 }  } }
+ai_chance = { base = 25  }
+}
+}
+vic_story.84 = { type = character_event title = vic_story.84.t desc = vic_story.84.desc theme = intrigue
+ trigger = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete is_ai = no global_var:vic_assassination = 1 NOT = { has_character_flag = vic_tharn_method_chosen } }
+option = { name = vic_story.84.0
+custom_tooltip = vic_story.84.0.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete is_ai = no global_var:vic_assassination = 1 NOT = { has_character_flag = vic_tharn_method_chosen }  } set_global_variable = { name = vic_method value = 1 }  vic_prepare_access = yes add_character_flag = vic_tharn_method_chosen vic_tharn_method_followup = yes } }
+ai_chance = { base = 45  }
+}
+option = { name = vic_story.84.1
+custom_tooltip = vic_story.84.1.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete is_ai = no global_var:vic_assassination = 1 NOT = { has_character_flag = vic_tharn_method_chosen }  } set_global_variable = { name = vic_method value = 2 }  vic_prepare_access = yes add_character_flag = vic_tharn_method_chosen vic_tharn_method_followup = yes } }
+ai_chance = { base = 35  }
+}
+option = { name = vic_story.84.2
+trigger = { NOT = { has_game_rule = vic_methods_mundane } OR = { has_trait = archmage has_trait = lifestyle_mystic has_trait = witch has_trait = source has_trait = source2 } }
+custom_tooltip = vic_story.84.2.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete is_ai = no global_var:vic_assassination = 1 NOT = { has_character_flag = vic_tharn_method_chosen } NOT = { has_game_rule = vic_methods_mundane } OR = { has_trait = archmage has_trait = lifestyle_mystic has_trait = witch has_trait = source has_trait = source2 } } set_global_variable = { name = vic_method value = 3 }  vic_prepare_access = yes add_character_flag = vic_tharn_method_chosen vic_tharn_method_followup = yes } }
+ai_chance = { base = 20  }
+}
+option = { name = vic_story.84.3
+custom_tooltip = vic_story.84.3.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete is_ai = no global_var:vic_assassination = 1 NOT = { has_character_flag = vic_tharn_method_chosen }  } add_character_flag = vic_tharn_method_chosen  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.85 = { type = character_event title = vic_story.85.t desc = vic_story.85.desc theme = intrigue
+ trigger = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete is_ai = no global_var:vic_assassination = 1 global_var:vic_method > 0 NOT = { has_character_flag = vic_tharn_preparation_done } }
+option = { name = vic_story.85.0
+custom_tooltip = vic_story.85.0.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete is_ai = no global_var:vic_assassination = 1 global_var:vic_method > 0 NOT = { has_character_flag = vic_tharn_preparation_done }  } add_character_flag = vic_tharn_preparation_done  vic_prepare_access = yes vic_queue_final_review = { DAYS = 14 } } }
+ai_chance = { base = 60  }
+}
+option = { name = vic_story.85.1
+custom_tooltip = vic_story.85.1.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete is_ai = no global_var:vic_assassination = 1 global_var:vic_method > 0 NOT = { has_character_flag = vic_tharn_preparation_done }  } add_character_flag = vic_tharn_preparation_done  vic_prepare_access = yes vic_change = { KEY = secrecy AMOUNT = 10 }  vic_queue_final_review = { DAYS = 14 } } }
+ai_chance = { base = 30  }
+}
+option = { name = vic_story.85.2
+custom_tooltip = vic_story.85.2.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete is_ai = no global_var:vic_assassination = 1 global_var:vic_method > 0 NOT = { has_character_flag = vic_tharn_preparation_done }  } add_character_flag = vic_tharn_preparation_done  vic_close_attempt = yes } }
+ai_chance = { base = 5  }
+}
+option = { name = vic_story.85.3
+custom_tooltip = vic_story.85.3.tt
+hidden_effect = { if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete is_ai = no global_var:vic_assassination = 1 global_var:vic_method > 0 NOT = { has_character_flag = vic_tharn_preparation_done }  } add_character_flag = vic_tharn_preparation_done  } }
+ai_chance = { base = 5  }
+}
+}
+vic_story.50 = { type = character_event title = vic_story.50.t desc = vic_story.50.desc theme = realm
+ trigger = { is_alive = yes has_title = title:h_voltara_severos global_var:vic_stage = 6 NOT = { has_global_variable = vic_aftermath_final } }
+option = { name = vic_story.50.0
+custom_tooltip = vic_story.50.0.tt
+hidden_effect = { if = { limit = { is_alive = yes has_title = title:h_voltara_severos global_var:vic_stage = 6 NOT = { has_global_variable = vic_aftermath_final }  } vic_finish_aftermath = { POLICY = 1 } } }
+ai_chance = { base = 45 modifier = { factor = 2 has_trait = compassionate } }
+}
+option = { name = vic_story.50.1
+custom_tooltip = vic_story.50.1.tt
+hidden_effect = { if = { limit = { is_alive = yes has_title = title:h_voltara_severos global_var:vic_stage = 6 NOT = { has_global_variable = vic_aftermath_final }  } vic_finish_aftermath = { POLICY = 2 } } }
+ai_chance = { base = 30 modifier = { factor = 2 has_trait = callous } }
+}
+option = { name = vic_story.50.2
+trigger = { is_at_war = no }
+custom_tooltip = vic_story.50.2.tt
+hidden_effect = { if = { limit = { is_alive = yes has_title = title:h_voltara_severos global_var:vic_stage = 6 NOT = { has_global_variable = vic_aftermath_final } is_at_war = no } vic_finish_aftermath = { POLICY = 3 } } }
+ai_chance = { base = 25 modifier = { factor = 3 this = character:19060001 } modifier = { factor = 0.2 this = character:19060003 } }
+}
+option = { name = vic_story.50.3
+custom_tooltip = vic_story.50.3.tt
+hidden_effect = { if = { limit = { is_alive = yes has_title = title:h_voltara_severos global_var:vic_stage = 6 NOT = { has_global_variable = vic_aftermath_final }  } vic_finish_aftermath = { POLICY = 0 } } }
+ai_chance = { base = 5  }
+}
+}
+vic_story.51 = { type = character_event title = vic_story.51.t desc = vic_story.51.desc theme = family
+ trigger = { this = character:19060002 is_alive = yes NOT = { has_character_flag = vic_family_decided } }
+option = { name = vic_story.51.0
+trigger = { exists = title:e_voltara_bryndale.holder }
+custom_tooltip = vic_story.51.0.tt
+hidden_effect = { if = { limit = { this = character:19060002 is_alive = yes NOT = { has_character_flag = vic_family_decided } exists = title:e_voltara_bryndale.holder } vic_refuge_family = yes add_character_flag = vic_family_decided  } }
+ai_chance = { base = 45  }
+}
+option = { name = vic_story.51.1
+custom_tooltip = vic_story.51.1.tt
+hidden_effect = { if = { limit = { this = character:19060002 is_alive = yes NOT = { has_character_flag = vic_family_decided }  } add_character_flag = vic_family_decided set_global_variable = { name = vic_family_safe value = 1 }  } }
+ai_chance = { base = 55  }
+}
+}
+vic_story.52 = { type = character_event title = vic_story.52.t desc = vic_story.52.desc theme = intrigue
+ trigger = { this = character:19060042 is_alive = yes NOT = { has_character_flag = vic_thorne_reckoning } }
+option = { name = vic_story.52.0
+custom_tooltip = vic_story.52.0.tt
+hidden_effect = { if = { limit = { this = character:19060042 is_alive = yes NOT = { has_character_flag = vic_thorne_reckoning }  } add_character_flag = vic_thorne_reckoning  add_character_modifier = { modifier = vic_reform_legacy years = 10 } } }
+ai_chance = { base = 60 modifier = { factor = 3 character:19060001 = { is_alive = yes } } }
+}
+option = { name = vic_story.52.1
+trigger = { is_imprisoned = no }
+custom_tooltip = vic_story.52.1.tt
+hidden_effect = { if = { limit = { this = character:19060042 is_alive = yes NOT = { has_character_flag = vic_thorne_reckoning } is_imprisoned = no } add_character_flag = vic_thorne_reckoning  vic_thorne_departure = yes } }
+ai_chance = { base = 30  }
+}
+option = { name = vic_story.52.2
+trigger = { is_imprisoned = no character:19060001 = { is_alive = no } OR = { global_var:vic_persecution = 1 character:19060044 = { is_alive = no } } }
+custom_tooltip = vic_story.52.2.tt
+hidden_effect = { if = { limit = { this = character:19060042 is_alive = yes NOT = { has_character_flag = vic_thorne_reckoning } is_imprisoned = no character:19060001 = { is_alive = no } OR = { global_var:vic_persecution = 1 character:19060044 = { is_alive = no } } } add_character_flag = vic_thorne_reckoning  vic_thorne_departure = yes if = { limit = { NOT = { exists = rite:voltara_khaotism_rite } } create_rite_from_type = { type = voltara_khaotism_rite convert = yes } } set_character_rite = rite:voltara_khaotism_rite add_trait = necromancer } }
+ai_chance = { base = 10  }
+}
+}
+vic_story.60 = { type = character_event title = vic_story.60.t desc = vic_story.60.desc theme = realm
+ trigger = { this = character:19060001 has_global_variable = vic_full_version }
+option = { name = vic_story.60.0
+custom_tooltip = vic_story.60.0.tt
+hidden_effect = { if = { limit = { this = character:19060001 has_global_variable = vic_full_version  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.61 = { type = character_event title = vic_story.61.t desc = vic_story.61.desc theme = realm
+ trigger = { this = character:19060029 has_global_variable = vic_full_version }
+option = { name = vic_story.61.0
+custom_tooltip = vic_story.61.0.tt
+hidden_effect = { if = { limit = { this = character:19060029 has_global_variable = vic_full_version  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.62 = { type = character_event title = vic_story.62.t desc = vic_story.62.desc theme = realm
+ trigger = { this = character:19060033 has_global_variable = vic_full_version }
+option = { name = vic_story.62.0
+custom_tooltip = vic_story.62.0.tt
+hidden_effect = { if = { limit = { this = character:19060033 has_global_variable = vic_full_version  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.63 = { type = character_event title = vic_story.63.t desc = vic_story.63.desc theme = realm
+ trigger = { this = character:19060003 has_global_variable = vic_full_version }
+option = { name = vic_story.63.0
+custom_tooltip = vic_story.63.0.tt
+hidden_effect = { if = { limit = { this = character:19060003 has_global_variable = vic_full_version  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.64 = { type = character_event title = vic_story.64.t desc = vic_story.64.desc theme = realm
+ trigger = { this = character:19060031 has_global_variable = vic_full_version }
+option = { name = vic_story.64.0
+custom_tooltip = vic_story.64.0.tt
+hidden_effect = { if = { limit = { this = character:19060031 has_global_variable = vic_full_version  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.92 = { type = character_event title = vic_story.92.t desc = vic_story.92.desc theme = intrigue
+ trigger = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 3 }
+option = { name = vic_story.92.0
+custom_tooltip = vic_story.92.0.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete global_var:vic_contact_state = 3  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.90 = { type = character_event title = vic_story.90.t desc = vic_story.90.desc theme = realm
+ trigger = { OR = { this = character:19060001 this = character:19060003 } vic_participant_available = yes OR = { global_var:vic_negotiation_state = 2 global_var:vic_negotiation_state = 3 } }
+option = { name = vic_story.90.0
+custom_tooltip = vic_story.90.0.tt
+hidden_effect = { if = { limit = { OR = { this = character:19060001 this = character:19060003 } vic_participant_available = yes OR = { global_var:vic_negotiation_state = 2 global_var:vic_negotiation_state = 3 }  }  } }
+ai_chance = { base = 1  }
+}
+}
+vic_story.86 = { type = character_event title = vic_story.86.t desc = vic_story.86.desc theme = intrigue
+ trigger = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_finance_followup_done } }
+option = { name = vic_story.86.0
+trigger = { gold >= 75 global_var:vic_funding_state = 0 character:19060003 = { vic_octavian_viable = yes } }
+custom_tooltip = vic_story.86.0.tt
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_finance_followup_done } gold >= 75 global_var:vic_funding_state = 0 character:19060003 = { vic_octavian_viable = yes } } add_character_flag = vic_finance_followup_done  vic_send_funding = yes } }
+ai_chance = { base = 70  }
+}
+option = { name = vic_story.86.1
+custom_tooltip = vic_story.86.1.tt
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_finance_followup_done }  } add_character_flag = vic_finance_followup_done  } }
+ai_chance = { base = 30  }
+}
+}
+vic_story.87 = { type = character_event title = vic_story.87.t desc = vic_story.87.desc theme = intrigue
+ trigger = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_estate_followup_done } }
+option = { name = vic_story.87.0
+custom_tooltip = vic_story.87.0.tt
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_estate_followup_done }  } add_character_flag = vic_estate_followup_done add_character_flag = vic_pledged_cassian vic_change = { KEY = legitimacy AMOUNT = 5 }  } }
+ai_chance = { base = 65  }
+}
+option = { name = vic_story.87.1
+custom_tooltip = vic_story.87.1.tt
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_estate_followup_done }  } add_character_flag = vic_estate_followup_done  } }
+ai_chance = { base = 35  }
+}
+}
+vic_story.88 = { type = character_event title = vic_story.88.t desc = vic_story.88.desc theme = intrigue
+ trigger = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_captains_followup_done } }
+option = { name = vic_story.88.0
+custom_tooltip = vic_story.88.0.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_captains_followup_done }  } add_character_flag = vic_captains_followup_done  vic_muster = yes } }
+ai_chance = { base = 55  }
+}
+option = { name = vic_story.88.1
+custom_tooltip = vic_story.88.1.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_captains_followup_done }  } add_character_flag = vic_captains_followup_done  vic_seek_house = yes } }
+ai_chance = { base = 30  }
+}
+option = { name = vic_story.88.2
+trigger = { global_var:vic_negotiation_state = 0 character:19060001 = { vic_participant_available = yes has_title = title:h_voltara_severos } }
+custom_tooltip = vic_story.88.2.tt
+hidden_effect = { if = { limit = { this = character:19060003 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_captains_followup_done } global_var:vic_negotiation_state = 0 character:19060001 = { vic_participant_available = yes has_title = title:h_voltara_severos } } add_character_flag = vic_captains_followup_done  vic_offer_peace = yes } }
+ai_chance = { base = 15  }
+}
+}
+vic_story.89 = { type = character_event title = vic_story.89.t
+ desc = { first_valid = {
+  triggered_desc = { trigger = { scope:vic_reply_answer = 1 } desc = vic_story.89.crown }
+  triggered_desc = { trigger = { scope:vic_reply_answer = 2 } desc = vic_story.89.opposition }
+  desc = vic_story.89.neutral
+ } }
+ theme = realm
+ left_portrait = { character = scope:vic_reply_house animation = personality_rational }
+ trigger = { vic_principal = yes vic_participant_available = yes vic_politics = yes exists = scope:vic_reply_house }
+option = { name = vic_story.89.0
+custom_tooltip = vic_house_reply_recorded_tt
+hidden_effect = { if = { limit = { vic_principal = yes vic_participant_available = yes vic_politics = yes exists = scope:vic_reply_house  }  } }
+ai_chance = { base = 1  }
+}
+}

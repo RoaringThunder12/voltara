@@ -1,19 +1,10 @@
 ﻿namespace = voltara_cassian_crisis
-voltara_cassian_crisis.1 = {
- type = character_event hidden = yes
- trigger = { is_alive = yes character:19060001 = { is_alive = yes has_title = title:h_voltara_severos } NOT = { has_global_variable = voltara_cassian_crisis_coup } }
- immediate = { voltara_cassian_coup = yes }
-}
-voltara_cassian_crisis.2 = {
- type = character_event hidden = yes
- trigger = { is_alive = yes has_title = title:h_voltara_severos NOT = { has_global_variable = voltara_cassian_crisis_revolt } exists = title:e_voltara_thornfall.holder title:e_voltara_thornfall.holder = { is_alive = yes NOT = { this = root } } }
- immediate = { voltara_begin_slave_revolt = yes }
-}
-voltara_cassian_crisis.3 = {
- type = character_event hidden = yes
- trigger = { NOT = { has_global_variable = voltara_cassian_crisis_exile } }
- immediate = { voltara_thorne_exile = yes }
-}
+voltara_cassian_crisis.1 = { hidden = yes trigger = { always = no } }
+
+voltara_cassian_crisis.2 = { hidden = yes trigger = { always = no } }
+
+voltara_cassian_crisis.3 = { hidden = yes trigger = { always = no } }
+
 voltara_cassian_crisis.10 = {
  type = character_event title = voltara_cassian_crisis.10.t desc = voltara_cassian_crisis.10.desc theme = intrigue
  option = { name = voltara_cassian_crisis.ack }

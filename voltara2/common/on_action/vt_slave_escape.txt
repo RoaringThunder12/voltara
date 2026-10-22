@@ -1,0 +1,7 @@
+﻿yearly_global_pulse = { on_actions = { vt_slave_escape_yearly } }
+vt_slave_escape_yearly = { effect = {
+ every_living_character = {
+  limit = { is_ai = yes vt_slave_escape_eligible = yes }
+  random = { chance = vt_slave_escape_willingness vt_slave_escape_attempt = yes }
+ }
+} }

@@ -1,0 +1,9 @@
+﻿vt_slave_escape_eligible = {
+ has_trait = voltara_slave is_alive = yes is_adult = yes is_landed = no
+ is_incapable = no is_travelling = no
+ exists = var:voltara_slave_owner
+ var:voltara_slave_owner = { is_alive = yes is_landed = yes voltara_slavery_is_legal = yes }
+ OR = { is_imprisoned = no imprisoner = var:voltara_slave_owner }
+ NOT = { has_character_flag = vt_slave_escape_cooldown }
+ NOT = { has_character_flag = voltara_slave_sale_pending }
+}

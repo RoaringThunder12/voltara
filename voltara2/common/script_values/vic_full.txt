@@ -1,0 +1,13 @@
+﻿vic_assassination_chance = {
+ value = 25
+ add = { value = global_var:vic_preparation multiply = 0.35 }
+ add = { value = global_var:vic_access multiply = 0.2 }
+ add = { value = global_var:vic_secrecy multiply = 0.1 }
+ subtract = { value = global_var:vic_security multiply = 0.4 }
+ subtract = { value = global_var:vic_exposure multiply = 0.15 }
+ if = { limit = { global_var:vic_method = 1 character:19060001 = { has_character_flag = vic_food_screening } } subtract = 20 }
+ if = { limit = { global_var:vic_method = 2 character:19060001 = { has_character_flag = vic_changed_schedule } } subtract = 20 }
+ if = { limit = { global_var:vic_method = 3 character:19060001 = { has_character_flag = vic_warded_household } } subtract = 20 }
+ min = 5 max = 85
+}
+vic_rebel_host_size = { value = global_var:vic_mobilization multiply = 35 add = 500 max = 4000 }

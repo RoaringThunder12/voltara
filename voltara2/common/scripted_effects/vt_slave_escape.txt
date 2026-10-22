@@ -1,0 +1,45 @@
+﻿vt_slave_escape_attempt = {
+ if = {
+  limit = { vt_slave_escape_eligible = yes }
+  save_scope_as = vt_fugitive
+  var:voltara_slave_owner = { save_scope_as = vt_escape_owner }
+  add_character_flag = { flag = vt_slave_escape_cooldown years = 2 }
+  random_list = {
+   1 = { modifier = { factor = vt_slave_escape_success_chance always = yes } vt_slave_escape_success = yes }
+   1 = { modifier = { factor = { value = 100 subtract = vt_slave_escape_success_chance } always = yes }
+    random_list = { 90 = { vt_slave_escape_capture = yes } 10 = { vt_slave_escape_death = yes } }
+   }
+  }
+ }
+}
+vt_slave_escape_success = {
+ clear_saved_scope = vt_escape_refuge
+ # Use the shared emancipation cleanup without crediting an unrelated liberator.
+ clear_saved_scope = voltara_liberator
+ voltara_free_character = yes
+ if = { limit = { is_imprisoned = yes } release_from_prison = yes }
+ # Prefer refuge in a nearby abolitionist court outside the owner's realm.
+ random_ruler = {
+  limit = {
+   is_landed = yes is_alive = yes
+   NOT = { has_trait = voltara_slave }
+   top_liege = { has_realm_law = voltara_slavery_banned }
+   NOT = { top_liege = scope:vt_escape_owner.top_liege }
+   in_diplomatic_range = scope:vt_escape_owner
+  }
+  save_scope_as = vt_escape_refuge
+ }
+ if = { limit = { exists = scope:vt_escape_refuge } scope:vt_escape_refuge = { add_courtier = scope:vt_fugitive } }
+ else = { move_to_pool = yes }
+ if = { limit = { is_ai = no } trigger_event = vt_slave_escape.1 }
+ if = { limit = { scope:vt_escape_owner = { is_ai = no } } scope:vt_escape_owner = { trigger_event = vt_slave_escape.4 } }
+}
+vt_slave_escape_capture = {
+ scope:vt_escape_owner = { imprison = { target = scope:vt_fugitive type = dungeon } }
+ if = { limit = { is_ai = no } trigger_event = vt_slave_escape.2 }
+ if = { limit = { scope:vt_escape_owner = { is_ai = no } } scope:vt_escape_owner = { trigger_event = vt_slave_escape.5 } }
+}
+vt_slave_escape_death = {
+ if = { limit = { scope:vt_escape_owner = { is_ai = no } } scope:vt_escape_owner = { trigger_event = vt_slave_escape.6 } }
+ death = { death_reason = vt_slave_escape_death }
+}

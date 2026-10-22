@@ -1,0 +1,25 @@
+﻿vt_receive_wizards_gift = {
+ if = { limit = { vt_wizard_gift_recipient = yes }
+  add_trait = voltara_wizards_immortality
+  set_immortal_age = age
+  add_opinion = { target = character:19066001 modifier = vt_wizards_gift_opinion }
+  trigger_event = vt_wizard_powers.1
+ }
+}
+vt_wizard_repel_invasion = {
+ if = { limit = { vt_wizard_foreign_invasion = yes }
+  scope:attacker = {
+   save_scope_as = vt_wizard_invader
+   add_character_flag = vt_wizard_wrath_pending
+   trigger_event = vt_wizard_powers.3
+  }
+  scope:war = { end_war = white_peace }
+  character:19066001 = { trigger_event = vt_wizard_powers.2 }
+ }
+}
+vt_wizard_execute_wrath = {
+ if = { limit = { is_alive = yes has_character_flag = vt_wizard_wrath_pending }
+  remove_character_flag = vt_wizard_wrath_pending
+  death = { death_reason = vt_death_wizards_wrath }
+ }
+}

@@ -1,0 +1,541 @@
+﻿vic_activity = {
+set_global_variable = { name = vic_last_action_tick value = global_var:vic_ticks } 
+}
+vic_gain_clue = {
+if = { limit = { var:vic_clue_$CLUE$ < $LEVEL$ } set_variable = { name = vic_clue_$CLUE$ value = $LEVEL$ } if = { limit = { this = character:19060029 global_var:vic_case_state > 1 } set_global_variable = { name = vic_case_state value = 0 } } }
+}
+vic_close_attempt = {
+if = { limit = { global_var:vic_assassination < 3 } set_global_variable = { name = vic_assassination value = 5 }  } remove_global_variable = vic_attempt_pending set_global_variable = { name = vic_attempt_age value = 0 } 
+}
+vic_check_emergencies = {
+if = { limit = { vic_running = yes }
+ if = { limit = { has_global_variable = vic_rebellion_required global_var:vic_war_started = 0 character:19060003 = { vic_octavian_viable = no } }
+ remove_global_variable = vic_rebellion_required
+ set_global_variable = { name = vic_claimant_unavailable value = yes }
+ }
+ if = { limit = { NOT = { exists = title:h_voltara_severos.holder } }
+ vic_close_attempt = yes set_global_variable = { name = vic_stage value = 7 } set_global_variable = { name = vic_outcome value = 7 }  }
+ else_if = { limit = { character:19060001 = { is_alive = no } global_var:vic_assassination != 4 global_var:vic_war_started = 0 }
+ vic_close_attempt = yes set_global_variable = { name = vic_stage value = 6 } set_global_variable = { name = vic_outcome value = 6 }  }
+ else_if = { limit = { character:19060001 = { is_alive = yes NOT = { has_title = title:h_voltara_severos } } global_var:vic_war_started = 0 }
+ vic_close_attempt = yes set_global_variable = { name = vic_stage value = 6 } set_global_variable = { name = vic_outcome value = 6 }  }
+ if = { limit = { global_var:vic_assassination < 3 character:19060033 = { OR = { is_alive = no has_trait = incapable is_imprisoned = yes } } }
+ vic_close_attempt = yes }
+ if = { limit = { character:19060001 = { is_alive = yes has_title = title:h_voltara_severos } character:19060033 = { is_alive = yes is_imprisoned = yes } character:19060003 = { vic_octavian_viable = yes } global_var:vic_war_started = 0 }
+ set_global_variable = { name = vic_rebellion_required value = yes }
+ vic_start_rebellion = yes }
+ }
+}
+vic_commit_attempt = {
+if = { limit = { vic_tharn_ready = yes }
+ set_global_variable = { name = vic_assassination value = 2 } set_global_variable = { name = vic_attempt_age value = 0 } set_global_variable = { name = vic_stage value = 4 } set_global_variable = { name = vic_palace_source value = 1 } 
+ vic_activity = yes
+ add_character_flag = { flag = vic_defense_window days = 8 }
+ trigger_event = { on_action = vic_attempt_resolution days = 7 }
+ character:19060001 = { trigger_event = { id = vic_story.40 days = 2 } }
+ }
+}
+vic_resolve_attempt = {
+if = { limit = { global_var:vic_assassination = 2 character:19060033 = { NOT = { has_character_flag = vic_defense_window } } }
+ if = { limit = { character:19060001 = { is_alive = yes has_title = title:h_voltara_severos is_imprisoned = no } character:19060033 = { vic_participant_available = yes } }
+ set_global_variable = { name = vic_attempt_roll value = 0 } 
+ random = { chance = vic_assassination_chance set_global_variable = { name = vic_attempt_roll value = 1 }  }
+ if = { limit = { global_var:vic_attempt_roll = 1 } vic_assassination_success = yes }
+ else = { vic_assassination_failure = yes }
+ } else = { vic_close_attempt = yes }
+ }
+}
+vic_assassination_success = {
+if = { limit = { global_var:vic_assassination = 2 character:19060001 = { is_alive = yes has_title = title:h_voltara_severos } character:19060033 = { vic_participant_available = yes } }
+ set_global_variable = { name = vic_assassination value = 4 } set_global_variable = { name = vic_outcome value = 1 } set_global_variable = { name = vic_palace_source value = 1 } 
+ character:19060001 = { death = { death_reason = death_voltara_imperial_assassin } }
+ character:19060033 = { add_character_flag = vic_regicide_committed }
+ every_player = { trigger_event = { id = vic_story.41 days = 1 } }
+ if = { limit = { exists = title:h_voltara_severos.holder character:19060003 = { vic_octavian_viable = yes } }
+ set_global_variable = { name = vic_rebellion_required value = yes }
+ vic_start_rebellion = yes
+ } else = { set_global_variable = { name = vic_stage value = 6 }  }
+ }
+}
+vic_assassination_failure = {
+if = { limit = { global_var:vic_assassination = 2 character:19060001 = { is_alive = yes } }
+ set_global_variable = { name = vic_assassination value = 3 } set_global_variable = { name = vic_outcome value = 2 } set_global_variable = { name = vic_stage value = 3 } vic_change = { KEY = exposure AMOUNT = 25 } vic_change = { KEY = legitimacy AMOUNT = 10 } 
+ character:19060001 = { vic_gain_clue = { CLUE = palace LEVEL = 3 } add_character_flag = vic_survived_attempt trigger_event = { id = vic_story.42 days = 1 } }
+ character:19060033 = { add_character_flag = vic_attempt_failed }
+ }
+}
+vic_arrest_tharn = {
+if = { limit = { this = character:19060001 is_alive = yes has_title = title:h_voltara_severos character:19060033 = { is_alive = yes is_imprisoned = no top_liege = character:19060001 } global_var:vic_war_started = 0 }
+ if = { limit = { vic_strong_case = yes } set_global_variable = { name = vic_case_quality value = 3 } vic_change = { KEY = legitimacy AMOUNT = 10 } vic_change = { KEY = noble_opposition AMOUNT = -15 } vic_change = { KEY = mobilization AMOUNT = -15 }  }
+ else = { set_global_variable = { name = vic_case_quality value = 1 } vic_change = { KEY = legitimacy AMOUNT = -20 } vic_change = { KEY = noble_opposition AMOUNT = 20 } vic_change = { KEY = mobilization AMOUNT = 15 }  }
+ imprison = { target = character:19060033 type = dungeon }
+ vic_close_attempt = yes
+ set_global_variable = { name = vic_tharn_arrested value = yes }
+ set_global_variable = { name = vic_rebellion_required value = yes }
+ vic_start_rebellion = yes
+ }
+}
+vic_start_rebellion = {
+if = { limit = {
+ global_var:vic_war_started = 0 exists = title:h_voltara_severos.holder
+ title:h_voltara_severos = { NOT = { has_variable = voltara_mw_active } }
+ title:h_voltara_severos.holder = { is_alive = yes }
+ character:19060003 = { vic_octavian_viable = yes is_at_war = no }
+ }
+ title:h_voltara_severos.holder = { save_scope_as = vic_war_defender }
+ character:19060003 = {
+ save_scope_as = vic_rebel
+ voltara_mw_save_contract = yes
+ if = { limit = { is_independent_ruler = no }
+ create_title_and_vassal_change = { type = independency save_scope_as = vic_departure add_claim_on_loss = no }
+ becomes_independent = { change = scope:vic_departure }
+ resolve_title_and_vassal_change = scope:vic_departure }
+ add_character_flag = vic_claimant
+ set_global_variable = { name = vic_war_started value = 1 } set_global_variable = { name = vic_stage value = 5 } 
+ start_war = { casus_belli = vic_imperial_claim target = scope:vic_war_defender }
+ random_character_war = { limit = { using_cb = vic_imperial_claim } save_scope_as = vic_new_war }
+ if = { limit = { exists = scope:vic_new_war }
+ set_global_variable = { name = vic_war value = scope:vic_new_war }
+ spawn_army = { levies = vic_rebel_host_size location = capital_province war = scope:vic_new_war name = vic_iron_forest_host }
+ trigger_event = { id = vic_story.43 days = 1 }
+ scope:vic_war_defender = { trigger_event = { id = vic_story.43 days = 1 } }
+ } else = {
+ set_global_variable = { name = vic_war_started value = 0 } set_global_variable = { name = vic_stage value = 3 } 
+ remove_character_flag = vic_claimant
+ vic_return_rebel = yes
+ }
+ }
+ }
+}
+vic_return_rebel = {
+if = { limit = { is_alive = yes is_landed = yes exists = title:h_voltara_severos.holder NOT = { has_title = title:h_voltara_severos } highest_held_title_tier < tier_hegemony }
+ create_title_and_vassal_change = { type = swear_fealty save_scope_as = vic_return }
+ change_liege = { liege = title:h_voltara_severos.holder change = scope:vic_return }
+ resolve_title_and_vassal_change = scope:vic_return
+ voltara_mw_restore_contract = yes }
+
+}
+vic_transfer_crown = {
+if = { limit = { scope:attacker = { is_alive = yes is_landed = yes } exists = title:h_voltara_severos.holder }
+ title:h_voltara_severos.holder = { save_scope_as = vic_former_emperor every_vassal = { limit = { NOT = { this = scope:attacker } } add_to_temporary_list = vic_crown_vassals } }
+ create_title_and_vassal_change = { type = usurped save_scope_as = vic_crown_transfer add_claim_on_loss = yes }
+ title:h_voltara_severos = { change_title_holder = { holder = scope:attacker change = scope:vic_crown_transfer } }
+ every_in_list = { list = vic_crown_vassals limit = { is_alive = yes is_landed = yes NOT = { this = scope:attacker } } change_liege = { liege = scope:attacker change = scope:vic_crown_transfer } }
+ scope:vic_former_emperor = { if = { limit = { is_alive = yes is_landed = yes NOT = { this = scope:attacker } highest_held_title_tier < tier_hegemony } change_liege = { liege = scope:attacker change = scope:vic_crown_transfer } } }
+ resolve_title_and_vassal_change = scope:vic_crown_transfer
+ scope:attacker = { add_prestige = 500 change_government = lp_feudal_government }
+ }
+}
+vic_war_end = {
+set_global_variable = { name = vic_war_result value = $RESULT$ }
+ set_global_variable = { name = vic_stage value = 6 } set_global_variable = { name = vic_aftermath_age value = 0 } 
+ remove_global_variable = vic_war
+ remove_global_variable = vic_rebellion_required
+ scope:attacker ?= { remove_character_flag = vic_claimant }
+
+}
+vic_send_contact = {
+if = { limit = { global_var:vic_contact_state = 0 character:19060003 = { vic_participant_available = yes } }
+ set_global_variable = { name = vic_contact_state value = 1 } set_global_variable = { name = vic_contact_age value = 0 } character:19060003 = { trigger_event = { id = vic_story.21 days = 3 } } vic_activity = yes }
+}
+vic_send_funding = {
+if = { limit = { global_var:vic_funding_state = 0 character:19060003 = { vic_participant_available = yes } }
+ set_global_variable = { name = vic_funding_state value = 1 } set_global_variable = { name = vic_funding_age value = 0 } character:19060003 = { trigger_event = { id = vic_story.22 days = 3 } } vic_activity = yes }
+}
+vic_send_negotiation = {
+if = { limit = { global_var:vic_negotiation_state = 0 character:19060003 = { vic_participant_available = yes } }
+ set_global_variable = { name = vic_negotiation_state value = 1 } set_global_variable = { name = vic_negotiation_age value = 0 } character:19060003 = { trigger_event = { id = vic_story.23 days = 3 } } vic_activity = yes }
+}
+vic_send_case = {
+if = { limit = { global_var:vic_case_state = 0 character:19060001 = { vic_participant_available = yes } }
+ set_global_variable = { name = vic_case_state value = 1 } set_global_variable = { name = vic_case_age value = 0 } character:19060001 = { trigger_event = { id = vic_story.24 days = 3 } } vic_activity = yes }
+}
+vic_send_confront = {
+if = { limit = { global_var:vic_confront_state = 0 character:19060033 = { vic_participant_available = yes } }
+ set_global_variable = { name = vic_confront_sender value = this } set_global_variable = { name = vic_confront_state value = 1 } set_global_variable = { name = vic_confront_age value = 0 } character:19060033 = { trigger_event = { id = vic_story.25 days = 3 } } vic_activity = yes }
+}
+vic_accept_funding = {
+if = { limit = { global_var:vic_funding_state = 1 character:19060031 = { vic_participant_available = yes gold >= 75 } character:19060003 = { vic_octavian_viable = yes } }
+ set_global_variable = { name = vic_funding_state value = 2 } set_global_variable = { name = vic_funding_paid value = 1 } 
+ character:19060031 = { remove_short_term_gold = 75 add_character_flag = vic_funded_octavian }
+ character:19060003 = { add_gold = 75 add_character_flag = vic_draconis_backing }
+ vic_change = { KEY = mobilization AMOUNT = 15 } vic_change = { KEY = groundwork AMOUNT = 10 }  }
+ else_if = { limit = { global_var:vic_funding_state = 1 } set_global_variable = { name = vic_funding_state value = 4 }  }
+}
+vic_share_case = {
+if = { limit = { this = character:19060029 vic_investigator = yes vic_has_new_evidence = yes global_var:vic_case_state = 0 }
+set_global_variable = { name = vic_case_musters value = var:vic_clue_musters } set_global_variable = { name = vic_case_palace value = var:vic_clue_palace } set_global_variable = { name = vic_case_cleric value = var:vic_clue_cleric } set_global_variable = { name = vic_case_letters value = var:vic_clue_letters } 
+ if = { limit = { has_character_flag = vic_evidence_compromised } set_global_variable = { name = vic_case_compromised value = 1 }  } else = { set_global_variable = { name = vic_case_compromised value = 0 }  }
+ vic_send_case = yes }
+}
+vic_receive_case = {
+if = { limit = { global_var:vic_case_state = 1 this = character:19060001 vic_participant_available = yes }
+if = { limit = { var:vic_clue_musters < global_var:vic_case_musters } set_variable = { name = vic_clue_musters value = global_var:vic_case_musters } }
+if = { limit = { var:vic_clue_palace < global_var:vic_case_palace } set_variable = { name = vic_clue_palace value = global_var:vic_case_palace } }
+if = { limit = { var:vic_clue_cleric < global_var:vic_case_cleric } set_variable = { name = vic_clue_cleric value = global_var:vic_case_cleric } }
+if = { limit = { var:vic_clue_letters < global_var:vic_case_letters } set_variable = { name = vic_clue_letters value = global_var:vic_case_letters } }
+
+ if = { limit = { global_var:vic_case_compromised = 1 } add_character_flag = vic_evidence_compromised }
+ set_global_variable = { name = vic_case_delivered value = yes } set_global_variable = { name = vic_case_state value = 2 }  }
+}
+vic_reopen_case = {
+if = { limit = { global_var:vic_case_state > 1 } set_global_variable = { name = vic_case_state value = 0 }  }
+}
+vic_prepare_access = {
+vic_change = { KEY = preparation AMOUNT = 15 } vic_change = { KEY = access AMOUNT = 15 } vic_change = { KEY = exposure AMOUNT = 5 } set_global_variable = { name = vic_palace_source value = 1 } 
+}
+vic_conceal = {
+vic_change = { KEY = secrecy AMOUNT = 15 } vic_change = { KEY = exposure AMOUNT = -10 } if = { limit = { gold >= 20 } remove_short_term_gold = 20 }
+}
+vic_muster = {
+vic_change = { KEY = mobilization AMOUNT = 15 } vic_change = { KEY = military_loyalty AMOUNT = -5 } set_global_variable = { name = vic_musters_source value = 1 } add_character_flag = vic_captain_network 
+}
+vic_offer_peace = {
+if = { limit = { global_var:vic_negotiation_state = 0 vic_politics = yes
+ character:19060001 = { vic_participant_available = yes has_title = title:h_voltara_severos }
+ character:19060003 = { vic_octavian_viable = yes }
+ }
+ set_global_variable = { name = vic_negotiation_state value = 1 } set_global_variable = { name = vic_negotiation_age value = 0 } 
+ if = { limit = { this = character:19060003 } set_global_variable = { name = vic_negotiation_target value = character:19060001 } character:19060001 = { trigger_event = { id = vic_story.26 days = 3 } } }
+ else = { set_global_variable = { name = vic_negotiation_target value = character:19060003 } character:19060003 = { trigger_event = { id = vic_story.23 days = 3 } } }
+ }
+}
+vic_accept_peace = {
+if = { limit = { global_var:vic_negotiation_state = 1 character:19060001 = { is_alive = yes } character:19060003 = { vic_participant_available = yes } }
+ set_global_variable = { name = vic_negotiation_state value = 2 } set_global_variable = { name = vic_settlement value = 1 } vic_change = { KEY = legitimacy AMOUNT = 15 } vic_change = { KEY = mobilization AMOUNT = -20 } vic_change = { KEY = noble_opposition AMOUNT = -10 } 
+ character:19060001 = { add_character_flag = vic_negotiated_with_octavian }
+ character:19060003 = { add_character_flag = vic_negotiated_with_cassian }
+ }
+}
+vic_find_cleric = {
+if = { limit = { global_var:vic_cleric_state = 0 this = character:19060033 }
+ set_global_variable = { name = vic_cleric_state value = 1 } set_global_variable = { name = vic_cleric_age value = 0 } 
+ save_scope_as = vic_cleric_patron
+ create_character = { age = 48 gender = male culture = scope:vic_cleric_patron.culture faith = scope:vic_cleric_patron.faith
+ employer = scope:vic_cleric_patron trait = zealous trait = education_learning_3 trait = maester
+ save_scope_as = vic_contact_cleric }
+ set_global_variable = { name = vic_cleric_actor value = scope:vic_contact_cleric }
+ scope:vic_contact_cleric = { add_character_flag = vic_procedural_cleric trigger_event = { id = vic_story.17 days = 3 } }
+ }
+}
+vic_seek_house = {
+save_scope_as = vic_petitioner
+ title:h_voltara_severos.holder = {
+ random_vassal = { limit = { is_alive = yes is_landed = yes highest_held_title_tier >= tier_kingdom
+ NOT = { this = scope:vic_petitioner } NOT = { has_character_flag = vic_house_contacted }
+ }
+ set_variable = { name = vic_house_petitioner value = scope:vic_petitioner }
+ add_character_flag = vic_house_contacted
+ trigger_event = { id = vic_story.30 days = 3 }
+ }
+}
+}
+vic_investigate = {
+if = { limit = { vic_investigator = yes gold >= 20 }
+ remove_short_term_gold = 20
+ vic_change = { KEY = exposure AMOUNT = 5 } 
+ if = { limit = { global_var:vic_$CLUE$_source >= 1 OR = { global_var:vic_source_destroyed = 0 has_character_flag = vic_witness_protected } }
+ random_list = {
+ 70 = { modifier = { factor = 2 learning >= 16 } vic_gain_clue = { CLUE = $CLUE$ LEVEL = 1 } }
+ 30 = { add_stress = 5 }
+ }
+ } else = { add_character_flag = { flag = vic_inquiry_empty days = 60 } }
+ }
+}
+vic_authenticate = {
+if = { limit = { vic_investigator = yes gold >= 20 var:vic_clue_$CLUE$ >= 1 var:vic_clue_$CLUE$ < 3 }
+ remove_short_term_gold = 20
+ if = { limit = { var:vic_clue_$CLUE$ = 1 } vic_gain_clue = { CLUE = $CLUE$ LEVEL = 2 } }
+ else = { vic_gain_clue = { CLUE = $CLUE$ LEVEL = 3 } }
+ if = { limit = { global_var:vic_frame_source = 1 learning < 14 NOT = { has_character_flag = vic_witness_protected } }
+ add_character_flag = vic_evidence_compromised }
+ vic_reopen_case = yes
+ }
+}
+vic_protect_witness = {
+if = { limit = { vic_investigator = yes gold >= 30 }
+ remove_short_term_gold = 30 add_character_flag = vic_witness_protected
+ remove_character_flag = vic_evidence_compromised
+ if = { limit = { exists = global_var:vic_cleric_actor global_var:vic_cleric_actor = { is_alive = yes is_imprisoned = no } }
+ global_var:vic_cleric_actor = { add_character_flag = vic_under_protection }
+ }
+ vic_reopen_case = yes
+ }
+}
+vic_draconis_offer = {
+if = { limit = { this = character:19060031 global_var:vic_draconis_state = 0 character:19060001 = { vic_participant_available = yes has_title = title:h_voltara_severos } }
+ set_global_variable = { name = vic_draconis_state value = 1 } set_global_variable = { name = vic_draconis_age value = 0 } character:19060001 = { trigger_event = { id = vic_story.79 days = 3 } } }
+}
+vic_draconis_accept = {
+if = { limit = { global_var:vic_draconis_state = 1 character:19060001 = { vic_participant_available = yes gold >= 50 } character:19060031 = { vic_participant_available = yes } }
+ set_global_variable = { name = vic_draconis_state value = 2 } vic_change = { KEY = noble_opposition AMOUNT = -15 } vic_change = { KEY = popular_unrest AMOUNT = -10 } 
+ character:19060001 = { remove_short_term_gold = 50 }
+ character:19060031 = { add_gold = 50 add_character_flag = vic_free_labor_transition add_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian add_character_modifier = { modifier = vic_estate_transition years = 10 } }
+ }
+}
+vic_publish_case = {
+if = { limit = { vic_investigator = yes global_var:vic_public_case = 0 vic_has_new_evidence = yes }
+ set_global_variable = { name = vic_public_case value = 1 } 
+ if = { limit = { vic_strong_case = yes }
+ set_global_variable = { name = vic_case_quality value = 3 } vic_change = { KEY = legitimacy AMOUNT = 10 } vic_change = { KEY = noble_opposition AMOUNT = -15 } vic_change = { KEY = church_opposition AMOUNT = -10 } 
+ character:19060033 = { add_character_flag = vic_publicly_implicated add_character_modifier = { modifier = vic_exposed_conspirator years = 10 } }
+ } else = { vic_change = { KEY = legitimacy AMOUNT = -10 } vic_change = { KEY = noble_opposition AMOUNT = 10 }  }
+ }
+}
+vic_regional_settlement = {
+if = { limit = { has_title = title:h_voltara_severos global_var:vic_regional_policy = 0 }
+ set_global_variable = { name = vic_regional_policy value = $POLICY$ }
+ if = { limit = { global_var:vic_regional_policy = 1 } add_character_modifier = { modifier = vic_regional_concessions years = 10 } }
+ else_if = { limit = { global_var:vic_regional_policy = 2 gold >= 100 } remove_short_term_gold = 100
+ every_vassal = { limit = { highest_held_title_tier >= tier_kingdom } add_character_modifier = { modifier = vic_regional_recovery years = 5 } }
+ title:k_voltara_22.holder ?= { add_gold = 50 add_character_modifier = { modifier = vic_regional_recovery years = 5 } }
+ }
+ else = { add_character_modifier = { modifier = vic_unsettled_realm years = 5 } }
+ trigger_event = { id = vic_story.80 days = 5 }
+ }
+}
+vic_tharn_opening_followup = {
+if = { limit = {
+ this = character:19060033 is_ai = no vic_participant_available = yes
+ global_var:vic_assassination = 1 NOT = { has_character_flag = vic_tharn_intro_queued }
+ }
+ add_character_flag = vic_tharn_intro_queued
+ if = { limit = { has_character_flag = vic_seek_cleric } vic_find_cleric = yes }
+ trigger_event = { id = vic_story.84 days = 7 }
+ }
+}
+vic_tharn_method_followup = {
+if = { limit = {
+ this = character:19060033 is_ai = no global_var:vic_assassination = 1
+ global_var:vic_method > 0 NOT = { has_character_flag = vic_tharn_preparation_queued }
+ }
+ add_character_flag = vic_tharn_preparation_queued
+ trigger_event = { id = vic_story.85 days = 21 }
+ }
+}
+vic_full_tick = {
+if = { limit = { vic_running = yes }
+ change_global_variable = { name = vic_ticks add = 1 }
+ vic_check_emergencies = yes
+ if = { limit = { global_var:vic_contact_state = 1 }
+ change_global_variable = { name = vic_contact_age add = 1 }
+ if = { limit = { OR = { global_var:vic_contact_age >= 3 character:19060003 = { vic_participant_available = no } } }
+ set_global_variable = { name = vic_contact_state value = 4 }  } }
+if = { limit = { global_var:vic_funding_state = 1 }
+ change_global_variable = { name = vic_funding_age add = 1 }
+ if = { limit = { OR = { global_var:vic_funding_age >= 3 character:19060003 = { vic_participant_available = no } } }
+ set_global_variable = { name = vic_funding_state value = 4 }  } }
+if = { limit = { global_var:vic_case_state = 1 }
+ change_global_variable = { name = vic_case_age add = 1 }
+ if = { limit = { OR = { global_var:vic_case_age >= 3 character:19060001 = { vic_participant_available = no } } }
+ set_global_variable = { name = vic_case_state value = 4 }  } }
+if = { limit = { global_var:vic_confront_state = 1 }
+ change_global_variable = { name = vic_confront_age add = 1 }
+ if = { limit = { OR = { global_var:vic_confront_age >= 3 character:19060033 = { vic_participant_available = no } } }
+ set_global_variable = { name = vic_confront_state value = 4 }  } }
+if = { limit = { global_var:vic_draconis_state = 1 }
+ change_global_variable = { name = vic_draconis_age add = 1 }
+ if = { limit = { OR = { global_var:vic_draconis_age >= 3 character:19060001 = { vic_participant_available = no } } }
+ set_global_variable = { name = vic_draconis_state value = 4 }  } }
+if = { limit = { global_var:vic_report_state = 1 }
+ change_global_variable = { name = vic_report_age add = 1 }
+ if = { limit = { OR = { global_var:vic_report_age >= 3 character:19060001 = { vic_participant_available = no } } }
+ set_global_variable = { name = vic_report_state value = 4 }  } }
+if = { limit = { global_var:vic_contact_state = 5 }
+ change_global_variable = { name = vic_contact_age add = 1 }
+ if = { limit = { global_var:vic_contact_age >= 3 } set_global_variable = { name = vic_contact_state value = 4 }  } }
+if = { limit = { global_var:vic_negotiation_state = 5 }
+ change_global_variable = { name = vic_negotiation_age add = 1 }
+ if = { limit = { global_var:vic_negotiation_age >= 3 } set_global_variable = { name = vic_negotiation_state value = 4 }  } }
+if = { limit = { global_var:vic_negotiation_state = 1 } change_global_variable = { name = vic_negotiation_age add = 1 } if = { limit = { global_var:vic_negotiation_age >= 3 } set_global_variable = { name = vic_negotiation_state value = 4 }  } }
+if = { limit = { global_var:vic_negotiation_state = 1 exists = global_var:vic_negotiation_target global_var:vic_negotiation_target = { vic_participant_available = no } } set_global_variable = { name = vic_negotiation_state value = 4 }  }
+if = { limit = { global_var:vic_cleric_state = 1 }
+ change_global_variable = { name = vic_cleric_age add = 1 }
+ if = { limit = { global_var:vic_cleric_age >= 3 } set_global_variable = { name = vic_cleric_state value = 4 }  } }
+
+ if = { limit = { global_var:vic_assassination = 2 }
+ change_global_variable = { name = vic_attempt_age add = 1 }
+ if = { limit = { global_var:vic_attempt_age >= 1 } vic_resolve_attempt = yes }
+ }
+ if = { limit = { has_global_variable = vic_rebellion_required global_var:vic_war_started = 0 } vic_start_rebellion = yes }
+ if = { limit = { global_var:vic_stage = 5 global_var:vic_war_started = 1 NOT = { exists = global_var:vic_war } }
+ set_global_variable = { name = vic_stage value = 6 } set_global_variable = { name = vic_war_result value = 4 }  }
+ if = { limit = { vic_politics = yes }
+ if = { limit = { global_var:vic_stage = 1 } set_global_variable = { name = vic_stage value = 2 }  }
+ if = { limit = { global_var:vic_stage = 2 OR = { global_var:vic_mobilization >= 40 global_var:vic_preparation >= 40 global_var:vic_exposure >= 40 } } set_global_variable = { name = vic_stage value = 3 }  }
+ if = { limit = { global_var:vic_stage = 3 global_var:vic_preparation >= 65 global_var:vic_assassination = 1 } set_global_variable = { name = vic_stage value = 4 }  }
+ character:19060001 ?= {
+ if = { limit = { vic_participant_available = no } remove_character_flag = vic_action_pending remove_character_flag = vic_opening_pending }
+ else_if = { limit = { NOT = { has_character_flag = vic_opening_complete } NOT = { has_character_flag = vic_opening_pending } }
+ add_character_flag = vic_opening_pending trigger_event = { id = vic_opening.1 days = 1 } }
+ }
+character:19060029 ?= {
+ if = { limit = { vic_participant_available = no } remove_character_flag = vic_action_pending remove_character_flag = vic_opening_pending }
+ else_if = { limit = { NOT = { has_character_flag = vic_opening_complete } NOT = { has_character_flag = vic_opening_pending } }
+ add_character_flag = vic_opening_pending trigger_event = { id = vic_opening.2 days = 1 } }
+ }
+character:19060033 ?= {
+ if = { limit = { vic_participant_available = no } remove_character_flag = vic_action_pending remove_character_flag = vic_opening_pending }
+ else_if = { limit = { NOT = { has_character_flag = vic_opening_complete } NOT = { has_character_flag = vic_opening_pending } }
+ add_character_flag = vic_opening_pending trigger_event = { id = vic_opening.3 days = 1 } }
+ }
+character:19060003 ?= {
+ if = { limit = { vic_participant_available = no } remove_character_flag = vic_action_pending remove_character_flag = vic_opening_pending }
+ else_if = { limit = { NOT = { has_character_flag = vic_opening_complete } NOT = { has_character_flag = vic_opening_pending } }
+ add_character_flag = vic_opening_pending trigger_event = { id = vic_opening.4 days = 1 } }
+ }
+character:19060031 ?= {
+ if = { limit = { vic_participant_available = no } remove_character_flag = vic_action_pending remove_character_flag = vic_opening_pending }
+ else_if = { limit = { NOT = { has_character_flag = vic_opening_complete } NOT = { has_character_flag = vic_opening_pending } }
+ add_character_flag = vic_opening_pending trigger_event = { id = vic_opening.5 days = 1 } }
+ }
+character:19060033 = { if = { limit = { global_var:vic_assassination = 2 } remove_character_flag = vic_action_pending } }
+character:19060033 ?= { if = { limit = {
+ is_ai = yes vic_participant_available = yes has_character_flag = vic_opening_complete
+ NOT = { AND = { this = character:19060033 global_var:vic_assassination = 2 } }
+ NOT = { has_character_flag = vic_action_pending } NOT = { has_character_flag = vic_action_cooldown }
+ } add_character_flag = vic_action_pending trigger_event = { id = vic_story.10 days = 2 } } }
+character:19060003 ?= { if = { limit = {
+ is_ai = yes vic_participant_available = yes has_character_flag = vic_opening_complete
+ NOT = { AND = { this = character:19060033 global_var:vic_assassination = 2 } }
+ NOT = { has_character_flag = vic_action_pending } NOT = { has_character_flag = vic_action_cooldown }
+ } add_character_flag = vic_action_pending trigger_event = { id = vic_story.11 days = 2 } } }
+character:19060031 ?= { if = { limit = {
+ is_ai = yes vic_participant_available = yes has_character_flag = vic_opening_complete
+ NOT = { AND = { this = character:19060033 global_var:vic_assassination = 2 } }
+ NOT = { has_character_flag = vic_action_pending } NOT = { has_character_flag = vic_action_cooldown }
+ } add_character_flag = vic_action_pending trigger_event = { id = vic_story.12 days = 2 } } }
+character:19060029 ?= { if = { limit = {
+ is_ai = yes vic_participant_available = yes has_character_flag = vic_opening_complete
+ NOT = { AND = { this = character:19060033 global_var:vic_assassination = 2 } }
+ NOT = { has_character_flag = vic_action_pending } NOT = { has_character_flag = vic_action_cooldown }
+ } add_character_flag = vic_action_pending trigger_event = { id = vic_story.13 days = 2 } } }
+character:19060001 ?= { if = { limit = {
+ is_ai = yes vic_participant_available = yes has_character_flag = vic_opening_complete
+ NOT = { AND = { this = character:19060033 global_var:vic_assassination = 2 } }
+ NOT = { has_character_flag = vic_action_pending } NOT = { has_character_flag = vic_action_cooldown }
+ } add_character_flag = vic_action_pending trigger_event = { id = vic_story.15 days = 2 } } }
+
+ # A settled or disrupted conspiracy must not hold the whole campaign hostage.
+ if = { limit = { global_var:vic_assassination >= 3 global_var:vic_war_started = 0 NOT = { has_global_variable = vic_rebellion_required } }
+ change_global_variable = { name = vic_quiet_ticks add = 1 }
+ if = { limit = { OR = { AND = { global_var:vic_settlement = 1 global_var:vic_quiet_ticks >= 3 } global_var:vic_quiet_ticks >= 12 } }
+ set_global_variable = { name = vic_stage value = 6 } set_global_variable = { name = vic_outcome value = 3 }  }
+ }
+ # Stalemates become a persistent political struggle, not an arbitrary murder.
+ if = { limit = { global_var:vic_ticks >= 30 global_var:vic_assassination != 2 global_var:vic_war_started = 0 NOT = { has_global_variable = vic_rebellion_required } }
+ vic_close_attempt = yes set_global_variable = { name = vic_stage value = 6 } set_global_variable = { name = vic_outcome value = 5 }  }
+ }
+ if = { limit = { global_var:vic_stage = 6 }
+ change_global_variable = { name = vic_aftermath_age add = 1 }
+ title:h_voltara_severos.holder ?= {
+ if = { limit = { is_alive = yes NOT = { has_character_flag = vic_aftermath_pending } NOT = { has_character_flag = vic_aftermath_chosen } }
+ add_character_flag = vic_aftermath_pending trigger_event = { id = vic_story.50 days = 2 }
+ }
+ }
+ if = { limit = { global_var:vic_aftermath_age >= 6 NOT = { has_global_variable = vic_aftermath_final } }
+ title:h_voltara_severos.holder ?= { vic_finish_aftermath = { POLICY = 0 } }
+ }
+ }
+ }
+}
+vic_finish_aftermath = {
+if = { limit = { global_var:vic_stage = 6 NOT = { has_global_variable = vic_aftermath_final } has_title = title:h_voltara_severos is_alive = yes }
+ set_global_variable = { name = vic_aftermath_final value = yes }
+ set_global_variable = { name = vic_aftermath_policy value = $POLICY$ }
+ add_character_flag = vic_aftermath_chosen remove_character_flag = vic_aftermath_pending
+ if = { limit = { global_var:vic_aftermath_policy = 1 }
+ vic_change = { KEY = legitimacy AMOUNT = 15 } vic_change = { KEY = noble_opposition AMOUNT = -15 } vic_change = { KEY = popular_unrest AMOUNT = -15 } 
+ add_character_modifier = { modifier = vic_reconciliation years = 10 }
+ }
+ else_if = { limit = { global_var:vic_aftermath_policy = 2 }
+ vic_change = { KEY = legitimacy AMOUNT = -10 } vic_change = { KEY = military_loyalty AMOUNT = 15 } vic_change = { KEY = popular_unrest AMOUNT = 20 } set_global_variable = { name = vic_persecution value = 1 } 
+ add_character_modifier = { modifier = vic_repression years = 10 }
+ }
+ else_if = { limit = { global_var:vic_aftermath_policy = 3 }
+ add_realm_law_skip_effects = voltara_slavery_banned
+ voltara_abolish_slavery = yes
+ vic_change = { KEY = popular_unrest AMOUNT = -30 } vic_change = { KEY = noble_opposition AMOUNT = 20 } 
+ add_character_modifier = { modifier = vic_reform_legacy years = 15 }
+ }
+ else = { add_character_modifier = { modifier = vic_unsettled_realm years = 10 } }
+ save_scope_as = vic_settlement_ruler
+ every_vassal_or_below = {
+ if = { limit = { OR = {
+ AND = { scope:vic_settlement_ruler = { this = character:19060003 } has_character_flag = vic_wartime_opposition }
+ AND = { scope:vic_settlement_ruler = { NOT = { this = character:19060003 } } has_character_flag = vic_wartime_crown }
+ } } add_character_modifier = { modifier = vic_war_service years = 5 } }
+ else_if = { limit = { OR = { has_character_flag = vic_wartime_crown has_character_flag = vic_wartime_opposition } } add_character_modifier = { modifier = vic_contested_loyalty years = 5 } }
+ }
+ vic_family_aftermath = yes
+ trigger_event = { id = vic_story.81 days = 10 }
+ character:19060042 ?= { if = { limit = { is_alive = yes } trigger_event = { id = vic_story.52 days = 15 } } }
+ if = { limit = { this = character:19060003 has_realm_law = voltara_slavery_legal global_var:vic_popular_unrest >= 60
+ NOT = { has_global_variable = voltara_cassian_crisis_revolt }
+ exists = title:e_voltara_thornfall.holder title:e_voltara_thornfall.holder = { is_alive = yes NOT = { this = root } }
+ NOT = { has_game_rule = vic_liberation_disabled }
+ }
+ voltara_begin_slave_revolt = yes
+ }
+ set_global_variable = { name = vic_stage value = 7 } 
+ }
+}
+vic_family_aftermath = {
+if = { limit = { NOT = { has_global_variable = vic_family_notified } }
+ set_global_variable = { name = vic_family_notified value = yes }
+ character:19060002 ?= { if = { limit = { is_alive = yes } trigger_event = { id = vic_story.51 days = 3 } } }
+ character:19060034 ?= { if = { limit = { is_alive = yes } add_character_modifier = { modifier = vic_family_guardian years = 5 } } }
+ }
+}
+vic_refuge_family = {
+if = { limit = { exists = title:e_voltara_bryndale.holder title:e_voltara_bryndale.holder = { is_alive = yes } }
+ title:e_voltara_bryndale.holder = { save_scope_as = vic_refuge }
+ character:19060002 ?= { if = { limit = { is_alive = yes is_landed = no is_imprisoned = no } save_scope_as = vic_family_member scope:vic_refuge = { add_courtier = scope:vic_family_member } } }
+character:19060004 ?= { if = { limit = { is_alive = yes is_landed = no is_imprisoned = no } save_scope_as = vic_family_member scope:vic_refuge = { add_courtier = scope:vic_family_member } } }
+character:19060005 ?= { if = { limit = { is_alive = yes is_landed = no is_imprisoned = no } save_scope_as = vic_family_member scope:vic_refuge = { add_courtier = scope:vic_family_member } } }
+set_global_variable = { name = vic_family_safe value = 1 }  }
+}
+vic_thorne_departure = {
+if = { limit = { this = character:19060042 is_alive = yes is_imprisoned = no }
+ if = { limit = { has_dlc_feature = roads_to_power is_landed = no NOT = { is_landless_adventurer = yes } }
+ create_adventurer_title = { name = voltara_withering_hand_camp holder = this save_scope_as = vic_thorne_camp }
+ change_government = landless_adventurer_government add_realm_law = landless_adventurer_succession_law add_gold = 150 }
+ character:19060043 ?= { if = { limit = { is_alive = yes is_landed = no is_imprisoned = no } save_scope_as = vic_thorne_companion root = { add_courtier = scope:vic_thorne_companion } } }
+ add_character_flag = vic_thorne_left_empire
+ }
+}
+vic_notify_negotiation = {
+if = { limit = { OR = { global_var:vic_negotiation_state = 2 global_var:vic_negotiation_state = 3 } NOT = { has_global_variable = vic_negotiation_reply_sent } }
+ set_global_variable = { name = vic_negotiation_reply_sent value = yes }
+ if = { limit = { this = character:19060003 } character:19060001 = { trigger_event = { id = vic_story.90 days = 3 } } }
+ else = { character:19060003 = { trigger_event = { id = vic_story.90 days = 3 } } }
+ }
+}
+vic_queue_final_review = {
+if = { limit = { this = character:19060033 vic_participant_available = yes vic_politics = yes global_var:vic_assassination = 1 NOT = { has_character_flag = vic_final_review_pending } }
+ add_character_flag = vic_final_review_pending trigger_event = { id = vic_story.19 days = $DAYS$ }
+ }
+}
+vic_route_cassian_opening = {
+if = { limit = { is_ai = no }
+ if = { limit = { has_character_flag = vic_letter_inquiry } trigger_event = { id = vic_story.13 days = 10 } }
+ else_if = { limit = { OR = { has_character_flag = vic_family_protection has_character_flag = vic_bryndale_guards } } trigger_event = { id = vic_story.40 days = 10 } }
+ }
+}
+vic_route_octavian_opening = {
+if = { limit = { OR = { has_character_flag = vic_public_musters has_character_flag = vic_captain_network } }
+ set_global_variable = { name = vic_musters_source value = 1 }  }
+ if = { limit = { is_ai = no }
+ if = { limit = { has_character_flag = vic_negotiation_channel } vic_offer_peace = yes }
+ else_if = { limit = { has_character_flag = vic_house_pledges } vic_seek_house = yes }
+ else = { trigger_event = { id = vic_story.88 days = 14 } }
+ }
+}
+vic_route_maxwell_opening = {
+if = { limit = { is_ai = no }
+ if = { limit = { has_character_flag = vic_opposition_financier } trigger_event = { id = vic_story.86 days = 10 } }
+ else_if = { limit = { has_character_flag = vic_reform_negotiator } vic_draconis_offer = yes }
+ else_if = { limit = { has_character_flag = vic_free_labor_transition } trigger_event = { id = vic_story.87 days = 21 } }
+ else_if = { limit = { has_character_flag = vic_anti_abolition } vic_seek_house = yes }
+ }
+}

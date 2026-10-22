@@ -1,0 +1,93 @@
+﻿VicContactReply = { type = character
+text = { trigger = { global_var:vic_contact_state = 1 } localization_key = vic_ui_viccontactreply_0 }
+text = { trigger = { global_var:vic_contact_state = 2 } localization_key = vic_ui_viccontactreply_1 }
+text = { trigger = { global_var:vic_contact_state = 3 } localization_key = vic_ui_viccontactreply_2 }
+text = { trigger = { global_var:vic_contact_state = 4 } localization_key = vic_ui_viccontactreply_3 }
+text = { trigger = { global_var:vic_contact_state = 5 } localization_key = vic_ui_viccontactreply_4 }
+text = { localization_key = vic_ui_viccontactreply_5 }
+}
+VicFundingReply = { type = character
+text = { trigger = { global_var:vic_funding_state = 1 } localization_key = vic_ui_vicfundingreply_0 }
+text = { trigger = { global_var:vic_funding_state = 2 } localization_key = vic_ui_vicfundingreply_1 }
+text = { trigger = { global_var:vic_funding_state = 3 } localization_key = vic_ui_vicfundingreply_2 }
+text = { trigger = { global_var:vic_funding_state = 4 } localization_key = vic_ui_vicfundingreply_3 }
+text = { trigger = { global_var:vic_funding_state = 5 } localization_key = vic_ui_vicfundingreply_4 }
+text = { localization_key = vic_ui_vicfundingreply_5 }
+}
+VicConfrontReply = { type = character
+text = { trigger = { global_var:vic_confront_state = 1 } localization_key = vic_ui_vicconfrontreply_0 }
+text = { trigger = { global_var:vic_confront_state = 2 } localization_key = vic_ui_vicconfrontreply_1 }
+text = { trigger = { global_var:vic_confront_state = 3 } localization_key = vic_ui_vicconfrontreply_2 }
+text = { trigger = { global_var:vic_confront_state = 4 } localization_key = vic_ui_vicconfrontreply_3 }
+text = { trigger = { global_var:vic_confront_state = 5 } localization_key = vic_ui_vicconfrontreply_4 }
+text = { localization_key = vic_ui_vicconfrontreply_5 }
+}
+VicEstateReply = { type = character
+text = { trigger = { global_var:vic_draconis_state = 1 } localization_key = vic_ui_vicestatereply_0 }
+text = { trigger = { global_var:vic_draconis_state = 2 } localization_key = vic_ui_vicestatereply_1 }
+text = { trigger = { global_var:vic_draconis_state = 3 } localization_key = vic_ui_vicestatereply_2 }
+text = { trigger = { global_var:vic_draconis_state = 4 } localization_key = vic_ui_vicestatereply_3 }
+text = { trigger = { global_var:vic_draconis_state = 5 } localization_key = vic_ui_vicestatereply_4 }
+text = { localization_key = vic_ui_vicestatereply_5 }
+}
+VicClericHelp = { type = character
+text = { trigger = { global_var:vic_cleric_help = 2 } localization_key = vic_ui_vicclerichelp_0 }
+text = { trigger = { global_var:vic_cleric_help = 1 } localization_key = vic_ui_vicclerichelp_1 }
+text = { localization_key = vic_ui_vicclerichelp_2 }
+}
+VicCrisisPhase = { type = character
+text = { trigger = { global_var:vic_stage = 1 } localization_key = vic_ui_viccrisisphase_0 }
+text = { trigger = { global_var:vic_stage = 2 } localization_key = vic_ui_viccrisisphase_1 }
+text = { trigger = { global_var:vic_stage = 3 } localization_key = vic_ui_viccrisisphase_2 }
+text = { trigger = { global_var:vic_stage = 4 } localization_key = vic_ui_viccrisisphase_3 }
+text = { trigger = { global_var:vic_stage = 5 } localization_key = vic_ui_viccrisisphase_4 }
+text = { trigger = { global_var:vic_stage = 6 } localization_key = vic_ui_viccrisisphase_5 }
+text = { trigger = { global_var:vic_stage = 7 } localization_key = vic_ui_viccrisisphase_6 }
+text = { localization_key = vic_ui_viccrisisphase_7 }
+}
+VicChosenMethod = { type = character
+text = { trigger = { global_var:vic_method = 1 } localization_key = vic_ui_vicchosenmethod_0 }
+text = { trigger = { global_var:vic_method = 2 } localization_key = vic_ui_vicchosenmethod_1 }
+text = { trigger = { global_var:vic_method = 3 } localization_key = vic_ui_vicchosenmethod_2 }
+text = { localization_key = vic_ui_vicchosenmethod_3 }
+}
+VicDraconisAllegiance = { type = character
+text = { trigger = { has_character_flag = vic_pledged_cassian } localization_key = vic_ui_vicdraconisallegiance_0 }
+text = { trigger = { has_character_flag = vic_pledged_octavian } localization_key = vic_ui_vicdraconisallegiance_1 }
+text = { trigger = { has_character_flag = vic_neutral_house } localization_key = vic_ui_vicdraconisallegiance_2 }
+text = { localization_key = vic_ui_vicdraconisallegiance_3 }
+}
+VicDraconisInvestment = { type = character
+text = { trigger = { has_character_flag = vic_funded_octavian } localization_key = vic_ui_vicdraconisinvestment_0 }
+text = { localization_key = vic_ui_vicdraconisinvestment_1 }
+}
+VicClueTreasury = { type = character
+text = { trigger = { var:vic_clue_treasury >= 3 } localization_key = vic_ui_viccluetreasury_0 }
+text = { trigger = { var:vic_clue_treasury >= 2 } localization_key = vic_ui_viccluetreasury_1 }
+text = { trigger = { var:vic_clue_treasury >= 1 } localization_key = vic_ui_viccluetreasury_2 }
+text = { localization_key = vic_ui_viccluetreasury_3 }
+}
+VicClueMusters = { type = character
+text = { trigger = { var:vic_clue_musters >= 3 } localization_key = vic_ui_viccluemusters_0 }
+text = { trigger = { var:vic_clue_musters >= 2 } localization_key = vic_ui_viccluemusters_1 }
+text = { trigger = { var:vic_clue_musters >= 1 } localization_key = vic_ui_viccluemusters_2 }
+text = { localization_key = vic_ui_viccluemusters_3 }
+}
+VicCluePalace = { type = character
+text = { trigger = { var:vic_clue_palace >= 3 } localization_key = vic_ui_viccluepalace_0 }
+text = { trigger = { var:vic_clue_palace >= 2 } localization_key = vic_ui_viccluepalace_1 }
+text = { trigger = { var:vic_clue_palace >= 1 } localization_key = vic_ui_viccluepalace_2 }
+text = { localization_key = vic_ui_viccluepalace_3 }
+}
+VicClueCleric = { type = character
+text = { trigger = { var:vic_clue_cleric >= 3 } localization_key = vic_ui_viccluecleric_0 }
+text = { trigger = { var:vic_clue_cleric >= 2 } localization_key = vic_ui_viccluecleric_1 }
+text = { trigger = { var:vic_clue_cleric >= 1 } localization_key = vic_ui_viccluecleric_2 }
+text = { localization_key = vic_ui_viccluecleric_3 }
+}
+VicClueLetters = { type = character
+text = { trigger = { var:vic_clue_letters >= 3 } localization_key = vic_ui_vicclueletters_0 }
+text = { trigger = { var:vic_clue_letters >= 2 } localization_key = vic_ui_vicclueletters_1 }
+text = { trigger = { var:vic_clue_letters >= 1 } localization_key = vic_ui_vicclueletters_2 }
+text = { localization_key = vic_ui_vicclueletters_3 }
+}

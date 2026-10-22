@@ -1,0 +1,7 @@
+﻿vt_is_the_wizard = { this = character:19066001 is_alive = yes }
+vt_wizard_gift_recipient = { is_alive = yes is_adult = yes NOT = { has_trait = voltara_wizards_immortality } NOT = { this = character:19066001 } }
+vt_wizard_foreign_invasion = {
+ exists = scope:war exists = scope:attacker exists = scope:defender
+ scope:defender = { vt_is_the_wizard = yes }
+ scope:attacker = { is_alive = yes is_landed = yes NOT = { top_liege = scope:defender.top_liege } }
+}

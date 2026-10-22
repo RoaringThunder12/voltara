@@ -1,0 +1,4 @@
+﻿on_perks_refunded = { on_actions = { vt_outlaw_refund } }
+vt_outlaw_refund = { effect = { vt_outlaw_sync = yes } }
+on_trait_lost = { on_actions = { vt_outlaw_lost_access } }
+vt_outlaw_lost_access = { trigger = { scope:trait = trait:gallowsbait OR = { has_focus = vt_outlaw_pirate_focus has_focus = vt_outlaw_bandit_focus has_focus = vt_outlaw_smuggler_focus } } effect = { set_focus = no } }

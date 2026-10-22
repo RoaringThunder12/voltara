@@ -1,0 +1,9 @@
+﻿vt_weave_crystal_travel_eligible = {
+ is_available_travelling = yes
+ is_playable_character = yes
+ is_adult = yes
+ NOT = { has_trait = dragon }
+ NOT = { has_character_flag = vt_found_travel_crystal }
+ NOT = { has_character_flag = in_pilgrimage_event_chain }
+ location = { is_sea_province = no }
+}

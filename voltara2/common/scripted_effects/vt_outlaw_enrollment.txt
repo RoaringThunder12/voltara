@@ -1,0 +1,3 @@
+﻿vt_outlaw_grant_access = {
+ if = { limit = { OR = { has_trait = voltara_pirate has_trait = vt_outlaw_bandit has_government = pirate_government vt_northern_bandit_leader = yes } NOT = { has_trait = gallowsbait } } add_trait = gallowsbait }
+}

@@ -1,0 +1,4 @@
+﻿on_game_start_after_lobby = { on_actions = { vkf_full_init } }
+on_game_start = { on_actions = { vkf_full_defer } }
+vkf_full_defer = { effect = { trigger_event = { on_action = vkf_full_init days = 1 } } }
+vkf_full_init = { effect = { vkf_situation_init = yes } }

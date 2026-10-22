@@ -1,0 +1,7 @@
+﻿on_game_start = { on_actions = { vt_outlaw_enroll_start } }
+vt_outlaw_enroll_start = { effect = { every_living_character = { vt_outlaw_grant_access = yes } } }
+on_trait_gained = { on_actions = { vt_outlaw_enroll_trait } }
+vt_outlaw_enroll_trait = { trigger = { OR = { scope:trait = trait:voltara_pirate scope:trait = trait:vt_outlaw_bandit } } effect = { vt_outlaw_grant_access = yes } }
+on_government_change = { on_actions = { vt_outlaw_enroll_government } }
+vt_outlaw_enroll_government = { effect = { vt_outlaw_grant_access = yes } }
+yearly_playable_pulse = { on_actions = { vt_outlaw_enroll_government } }
