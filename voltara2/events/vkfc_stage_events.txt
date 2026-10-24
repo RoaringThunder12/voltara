@@ -169,7 +169,7 @@ vkfc.7 = { hidden = yes
 vkfc.107 = { hidden = yes
  trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_7 has_variable = vkfc_stage_7 } }
  immediate = {
-  if = { limit = { scope:activity = { has_variable = vkfc_closing_read } } scope:activity = { skip_activity_phase = yes } }
+  if = { limit = { scope:activity = { has_variable = vkfc_closing_read } } vkfc_complete_council = yes scope:activity = { skip_activity_phase = yes } }
   else = { trigger_event = { id = vkfc.107 days = 3 } }
  }
 }
@@ -186,11 +186,11 @@ vkfc.21 = { type = character_event theme = realm title = vkfc.21.t desc = vkfc.2
  left_portrait = { character = root } right_portrait = { character = scope:vkfc_delegate }
  option = { name = vkfc.21.a custom_tooltip = vkfc.21.a.tt
  scope:vkfc_delegate = { vkf_council_oath = { TYPE = 2 } set_variable = { name = vkf_promised_by value = root days = 1825 } add_character_modifier = { modifier = vkf_promised_autonomy years = 5 } }
- ai_chance = { base = 45 } }
+ ai_chance = { base = 45  modifier = { this = character:9999100 add = 1000 } } }
  option = { name = vkfc.21.b trigger = { gold >= 75 } custom_tooltip = vkfc.21.b.tt
  remove_short_term_gold = 75 scope:vkfc_delegate = { add_gold = 75 vkf_council_oath = { TYPE = 1 } }
- ai_chance = { base = 35 } }
- option = { name = vkfc.21.c custom_tooltip = vkfc.21.c.tt ai_chance = { base = 20 } }
+ ai_chance = { base = 35  modifier = { this = character:9999100 factor = 0.01 } } }
+ option = { name = vkfc.21.c custom_tooltip = vkfc.21.c.tt ai_chance = { base = 20  modifier = { this = character:9999100 factor = 0.01 } } }
 }
 vkfc.22 = { type = character_event theme = realm title = vkfc.22.t desc = vkfc.22.desc
  trigger = { vkfu_council_host = yes has_character_flag = vkf_war_council_active exists = scope:activity }

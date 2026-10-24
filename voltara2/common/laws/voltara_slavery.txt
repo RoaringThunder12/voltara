@@ -6,11 +6,11 @@
   is_landed = yes
   custom_tooltip = {
    text = voltara_abolition_cassian_lock_tt
-   OR = { vic_cassian_victorious = yes has_game_rule = vt_abolition_open
-   NOT = {
+   OR = { vic_cassian_victorious = yes top_liege = { vic_cassian_victorious = yes } has_game_rule = vt_abolition_open
+   NOT = { AND = {
     character:19060001 = { is_alive = yes }
     top_liege = { OR = { has_title = title:h_voltara_severos has_title = title:e_voltara_21 } }
-   }
+   } }
    }
   }
   prestige_level >= 3
@@ -24,7 +24,7 @@ voltara_slavery_legal = {
  law_group_type = voltara_slavery_laws index = 1 flag = voltara_slavery_legal
  can_realm_have = { always = yes }
  should_start_with = { voltara_historical_slavery_realm = yes }
- can_pass = { is_landed = yes NOT = { vtf_protected = yes } }
+ can_pass = { is_landed = yes NOT = { vtf_protected = yes } NOT = { AND = { is_independent_ruler = no top_liege = { has_title = title:h_voltara_severos has_realm_law = voltara_slavery_banned } } } }
  pass_cost = { prestige = 300 }
  on_after_pass = { voltara_report_slavery_crime = yes every_vassal_or_below = { voltara_report_slavery_crime = yes } }
 }

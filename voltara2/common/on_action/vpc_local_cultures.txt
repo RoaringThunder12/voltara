@@ -1,0 +1,7 @@
+﻿on_game_start = { on_actions = { vpc_initialize } }
+on_game_start_after_lobby = { on_actions = { vpc_initialize } }
+yearly_global_pulse = { on_actions = { vpc_refresh } }
+on_title_gain = { on_actions = { vpc_title_holder } }
+vpc_initialize = { effect = { vpc_seed_local_cultures = yes vpc_repair_world = yes trigger_event = { on_action = vpc_refresh days = 1 } } }
+vpc_refresh = { effect = { vpc_repair_world = yes } }
+vpc_title_holder = { effect = { vpc_repair_ruler = yes } }

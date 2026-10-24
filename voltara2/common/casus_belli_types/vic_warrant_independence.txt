@@ -1,0 +1,21 @@
+﻿vic_warrant_independence = {
+ icon = independence_faction_war group = independence target_titles = none ai = no
+ war_name = vic_warrant_independence_name cb_name = vic_warrant_independence
+ allowed_for_character = { has_variable = vic_warrant_status }
+ allowed_against_character = { this = character:19060003 }
+ valid_to_start = { scope:attacker = { vic_warrant_pending = yes } scope:defender = { this = character:19060003 has_title = title:h_voltara_severos } }
+ should_invalidate = { OR = { scope:attacker = { OR = { is_alive = no is_independent_ruler = yes } } NOT = { exists = title:h_voltara_severos.holder } } }
+ on_primary_attacker_death = inherit on_primary_defender_death = inherit
+ attacker_capital_gives_war_score = yes max_attacker_score_from_battles = 100 max_defender_score_from_battles = 100
+ on_victory_desc = { desc = vic_warrant_independence_victory }
+ on_defeat_desc = { desc = vic_warrant_independence_defeat }
+ on_white_peace_desc = { desc = vic_warrant_independence_white_peace }
+ on_invalidated_desc = { desc = vic_warrant_independence_invalidated }
+ on_victory = {
+  create_title_and_vassal_change = { type = independency save_scope_as = vic_warrant_freedom }
+  scope:attacker = { becomes_independent = { change = scope:vic_warrant_freedom } set_variable = { name = vic_warrant_status value = 4 } }
+  resolve_title_and_vassal_change = scope:vic_warrant_freedom
+ }
+ on_defeat = { scope:defender = { if = { limit = { scope:attacker = { is_alive = yes is_imprisoned = no } } imprison = { target = scope:attacker type = dungeon } } } scope:attacker = { set_variable = { name = vic_warrant_status value = 5 } } }
+ on_white_peace = { scope:attacker = { set_variable = { name = vic_warrant_status value = 6 } } }
+}

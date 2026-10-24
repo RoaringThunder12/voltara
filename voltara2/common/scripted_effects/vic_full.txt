@@ -98,6 +98,8 @@ if = { limit = {
  random_character_war = { limit = { using_cb = vic_imperial_claim } save_scope_as = vic_new_war }
  if = { limit = { exists = scope:vic_new_war }
  set_global_variable = { name = vic_war value = scope:vic_new_war }
+ vic_enforce_starting_sides = yes
+ trigger_event = { id = vic_settlement.1 days = 1 }
  spawn_army = { levies = vic_rebel_host_size location = capital_province war = scope:vic_new_war name = vic_iron_forest_host }
  trigger_event = { id = vic_story.43 days = 1 }
  scope:vic_war_defender = { trigger_event = { id = vic_story.43 days = 1 } }
@@ -133,6 +135,8 @@ title:c_voltara_323 = { if = { limit = { holder = scope:vic_former_emperor } cha
  if = { limit = { has_title = title:c_voltara_323 } set_realm_capital = title:c_voltara_323 }
  if = { limit = { this = character:19060003 NOT = { has_character_flag = vic_heirs_resolved } }
  add_character_flag = vic_heirs_pending trigger_event = { id = vic_heirs.1 days = 3 }
+ trigger_event = { id = vic_settlement.2 days = 1 }
+ vic_marques_dispossess = yes
  vic_thorne_victory_exile = yes
  }
 }
@@ -140,7 +144,10 @@ title:c_voltara_323 = { if = { limit = { holder = scope:vic_former_emperor } cha
 }
 vic_war_end = {
 set_global_variable = { name = vic_war_result value = $RESULT$ }
+ vic_restore_war_realms = yes
+ if = { limit = { global_var:vic_war_result = 1 } character:19060003 = { trigger_event = { id = vic_warrants.1 days = 2 } } }
  set_global_variable = { name = vic_stage value = 6 } set_global_variable = { name = vic_aftermath_age value = 0 } 
+ if = { limit = { global_var:vic_war_result = 2 } vic_loyalist_victory = yes }
  remove_global_variable = vic_war
  remove_global_variable = vic_rebellion_required
  scope:attacker ?= { remove_character_flag = vic_claimant }
@@ -462,7 +469,8 @@ vip_refresh_public = yes
 vip_story_public_consequences = yes
 }
 vic_finish_aftermath = {
-if = { limit = { global_var:vic_stage = 6 NOT = { has_global_variable = vic_aftermath_final } has_title = title:h_voltara_severos is_alive = yes }
+save_scope_value_as = { name = vic_requested_policy value = $POLICY$ }
+if = { limit = { global_var:vic_stage = 6 NOT = { has_global_variable = vic_aftermath_final } has_title = title:h_voltara_severos is_alive = yes OR = { NOT = { scope:vic_requested_policy = 3 } AND = { NOT = { this = character:19060003 } OR = { NOT = { vic_abolitionist_ruler = yes } vic_cassian_victorious = yes } } } }
  set_global_variable = { name = vic_aftermath_final value = yes }
  set_global_variable = { name = vic_aftermath_policy value = $POLICY$ }
  add_character_flag = vic_aftermath_chosen remove_character_flag = vic_aftermath_pending
@@ -475,7 +483,7 @@ if = { limit = { global_var:vic_stage = 6 NOT = { has_global_variable = vic_afte
  add_character_modifier = { modifier = vic_repression years = 10 }
  }
  else_if = { limit = { global_var:vic_aftermath_policy = 3 }
- add_realm_law_skip_effects = voltara_slavery_banned
+ if = { limit = { NOT = { has_realm_law = voltara_slavery_banned } } add_realm_law_skip_effects = voltara_slavery_banned }
  voltara_abolish_slavery = yes
  vic_change = { KEY = popular_unrest AMOUNT = -30 } vic_change = { KEY = noble_opposition AMOUNT = 20 } 
  add_character_modifier = { modifier = vic_reform_legacy years = 15 }
@@ -540,7 +548,7 @@ if = { limit = { this = character:19060033 vic_participant_available = yes vic_p
 }
 vic_route_cassian_opening = {
 if = { limit = { is_ai = no }
- if = { limit = { has_character_flag = vic_letter_inquiry } if = { limit = { is_ai = yes } trigger_event = { id = vic_story.13 days = 10 } } else = { remove_character_flag = vic_action_pending lam_fac_default_view_effect = yes lam_factions_refresh_effect = yes set_variable = { name = lam_factions_open value = yes } } }
+ if = { limit = { has_character_flag = vic_letter_inquiry } trigger_event = { id = vic_story.13 days = 10 } }
  else_if = { limit = { OR = { has_character_flag = vic_family_protection has_character_flag = vic_bryndale_guards } } trigger_event = { id = vic_story.40 days = 10 } }
  }
 }

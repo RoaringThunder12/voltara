@@ -7,3 +7,13 @@ if = { limit = { scope:activity = { has_current_phase = vkf_council_phase_5 NOT 
 if = { limit = { scope:activity = { has_current_phase = vkf_council_phase_6 NOT = { has_variable = vkfc_stage_6 } } } trigger_event = { id = vkfc.6 days = 1 } }
 if = { limit = { scope:activity = { has_current_phase = vkf_council_phase_7 NOT = { has_variable = vkfc_stage_7 } } } trigger_event = { id = vkfc.7 days = 1 } }
 }
+
+# Character scope: one guarded completion shared by the last stage and native callback.
+vkfc_complete_council = {
+ if = { limit = { exists = scope:activity NOT = { scope:activity = { has_variable = vkfc_finished } } }
+  scope:activity = { set_variable = { name = vkfc_finished value = yes } }
+  remove_character_flag = vkf_war_council_active
+  vkf_recount = yes
+  vkfu_finish_council = yes
+ }
+}

@@ -1,0 +1,21 @@
+﻿namespace = vic_settlement
+vic_settlement.1 = { type = character_event theme = intrigue title = vic_settlement.1.t
+ desc = { first_valid = { triggered_desc = { trigger = { global_var:vic_assassination = 4 } desc = vic_settlement.1.dead } desc = vic_settlement.1.alive } }
+ trigger = { this = character:19060003 is_alive = yes global_var:vic_war_started = 1 NOT = { has_global_variable = vic_war_attempt_done } }
+ immediate = { vic_war_opening_attempt = yes }
+ option = { name = vic_settlement.1.a }
+}
+vic_settlement.2 = { type = character_event theme = war title = vic_settlement.2.t
+ desc = { first_valid = { triggered_desc = { trigger = { has_global_variable = vic_cassian_fell_at_titania } desc = vic_settlement.2.execution } desc = vic_settlement.2.dead } }
+ trigger = { this = character:19060003 is_alive = yes has_title = title:h_voltara_severos NOT = { has_global_variable = vic_titania_reckoning_done } }
+ immediate = { vic_titania_reckoning = yes }
+ option = { name = vic_settlement.2.a }
+}
+vic_settlement.3 = { type = character_event theme = realm title = vic_settlement.3.t desc = vic_settlement.3.desc
+ trigger = { this = character:19060029 is_alive = yes has_character_flag = vic_marques_in_exile }
+ option = { name = vic_settlement.3.a }
+}
+vic_settlement.4 = { type = character_event theme = family title = vic_settlement.4.t desc = vic_settlement.4.desc
+ trigger = { this = character:19060029 is_alive = yes has_global_variable = vic_family_with_marques }
+ option = { name = vic_settlement.4.a }
+}

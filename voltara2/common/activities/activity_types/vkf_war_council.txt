@@ -11,6 +11,7 @@
  can_be_activity_guest = { vkf_council_guest = yes }
  guest_invite_rules = { defaults = { 1 = vkf_invite_southron } }
  guest_join_chance = { base = 50 base_activity_modifier = yes
+ modifier = { add = 100 scope:host = { this = character:9999100 } }
  modifier = { factor = 0 exists = scope:activity scope:activity = { has_variable = vkf_arrivals_closed } }
  }
  ai_will_do = { value = 30 } ai_will_select_province = { value = 100 }
@@ -22,10 +23,7 @@
   }
  }
  on_start = { scope:host = { remove_variable = vkfc_policy remove_character_flag = vkfc_platform_chosen vkf_seed_leader = yes if = { limit = { has_variable = vkf_spoils var:vkf_spoils > 0 } add_gold = var:vkf_spoils set_variable = { name = vkf_spoils value = 0 } } add_character_flag = vkf_war_council_active remove_character_flag = vkf_spoils_decided remove_character_flag = vkf_strategy_decided } }
- on_complete = { if = { limit = { this = scope:host NOT = { scope:activity = { has_variable = vkfc_finished } } }
- scope:activity = { set_variable = { name = vkfc_finished value = yes } }
- remove_character_flag = vkf_war_council_active vkf_recount = yes vkfu_finish_council = yes
- } }
+ on_complete = { scope:host = { vkfc_complete_council = yes } }
  on_invalidated = { scope:host ?= { remove_character_flag = vkf_war_council_active } }
  on_host_death = { scope:host ?= { remove_character_flag = vkf_war_council_active } }
  header_background = "gfx/interface/illustrations/activity_header_backgrounds/activity_camp_party.dds"

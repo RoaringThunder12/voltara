@@ -1,0 +1,61 @@
+﻿vic_enforce_starting_sides = {
+ if = { limit = { exists = global_var:vic_war }
+ global_var:vic_war = { save_scope_as = war }
+ if = { limit = { title:h_voltara_severos = { NOT = { has_variable = voltara_mw_active } } }
+  title:h_voltara_severos = { set_variable = { name = voltara_mw_active value = scope:war } }
+  title:h_voltara_severos.holder = { every_vassal = {
+   limit = { highest_held_title_tier >= tier_kingdom NOT = { this = character:19060003 } NOT = { voltara_is_ruins_placeholder = yes } NOT = { voltara_keeper_realm = yes } }
+   add_to_temporary_list = vic_start_paramounts
+  } }
+  every_in_list = { list = vic_start_paramounts voltara_mw_detach = yes }
+ }
+
+ character:19060033 ?= { if = { limit = { is_alive = yes } vic_fixed_war_side = { SIDE = 2 } } }
+ character:19060031 ?= { if = { limit = { is_alive = yes } vic_fixed_war_side = { SIDE = 2 } } }
+ title:e_voltara_halithor.holder ?= { if = { limit = { is_alive = yes } vic_fixed_war_side = { SIDE = 2 } } }
+ title:k_voltara_luminous_see.holder ?= { if = { limit = { is_alive = yes } vic_fixed_war_side = { SIDE = 2 } } }
+ title:e_voltara_enderal.holder ?= { if = { limit = { is_alive = yes } vic_fixed_war_side = { SIDE = 2 } } }
+ title:e_voltara_thornfall.holder ?= { if = { limit = { is_alive = yes } vic_fixed_war_side = { SIDE = 1 } } }
+ title:e_voltara_kedith.holder ?= { if = { limit = { is_alive = yes } vic_fixed_war_side = { SIDE = 1 } } }
+ character:19060029 ?= { if = { limit = { is_alive = yes } vic_fixed_war_side = { SIDE = 1 } } }
+ character:19060034 ?= { if = { limit = { is_alive = yes } vic_fixed_war_side = { SIDE = 1 } } }
+ title:e_voltara_bryndale.holder ?= { if = { limit = { is_alive = yes } vic_fixed_war_side = { SIDE = 1 } } }
+ character:19060024 ?= { if = { limit = { is_alive = yes } vic_fixed_war_side = { SIDE = 1 } } }
+ vip_refresh_public = yes
+ }
+}
+vic_fixed_war_side = {
+ save_scope_as = vic_fixed_member
+ set_variable = { name = vic_fixed_war_side value = $SIDE$ }
+ set_variable = { name = vip_alignment value = $SIDE$ }
+ remove_character_flag = vic_neutral_house
+ remove_character_flag = vip_wartime_neutral
+ if = { limit = { var:vic_fixed_war_side = 2 }
+  add_character_flag = vic_pledged_octavian remove_character_flag = vic_pledged_cassian
+  add_character_flag = vic_wartime_opposition remove_character_flag = vic_wartime_crown
+ } else = {
+  add_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian
+  add_character_flag = vic_wartime_crown remove_character_flag = vic_wartime_opposition
+ }
+ if = { limit = { is_landed = yes highest_held_title_tier > tier_barony is_independent_ruler = no }
+  voltara_mw_detach = yes
+ }
+ if = { limit = { is_landed = yes }
+  primary_title = {
+   set_variable = { name = voltara_mw_home value = title:h_voltara_severos }
+   set_variable = { name = voltara_mw_war value = scope:war }
+  }
+  if = { limit = { var:vic_fixed_war_side = 2 }
+   scope:war = { if = { limit = { NOT = { is_attacker = scope:vic_fixed_member } } add_attacker = scope:vic_fixed_member } }
+  } else = {
+   scope:war = { if = { limit = { NOT = { is_defender = scope:vic_fixed_member } } add_defender = scope:vic_fixed_member } }
+  }
+ }
+}
+
+vic_restore_war_realms = {
+ if = { limit = { exists = global_var:vic_war }
+  every_independent_ruler = { limit = { primary_title = { has_variable = voltara_mw_home var:voltara_mw_war ?= global_var:vic_war } } voltara_mw_reassemble = yes }
+  title:h_voltara_severos = { if = { limit = { var:voltara_mw_active ?= global_var:vic_war } remove_variable = voltara_mw_active } }
+ }
+}

@@ -1,0 +1,35 @@
+﻿vsr_reconquest = {
+ icon = vassalization
+ group = vassalization
+ target_titles = none
+ war_name = vsr_reconquest_name
+ cb_name = vsr_reconquest
+ allowed_for_character = { has_title = title:h_voltara_severos }
+ allowed_against_character = { scope:defender = { vsr_breakaway_empire = yes } }
+ valid_to_start = { scope:attacker = { has_title = title:h_voltara_severos } scope:defender = { vsr_breakaway_empire = yes } }
+ cost = { prestige = { value = 500 } }
+ on_declaration = { on_declared_war = yes }
+ should_invalidate = {
+  OR = {
+   scope:attacker = { NOT = { has_title = title:h_voltara_severos } }
+   scope:defender = { NOT = { vsr_breakaway_empire = yes } }
+  }
+ }
+ on_primary_attacker_death = inherit
+ on_primary_defender_death = inherit
+ attacker_capital_gives_war_score = yes
+ max_attacker_score_from_battles = 100
+ max_defender_score_from_battles = 100
+ on_victory_desc = vsr_reconquest_victory
+ on_invalidated_desc = vsr_reconquest_invalidated
+ on_victory = {
+  create_title_and_vassal_change = { type = swear_fealty save_scope_as = vsr_reconquest_change }
+  scope:defender = { change_liege = { liege = scope:attacker change = scope:vsr_reconquest_change } }
+  resolve_title_and_vassal_change = scope:vsr_reconquest_change
+  add_truce_attacker_victory_effect = yes
+ }
+ on_white_peace_desc = vsr_reconquest_peace
+ on_white_peace = { add_truce_white_peace_effect = yes }
+ on_defeat_desc = vsr_reconquest_defeat
+ on_defeat = { scope:attacker = { add_prestige = -500 } add_truce_attacker_defeat_effect = yes }
+}

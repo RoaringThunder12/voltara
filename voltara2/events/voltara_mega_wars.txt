@@ -5,7 +5,7 @@ voltara_mega_wars.1 = {
  title = voltara_mega_wars.1.t desc = voltara_mega_wars.1.desc
  theme = war
  left_portrait = { character = root }
- trigger = { primary_title = { exists = var:voltara_mw_war } }
+ trigger = { primary_title = { exists = var:voltara_mw_war } NOT = { AND = { has_variable = vic_fixed_war_side primary_title.var:voltara_mw_war = { using_cb = vic_imperial_claim } } } }
  option = {
   name = voltara_mega_wars.1.loyal
   voltara_mw_join_crown = yes

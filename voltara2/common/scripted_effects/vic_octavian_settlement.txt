@@ -1,0 +1,73 @@
+﻿
+vic_war_opening_attempt = {
+ if = { limit = { NOT = { has_global_variable = vic_war_attempt_done } global_var:vic_war_started = 1 has_global_variable = vic_war }
+  set_global_variable = { name = vic_war_attempt_done value = yes }
+  if = { limit = { character:19060001 = { is_alive = yes has_title = title:h_voltara_severos } }
+   set_global_variable = { name = vic_assassination value = 2 }
+   character:19060033 = { remove_character_flag = vic_defense_window }
+   # A disrupted conspiracy still makes its attempt, but cannot succeed without Tharn.
+   if = { limit = { character:19060033 = { vic_participant_available = yes } }
+    vic_resolve_attempt = yes
+   }
+   else = { vic_assassination_failure = yes }
+   set_global_variable = { name = vic_stage value = 5 }
+  }
+ }
+}
+vic_titania_reckoning = {
+ if = { limit = { this = character:19060003 has_title = title:h_voltara_severos NOT = { has_global_variable = vic_titania_reckoning_done } }
+  set_global_variable = { name = vic_titania_reckoning_done value = yes }
+  if = { limit = { character:19060001 = { is_alive = yes } }
+   character:19060001 = { death = { death_reason = death_execution killer = character:19060003 } }
+   set_global_variable = { name = vic_cassian_fell_at_titania value = yes }
+  }
+ }
+}
+vic_marques_dispossess = {
+ if = { limit = { this = character:19060003 has_title = title:h_voltara_severos character:19060029 = { is_alive = yes } NOT = { has_global_variable = vic_marques_dispossessed } }
+  set_global_variable = { name = vic_marques_dispossessed value = yes }
+  save_scope_as = vic_confiscating_crown
+  create_title_and_vassal_change = { type = revoked save_scope_as = vic_marques_confiscation add_claim_on_loss = yes }
+  character:19060029 = {
+   every_held_title = { limit = { tier > tier_barony } change_title_holder = { holder = scope:vic_confiscating_crown change = scope:vic_marques_confiscation take_baronies = yes } }
+  }
+  resolve_title_and_vassal_change = scope:vic_marques_confiscation
+  character:19060029 = {
+   if = { limit = { is_imprisoned = yes } release_from_prison = yes }
+   if = { limit = { has_dlc_feature = roads_to_power is_landed = no NOT = { is_landless_adventurer = yes } }
+    create_adventurer_title = { name = vic_trevelyan_exiles holder = this save_scope_as = vic_trevelyan_camp }
+    change_government = landless_adventurer_government
+    if = { limit = { NOT = { has_realm_law = landless_adventurer_succession_law } } add_realm_law = landless_adventurer_succession_law }
+    add_gold = 250
+   }
+   if = { limit = { exists = title:e_voltara_bryndale.holder }
+    domicile ?= { move_domicile = title:e_voltara_bryndale.holder.capital_province }
+   }
+   add_character_flag = vic_marques_in_exile
+   trigger_event = { id = vic_settlement.3 days = 1 }
+  }
+ }
+}
+vic_execute_leon = {
+ if = { limit = { this = character:19060003 has_title = title:h_voltara_severos has_character_flag = vic_heirs_pending NOT = { has_character_flag = vic_heirs_resolved } character:19060004 = { is_alive = yes } }
+  remove_character_flag = vic_heirs_pending add_character_flag = vic_heirs_resolved
+  set_variable = { name = vic_heirs_policy value = 4 }
+  character:19060004 = { death = { death_reason = death_execution killer = character:19060003 } }
+  add_character_flag = vic_executed_leon
+  vic_marques_dispossess = yes
+  if = { limit = { character:19060029 = { is_alive = yes } }
+   character:19060002 = { if = { limit = { is_alive = yes }
+    if = { limit = { is_imprisoned = yes } release_from_prison = yes }
+    add_character_flag = vic_family_decided
+    character:19060029 = { add_courtier = character:19060002 }
+   } }
+   character:19060005 = { if = { limit = { is_alive = yes }
+    if = { limit = { is_imprisoned = yes } release_from_prison = yes }
+    character:19060029 = { add_courtier = character:19060005 }
+   } }
+   set_global_variable = { name = vic_family_with_marques value = yes }
+   set_global_variable = { name = vic_family_safe value = 1 }
+   character:19060029 = { trigger_event = { id = vic_settlement.4 days = 1 } }
+  }
+ }
+}

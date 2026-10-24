@@ -1320,7 +1320,7 @@ cl_create_clone_effect = {
 		cl_improve_clone_congenital_effect = { TRAIT = physique }
 		cl_improve_clone_congenital_effect = { TRAIT = beauty }
 		cl_improve_clone_congenital_effect = { TRAIT = intellect }
-		cl_improve_clone_congenital_effect = { TRAIT = arcana }
+		cl_improve_clone_congenital_effect_voltara_arcana = yes
 		# Second Upgrade Check
 		if = {
 			limit = { scope:story ?= { has_variable = cl_congenital_physique_2 } }
@@ -1336,7 +1336,7 @@ cl_create_clone_effect = {
 		}
 		if = {
 			limit = { scope:story ?= { has_variable = cl_congenital_arcana_2 } }
-			cl_improve_clone_congenital_effect = { TRAIT = arcana }
+			cl_improve_clone_congenital_effect_voltara_arcana = yes
 		}
 	}
 
@@ -1801,4 +1801,140 @@ remove_birthsign = {
 			}
 		}
 	}
+}
+cl_save_congenital_trait_effect_voltara_arcana = {
+
+	# Spits out a trait_arcana scope based on our congenital trait level
+	# Example: scope:trait_arcana = trait:trait_vt_ek_arcana_bad_2
+	# If we have none, use vt_ek_arcana_good_1
+	# For localization
+	if = {
+		limit = { has_trait = vt_ek_arcana_good_1 }
+		trait:vt_ek_arcana_good_1 = { save_scope_as = trait_arcana }
+	}
+	else_if = {
+		limit = { has_trait = vt_ek_arcana_good_2 }
+		trait:vt_ek_arcana_good_2 = { save_scope_as = trait_arcana }
+	}
+	else_if = {
+		limit = { has_trait = vt_ek_arcana_good_3 }
+		trait:vt_ek_arcana_good_3 = { save_scope_as = trait_arcana }
+	}
+	else_if = {
+		limit = { has_trait = vt_ek_arcana_bad_1 }
+		trait:vt_ek_arcana_bad_1 = { save_scope_as = trait_arcana }
+	}
+	else_if = {
+		limit = { has_trait = vt_ek_arcana_bad_2 }
+		trait:vt_ek_arcana_bad_2 = { save_scope_as = trait_arcana }
+	}
+	else_if = {
+		limit = { has_trait = vt_ek_arcana_bad_3 }
+		trait:vt_ek_arcana_bad_3 = { save_scope_as = trait_arcana }
+	}
+	else = { trait:vt_ek_arcana_good_1 = { save_scope_as = trait_arcana }}
+
+}
+
+cl_improve_clone_congenital_effect_voltara_arcana = {
+
+	# Check if we had a successful improve congenital event (life_extension.0153)
+	if = {
+		limit = {
+			scope:story ?= { has_variable = cl_congenital_arcana }
+		}
+		# Save old trait as scope for loc
+		if = {
+			limit = { has_trait = vt_ek_arcana_good_1 }
+			trait:vt_ek_arcana_good_1 = { save_scope_as = old_trait_arcana }
+		}
+		else_if = {
+			limit = { has_trait = vt_ek_arcana_good_2 }
+			trait:vt_ek_arcana_good_2 = { save_scope_as = old_trait_arcana }
+		}
+		else_if = {
+			limit = { has_trait = vt_ek_arcana_good_3 }
+			trait:vt_ek_arcana_good_3 = { save_scope_as = old_trait_arcana }
+		}
+		else_if = {
+			limit = { has_trait = vt_ek_arcana_bad_1 }
+			trait:vt_ek_arcana_bad_1 = { save_scope_as = old_trait_arcana }
+		}
+		else_if = {
+			limit = { has_trait = vt_ek_arcana_bad_2 }
+			trait:vt_ek_arcana_bad_2 = { save_scope_as = old_trait_arcana }
+		}
+		else_if = {
+			limit = { has_trait = vt_ek_arcana_bad_3 }
+			trait:vt_ek_arcana_bad_3 = { save_scope_as = old_trait_arcana }
+		}
+		# Save improved trait as scope for loc
+		# Bad traits have a chance to improve two levels at once
+		# Good traits can only improve one level
+		random_list = {
+			# Bad 2
+			10 = {
+				trigger = { has_trait = vt_ek_arcana_bad_3 }
+				trait:vt_ek_arcana_bad_2 = { save_scope_as = new_trait_arcana }
+			}
+			# Bad 1
+			10 = {
+				trigger = {
+					OR = {
+						has_trait = vt_ek_arcana_bad_3
+						has_trait = vt_ek_arcana_bad_2
+					}
+				}
+				trait:vt_ek_arcana_bad_1 = { save_scope_as = new_trait_arcana }
+			}
+			# None
+			10 = {
+				trigger = {
+					OR = {
+						has_trait = vt_ek_arcana_bad_2
+						has_trait = vt_ek_arcana_bad_1
+					}
+				}
+				# New trait rank 0, aka nothing
+			}
+			# Good 1
+			10 = {
+				trigger = {
+					OR = {
+						has_trait = vt_ek_arcana_bad_1
+						NOR = { # None
+							has_trait = arcana_bad
+							has_trait = arcana_good
+						}
+					}
+				}
+				trait:vt_ek_arcana_good_1 = { save_scope_as = new_trait_arcana }
+			}
+			# Good 2
+			10 = {
+				trigger = {
+					has_trait = vt_ek_arcana_good_1
+				}
+				trait:vt_ek_arcana_good_2 = { save_scope_as = new_trait_arcana }
+			}
+			# Good 3
+			10 = {
+				trigger = {
+					has_trait = vt_ek_arcana_good_2
+				}
+				trait:vt_ek_arcana_good_3 = { save_scope_as = new_trait_arcana }
+			}
+		}
+		# Remove old trait
+		if = {
+			limit = { exists = scope:old_trait_arcana }
+			remove_trait = scope:old_trait_arcana
+		}
+		# Add new trait
+		if = {
+			limit = { exists = scope:new_trait_arcana }
+			add_trait = scope:new_trait_arcana
+		}
+	}
+
 }

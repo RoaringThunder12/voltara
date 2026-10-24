@@ -1,0 +1,20 @@
+﻿vsr_breakaway_empire = {
+ is_independent_ruler = yes
+ highest_held_title_tier = tier_empire
+ primary_title = { de_jure_liege = title:h_voltara_severos }
+ NOT = { voltara_is_ruins_placeholder = yes }
+ NOT = { voltara_keeper_realm = yes }
+}
+vsr_can_restore = {
+ is_independent_ruler = yes
+ is_at_war = no
+ is_imprisoned = no
+ has_title = title:e_voltara_21
+ NOT = { exists = title:h_voltara_severos.holder }
+ any_held_title = {
+  count >= 2
+  tier = tier_empire
+  NOT = { this = title:e_voltara_21 }
+  de_jure_liege = title:h_voltara_severos
+ }
+}

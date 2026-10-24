@@ -1,0 +1,20 @@
+﻿vic_loyalist_victory = {
+ title:h_voltara_severos.holder ?= {
+  if = { limit = { vic_abolitionist_ruler = yes is_alive = yes global_var:vic_war_result = 2 }
+   save_scope_as = vic_victorious_crown
+   character:19060033 = { if = { limit = { is_alive = yes NOT = { imprisoner ?= scope:vic_victorious_crown } }
+    if = { limit = { is_imprisoned = yes } release_from_prison = yes }
+    scope:vic_victorious_crown = { imprison = { target = character:19060033 type = dungeon } }
+   } }
+   character:19060003 = { if = { limit = { is_alive = yes NOT = { imprisoner ?= scope:vic_victorious_crown } }
+    if = { limit = { is_imprisoned = yes } release_from_prison = yes }
+    scope:vic_victorious_crown = { imprison = { target = character:19060003 type = dungeon } }
+   } }
+   if = { limit = { NOT = { has_character_flag = vic_loyalist_victory_queued } NOT = { has_global_variable = vic_aftermath_final } }
+    add_character_flag = vic_loyalist_victory_queued
+    add_character_flag = vic_aftermath_pending
+    trigger_event = { id = vic_loyalist.1 days = 2 }
+   }
+  }
+ }
+}

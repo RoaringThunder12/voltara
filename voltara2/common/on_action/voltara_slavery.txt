@@ -11,6 +11,7 @@ voltara_slavery_maintenance = { effect = {
 quarterly_playable_pulse = { on_actions = { voltara_slave_realm_check } }
 on_vassal_change = { on_actions = { voltara_slavery_liege_changed } }
 voltara_slavery_liege_changed = { effect = {
+ if = { limit = { is_landed = yes top_liege = { has_title = title:h_voltara_severos has_realm_law = voltara_slavery_banned } } voltara_abolish_slavery = yes }
  voltara_report_slavery_crime = yes
  every_courtier = { limit = { has_trait = voltara_slave } voltara_check_slave_owner = yes }
  every_vassal_or_below = { voltara_report_slavery_crime = yes every_courtier = { limit = { has_trait = voltara_slave } voltara_check_slave_owner = yes } }

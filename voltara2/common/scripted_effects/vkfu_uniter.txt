@@ -1,7 +1,13 @@
 ﻿
 vkfu_authorize = { vkf_count_support = yes if = { limit = { vkf_chief = yes has_character_flag = vkf_council_concluded var:vkf_support >= 2 prestige >= 500 gold >= 100 NOT = { exists = title:e_voltara_sixth_southron_invasion.holder } } add_character_flag = vkfu_candidate } }
 vkfu_finish_council = {
- if = { limit = { vkf_leader = yes } trigger_event = { id = vkf.125 days = 1 } }
+ # Talia's completed assembly always creates the invasion, even with depleted resources.
+ if = { limit = { this = character:9999100 vkf_chief = yes NOT = { exists = title:e_voltara_sixth_southron_invasion.holder } }
+  add_character_flag = vkfu_council_completed
+  vkfu_found_empire = { VOW = 1 }
+  trigger_event = { id = vkfu.30 days = 1 }
+ }
+ else_if = { limit = { vkf_leader = yes } vkfu_honor_blood_oaths = yes trigger_event = { id = vkf.125 days = 1 } }
  else_if = { limit = { vkfu_candidate = yes } add_character_flag = vkfu_council_completed
  if = { limit = { vkfu_foundation_ready = yes } trigger_event = { id = vkfu.10 days = 1 } }
  else = { remove_character_flag = vkfu_council_completed trigger_event = { id = vkfu.11 days = 1 } } }
@@ -9,7 +15,8 @@ vkfu_finish_council = {
 }
 vkfu_found_empire = {
  if = { limit = { vkfu_foundation_ready = yes }
- save_scope_as = vkfu_founder remove_short_term_gold = 100 add_prestige = -500
+ save_scope_as = vkfu_founder
+ if = { limit = { NOT = { vkfu_talia_foundation = yes } } remove_short_term_gold = 100 add_prestige = -500 }
  create_title_and_vassal_change = { type = created save_scope_as = vkfu_creation add_claim_on_loss = no }
  title:e_voltara_sixth_southron_invasion = { change_title_holder = { holder = scope:vkfu_founder change = scope:vkfu_creation } }
  resolve_title_and_vassal_change = scope:vkfu_creation set_primary_title_to = title:e_voltara_sixth_southron_invasion
@@ -18,7 +25,7 @@ vkfu_found_empire = {
  set_global_variable = { name = vkfu_founder value = this } set_global_variable = { name = vkfu_founding_promise value = $VOW$ }
  if = { limit = { NOT = { has_global_variable = vkfu_world_announced } } set_global_variable = { name = vkfu_world_announced value = yes } every_player = { trigger_event = { id = vkfu.20 days = 2 } } }
  trigger_event = { id = vkfu.21 days = 3650 }
- vkfu_seek_submission = yes vkf_recount = yes
+ vkfu_honor_blood_oaths = yes vkfu_seek_submission = yes vkf_recount = yes
  }
 }
 vkfu_heralds = {
@@ -72,5 +79,17 @@ vkfu_offer_settlement = {
  ordered_vassal_or_below = { order_by = diplomacy max = 3 check_range_bounds = no limit = { vkfu_human_southron = yes vkf_available = yes OR = { has_government = tribal_government has_government = nomad_government } NOT = { has_character_flag = vkfu_settlement_answered } NOT = { has_variable = vkfu_settlement_offer } }
  scope:vkfu_settlement_patron = { remove_short_term_gold = 200 }
  set_variable = { name = vkfu_settlement_offer value = scope:vkfu_settlement_patron days = 120 } trigger_event = { id = vkfu.25 days = 5 } }
+ }
+}
+
+# Blood oaths already consent to fealty; ordinary support remains voluntary.
+vkfu_honor_blood_oaths = {
+ if = { limit = { vkf_leader = yes is_independent_ruler = yes }
+  save_scope_as = vkfu_oath_liege
+  every_independent_ruler = {
+   limit = { vkf_chief = yes var:vkf_patron ?= scope:vkfu_oath_liege var:vkf_oath >= 2 }
+   vkf_submit = yes
+  }
+  vkf_recount = yes
  }
 }

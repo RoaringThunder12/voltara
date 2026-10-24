@@ -33,6 +33,8 @@ voltara_free_character = {
  remove_character_flag = voltara_slave_sale_pending
 }
 voltara_abolish_slavery = {
+ if = { limit = { NOT = { has_realm_law = voltara_slavery_banned } } add_realm_law_skip_effects = voltara_slavery_banned }
+ every_vassal_or_below = { limit = { NOT = { has_realm_law = voltara_slavery_banned } } add_realm_law_skip_effects = voltara_slavery_banned }
  save_scope_as = voltara_liberator
  every_living_character = {
   limit = { has_trait = voltara_slave OR = {

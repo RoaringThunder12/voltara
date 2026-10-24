@@ -27,9 +27,9 @@ option = { name = vkfu.11.0 custom_tooltip = vkfu.11.0_tt hidden_effect = { if =
 }
 
 vkfu.12 = { type = character_event theme = realm title = vkfu.12.t desc = vkfu.12.desc trigger = { vkf_chief = yes has_variable = vkfu_submission_offer var:vkfu_submission_offer = { vkf_leader = yes is_independent_ruler = yes } }
-option = { name = vkfu.12.0 custom_tooltip = vkfu.12.0_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_submission_offer var:vkfu_submission_offer = { vkf_leader = yes is_independent_ruler = yes }  } vkfu_submit = yes } } ai_chance = { base = 65 } }
-option = { name = vkfu.12.1 custom_tooltip = vkfu.12.1_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_submission_offer var:vkfu_submission_offer = { vkf_leader = yes is_independent_ruler = yes }  } set_variable = { name = vkf_patron value = var:vkfu_submission_offer days = 1825 } set_variable = { name = vkf_oath value = 1 days = 1825 } add_character_flag = { flag = vkfu_submission_answered days = 1825 } remove_variable = vkfu_submission_offer } } ai_chance = { base = 25 } }
-option = { name = vkfu.12.2 custom_tooltip = vkfu.12.2_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_submission_offer var:vkfu_submission_offer = { vkf_leader = yes is_independent_ruler = yes }  } add_character_flag = { flag = vkfu_submission_answered days = 1825 } remove_variable = vkfu_submission_offer } } ai_chance = { base = 10 } }
+option = { name = vkfu.12.0 custom_tooltip = vkfu.12.0_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_submission_offer var:vkfu_submission_offer = { vkf_leader = yes is_independent_ruler = yes }  } vkfu_submit = yes } } ai_chance = { base = 65  modifier = { var:vkfu_submission_offer ?= character:9999100 add = 1000 } } }
+option = { name = vkfu.12.1 custom_tooltip = vkfu.12.1_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_submission_offer var:vkfu_submission_offer = { vkf_leader = yes is_independent_ruler = yes }  } set_variable = { name = vkf_patron value = var:vkfu_submission_offer days = 1825 } set_variable = { name = vkf_oath value = 1 days = 1825 } add_character_flag = { flag = vkfu_submission_answered days = 1825 } remove_variable = vkfu_submission_offer } } ai_chance = { base = 25  modifier = { var:vkfu_submission_offer ?= character:9999100 factor = 0.01 } } }
+option = { name = vkfu.12.2 custom_tooltip = vkfu.12.2_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_submission_offer var:vkfu_submission_offer = { vkf_leader = yes is_independent_ruler = yes }  } add_character_flag = { flag = vkfu_submission_answered days = 1825 } remove_variable = vkfu_submission_offer } } ai_chance = { base = 10  modifier = { var:vkfu_submission_offer ?= character:9999100 factor = 0.01 } } }
 }
 
 vkfu.13 = { type = character_event theme = realm title = vkfu.13.t desc = vkfu.13.desc trigger = { vkf_leader = yes exists = scope:vkfu_subject }
@@ -60,4 +60,10 @@ vkfu.24 = { type = character_event theme = realm title = vkfu_oath_title
 vkfu.25 = { type = character_event theme = realm title = vkfu.25.t desc = vkfu.25.desc trigger = { vkf_available = yes vkfu_human_southron = yes has_variable = vkfu_settlement_offer var:vkfu_settlement_offer = { vkfu_vow_active = yes var:vkfu_promise = 3 } OR = { has_government = tribal_government has_government = nomad_government } }
 option = { name = vkfu.25.0 custom_tooltip = vkfu.25.0_tt hidden_effect = { if = { limit = { vkf_available = yes vkfu_human_southron = yes has_variable = vkfu_settlement_offer var:vkfu_settlement_offer = { vkfu_vow_active = yes var:vkfu_promise = 3 } OR = { has_government = tribal_government has_government = nomad_government }  } vkfu_settle_clan = yes add_character_flag = vkfu_settlement_answered remove_variable = vkfu_settlement_offer } } ai_chance = { base = 65 } }
 option = { name = vkfu.25.1 custom_tooltip = vkfu.25.1_tt hidden_effect = { if = { limit = { vkf_available = yes vkfu_human_southron = yes has_variable = vkfu_settlement_offer var:vkfu_settlement_offer = { vkfu_vow_active = yes var:vkfu_promise = 3 } OR = { has_government = tribal_government has_government = nomad_government }  } var:vkfu_settlement_offer = { add_gold = 200 } add_character_flag = { flag = vkfu_settlement_answered days = 1095 } remove_variable = vkfu_settlement_offer } } ai_chance = { base = 35 } }
+}
+
+vkfu.30 = { type = character_event theme = realm title = vkfu.30.t desc = vkfu.30.desc
+ trigger = { this = character:9999100 has_title = title:e_voltara_sixth_southron_invasion }
+ left_portrait = { character = root }
+ option = { name = vkfu.30.a }
 }

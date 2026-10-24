@@ -1,0 +1,12 @@
+﻿vsr_restore_decision = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" }
+ decision_group_type = major
+ desc = vsr_restore_decision_desc
+ selection_tooltip = vsr_restore_decision_tooltip
+ confirm_text = vsr_restore_decision_confirm
+ ai_check_interval = 12
+ is_shown = { is_landed = yes has_title = title:e_voltara_21 NOT = { exists = title:h_voltara_severos.holder } }
+ is_valid = { vsr_can_restore = yes }
+ effect = { vsr_restore = yes }
+ ai_will_do = { base = 100 }
+}

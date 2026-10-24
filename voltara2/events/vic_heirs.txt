@@ -5,4 +5,10 @@ vic_heirs.1 = { type = character_event title = vic_heirs.1.t desc = vic_heirs.1.
  option = { name = vic_heirs.1.a custom_tooltip = vic_heirs.1.a.tt hidden_effect = { vic_resolve_heirs = { POLICY = 1 } } ai_chance = { base = 35 } }
  option = { name = vic_heirs.1.b custom_tooltip = vic_heirs.1.b.tt hidden_effect = { vic_resolve_heirs = { POLICY = 2 } } ai_chance = { base = 50 } }
  option = { name = vic_heirs.1.c custom_tooltip = vic_heirs.1.c.tt hidden_effect = { vic_resolve_heirs = { POLICY = 3 } } ai_chance = { base = 15 } }
+ option = { name = vic_heirs.1.d
+ trigger = { character:19060004 = { is_alive = yes } character:19060029 = { is_alive = yes } }
+ custom_tooltip = vic_heirs.1.d.tt
+ hidden_effect = { vic_execute_leon = yes }
+ ai_chance = { base = 20 }
+ }
 }

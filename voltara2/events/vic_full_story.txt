@@ -604,15 +604,15 @@ ai_chance = { base = 1  }
 }
 }
 vic_story.42 = { type = character_event title = vic_story.42.t desc = vic_story.42.desc theme = intrigue
- trigger = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_assassination = 3 }
+ trigger = { this = character:19060001 vic_participant_available = yes vic_running = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_assassination = 3 }
 option = { name = vic_story.42.0
 custom_tooltip = vic_story.42.0.tt
-hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_assassination = 3  } add_character_flag = vic_family_protection vic_change = { KEY = security AMOUNT = 15 }  } }
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_running = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_assassination = 3  } add_character_flag = vic_family_protection vic_change = { KEY = security AMOUNT = 15 }  } }
 ai_chance = { base = 50  }
 }
 option = { name = vic_story.42.1
 custom_tooltip = vic_story.42.1.tt
-hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_assassination = 3  } trigger_event = vic_story.15 } }
+hidden_effect = { if = { limit = { this = character:19060001 vic_participant_available = yes vic_running = yes has_character_flag = vic_opening_complete has_title = title:h_voltara_severos global_var:vic_assassination = 3  } trigger_event = vic_story.15 } }
 ai_chance = { base = 50  }
 }
 }
@@ -896,9 +896,9 @@ hidden_effect = { if = { limit = { is_alive = yes has_title = title:h_voltara_se
 ai_chance = { base = 30 modifier = { factor = 2 has_trait = callous } }
 }
 option = { name = vic_story.50.2
-trigger = { is_at_war = no }
+trigger = { is_at_war = no AND = { NOT = { this = character:19060003 } OR = { NOT = { this = character:19060001 } vic_cassian_can_abolish = yes } } }
 custom_tooltip = vic_story.50.2.tt
-hidden_effect = { if = { limit = { is_alive = yes has_title = title:h_voltara_severos global_var:vic_stage = 6 NOT = { has_global_variable = vic_aftermath_final } is_at_war = no } vic_finish_aftermath = { POLICY = 3 } } }
+hidden_effect = { if = { limit = { is_alive = yes has_title = title:h_voltara_severos global_var:vic_stage = 6 NOT = { has_global_variable = vic_aftermath_final } is_at_war = no AND = { NOT = { this = character:19060003 } OR = { NOT = { this = character:19060001 } vic_cassian_can_abolish = yes } } } vic_finish_aftermath = { POLICY = 3 } } }
 ai_chance = { base = 25 modifier = { factor = 3 this = character:19060001 } modifier = { factor = 0.2 this = character:19060003 } }
 }
 option = { name = vic_story.50.3

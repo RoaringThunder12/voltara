@@ -1,6 +1,7 @@
-﻿vic_cassian_victorious = {
- this = character:19060001 is_alive = yes has_title = title:h_voltara_severos
+﻿vic_abolitionist_ruler = { OR = { this = character:19060001 this = character:19060004 this = character:19060005 } }
+vic_cassian_victorious = {
+ vic_abolitionist_ruler = yes is_alive = yes has_title = title:h_voltara_severos
  global_var:vic_war_result ?= 2
- custom_tooltip = { text = vic_tharn_dealt_with_tt character:19060033 = { OR = { is_alive = no AND = { is_imprisoned = yes imprisoner = { top_liege = character:19060001 } } } } }
+ custom_tooltip = { text = vic_tharn_dealt_with_tt character:19060033 = { OR = { is_alive = no AND = { is_imprisoned = yes imprisoner = title:h_voltara_severos.holder } } } }
 }
-vic_cassian_can_abolish = { vic_cassian_victorious = yes is_at_war = no NOT = { has_realm_law = voltara_slavery_banned } }
+vic_cassian_can_abolish = { vic_cassian_victorious = yes is_at_war = no OR = { NOT = { has_realm_law = voltara_slavery_banned } any_vassal_or_below = { has_realm_law = voltara_slavery_legal } } }

@@ -1,0 +1,6 @@
+﻿namespace = vic_loyalist
+vic_loyalist.1 = { type = character_event theme = realm title = vic_loyalist.1.t desc = vic_loyalist.1.desc
+ trigger = { vic_cassian_victorious = yes global_var:vic_stage = 6 NOT = { has_global_variable = vic_aftermath_final } }
+ immediate = { vic_finish_aftermath = { POLICY = 3 } }
+ option = { name = vic_loyalist.1.a }
+}
