@@ -1,0 +1,61 @@
+﻿lam_pb_same_front_trigger = {
+	has_variable = lam_pb_managed
+	has_variable = lam_pb_approved
+	NOT = {
+		has_variable = lam_pb_sent
+	}
+	faction_is_at_war = no
+	exists = scope:lam_pb_host
+	NOT = {
+		faction_leader ?= {
+			has_relation_rival = scope:lam_pb_host
+		}
+	}
+	NOT = {
+		faction_leader ?= {
+			has_relation_nemesis = scope:lam_pb_host
+		}
+	}
+	OR = {
+		AND = {
+			faction_is_type = liberty_faction
+			scope:lam_pb_host = {
+				var:lam_pb_kind ?= flag:liberty_faction
+			}
+		}
+		AND = {
+			faction_is_type = independence_faction
+			scope:lam_pb_host = {
+				var:lam_pb_kind ?= flag:independence_faction
+			}
+		}
+		AND = {
+			faction_is_type = claimant_faction
+			scope:lam_pb_host = {
+				var:lam_pb_kind ?= flag:claimant_faction
+			}
+		}
+		AND = {
+			faction_is_type = nation_fracturing_faction
+			scope:lam_pb_host = {
+				var:lam_pb_kind ?= flag:nation_fracturing_faction
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			faction_is_type = claimant_faction
+		}
+		trigger_if = {
+			limit = {
+				exists = scope:lam_pb_host.var:lam_pb_claimant
+				exists = scope:lam_pb_host.var:lam_pb_title
+			}
+			special_character ?= scope:lam_pb_host.var:lam_pb_claimant
+			special_title ?= scope:lam_pb_host.var:lam_pb_title
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+}

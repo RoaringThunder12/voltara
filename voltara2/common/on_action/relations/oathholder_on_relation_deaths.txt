@@ -1,0 +1,241 @@
+﻿on_death_relation_oathholder = { # Triggers from person that died.  -- We die essentially. scope:target gets Oathholder.
+	on_actions = {
+		the_permanent_oath_oathbound_perspective
+		
+        oathbound_task_cleanup
+
+        oathbounds_cleanup
+	}
+}
+
+the_permanent_oath_oathbound_perspective = {
+	trigger = {
+		has_character_modifier = permanent_oath
+		primary_heir.dynasty = root.dynasty
+	}
+	effect = {
+
+		primary_heir = {
+			add_character_modifier = { modifier = permanent_oath }
+			add_trait = oathkeeper
+			add_trait = loyal
+			remove_trait = disloyal
+
+			set_relation_oathholder = {
+				target = scope:target
+			}
+			
+			scope:target = {
+				oathkeeper_assigned = { CHARACTER = root.primary_heir }
+                create_character_memory = {
+                    type = gained_oathbound_contract_memory
+                    participants = {
+                        new_servant = root.primary_heir
+                    }
+                }
+				add_character_modifier = { modifier = oathholder_life }
+                if = {
+                    limit = { is_female = yes }
+                    add_trait = oathholder_female
+                }
+                else = {
+                    add_trait = oathholder_male
+                }
+			}
+			
+			scope:target = {
+				add_hook = {
+					target = root.primary_heir
+					type = obligation_hook
+				}
+			}
+			oathholder_assigned = { CHARACTER = scope:target }
+            create_character_memory = {
+                type = swore_oathbound_contract_memory
+                participants = {
+                    new_boss = scope:target
+                }
+            }
+
+			trigger_event = {
+				id = oathbound_permanent_events.0002
+				days = 1
+			}
+		}
+	}
+}
+
+oathbounds_cleanup = {
+    effect = {
+        root = {
+            remove_variable = val_oathkeeper
+			remove_variable = val_oathholder
+
+			# -------- NEW NEEDS TESTING ----- SHOULD REMOVE MODIFIERS ON DEATH
+            if = {
+                limit = {
+                    exists = var:oathbound_patrolled_county_var
+                }
+                var:oathbound_patrolled_county_var = {
+                    remove_county_modifier = oathbound_enforcing_order_weak
+                    remove_county_modifier = oathbound_enforcing_order_normal
+                    remove_county_modifier = oathbound_enforcing_order_strong
+                }
+                remove_variable = oathbound_patrolled_county_var
+            }
+			# ------- END
+        }
+
+        scope:target = {
+            if = {
+                limit = {
+                    has_relation_oathbound = root
+                }
+                remove_relation_oathbound = root
+            }
+            if = {
+                limit = {
+                    exists = var:val_oathholder
+                    var:val_oathholder = root
+                }
+                remove_variable = val_oathholder
+            }
+            if = {
+                limit = {
+                    exists = var:val_oathkeeper
+                    var:val_oathkeeper = root
+                }
+                remove_variable = val_oathkeeper
+            }
+            if = {
+                limit = {
+                    exists = var:val_oathholder_heir
+                }
+                remove_variable = val_oathholder_heir
+            }
+            if = {
+                limit = {
+                    has_character_modifier = oathholder_life
+                }
+                remove_character_modifier = oathholder_life
+            }
+            if = {
+                limit = { 
+                    is_female = yes
+                    NOT = {
+                        ROOT = { has_character_modifier = permanent_oath }
+                    }
+                }
+                remove_trait = oathholder_female
+            }
+            else_if = {
+                limit = { 
+                    is_female = no
+                    NOT = {
+                        ROOT = { has_character_modifier = permanent_oath }
+                    }
+                }
+                remove_trait = oathholder_male
+            }
+            if = {
+                limit = {
+                    has_character_flag = oathholder_travel_job_set 
+                }
+                remove_character_flag = oathholder_travel_job_set
+            }
+        }
+    }
+}
+
+oathbound_task_cleanup = {
+    effect = {
+        # --- 1. TRAVEL JOB CLEANUP (Enforce Control) --- #
+        if = {
+            limit = {
+                OR = {
+                    has_character_flag = oathbound_on_travel_job 
+                    has_character_flag = oathbound_control_job 
+                }
+            }
+            
+            # The County didn't die! We must clean it up before we lose the variable.
+            var:oathbound_control_task_county_var = {
+                remove_county_modifier = oathbound_enforcing_order_weak
+                remove_county_modifier = oathbound_enforcing_order_normal
+                remove_county_modifier = oathbound_enforcing_order_strong
+            }
+            
+            # Clean up the Boss so they can hire a replacement mercenary
+            scope:target = {
+                remove_character_flag = oathholder_travel_job_set
+            }
+        }
+
+        # --- 2. STATIONARY JOB CLEANUP (Sway Vassal) --- #
+        if = {
+            limit = {
+                OR = {
+                    has_character_flag = oathbound_on_stationary_job
+                    has_character_flag = oathbound_sway_job
+                }
+            }
+
+            # Note: We don't need to use 'end_scheme' here. Dead people drop their schemes automatically!
+
+            # Clean up the Boss so they can assign a new desk job
+            scope:target = {
+                remove_character_flag = oathholder_stationary_job_set
+                remove_character_flag = oathholder_sway_job_set
+            }
+        }
+
+        # --- 3. STATIONARY JOB CLEANUP (Kill Rival) --- #
+        if = {
+            limit = {
+                OR = {
+                    has_character_flag = oathbound_on_stationary_job
+                    has_character_flag = oathbound_kill_job
+                }
+            }
+
+            # Note: Dead oathbound drops their schemes automatically — no end_scheme needed.
+
+            # Clean up the Boss so they can assign a new desk job
+            scope:target = {
+                remove_character_flag = oathholder_stationary_job_set
+                remove_character_flag = oathholder_kill_job_set
+            }
+        }
+        # --- 4. TRAVEL JOB CLEANUP (Duel Rival) --- #
+        if = {
+            limit = {
+                OR = {
+                    has_character_flag = oathbound_on_travel_job
+                    has_character_flag = oathbound_duel_job
+                }
+            }
+            scope:target = {
+                remove_character_flag = oathholder_travel_job_set
+                remove_character_flag = oathholder_duel_job_set
+            }
+        }
+        # --- 5. KILL TYPE CLEANUP --- #
+        if = {
+            limit = {
+                scope:target = {
+                    OR = {
+                        has_character_flag = i_decided_kill_type
+                        has_character_flag = oathholder_prefers_duel
+                        has_character_flag = oathholder_prefers_murder
+                    }
+                }
+            }
+            scope:target = {
+                remove_character_flag = i_decided_kill_type
+                remove_character_flag = oathholder_prefers_duel
+                remove_character_flag = oathholder_prefers_murder
+            }
+        }
+    }
+}
+

@@ -1,0 +1,40 @@
+﻿lam_wc_claimant_vote_value = {
+	value = 0
+	if = {
+		limit = {
+			scope:lam_cr_head ?= {
+				OR = {
+					var:lam_cr_action ?= flag:rise
+					var:lam_cr_action ?= flag:cp_rise
+				}
+				var:lam_wc_plan_candidate ?= {
+					is_alive = yes
+				}
+			}
+		}
+		add = {
+			value = "opinion(scope:lam_cr_head.var:lam_wc_plan_candidate)"
+			multiply = 0.25
+		}
+		if = {
+			limit = {
+				has_relation_rival = scope:lam_cr_head.var:lam_wc_plan_candidate
+			}
+			add = -25
+		}
+		if = {
+			limit = {
+				has_relation_nemesis = scope:lam_cr_head.var:lam_wc_plan_candidate
+			}
+			add = -35
+		}
+		if = {
+			limit = {
+				this = scope:lam_cr_head.var:lam_wc_plan_candidate
+			}
+			add = 20
+		}
+	}
+	min = -40
+	max = 40
+}

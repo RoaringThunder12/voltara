@@ -1,0 +1,118 @@
+﻿namespace = lam_cr
+lam_cr.0010 = {
+	type = character_event
+	title = lam_cr_patronage_title
+	desc = lam_cr_patronage_desc
+	theme = realm
+	left_portrait = {
+		character = scope:lam_pr_lord
+	}
+	right_portrait = {
+		character = root
+	}
+	option = {
+		name = lam_cr_patronage_obstruct
+		trigger = {
+			lam_cr_reaction_valid_trigger = yes
+			lam_pd_obstruct_possible_trigger = yes
+		}
+		custom_tooltip = lam_cr_obstruct_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_cr_reaction_valid_trigger = yes
+				}
+				remove_variable = lam_cr_reaction_open
+				lam_cr_obstruct_effect = yes
+			}
+		}
+	}
+	option = {
+		name = lam_cr_patronage_coalition
+		trigger = {
+			always = no
+			lam_cr_reaction_valid_trigger = yes
+		}
+		custom_tooltip = lam_cr_coalition_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_cr_reaction_valid_trigger = yes
+				}
+				remove_variable = lam_cr_reaction_open
+				lam_cr_counterweight_effect = yes
+			}
+		}
+	}
+	option = {
+		name = lam_cr_patronage_approach
+		trigger = {
+			lam_cr_reaction_valid_trigger = yes
+		}
+		custom_tooltip = lam_cr_approach_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_cr_reaction_valid_trigger = yes
+				}
+				remove_variable = lam_cr_reaction_open
+				lam_cr_approach_effect = yes
+			}
+		}
+	}
+	option = {
+		name = lam_cr_close
+		trigger = {
+			NOT = {
+				lam_cr_reaction_valid_trigger = yes
+			}
+		}
+	}
+	option = {
+		name = lam_pd_wait
+		trigger = {
+			lam_cr_reaction_valid_trigger = yes
+		}
+		hidden_effect = {
+			remove_variable = lam_cr_reaction_open
+			set_variable = {
+				name = lam_pd_plan
+				value = flag:wait
+			}
+		}
+	}
+}
+lam_cr.0011 = {
+    type = character_event
+    title = lam_cr_coalition_title
+    desc = lam_cr_coalition_desc
+    theme = realm
+    left_portrait = { character = scope:lam_pr_reactor }
+    right_portrait = { character = root }
+    option = {
+        name = lam_cr_coalition_accept
+        trigger = { lam_cr_alliance_valid_trigger = yes }
+        hidden_effect = { if = { limit = { lam_cr_alliance_valid_trigger = yes }
+            scope:lam_pr_reactor = { remove_variable = lam_cr_alliance_offer }
+            lam_fac_ally_effect = { A = root B = scope:lam_pr_reactor }
+            lam_fac_cohesion_add_effect = { ADD = 3 }
+            scope:lam_pr_reactor = { lam_fac_cohesion_add_effect = { ADD = 3 } }
+            scope:lam_pr_lord = { if = { limit = { is_ai = no }
+                send_interface_message = { type = event_generic_neutral title = lam_cr_coalition_formed right_icon = scope:lam_pr_reactor }
+            } }
+        } }
+        ai_chance = { base = 60 modifier = { add = 30 has_variable = lam_cr_excluded } modifier = { add = -45 has_variable = lam_fac_courtparty } }
+    }
+    option = {
+        name = lam_cr_coalition_decline
+        trigger = { lam_cr_alliance_valid_trigger = yes }
+        hidden_effect = { if = { limit = { lam_cr_alliance_valid_trigger = yes }
+            scope:lam_pr_reactor = { remove_variable = lam_cr_alliance_offer
+                if = { limit = { is_ai = no } send_interface_message = { type = event_generic_neutral title = lam_cr_coalition_refused right_icon = root } }
+            }
+        } }
+        ai_chance = { base = 40 }
+    }
+    option = { name = lam_cr_close trigger = { NOT = { lam_cr_alliance_valid_trigger = yes } } }
+}
+

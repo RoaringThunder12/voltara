@@ -1,0 +1,4 @@
+﻿on_game_start = { on_actions = { ven_start } }
+ven_start = { effect = { if = { limit = { NOT = { has_global_variable = ven_initialized } } set_global_variable = { name = ven_initialized value = yes } ven_initialize = yes } } }
+on_title_gain = { on_actions = { ven_new_king } }
+ven_new_king = { trigger = { scope:title = title:e_voltara_enderal ven_northerner = yes } effect = { change_government = ven_lodge_government ven_join_lodge = yes ven_install_law = yes trigger_event = { id = ven.5 days = 7 } } }

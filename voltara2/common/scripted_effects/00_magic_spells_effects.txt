@@ -2482,8 +2482,7 @@ magic_teleportation_effect = {
 			#	complete_travel_plan = yes
 			#}
 			current_travel_plan = {
-				if = {
-					limit = {
+				if = { limit = {
 						always = no
 						next_destination_province = final_destination_province
 						trigger_if = {
@@ -2499,12 +2498,8 @@ magic_teleportation_effect = {
 								count = 0
 							}
 						}
-					}
-					scope:traveler = {
-						set_location = current_travel_plan.final_destination_province
-					}
-					abort_travel_plan = yes
-				}
+					} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 				else = {
 					#if = {
 					#	limit = {

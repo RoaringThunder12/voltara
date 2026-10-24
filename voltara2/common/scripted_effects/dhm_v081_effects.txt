@@ -1,0 +1,66 @@
+﻿# v0.8.1 polish. New timed evidence is additive; legacy state is never reset.
+dhm_v081_breathing_room_effect = {
+	add_character_flag = { flag = dhm081_aftermath_pause months = 6 }
+}
+dhm_v081_capture_officer_role_effect = {
+	if = { limit = { scope:dhm_story_officer = { has_character_flag = dhm_office_steward } } save_scope_value_as = { name = dhm081_officer_role value = flag:steward } }
+	else_if = { limit = { scope:dhm_story_officer = { has_character_flag = dhm_office_matchmaker } } save_scope_value_as = { name = dhm081_officer_role value = flag:matchmaker } }
+	else_if = { limit = { scope:dhm_story_officer = { has_character_flag = dhm_office_tutor } } save_scope_value_as = { name = dhm081_officer_role value = flag:tutor } }
+	else_if = { limit = { scope:dhm_story_officer = { has_character_flag = dhm_office_chronicler } } save_scope_value_as = { name = dhm081_officer_role value = flag:chronicler } }
+}
+dhm_v081_close_pair_effect = {
+	$FIRST$ = { add_opinion = { target = $SECOND$ modifier = dhm082_settled_marriage_opinion } }
+	$SECOND$ = { add_opinion = { target = $FIRST$ modifier = dhm082_settled_marriage_opinion } }
+	dhm_v081_breathing_room_effect = yes
+}
+dhm_v081_close_dispute_effect = {
+	scope:dhm_dispute_first = { add_character_flag = { flag = dhm081_dispute_settled years = 8 } }
+	scope:dhm_dispute_second = { add_character_flag = { flag = dhm081_dispute_settled years = 8 } }
+	dhm_v081_breathing_room_effect = yes
+}
+dhm_v081_couple_settles_effect = {
+	if = {
+		limit = { dhm_v081_couple_self_reliant_trigger = yes }
+		scope:dhm_crisis_relative = { add_stress = minor_stress_loss }
+		scope:dhm_crisis_spouse = { add_stress = minor_stress_loss }
+		dhm_v081_close_pair_effect = { FIRST = scope:dhm_crisis_relative SECOND = scope:dhm_crisis_spouse }
+		send_interface_message = { type = event_diplomacy_good_with_text title = dhm081_couple_settled_title desc = dhm081_couple_settled_desc left_icon = scope:dhm_crisis_relative right_icon = scope:dhm_crisis_spouse }
+	}
+}
+dhm_v081_school_callback_effect = {
+	if = {
+		limit = { dhm_v081_learned_to_listen_trigger = yes }
+		dhm_v090_record_lesson_context_effect = yes
+		scope:dhm_story_child = {
+			add_character_flag = { flag = dhm081_used_lesson years = 10 }
+			add_stress = miniscule_stress_loss
+			add_opinion = { target = scope:dhm_story_tutor modifier = dhm_quiet_encouragement_opinion }
+		}
+		scope:dhm_story_tutor = { add_opinion = { target = scope:dhm_story_child modifier = dhm_quiet_encouragement_opinion } }
+		send_interface_message = { type = event_stewardship_good_with_text title = dhm081_callback_title desc = dhm081_callback_desc left_icon = scope:dhm_story_child right_icon = scope:dhm_story_tutor }
+		dhm_v081_breathing_room_effect = yes
+	}
+}
+# Recognition goes to the officer doing the work, not a second ruler skill award.
+dhm_v081_officer_accomplishment_effect = {
+	if = {
+		limit = { scope:dhm_story_officer = { has_character_flag = dhm_office_steward } }
+		scope:dhm_story_officer = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_orderly_accounts_modifier YEARS = 2 RENEWAL_TT = dhm081_orderly_accounts_renewed_tt } }
+		send_interface_message = { type = event_stewardship_good_with_text title = dhm081_officer_result_title desc = dhm081_steward_result_desc left_icon = scope:dhm_story_officer }
+	}
+	else_if = {
+		limit = { scope:dhm_story_officer = { has_character_flag = dhm_office_matchmaker } }
+		scope:dhm_story_officer = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_careful_letters_modifier YEARS = 2 RENEWAL_TT = dhm081_careful_letters_renewed_tt } }
+		send_interface_message = { type = event_diplomacy_good_with_text title = dhm081_officer_result_title desc = dhm081_matchmaker_result_desc left_icon = scope:dhm_story_officer }
+	}
+	else_if = {
+		limit = { scope:dhm_story_officer = { has_character_flag = dhm_office_tutor } }
+		scope:dhm_story_officer = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_prepared_lessons_modifier YEARS = 2 RENEWAL_TT = dhm081_prepared_lessons_renewed_tt } }
+		send_interface_message = { type = event_stewardship_good_with_text title = dhm081_officer_result_title desc = dhm081_tutor_result_desc left_icon = scope:dhm_story_officer }
+	}
+	else_if = {
+		limit = { scope:dhm_story_officer = { has_character_flag = dhm_office_chronicler } }
+		scope:dhm_story_officer = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_ordered_records_modifier YEARS = 2 RENEWAL_TT = dhm081_ordered_records_renewed_tt } }
+		send_interface_message = { type = event_stewardship_good_with_text title = dhm081_officer_result_title desc = dhm081_chronicler_result_desc left_icon = scope:dhm_story_officer }
+	}
+}

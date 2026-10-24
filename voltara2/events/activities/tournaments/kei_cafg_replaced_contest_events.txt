@@ -1,0 +1,374 @@
+﻿namespace = contest_events
+
+# A commoner runs onto the tracks, naked.
+# by James Beaumont
+scripted_trigger 3030_would_streak_trigger = {
+	is_physically_able_adult = yes
+	is_ai = yes
+	OR = {
+		has_trait = lustful
+		has_trait = lunatic
+		AND = {
+			has_trait = arrogant
+			has_trait = impatient
+		}
+		is_deviant_trigger = yes
+		rite = { rite_has_parameter = naked_adherents_active }
+		rite = { rite_has_parameter = naked_priests_active }
+	}
+	OR = {
+		rite = { rite_has_parameter = naked_adherents_active }
+		rite = { rite_has_parameter = naked_priests_active }
+		NOR = {
+			has_trait = chaste
+			has_trait = celibate
+			has_trait = humble
+		}
+	}
+}
+
+contest_events.3030 = {
+	type = activity_event
+	title = contest_events.3030.t
+	desc = contest_events.3030.desc
+	theme = tournament_contest
+	window = widget_activity_locale_fullscreen_event
+	left_portrait = {
+		character = root
+		triggered_animation = {
+			trigger = {
+				is_deviant_trigger = yes
+			}
+			animation = ecstasy
+		}
+		animation = shock
+	}
+	right_portrait = {
+		character = scope:naked_peasant
+		animation = happiness
+	}
+	cooldown = { years = 1 }
+
+	# kCAFG override : low priority, it's okay if this event is replaced
+	id_override_priority = 1
+
+	trigger = {
+		location.rite = {
+			NOR = {
+				rite_has_parameter = naked_adherents_active
+				rite_has_parameter = naked_priests_active
+			}
+		}
+	}
+
+	immediate = {
+		play_sound_effect = "event:/DLC/EP2/SFX/Ambience/2D/ep2_amb_2d_crowd_surprise_reaction"
+		tournament_pivotal_flavor_variable_effect = { CONTEST = horse_race ID = 3030 }
+		if = {
+			limit = {
+				any_pool_character = {
+					province = root.location
+					3030_would_streak_trigger = yes
+				}
+			}
+			random_pool_character = {
+				province = root.location
+				limit = { 3030_would_streak_trigger = yes }
+				hidden_effect = {
+					add_trait = deviant
+				}
+				save_scope_as = naked_peasant
+			}
+		}
+		else = {
+			create_character = {
+				template = generic_peasant_character
+				culture = root.location.culture
+				faith = root.location.faith
+				rite = root.location.rite
+				location = root.location
+				trait = deviant
+				save_scope_as = naked_peasant
+			}
+		}
+		scope:naked_peasant = {
+			add_character_flag = is_naked
+		}
+	}
+
+	option = { # How disgusting! Arrest them!
+		name = contest_events.3030.a
+		rightfully_imprison_character_effect = {
+			TARGET = scope:naked_peasant
+			IMPRISONER = root
+		}
+		if = {
+			limit = {
+				rite = {
+					NOR = {
+						rite_has_parameter = naked_adherents_active
+						rite_has_parameter = naked_priests_active
+						trait_is_virtue_rite = lustful
+					}
+				}
+			}
+			stress_and_fulfillment_impact = {
+				deviant = minor_stress_impact_gain
+				lustful = minor_stress_impact_gain
+				seducer = minor_stress_impact_gain
+			}
+		}
+		else = {
+			stress_and_fulfillment_impact = {
+				deviant = minor_stress_impact_gain
+				lustful = minor_stress_impact_gain
+				seducer = minor_stress_impact_gain
+				zealous = minor_stress_impact_gain
+			}
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0.5
+				OR = {
+					has_trait = deviant
+					has_trait = lustful
+					has_trait = seducer
+				}
+			}
+		}
+	}
+
+	option = { # Haha! What a display!
+		name = contest_events.3030.b
+		trigger = {
+			NOR = {
+				has_trait = callous
+				has_trait = sadistic
+			}
+		}
+		show_unlock_reason = no
+		if = {
+			limit = {
+				AND = {
+					rite = {
+						NOR = {
+							rite_has_parameter = naked_adherents_active
+							rite_has_parameter = naked_priests_active
+						}
+					}
+					NOT = { rite = { trait_is_virtue_rite = lustful } }
+				}
+			}
+			stress_and_fulfillment_impact = {
+				base = minor_stress_impact_loss
+				callous = minor_stress_impact_loss
+				sadistic = minor_stress_impact_loss
+				deviant = minor_stress_impact_loss
+				lustful = minor_stress_impact_loss
+				seducer = minor_stress_impact_loss
+				chaste = medium_stress_impact_gain
+				zealous = medium_stress_impact_gain
+			}
+		}
+		else = {
+			stress_and_fulfillment_impact = {
+				base = minor_stress_impact_loss
+				callous = minor_stress_impact_loss
+				sadistic = minor_stress_impact_loss
+				deviant = minor_stress_impact_loss
+				lustful = minor_stress_impact_loss
+				seducer = minor_stress_impact_loss
+				zealous = minor_stress_impact_loss
+				chaste = medium_stress_impact_gain
+			}
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0
+				NOR = {
+					has_trait = deviant
+					has_trait = lustful
+					has_trait = seducer
+				}
+			}
+		}
+	}
+
+	option = { # Hey, that looks like fun!
+		name = contest_events.3030.c
+		trigger = {
+			is_deviant_trigger = yes
+		}
+		trait = deviant
+		if = {
+			limit = {
+				scope:host != this
+			}
+			reverse_add_opinion = {
+				modifier = tournament_streaker_opinion
+				target = scope:host
+				opinion = -30
+			}
+		}
+		set_relation_friend = {
+			reason = friend_naked_together
+			target = scope:naked_peasant
+		}
+		if = {
+			limit = {
+				any_secret = {
+					type = secret_deviant
+				}
+			}
+			random_secret = {
+				type = secret_deviant
+				show_as_tooltip = {
+					expose_secret = root
+				}
+				save_scope_as = secret
+			}
+			hidden_effect = { #exposing secrets on yourself doesn't trigger secrets.0001, so we have to trigger the effects here
+				secret_exposed_owner_effects_effect = { SECRET = scope:secret POV = root }
+				secret_exposed_owner_opinion_effects_effect = yes
+			}
+		}
+		stress_and_fulfillment_impact = {
+			base = medium_stress_impact_loss # Base instead of Deviant since the Deviant secret won't give stress loss
+			lustful = medium_stress_impact_loss
+			rakish = medium_stress_impact_loss
+			seducer = medium_stress_impact_loss
+			chaste = medium_stress_impact_gain
+			zealous = medium_stress_impact_gain
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0
+				NOR = { # Only do this if you're horny
+					has_trait = lustful
+					has_trait = rakish
+					is_deviant_trigger = yes
+					has_trait = seducer
+				}
+			}
+		}
+	}
+
+	option = { # Nudity is not a sin!
+		name = contest_events.3030.d
+		trigger = {
+			rite = {
+				OR = {
+					rite_has_parameter = naked_adherents_active
+					rite_has_parameter = naked_priests_active
+				}
+			}
+		}
+		duel = {
+			skill = learning
+			value = high_skill_rating
+			10 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 3.5
+					min = -49
+				}
+				desc = contest_events.3030.a.success
+				send_interface_toast = {
+					title = contest_events.3030.a.success
+					left_icon = root
+					add_piety = medium_piety_gain
+					if = {
+						limit = {
+							root.location.faith != root.faith
+							is_liege_or_above_of = root.location.county.holder
+							root.location.county.holder = {
+								is_ai = yes
+								OR = {
+									faith = root.faith
+									NOT = {
+										vassal_contract_has_flag = religiously_protected
+									}
+								}
+							}
+						}
+						root.location.county = {
+							E_kCAFG_convert_rite_in_all_county_provinces = {
+								FACTOR = 0.4
+								VARIANCE = 0.2
+								RITE = root.rite
+								MAX = 0.85
+							}
+						}
+					}
+				}
+			}
+			10 = {
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -3.5
+					min = -49
+				}
+				desc = contest_events.3030.a.failure
+				send_interface_toast = {
+					title = contest_events.3030.a.failure
+					left_icon = root
+					add_piety = minor_piety_loss
+				}
+			}
+		}
+		progress_towards_friend_effect = {
+			REASON = friend_naked_together
+			CHARACTER = scope:naked_peasant
+			OPINION = default_friend_opinion
+		}
+		stress_and_fulfillment_impact = {
+			chaste = medium_stress_impact_gain
+			lazy = medium_stress_impact_gain
+			callous = medium_stress_impact_gain
+			cynical = medium_stress_impact_gain
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_trait = chaste
+					has_trait = lazy
+					has_trait = callous
+					has_trait = cynical
+				}
+			}
+		}
+	}
+
+	option = { # Let the horses trample them
+		name = contest_events.3030.e
+		trigger = {
+			OR = {
+				has_trait = callous
+				has_trait = sadistic
+			}
+		}
+		scope:naked_peasant = {
+			death = {
+				death_reason = death_trampled_by_horse
+			}
+		}
+		add_dread = minor_dread_gain
+		stress_and_fulfillment_impact = {
+			callous = medium_stress_impact_loss
+			sadistic = medium_stress_impact_loss
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+	after = {
+		scope:naked_peasant = {
+			remove_character_flag = is_naked
+		}
+	}
+}

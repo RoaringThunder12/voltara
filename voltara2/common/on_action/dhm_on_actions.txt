@@ -1,0 +1,145 @@
+﻿# Dynasty & Household Manager
+# Append through uniquely named child on-actions. This avoids competing with
+# vanilla or another mod for an existing on-action's trigger/effect blocks.
+
+on_birth_child = {
+    on_actions = {
+        dhm_on_birth_child
+    }
+}
+
+dhm_on_birth_child = {
+    events = {
+        dhm_education.0001
+        dhm_marriage.0360
+    }
+}
+
+on_6th_birthday = {
+    on_actions = {
+        dhm_on_6th_birthday
+    }
+}
+
+dhm_on_6th_birthday = {
+    events = {
+        dhm_education.0002
+    }
+}
+
+on_10th_birthday = {
+    on_actions = {
+        dhm_on_10th_birthday
+    }
+}
+
+dhm_on_10th_birthday = {
+    events = {
+        dhm_education.0005
+    }
+}
+
+on_16th_birthday = {
+    on_actions = {
+        dhm_on_16th_birthday
+    }
+}
+
+dhm_on_16th_birthday = {
+    events = {
+        dhm_education.0003
+		# Native on-action delay sequencing lets the education event reserve its
+		# visible conclusion before matchmaking begins on the following day.
+		delay = { days = 1 }
+        dhm_marriage.0001
+		dhm_v080_plans.0001
+    }
+}
+
+# A bounded quarterly pass keeps automation responsive without a daily pulse or
+# any whole-world scan. The effect itself caps family and courtier throughput.
+quarterly_playable_pulse = {
+    on_actions = {
+        dhm_on_quarterly_playable_pulse
+    }
+}
+
+dhm_on_quarterly_playable_pulse = {
+    events = {
+        dhm_core.0001
+    }
+}
+
+# Lifecycle bridges use native scopes and do nothing unless a DHM marker exists.
+on_marriage = {
+    on_actions = {
+        dhm_on_marriage
+    }
+}
+
+dhm_on_marriage = {
+    events = {
+        dhm_marriage.0290
+    }
+}
+
+on_death = {
+    on_actions = {
+        dhm_on_death
+    }
+}
+
+dhm_on_death = {
+    events = {
+        dhm_marriage.0370
+		dhm_saga.6200
+    }
+}
+
+on_divorce = {
+    on_actions = {
+        dhm_on_divorce
+    }
+}
+
+dhm_on_divorce = {
+    events = {
+        dhm_marriage.0380
+    }
+}
+
+on_betrothal_broken = {
+    on_actions = {
+        dhm_on_betrothal_broken
+    }
+}
+
+dhm_on_betrothal_broken = {
+	# A broken betrothal may be caused by death. CK3 keeps the dead character as
+	# scope:second, but character variables are no longer readable on that scope.
+	# Only living partners are inspected; the survivor's lock is still cleared.
+	effect = {
+		if = {
+			limit = { is_alive = yes }
+			if = {
+				limit = {
+					has_variable = dhm_arranged_union_spouse
+					var:dhm_arranged_union_spouse = scope:second
+				}
+				dhm_clear_pending_arranged_union_state_effect = yes
+			}
+		}
+		if = {
+			limit = { scope:second = { is_alive = yes } }
+			scope:second = {
+				if = {
+					limit = {
+						has_variable = dhm_arranged_union_spouse
+						var:dhm_arranged_union_spouse = root
+					}
+					dhm_clear_pending_arranged_union_state_effect = yes
+				}
+			}
+		}
+	}
+}

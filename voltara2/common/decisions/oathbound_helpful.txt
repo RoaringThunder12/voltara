@@ -1,0 +1,97 @@
+﻿oathbound_increase_control_decision = {
+    picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = oathbound_increase_control_decision_desc
+	selection_tooltip = oathbound_increase_control_decision_tooltip
+
+	ai_check_interval = 12
+
+	is_shown = {
+        is_ai = no
+		is_landless_adventurer = yes	
+		num_of_relation_oathholder > 0
+        exists = location.county
+
+        location.county = { 
+            county_control < 100 
+
+            NOT = {
+                has_county_modifier = oathbound_enforcing_order_strong
+                has_county_modifier = oathbound_enforcing_order_normal
+                has_county_modifier = oathbound_enforcing_order_weak
+            }
+        }
+
+        any_relation = {
+            type = oathholder
+            
+            OR = {
+                this = root.location.county.holder
+                
+                root.location.county.holder = {
+                    target_is_liege_or_above = prev 
+                }
+            }
+        }
+	}
+
+	is_valid = {
+		NOT = { 
+			is_imprisoned = yes
+			has_trait = incapable 
+		}
+	}
+
+	effect = {
+        # Scope to the county
+        location.county = {
+            
+            # Tier 3: Legendary Enforcer (Must be highly skilled AND highly famous)
+            if = {
+                limit = {
+                    root.martial >= 16
+                    root.prestige_level >= 4 # Exalted Among Men or higher
+                }
+                add_county_modifier = {
+                    modifier = oathbound_enforcing_order_strong
+                    years = 100 
+                }
+            }
+            
+            # Tier 2: Standard Enforcer (Must be decent AND somewhat known)
+            else_if = {
+                limit = {
+                    root.martial >= 12
+                    root.prestige_level >= 2 # Distinguished or higher
+                }
+                add_county_modifier = {
+                    modifier = oathbound_enforcing_order_normal
+                    years = 100 
+                }
+            }
+            
+            # Tier 1: The Nobodies (Either terrible at fighting, or completely unknown)
+            else = {
+                add_county_modifier = {
+                    modifier = oathbound_enforcing_order_weak
+                    years = 100 
+                }
+            }
+        }
+
+        # 2. Save the location to your character
+        set_variable = {
+            name = oathbound_patrolled_county_var
+            value = location.county
+        }
+
+        send_interface_toast = {
+            type = event_toast_effect_good
+            title = oathbound_increase_control_decision_toast
+            left_icon = root
+            right_icon = location.county.holder
+            custom_tooltip = oathbound_increase_control_decision_toast_desc
+        }
+    }
+}

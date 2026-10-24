@@ -1,0 +1,6 @@
+﻿ven_kingsmoot_law = { law_group_type = title_succession_laws index = 901
+ can_have = { ven_northerner = yes highest_held_title_tier >= tier_kingdom }
+ can_pass = { has_title = title:e_voltara_enderal }
+ can_title_have = { this = title:e_voltara_enderal }
+ succession = { order_of_succession = election election_type = ven_kingsmoot }
+ flag = elective_succession_law title_allegiance_opinion = 5 pass_cost = { prestige = 500 } revoke_cost = { prestige = 2000 } }

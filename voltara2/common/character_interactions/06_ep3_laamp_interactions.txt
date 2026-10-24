@@ -5666,20 +5666,13 @@ is_valid = {
 				target = scope:recipient
 			}
 			custom_tooltip = hire_laamp_mercenaries_interaction.contribution_pay
-			if = {
-				limit = {
-					has_title = title:h_china
+			if = { limit = {
+					always = no
 					situation:dynastic_cycle ?= {
 						situation_top_has_catalyst = catalyst_hegemon_hired_mercenary
 					}
-				}
-				situation:dynastic_cycle ?= {
-					trigger_situation_catalyst = {
-						catalyst = catalyst_hegemon_hired_mercenary
-						character = scope:puppet_or_actor
-					}
-				}
-			}
+				} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 		}
 		scope:recipient = {
 			set_variable = {

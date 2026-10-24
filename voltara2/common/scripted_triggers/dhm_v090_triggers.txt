@@ -1,0 +1,226 @@
+﻿# v0.9.0: bounded, evidence-based household checks. No world searches.
+dhm_v090_school_has_reason_trigger = {
+ OR = {
+  NOT = { has_variable = dhm090_review_age }
+  NOT = { exists = var:dhm090_review_tutor }
+  AND = { age >= 12 var:dhm090_review_age < 12 }
+  AND = { age >= 14 var:dhm090_review_age < 14 }
+  any_relation = { type = dhm_specialist_tutor exists = prev.var:dhm090_review_tutor NOT = { this = prev.var:dhm090_review_tutor } }
+  AND = { has_focus = education_diplomacy NOT = { var:dhm090_review_focus ?= flag:diplomacy } }
+  AND = { has_focus = education_martial NOT = { var:dhm090_review_focus ?= flag:martial } }
+  AND = { has_focus = education_stewardship NOT = { var:dhm090_review_focus ?= flag:stewardship } }
+  AND = { has_focus = education_intrigue NOT = { var:dhm090_review_focus ?= flag:intrigue } }
+  AND = { has_focus = education_learning NOT = { var:dhm090_review_focus ?= flag:learning } }
+ }
+}
+# Subject = child. Retention never protects an absent, hostile or incapable tutor.
+dhm_v090_keep_capable_tutor_trigger = {
+ has_global_variable = dhm090_keep_capable_tutors
+ any_relation = {
+  type = dhm_specialist_tutor
+  is_alive = yes is_imprisoned = no is_hostage = no
+  NOT = { has_trait = incapable }
+  is_in_the_same_court_as = scope:dhm_manager
+  NOT = { has_relation_rival = prev }
+  NOT = { has_relation_nemesis = prev }
+  learning >= 8
+  OR = {
+   AND = { diplomacy >= 12 prev = { has_focus = education_diplomacy } }
+   AND = { martial >= 12 prev = { has_focus = education_martial } }
+   AND = { stewardship >= 12 prev = { has_focus = education_stewardship } }
+   AND = { intrigue >= 12 prev = { has_focus = education_intrigue } }
+   AND = { learning >= 12 prev = { has_focus = education_learning } }
+  }
+ }
+}
+# Only the small, explicitly authorised officer thank-you uses this allowance.
+dhm_v090_may_spend_allowance_trigger = {
+ is_alive = yes is_ai = no
+ has_character_flag = dhm090_allow_officer_gift
+ NOT = { has_character_flag = dhm090_allowance_spent }
+ short_term_gold >= 10
+ OR = {
+  NOT = { has_global_variable = dhm090_protect_reserve }
+  short_term_gold >= 110
+ }
+}
+# Current character is a saved helper, not either disputant.
+dhm_v090_mediator_eligible_trigger = {
+ is_alive = yes is_adult = yes is_imprisoned = no is_hostage = no
+ NOT = { has_trait = incapable }
+ this != root this != scope:dhm_dispute_first this != scope:dhm_dispute_second
+ is_in_the_same_court_as = root
+ var:dhm090_helped_by ?= root
+ NOT = { has_character_flag = dhm090_mediation_recent }
+ NOT = { has_relation_rival = scope:dhm_dispute_first }
+ NOT = { has_relation_rival = scope:dhm_dispute_second }
+ NOT = { has_relation_nemesis = scope:dhm_dispute_first }
+ NOT = { has_relation_nemesis = scope:dhm_dispute_second }
+ opinion = { target = root value >= 20 }
+ OR = {
+  is_close_family_of = scope:dhm_dispute_first
+  is_close_family_of = scope:dhm_dispute_second
+  has_relation_friend = scope:dhm_dispute_first
+  has_relation_friend = scope:dhm_dispute_second
+ }
+}
+dhm_v090_mediator_offer_current_trigger = {
+ exists = scope:dhm090_mediator
+ scope:dhm090_mediator = { dhm_v090_mediator_eligible_trigger = yes }
+ exists = scope:dhm_dispute_first exists = scope:dhm_dispute_second
+ scope:dhm_dispute_first = { is_alive = yes is_adult = yes is_imprisoned = no is_hostage = no NOT = { has_trait = incapable } is_in_the_same_court_as = root }
+ scope:dhm_dispute_second = { is_alive = yes is_adult = yes is_imprisoned = no is_hostage = no NOT = { has_trait = incapable } is_in_the_same_court_as = root }
+}
+dhm_v090_spouse_child_plan_trigger = {
+ exists = scope:dhm_partner_spouse exists = scope:dhm_protected_child
+ scope:dhm_partner_spouse = {
+  is_alive = yes is_imprisoned = no is_hostage = no NOT = { has_trait = incapable }
+  is_spouse_of = root is_in_the_same_court_as = root
+  OR = {
+   scope:dhm_protected_child = { is_child_of = prev }
+   has_relation_friend = scope:dhm_protected_child
+   opinion = { target = scope:dhm_protected_child value >= 40 }
+  }
+ }
+ scope:dhm_protected_child = {
+  is_alive = yes is_adult = no is_imprisoned = no is_hostage = no
+  NOT = { has_trait = incapable } is_in_the_same_court_as = root
+ }
+}
+
+dhm_v090_school_triumph_trigger = {
+ exists = scope:dhm090_triumph_chapter
+ OR = { scope:dhm090_triumph_chapter = flag:dhm_chapter_tutor_bond scope:dhm090_triumph_chapter = flag:dhm_chapter_failed_lesson }
+}
+dhm_v090_private_triumph_trigger = {
+ exists = scope:dhm090_triumph_chapter
+ OR = { scope:dhm090_triumph_chapter = flag:dhm_chapter_marriage_saved scope:dhm090_triumph_chapter = flag:dhm_chapter_spouses_stood_together scope:dhm090_triumph_chapter = flag:dhm_chapter_reconciliation }
+}
+dhm_v090_keepsake_available_trigger = {
+ is_alive = yes is_ai = no
+ has_character_flag = dhm_v080_triumph_pending
+ dhm_v090_recorded_chapter_trigger = yes
+ NOT = { has_global_variable = dhm090_keepsake_awarded }
+}
+
+# Distinct actual pair: a bad relationship or an existing strain, not random hostility.
+dhm_v090_dispute_pair_trigger = {
+ OR = {
+  opinion = { target = $OTHER$ value < 0 }
+  has_relation_rival = $OTHER$
+  stress_level >= 2
+  $OTHER$ = { stress_level >= 2 }
+ }
+}
+
+# Every saved chapter token is read explicitly; an unknown future token earns nothing.
+dhm_v090_recorded_chapter_trigger = {
+ exists = scope:dhm090_triumph_chapter
+ OR = {
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_ambition_kept
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_failed_lesson
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_first_command
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_heir_ready
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_inlaw_welcomed
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_legacy_challenged
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_marriage_freed
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_marriage_saved
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_officer_triumph
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_officers_feud
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_parent_heir_trust
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_policy_mediated
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_reconciliation
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_scandal_endured
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_shared_grief
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_siblings_divided
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_siblings_reconciled
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_spouses_stood_together
+  scope:dhm090_triumph_chapter = flag:dhm_chapter_tutor_bond
+ }
+}
+
+dhm_v090_spouse_advice_current_trigger = {
+ is_alive = yes is_ai = no
+ exists = scope:dhm_partner_spouse
+ scope:dhm_partner_spouse = {
+  is_alive = yes is_spouse_of = root is_in_the_same_court_as = root
+  is_imprisoned = no is_hostage = no NOT = { has_trait = incapable }
+ }
+}
+dhm_v090_child_advice_current_trigger = {
+ dhm_v090_spouse_advice_current_trigger = yes
+ exists = scope:dhm_protected_child
+ scope:dhm_protected_child = {
+  is_alive = yes is_adult = no is_in_the_same_court_as = root
+  is_imprisoned = no is_hostage = no NOT = { has_trait = incapable }
+ }
+}
+
+# A review is due for a new appointment or after real household work.
+dhm_v090_officer_review_due_trigger = {
+ OR = {
+  NOT = { var:dhm090_reviewed_by ?= scope:dhm_manager }
+  has_character_flag = dhm090_officer_work_due
+  AND = { has_character_flag = dhm_office_steward NOT = { var:dhm090_last_review_role ?= flag:steward } }
+  AND = { has_character_flag = dhm_office_matchmaker NOT = { var:dhm090_last_review_role ?= flag:matchmaker } }
+  AND = { has_character_flag = dhm_office_tutor NOT = { var:dhm090_last_review_role ?= flag:tutor } }
+  AND = { has_character_flag = dhm_office_chronicler NOT = { var:dhm090_last_review_role ?= flag:chronicler } }
+ }
+}
+
+# Ordinary letters need news: first correspondence, a changed burden, a DHM
+# marriage or a young child whose birth has not already been mentioned.
+dhm_v090_letter_has_news_trigger = {
+ OR = {
+  NOT = { var:dhm090_letter_to ?= scope:dhm_manager }
+  has_character_flag = dhm090_marriage_news
+  AND = { has_variable = dhm090_letter_stress NOT = { stress_level = var:dhm090_letter_stress } }
+  any_child = { is_alive = yes age < 2 NOT = { has_character_flag = dhm090_birth_letter_sent } }
+ }
+}
+
+# RC2: an old queued policy offer cannot dismiss or overwrite a newer offer.
+dhm_v090_rc2_policy_offer_current_trigger = {
+ dhm_v090_spouse_advice_current_trigger = yes
+ NOT = { has_character_flag = dhm090_policy_addressed }
+ OR = {
+  NOT = { exists = scope:dhm090_policy_ticket }
+  var:dhm090_policy_ticket ?= scope:dhm090_policy_ticket
+ }
+}
+dhm_v090_rc2_tutor_can_receive_trigger = {
+ exists = scope:dhm_story_tutor
+ scope:dhm_story_tutor = { is_alive = yes is_imprisoned = no is_hostage = no NOT = { has_trait = incapable } }
+}
+# Current scope = letter writer. Personality never overrides actual hostility.
+dhm_v090_rc2_letter_marriage_strained_trigger = {
+ any_spouse = {
+  is_alive = yes
+  OR = {
+   opinion = { target = prev value < 0 }
+   has_relation_rival = prev
+   has_relation_nemesis = prev
+   prev = { opinion = { target = prev value < 0 } }
+   prev = { has_relation_rival = prev }
+   prev = { has_relation_nemesis = prev }
+  }
+ }
+}
+dhm_v090_rc2_letter_marriage_peaceful_trigger = {
+ stress_level < 2
+ any_spouse = { is_alive = yes }
+ NOT = { dhm_v090_rc2_letter_marriage_strained_trigger = yes }
+ NOT = {
+  any_spouse = {
+   is_alive = yes
+   OR = {
+    stress_level >= 2
+    is_imprisoned = yes
+    is_hostage = yes
+    has_trait = incapable
+    opinion = { target = prev value < 20 }
+    prev = { opinion = { target = prev value < 20 } }
+   }
+  }
+ }
+}

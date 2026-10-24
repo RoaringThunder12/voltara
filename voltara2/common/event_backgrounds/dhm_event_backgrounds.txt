@@ -1,0 +1,137 @@
+﻿# Original event illustrations generated for Dynasty & Household Manager v0.4.0.
+
+dhm_living_council = {
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_living_council.dds"
+		environment = "environment_event_councilchamber"
+		ambience = "event:/SFX/Events/Backgrounds/meetingchamber_western"
+	}
+}
+
+dhm_living_letter = {
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_living_letter.dds"
+		environment = "environment_event_study"
+		ambience = "event:/SFX/Events/Backgrounds/office_workplace"
+	}
+}
+
+dhm_living_schoolroom = {
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_living_schoolroom.dds"
+		environment = "environment_event_study"
+		ambience = "event:/SFX/Events/Backgrounds/office_workplace"
+	}
+}
+
+dhm_living_hearth = {
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_living_hearth.dds"
+		environment = "environment_event_sittingroom"
+		ambience = "event:/SFX/Events/Backgrounds/sittingroom_fireplace"
+	}
+}
+
+# v0.5.0 — original Blood, Hearth & Legacy story rooms. Each illustration was
+# composed with a dark left field for text and a calm right edge for portraits.
+dhm_v050_officers = {
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_v050_officers.dds"
+		environment = "environment_event_councilchamber"
+		ambience = "event:/SFX/Events/Backgrounds/office_workplace"
+	}
+}
+
+dhm_v050_heir = {
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_v050_heir.dds"
+		environment = "environment_event_councilchamber"
+		ambience = "event:/SFX/Events/Backgrounds/meetingchamber_western"
+	}
+}
+
+dhm_v050_family = {
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_v050_family.dds"
+		environment = "environment_event_sittingroom"
+		ambience = "event:/SFX/Events/Backgrounds/sittingroom_fireplace"
+	}
+}
+
+dhm_v050_legacy = {
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_v050_legacy.dds"
+		environment = "environment_event_study"
+		ambience = "event:/SFX/Events/Backgrounds/office_workplace"
+	}
+}
+
+# v0.6.0 — original scene art for connected sagas. All four paintings keep a
+# dark text field and portrait-safe edge and were verified after DXT5 conversion.
+dhm_v060_officer_rivalry = {
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_v060_officer_rivalry.dds"
+		environment = "environment_event_councilchamber"
+		ambience = "event:/SFX/Events/Backgrounds/office_workplace"
+	}
+}
+
+dhm_v060_heir_command = {
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_v060_heir_command.dds"
+		environment = "environment_event_councilchamber"
+		ambience = "event:/SFX/Events/Backgrounds/meetingchamber_western"
+	}
+}
+
+dhm_v060_marriage_courtship = {
+	background = {
+		trigger = { dhm_v075_christian_courtship_art_trigger = yes }
+		reference = "gfx/interface/illustrations/dhm/dhm_v060_marriage_courtship.dds"
+		environment = "environment_event_sittingroom"
+		ambience = "event:/SFX/Events/Backgrounds/sittingroom_fireplace"
+	}
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_v075_courtship_neutral.dds"
+		environment = "environment_event_sittingroom"
+		ambience = "event:/SFX/Events/Backgrounds/sittingroom_fireplace"
+	}
+}
+
+dhm_v060_crisis_recovery = {
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_v060_crisis_recovery.dds"
+		environment = "environment_event_sittingroom"
+		ambience = "event:/SFX/Events/Backgrounds/sittingroom_fireplace"
+	}
+}
+
+# v0.8.0 — an original, purpose-built Chronicle milestone scene.
+dhm_v080_household_triumph = {
+	background = {
+		reference = "gfx/interface/illustrations/dhm/dhm_v080_household_triumph.dds"
+		environment = "environment_event_councilchamber"
+		ambience = "event:/SFX/Events/Backgrounds/meetingchamber_western"
+	}
+}
+
+# Existing paintings, selected by the saved achievement rather than a generic hall.
+dhm090_contextual_triumph = {
+ background = {
+  trigger = { dhm_v090_school_triumph_trigger = yes }
+  reference = "gfx/interface/illustrations/dhm/dhm_living_schoolroom.dds"
+  environment = "environment_event_study"
+  ambience = "event:/SFX/Events/Backgrounds/office_workplace"
+ }
+ background = {
+  trigger = { dhm_v090_private_triumph_trigger = yes }
+  reference = "gfx/interface/illustrations/dhm/dhm_living_hearth.dds"
+  environment = "environment_event_sittingroom"
+  ambience = "event:/SFX/Events/Backgrounds/sittingroom_fireplace"
+ }
+ background = {
+  reference = "gfx/interface/illustrations/dhm/dhm_v080_household_triumph.dds"
+  environment = "environment_event_councilchamber"
+  ambience = "event:/SFX/Events/Backgrounds/meetingchamber_western"
+ }
+}

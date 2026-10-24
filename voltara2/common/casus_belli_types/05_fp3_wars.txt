@@ -1,5 +1,7 @@
 ﻿fp3_install_loyalist_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -64,7 +66,7 @@ valid_to_start = {
  NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins }
 
 		has_trait = fp3_struggle_supporter
-		exists = title:d_sunni.holder
+		always = no
 		OR = {
 			is_ai = no
 			opinion = {
@@ -266,11 +268,14 @@ valid_to_start = {
 			scope:loyalist_puppet = { # We set the new ruler to be a puppet
 				add_character_flag = fp3_is_a_loyalist_puppet
 
-				if = { # Creates further interaction points for the struggle
-					limit = {
+				if = { limit = {
 						OR = {
-							title:e_arabia.holder ?= { this = scope:attacker }
-							title:d_sunni.holder ?= { this = scope:attacker }
+							# Optional native title is absent on the Voltara map.
+# title:e_arabia.holder ?= { this = scope:attacker }
+always = no
+							# Optional native title is absent on the Voltara map.
+# title:d_sunni.holder ?= { this = scope:attacker }
+always = no
 						}
 						scope:attacker = {
 							can_add_hook = {
@@ -278,14 +283,14 @@ valid_to_start = {
 								target = scope:loyalist_puppet
 							}
 						}
-					}
-					scope:attacker = {
-						add_hook = {
-							target = scope:loyalist_puppet
-							type = caliphal_submission_hook
-						}
-					}
-				}
+					} # Proven unreachable; original effects retained below.
+# scope:attacker = {
+# 						add_hook = {
+# 							target = scope:loyalist_puppet
+# 							type = caliphal_submission_hook
+# 						}
+# 					}
+}
 				else = {
 					# Basic piety rewards for supporting the caliph/furthering your influence.
 					scope:attacker = { add_piety = medium_piety_gain }
@@ -413,6 +418,8 @@ valid_to_start = {
 
 fp3_turkic_invasion_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -825,6 +832,8 @@ fp3_seljuk_invasion_cb = {
  NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins }
  is_landed = yes }
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -1051,6 +1060,8 @@ fp3_seljuk_invasion_cb = {
 
 fp3_free_house_member_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -1225,6 +1236,8 @@ valid_to_start = {
 
 fp3_unify_house_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -1457,6 +1470,8 @@ fp3_zanj_rebellion_war = {
 	ignore_effect = change_title_holder
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -1576,24 +1591,10 @@ fp3_zanj_rebellion_war = {
 
 		every_in_list = {
 			list = titles_taken
-			if = {
-				limit = { this = title:c_basra }
-				change_title_holder = {
-					holder = scope:attacker
-					change = scope:change
-					take_baronies = yes
-				}
-				set_county_culture = culture:east_bantu
-				set_county_faith = faith:kharijite
-			}
-			else_if = {
-				limit = { this = title:d_basra }
-				change_title_holder = {
-					holder = scope:attacker
-					change = scope:change
-					take_baronies = yes
-				}
-			}
+			if = { limit = { always = no } # Unreachable effects archived in debug-dead-branches/audit.json.
+}
+			else_if = { limit = { always = no } # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 			else = {
 				create_zanj_vassal_effect = {
 					LOCATION = scope:attacker.location

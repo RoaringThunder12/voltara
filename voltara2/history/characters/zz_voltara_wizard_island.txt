@@ -9,46 +9,46 @@
   set_immortal_age = 65
   voltara_initialize_threadbinder = yes
   set_variable = { name = arcana_base value = 50 }
-  add_perk = conjuration_novice_perk
-  add_perk = conjuration_apprentice_perk
-  add_perk = conjuration_minor_rituals_perk
-  add_perk = conjuration_journeyman_perk
-  add_perk = conjuration_medium_rituals_perk
-  add_perk = conjuration_expert_perk
-  add_perk = conjuration_major_rituals_perk
-  add_perk = conjuration_master_perk
-  add_perk = destruction_novice_perk
-  add_perk = destruction_apprentice_perk
-  add_perk = destruction_minor_rituals_perk
-  add_perk = destruction_journeyman_perk
-  add_perk = destruction_medium_rituals_perk
-  add_perk = destruction_expert_perk
-  add_perk = destruction_major_rituals_perk
-  add_perk = destruction_master_perk
-  add_perk = alteration_novice_perk
-  add_perk = alteration_apprentice_perk
-  add_perk = alteration_minor_rituals_perk
-  add_perk = alteration_journeyman_perk
-  add_perk = alteration_medium_rituals_perk
-  add_perk = alteration_expert_perk
-  add_perk = alteration_major_rituals_perk
-  add_perk = alteration_master_perk
-  add_perk = illusion_novice_perk
-  add_perk = illusion_apprentice_perk
-  add_perk = illusion_minor_rituals_perk
-  add_perk = illusion_journeyman_perk
-  add_perk = illusion_medium_rituals_perk
-  add_perk = illusion_expert_perk
-  add_perk = illusion_major_rituals_perk
-  add_perk = illusion_master_perk
-  add_perk = restoration_novice_perk
-  add_perk = restoration_apprentice_perk
-  add_perk = restoration_minor_rituals_perk
-  add_perk = restoration_journeyman_perk
-  add_perk = restoration_medium_rituals_perk
-  add_perk = restoration_expert_perk
-  add_perk = restoration_major_rituals_perk
-  add_perk = restoration_master_perk
+  if = { limit = { NOT = { has_perk = conjuration_novice_perk } } add_perk = conjuration_novice_perk }
+  if = { limit = { NOT = { has_perk = conjuration_apprentice_perk } } add_perk = conjuration_apprentice_perk }
+  if = { limit = { NOT = { has_perk = conjuration_minor_rituals_perk } } add_perk = conjuration_minor_rituals_perk }
+  if = { limit = { NOT = { has_perk = conjuration_journeyman_perk } } add_perk = conjuration_journeyman_perk }
+  if = { limit = { NOT = { has_perk = conjuration_medium_rituals_perk } } add_perk = conjuration_medium_rituals_perk }
+  if = { limit = { NOT = { has_perk = conjuration_expert_perk } } add_perk = conjuration_expert_perk }
+  if = { limit = { NOT = { has_perk = conjuration_major_rituals_perk } } add_perk = conjuration_major_rituals_perk }
+  if = { limit = { NOT = { has_perk = conjuration_master_perk } } add_perk = conjuration_master_perk }
+  if = { limit = { NOT = { has_perk = destruction_novice_perk } } add_perk = destruction_novice_perk }
+  if = { limit = { NOT = { has_perk = destruction_apprentice_perk } } add_perk = destruction_apprentice_perk }
+  if = { limit = { NOT = { has_perk = destruction_minor_rituals_perk } } add_perk = destruction_minor_rituals_perk }
+  if = { limit = { NOT = { has_perk = destruction_journeyman_perk } } add_perk = destruction_journeyman_perk }
+  if = { limit = { NOT = { has_perk = destruction_medium_rituals_perk } } add_perk = destruction_medium_rituals_perk }
+  if = { limit = { NOT = { has_perk = destruction_expert_perk } } add_perk = destruction_expert_perk }
+  if = { limit = { NOT = { has_perk = destruction_major_rituals_perk } } add_perk = destruction_major_rituals_perk }
+  if = { limit = { NOT = { has_perk = destruction_master_perk } } add_perk = destruction_master_perk }
+  if = { limit = { NOT = { has_perk = alteration_novice_perk } } add_perk = alteration_novice_perk }
+  if = { limit = { NOT = { has_perk = alteration_apprentice_perk } } add_perk = alteration_apprentice_perk }
+  if = { limit = { NOT = { has_perk = alteration_minor_rituals_perk } } add_perk = alteration_minor_rituals_perk }
+  if = { limit = { NOT = { has_perk = alteration_journeyman_perk } } add_perk = alteration_journeyman_perk }
+  if = { limit = { NOT = { has_perk = alteration_medium_rituals_perk } } add_perk = alteration_medium_rituals_perk }
+  if = { limit = { NOT = { has_perk = alteration_expert_perk } } add_perk = alteration_expert_perk }
+  if = { limit = { NOT = { has_perk = alteration_major_rituals_perk } } add_perk = alteration_major_rituals_perk }
+  if = { limit = { NOT = { has_perk = alteration_master_perk } } add_perk = alteration_master_perk }
+  if = { limit = { NOT = { has_perk = illusion_novice_perk } } add_perk = illusion_novice_perk }
+  if = { limit = { NOT = { has_perk = illusion_apprentice_perk } } add_perk = illusion_apprentice_perk }
+  if = { limit = { NOT = { has_perk = illusion_minor_rituals_perk } } add_perk = illusion_minor_rituals_perk }
+  if = { limit = { NOT = { has_perk = illusion_journeyman_perk } } add_perk = illusion_journeyman_perk }
+  if = { limit = { NOT = { has_perk = illusion_medium_rituals_perk } } add_perk = illusion_medium_rituals_perk }
+  if = { limit = { NOT = { has_perk = illusion_expert_perk } } add_perk = illusion_expert_perk }
+  if = { limit = { NOT = { has_perk = illusion_major_rituals_perk } } add_perk = illusion_major_rituals_perk }
+  if = { limit = { NOT = { has_perk = illusion_master_perk } } add_perk = illusion_master_perk }
+  if = { limit = { NOT = { has_perk = restoration_novice_perk } } add_perk = restoration_novice_perk }
+  if = { limit = { NOT = { has_perk = restoration_apprentice_perk } } add_perk = restoration_apprentice_perk }
+  if = { limit = { NOT = { has_perk = restoration_minor_rituals_perk } } add_perk = restoration_minor_rituals_perk }
+  if = { limit = { NOT = { has_perk = restoration_journeyman_perk } } add_perk = restoration_journeyman_perk }
+  if = { limit = { NOT = { has_perk = restoration_medium_rituals_perk } } add_perk = restoration_medium_rituals_perk }
+  if = { limit = { NOT = { has_perk = restoration_expert_perk } } add_perk = restoration_expert_perk }
+  if = { limit = { NOT = { has_perk = restoration_major_rituals_perk } } add_perk = restoration_major_rituals_perk }
+  if = { limit = { NOT = { has_perk = restoration_master_perk } } add_perk = restoration_master_perk }
   set_variable = { name = magicka value = magicka_max }
   set_relation_best_friend = { target = character:19066002 reason = friend_generic_history }
  } }
@@ -56,6 +56,7 @@
 }
 19066002 = {
  name = "Micheal"
+ trait = vwa_amnesia
  culture = voltara_local_goblin_voltara_rhaulla rite = voltara_harmonious_weave dna = voltara_goblin_reference
  diplomacy = 18 martial = 5 stewardship = 12 intrigue = 9 learning = 14 prowess = 6
  trait = voltara_wizards_immortality trait = gregarious trait = gluttonous trait = loyal

@@ -1,0 +1,198 @@
+﻿lam_lf_government_clear_effect = {
+	remove_variable = lam_lf_gov_lord
+	remove_variable = lam_lf_gov_title
+	remove_variable = lam_lf_gov_capital
+	remove_variable = lam_lf_gov_next
+	remove_variable = lam_lf_gov_rating
+	remove_variable = lam_lf_gov_streak
+	remove_variable = lam_lf_gov_gold
+	remove_variable = lam_lf_gov_size
+	remove_variable = lam_lf_gov_dev
+	remove_variable = lam_lf_gov_control
+}
+lam_lf_government_snapshot_effect = {
+	set_variable = {
+		name = lam_lf_gov_lord
+		value = liege
+	}
+	set_variable = {
+		name = lam_lf_gov_title
+		value = liege.primary_title
+	}
+	set_variable = {
+		name = lam_lf_gov_capital
+		value = liege.capital_county
+	}
+	set_variable = {
+		name = lam_lf_gov_gold
+		value = liege.gold
+	}
+	set_variable = {
+		name = lam_lf_gov_size
+		value = liege.realm_size
+	}
+	set_variable = {
+		name = lam_lf_gov_dev
+		value = liege.capital_county.development_level
+	}
+	set_variable = {
+		name = lam_lf_gov_control
+		value = liege.capital_county.county_control
+	}
+	set_variable = {
+		name = lam_lf_gov_next
+		value = {
+			value = lam_now_m
+			add = 12
+		}
+	}
+}
+lam_lf_government_pulse_effect = {
+	if = {
+		limit = {
+			has_variable = lam_fac_courtparty
+			lam_lf_governing_seats_value >= 1
+			exists = liege.capital_county
+		}
+		if = {
+			limit = {
+				NOT = {
+					AND = {
+						var:lam_lf_gov_lord ?= liege
+						var:lam_lf_gov_title ?= liege.primary_title
+						var:lam_lf_gov_capital ?= liege.capital_county
+					}
+				}
+			}
+			lam_lf_government_clear_effect = yes
+			set_variable = {
+				name = lam_lf_gov_rating
+				value = 0
+			}
+			set_variable = {
+				name = lam_lf_gov_streak
+				value = 0
+			}
+			lam_lf_government_snapshot_effect = yes
+		}
+		else_if = {
+			limit = {
+				has_variable = lam_lf_gov_next
+				var:lam_lf_gov_next <= lam_now_m
+			}
+			set_variable = {
+				name = lam_lf_gov_delta
+				value = lam_lf_government_change_value
+			}
+			set_variable = {
+				name = lam_lf_gov_rating
+				value = {
+					value = var:lam_lf_gov_rating
+					multiply = 0.5
+					add = var:lam_lf_gov_delta
+					min = -6
+					max = 6
+				}
+			}
+			if = {
+				limit = {
+					var:lam_lf_gov_delta <= -2
+				}
+				change_variable = {
+					name = lam_lf_gov_streak
+					add = 1
+				}
+			}
+			else = {
+				set_variable = {
+					name = lam_lf_gov_streak
+					value = 0
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			if = {
+				limit = {
+					var:lam_lf_gov_delta >= 2
+				}
+				change_variable = {
+					name = lam_fac_favour
+					add = 5
+				}
+				lam_fac_cohesion_add_effect = {
+					ADD = 3
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_variable = lam_lf_gov_news_cd
+						}
+					}
+					lam_st_record_effect = {
+						KEY = government_prospers
+					}
+					lam_lf_public_notice_effect = {
+						KEY = government_prospers
+					}
+					set_variable = {
+						name = lam_lf_gov_news_cd
+						value = yes
+						years = 3
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					var:lam_lf_gov_delta <= -2
+				}
+				change_variable = {
+					name = lam_fac_favour
+					add = -7
+				}
+				lam_fac_cohesion_add_effect = {
+					ADD = -3
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_variable = lam_lf_gov_news_cd
+						}
+					}
+					lam_st_record_effect = {
+						KEY = government_falters
+					}
+					lam_lf_public_notice_effect = {
+						KEY = government_falters
+					}
+					set_variable = {
+						name = lam_lf_gov_news_cd
+						value = yes
+						years = 3
+					}
+				}
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+			lam_lf_government_snapshot_effect = yes
+			remove_variable = lam_lf_gov_delta
+		}
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_lf_gov_lord
+		}
+		lam_lf_government_clear_effect = yes
+	}
+}

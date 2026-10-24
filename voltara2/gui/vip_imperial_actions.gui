@@ -1,0 +1,187 @@
+﻿window = { name = "vip_actions_window" parentanchor = center layer = top size = { 700 800 } movable = yes
+ visible = "[And( GetPlayer.IsValid, GetPlayer.MakeScope.Var('vip_actions_open').IsSet )]"
+ using = Window_Background using = Window_Decoration
+ vbox = { using = Window_Margins spacing = 10
+ header_pattern = { layoutpolicy_horizontal = expanding
+ blockoverride "header_text" { text = "vip_actions_title" }
+ blockoverride "button_close" { onclick = "[GetScriptedGui('vip_actions_toggle').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" } }
+ text_multi = { text = "vip_actions_hint" max_width = 640 autoresize = yes }
+ button_standard = { size = { 620 38 } text = "vip_private_report"
+ visible = "[GetScriptedGui('vip_private_report').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_private_report').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_private_report').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+ button_standard = { size = { 620 38 } text = "vip_enact_abolition"
+ tooltip = "vip_enact_abolition_tt"
+ visible = "[GetScriptedGui('vip_enact_abolition').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_enact_abolition').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_enact_abolition').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+ scrollbox = { layoutpolicy_horizontal = expanding layoutpolicy_vertical = expanding
+ blockoverride "scrollbox_content" { vbox = { spacing = 8 button_standard = { size = { 620 38 } text = "vic_story.10.0" tooltip = "vic_story.10.0.tt"
+ visible = "[GetScriptedGui('vip_action_10_0').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_10_0').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_10_0').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.10.1" tooltip = "vic_story.10.1.tt"
+ visible = "[GetScriptedGui('vip_action_10_1').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_10_1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_10_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.10.2" tooltip = "vic_story.10.2.tt"
+ visible = "[GetScriptedGui('vip_action_10_2').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_10_2').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_10_2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.10.3" tooltip = "vic_story.10.3.tt"
+ visible = "[GetScriptedGui('vip_action_10_3').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_10_3').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_10_3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.10.4" tooltip = "vic_story.10.4.tt"
+ visible = "[GetScriptedGui('vip_action_10_4').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_10_4').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_10_4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.10.5" tooltip = "vic_story.10.5.tt"
+ visible = "[GetScriptedGui('vip_action_10_5').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_10_5').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_10_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.10.6" tooltip = "vic_story.10.6.tt"
+ visible = "[GetScriptedGui('vip_action_10_6').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_10_6').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_10_6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.10.7" tooltip = "vic_story.10.7.tt"
+ visible = "[GetScriptedGui('vip_action_10_7').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_10_7').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_10_7').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.11.0" tooltip = "vic_story.11.0.tt"
+ visible = "[GetScriptedGui('vip_action_11_0').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_11_0').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_11_0').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.11.1" tooltip = "vic_story.11.1.tt"
+ visible = "[GetScriptedGui('vip_action_11_1').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_11_1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_11_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.11.2" tooltip = "vic_story.11.2.tt"
+ visible = "[GetScriptedGui('vip_action_11_2').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_11_2').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_11_2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.11.3" tooltip = "vic_story.11.3.tt"
+ visible = "[GetScriptedGui('vip_action_11_3').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_11_3').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_11_3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.11.4" tooltip = "vic_story.11.4.tt"
+ visible = "[GetScriptedGui('vip_action_11_4').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_11_4').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_11_4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.11.5" tooltip = "vic_story.11.5.tt"
+ visible = "[GetScriptedGui('vip_action_11_5').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_11_5').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_11_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.12.0" tooltip = "vic_story.12.0.tt"
+ visible = "[GetScriptedGui('vip_action_12_0').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_12_0').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_12_0').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.12.1" tooltip = "vic_story.12.1.tt"
+ visible = "[GetScriptedGui('vip_action_12_1').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_12_1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_12_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.12.2" tooltip = "vic_story.12.2.tt"
+ visible = "[GetScriptedGui('vip_action_12_2').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_12_2').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_12_2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.12.3" tooltip = "vic_story.12.3.tt"
+ visible = "[GetScriptedGui('vip_action_12_3').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_12_3').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_12_3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.12.4" tooltip = "vic_story.12.4.tt"
+ visible = "[GetScriptedGui('vip_action_12_4').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_12_4').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_12_4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.12.5" tooltip = "vic_story.12.5.tt"
+ visible = "[GetScriptedGui('vip_action_12_5').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_12_5').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_12_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.12.6" tooltip = "vic_story.12.6.tt"
+ visible = "[GetScriptedGui('vip_action_12_6').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_12_6').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_12_6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.0" tooltip = "vic_story.13.0.tt"
+ visible = "[GetScriptedGui('vip_action_13_0').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_0').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_0').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.1" tooltip = "vic_story.13.1.tt"
+ visible = "[GetScriptedGui('vip_action_13_1').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.2" tooltip = "vic_story.13.2.tt"
+ visible = "[GetScriptedGui('vip_action_13_2').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_2').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.3" tooltip = "vic_story.13.3.tt"
+ visible = "[GetScriptedGui('vip_action_13_3').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_3').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.4" tooltip = "vic_story.13.4.tt"
+ visible = "[GetScriptedGui('vip_action_13_4').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_4').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.5" tooltip = "vic_story.13.5.tt"
+ visible = "[GetScriptedGui('vip_action_13_5').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_5').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.6" tooltip = "vic_story.13.6.tt"
+ visible = "[GetScriptedGui('vip_action_13_6').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_6').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.7" tooltip = "vic_story.13.7.tt"
+ visible = "[GetScriptedGui('vip_action_13_7').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_7').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_7').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.8" tooltip = "vic_story.13.8.tt"
+ visible = "[GetScriptedGui('vip_action_13_8').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_8').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_8').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.9" tooltip = "vic_story.13.9.tt"
+ visible = "[GetScriptedGui('vip_action_13_9').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_9').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.10" tooltip = "vic_story.13.10.tt"
+ visible = "[GetScriptedGui('vip_action_13_10').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_10').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_10').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.11" tooltip = "vic_story.13.11.tt"
+ visible = "[GetScriptedGui('vip_action_13_11').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_11').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_11').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.13.12" tooltip = "vic_story.13.12.tt"
+ visible = "[GetScriptedGui('vip_action_13_12').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_13_12').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_13_12').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.15.0" tooltip = "vic_story.15.0.tt"
+ visible = "[GetScriptedGui('vip_action_15_0').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_15_0').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_15_0').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.15.1" tooltip = "vic_story.15.1.tt"
+ visible = "[GetScriptedGui('vip_action_15_1').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_15_1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_15_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.15.2" tooltip = "vic_story.15.2.tt"
+ visible = "[GetScriptedGui('vip_action_15_2').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_15_2').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_15_2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.15.3" tooltip = "vic_story.15.3.tt"
+ visible = "[GetScriptedGui('vip_action_15_3').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_15_3').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_15_3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.15.4" tooltip = "vic_story.15.4.tt"
+ visible = "[GetScriptedGui('vip_action_15_4').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_15_4').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_15_4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.15.5" tooltip = "vic_story.15.5.tt"
+ visible = "[GetScriptedGui('vip_action_15_5').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_15_5').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_15_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.15.6" tooltip = "vic_story.15.6.tt"
+ visible = "[GetScriptedGui('vip_action_15_6').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_15_6').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_15_6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 620 38 } text = "vic_story.15.7" tooltip = "vic_story.15.7.tt"
+ visible = "[GetScriptedGui('vip_action_15_7').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_action_15_7').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_action_15_7').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" } } } }
+ } }

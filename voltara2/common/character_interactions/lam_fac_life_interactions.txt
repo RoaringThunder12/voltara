@@ -1,0 +1,97 @@
+﻿lam_lf_land_petition_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_issue
+	auto_accept = yes
+	desc = lam_lf_land_petition_interaction_desc
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			var:lam_bloc ?= this
+			liege ?= scope:recipient
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			is_alive = yes
+			is_adult = yes
+			is_imprisoned = no
+			NOT = {
+				has_variable = lam_pd_active
+			}
+			NOT = {
+				has_variable = lam_cr_active
+			}
+			NOT = {
+				has_variable = lam_cr_contract_pending
+			}
+			NOT = {
+				has_variable = lam_head_demand_cd
+			}
+			NOT = {
+				has_variable = lam_cr_retry_petition
+			}
+			NOT = {
+				has_variable = lam_fac_disband
+			}
+		}
+		scope:recipient = {
+			lam_nc_county_available_trigger = {
+				RECIPIENT = scope:actor
+			}
+		}
+	}
+	on_accept = {
+		scope:actor = {
+			lam_pd_begin_effect = {
+				KIND = land
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+lam_lf_exchange_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_issue
+	desc = lam_lf_exchange_interaction_desc
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+		}
+		scope:recipient = {
+			has_variable = lam_bloc_lead
+			liege ?= scope:actor.liege
+			NOT = {
+				this = scope:actor
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		lam_lf_exchange_pair_trigger = {
+			A = scope:actor
+			B = scope:recipient
+		}
+	}
+	on_accept = {
+		lam_lf_exchange_create_effect = {
+			A = scope:actor
+			B = scope:recipient
+		}
+	}
+	ai_accept = {
+		base = 0
+		modifier = {
+			add = 50
+			lam_lf_exchange_pair_trigger = {
+				A = scope:actor
+				B = scope:recipient
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}

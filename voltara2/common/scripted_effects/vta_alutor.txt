@@ -1,0 +1,21 @@
+﻿vta_alutor_initialize_effect = {
+ if = {
+  limit = { NOT = { has_global_variable = vta_alutor_initialized } current_date = 3781.1.1 title:e_voltara_alutor.holder = character:9900040 }
+  set_global_variable = { name = vta_alutor_initialized value = yes }
+  character:9910333 = {
+   if = { limit = { has_title = title:k_voltara_test_333 NOT = { liege = character:9900040 } }
+    create_title_and_vassal_change = { type = swear_fealty save_scope_as = vta_alutor_change }
+    change_liege = { liege = character:9900040 change = scope:vta_alutor_change }
+    resolve_title_and_vassal_change = scope:vta_alutor_change
+   }
+  }
+  character:9900040 = {
+   if = { limit = { has_domicile = no } create_noble_family_effect = { GOVERNMENT_GIVER = this } domicile ?= { set_up_domicile_estate_effect = yes } }
+   every_vassal_or_below = {
+    limit = { is_landed = yes highest_held_title_tier >= tier_county }
+    change_government = administrative_government
+    if = { limit = { highest_held_title_tier >= tier_duchy has_domicile = no } create_noble_family_effect = { GOVERNMENT_GIVER = character:9900040 } domicile ?= { set_up_domicile_estate_effect = yes } }
+   }
+  }
+ }
+}

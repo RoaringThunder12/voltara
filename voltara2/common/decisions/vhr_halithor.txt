@@ -1,0 +1,16 @@
+﻿vhr_ruby_export = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds" }
+ desc = vhr_ruby_export_desc selection_tooltip = vhr_ruby_export_tooltip confirm_text = vhr_ruby_export_confirm
+ is_shown = { vhr_mine_realm = yes }
+ is_valid = { is_imprisoned = no gold >= 40 NOT = { has_character_flag = vhr_export_cooldown } }
+ effect = { remove_short_term_gold = 40 add_character_flag = { flag = vhr_export_cooldown years = 1 } trigger_event = { id = vhr.1 days = 30 } }
+ ai_check_interval = 12 ai_will_do = { base = 50 }
+}
+vhr_hire_crews = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_castle_view.dds" }
+ desc = vhr_hire_crews_desc selection_tooltip = vhr_hire_crews_tooltip confirm_text = vhr_hire_crews_confirm
+ is_shown = { vhr_mine_owner = yes }
+ is_valid = { is_imprisoned = no gold >= 50 NOT = { has_character_flag = vhr_paid_crews } }
+ effect = { vhr_paid_crews = yes }
+ ai_check_interval = 12 ai_will_do = { base = 35 }
+}

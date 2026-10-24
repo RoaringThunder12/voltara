@@ -1,0 +1,608 @@
+﻿lam_lf_consider_successor_effect = {
+	if = {
+		limit = {
+			lam_fac_succ_eligible_trigger = {
+				LORD = scope:lam_lf_succ_lord
+			}
+			OR = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_ps_old
+						}
+						var:lam_bloc ?= scope:lam_ps_old
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			NOT = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_lf_succ_a
+						}
+						this ?= scope:lam_lf_succ_a
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			NOT = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_lf_succ_b
+						}
+						this ?= scope:lam_lf_succ_b
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					NOT = {
+						exists = scope:lam_lf_succ_a
+					}
+					lam_lf_successor_value > scope:lam_lf_succ_a.lam_lf_successor_value
+				}
+			}
+			scope:lam_lf_succ_a ?= {
+				save_scope_as = lam_lf_succ_b
+			}
+			save_scope_as = lam_lf_succ_a
+		}
+		else_if = {
+			limit = {
+				OR = {
+					NOT = {
+						exists = scope:lam_lf_succ_b
+					}
+					lam_lf_successor_value > scope:lam_lf_succ_b.lam_lf_successor_value
+				}
+			}
+			save_scope_as = lam_lf_succ_b
+		}
+	}
+}
+lam_lf_successor_shortlist_effect = {
+	save_scope_as = lam_ps_old
+	$LORD$ = {
+		save_scope_as = lam_lf_succ_lord
+	}
+	clear_saved_scope = lam_lf_succ_a
+	clear_saved_scope = lam_lf_succ_b
+	every_in_list = {
+		variable = lam_fac_members
+		lam_lf_consider_successor_effect = yes
+	}
+	if = {
+		limit = {
+			NOT = {
+				any_in_list = {
+					variable = lam_fac_members
+				}
+			}
+		}
+		every_in_list = {
+			variable = lam_fac_prev_members
+			lam_lf_consider_successor_effect = yes
+		}
+	}
+	var:lam_fac_succ_pick ?= {
+		lam_lf_consider_successor_effect = yes
+	}
+	primary_heir ?= {
+		lam_lf_consider_successor_effect = yes
+	}
+	$LORD$ = {
+		ordered_vassal = {
+			max = 1
+			check_range_bounds = no
+			order_by = lam_lf_successor_value
+			limit = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_ps_old.house
+						}
+						house ?= scope:lam_ps_old.house
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				lam_fac_succ_eligible_trigger = {
+					LORD = scope:lam_lf_succ_lord
+				}
+				OR = {
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_ps_old
+							}
+							var:lam_bloc ?= scope:lam_ps_old
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					NOT = {
+						has_variable = lam_bloc
+					}
+				}
+			}
+			lam_lf_consider_successor_effect = yes
+		}
+	}
+}
+lam_lf_successor_vote_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+			is_adult = yes
+			is_imprisoned = no
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_succ_lord
+					}
+					liege ?= scope:lam_lf_succ_lord
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			NOT = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_ps_old
+						}
+						this = scope:lam_ps_old
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			OR = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_ps_old
+						}
+						var:lam_bloc ?= scope:lam_ps_old
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_ps_old
+						}
+						var:lam_fac_prev_bloc ?= scope:lam_ps_old
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		clear_saved_scope = lam_lf_vote_for
+		if = {
+			limit = {
+				is_ai = no
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_ps_old
+						}
+						var:lam_lf_endorse_head ?= scope:lam_ps_old
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				has_variable = lam_lf_endorse_until
+				var:lam_lf_endorse_until > lam_now_m
+			}
+			if = {
+				limit = {
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_lf_succ_a
+							}
+							var:lam_lf_endorse_person ?= scope:lam_lf_succ_a
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+				scope:lam_lf_succ_a = {
+					save_scope_as = lam_lf_vote_for
+				}
+			}
+			else_if = {
+				limit = {
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_lf_succ_b
+							}
+							var:lam_lf_endorse_person ?= scope:lam_lf_succ_b
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+				scope:lam_lf_succ_b = {
+					save_scope_as = lam_lf_vote_for
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				is_ai = yes
+			}
+			if = {
+				limit = {
+					lam_lf_successor_preference_value >= 0
+				}
+				scope:lam_lf_succ_a = {
+					save_scope_as = lam_lf_vote_for
+				}
+			}
+			else = {
+				scope:lam_lf_succ_b = {
+					save_scope_as = lam_lf_vote_for
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:lam_lf_vote_for
+			}
+			save_scope_value_as = {
+				name = lam_lf_vote_weight
+				value = lam_cr_influence_value
+			}
+			if = {
+				limit = {
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_lf_succ_a
+							}
+							scope:lam_lf_vote_for = scope:lam_lf_succ_a
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+				scope:lam_ps_old = {
+					change_variable = {
+						name = lam_lf_votes_a
+						add = scope:lam_lf_vote_weight
+					}
+				}
+			}
+			else = {
+				scope:lam_ps_old = {
+					change_variable = {
+						name = lam_lf_votes_b
+						add = scope:lam_lf_vote_weight
+					}
+				}
+			}
+		}
+	}
+}
+lam_lf_pick_successor_effect = {
+	lam_lf_successor_shortlist_effect = {
+		LORD = $LORD$
+	}
+	clear_saved_scope = lam_succ
+	clear_saved_scope = lam_lf_succ_loser
+	if = {
+		limit = {
+			exists = scope:lam_lf_succ_a
+		}
+		scope:lam_lf_succ_a = {
+			save_scope_as = lam_succ
+		}
+		if = {
+			limit = {
+				exists = scope:lam_lf_succ_b
+			}
+			set_variable = {
+				name = lam_lf_votes_a
+				value = 0
+			}
+			set_variable = {
+				name = lam_lf_votes_b
+				value = 0
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				lam_lf_successor_vote_effect = yes
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_in_list = {
+							variable = lam_fac_members
+						}
+					}
+				}
+				every_in_list = {
+					variable = lam_fac_prev_members
+					lam_lf_successor_vote_effect = yes
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = var:lam_lf_votes_a
+							}
+							var:lam_lf_votes_b > var:lam_lf_votes_a
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+				scope:lam_lf_succ_b = {
+					save_scope_as = lam_succ
+				}
+				scope:lam_lf_succ_a = {
+					save_scope_as = lam_lf_succ_loser
+				}
+			}
+			else = {
+				scope:lam_lf_succ_b = {
+					save_scope_as = lam_lf_succ_loser
+				}
+			}
+			save_scope_value_as = {
+				name = lam_lf_succ_total
+				value = {
+					value = var:lam_lf_votes_a
+					add = var:lam_lf_votes_b
+				}
+			}
+			if = {
+				limit = {
+					scope:lam_lf_succ_total > 0
+					var:lam_lf_votes_a >= {
+						value = scope:lam_lf_succ_total
+						multiply = 0.4
+					}
+					var:lam_lf_votes_b >= {
+						value = scope:lam_lf_succ_total
+						multiply = 0.4
+					}
+				}
+				scope:lam_succ = {
+					set_variable = {
+						name = lam_lf_contested_from
+						value = scope:lam_ps_old
+					}
+					set_variable = {
+						name = lam_lf_contested_rival
+						value = scope:lam_lf_succ_loser
+					}
+				}
+			}
+			remove_variable = lam_lf_votes_a
+			remove_variable = lam_lf_votes_b
+		}
+	}
+	else = {
+		lam_lf_legacy_successor_effect = {
+			LORD = $LORD$
+		}
+		if = {
+			limit = {
+				scope:lam_succ ?= {
+					has_variable = lam_bloc
+					NOT = {
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = scope:lam_ps_old
+								}
+								var:lam_bloc ?= scope:lam_ps_old
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+				}
+			}
+			clear_saved_scope = lam_succ
+		}
+	}
+}
+lam_lf_succession_result_effect = {
+	$TO$ = {
+		if = {
+			limit = {
+				var:lam_lf_contested_from ?= $FROM$
+				var:lam_lf_contested_rival ?= {
+					is_alive = yes
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = prev.liege
+							}
+							liege ?= prev.liege
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+			}
+			lam_fac_cohesion_add_effect = {
+				ADD = -8
+			}
+			lam_st_record_effect = {
+				KEY = contested_succession
+			}
+			save_scope_as = lam_lf_new_head
+			var:lam_lf_contested_rival = {
+				add_opinion = {
+					target = scope:lam_lf_new_head
+					modifier = lam_lf_contested_opinion
+				}
+				set_variable = {
+					name = lam_cr_unrest_head
+					value = scope:lam_lf_new_head
+					years = 3
+				}
+				set_variable = {
+					name = lam_cr_unrest
+					value = 1
+					years = 3
+				}
+				set_variable = {
+					name = lam_st_dissent_issue
+					value = flag:confidence
+					years = 3
+				}
+			}
+		}
+		remove_variable = lam_lf_contested_from
+		remove_variable = lam_lf_contested_rival
+	}
+}
+lam_lf_succession_pulse_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+			is_adult = yes
+			is_imprisoned = no
+			has_variable = lam_bloc_lead
+			OR = {
+				NOT = {
+					has_variable = lam_lf_succ_next
+				}
+				var:lam_lf_succ_next <= lam_now_m
+			}
+		}
+		set_variable = {
+			name = lam_lf_succ_next
+			value = {
+				value = lam_now_m
+				add = 24
+			}
+		}
+		lam_lf_successor_shortlist_effect = {
+			LORD = liege
+		}
+		if = {
+			limit = {
+				exists = scope:lam_lf_succ_a
+				exists = scope:lam_lf_succ_b
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_ai = no
+					is_adult = yes
+					is_imprisoned = no
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_ps_old
+							}
+							var:lam_bloc ?= scope:lam_ps_old
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_ps_old.liege
+							}
+							liege ?= scope:lam_ps_old.liege
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					NOT = {
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = scope:lam_ps_old
+								}
+								this = scope:lam_ps_old
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+					NOT = {
+						has_variable = lam_lf_endorse_cd
+					}
+				}
+				set_variable = {
+					name = lam_lf_endorse_cd
+					value = yes
+					years = 3
+				}
+				set_variable = {
+					name = lam_lf_endorse_open
+					value = scope:lam_ps_old
+					months = 2
+				}
+				set_variable = {
+					name = lam_lf_endorse_deadline
+					value = {
+						value = lam_now_m
+						add = 2
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_ps_old = {
+							has_variable = lam_fac_rec
+						}
+					}
+					set_variable = {
+						name = lam_lf_endorse_record
+						value = scope:lam_ps_old.var:lam_fac_rec
+					}
+				}
+				else = {
+					remove_variable = lam_lf_endorse_record
+				}
+				trigger_event = lam_lf.0300
+			}
+		}
+	}
+}

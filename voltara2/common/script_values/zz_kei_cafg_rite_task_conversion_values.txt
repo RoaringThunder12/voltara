@@ -1,0 +1,868 @@
+﻿V_kCAFG_task_conversion_tension_increase_per_factor = 0.8 # Tension Increase per factor converted
+V_kCAFG_chaplain_conversion_province_rite_tension_max_reduction = 0.25 # At max tension, conversion speed is multiplied by this value
+V_kCAFG_court_chaplain_conversion_low_presence_factor = 0.85 # Starting converting a province is a bit slower
+
+# The AI will suggest to convert elsewhere
+# If the task speed is multiplied by a value below this threshold because of minorities
+V_kCAFG_AI_suggestion_task_conversion_minorities_speed_factor_threshold = 0.4
+# If the task would take at least this amount of months (game rule excluded)
+V_kCAFG_AI_suggestion_task_conversion_duration_threshold_months = 8
+# If the province baseline tension is under this value
+V_kCAFG_AI_suggestion_task_conversion_tension_threshold = 0.05
+
+V_kCAFG_chaplain_conversion_small_minorities_majority_threshold = 0.7
+V_kCAFG_chaplain_conversion_small_minorities_start_factor = 0.40
+V_kCAFG_chaplain_conversion_small_minorities_end_factor = 0.005
+
+V_kCAFG_task_conversion_councillor_current_progress = {
+	value = 0
+	if = {
+		limit = {
+			exists = yes
+			has_variable = kCAFG_task_conversion_progress
+		}
+		add = var:kCAFG_task_conversion_progress
+	}
+}
+
+# Scope : province
+V_kCAFG_court_chaplain_conversion_bonuses_game_rules_excluded_months_to_finish = {
+	value = V_kCAFG_court_chaplain_conversion_bonuses_game_rules_excluded
+	save_temporary_value_as = kCAFG_bonuses
+	if = {
+		limit = { scope:kCAFG_bonuses > 0 }
+		value = {
+			value = 100
+			divide = scope:kCAFG_bonuses
+			ceiling = yes
+		}
+	}
+	else = { value = -1 }
+}
+
+# Scope : province
+V_kCAFG_court_chaplain_conversion_bonuses_months_to_finish = {
+	value = V_kCAFG_court_chaplain_conversion_bonuses
+	save_temporary_value_as = kCAFG_bonuses
+	if = {
+		limit = { scope:kCAFG_bonuses > 0 }
+		value = {
+			value = 100
+			divide = scope:kCAFG_bonuses
+			ceiling = yes
+		}
+	}
+	else = { value = -1 }
+}
+
+# Scope : province
+V_kCAFG_court_chaplain_conversion_bonuses_game_rules_excluded = {
+	scope:councillor_liege.rite = { save_temporary_scope_as = kCAFG_converting_rite }
+
+	if = {
+		limit = {
+			NOT = { T_kCAFG_province_only_rite = { RITE = scope:kCAFG_converting_rite } }
+		}
+
+		## Save Scopes
+		save_temporary_scope_as = kCAFG_converted_province
+		scope:councillor = { save_temporary_scope_as = kCAFG_converter_character }
+		scope:councillor_liege = { save_temporary_scope_as = kCAFG_converting_character }
+		scope:councillor_liege.culture = { save_temporary_scope_as = kCAFG_converting_culture }
+		save_temporary_scope_as = kCAFG_court_chaplain_base_bonus
+
+		## Base
+		add = {
+			value = kCAFG_court_chaplain_conversion_base
+			desc = COURT_CHAPLAIN_PROGRESS_BASE
+		}
+
+		## Skill
+		add = {
+			value = scope:councillor.kCAFG_court_chaplain_conversion_monthly_increase
+			desc = SCALED_COUNCILLOR_LEARNING_VALUE
+
+			save_temporary_value_as = kCAFG_court_chaplain_learning_progress
+		}
+
+		save_temporary_value_as = kCAFG_conversion_base_total
+
+		scope:kCAFG_converting_character = {
+			add = V_kCAFG_rite_conversion_converting_character_modifiers
+		}
+
+		scope:kCAFG_converting_rite = {
+			add = V_kCAFG_rite_conversion_converting_rite_modifiers
+		}
+
+		if = {
+			limit = {
+				scope:kCAFG_converting_rite = { scope:kCAFG_converted_province = { V_kCAFG_province_prev_rite_factor < 1 } }
+			}
+			add = {
+				every_in_list = {
+					variable = kCAFG_province_rite_structs
+					limit = { scope:kCAFG_converting_rite != var:rite }
+					add = {
+						value = var:rite.V_kCAFG_rite_conversion_converted_rite_modifiers
+						multiply = var:factor
+					}
+				}
+				# rescale by excluding converting rite
+				divide = {
+					value = 1
+					scope:kCAFG_converting_rite = { scope:kCAFG_converted_province = { subtract = V_kCAFG_province_prev_rite_factor } }
+            		min = V_kCAFG_smallest_minority_factor
+				}
+				desc = kCAFG_task_conversion_various_rites
+			}
+		}
+
+		add = {
+			every_in_list = {
+				variable = kCAFG_province_culture_structs
+				add = {
+					value = var:culture.V_kCAFG_rite_conversion_converted_culture_modifiers
+					multiply = var:factor
+				}
+			}
+			desc = kCAFG_task_conversion_various_cultures
+		}
+
+		county = { add = V_kCAFG_rite_conversion_county_modifiers_add }
+
+		## MULTIPLICATIVE MODIFIERS ##
+
+		#Fervor of Court Chaplain's Rite
+		if = {
+			limit = { # Conditional in order to not mess up the preview-tooltip
+				exists = scope:kCAFG_converting_rite
+			}
+			multiply = {
+				value = V_kCAFG_chaplain_conversion_rite_fervor
+				multiply = 100
+				round = yes
+				divide = 100
+				desc = kCAFG_task_conversion_rite_conversion_fervor_against_converting
+			}
+		}
+
+		multiply = V_kCAFG_rite_conversion_province_modifiers_mult
+
+		county = {
+			multiply = V_kCAFG_rite_conversion_county_modifiers_mult
+		
+			# Development reduces the speed
+			if = {
+				limit = {
+					development_level > 0
+				}
+				multiply = {
+					value = V_kCAFG_court_chaplain_conversion_county_development_factor
+					desc = STEWARD_PROMOTE_CULTURE_DEVELOPMENT_PENALTY
+				}
+			}
+		}
+
+		scope:kCAFG_converting_character = {
+			multiply = V_kCAFG_rite_conversion_converting_character_modifiers_mult
+		}
+
+		scope:kCAFG_converting_rite = {
+			multiply = V_kCAFG_rite_conversion_converting_rite_modifiers_mult
+		}
+
+		# Rite Tension
+		multiply = {
+			value = V_kCAFG_court_chaplain_conversion_province_rite_tension_mult
+			desc = kCAFG_task_conversion_tension_impact
+		}
+
+		# Starting converting a province is a bit slower
+		if = {
+			limit = {
+				scope:kCAFG_converting_rite = {
+					prev = { # province
+						V_kCAFG_province_prev_rite_factor < V_kCAFG_small_minority_factor
+					}
+				}
+			}
+			multiply = {
+				value = V_kCAFG_court_chaplain_conversion_low_presence_factor
+				desc = kCAFG_task_conversion_low_presence
+			}
+		}
+
+		multiply = V_kCAFG_court_chaplain_conversion_small_minorities_mult
+
+		min = 0
+	}
+	else = { value = 0 }
+}
+
+# Scope : province
+V_kCAFG_court_chaplain_conversion_bonuses = {
+	value = V_kCAFG_court_chaplain_conversion_bonuses_game_rules_excluded
+	multiply = V_kCAFG_court_chaplain_conversion_game_rules_mult
+}
+
+kCAFG_court_chaplain_conversion_base = {
+	value = 0.5
+	multiply = V_kCAFG_rite_chaplain_conversion_values_scale
+}
+
+kCAFG_court_chaplain_conversion_monthly_increase = {
+	add = learning
+	divide = 10
+	multiply = V_kCAFG_rite_chaplain_conversion_values_scale
+}
+
+# Scope : character
+V_kCAFG_rite_conversion_converting_character_modifiers = {
+	if = {
+		limit = {
+			exists = scope:kCAFG_converter_character
+			NOT = { scope:kCAFG_converter_character = this }
+		}
+		# Relation Bonuses/Penalties
+		if = { # Friend
+			limit = {
+				has_relation_friend = scope:kCAFG_converter_character
+				NOT = { has_relation_best_friend = scope:kCAFG_converter_character }
+			}
+			add = {
+				value = {
+					value = scope:kCAFG_court_chaplain_learning_progress
+					multiply = V_kCAFG_court_chaplain_conversion_friend_factor
+				}
+				desc = COUNCILLOR_IS_YOUR_FRIEND
+			}
+		}
+		if = { # Best Friend
+			limit = { has_relation_best_friend = scope:kCAFG_converter_character }
+			add = {
+				value = {
+					value = scope:kCAFG_court_chaplain_learning_progress
+					multiply = V_kCAFG_court_chaplain_conversion_best_friend_factor
+				}
+				desc = COUNCILLOR_IS_YOUR_BEST_FRIEND
+			}
+		}
+		if = { # Rival
+			limit = {
+				has_relation_rival = scope:kCAFG_converter_character
+				NOT = { has_relation_nemesis = scope:kCAFG_converter_character }
+			}
+			add = {
+				value = {
+					value = scope:kCAFG_court_chaplain_learning_progress
+					multiply = V_kCAFG_court_chaplain_conversion_rival_factor
+				}
+				desc = COUNCILLOR_IS_YOUR_RIVAL
+			}
+		}
+		if = { # Nemesis
+			limit = { has_relation_nemesis = scope:kCAFG_converter_character }
+			add = {
+				value = {
+					value = scope:kCAFG_court_chaplain_learning_progress
+					multiply = V_kCAFG_court_chaplain_conversion_nemesis_factor
+				}
+				desc = COUNCILLOR_IS_YOUR_NEMESIS
+			}
+		}
+		if = {
+			limit = {
+				has_character_flag = fp3_consulted_house
+				exists = house
+				exists = scope:kCAFG_converter_character.house
+				house = scope:kCAFG_converter_character.house
+			}
+			add = {
+				value = {
+					value = scope:kCAFG_court_chaplain_learning_progress
+					multiply = V_kCAFG_court_chaplain_conversion_consulted_house_councillors_factor
+				}
+				desc = CONSULTED_HOUSE_BONUS_VALUE
+			}
+		}
+		
+		if = {
+			limit = {
+				culture = { has_cultural_parameter = close_family_better_councillors }
+				scope:kCAFG_converter_character = { is_close_family_of = scope:kCAFG_converting_character }
+			}
+			add = {
+				value = {
+					value = scope:kCAFG_court_chaplain_learning_progress
+					multiply = V_kCAFG_court_chaplain_conversion_family_business_councillors_factor
+				}
+				desc = FAMILY_BUSINESS_BONUS_VALUE
+			}
+		}
+	}
+
+	#Perk Bonus
+	if = {
+		limit = {
+			OR = {
+				has_perk = zealous_proselytizer_perk
+				has_character_flag = reformer_conversion
+			}
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_court_chaplain_learning_progress
+				multiply = V_kCAFG_court_chaplain_conversion_zealous_proselytizer_factor
+			}
+			desc = CONVERSION_PERK_BONUS_VALUE
+		}
+	}
+	if = {
+		limit = {
+			exists = dynasty
+			dynasty = { has_dynasty_perk = erudition_legacy_5 }
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_court_chaplain_learning_progress
+				multiply = V_kCAFG_court_chaplain_conversion_erudition_legacy_5_factor
+			}
+			desc = CONVERSION_DYNASTY_PERK_BONUS_VALUE
+		}
+	}
+
+	#Other
+	if = {
+		limit = {
+			has_trait = savior
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_court_chaplain_conversion_savior_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LIEGE_IS_SAVIOR
+		}
+	}
+	if = {
+		limit = {
+			has_trait = divine_blood
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_court_chaplain_conversion_divine_blood_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LIEGE_IS_DIVINE_BLOOD
+		}
+	}
+	#Foreign-raised reformer is enforcing uniform rite
+	if = {
+		limit = {
+			has_character_flag = reformer_conversion
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_court_chaplain_conversion_zealous_proselytizer_factor
+			}
+			desc = CONVERSION_REFORMER_BONUS_VALUE
+		}
+	}
+}
+
+# Scope : province
+V_kCAFG_chaplain_conversion_rite_fervor = {
+	value = V_kCAFG_rite_conversion_fervor_multiplier
+    if = {
+        limit = { scope:councillor_liege = { has_perk = religious_icon_perk } }
+        min = 1
+    }
+	if = {
+		limit = { scope:kCAFG_converting_rite = { has_variable = pam_rite_grace_period } }
+        min = 1
+	}
+}
+
+# Scope : county
+V_kCAFG_court_chaplain_conversion_county_development_factor = {
+    value = 1.1 # 100% speed at 10 development
+    subtract = {
+        value = development_level
+        divide = max_development_level
+    }
+}
+
+# Scope : character
+V_kCAFG_rite_conversion_converting_character_modifiers_mult = {
+	value = 1
+
+	if = {
+		limit = {
+			scope:councillor.rite != scope:kCAFG_converting_rite
+		}
+		multiply = {
+			value = chaplain_off_rite_conversion_penalty
+			desc = COURT_CHAPLAIN_CONVERSION_OFF_RITE_CHAPLAIN_PENALTY
+		}
+	}
+
+	multiply = {
+		value = V_kCAFG_rite_conversion_speed_tolerance_law_factor
+		desc = kCAFG_rite_intolerant_law
+	}
+
+	multiply = V_kCAFG_rite_conversion_converting_character_modifiers_mult_VANILLA
+}
+
+# scope : character
+V_kCAFG_rite_conversion_speed_tolerance_law_factor = {
+	value = 1
+	scope:kCAFG_converted_province = {
+		county.holder = {
+			if = {
+				limit = { is_independent_ruler = yes }
+				save_temporary_scope_as = law_enforcer
+			}
+			else = {
+				# Get the first liege whose law applies
+				ordered_liege_or_above = {
+					position = 0
+					order_by = primary_title.tier
+					limit = { T_kCAFG_overrides_rite_tolerance_law = yes }
+					save_temporary_scope_as = law_enforcer
+				}
+
+				# Default to county holder
+				if = {
+					limit = { NOT = { exists = scope:law_enforcer } }
+					save_temporary_scope_as = law_enforcer
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = scope:law_enforcer }
+			scope:law_enforcer = {
+				if = {
+					limit = {
+						T_kCAFG_has_rite_intolerance_realm_law = yes
+						# Bonus applies to the rite of the lawmaker
+						trigger_if = {
+							limit = { exists = primary_title.state_rite }
+							primary_title.state_rite = scope:kCAFG_converting_character.rite
+						}
+						trigger_else = {
+							rite = scope:kCAFG_converting_character.rite
+						}
+					}
+					add = V_kCAFG_intolerant_law_conversion_bonus
+				}
+			}
+		}
+	}
+}
+
+# Scope : character
+V_kCAFG_rite_conversion_converting_character_modifiers_mult_VANILLA = {
+	value = 1
+
+	# Faster conversion of Persian counties with the FP3 Promote Persian Scripture decision
+    if = {
+        limit = {
+			has_character_modifier = fp3_promoted_persian_scripture_modifier 
+			is_ai = no #this is so that we don't get AI converting and homogenizing Persia too quickly
+        }
+        multiply = {
+			value = 1
+            add = {
+				value = 0
+				# Get proportion of cultures that meet the requirements
+				scope:kCAFG_converted_province = {
+					every_in_list = {
+						variable = kCAFG_province_culture_structs
+						limit = { var:culture = { has_cultural_pillar = heritage_iranian } }
+						add = var:factor
+					}
+				}
+				multiply = {
+					value = promote_persian_scripture_conversion_modifier_value
+					subtract = 1 # Only the part above one
+				}
+			}
+            desc = fp3_promote_persian_scripture_task_desc
+        }
+    }
+	# Faster conversion for FP2 Hostility ending, if county is in Iberia and faith was involved
+    if = {
+        limit = {
+            exists = house
+			exists = scope:kCAFG_converted_province
+            house = {
+                OR = {
+                    has_house_modifier = fp2_struggle_hostility_house_faith_modifier
+                    has_house_modifier = fp2_struggle_hostility_house_combined_modifier
+                }
+            }
+            scope:kCAFG_converted_province = { geographical_region = world_europe_west_iberia }
+            
+        }
+		multiply = {
+			value = 1
+            add = {
+				value = 0
+				# Get proportion of faiths that meet the requirements
+				scope:kCAFG_converted_province = {
+					every_in_list = {
+						variable = kCAFG_province_rite_structs
+						
+						limit = {
+							is_target_in_global_variable_list = {
+								name = fp2_struggle_ending_faith_list
+								target = var:rite.faith
+							}
+						}
+
+						add = var:factor
+					}
+				}
+				multiply = {
+					value = fp2_struggle_hostility_conversion_value
+					subtract = 1 # Only the part above one
+				}
+			}
+            desc = fp2_struggle_hostility_faith_conversion_task_desc
+        }
+    }
+    if = {
+        limit = {
+            has_character_modifier = fp2_council_conversion_modifier
+        }
+    	# Faster conversion of infidels for FP2 Council Toledo Conversion
+		multiply = {
+			value = 1
+            add = {
+				value = 0
+				# Get proportion of rites that meet the requirements
+				scope:kCAFG_converted_province = {
+					every_in_list = {
+						variable = kCAFG_province_rite_structs
+						limit = {
+							NOT = { var:rite.religion = scope:kCAFG_converting_character.religion }
+						}
+
+						add = var:factor
+					}
+				}
+				multiply = {
+					value = council_toledo_conversion_modifier_value
+					subtract = 1 # Only the part above one
+				}
+			}
+            desc = council_toledo_conversion_task_desc
+        }
+
+    	# Faster conversion of heretics for FP2 Council Toledo Heresies
+		multiply = {
+			value = 1
+            add = {
+				value = 0
+				# Get proportion of rites that meet the requirements
+				scope:kCAFG_converted_province = {
+					every_in_list = {
+						variable = kCAFG_province_rite_structs
+						limit = {
+							var:rite = rite:mozarabic_church
+							var:rite = {
+								religion = scope:kCAFG_converting_character.religion
+								NOT = { exists = religious_head }
+							}
+						}
+
+						add = var:factor
+					}
+				}
+				multiply = {
+					value = council_toledo_conversion_modifier_value
+					subtract = 1 # Only the part above one
+				}
+			}
+            desc = council_toledo_heresies_task_desc
+        }
+    }
+	# Court events
+	if = {	#court.6010
+		limit = {
+			var:6010_harsh_conversion ?= scope:county.faith
+		}
+		multiply = {
+			value = 1.2
+			desc = court_6010_harsh_conversions
+		}
+	}
+	if = {	#court.6010
+		limit = {
+			var:6010_tolerant_conversion ?= scope:county.faith
+		}
+		multiply = {
+			value = 0.8
+			desc = court_6010_tolerant_conversions
+		}
+	}
+	#If someone has done some buddhist teaching in this province
+	if = {
+		limit = {
+			scope:county ?= { has_county_modifier = buddhist_teachings_conversion_modifier }
+			scope:councillor.liege.religion = religion:buddhism_religion 
+		}
+		multiply = {
+			value = 2
+			desc = buddhist_teachings_conversion_modifier
+		}
+	}
+	# State Rite Boost
+	if = {
+		limit = {
+			primary_title.state_rite ?= {
+				this != scope:county.rite
+				this = scope:councillor.top_liege.rite
+			}
+		}
+		multiply = {
+			value = ep3_state_faith_conversion_mult_value
+			desc = ep3_convert_county_to_state_faith
+		}
+	}
+}
+
+# Scope : province
+V_kCAFG_court_chaplain_conversion_province_rite_tension_mult = {
+	value = 1
+	subtract = {
+		value = var:kCAFG_rite_tension
+		multiply = V_kCAFG_chaplain_conversion_province_rite_tension_max_reduction
+	}
+}
+
+# Scope : province
+V_kCAFG_court_chaplain_conversion_small_minorities_mult = {
+	value = 1
+	# Converting remaining small minorities is very long
+	# Kei : TO DO use the "health"/"resistance" instead ?
+	if = {
+		limit = {
+			any_in_list = {
+				variable = kCAFG_province_rite_structs
+				scope:kCAFG_converting_rite = var:rite
+				var:factor >= V_kCAFG_chaplain_conversion_small_minorities_majority_threshold
+			}
+			NOT = {
+				any_in_list = {
+					variable = kCAFG_province_rite_structs
+					scope:kCAFG_converting_rite != var:rite
+					var:factor > V_kCAFG_small_minority_factor
+				}
+			}
+		}
+		multiply = {
+			value = {
+				value = V_kCAFG_chaplain_conversion_small_minorities_start_factor
+				scope:kCAFG_converting_rite = {
+					prev = {
+						subtract = {
+							value = V_kCAFG_province_prev_rite_factor
+							# Rescale to 0-1
+							subtract = V_kCAFG_chaplain_conversion_small_minorities_majority_threshold
+							min = 0
+							divide = {
+								value = 1
+								subtract = V_kCAFG_chaplain_conversion_small_minorities_majority_threshold
+							}
+							# 
+							multiply = {
+								value = V_kCAFG_chaplain_conversion_small_minorities_start_factor
+								subtract = V_kCAFG_chaplain_conversion_small_minorities_end_factor
+							}
+						}
+					}
+				}
+				# If sorrounded by counties having the converting rite as majority, mitigate
+				if = {
+					limit = {
+						NOT = {
+							county = {
+								any_neighboring_county = {
+									rite != scope:kCAFG_converting_rite
+								}
+							}
+						}
+					}
+					multiply = 1.5
+				}
+				# Different faiths amplify this effect, harder to root them out
+				multiply = {
+					value = 1.09
+					every_in_list = {
+						variable = kCAFG_province_rite_structs
+						limit = { scope:kCAFG_converting_rite.faith != var:rite.faith }
+						subtract = 0.09
+					}
+					max = 1
+					min = 0.5
+				}
+				# Mitigated by urbanization tech of Majority Culture
+				if = {
+					limit = { county.culture = { has_innovation = innovation_development_04 } }
+					multiply = 1.4 # With Rennaisance Thought
+				}
+				else_if = {
+					limit = { county.culture = { has_innovation = innovation_development_03 } }
+					multiply = 1.15 # With Urbanization
+				}
+				else_if = {
+					limit = { county.culture = { has_innovation = innovation_development_02 } }
+					multiply = 1.1 # With Communal Government
+				}
+				else_if = {
+					limit = { county.culture = { has_innovation = innovation_development_01 } }
+					multiply = 1.05 # With the Public Works innovation
+				}
+				max = 1
+			}
+			desc = kCAFG_task_conversion_only_minority_rite_remain
+		}
+	}
+}
+
+V_kCAFG_court_chaplain_conversion_game_rules_mult = {
+	value = 1
+	# Conversion speed game rules
+	if = {
+		limit = {
+			has_game_rule = slower_faith_conversion_speed
+		}
+		multiply = {
+			value = slower_game_rule_value
+			desc = GAME_RULE_SLOWER_REASON
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = significantly_slower_faith_conversion_speed
+		}
+		multiply = {
+			value = significantly_slower_game_rule_value
+			desc = GAME_RULE_SIGNIFICANTLY_SLOWER_REASON
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = faster_faith_conversion_speed
+		}
+		multiply = {
+			value = faster_game_rule_value
+			desc = GAME_RULE_FASTER_REASON
+		}
+	}
+	if = {
+		limit = {
+			has_game_rule = significantly_faster_faith_conversion_speed
+		}
+		multiply = {
+			value = significantly_faster_game_rule_value
+			desc = GAME_RULE_SIGNIFICANTLY_FASTER_REASON
+		}
+	}
+	
+	if = {
+		limit = {
+			has_game_rule = kCAFG_rite_conversion_speed_075
+		}
+		multiply = {
+			value = 0.75
+			desc = kCAFG_task_conversion_speed_game_rule_075
+		}
+	}
+	
+	if = {
+		limit = {
+			has_game_rule = kCAFG_rite_conversion_speed_125
+		}
+		multiply = {
+			value = 1.25
+			desc = kCAFG_task_conversion_speed_game_rule_125
+		}
+	}
+	
+	if = {
+		limit = {
+			has_game_rule = kCAFG_rite_conversion_speed_150
+		}
+		multiply = {
+			value = 1.50
+			desc = kCAFG_task_conversion_speed_game_rule_150
+		}
+	}
+	
+	if = {
+		limit = {
+			has_game_rule = kCAFG_rite_conversion_speed_175
+		}
+		multiply = {
+			value = 1.75
+			desc = kCAFG_task_conversion_speed_game_rule_175
+		}
+	}
+}
+
+## EVENTS VALUES ##
+V_kCAFG_court_chaplain_task_conversions_tension_increase = 0.15
+V_kCAFG_court_chaplain_task_conversions_tension_decrease = {
+	value = V_kCAFG_court_chaplain_task_conversions_tension_increase
+	multiply = -1
+}
+
+# Scope : province
+# Required scopes :
+# kCAFG_rite
+# councillor_liege
+V_kCAFG_court_chaplain_conversion_default_focus_province_score = {
+	value = squared_distance_large
+
+	# The further, the less we care
+	subtract = "squared_distance(scope:councillor_liege.capital_province)"
+	divide = 100
+	min = 100
+
+	multiply = {
+		# Other rites factor
+		value = 1
+		subtract = V_kCAFG_province_rite_factor
+
+		if = {
+			limit = { scope:councillor_liege = { is_ai = yes } }
+			# Rescale to conversion threshold
+			subtract = scope:councillor_liege.V_kCAFG_ai_stop_task_rite_conversion_threshold
+			min = 0
+			divide = {
+				value = 1
+				subtract = scope:councillor_liege.V_kCAFG_ai_stop_task_rite_conversion_threshold
+			}
+		}
+
+		save_temporary_value_as = tmp_value
+		if = {
+			limit = { scope:tmp_value > 0 }
+
+			# Rescale relative to county values (if applicable)
+			multiply = {
+				value = V_kCAFG_province_relative_values_scale
+				divide = V_kCAFG_province_relative_scale
+			}
+			
+			multiply = 0.2
+			add = 0.8
+		}
+	}
+}

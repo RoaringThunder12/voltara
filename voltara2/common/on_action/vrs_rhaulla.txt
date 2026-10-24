@@ -1,0 +1,10 @@
+﻿on_game_start = { on_actions = { vrs_init } }
+on_game_start_after_lobby = { on_actions = { vrs_init } }
+yearly_global_pulse = { on_actions = { vrs_init } }
+vrs_init = { effect = { vrs_seed = yes } }
+monthly_global_pulse = { on_actions = { vrs_completion } }
+vrs_completion = { effect = { vrs_complete_pending = yes } }
+on_travel_plan_movement = { on_actions = { vrs_movement } }
+vrs_movement = { effect = { vrs_encounter = yes } }
+yearly_playable_pulse = { on_actions = { vrs_yearly } }
+vrs_yearly = { trigger = { vrs_ruler = yes } effect = { random = { chance = 20 vrs_encroach = yes } } }

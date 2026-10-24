@@ -1,0 +1,2962 @@
+﻿window = {
+	name = "lam_factions_window"
+	parentanchor = center
+	layer = windows_layer
+	size = {
+		1830
+		980
+	}
+	movable = yes
+	visible = "[And( GetPlayer.IsValid, GetPlayer.MakeScope.Var('lam_factions_open').IsSet )]"
+	using = Window_Background
+	using = Window_Decoration
+	vbox = {
+		using = Window_Margins
+		background = {
+			using = Background_Area_Dark
+		}
+		header_pattern = {
+			layoutpolicy_horizontal = expanding
+			blockoverride
+			"header_text"
+			  {
+				text = "vip_title"
+			}
+			blockoverride
+			"button_close"
+			  {
+				onclick = "[GetScriptedGui('lam_sgui_factions_close').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[CloseGameView( 'factions_window' )]"
+				onclick = "[GetVariableSystem.Clear( 'lam_fac_vanilla' )]"
+				onclick = "[GetVariableSystem.Clear( 'lam_fac_tab' )]"
+			}
+		}
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			margin = {
+				10
+				4
+			}
+			spacing = 8
+ button_standard = { size = { 150 30 } text = "vip_actions_title"
+ onclick = "[GetScriptedGui('vip_actions_toggle').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+
+			button_standard = {
+				size = {
+					135
+					30
+				}
+				text = "lam_pb_fronts_title"
+				onclick = "[GetScriptedGui('lam_pb_gui_open').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			}
+			button_standard = {
+				size = {
+					150
+					30
+				}
+				text = "lam_pb_other_uprisings"
+				tooltip = "lam_pb_other_uprisings_tt"
+				onclick = "[GetVariableSystem.Set( 'lam_fac_vanilla', '1' )]"
+				onclick = "[GetScriptedGui('lam_sgui_factions_close').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[OpenGameView( 'factions_window' )]"
+			}
+			button_standard = {
+				size = {
+					120
+					30
+				}
+				text = "lam_fac_btn_lineage"
+				tooltip = "lam_fac_btn_lineage_tt"
+				visible = "[Not( GetVariableSystem.HasValue( 'lam_fac_tab', 'harem' ) )]"
+				down = "[GetPlayer.MakeScope.Var('lam_fac_lineage_open').IsSet]"
+				onclick = "[GetScriptedGui('lam_sgui_fac_lineage_toggle').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			}
+			expand = {}
+			hbox = {
+				spacing = 8
+				datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char]"
+				visible = "[Not( GetVariableSystem.HasValue( 'lam_fac_tab', 'harem' ) )]"
+				text_single = {
+					text = "lam_fac_crown_line"
+					fontsize = 17
+					fontsize_min = 14
+					max_width = 380
+					align = left|nobaseline
+					tooltip = "lam_fac_crown_tt"
+				}
+				progressbar_standard = {
+					size = {
+						140
+						10
+					}
+					min = 0
+					max = 100
+					value = "[Character.MakeScope.Var('lam_crown').GetValue]"
+					tooltip = "lam_fac_crown_tt"
+				}
+				text_single = {
+					text = "lam_fac_ban_line"
+					fontsize = 16
+					fontsize_min = 13
+					max_width = 200
+					align = left|nobaseline
+					tooltip = "lam_fac_ban_line_tt"
+					visible = "[Character.MakeScope.Var('lam_fac_ban').IsSet]"
+				}
+				text_single = {
+					text = "lam_fac_awe_line"
+					fontsize = 16
+					fontsize_min = 13
+					max_width = 220
+					align = left|nobaseline
+					tooltip = "lam_fac_awe_line_tt"
+					visible = "[Character.MakeScope.Var('lam_fac_awe').IsSet]"
+				}
+			}
+			button_standard = {
+				size = {
+					140
+					30
+				}
+				text = "lam_fac_view_self"
+				visible = "[Not( GetVariableSystem.HasValue( 'lam_fac_tab', 'harem' ) )]"
+				onclick = "[GetScriptedGui('lam_sgui_factions_view_self').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			}
+			button_standard = {
+				size = {
+					160
+					30
+				}
+				text = "lam_fac_view_up"
+				tooltip = "lam_fac_view_up_tt"
+				visible = "[And( Not( GetVariableSystem.HasValue( 'lam_fac_tab', 'harem' ) ), GetScriptedGui('lam_sgui_factions_view_up').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+				enabled = "[GetScriptedGui('lam_sgui_factions_view_up').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				onclick = "[GetScriptedGui('lam_sgui_factions_view_up').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			}
+		}
+		text_single = {
+			text = "lam_fac_hint"
+			fontsize = 15
+			fontsize_min = 12
+			max_width = 1780
+			layoutpolicy_horizontal = expanding
+			align = left|nobaseline
+			default_format = "#weak"
+			margin = {
+				12
+				0
+			}
+		}
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			margin = {
+				10
+				2
+			}
+			spacing = 8
+			datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char]"
+			visible = "[And( Not( GetVariableSystem.HasValue( 'lam_fac_tab', 'harem' ) ), Character.MakeScope.Var('lam_is_any').IsSet )]"
+			hbox = {
+				spacing = 8
+				ignoreinvisible = yes
+				widget = {
+					size = {
+						590
+						134
+					}
+					visible = "[Character.MakeScope.Var('lam_is_heir_open').IsSet]"
+					background = {
+						using = Background_Area
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						layoutpolicy_vertical = expanding
+						margin = {
+							8
+							4
+						}
+						spacing = 3
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							icon = {
+								size = {
+									24
+									24
+								}
+								texture = "gfx/interface/icons/flat_icons/succession.dds"
+							}
+							text_single = {
+								text = "lam_is_heir_title"
+								fontsize = 18
+								fontsize_min = 15
+								max_width = 260
+								align = left|nobaseline
+							}
+							expand = {}
+							text_single = {
+								text = "lam_is_heir_lead"
+								fontsize = 15
+								fontsize_min = 12
+								max_width = 220
+								align = right|nobaseline
+							}
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							widget = {
+								size = {
+									64
+									64
+								}
+								visible = "[Character.MakeScope.Var('lam_is_heir_xp').IsSet]"
+								widget = {
+									size = {
+										64
+										64
+									}
+									datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('lam_is_heir_xp').Char]"
+									portrait_button = {
+										size = {
+											58
+											64
+										}
+										using = portrait_base
+										portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+										mask = "gfx/portraits/portrait_mask_head_small.dds"
+										effectname = "NoHighlight"
+										onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+										tooltip = "[Character.GetName]"
+										onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+									}
+								}
+							}
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								text_single = {
+									text = "lam_is_heir_x"
+									fontsize = 15
+									fontsize_min = 12
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_heir_xs"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_heir_xu"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_heir_xc"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+							}
+							widget = {
+								size = {
+									210
+									18
+								}
+								tooltip = "lam_is_heir_tt"
+								background = {
+									texture = "gfx/interface/progressbars/war_progress_noprogress.dds"
+									margin = {
+										0
+										-3
+									}
+								}
+								widget = {
+									size = {
+										100%
+										100%
+									}
+									scissor = yes
+									hbox = {
+										icon = {
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											layoutstretchfactor_horizontal = "[GetProgressBarValueMaxScaled( FixedPointToFloat( Character.MakeScope.Var('lam_is_heir_disp').GetValue ), '(float)200', '(int32)200' )]"
+											size = {
+												0
+												0
+											}
+											texture = "gfx/interface/progressbars/war_progress_blue.dds"
+											spriteType = Corneredtiled
+											icon = {
+												parentanchor = right|vcenter
+												position = {
+													5
+													0
+												}
+												size = {
+													14
+													100%
+												}
+												texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+												color = {
+													0.9
+													0.9
+													0.9
+													1
+												}
+											}
+										}
+										icon = {
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											layoutstretchfactor_horizontal = "[GetProgressBarValueMaxOtherScaled( FixedPointToFloat( Character.MakeScope.Var('lam_is_heir_disp').GetValue ), '(float)200', '(int32)200' )]"
+											size = {
+												0
+												0
+											}
+											texture = "gfx/interface/progressbars/war_progress_red.dds"
+											spriteType = Corneredtiled
+											icon = {
+												parentanchor = left|vcenter
+												position = {
+													-6
+													0
+												}
+												mirror = horizontal
+												size = {
+													14
+													100%
+												}
+												texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+												color = {
+													0.9
+													0.9
+													0.9
+													1
+												}
+											}
+										}
+									}
+								}
+								icon = {
+									parentanchor = center
+									size = {
+										2
+										22
+									}
+									texture = "gfx/interface/colors/white.dds"
+									alpha = 0.35
+								}
+							}
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								text_single = {
+									text = "lam_is_heir_y"
+									fontsize = 15
+									fontsize_min = 12
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_heir_ys"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_heir_yu"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_heir_yc"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+							}
+							widget = {
+								size = {
+									64
+									64
+								}
+								visible = "[Character.MakeScope.Var('lam_is_heir_yp').IsSet]"
+								widget = {
+									size = {
+										64
+										64
+									}
+									datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('lam_is_heir_yp').Char]"
+									portrait_button = {
+										size = {
+											58
+											64
+										}
+										using = portrait_base
+										portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+										mask = "gfx/portraits/portrait_mask_head_small.dds"
+										effectname = "NoHighlight"
+										onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+										tooltip = "[Character.GetName]"
+										onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+									}
+								}
+							}
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							button_standard = {
+								size = {
+									170
+									24
+								}
+								text = "lam_is_heir_btn_x"
+								tooltip = "lam_is_push_tt"
+								visible = "[GetScriptedGui('lam_is_push_heir_x').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_is_push_heir_x').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_is_push_heir_x').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							text_single = {
+								text = "lam_is_heir_mvl1"
+								fontsize = 13
+								fontsize_min = 10
+								max_width = 220
+								align = center|nobaseline
+							}
+							button_standard = {
+								size = {
+									170
+									24
+								}
+								text = "lam_is_heir_btn_y"
+								tooltip = "lam_is_push_tt"
+								visible = "[GetScriptedGui('lam_is_push_heir_y').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_is_push_heir_y').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_is_push_heir_y').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+						}
+					}
+				}
+				widget = {
+					size = {
+						590
+						134
+					}
+					visible = "[Character.MakeScope.Var('lam_is_crown_open').IsSet]"
+					background = {
+						using = Background_Area
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						layoutpolicy_vertical = expanding
+						margin = {
+							8
+							4
+						}
+						spacing = 3
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							icon = {
+								size = {
+									24
+									24
+								}
+								texture = "gfx/interface/icons/flat_icons/county_crown.dds"
+							}
+							text_single = {
+								text = "lam_is_crown_title"
+								fontsize = 18
+								fontsize_min = 15
+								max_width = 260
+								align = left|nobaseline
+							}
+							expand = {}
+							text_single = {
+								text = "lam_is_crown_lead"
+								fontsize = 15
+								fontsize_min = 12
+								max_width = 220
+								align = right|nobaseline
+							}
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							widget = {
+								size = {
+									64
+									64
+								}
+								visible = "[Character.MakeScope.Var('lam_is_crown_xp').IsSet]"
+								widget = {
+									size = {
+										64
+										64
+									}
+									datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('lam_is_crown_xp').Char]"
+									portrait_button = {
+										size = {
+											58
+											64
+										}
+										using = portrait_base
+										portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+										mask = "gfx/portraits/portrait_mask_head_small.dds"
+										effectname = "NoHighlight"
+										onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+										tooltip = "[Character.GetName]"
+										onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+									}
+								}
+							}
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								text_single = {
+									text = "lam_is_crown_x"
+									fontsize = 15
+									fontsize_min = 12
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_crown_xs"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_crown_xu"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_crown_xc"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+							}
+							widget = {
+								size = {
+									210
+									18
+								}
+								tooltip = "lam_is_crown_tt"
+								background = {
+									texture = "gfx/interface/progressbars/war_progress_noprogress.dds"
+									margin = {
+										0
+										-3
+									}
+								}
+								widget = {
+									size = {
+										100%
+										100%
+									}
+									scissor = yes
+									hbox = {
+										icon = {
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											layoutstretchfactor_horizontal = "[GetProgressBarValueMaxScaled( FixedPointToFloat( Character.MakeScope.Var('lam_is_crown_disp').GetValue ), '(float)200', '(int32)200' )]"
+											size = {
+												0
+												0
+											}
+											texture = "gfx/interface/progressbars/war_progress_blue.dds"
+											spriteType = Corneredtiled
+											icon = {
+												parentanchor = right|vcenter
+												position = {
+													5
+													0
+												}
+												size = {
+													14
+													100%
+												}
+												texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+												color = {
+													0.9
+													0.9
+													0.9
+													1
+												}
+											}
+										}
+										icon = {
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											layoutstretchfactor_horizontal = "[GetProgressBarValueMaxOtherScaled( FixedPointToFloat( Character.MakeScope.Var('lam_is_crown_disp').GetValue ), '(float)200', '(int32)200' )]"
+											size = {
+												0
+												0
+											}
+											texture = "gfx/interface/progressbars/war_progress_red.dds"
+											spriteType = Corneredtiled
+											icon = {
+												parentanchor = left|vcenter
+												position = {
+													-6
+													0
+												}
+												mirror = horizontal
+												size = {
+													14
+													100%
+												}
+												texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+												color = {
+													0.9
+													0.9
+													0.9
+													1
+												}
+											}
+										}
+									}
+								}
+								icon = {
+									parentanchor = center
+									size = {
+										2
+										22
+									}
+									texture = "gfx/interface/colors/white.dds"
+									alpha = 0.35
+								}
+							}
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								text_single = {
+									text = "lam_is_crown_y"
+									fontsize = 15
+									fontsize_min = 12
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_crown_ys"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_crown_yu"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_crown_yc"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+							}
+							widget = {
+								size = {
+									64
+									64
+								}
+								visible = "[Character.MakeScope.Var('lam_is_crown_yp').IsSet]"
+								widget = {
+									size = {
+										64
+										64
+									}
+									datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('lam_is_crown_yp').Char]"
+									portrait_button = {
+										size = {
+											58
+											64
+										}
+										using = portrait_base
+										portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+										mask = "gfx/portraits/portrait_mask_head_small.dds"
+										effectname = "NoHighlight"
+										onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+										tooltip = "[Character.GetName]"
+										onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+									}
+								}
+							}
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							button_standard = {
+								size = {
+									170
+									24
+								}
+								text = "lam_is_crown_btn_x"
+								tooltip = "lam_is_push_tt"
+								visible = "[GetScriptedGui('lam_is_push_crown_x').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_is_push_crown_x').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_is_push_crown_x').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							text_single = {
+								text = "lam_is_crown_mvl1"
+								fontsize = 13
+								fontsize_min = 10
+								max_width = 220
+								align = center|nobaseline
+							}
+							button_standard = {
+								size = {
+									170
+									24
+								}
+								text = "lam_is_crown_btn_y"
+								tooltip = "lam_is_push_tt"
+								visible = "[GetScriptedGui('lam_is_push_crown_y').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_is_push_crown_y').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_is_push_crown_y').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+						}
+					}
+				}
+				widget = {
+					size = {
+						590
+						134
+					}
+					visible = "[Character.MakeScope.Var('lam_is_council_open').IsSet]"
+					background = {
+						using = Background_Area
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						layoutpolicy_vertical = expanding
+						margin = {
+							8
+							4
+						}
+						spacing = 3
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							icon = {
+								size = {
+									24
+									24
+								}
+								texture = "gfx/interface/icons/flat_icons/council.dds"
+							}
+							text_single = {
+								text = "lam_is_council_title"
+								fontsize = 18
+								fontsize_min = 15
+								max_width = 260
+								align = left|nobaseline
+							}
+							expand = {}
+							text_single = {
+								text = "lam_is_council_lead"
+								fontsize = 15
+								fontsize_min = 12
+								max_width = 220
+								align = right|nobaseline
+							}
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							widget = {
+								size = {
+									64
+									64
+								}
+								visible = "[Character.MakeScope.Var('lam_is_council_xp').IsSet]"
+								widget = {
+									size = {
+										64
+										64
+									}
+									datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('lam_is_council_xp').Char]"
+									portrait_button = {
+										size = {
+											58
+											64
+										}
+										using = portrait_base
+										portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+										mask = "gfx/portraits/portrait_mask_head_small.dds"
+										effectname = "NoHighlight"
+										onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+										tooltip = "[Character.GetName]"
+										onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+									}
+								}
+							}
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								text_single = {
+									text = "lam_is_council_x"
+									fontsize = 15
+									fontsize_min = 12
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_council_xs"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_council_xu"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_council_xc"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+							}
+							widget = {
+								size = {
+									210
+									18
+								}
+								tooltip = "lam_is_council_tt"
+								background = {
+									texture = "gfx/interface/progressbars/war_progress_noprogress.dds"
+									margin = {
+										0
+										-3
+									}
+								}
+								widget = {
+									size = {
+										100%
+										100%
+									}
+									scissor = yes
+									hbox = {
+										icon = {
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											layoutstretchfactor_horizontal = "[GetProgressBarValueMaxScaled( FixedPointToFloat( Character.MakeScope.Var('lam_is_council_disp').GetValue ), '(float)200', '(int32)200' )]"
+											size = {
+												0
+												0
+											}
+											texture = "gfx/interface/progressbars/war_progress_blue.dds"
+											spriteType = Corneredtiled
+											icon = {
+												parentanchor = right|vcenter
+												position = {
+													5
+													0
+												}
+												size = {
+													14
+													100%
+												}
+												texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+												color = {
+													0.9
+													0.9
+													0.9
+													1
+												}
+											}
+										}
+										icon = {
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											layoutstretchfactor_horizontal = "[GetProgressBarValueMaxOtherScaled( FixedPointToFloat( Character.MakeScope.Var('lam_is_council_disp').GetValue ), '(float)200', '(int32)200' )]"
+											size = {
+												0
+												0
+											}
+											texture = "gfx/interface/progressbars/war_progress_red.dds"
+											spriteType = Corneredtiled
+											icon = {
+												parentanchor = left|vcenter
+												position = {
+													-6
+													0
+												}
+												mirror = horizontal
+												size = {
+													14
+													100%
+												}
+												texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+												color = {
+													0.9
+													0.9
+													0.9
+													1
+												}
+											}
+										}
+									}
+								}
+								icon = {
+									parentanchor = center
+									size = {
+										2
+										22
+									}
+									texture = "gfx/interface/colors/white.dds"
+									alpha = 0.35
+								}
+							}
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								text_single = {
+									text = "lam_is_council_y"
+									fontsize = 15
+									fontsize_min = 12
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_council_ys"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_council_yu"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_council_yc"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+							}
+							widget = {
+								size = {
+									64
+									64
+								}
+								visible = "[Character.MakeScope.Var('lam_is_council_yp').IsSet]"
+								widget = {
+									size = {
+										64
+										64
+									}
+									datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('lam_is_council_yp').Char]"
+									portrait_button = {
+										size = {
+											58
+											64
+										}
+										using = portrait_base
+										portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+										mask = "gfx/portraits/portrait_mask_head_small.dds"
+										effectname = "NoHighlight"
+										onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+										tooltip = "[Character.GetName]"
+										onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+									}
+								}
+							}
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							button_standard = {
+								size = {
+									170
+									24
+								}
+								text = "lam_is_council_btn_x"
+								tooltip = "lam_is_push_tt"
+								visible = "[GetScriptedGui('lam_is_push_council_x').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_is_push_council_x').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_is_push_council_x').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							text_single = {
+								text = "lam_is_council_mvl1"
+								fontsize = 13
+								fontsize_min = 10
+								max_width = 220
+								align = center|nobaseline
+							}
+							button_standard = {
+								size = {
+									170
+									24
+								}
+								text = "lam_is_council_btn_y"
+								tooltip = "lam_is_push_tt"
+								visible = "[GetScriptedGui('lam_is_push_council_y').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_is_push_council_y').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_is_push_council_y').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+						}
+					}
+				}
+				widget = {
+					size = {
+						590
+						134
+					}
+					visible = "[Character.MakeScope.Var('lam_is_faith_open').IsSet]"
+					background = {
+						using = Background_Area
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						layoutpolicy_vertical = expanding
+						margin = {
+							8
+							4
+						}
+						spacing = 3
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							icon = {
+								size = {
+									24
+									24
+								}
+								texture = "gfx/interface/icons/flat_icons/faith.dds"
+							}
+							text_single = {
+								text = "lam_is_faith_title"
+								fontsize = 18
+								fontsize_min = 15
+								max_width = 260
+								align = left|nobaseline
+							}
+							expand = {}
+							text_single = {
+								text = "lam_is_faith_lead"
+								fontsize = 15
+								fontsize_min = 12
+								max_width = 220
+								align = right|nobaseline
+							}
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							widget = {
+								size = {
+									64
+									64
+								}
+								visible = "[Character.MakeScope.Var('lam_is_faith_xp').IsSet]"
+								widget = {
+									size = {
+										64
+										64
+									}
+									datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('lam_is_faith_xp').Char]"
+									portrait_button = {
+										size = {
+											58
+											64
+										}
+										using = portrait_base
+										portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+										mask = "gfx/portraits/portrait_mask_head_small.dds"
+										effectname = "NoHighlight"
+										onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+										tooltip = "[Character.GetName]"
+										onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+									}
+								}
+							}
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								text_single = {
+									text = "lam_is_faith_x"
+									fontsize = 15
+									fontsize_min = 12
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_faith_xs"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_faith_xu"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_faith_xc"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+							}
+							widget = {
+								size = {
+									210
+									18
+								}
+								tooltip = "lam_is_faith_tt"
+								background = {
+									texture = "gfx/interface/progressbars/war_progress_noprogress.dds"
+									margin = {
+										0
+										-3
+									}
+								}
+								widget = {
+									size = {
+										100%
+										100%
+									}
+									scissor = yes
+									hbox = {
+										icon = {
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											layoutstretchfactor_horizontal = "[GetProgressBarValueMaxScaled( FixedPointToFloat( Character.MakeScope.Var('lam_is_faith_disp').GetValue ), '(float)200', '(int32)200' )]"
+											size = {
+												0
+												0
+											}
+											texture = "gfx/interface/progressbars/war_progress_blue.dds"
+											spriteType = Corneredtiled
+											icon = {
+												parentanchor = right|vcenter
+												position = {
+													5
+													0
+												}
+												size = {
+													14
+													100%
+												}
+												texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+												color = {
+													0.9
+													0.9
+													0.9
+													1
+												}
+											}
+										}
+										icon = {
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											layoutstretchfactor_horizontal = "[GetProgressBarValueMaxOtherScaled( FixedPointToFloat( Character.MakeScope.Var('lam_is_faith_disp').GetValue ), '(float)200', '(int32)200' )]"
+											size = {
+												0
+												0
+											}
+											texture = "gfx/interface/progressbars/war_progress_red.dds"
+											spriteType = Corneredtiled
+											icon = {
+												parentanchor = left|vcenter
+												position = {
+													-6
+													0
+												}
+												mirror = horizontal
+												size = {
+													14
+													100%
+												}
+												texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+												color = {
+													0.9
+													0.9
+													0.9
+													1
+												}
+											}
+										}
+									}
+								}
+								icon = {
+									parentanchor = center
+									size = {
+										2
+										22
+									}
+									texture = "gfx/interface/colors/white.dds"
+									alpha = 0.35
+								}
+							}
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								text_single = {
+									text = "lam_is_faith_y"
+									fontsize = 15
+									fontsize_min = 12
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_faith_ys"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_faith_yu"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_faith_yc"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+							}
+							widget = {
+								size = {
+									64
+									64
+								}
+								visible = "[Character.MakeScope.Var('lam_is_faith_yp').IsSet]"
+								widget = {
+									size = {
+										64
+										64
+									}
+									datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('lam_is_faith_yp').Char]"
+									portrait_button = {
+										size = {
+											58
+											64
+										}
+										using = portrait_base
+										portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+										mask = "gfx/portraits/portrait_mask_head_small.dds"
+										effectname = "NoHighlight"
+										onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+										tooltip = "[Character.GetName]"
+										onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+									}
+								}
+							}
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							button_standard = {
+								size = {
+									170
+									24
+								}
+								text = "lam_is_faith_btn_x"
+								tooltip = "lam_is_push_tt"
+								visible = "[GetScriptedGui('lam_is_push_faith_x').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_is_push_faith_x').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_is_push_faith_x').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							text_single = {
+								text = "lam_is_faith_mvl1"
+								fontsize = 13
+								fontsize_min = 10
+								max_width = 220
+								align = center|nobaseline
+							}
+							button_standard = {
+								size = {
+									170
+									24
+								}
+								text = "lam_is_faith_btn_y"
+								tooltip = "lam_is_push_tt"
+								visible = "[GetScriptedGui('lam_is_push_faith_y').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_is_push_faith_y').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_is_push_faith_y').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+						}
+					}
+				}
+				widget = {
+					size = {
+						590
+						134
+					}
+					visible = "[Character.MakeScope.Var('lam_is_tax_open').IsSet]"
+					background = {
+						using = Background_Area
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						layoutpolicy_vertical = expanding
+						margin = {
+							8
+							4
+						}
+						spacing = 3
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							icon = {
+								size = {
+									24
+									24
+								}
+								texture = "gfx/interface/icons/icon_gold.dds"
+							}
+							text_single = {
+								text = "lam_is_tax_title"
+								fontsize = 18
+								fontsize_min = 15
+								max_width = 260
+								align = left|nobaseline
+							}
+							expand = {}
+							text_single = {
+								text = "lam_is_tax_lead"
+								fontsize = 15
+								fontsize_min = 12
+								max_width = 220
+								align = right|nobaseline
+							}
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							widget = {
+								size = {
+									64
+									64
+								}
+								visible = "[Character.MakeScope.Var('lam_is_tax_xp').IsSet]"
+								widget = {
+									size = {
+										64
+										64
+									}
+									datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('lam_is_tax_xp').Char]"
+									portrait_button = {
+										size = {
+											58
+											64
+										}
+										using = portrait_base
+										portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+										mask = "gfx/portraits/portrait_mask_head_small.dds"
+										effectname = "NoHighlight"
+										onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+										tooltip = "[Character.GetName]"
+										onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+									}
+								}
+							}
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								text_single = {
+									text = "lam_is_tax_x"
+									fontsize = 15
+									fontsize_min = 12
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_tax_xs"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_tax_xu"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_tax_xc"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+							}
+							widget = {
+								size = {
+									210
+									18
+								}
+								tooltip = "lam_is_tax_tt"
+								background = {
+									texture = "gfx/interface/progressbars/war_progress_noprogress.dds"
+									margin = {
+										0
+										-3
+									}
+								}
+								widget = {
+									size = {
+										100%
+										100%
+									}
+									scissor = yes
+									hbox = {
+										icon = {
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											layoutstretchfactor_horizontal = "[GetProgressBarValueMaxScaled( FixedPointToFloat( Character.MakeScope.Var('lam_is_tax_disp').GetValue ), '(float)200', '(int32)200' )]"
+											size = {
+												0
+												0
+											}
+											texture = "gfx/interface/progressbars/war_progress_blue.dds"
+											spriteType = Corneredtiled
+											icon = {
+												parentanchor = right|vcenter
+												position = {
+													5
+													0
+												}
+												size = {
+													14
+													100%
+												}
+												texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+												color = {
+													0.9
+													0.9
+													0.9
+													1
+												}
+											}
+										}
+										icon = {
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											layoutstretchfactor_horizontal = "[GetProgressBarValueMaxOtherScaled( FixedPointToFloat( Character.MakeScope.Var('lam_is_tax_disp').GetValue ), '(float)200', '(int32)200' )]"
+											size = {
+												0
+												0
+											}
+											texture = "gfx/interface/progressbars/war_progress_red.dds"
+											spriteType = Corneredtiled
+											icon = {
+												parentanchor = left|vcenter
+												position = {
+													-6
+													0
+												}
+												mirror = horizontal
+												size = {
+													14
+													100%
+												}
+												texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+												color = {
+													0.9
+													0.9
+													0.9
+													1
+												}
+											}
+										}
+									}
+								}
+								icon = {
+									parentanchor = center
+									size = {
+										2
+										22
+									}
+									texture = "gfx/interface/colors/white.dds"
+									alpha = 0.35
+								}
+							}
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								text_single = {
+									text = "lam_is_tax_y"
+									fontsize = 15
+									fontsize_min = 12
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_tax_ys"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_tax_yu"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_tax_yc"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+							}
+							widget = {
+								size = {
+									64
+									64
+								}
+								visible = "[Character.MakeScope.Var('lam_is_tax_yp').IsSet]"
+								widget = {
+									size = {
+										64
+										64
+									}
+									datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('lam_is_tax_yp').Char]"
+									portrait_button = {
+										size = {
+											58
+											64
+										}
+										using = portrait_base
+										portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+										mask = "gfx/portraits/portrait_mask_head_small.dds"
+										effectname = "NoHighlight"
+										onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+										tooltip = "[Character.GetName]"
+										onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+									}
+								}
+							}
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							button_standard = {
+								size = {
+									170
+									24
+								}
+								text = "lam_is_tax_btn_x"
+								tooltip = "lam_is_push_tt"
+								visible = "[GetScriptedGui('lam_is_push_tax_x').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_is_push_tax_x').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_is_push_tax_x').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							text_single = {
+								text = "lam_is_tax_mvl1"
+								fontsize = 13
+								fontsize_min = 10
+								max_width = 220
+								align = center|nobaseline
+							}
+							button_standard = {
+								size = {
+									170
+									24
+								}
+								text = "lam_is_tax_btn_y"
+								tooltip = "lam_is_push_tt"
+								visible = "[GetScriptedGui('lam_is_push_tax_y').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_is_push_tax_y').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_is_push_tax_y').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+						}
+					}
+				}
+				widget = {
+					size = {
+						590
+						134
+					}
+					visible = "[Character.MakeScope.Var('lam_is_war_open').IsSet]"
+					background = {
+						using = Background_Area
+					}
+					vbox = {
+						layoutpolicy_horizontal = expanding
+						layoutpolicy_vertical = expanding
+						margin = {
+							8
+							4
+						}
+						spacing = 3
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							icon = {
+								size = {
+									24
+									24
+								}
+								texture = "gfx/interface/icons/flat_icons/declare_war.dds"
+							}
+							text_single = {
+								text = "lam_is_war_title"
+								fontsize = 18
+								fontsize_min = 15
+								max_width = 260
+								align = left|nobaseline
+							}
+							expand = {}
+							text_single = {
+								text = "lam_is_war_lead"
+								fontsize = 15
+								fontsize_min = 12
+								max_width = 220
+								align = right|nobaseline
+							}
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							widget = {
+								size = {
+									64
+									64
+								}
+								visible = "[Character.MakeScope.Var('lam_is_war_xp').IsSet]"
+								widget = {
+									size = {
+										64
+										64
+									}
+									datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('lam_is_war_xp').Char]"
+									portrait_button = {
+										size = {
+											58
+											64
+										}
+										using = portrait_base
+										portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+										mask = "gfx/portraits/portrait_mask_head_small.dds"
+										effectname = "NoHighlight"
+										onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+										tooltip = "[Character.GetName]"
+										onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+									}
+								}
+							}
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								text_single = {
+									text = "lam_is_war_x"
+									fontsize = 15
+									fontsize_min = 12
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_war_xs"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_war_xu"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+								text_single = {
+									text = "lam_is_war_xc"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = left|nobaseline
+								}
+							}
+							widget = {
+								size = {
+									210
+									18
+								}
+								tooltip = "lam_is_war_tt"
+								background = {
+									texture = "gfx/interface/progressbars/war_progress_noprogress.dds"
+									margin = {
+										0
+										-3
+									}
+								}
+								widget = {
+									size = {
+										100%
+										100%
+									}
+									scissor = yes
+									hbox = {
+										icon = {
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											layoutstretchfactor_horizontal = "[GetProgressBarValueMaxScaled( FixedPointToFloat( Character.MakeScope.Var('lam_is_war_disp').GetValue ), '(float)200', '(int32)200' )]"
+											size = {
+												0
+												0
+											}
+											texture = "gfx/interface/progressbars/war_progress_blue.dds"
+											spriteType = Corneredtiled
+											icon = {
+												parentanchor = right|vcenter
+												position = {
+													5
+													0
+												}
+												size = {
+													14
+													100%
+												}
+												texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+												color = {
+													0.9
+													0.9
+													0.9
+													1
+												}
+											}
+										}
+										icon = {
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											layoutstretchfactor_horizontal = "[GetProgressBarValueMaxOtherScaled( FixedPointToFloat( Character.MakeScope.Var('lam_is_war_disp').GetValue ), '(float)200', '(int32)200' )]"
+											size = {
+												0
+												0
+											}
+											texture = "gfx/interface/progressbars/war_progress_red.dds"
+											spriteType = Corneredtiled
+											icon = {
+												parentanchor = left|vcenter
+												position = {
+													-6
+													0
+												}
+												mirror = horizontal
+												size = {
+													14
+													100%
+												}
+												texture = "gfx/interface/progressbars/progressbar_center_glow.dds"
+												color = {
+													0.9
+													0.9
+													0.9
+													1
+												}
+											}
+										}
+									}
+								}
+								icon = {
+									parentanchor = center
+									size = {
+										2
+										22
+									}
+									texture = "gfx/interface/colors/white.dds"
+									alpha = 0.35
+								}
+							}
+							vbox = {
+								layoutpolicy_horizontal = expanding
+								text_single = {
+									text = "lam_is_war_y"
+									fontsize = 15
+									fontsize_min = 12
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_war_ys"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_war_yu"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+								text_single = {
+									text = "lam_is_war_yc"
+									fontsize = 13
+									fontsize_min = 10
+									max_width = 112
+									align = right|nobaseline
+								}
+							}
+							widget = {
+								size = {
+									64
+									64
+								}
+								visible = "[Character.MakeScope.Var('lam_is_war_yp').IsSet]"
+								widget = {
+									size = {
+										64
+										64
+									}
+									datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('lam_is_war_yp').Char]"
+									portrait_button = {
+										size = {
+											58
+											64
+										}
+										using = portrait_base
+										portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+										mask = "gfx/portraits/portrait_mask_head_small.dds"
+										effectname = "NoHighlight"
+										onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+										tooltip = "[Character.GetName]"
+										onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+									}
+								}
+							}
+						}
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							button_standard = {
+								size = {
+									170
+									24
+								}
+								text = "lam_is_war_btn_x"
+								tooltip = "lam_is_push_tt"
+								visible = "[GetScriptedGui('lam_is_push_war_x').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_is_push_war_x').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_is_push_war_x').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							text_single = {
+								text = "lam_is_war_mvl1"
+								fontsize = 13
+								fontsize_min = 10
+								max_width = 220
+								align = center|nobaseline
+							}
+							button_standard = {
+								size = {
+									170
+									24
+								}
+								text = "lam_is_war_btn_y"
+								tooltip = "lam_is_push_tt"
+								visible = "[GetScriptedGui('lam_is_push_war_y').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_is_push_war_y').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_is_push_war_y').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+						}
+					}
+				}
+			}
+			expand = {}
+		}
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			layoutpolicy_vertical = expanding
+			margin = {
+				10
+				4
+			}
+			spacing = 10
+			visible = "[Not( GetVariableSystem.HasValue( 'lam_fac_tab', 'harem' ) )]"
+			datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char]"
+			vbox = {
+				layoutpolicy_horizontal = expanding
+				layoutpolicy_vertical = expanding
+				scrollarea = {
+					size = {
+						1500
+						666
+					}
+					scrollbarpolicy_vertical = always_off
+					scrollbarpolicy_horizontal = as_needed
+					scrollbar_horizontal = {
+						using = Scrollbar_Horizontal
+					}
+					scrollwidget = {
+						hbox = {
+							layoutpolicy_horizontal = expanding
+							hbox = {
+								spacing = 10
+								ignoreinvisible = yes
+								datamodel = "[Character.MakeScope.GetList('lam_bloc_leads_sorted')]"
+								item = {
+									widget = {
+										datacontext = "[Scope.Char]"
+										size = {
+											380
+											650
+										}
+										background = {
+											using = Background_Area
+										}
+										visible = "[Not( And( Character.MakeScope.Var('lam_fac_vh').IsSet, Character.MakeScope.Var('lam_fac_hide').IsSet ) )]"
+										vbox = {
+											visible = "[And( Character.MakeScope.Var('lam_fac_vl').IsSet, Character.MakeScope.Var('lam_fac_hide').IsSet )]"
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											margin = {
+												10
+												10
+											}
+											spacing = 8
+											text_single = {
+												text = "lam_fac_veil_title"
+												fontsize = 19
+												fontsize_min = 16
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												minimumsize = {
+													360
+													0
+												}
+											}
+											text_single = {
+												text = "lam_fac_veil_lead"
+												fontsize = 15
+												fontsize_min = 12
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												minimumsize = {
+													360
+													0
+												}
+											}
+											text_single = {
+												text = "lam_fac_veil_members"
+												fontsize = 15
+												fontsize_min = 12
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												minimumsize = {
+													360
+													0
+												}
+											}
+											text_single = {
+												text = "lam_fac_veil_q"
+												fontsize = 72
+												fontsize_min = 40
+												max_width = 360
+												align = center|nobaseline
+												default_format = "#weak"
+											}
+											text_multi = {
+												text = "lam_fac_veil_desc"
+												fontsize = 15
+												max_width = 360
+												autoresize = yes
+												layoutpolicy_horizontal = expanding
+											}
+											text_single = {
+												text = "lam_fac_card_intel"
+												fontsize = 14
+												fontsize_min = 11
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_fac_card_intel_tt"
+												minimumsize = {
+													360
+													0
+												}
+											}
+											expand = {}
+										}
+										vbox = {
+											visible = "[Not( And( Character.MakeScope.Var('lam_fac_vl').IsSet, Character.MakeScope.Var('lam_fac_hide').IsSet ) )]"
+											layoutpolicy_horizontal = expanding
+											layoutpolicy_vertical = expanding
+											margin = {
+												10
+												10
+											}
+											spacing = 5
+											hbox = {
+												layoutpolicy_horizontal = expanding
+												spacing = 6
+												portrait_head_small = {}
+												vbox = {
+													layoutpolicy_horizontal = expanding
+													spacing = 1
+													text_single = {
+														text = "lam_fac_card_title"
+														fontsize = 19
+														fontsize_min = 16
+														max_width = 260
+														layoutpolicy_horizontal = expanding
+														align = left|nobaseline
+														tooltip = "lam_fac_card_title_tt"
+														minimumsize = {
+															260
+															0
+														}
+													}
+													text_single = {
+														text = "lam_fac_card_lead"
+														fontsize = 15
+														fontsize_min = 12
+														max_width = 260
+														layoutpolicy_horizontal = expanding
+														align = left|nobaseline
+														tooltip = "lam_fac_member_row"
+														minimumsize = {
+															260
+															0
+														}
+													}
+													text_single = {
+														text = "lam_fac_card_stance"
+														fontsize = 15
+														fontsize_min = 12
+														max_width = 260
+														layoutpolicy_horizontal = expanding
+														align = left|nobaseline
+														tooltip = "lam_fac_card_stance"
+														visible = no
+														minimumsize = {
+															260
+															0
+														}
+													}
+													text_single = {
+														text = "lam_fac_card_loyal"
+														fontsize = 15
+														fontsize_min = 12
+														max_width = 260
+														layoutpolicy_horizontal = expanding
+														align = left|nobaseline
+														visible = no
+														minimumsize = {
+															260
+															0
+														}
+													}
+													expand = {}
+												}
+											}
+											hbox = {
+												spacing = 6
+												text_single = {
+													text = "lam_fac_bar_share"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 90
+													align = left|nobaseline
+													default_format = "#weak"
+													tooltip = "lam_fac_bar_share_tt"
+													minimumsize = {
+														90
+														0
+													}
+												}
+												progressbar_standard = {
+													size = {
+														214
+														10
+													}
+													min = 0
+													max = 100
+													value = "[Character.MakeScope.Var('lam_fac_share').GetValue]"
+												}
+												text_single = {
+													text = "lam_fac_barv_share"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 40
+													align = right|nobaseline
+													minimumsize = {
+														40
+														0
+													}
+												}
+												layoutpolicy_horizontal = expanding
+											}
+											text_single = {
+												text = "lam_fac_card_rep"
+												fontsize = 15
+												fontsize_min = 12
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												default_format = "#italic"
+												tooltip = "lam_fac_card_rep_tt"
+												minimumsize = {
+													360
+													0
+												}
+											}
+											text_single = {
+												text = "lam_fac_card_intel"
+												fontsize = 14
+												fontsize_min = 11
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_fac_card_intel_tt"
+												visible = "[Character.MakeScope.Var('lam_fac_hide').IsSet]"
+												minimumsize = {
+													360
+													0
+												}
+											}
+											hbox = {
+												layoutpolicy_horizontal = expanding
+												spacing = 4
+												text_single = {
+													text = "lam_fac_badge_court"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 90
+													align = left|nobaseline
+													tooltip = "lam_fac_cp_rift_hint"
+													visible = "[Character.MakeScope.Var('lam_fac_courtparty').IsSet]"
+												}
+												text_single = {
+													text = "lam_fac_badge_cpbroken"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 140
+													align = left|nobaseline
+													tooltip = "lam_fac_badge_cpbroken_tt"
+													visible = "[Character.MakeScope.Var('lam_fac_cp_broken_m').IsSet]"
+												}
+												text_single = {
+													text = "lam_fac_badge_holding"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 120
+													align = left|nobaseline
+													tooltip = "lam_fac_badge_holding_tt"
+													visible = "[Character.MakeScope.Var('lam_fac_holding').IsSet]"
+												}
+												expand = {}
+											}
+											hbox = {
+												layoutpolicy_horizontal = expanding
+												spacing = 4
+												text_single = {
+													text = "lam_fac_badge_inlaw"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 120
+													align = left|nobaseline
+													tooltip = "lam_fac_badge_inlaw"
+													visible = "[Character.MakeScope.Var('lam_fac_inlaw').IsSet]"
+												}
+												text_single = {
+													text = "lam_fac_badge_promise"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 64
+													align = left|nobaseline
+													tooltip = "lam_fac_badge_promise_tt"
+													visible = "[Character.MakeScope.Var('lam_fac_promise').IsSet]"
+												}
+												text_single = {
+													text = "lam_fac_badge_founded"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 76
+													align = left|nobaseline
+													tooltip = "lam_fac_hist_tt"
+													visible = "[Character.MakeScope.Var('lam_fac_founded').IsSet]"
+												}
+												text_single = {
+													text = "lam_fac_badge_endured"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 80
+													align = left|nobaseline
+													tooltip = "lam_fac_badge_endured"
+													visible = "[Character.MakeScope.Var('lam_fac_endured').IsSet]"
+												}
+												expand = {}
+											}
+											text_multi = {
+												text = "lam_ux2_want"
+												fontsize = 15
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_fac_card_goal"
+												minimumsize = {
+													360
+													0
+												}
+												autoresize = yes
+											}
+											text_multi = {
+												text = "lam_ux2_mood"
+												fontsize = 15
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_fac_stage_tt"
+												minimumsize = {
+													360
+													0
+												}
+												autoresize = yes
+											}
+											text_multi = {
+												text = "lam_ux2_next"
+												fontsize = 15
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_fac_card_nerve"
+												minimumsize = {
+													360
+													0
+												}
+												autoresize = yes
+											}
+											text_multi = {
+												text = "lam_is_card_stance_line"
+												fontsize = 14
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												visible = "[Or( Or( Or( Character.MakeScope.Var('lam_is_st_heir').IsSet, Character.MakeScope.Var('lam_is_st_crown').IsSet ), Or( Character.MakeScope.Var('lam_is_st_council').IsSet, Character.MakeScope.Var('lam_is_st_faith').IsSet ) ), Or( Character.MakeScope.Var('lam_is_st_tax').IsSet, Character.MakeScope.Var('lam_is_st_war').IsSet ) )]"
+												minimumsize = {
+													360
+													0
+												}
+												autoresize = yes
+											}
+											text_multi = {
+												text = "lam_is_card_fate_line"
+												fontsize = 14
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												visible = "[Or( Character.MakeScope.Var('lam_is_beaten').IsSet, Character.MakeScope.Var('lam_is_victor').IsSet )]"
+												minimumsize = {
+													360
+													0
+												}
+												autoresize = yes
+											}
+											text_single = {
+												text = "lam_wc_front_card"
+												fontsize = 15
+												fontsize_min = 12
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_wc_front_tt"
+												visible = "[Character.MakeScope.Var('lam_wc_phase').IsSet]"
+												minimumsize = {
+													360
+													0
+												}
+											}
+											text_single = {
+												text = "lam_wc_shared_front_short"
+												fontsize = 14
+												fontsize_min = 11
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_wc_front_tt"
+												visible = "[Character.MakeScope.Var('lam_wc_shared_front').IsSet]"
+												minimumsize = {
+													360
+													0
+												}
+											}
+											text_single = {
+												text = "lam_fac_card_heir_lawful"
+												fontsize = 15
+												fontsize_min = 12
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_fac_card_heir_tt"
+												visible = "[And( Not(Character.MakeScope.Var('lam_wc_phase').IsSet), And( Character.MakeScope.Var('lam_fac_heir').IsSet, Character.MakeScope.Var('lam_fac_heir_lawful').IsSet ) )]"
+												minimumsize = {
+													360
+													0
+												}
+											}
+											text_single = {
+												text = "lam_fac_card_heir_other"
+												fontsize = 15
+												fontsize_min = 12
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_fac_card_heir_tt"
+												visible = "[And( Not(Character.MakeScope.Var('lam_wc_phase').IsSet), And( Character.MakeScope.Var('lam_fac_heir').IsSet, Not( Character.MakeScope.Var('lam_fac_heir_lawful').IsSet ) ) )]"
+												minimumsize = {
+													360
+													0
+												}
+											}
+											text_single = {
+												text = "lam_fac_members_title_n"
+												fontsize = 16
+												fontsize_min = 13
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												minimumsize = {
+													360
+													0
+												}
+											}
+											scrollbox = {
+												blockoverride
+												"scrollbox_content"
+												  {
+													vbox = {
+														layoutpolicy_horizontal = expanding
+														spacing = 2
+														datamodel = "[Character.MakeScope.GetList('lam_fac_members_sorted')]"
+														item = {
+															widget = {
+																datacontext = "[Scope.Char]"
+																size = {
+																	342
+																	28
+																}
+																button = {
+																	visible = "[Not( And( Character.MakeScope.Var('lam_fac_vq').IsSet, Character.MakeScope.Var('lam_bloc').Char.MakeScope.Var('lam_fac_hide').IsSet ) )]"
+																	size = {
+																		342
+																		28
+																	}
+																	onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+																	tooltip = "lam_fac_member_row"
+																	background = {
+																		using = Background_Area_Dark
+																	}
+																	text_single = {
+																		text = "lam_fac_mrow_name"
+																		fontsize = 14
+																		fontsize_min = 11
+																		max_width = 160
+																		align = left|nobaseline
+																		position = {
+																			6
+																			4
+																		}
+																	}
+																	text_single = {
+																		text = "lam_fac_mrow_tier"
+																		fontsize = 14
+																		fontsize_min = 11
+																		max_width = 82
+																		align = left|nobaseline
+																		position = {
+																			170
+																			4
+																		}
+																	}
+																	text_single = {
+																		text = "lam_fac_mrow_att"
+																		fontsize = 14
+																		fontsize_min = 11
+																		max_width = 86
+																		align = left|nobaseline
+																		position = {
+																			256
+																			4
+																		}
+																	}
+																	onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+																}
+																widget = {
+																	visible = "[And( Character.MakeScope.Var('lam_fac_vq').IsSet, Character.MakeScope.Var('lam_bloc').Char.MakeScope.Var('lam_fac_hide').IsSet )]"
+																	size = {
+																		342
+																		28
+																	}
+																	background = {
+																		using = Background_Area_Dark
+																	}
+																	text_single = {
+																		text = "lam_fac_mrow_veiled"
+																		fontsize = 14
+																		fontsize_min = 11
+																		max_width = 330
+																		align = left|nobaseline
+																		tooltip = "lam_fac_mrow_veiled_tt"
+																		position = {
+																			6
+																			4
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+												minimumsize = {
+													360
+													150
+												}
+												layoutpolicy_horizontal = expanding
+												layoutpolicy_vertical = expanding
+											}
+											hbox = {
+												layoutpolicy_horizontal = expanding
+												spacing = 8
+												button_standard = {
+													text = "lam_cv_btn"
+													tooltip = "lam_cv_btn_tt"
+													visible = "[Or( Or( Character.MakeScope.Var('lam_cr_active').IsSet, Character.MakeScope.Var('lam_cr_last_total').IsSet ), ObjectsEqual( Character.Self, GetPlayer.Self ) )]"
+													onclick = "[GetScriptedGui('lam_cv_open').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+													size = {
+														170
+														28
+													}
+												}
+												button_standard = {
+													size = {
+														182
+														28
+													}
+													text = "lam_fac_btn_detail"
+													tooltip = "lam_fac_btn_detail_tt"
+													visible = "[And( Character.MakeScope.Var('lam_bloc_lead').IsSet, Not( And( Character.MakeScope.Var('lam_fac_vl').IsSet, Character.MakeScope.Var('lam_fac_hide').IsSet ) ) )]"
+													onclick = "[GetScriptedGui('lam_sgui_fac_detail').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+												}
+											}
+											hbox = {
+												spacing = 8
+												visible = "[And( Character.MakeScope.Var('lam_fac_favour').IsSet, ObjectsEqual( GetPlayer.MakeScope.Var('lam_fac_view').Char, GetPlayer ) )]"
+												button_standard = {
+													size = {
+														174
+														28
+													}
+													text = "lam_fac_btn_favour"
+													tooltip = "lam_fac_btn_favour_tt"
+													enabled = "[GetScriptedGui('lam_sgui_fac_favour').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+													onclick = "[GetScriptedGui('lam_sgui_fac_favour').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+												}
+												button_standard = {
+													size = {
+														174
+														28
+													}
+													text = "lam_fac_btn_slight"
+													tooltip = "lam_fac_btn_slight_tt"
+													enabled = "[GetScriptedGui('lam_sgui_fac_slight').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+													onclick = "[GetScriptedGui('lam_sgui_fac_slight').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+												}
+											}
+											hbox = {
+												spacing = 8
+												button_standard = {
+													size = {
+														174
+														28
+													}
+													text = "lam_fac_btn_join"
+													visible = "[GetScriptedGui('lam_sgui_fac_join').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+													enabled = "[GetScriptedGui('lam_sgui_fac_join').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+													onclick = "[GetScriptedGui('lam_sgui_fac_join').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+												}
+												button_standard = {
+													size = {
+														174
+														28
+													}
+													text = "lam_fac_btn_leave"
+													visible = "[GetScriptedGui('lam_sgui_fac_leave').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+													enabled = "[GetScriptedGui('lam_sgui_fac_leave').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+													onclick = "[GetScriptedGui('lam_sgui_fac_leave').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+												}
+											}
+											text_single = {
+												text = "lam_fac_card_camp"
+												fontsize = 15
+												fontsize_min = 12
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_fac_stage_tt"
+												visible = no
+												minimumsize = {
+													360
+													0
+												}
+											}
+											text_single = {
+												text = "lam_fac_card_nerve"
+												fontsize = 14
+												fontsize_min = 11
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_fac_card_nerve_tt"
+												visible = no
+												minimumsize = {
+													360
+													0
+												}
+											}
+											text_single = {
+												text = "lam_fac_card_goal"
+												fontsize = 15
+												fontsize_min = 12
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_fac_card_goal"
+												visible = no
+												minimumsize = {
+													360
+													0
+												}
+											}
+											text_single = {
+												text = "lam_fac_card_next"
+												fontsize = 14
+												fontsize_min = 11
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_fac_card_next_tt"
+												visible = no
+												minimumsize = {
+													360
+													0
+												}
+											}
+											text_single = {
+												text = "lam_fac_card_inf"
+												fontsize = 14
+												fontsize_min = 11
+												max_width = 360
+												layoutpolicy_horizontal = expanding
+												align = left|nobaseline
+												tooltip = "lam_fac_card_inf_tt"
+												visible = no
+												minimumsize = {
+													360
+													0
+												}
+											}
+											hbox = {
+												layoutpolicy_horizontal = expanding
+												spacing = 2
+												vbox = {
+													minimumsize = {
+														112
+														40
+													}
+													background = {
+														using = Background_Area_Dark
+													}
+													text_single = {
+														text = "lam_fac_stat_count_v"
+														fontsize = 20
+														fontsize_min = 17
+														max_width = 108
+														align = center|nobaseline
+													}
+													text_single = {
+														text = "lam_fac_stat_count_l"
+														fontsize = 14
+														fontsize_min = 11
+														max_width = 108
+														align = center|nobaseline
+														default_format = "#weak"
+													}
+												}
+												vbox = {
+													minimumsize = {
+														112
+														40
+													}
+													background = {
+														using = Background_Area_Dark
+													}
+													text_single = {
+														text = "lam_fac_stat_share_v"
+														fontsize = 20
+														fontsize_min = 17
+														max_width = 108
+														align = center|nobaseline
+													}
+													text_single = {
+														text = "lam_fac_stat_share_l"
+														fontsize = 14
+														fontsize_min = 11
+														max_width = 108
+														align = center|nobaseline
+														default_format = "#weak"
+													}
+												}
+												vbox = {
+													minimumsize = {
+														112
+														40
+													}
+													background = {
+														using = Background_Area_Dark
+													}
+													text_single = {
+														text = "lam_fac_stat_op_v"
+														fontsize = 20
+														fontsize_min = 17
+														max_width = 108
+														align = center|nobaseline
+													}
+													text_single = {
+														text = "lam_fac_stat_op_l"
+														fontsize = 14
+														fontsize_min = 11
+														max_width = 108
+														align = center|nobaseline
+														default_format = "#weak"
+													}
+												}
+												visible = no
+											}
+											hbox = {
+												spacing = 6
+												text_single = {
+													text = "lam_fac_bar_loyal"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 64
+													align = left|nobaseline
+													default_format = "#weak"
+													tooltip = "lam_fac_bar_loyal_tt"
+													minimumsize = {
+														64
+														0
+													}
+												}
+												progressbar_standard = {
+													size = {
+														170
+														10
+													}
+													min = -100
+													max = 100
+													value = "[Character.MakeScope.Var('lam_fac_loyal').GetValue]"
+												}
+												text_single = {
+													text = "lam_fac_barv_loyal"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 40
+													align = right|nobaseline
+													minimumsize = {
+														40
+														0
+													}
+												}
+												visible = no
+											}
+											hbox = {
+												spacing = 6
+												text_single = {
+													text = "lam_fac_bar_favour"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 64
+													align = left|nobaseline
+													default_format = "#weak"
+													tooltip = "lam_fac_bar_favour_tt"
+													minimumsize = {
+														64
+														0
+													}
+												}
+												progressbar_standard = {
+													size = {
+														170
+														10
+													}
+													min = -100
+													max = 100
+													value = "[Character.MakeScope.Var('lam_fac_favour').GetValue]"
+												}
+												text_single = {
+													text = "lam_fac_barv_favour"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 40
+													align = right|nobaseline
+													minimumsize = {
+														40
+														0
+													}
+												}
+												visible = no
+											}
+											hbox = {
+												spacing = 6
+												text_single = {
+													text = "lam_fac_bar_cohesion"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 64
+													align = left|nobaseline
+													default_format = "#weak"
+													tooltip = "lam_fac_bar_cohesion_tt"
+													minimumsize = {
+														64
+														0
+													}
+												}
+												progressbar_standard = {
+													size = {
+														170
+														10
+													}
+													min = 0
+													max = 100
+													value = "[Character.MakeScope.Var('lam_fac_cohesion').GetValue]"
+												}
+												text_single = {
+													text = "lam_fac_barv_cohesion"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 40
+													align = right|nobaseline
+													minimumsize = {
+														40
+														0
+													}
+												}
+												visible = no
+											}
+											hbox = {
+												layoutpolicy_horizontal = expanding
+												spacing = 4
+												text_single = {
+													text = "lam_fac_rel_friends"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 44
+													align = left|nobaseline
+													minimumsize = {
+														44
+														0
+													}
+												}
+												hbox = {
+													spacing = 6
+													datamodel = "[Character.MakeScope.GetList('lam_fac_friends')]"
+													item = {
+														text_single = {
+															text = "lam_fac_chip"
+															fontsize = 14
+															fontsize_min = 11
+															max_width = 76
+															align = left|nobaseline
+															datacontext = "[Scope.Char]"
+															visible = "[Not( And( Character.MakeScope.Var('lam_fac_vl').IsSet, Character.MakeScope.Var('lam_fac_hide').IsSet ) )]"
+														}
+													}
+												}
+												text_single = {
+													text = "lam_fac_none"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 60
+													align = left|nobaseline
+													visible = "[Character.MakeScope.Var('lam_fac_friends_none').IsSet]"
+												}
+												expand = {}
+												visible = no
+											}
+											hbox = {
+												layoutpolicy_horizontal = expanding
+												spacing = 4
+												text_single = {
+													text = "lam_fac_rel_foes"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 44
+													align = left|nobaseline
+													minimumsize = {
+														44
+														0
+													}
+												}
+												hbox = {
+													spacing = 6
+													datamodel = "[Character.MakeScope.GetList('lam_fac_foes')]"
+													item = {
+														text_single = {
+															text = "lam_fac_chip"
+															fontsize = 14
+															fontsize_min = 11
+															max_width = 76
+															align = left|nobaseline
+															datacontext = "[Scope.Char]"
+															visible = "[Not( And( Character.MakeScope.Var('lam_fac_vl').IsSet, Character.MakeScope.Var('lam_fac_hide').IsSet ) )]"
+														}
+													}
+												}
+												text_single = {
+													text = "lam_fac_none"
+													fontsize = 14
+													fontsize_min = 11
+													max_width = 60
+													align = left|nobaseline
+													visible = "[Character.MakeScope.Var('lam_fac_foes_none').IsSet]"
+												}
+												expand = {}
+												visible = no
+											}
+										}
+									}
+								}
+							}
+							expand = {}
+						}
+					}
+				}
+				text_single = {
+					text = "lam_fac_empty_court"
+					fontsize = 17
+					fontsize_min = 14
+					max_width = 1200
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					visible = "[Character.MakeScope.Var('lam_bloc_leads_none').IsSet]"
+				}
+				expand = {}
+			}
+			vbox = {
+				minimumsize = {
+					240
+					666
+				}
+				maximumsize = {
+					240
+					666
+				}
+				background = {
+					using = Background_Area
+				}
+				margin = {
+					8
+					8
+				}
+				spacing = 4
+				text_single = {
+					text = "lam_fac_unaligned_title_n"
+					fontsize = 16
+					fontsize_min = 13
+					max_width = 224
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_unaligned_tt"
+				}
+				scrollbox = {
+					size = {
+						224
+						616
+					}
+					blockoverride
+					"scrollbox_content"
+					  {
+						vbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 2
+							datamodel = "[Character.MakeScope.GetList('lam_bloc_unaligned')]"
+							item = {
+								button = {
+									datacontext = "[Scope.Char]"
+									size = {
+										206
+										40
+									}
+									onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+									tooltip = "lam_fac_unaligned_sub"
+									background = {
+										using = Background_Area_Dark
+									}
+									text_single = {
+										text = "lam_fac_unaligned_chip"
+										fontsize = 15
+										fontsize_min = 12
+										max_width = 194
+										align = left|nobaseline
+										position = {
+											6
+											3
+										}
+									}
+									text_single = {
+										text = "lam_fac_unaligned_sub"
+										fontsize = 14
+										fontsize_min = 11
+										max_width = 194
+										align = left|nobaseline
+										position = {
+											6
+											21
+										}
+									}
+									onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		expand = {}
+	}
+}

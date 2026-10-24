@@ -1,0 +1,104 @@
+﻿# No old education settings, traits, relationships or timers are rewritten.
+# Missing opt-out means enabled, in line with the requested automatic education.
+dhm_v091_migration_effect = {
+    if = {
+        limit = { NOT = { has_global_variable = dhm_migration_0910 } }
+        set_global_variable = { name = dhm_migration_0910 value = yes }
+    }
+}
+
+# Current scope = close-family pupil, scope:dhm_manager = human court owner.
+# Called ONLY from hidden education work, never from menu previews or reports.
+dhm_v091_try_personality_guidance_effect = {
+    clear_saved_scope = dhm_v091_pupil
+    clear_saved_scope = dhm_v091_mentor
+    clear_saved_scope = dhm_v091_trait
+    if = {
+        limit = { dhm_v091_pupil_eligible_trigger = yes }
+        save_scope_as = dhm_v091_pupil
+        random_relation = {
+            type = dhm_specialist_tutor
+            limit = { dhm_v091_mentor_eligible_trigger = yes }
+            save_scope_as = dhm_v091_mentor
+        }
+        if = {
+            limit = { NOT = { exists = scope:dhm_v091_mentor } }
+            random_relation = {
+                type = guardian
+                limit = { dhm_v091_mentor_eligible_trigger = yes }
+                save_scope_as = dhm_v091_mentor
+            }
+        }
+        if = {
+            limit = { exists = scope:dhm_v091_mentor }
+            scope:dhm_v091_mentor = {
+                # Diligence is the first lesson when the educator can teach it.
+                if = {
+                    limit = { has_trait = diligent trait:diligent = { dhm_v091_teachable_trait_trigger = yes } }
+                    trait:diligent = { save_scope_as = dhm_v091_trait }
+                }
+                else = {
+                    random_character_trait = {
+                        limit = { dhm_v091_teachable_trait_trigger = yes }
+                        save_scope_as = dhm_v091_trait
+                    }
+                }
+            }
+        }
+        if = {
+            limit = {
+                exists = scope:dhm_v091_mentor
+                exists = scope:dhm_v091_trait
+                dhm_v091_pupil_eligible_trigger = yes
+                scope:dhm_v091_mentor = { dhm_v091_mentor_eligible_trigger = yes has_trait = scope:dhm_v091_trait }
+                scope:dhm_v091_trait = { dhm_v091_teachable_trait_trigger = yes }
+            }
+            # Child-owned timer: a failed roll, new tutor, new ruler or manual
+            # reappointment cannot create another attempt in this interval.
+            add_character_flag = { flag = dhm091_personality_recent years = 3 }
+            set_variable = { name = dhm091_lesson_mentor value = scope:dhm_v091_mentor }
+            set_variable = { name = dhm091_lesson_trait value = scope:dhm_v091_trait }
+            set_variable = { name = dhm091_lesson_age value = age }
+            set_variable = { name = dhm091_lesson_chance value = scope:dhm_v091_mentor.dhm_v091_personality_chance_value }
+            set_variable = { name = dhm091_lesson_success value = 0 }
+            random = {
+                chance = var:dhm091_lesson_chance
+                add_trait = scope:dhm_v091_trait
+                if = {
+                    limit = { has_trait = scope:dhm_v091_trait }
+                    set_variable = { name = dhm091_lesson_success value = 1 }
+                }
+            }
+            if = {
+                limit = { var:dhm091_lesson_success = 1 }
+                add_opinion = { target = scope:dhm_v091_mentor modifier = admiration_opinion opinion = 10 }
+                scope:dhm_v091_mentor = { add_stress = { value = minor_stress_gain multiply = 0.5 } }
+                if = {
+                    limit = {
+                        NOT = { has_global_variable = dhm_setting_development_reports_disabled }
+                        scope:dhm_manager = { NOT = { has_character_flag = dhm091_lesson_notice_recent } }
+                    }
+                    scope:dhm_manager = {
+                        add_character_flag = { flag = dhm091_lesson_notice_recent years = 1 }
+                        send_interface_message = {
+                            type = event_childhood_good_text
+                            title = dhm091_lesson_success_title
+                            desc = dhm091_lesson_success_desc
+                            left_icon = scope:dhm_v091_pupil
+                            right_icon = scope:dhm_v091_mentor
+                        }
+                    }
+                }
+            }
+            else = {
+                # The native success calculation is retained; DHM's quieter
+                # outcome uses modest disappointment, not a permanent feud.
+                add_opinion = { target = scope:dhm_v091_mentor modifier = confused_opinion opinion = -5 }
+                scope:dhm_v091_mentor = { add_stress = { value = medium_stress_gain multiply = 0.5 } }
+            }
+        }
+    }
+    clear_saved_scope = dhm_v091_trait
+    clear_saved_scope = dhm_v091_mentor
+    clear_saved_scope = dhm_v091_pupil
+}

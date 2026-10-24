@@ -1,0 +1,192 @@
+﻿namespace = dhm_council
+
+# Annual household council. It never forces council appointments, factions,
+# alliances or marriages; it sets one-year priorities and reports bounded data.
+dhm_council.0001 = {
+	type = character_event
+	title = dhm_council.0001.t
+	desc = {
+		desc = dhm_council.0001.desc
+		triggered_desc = { trigger = { dhm_v040_report_snapshot_valid_trigger = yes } desc = dhm_council.0001.annual_report }
+		triggered_desc = { trigger = { var:dhm_report_extinction_risk > 0 } desc = dhm_council.0001.extinction }
+		first_valid = {
+			triggered_desc = { trigger = { has_character_flag = dhm_council_priority_succession } desc = dhm_council.priority.succession }
+			triggered_desc = { trigger = { has_character_flag = dhm_council_priority_alliance } desc = dhm_council.priority.alliance }
+			triggered_desc = { trigger = { has_character_flag = dhm_council_priority_education } desc = dhm_council.priority.education }
+			desc = dhm_council.priority.balanced
+		}
+	}
+	theme = stewardship
+	override_background = { reference = dhm_living_council }
+	right_portrait = scope:dhm_council_advisor
+	trigger = { is_ai = no is_alive = yes }
+	immediate = {
+		dhm_refresh_v030_dashboard_effect = yes
+		dhm_prepare_annual_living_report_effect = yes
+	}
+
+	option = {
+		name = dhm_council.0001.succession
+		remove_character_flag = dhm_council_priority_alliance
+		remove_character_flag = dhm_council_priority_education
+		add_character_flag = dhm_council_priority_succession
+		hidden_effect = {
+			remove_character_modifier = dhm_council_alliance_modifier
+			remove_character_modifier = dhm_council_education_modifier
+			remove_character_modifier = dhm_council_balanced_modifier
+		
+		}
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_council_succession_modifier YEARS = 1 RENEWAL_TT = dhm_council_succession_modifier_renewed_1_tt }
+		custom_tooltip = dhm_council.priority_persists_tt
+	}
+	option = {
+		name = dhm_council.0001.alliance
+		remove_character_flag = dhm_council_priority_succession
+		remove_character_flag = dhm_council_priority_education
+		add_character_flag = dhm_council_priority_alliance
+		hidden_effect = {
+			remove_character_modifier = dhm_council_succession_modifier
+			remove_character_modifier = dhm_council_education_modifier
+			remove_character_modifier = dhm_council_balanced_modifier
+		
+		}
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_council_alliance_modifier YEARS = 1 RENEWAL_TT = dhm_council_alliance_modifier_renewed_1_tt }
+		custom_tooltip = dhm_council.priority_persists_tt
+	}
+	option = {
+		name = dhm_council.0001.education
+		remove_character_flag = dhm_council_priority_succession
+		remove_character_flag = dhm_council_priority_alliance
+		add_character_flag = dhm_council_priority_education
+		hidden_effect = {
+			remove_character_modifier = dhm_council_succession_modifier
+			remove_character_modifier = dhm_council_alliance_modifier
+			remove_character_modifier = dhm_council_balanced_modifier
+		
+		}
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_council_education_modifier YEARS = 1 RENEWAL_TT = dhm_council_education_modifier_renewed_1_tt }
+		custom_tooltip = dhm_council.priority_persists_tt
+	}
+	option = {
+		name = dhm_council.0001.balanced
+		remove_character_flag = dhm_council_priority_succession
+		remove_character_flag = dhm_council_priority_alliance
+		remove_character_flag = dhm_council_priority_education
+		hidden_effect = {
+			remove_character_modifier = dhm_council_succession_modifier
+			remove_character_modifier = dhm_council_alliance_modifier
+			remove_character_modifier = dhm_council_education_modifier
+		
+		}
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_council_balanced_modifier YEARS = 1 RENEWAL_TT = dhm_council_balanced_modifier_renewed_1_tt }
+		custom_tooltip = dhm_council.priority_persists_tt
+	}
+	option = { name = dhm_council.0001.careers trigger_event = dhm_council.0010 }
+	option = {
+		name = dhm_council.0001.disable
+		set_global_variable = { name = dhm_setting_council_disabled value = yes }
+		dhm_v070_mark_custom_preset_effect = yes
+	}
+}
+
+# Career recommendations use court-only ordered iterators and do not assign jobs.
+dhm_council.0010 = {
+	type = character_event
+	title = dhm_council.0010.t
+	desc = {
+		desc = dhm_council.0010.desc
+		triggered_desc = { trigger = { has_variable = dhm_career_best_diplomat } desc = dhm_council.0010.diplomat }
+		triggered_desc = { trigger = { has_variable = dhm_career_best_commander } desc = dhm_council.0010.commander }
+		triggered_desc = { trigger = { has_variable = dhm_career_best_steward } desc = dhm_council.0010.steward }
+		triggered_desc = { trigger = { has_variable = dhm_career_best_spymaster } desc = dhm_council.0010.spymaster }
+		triggered_desc = { trigger = { has_variable = dhm_career_best_scholar } desc = dhm_council.0010.scholar }
+		triggered_desc = { trigger = { var:dhm_v080_report_career_total > 0 } desc = dhm_v080_personal_plan_report }
+		triggered_desc = {
+			trigger = {
+				OR = {
+					var:dhm_v080_report_child_active > 0
+					var:dhm_v080_report_child_achieved > 0
+					var:dhm_v080_report_child_redirected > 0
+					var:dhm_v080_report_child_missed > 0
+				}
+			}
+			desc = dhm_v080_child_plan_report
+		}
+	}
+	theme = stewardship
+	override_background = { reference = study }
+	trigger = { is_ai = no is_alive = yes }
+	immediate = { dhm_refresh_career_report_effect = yes }
+	option = { name = dhm_council.0010.manager trigger_event = dhm_manager.0091 }
+	option = { name = dhm_council.0010.close is_cancel_option = yes }
+}
+
+# Performance governor and notification controls.
+dhm_council.0020 = {
+	type = character_event
+	title = dhm_council.0020.t
+	desc = {
+		desc = dhm_council.0020.desc
+		first_valid = {
+			triggered_desc = { trigger = { has_global_variable = dhm_setting_performance_light } desc = dhm_council.performance.light }
+			triggered_desc = { trigger = { has_global_variable = dhm_setting_performance_deep } desc = dhm_council.performance.deep }
+			desc = dhm_council.performance.balanced
+		}
+		first_valid = {
+			triggered_desc = { trigger = { has_global_variable = dhm_setting_council_disabled } desc = dhm_council.council.off }
+			desc = dhm_council.council.on
+		}
+	}
+	theme = stewardship
+	override_background = { reference = study }
+
+	option = {
+		name = dhm_council.0020.light
+		remove_global_variable = dhm_setting_performance_deep
+		set_global_variable = { name = dhm_setting_performance_light value = yes }
+		dhm_v070_mark_custom_preset_effect = yes
+		trigger_event = dhm_council.0020
+	}
+	option = {
+		name = dhm_council.0020.balanced
+		remove_global_variable = dhm_setting_performance_light
+		remove_global_variable = dhm_setting_performance_deep
+		dhm_v070_mark_custom_preset_effect = yes
+		trigger_event = dhm_council.0020
+	}
+	option = {
+		name = dhm_council.0020.deep
+		remove_global_variable = dhm_setting_performance_light
+		set_global_variable = { name = dhm_setting_performance_deep value = yes }
+		dhm_v070_mark_custom_preset_effect = yes
+		trigger_event = dhm_council.0020
+	}
+	option = {
+		name = dhm_council.0020.council_on
+		trigger = { has_global_variable = dhm_setting_council_disabled }
+		remove_global_variable = dhm_setting_council_disabled
+		remove_character_flag = dhm_annual_council_cooldown
+		dhm_v070_mark_custom_preset_effect = yes
+		trigger_event = dhm_council.0020
+	}
+	option = {
+		name = dhm_council.0020.council_off
+		trigger = { NOT = { has_global_variable = dhm_setting_council_disabled } }
+		set_global_variable = { name = dhm_setting_council_disabled value = yes }
+		dhm_v070_mark_custom_preset_effect = yes
+		trigger_event = dhm_council.0020
+	}
+	option = {
+		name = dhm_council.0020.debug_on
+		trigger = { NOT = { has_global_variable = dhm_setting_debug } }
+		set_global_variable = { name = dhm_setting_debug value = yes }
+		trigger_event = dhm_council.0020
+	}
+	option = {
+		name = dhm_council.0020.debug_off
+		trigger = { has_global_variable = dhm_setting_debug }
+		remove_global_variable = dhm_setting_debug
+		trigger_event = dhm_council.0020
+	}
+	option = { name = dhm_council.0020.back trigger_event = dhm_manager.0092 is_cancel_option = yes }
+}

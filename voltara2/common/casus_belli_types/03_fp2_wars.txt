@@ -62,6 +62,8 @@ fp2_border_raid = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -475,6 +477,8 @@ fp2_expel_interloper = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -849,9 +853,9 @@ fp2_mediterranean_conquest_cb = {
 			house ?= { has_house_modifier = fp2_controls_the_mediterranean_house_modifier }
 		}
 
-		completely_controls = title:d_mallorca # Losing control means losing legitimacy
-		completely_controls = title:d_sardinia
-		completely_controls = title:d_sicily
+		always = no # Losing control means losing legitimacy
+		always = no
+		always = no
 		NOT = {
 			government_has_flag = government_is_landless_adventurer
 		}
@@ -884,6 +888,8 @@ fp2_mediterranean_conquest_cb = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }

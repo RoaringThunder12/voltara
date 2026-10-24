@@ -1,0 +1,86 @@
+﻿lam_st_reward_weight_value = {
+	value = 1
+	if = {
+		limit = {
+			var:lam_fac_tier ?= 1
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_merit
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			var:lam_cr_service_head ?= scope:lam_sg_lead
+			has_variable = lam_cr_service
+		}
+		add = {
+			value = var:lam_cr_service
+			min = 0
+			max = 6
+			divide = 3
+		}
+	}
+	if = {
+		limit = {
+			var:lam_st_reward_head ?= scope:lam_sg_lead
+			has_variable = lam_st_overlooked
+		}
+		add = {
+			value = var:lam_st_overlooked
+			max = 2
+			min = 0
+		}
+	}
+	max = 6
+}
+lam_st_award_fraction_value = {
+	value = 0.6
+	if = {
+		limit = {
+			OR = {
+				has_trait = just
+				has_trait = generous
+			}
+		}
+		value = 0.7
+	}
+	else_if = {
+		limit = {
+			OR = {
+				has_trait = greedy
+				AND = {
+					has_trait = ambitious
+					NOT = {
+						has_trait = generous
+					}
+				}
+			}
+		}
+		value = 0.2
+	}
+	if = {
+		limit = {
+			OR = {
+				var:lam_fac_cohesion < 45
+				any_in_list = {
+					variable = lam_fac_members
+					var:lam_bloc ?= prev
+					trigger_if = {
+						limit = {
+							has_variable = lam_cr_unrest
+						}
+						var:lam_cr_unrest >= 2
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		min = 0.6
+	}
+}

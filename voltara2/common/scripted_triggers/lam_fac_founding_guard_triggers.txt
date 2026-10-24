@@ -1,0 +1,27 @@
+﻿# Shared identity invariant. Also catches a self-reference between refreshes.
+lam_ff_not_head_trigger = {
+ NOT = { has_variable = lam_bloc_lead }
+ NOT = { var:lam_bloc ?= this }
+}
+# Current character is the initiator, saved scope is the chosen court.
+lam_ff_founder_current_trigger = {
+ is_alive = yes is_adult = yes is_imprisoned = no
+ lam_ff_not_head_trigger = yes
+ scope:lam_ff_lord ?= { is_alive = yes is_ruler = yes }
+ OR = { this = scope:lam_ff_lord liege ?= scope:lam_ff_lord }
+ lam_ff_can_found_in_trigger = { LORD = scope:lam_ff_lord }
+}
+lam_ff_self_current_trigger = {
+ lam_ff_founder_current_trigger = yes
+ NOT = { this = scope:lam_ff_lord }
+}
+lam_ff_candidate_current_trigger = {
+ lam_ff_founder_current_trigger = yes
+ save_temporary_scope_as = lam_ff_guard_founder
+ $WHO$ ?= {
+  is_alive = yes is_adult = yes is_imprisoned = no is_ruler = yes is_ai = yes
+  liege ?= scope:lam_ff_lord
+  NOT = { this = scope:lam_ff_guard_founder }
+  lam_ff_not_head_trigger = yes
+ }
+}

@@ -1,0 +1,21 @@
+﻿lam_pd_obstruct_possible_trigger = {
+	lam_cr_patronage_valid_trigger = yes
+	var:lam_cr_rival ?= {
+		is_alive = yes
+		has_variable = lam_pd_active
+		liege ?= prev.liege
+		OR = {
+			var:lam_pd_kind ?= flag:council
+			var:lam_pd_kind ?= flag:heir
+			var:lam_pd_kind ?= flag:law
+		}
+	}
+}
+lam_pd_obstruct_current_trigger = {
+	has_variable = lam_cr_obstruct
+	has_variable = lam_pd_obstruct_id
+	var:lam_cr_rival ?= {
+		lam_pd_proposal_current_trigger = yes
+		var:lam_pd_id ?= prev.var:lam_pd_obstruct_id
+	}
+}

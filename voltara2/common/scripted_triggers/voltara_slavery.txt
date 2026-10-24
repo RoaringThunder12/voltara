@@ -1,10 +1,11 @@
 ﻿voltara_historical_slavery_realm = {
  top_liege = { OR = {
-  has_title = title:k_voltara_40
+  has_title = title:e_voltara_alutor
   culture = { has_cultural_pillar = language_voltara_orc } culture = culture:voltara_culture_22 culture = culture:voltara_culture_43
  } }
 }
 voltara_slavery_is_legal = {
+ NOT = { vtf_protected = yes }
  is_landed = yes NOT = { voltara_is_ruins_placeholder = yes }
  top_liege = { has_realm_law = voltara_slavery_legal }
 }

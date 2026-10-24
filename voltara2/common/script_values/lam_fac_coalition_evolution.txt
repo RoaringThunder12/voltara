@@ -1,0 +1,9 @@
+﻿lam_cu_new_root_cooldown_value = {
+	value = lam_tune_pol_found_cooldown
+	if = {
+		limit = {
+			lam_ev_established_court_trigger = yes
+		}
+		min = 60
+	}
+}

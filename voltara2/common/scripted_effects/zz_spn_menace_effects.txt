@@ -225,10 +225,8 @@ spn_open_menace_trail_effect = {
 # the macro does the branching the script cannot.
 spn_menace_teach_kill_effect = {
 	# Nothing. A kill is not the lesson this pair is about. The guard keeps this a legal, non-empty effect.
-	if = {
-		limit = { always = no }
-		add_character_flag = spn_menace_teach_noop
-	}
+	if = { limit = { always = no } # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 }
 
 # WHAT THE OLD WOMAN TOLD YOU. Thomas: "whomever turned me into a werewolf didn't teach me much about it."

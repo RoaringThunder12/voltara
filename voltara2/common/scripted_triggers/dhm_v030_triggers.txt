@@ -1,0 +1,130 @@
+﻿# =============================================================================
+# Dynasty & Household Manager v0.3.0 — profiles, consent and lifecycle gates
+# =============================================================================
+
+# Current scope = managed dynasty member.
+dhm_subject_automation_enabled_trigger = {
+	NOR = {
+		has_character_flag = dhm_profile_manual
+		has_character_flag = dhm_profile_do_not_marry
+	}
+	OR = {
+		has_character_flag = dhm_profile_full_auto
+		has_character_flag = dhm_profile_ask
+		AND = {
+			NOR = {
+				has_character_flag = dhm_profile_full_auto
+				has_character_flag = dhm_profile_ask
+				has_character_flag = dhm_profile_manual
+				has_character_flag = dhm_profile_do_not_marry
+			}
+			NOT = { has_global_variable = dhm_setting_marriage_manual }
+		}
+	}
+}
+
+# Current scope = managed dynasty member.
+dhm_subject_uses_full_auto_trigger = {
+	OR = {
+		has_character_flag = dhm_profile_full_auto
+		AND = {
+			NOT = { has_character_flag = dhm_profile_ask }
+			has_global_variable = dhm_setting_marriage_full_auto
+		}
+	}
+}
+
+# Same as the live queue eligibility gate, but permits the short proposal-pending
+# flag so a queued player event does not invalidate itself before it opens.
+dhm_marriage_subject_event_valid_trigger = {
+	is_alive = yes
+	OR = { NOT = { has_variable = dhm_courtship_reserved_for } var:dhm_courtship_reserved_for ?= scope:dhm_marriage_candidate }
+	is_ai = yes
+	age >= 12
+	is_betrothed = no
+	is_imprisoned = no
+	is_hostage = no
+	NOT = { has_trait = incapable }
+	NOT = { has_been_promised_grand_wedding = yes }
+	is_in_the_same_court_as = scope:dhm_manager
+	bp2_valid_for_standard_interactions_trigger = yes
+	can_marry_trigger = yes
+	NOT = { has_character_flag = dhm_matchmaking_cooldown }
+	dhm_subject_automation_enabled_trigger = yes
+	OR = {
+		AND = { exists = matchmaker matchmaker = scope:dhm_manager }
+		is_child_of = scope:dhm_manager
+	}
+}
+
+dhm_courtier_marriage_subject_event_valid_trigger = {
+	is_alive = yes
+	OR = { NOT = { has_variable = dhm_courtship_reserved_for } var:dhm_courtship_reserved_for ?= scope:dhm_marriage_candidate }
+	is_ai = yes
+	is_adult = yes
+	is_ruler = no
+	is_courtier_of = scope:dhm_manager
+	NOT = { is_close_family_of = scope:dhm_manager }
+	NOR = {
+		AND = {
+			exists = dynasty
+			scope:dhm_manager = { exists = dynasty }
+			dynasty = scope:dhm_manager.dynasty
+		}
+	}
+	is_betrothed = no
+	is_imprisoned = no
+	is_hostage = no
+	NOT = { has_trait = incapable }
+	NOT = { has_been_promised_grand_wedding = yes }
+	bp2_valid_for_standard_interactions_trigger = yes
+	can_marry_trigger = yes
+	NOT = { has_character_flag = dhm_matchmaking_cooldown }
+	exists = matchmaker
+	matchmaker = scope:dhm_manager
+}
+
+# Current scope = candidate; subject + manager scopes required.
+dhm_profile_candidate_restrictions_trigger = {
+	trigger_if = {
+		limit = { scope:dhm_marriage_subject = { has_character_flag = dhm_strategy_same_faith } }
+		faith = scope:dhm_marriage_subject.faith
+	}
+}
+
+# Current scope = marriage subject; candidate scope required.
+dhm_subject_requires_consent_event_trigger = {
+	is_adult = yes
+	NOT = { has_character_flag = dhm_consent_resolved_cooldown }
+	dhm_subject_consent_score_value < -60
+}
+
+# Current scope = candidate; manager scope required.
+dhm_foreign_negotiation_required_trigger = {
+	exists = matchmaker
+	matchmaker != scope:dhm_manager
+	dhm_marriage_acceptance_score_value < 30
+	scope:dhm_marriage_subject = { NOT = { has_character_flag = dhm_negotiation_resolved_cooldown } }
+}
+
+# Current scope = candidate; marriage subject scope required.
+dhm_spousal_compatibility_good_trigger = {
+	exists = scope:dhm_marriage_subject
+	dhm_spousal_compatibility_value >= 60
+}
+
+dhm_spousal_compatibility_poor_trigger = {
+	exists = scope:dhm_marriage_subject
+	dhm_spousal_compatibility_value < 0
+}
+
+# A child plan exists when one of the mutually exclusive development flags is set.
+dhm_has_child_development_plan_trigger = {
+	OR = {
+		has_character_flag = dhm_child_plan_diplomacy
+		has_character_flag = dhm_child_plan_martial
+		has_character_flag = dhm_child_plan_stewardship
+		has_character_flag = dhm_child_plan_intrigue
+		has_character_flag = dhm_child_plan_learning
+	}
+}

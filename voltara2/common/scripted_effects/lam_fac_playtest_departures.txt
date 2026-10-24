@@ -1,0 +1,174 @@
+﻿lam_pt_depart_clear_effect = {
+	remove_variable = lam_pt_depart_owner
+	remove_variable = lam_pt_depart_to
+	remove_variable = lam_pt_depart_after
+	remove_variable = lam_pt_depart_queued
+}
+lam_pt_depart_hold_effect = {
+	scope:lam_bm_old = {
+		save_scope_as = lam_bbest
+	}
+	if = {
+		limit = {
+			scope:lam_bm_oldtier ?= 1
+		}
+		save_scope_value_as = {
+			name = lam_bbs
+			value = 60
+		}
+	}
+	else = {
+		save_scope_value_as = {
+			name = lam_bbs
+			value = 30
+		}
+	}
+}
+lam_pt_depart_prepare_effect = {
+	if = {
+		limit = {
+			NOT = {
+				lam_pt_depart_same_trigger = yes
+			}
+		}
+		lam_fac_waver_clear_effect = yes
+		remove_variable = lam_fac_want
+		set_variable = {
+			name = lam_pt_depart_owner
+			value = scope:lam_bm_old
+		}
+		if = {
+			limit = {
+				exists = scope:lam_bbest
+			}
+			set_variable = {
+				name = lam_pt_depart_to
+				value = scope:lam_bbest
+			}
+		}
+		set_variable = {
+			name = lam_pt_depart_after
+			value = {
+				value = lam_now_m
+				add = 6
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_pt_depart_queued
+			var:lam_pt_depart_queued > lam_now_m
+		}
+		lam_pt_depart_hold_effect = yes
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_pt_depart_after
+			var:lam_pt_depart_after > lam_now_m
+		}
+		lam_pt_depart_hold_effect = yes
+	}
+	else_if = {
+		limit = {
+			lam_pt_depart_important_trigger = yes
+			NOT = {
+				has_variable = lam_pt_depart_warned
+			}
+			scope:lam_bm_old = {
+				NOT = {
+					has_variable = lam_pt_depart_notice_cd
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:lam_bbest
+			}
+			set_variable = {
+				name = lam_fac_want
+				value = scope:lam_bbest
+			}
+		}
+		else = {
+			remove_variable = lam_fac_want
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_fac_waver_serial
+				}
+			}
+			set_variable = {
+				name = lam_fac_waver_serial
+				value = 0
+			}
+		}
+		change_variable = {
+			name = lam_fac_waver_serial
+			add = 1
+		}
+		set_variable = {
+			name = lam_fac_wavering
+			value = yes
+		}
+		set_variable = {
+			name = lam_fac_waver_owner
+			value = scope:lam_bm_old
+		}
+		if = {
+			limit = {
+				opinion = {
+					target = scope:lam_bm_old
+					value < 0
+				}
+			}
+			set_variable = {
+				name = lam_fac_waver_why
+				value = flag:head
+			}
+		}
+		else_if = {
+			limit = {
+				exists = scope:lam_bbest
+			}
+			set_variable = {
+				name = lam_fac_waver_why
+				value = flag:other
+			}
+		}
+		else = {
+			set_variable = {
+				name = lam_fac_waver_why
+				value = flag:tired
+			}
+		}
+		scope:lam_bm_old = {
+			add_to_variable_list = {
+				name = lam_fac_waverers
+				target = scope:lam_bm
+			}
+		}
+		lam_pt_depart_hold_effect = yes
+	}
+	else = {
+		scope:lam_bm_old = {
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_pt_depart_count
+					}
+				}
+				set_variable = {
+					name = lam_pt_depart_count
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_pt_depart_count
+				add = 1
+			}
+		}
+		lam_fac_waver_clear_effect = yes
+		remove_variable = lam_fac_want
+	}
+}

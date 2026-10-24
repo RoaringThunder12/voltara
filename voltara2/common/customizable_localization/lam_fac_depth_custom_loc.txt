@@ -1,0 +1,123 @@
+﻿LamPdRequest = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_pd_kind ?= flag:land
+		}
+		localization_key = lam_lf_kind_land
+	}
+	text = {
+		trigger = {
+			var:lam_pd_kind ?= flag:law
+		}
+		localization_key = lam_pd_kind_law
+	}
+	text = {
+		trigger = {
+			var:lam_pd_kind ?= flag:heir
+		}
+		localization_key = lam_pd_kind_heir
+	}
+	text = {
+		trigger = {
+			var:lam_pd_kind ?= flag:tolerance
+		}
+		localization_key = lam_pd_kind_tolerance
+	}
+	text = {
+		trigger = {
+			var:lam_pd_kind ?= flag:gold
+		}
+		localization_key = lam_pd_kind_gold
+	}
+	text = {
+		trigger = {
+			var:lam_pd_kind ?= flag:amnesty
+		}
+		localization_key = lam_pd_kind_amnesty
+	}
+	text = {
+		trigger = {
+			trigger_if = {
+				limit = {
+					is_alive = yes
+				}
+				var:lam_pd_kind ?= flag:council
+				exists = var:lam_lf_beneficiary
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		localization_key = lam_pd_kind_council
+	}
+	text = {
+		trigger = {
+			var:lam_pd_kind ?= flag:council
+		}
+		localization_key = lam_ss_office_unspecified
+	}
+	text = {
+		trigger = {
+			var:lam_pd_kind ?= flag:taxes
+		}
+		localization_key = lam_pd_kind_taxes
+	}
+	text = {
+		trigger = {
+			var:lam_pd_kind ?= flag:release
+		}
+		localization_key = lam_pd_kind_release
+	}
+	text = {
+		trigger = {
+			var:lam_pd_kind ?= flag:faith
+		}
+		localization_key = lam_pd_kind_faith
+	}
+	text = {
+		trigger = {
+			var:lam_pd_kind ?= flag:no_revoke
+		}
+		localization_key = lam_pd_kind_no_revoke
+	}
+	text = {
+		trigger = {
+			var:lam_pd_kind ?= flag:campaign
+		}
+		localization_key = lam_pd_kind_campaign
+	}
+	text = {
+		localization_key = lam_pd_kind_none
+	}
+}
+LamPdResult = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_pd_last_result ?= flag:promised
+		}
+		localization_key = lam_pd_promised
+	}
+	text = {
+		trigger = {
+			var:lam_pd_last_result ?= flag:broken
+		}
+		localization_key = lam_pd_broken
+	}
+	text = {
+		trigger = {
+			var:lam_pd_last_result ?= flag:kept
+		}
+		localization_key = lam_pd_kept
+	}
+	text = {
+		trigger = {
+			var:lam_pd_last_result ?= flag:refused
+		}
+		localization_key = lam_pd_refused
+	}
+	text = {
+		localization_key = lam_pd_void
+	}
+}

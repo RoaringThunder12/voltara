@@ -1,0 +1,43 @@
+﻿# Living Factions - review fixes (tools/claude_fixes/fixes_1019.py)
+on_war_started = {
+	on_actions = {
+		lam_fix_on_war_started
+	}
+}
+# A lord who opens a war on someone outside the realm keeps the campaign promises (without a promised title) he made.
+lam_fix_on_war_started = {
+	trigger = {
+		exists = scope:war
+	}
+	effect = {
+		scope:war.primary_attacker ?= {
+			save_scope_as = lam_fx_attacker
+		}
+		if = {
+			limit = {
+				exists = scope:lam_fx_attacker
+				scope:war.primary_defender ?= {
+					NOT = {
+						top_liege = scope:lam_fx_attacker.top_liege
+					}
+				}
+			}
+			scope:lam_fx_attacker = {
+				every_in_list = {
+					variable = lam_bloc_leads
+					limit = {
+						is_alive = yes
+						var:lam_fac_promise ?= flag:campaign
+						NOT = {
+							has_variable = lam_pd_promised_title
+						}
+					}
+					set_variable = {
+						name = lam_fac_campaign_begun
+						value = yes
+					}
+				}
+			}
+		}
+	}
+}

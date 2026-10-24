@@ -19,15 +19,18 @@ vt_slave_escape_success = {
  voltara_free_character = yes
  if = { limit = { is_imprisoned = yes } release_from_prison = yes }
  # Prefer refuge in a nearby abolitionist court outside the owner's realm.
+ random_ruler = { limit = { vtf_protected = yes is_alive = yes has_character_modifier = vtf_sanctuary NOT = { this = scope:vt_escape_owner } in_diplomatic_range = scope:vt_escape_owner } save_scope_as = vt_escape_refuge }
+ if = { limit = { NOT = { exists = scope:vt_escape_refuge } }
  random_ruler = {
   limit = {
    is_landed = yes is_alive = yes
    NOT = { has_trait = voltara_slave }
-   top_liege = { has_realm_law = voltara_slavery_banned }
-   NOT = { top_liege = scope:vt_escape_owner.top_liege }
+   NOT = { voltara_slavery_is_legal = yes }
+   NOT = { this = scope:vt_escape_owner }
    in_diplomatic_range = scope:vt_escape_owner
   }
   save_scope_as = vt_escape_refuge
+ }
  }
  if = { limit = { exists = scope:vt_escape_refuge } scope:vt_escape_refuge = { add_courtier = scope:vt_fugitive } }
  else = { move_to_pool = yes }

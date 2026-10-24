@@ -1,0 +1,125 @@
+﻿# Dynasty & Household Manager v0.8.0 — truthful proposal explanations.
+# These triggers describe factors already used by the matchmaking score. They do
+# not alter legality, candidate order, consent, diplomatic range, or execution.
+
+dhm_v080_match_reason_bond_trigger = {
+	exists = scope:dhm_marriage_subject
+	exists = scope:dhm_marriage_candidate
+	# The ranking reads the candidate's relationship and opinion toward the
+	# subject, so the explanation must use that same direction and threshold.
+	scope:dhm_marriage_candidate = {
+		OR = {
+			has_relation_soulmate = scope:dhm_marriage_subject
+			has_relation_lover = scope:dhm_marriage_subject
+			has_relation_best_friend = scope:dhm_marriage_subject
+			has_relation_friend = scope:dhm_marriage_subject
+			opinion = { target = scope:dhm_marriage_subject value >= 50 }
+		}
+	}
+}
+
+dhm_v080_match_reason_alliance_trigger = {
+	scope:dhm_marriage_subject = { has_character_flag = dhm_strategy_alliance }
+	scope:dhm_marriage_candidate = {
+		OR = {
+			is_ruler = yes
+			any_close_family_member = { is_ruler = yes }
+			prestige_level >= 4
+		}
+	}
+}
+
+dhm_v080_match_reason_claim_trigger = {
+	scope:dhm_marriage_subject = { has_character_flag = dhm_strategy_claims }
+	scope:dhm_marriage_candidate = { is_claimant = yes }
+}
+
+dhm_v080_match_reason_bloodline_trigger = {
+	scope:dhm_marriage_subject = { has_character_flag = dhm_strategy_bloodline }
+	scope:dhm_marriage_candidate = {
+		OR = {
+			has_trait = intellect_good_3
+			has_trait = intellect_good_2
+			has_trait = intellect_good_1
+			has_trait = physique_good_3
+			has_trait = physique_good_2
+			has_trait = beauty_good_3
+			has_trait = beauty_good_2
+			has_trait = fecund
+		}
+	}
+}
+
+dhm_v080_match_reason_same_culture_trigger = {
+	scope:dhm_marriage_subject = { has_character_flag = dhm_strategy_same_culture }
+	scope:dhm_marriage_candidate = { culture = scope:dhm_marriage_subject.culture }
+}
+
+dhm_v080_match_reason_compatibility_trigger = {
+	scope:dhm_marriage_subject = { has_character_flag = dhm_strategy_compatibility }
+	scope:dhm_marriage_candidate = {
+		OR = {
+			faith = scope:dhm_marriage_subject.faith
+			culture = scope:dhm_marriage_subject.culture
+			has_relation_friend = scope:dhm_marriage_subject
+			has_relation_lover = scope:dhm_marriage_subject
+		}
+	}
+}
+
+dhm_v080_match_reason_dynasty_trigger = {
+	scope:dhm_marriage_subject = { has_character_flag = dhm_strategy_dynasty }
+	scope:dhm_marriage_candidate = {
+		exists = dynasty
+		can_have_children_with = { CHARACTER = scope:dhm_marriage_subject }
+	}
+}
+
+dhm_v080_match_shared_customs_trigger = {
+	scope:dhm_marriage_candidate = {
+		faith = scope:dhm_marriage_subject.faith
+		culture = scope:dhm_marriage_subject.culture
+	}
+}
+
+dhm_v080_match_warning_personal_trigger = {
+	OR = {
+		scope:dhm_marriage_candidate = {
+			OR = {
+				has_relation_rival = scope:dhm_marriage_subject
+				has_relation_nemesis = scope:dhm_marriage_subject
+				opinion = { target = scope:dhm_marriage_subject value <= -25 }
+			}
+		}
+		scope:dhm_marriage_subject = {
+			OR = {
+				has_relation_rival = scope:dhm_marriage_candidate
+				has_relation_nemesis = scope:dhm_marriage_candidate
+				opinion = { target = scope:dhm_marriage_candidate value <= -25 }
+			}
+		}
+	}
+}
+
+dhm_v080_match_warning_faith_trigger = {
+	scope:dhm_marriage_candidate = { NOT = { faith = scope:dhm_marriage_subject.faith } }
+}
+
+dhm_v080_match_warning_culture_trigger = {
+	scope:dhm_marriage_candidate = { NOT = { culture = scope:dhm_marriage_subject.culture } }
+}
+
+dhm_v080_officer_candidate_weak_trigger = {
+	exists = scope:dhm_office_candidate
+	OR = {
+		AND = { dhm_v074_appoint_steward_trigger = yes scope:dhm_office_candidate = { stewardship < 10 } }
+		AND = { dhm_v074_appoint_matchmaker_trigger = yes scope:dhm_office_candidate = { diplomacy < 10 } }
+		AND = { dhm_v074_appoint_tutor_trigger = yes scope:dhm_office_candidate = { learning < 10 } }
+		AND = { dhm_v074_appoint_chronicler_trigger = yes scope:dhm_office_candidate = { learning < 10 } }
+	}
+}
+
+dhm_v080_officer_candidate_rival_trigger = {
+	exists = scope:dhm_office_candidate
+	scope:dhm_office_candidate = { has_relation_rival = root }
+}

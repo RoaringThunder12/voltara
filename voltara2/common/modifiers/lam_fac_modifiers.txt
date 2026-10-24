@@ -1,0 +1,107 @@
+﻿# Living Factions (split from Love & Marriage).
+# A faction rose against the crown but had no lawful banner to rise under: they withhold what they owe.
+# Three weights, by the defying faction's share of the vassals' strength (lam_fac_defiance_refresh_effect, recomputed each pulse).
+lam_fac_defiance_minor_modifier = {
+	icon = byzantine_crown_negative
+	vassal_levy_contribution_mult = -0.05
+	vassal_tax_contribution_mult = -0.05
+}
+lam_fac_defiance_mid_modifier = {
+	icon = byzantine_crown_negative
+	vassal_levy_contribution_mult = -0.12
+	vassal_tax_contribution_mult = -0.12
+	vassal_opinion = -2
+}
+lam_fac_defiance_modifier = {
+	icon = byzantine_crown_negative
+	vassal_levy_contribution_mult = -0.25
+	vassal_tax_contribution_mult = -0.25
+	vassal_opinion = -5
+}
+# Belonging to a banned faction: under watch, passed over, whispered about.
+lam_fac_outlaw_modifier = {
+	icon = byzantine_crown_negative
+	monthly_prestige = -0.5
+	stress_gain_mult = 0.1
+}
+# The head of a long-standing faction carries its name.
+lam_fac_old_modifier = {
+	icon = prestige_positive
+	monthly_prestige = 0.25
+}
+lam_fac_venerable_modifier = {
+	icon = prestige_positive
+	monthly_prestige = 0.5
+	diplomacy = 1
+}
+# A crown on strings: the realm answers to someone else.
+lam_fac_puppet_modifier = {
+	icon = byzantine_crown_negative
+	monthly_prestige = -1
+	vassal_opinion = -10
+	stress_gain_mult = 0.15
+}
+# The power behind the throne.
+lam_fac_puppeteer_modifier = {
+	icon = prestige_positive
+	monthly_prestige = 1
+	intrigue = 2
+	diplomacy = 1
+}
+# A crown that has banned the factions pays for it: informers, and a court that will not meet its eye.
+lam_fac_ban_upkeep_modifier = {
+	icon = byzantine_crown_negative
+	monthly_prestige = -0.5
+	domain_tax_mult = -0.05
+}
+# An underground faction's head: safe houses, couriers, people who owe them.
+lam_fac_ug_network_modifier = {
+	icon = intrigue_positive
+	owned_hostile_scheme_success_chance_add = 10
+}
+# The court party's head, long in the lord's service (step_court_party).
+lam_cp_trusted_modifier = {
+	icon = prestige_positive
+	monthly_prestige = 0.3
+	liege_opinion = 10
+}
+lam_cp_paragon_modifier = {
+	icon = prestige_positive
+	monthly_prestige = 0.8
+	general_opinion = 5
+	liege_opinion = 15
+	diplomacy = 1
+}
+lam_cp_legend_modifier = {
+	icon = prestige_positive
+	monthly_prestige = 1.2
+	general_opinion = 10
+	liege_opinion = 20
+	diplomacy = 2
+	stewardship = 1
+}
+# A house of loyal ministers (three generations heading the court party; step_loyal_house). On every member.
+lam_cp_loyal_house_modifier = {
+	icon = prestige_positive
+	monthly_prestige = 0.5
+	general_opinion = 5
+	liege_opinion = 15
+	diplomacy = 1
+	stewardship = 1
+}
+# The power behind the throne, under a government that runs on influence: the court comes to them (step_shadow_influence).
+lam_sh_power_modifier = {
+	icon = prestige_positive
+	monthly_influence = 20
+	monthly_influence_mult = 1
+	# The court's politics bend to them: political schemes (and their own) far easier, rivals' far harder.
+	owned_political_scheme_success_chance_add = 25
+	owned_political_scheme_success_chance_growth_add = 5
+	owned_political_scheme_success_chance_max_add = 15
+	max_political_schemes_add = 1
+	political_scheme_phase_duration_add = -30
+	enemy_political_scheme_success_chance_add = -25
+	owned_hostile_scheme_success_chance_add = 10
+	owned_personal_scheme_success_chance_add = 10
+	owned_scheme_secrecy_add = 15
+}

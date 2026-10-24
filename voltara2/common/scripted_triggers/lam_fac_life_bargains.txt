@@ -1,0 +1,171 @@
+﻿lam_lf_exchange_pair_trigger = {
+	$A$ = {
+		is_alive = yes
+		is_adult = yes
+		is_imprisoned = no
+		has_variable = lam_bloc_lead
+		var:lam_bloc ?= this
+		exists = liege
+		NOT = {
+			has_variable = lam_pd_pact_partner
+		}
+		NOT = {
+			has_variable = lam_fac_disband
+		}
+		NOT = {
+			has_variable = lam_lf_exchange_cd
+		}
+		NOT = {
+			has_variable = lam_lf_pledged_member
+		}
+		has_variable = lam_fac_heir
+		save_temporary_scope_as = lam_lf_sponsor
+		liege = {
+			lam_nc_heir_trigger = {
+				CANDIDATE = scope:lam_lf_sponsor.var:lam_fac_heir
+			}
+		}
+	}
+	$B$ = {
+		is_alive = yes
+		is_adult = yes
+		is_imprisoned = no
+		has_variable = lam_bloc_lead
+		var:lam_bloc ?= this
+		liege ?= $A$.liege
+		NOT = {
+			this = $A$
+		}
+		NOT = {
+			has_variable = lam_pd_pact_partner
+		}
+		NOT = {
+			has_variable = lam_fac_disband
+		}
+		NOT = {
+			has_variable = lam_lf_exchange_cd
+		}
+		NOT = {
+			is_councillor_of = liege
+		}
+		lam_st_office_available_trigger = yes
+		NOT = {
+			has_relation_rival = $A$
+		}
+		opinion = {
+			target = $A$
+			value >= 0
+		}
+		OR = {
+			NOT = {
+				has_variable = lam_fac_heir
+			}
+			var:lam_fac_heir ?= $A$.var:lam_fac_heir
+		}
+	}
+	$A$ = {
+		opinion = {
+			target = $B$
+			value >= 0
+		}
+		NOT = {
+			has_relation_rival = $B$
+		}
+	}
+}
+lam_lf_exchange_current_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+			exists = liege
+		}
+		trigger_if = {
+			limit = {
+				has_variable = lam_bloc_lead
+				var:lam_bloc ?= this
+				NOT = {
+					has_variable = lam_fac_disband
+				}
+				var:lam_pd_pact_kind ?= flag:exchange
+				has_variable = lam_fac_rec
+				has_variable = lam_lf_exchange_until
+				exists = var:lam_lf_exchange_heir
+				exists = var:lam_lf_exchange_person
+				exists = var:lam_pd_pact_partner
+			}
+			trigger_if = {
+				limit = {
+					var:lam_lf_exchange_heir = {
+						is_alive = yes
+					}
+					var:lam_lf_exchange_person = {
+						is_alive = yes
+					}
+					var:lam_pd_pact_partner = {
+						is_alive = yes
+					}
+				}
+				var:lam_lf_exchange_lord ?= liege
+				var:lam_lf_exchange_record ?= var:lam_fac_rec
+				var:lam_lf_exchange_until > lam_now_m
+				var:lam_lf_exchange_person = {
+					is_adult = yes
+					is_imprisoned = no
+					liege ?= prev.liege
+					has_variable = lam_bloc_lead
+					var:lam_bloc ?= this
+				}
+				var:lam_pd_pact_partner = {
+					is_imprisoned = no
+					has_variable = lam_bloc_lead
+					liege ?= prev.liege
+					NOT = {
+						has_variable = lam_fac_disband
+					}
+					var:lam_pd_pact_partner ?= prev
+					var:lam_pd_pact_kind ?= flag:exchange
+					AND = {
+						trigger_if = {
+							limit = {
+								has_variable = lam_fac_rec
+							}
+							var:lam_lf_exchange_record ?= var:lam_fac_rec
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					var:lam_lf_exchange_lord ?= liege
+					var:lam_lf_exchange_heir ?= prev.var:lam_lf_exchange_heir
+					var:lam_lf_exchange_person ?= prev.var:lam_lf_exchange_person
+				}
+				trigger_if = {
+					limit = {
+						var:lam_lf_exchange_role ?= flag:sponsor
+					}
+					var:lam_fac_heir ?= var:lam_lf_exchange_heir
+				}
+				trigger_else = {
+					var:lam_pd_pact_partner.var:lam_fac_heir ?= var:lam_lf_exchange_heir
+				}
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_lf_exchange_guard_trigger = {
+	trigger_if = {
+		limit = {
+			var:lam_pd_pact_kind ?= flag:exchange
+		}
+		lam_lf_exchange_current_trigger = yes
+	}
+}

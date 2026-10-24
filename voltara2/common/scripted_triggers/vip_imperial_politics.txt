@@ -1,0 +1,9 @@
+﻿vip_court = { has_title = title:h_voltara_severos }
+vip_actor = {
+ is_alive = yes
+ OR = { voltara_in_hegemony = yes vic_principal = yes has_character_flag = vic_claimant primary_title ?= { var:voltara_mw_home ?= title:h_voltara_severos } }
+}
+vip_public_lord = {
+ vip_actor = yes is_landed = yes is_adult = yes
+ NOT = { has_title = title:k_voltara_22 }
+}

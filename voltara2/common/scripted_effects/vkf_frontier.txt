@@ -39,15 +39,7 @@ vkf_count_support = {
 save_scope_as = vkf_host set_variable = { name = vkf_support value = 0 }
  every_independent_ruler = { limit = { vkf_chief = yes has_variable = vkf_patron var:vkf_patron ?= scope:vkf_host } scope:vkf_host = { change_variable = { name = vkf_support add = 1 } } }
 }
-vkf_form_mandate = {
-vkf_count_support = yes
- if = { limit = { vkf_chief = yes has_character_flag = vkf_council_concluded var:vkf_support >= 2 prestige >= 500 gold >= 100 NOT = { exists = title:e_voltara_sixth_southron_invasion.holder } }
- save_scope_as = vkf_founder remove_short_term_gold = 100 add_prestige = -500
- create_title_and_vassal_change = { type = created save_scope_as = vkf_creation add_claim_on_loss = no }
- title:e_voltara_sixth_southron_invasion = { change_title_holder = { holder = scope:vkf_founder change = scope:vkf_creation } }
- resolve_title_and_vassal_change = scope:vkf_creation set_primary_title_to = title:e_voltara_sixth_southron_invasion
- add_character_flag = vkf_recognized_leader remove_character_flag = vkf_council_concluded trigger_event = { id = vkf.32 days = 1 } }
-}
+vkf_form_mandate = { vkfu_authorize = yes }
 vkf_submit = {
 if = { limit = { vkf_chief = yes has_variable = vkf_patron var:vkf_oath >= 2 var:vkf_patron = { vkf_available = yes has_title = title:e_voltara_sixth_southron_invasion } }
  save_scope_as = vkf_sworn_chief
@@ -80,6 +72,8 @@ vkf_initialize = yes
 
 }
 vkf_monthly = {
+ vkfu_monthly = yes
+ every_player = { limit = { vkf_regional_actor = yes NOT = { has_character_flag = vkf_introduced } } trigger_event = { id = vkf_intro.1 days = 2 } }
 vkf_initialize = yes
  if = { limit = { global_var:vkf_hostility > 0 } vkf_hostility_change = { VALUE = -1 } }
  set_global_variable = { name = vkf_unity value = 0 }
@@ -91,7 +85,7 @@ vkf_initialize = yes
  if = { limit = { global_var:vkf_hostility >= 35 } set_global_variable = { name = vkf_phase value = 2 } }
  if = { limit = { global_var:vkf_unity >= 30 } set_global_variable = { name = vkf_phase value = 3 } }
  if = { limit = { exists = title:e_voltara_sixth_southron_invasion.holder } set_global_variable = { name = vkf_phase value = 4 } }
- if = { limit = { title:e_voltara_sixth_southron_invasion.holder ?= { vkf_war_ready = yes } global_var:vkf_hostility >= 50 } set_global_variable = { name = vkf_phase value = 5 } }
+ if = { limit = { exists = title:e_voltara_sixth_southron_invasion.holder title:e_voltara_sixth_southron_invasion.holder = { vkf_war_ready = yes } global_var:vkf_hostility >= 50 } set_global_variable = { name = vkf_phase value = 5 } }
  if = { limit = { exists = global_var:vkf_war } set_global_variable = { name = vkf_phase value = 6 } }
  set_global_variable = { name = vkf_hostility_bar value = { value = global_var:vkf_hostility divide = 100 } }
  set_global_variable = { name = vkf_unity_bar value = { value = global_var:vkf_unity divide = 100 } }
@@ -119,6 +113,7 @@ title:e_voltara_sixth_southron_invasion.holder ?= { add_character_flag = vkf_rec
 }
 vkf_council_oath = {
 if = { limit = { vkf_delegate_pending = yes }
+ set_variable = { name = vkfu_endorsed_host value = var:vkf_council_host days = 180 }
  set_variable = { name = vkf_patron value = var:vkf_council_host days = 1825 }
  set_variable = { name = vkf_oath value = $TYPE$ days = 1825 }
  add_character_flag = { flag = vkf_council_pledged days = 1095 }
@@ -172,7 +167,7 @@ title:e_voltara_sixth_southron_invasion.holder ?= {
  add_character_flag = { flag = vkf_ai_diplomacy days = 730 }
  if = { limit = { global_var:vkf_hostility < 30 exists = title:k_voltara_22.holder is_at_war = no NOT = { has_global_variable = vkf_treaty } }
  save_scope_as = vkf_ai_peacemaker title:k_voltara_22.holder = { if = { limit = { is_at_war = no NOT = { has_variable = vkf_treaty_offer } } set_variable = { name = vkf_treaty_offer value = scope:vkf_ai_peacemaker days = 60 } trigger_event = { id = vkf.206 days = 3 } } } }
- else_if = { limit = { global_var:vkf_hostility >= 50 character:19060042 = { vkf_available = yes has_character_flag = vic_thorne_left_empire NOT = { has_character_flag = vkf_thorne_answered } } }
+ else_if = { limit = { global_var:vkf_hostility >= 50 character:19060042 = { vkf_available = yes OR = { has_character_flag = vic_thorne_left_empire AND = { has_global_variable = vic_thorne_victory_done rite = rite:voltara_unbound_weave } } NOT = { has_character_flag = vkf_thorne_answered } } }
  save_scope_as = vkf_ai_ally character:19060042 = { set_variable = { name = vkf_thorne_offer value = scope:vkf_ai_ally days = 60 } trigger_event = { id = vkf.211 days = 3 } } }
  }
  }

@@ -1,0 +1,6 @@
+﻿vtf_region = { is_landed = yes NOT = { voltara_is_ruins_placeholder = yes } OR = { has_title = title:e_voltara_thornfall capital_county = { de_jure_liege.de_jure_liege.de_jure_liege = title:e_voltara_thornfall } } }
+vtf_protected = { is_landed = yes OR = { vtf_region = yes any_liege_or_above = { vtf_region = yes } } }
+vtf_county = { tier = tier_county de_jure_liege.de_jure_liege.de_jure_liege = title:e_voltara_thornfall NOT = { has_variable = voltara_ruin_state } }
+vtf_actor = { vtf_region = yes is_adult = yes is_imprisoned = no }
+vtf_cassian = { character:19060001 = { is_alive = yes is_landed = yes is_imprisoned = no has_title = title:h_voltara_severos } NOT = { is_at_war_with = character:19060001 } }
+vtf_petition_target = { is_landed = yes is_alive = yes voltara_slavery_is_legal = yes in_diplomatic_range = scope:vtf_petitioner NOT = { this = scope:vtf_petitioner } any_courtier = { has_trait = voltara_slave is_imprisoned = no var:voltara_slave_owner ?= prev NOT = { has_character_flag = voltara_slave_sale_pending } } }

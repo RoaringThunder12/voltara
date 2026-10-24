@@ -1,0 +1,85 @@
+﻿lam_ux_contact_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_ai = yes
+	is_imprisoned = no
+	var:lam_bloc ?= scope:lam_ux_head
+	liege ?= scope:lam_ux_observer
+	NOT = {
+		this = scope:lam_ux_head
+	}
+	OR = {
+		var:lam_fac_tier ?= 1
+		var:lam_fac_tier ?= 2
+	}
+	opinion = {
+		target = scope:lam_ux_observer
+		value >= 30
+	}
+	opinion = {
+		target = scope:lam_ux_head
+		value <= 0
+	}
+	OR = {
+		this ?= scope:lam_ux_spy
+		has_relation_friend = scope:lam_ux_observer
+		has_relation_best_friend = scope:lam_ux_observer
+		AND = {
+			exists = scope:lam_ux_spy
+			OR = {
+				has_relation_friend = scope:lam_ux_spy
+				has_relation_best_friend = scope:lam_ux_spy
+			}
+		}
+	}
+}
+lam_ux_report_visible_trigger = {
+	exists = scope:second
+	is_alive = yes
+	has_variable = lam_bloc_lead
+	NOT = {
+		has_variable = lam_fac_disband
+	}
+	var:lam_ux_report_observer ?= scope:second
+	liege ?= scope:second
+	has_variable = lam_ux_report_until
+	var:lam_ux_report_until > lam_now_m
+	exists = var:lam_ux_report_source
+	has_variable = lam_ux_report_kind
+	has_variable = lam_ux_report_year
+	has_variable = lam_ux_report_month
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_fac_rec
+			}
+			NOT = {
+				has_variable = lam_ux_report_record
+			}
+		}
+		AND = {
+			has_variable = lam_fac_rec
+			has_variable = lam_ux_report_record
+			var:lam_fac_rec = var:lam_ux_report_record
+		}
+	}
+}
+lam_ux_insider_view_trigger = {
+	exists = scope:second
+	OR = {
+		this = scope:second
+		AND = {
+			scope:second = {
+				is_alive = yes
+				is_adult = yes
+				is_imprisoned = no
+				var:lam_bloc ?= prev
+				liege ?= prev.liege
+				OR = {
+					var:lam_fac_tier ?= 1
+					var:lam_fac_tier ?= 2
+				}
+			}
+		}
+	}
+}

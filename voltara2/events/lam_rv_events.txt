@@ -1,0 +1,37 @@
+﻿namespace = lam_rv
+
+# Living Factions - review fixes (tools/claude_fixes/review_1020.py)
+# The coalition a player head gathered is ready: send the ultimatum now, or wait (a decision sends it later).
+lam_rv.0001 = {
+	type = character_event
+	title = lam_rv.0001.t
+	desc = lam_rv.0001.desc
+	theme = war
+	left_portrait = {
+		character = root
+		animation = war_attacker
+	}
+	right_portrait = {
+		character = scope:lam_rv_lord
+		animation = worry
+	}
+	trigger = {
+		lam_rv_can_send_trigger = yes
+	}
+	immediate = {
+		liege = {
+			save_scope_as = lam_rv_lord
+		}
+	}
+	option = {
+		name = lam_rv.0001.send
+		custom_tooltip = lam_rv_send_tt
+		hidden_effect = {
+			lam_rv_send_effect = yes
+		}
+	}
+	option = {
+		name = lam_rv.0001.wait
+		custom_tooltip = lam_rv.0001.wait_tt
+	}
+}

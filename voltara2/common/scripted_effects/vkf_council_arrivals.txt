@@ -1,0 +1,32 @@
+﻿# Called in the host's scope with scope:activity supplied by activity callbacks.
+vkf_close_council_arrivals = {
+ scope:activity = {
+  set_variable = { name = vkf_arrivals_closed value = yes }
+  every_attending_character = {
+   state = travel
+   limit = { NOT = { this = scope:host } has_activity_state = travel }
+   add_to_temporary_list = vkf_late_council_guests
+  }
+ }
+ every_in_list = {
+  list = vkf_late_council_guests
+  remove_from_activity = scope:activity
+  return_home = yes
+ }
+}
+
+# Only the empty opening phase may be bypassed. Never skip council choices.
+vkf_release_summons_gate = {
+ if = {
+  limit = {
+   this = scope:host has_activity_state = passive
+   scope:activity = {
+    has_variable = vkf_arrivals_closed
+    has_current_phase = vkf_council_phase_1
+    is_current_phase_active = no
+    NOT = { any_attending_character = { state = travel } }
+   }
+  }
+  scope:activity = { skip_activity_phase = yes }
+ }
+}

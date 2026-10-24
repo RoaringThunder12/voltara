@@ -1,0 +1,234 @@
+﻿namespace = stewardship_domain
+
+##################################
+# Culture Clash
+# 1073
+# by Sean Hughes
+##################################
+
+#One of your other-cultured counties longs to be ruled by a same-county lord.
+stewardship_domain.1073 = {
+	type = character_event
+	title = stewardship_domain.1073.t
+	desc = stewardship_domain.1073.desc
+	theme = stewardship_domain_focus
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:target_ruler
+		animation = personality_honorable
+	}
+
+	# kCAFG override : low priority, it's okay if this event is replaced
+	id_override_priority = 1
+
+	trigger = {
+		NOT = { has_character_flag = had_event_stewardship_domain_1073 }
+		#Must hold a county...
+		any_held_title = {
+			title_tier = county
+			is_landless_type_title = no
+			is_noble_family_title = no
+			#Which has a culture other than your own...
+			culture = {
+				this != root.culture
+				save_temporary_scope_as = border_province_culture
+			}
+			#And is the same culture as one of the rulers who neighbors that county.
+			any_neighboring_county = {
+				holder ?= {
+					this != root
+					culture = scope:border_province_culture
+				}
+			}
+		}
+	}
+
+	weight_multiplier = {
+		base = 1
+		upweight_for_focus_modifier = { FOCUS = stewardship_domain_focus }
+	}
+
+	immediate = {
+		add_character_flag = {
+			flag = had_event_stewardship_domain_1073
+			years = 5
+		}
+		add_character_flag = {
+			flag = had_recent_lifestyle_ongoing_event
+			years = ongoing_lifestyle_event_delay
+		}
+		random_held_title = {
+			#Find and save a county which meets the trigger requirements.
+			title_tier = county
+			limit = {
+				is_landless_type_title = no
+				is_noble_family_title = no
+				culture = {
+					this != root.culture
+					save_temporary_scope_as = border_province_culture
+				}
+				any_neighboring_county = {
+					holder ?= {
+						this != root
+						culture = scope:border_province_culture
+					}
+				}
+			}
+			save_scope_as = target_county
+
+			#Save the target county's current culture.
+			culture = {
+				save_scope_as = target_county_culture
+			}
+
+			#Save the scope of a neighboring ruler who shares a culture with the target county.
+			random_neighboring_county = {
+				limit = {
+					holder ?= {
+						this != root
+						culture = scope:target_county_culture
+					}
+				}
+				holder = {
+					save_scope_as = target_ruler
+				}
+			}
+		}
+
+		# We have to save ourselves as a scope for effect localization.
+		save_scope_as = me
+	}
+
+	#Option A: Convince the county to adopt your culture instead.
+	option = {
+		name = stewardship_domain.1073.a
+		
+		trigger = { # This can cause culture-gore, so avoid the ai taking it
+			is_ai = no
+		}
+
+		add_stewardship_lifestyle_xp = medium_lifestyle_xp
+		duel = {
+			skill = diplomacy
+			value = 10
+
+			50 = {		
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 3.5
+					min = -49
+				}
+				desc = stewardship_domain.1073.a.success
+				send_interface_toast = {
+					type = event_toast_effect_good
+					title = stewardship_domain.1073.a.success
+					left_icon = scope:target_county
+
+					scope:target_county = {
+						#Set the county's culture to your own.
+						E_kCAFG_convert_culture_in_all_county_provinces = {
+							FACTOR = 0.6
+							VARIANCE = 0.3
+							CULTURE = root.culture
+							MAX = 0.9
+						}
+					}
+				}
+			}
+
+			50 = {		
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -3.5
+					min = -49
+				}
+				desc = stewardship_domain.1073.a.failure
+				send_interface_toast = {
+					type = event_toast_effect_bad
+					title = stewardship_domain.1073.a.failure
+					left_icon = scope:target_county
+
+					# Lower the county's Opinion of you.
+					scope:target_county = {
+						add_county_modifier = {
+							modifier = governance_1073_traditions_disrespected_modifier
+							years = 5
+						}
+					}
+
+					# Lower the opinion of the neighboring ruler.
+					scope:target_ruler = {
+						add_opinion = {
+							modifier = angry_opinion
+							target = root
+							opinion = -10
+						}
+					}
+				}
+			}
+		}
+
+		stress_and_fulfillment_impact = {
+			humble = minor_stress_impact_gain
+			compassionate = minor_stress_impact_gain
+		}
+	}
+
+	#Option C: Take a hands-off approach and let the county just keep doing their thing.
+	option = {
+		name = stewardship_domain.1073.c
+
+		scope:target_county = {
+			#Add a modifier which lowers unrest but makes it harder to change the county's culture.
+			add_county_modifier = {
+				modifier = governance_1073_conversion_resistance_modifier
+				years = 5
+			}
+			custom_tooltip = stewardship_domain.1073.c.warning
+		}
+
+		stress_and_fulfillment_impact = {
+			diligent = minor_stress_impact_gain
+		}
+		ai_chance = {
+			base = 100
+
+			ai_value_modifier = {
+				ai_compassion = 200
+				ai_energy = -200
+			}
+		}
+	}
+
+	#Option D: I am their ruler, they should be glad to serve me!
+	option = {
+		name = stewardship_domain.1073.d
+
+		#Gain prestige.
+		add_prestige = medium_prestige_gain
+
+
+		scope:target_county = {
+				add_county_modifier = {
+				modifier = governance_1073_traditions_disrespected_modifier
+				years = 5
+			}
+		}
+
+		stress_and_fulfillment_impact = {
+			humble = minor_stress_impact_gain
+		}
+		ai_chance = {
+			base = 100
+
+			ai_value_modifier = {
+				ai_boldness = 200
+				ai_greed = 100
+			}
+		}
+	}
+}
+

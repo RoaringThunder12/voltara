@@ -1,0 +1,90 @@
+﻿lam_bp_breaking_point_trigger = {
+	var:lam_cr_unrest >= 1
+	scope:lam_cr_head = {
+		var:lam_fac_cohesion < 25
+	}
+	OR = {
+		AND = {
+			var:lam_bp_position_side ?= flag:retain
+			var:lam_bp_position_alternative ?= {
+				is_alive = yes
+			}
+			opinion = {
+				target = var:lam_bp_position_alternative
+				value >= 60
+			}
+			opinion = {
+				target = var:lam_bp_position_target
+				value <= 0
+			}
+		}
+		AND = {
+			var:lam_bp_position_side ?= flag:fair
+			var:lam_st_reward_head ?= scope:lam_cr_head
+			var:lam_st_overlooked >= 3
+		}
+	}
+}
+lam_bp_aligned_voter_trigger = {
+	lam_cr_saved_voter_trigger = yes
+	lam_bp_position_current_trigger = yes
+	var:lam_cr_choice ?= flag:no
+	NOT = {
+		this = scope:lam_cr_head
+	}
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+	var:lam_cr_unrest_head ?= scope:lam_cr_head
+	OR = {
+		var:lam_cr_unrest >= 2
+		lam_bp_breaking_point_trigger = yes
+	}
+	lam_bp_same_position_trigger = {
+		OTHER = scope:lam_vt_lead
+	}
+}
+lam_bp_offer_valid_trigger = {
+	trigger_if = {
+		limit = {
+			lam_cr_split_offer_valid_trigger = yes
+			has_variable = lam_bp_offer_until
+		}
+		is_adult = yes
+		is_imprisoned = no
+		var:lam_bp_offer_until > lam_now_m
+		AND = {
+			trigger_if = {
+				limit = {
+					scope:lam_cr_original_head = {
+						has_variable = lam_fac_rec
+					}
+				}
+				var:lam_bp_offer_old_record ?= scope:lam_cr_original_head.var:lam_fac_rec
+			}
+			trigger_else = {
+				NOT = {
+					has_variable = lam_bp_offer_old_record
+				}
+			}
+		}
+		AND = {
+			trigger_if = {
+				limit = {
+					scope:lam_cr_split_head = {
+						has_variable = lam_fac_rec
+					}
+				}
+				var:lam_bp_offer_new_record ?= scope:lam_cr_split_head.var:lam_fac_rec
+			}
+			trigger_else = {
+				NOT = {
+					has_variable = lam_bp_offer_new_record
+				}
+			}
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}

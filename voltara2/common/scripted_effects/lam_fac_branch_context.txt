@@ -1,0 +1,502 @@
+﻿lam_bp_meeting_clear_effect = {
+	remove_variable = lam_bp_meeting_id
+	remove_variable = lam_bp_meeting_topic
+	remove_variable = lam_bp_meeting_side
+	remove_variable = lam_bp_meeting_target
+	remove_variable = lam_bp_meeting_alternative
+	remove_variable = lam_bp_meeting_lord
+	remove_variable = lam_bp_meeting_object
+	remove_variable = lam_bp_meeting_detail
+	remove_variable = lam_bp_meeting_old
+	remove_variable = lam_bp_meeting_fair
+}
+lam_bp_meeting_snapshot_effect = {
+	lam_bp_meeting_clear_effect = yes
+	set_variable = {
+		name = lam_bp_meeting_id
+		value = var:lam_cr_id
+	}
+	set_variable = {
+		name = lam_bp_meeting_topic
+		value = var:lam_cr_issue
+	}
+	set_variable = {
+		name = lam_bp_meeting_side
+		value = flag:oppose
+	}
+	set_variable = {
+		name = lam_bp_meeting_lord
+		value = liege
+	}
+	if = {
+		limit = {
+			exists = var:lam_cr_target
+		}
+		set_variable = {
+			name = lam_bp_meeting_target
+			value = var:lam_cr_target
+		}
+	}
+	if = {
+		limit = {
+			exists = var:lam_cr_old
+		}
+		set_variable = {
+			name = lam_bp_meeting_old
+			value = var:lam_cr_old
+		}
+	}
+	if = {
+		limit = {
+			var:lam_cr_issue ?= flag:petition
+			has_variable = lam_pd_kind
+		}
+		set_variable = {
+			name = lam_bp_meeting_topic
+			value = var:lam_pd_kind
+		}
+		if = {
+			limit = {
+				var:lam_pd_kind ?= flag:heir
+				exists = var:lam_pd_target
+			}
+			set_variable = {
+				name = lam_bp_meeting_target
+				value = var:lam_pd_target
+			}
+		}
+		if = {
+			limit = {
+				var:lam_pd_kind ?= flag:land
+				exists = var:lam_lf_land_title
+			}
+			set_variable = {
+				name = lam_bp_meeting_object
+				value = var:lam_lf_land_title
+			}
+		}
+		if = {
+			limit = {
+				var:lam_pd_kind ?= flag:council
+				has_variable = lam_pd_seat
+			}
+			set_variable = {
+				name = lam_bp_meeting_detail
+				value = var:lam_pd_seat
+			}
+		}
+		if = {
+			limit = {
+				var:lam_pd_kind ?= flag:law
+				has_variable = lam_pd_law_new
+			}
+			set_variable = {
+				name = lam_bp_meeting_detail
+				value = var:lam_pd_law_new
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					var:lam_pd_kind ?= flag:council
+					var:lam_pd_kind ?= flag:land
+				}
+				exists = var:lam_lf_beneficiary
+			}
+			set_variable = {
+				name = lam_bp_meeting_target
+				value = var:lam_lf_beneficiary
+			}
+			if = {
+				limit = {
+					var:lam_lf_beneficiary = {
+						var:lam_lf_reward_head ?= prev
+						has_variable = lam_lf_reward_until
+						var:lam_lf_reward_until > lam_now_m
+					}
+				}
+				set_variable = {
+					name = lam_bp_meeting_fair
+					value = yes
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				var:lam_bp_meeting_topic ?= flag:rise
+				var:lam_bp_meeting_topic ?= flag:arm
+				var:lam_bp_meeting_topic ?= flag:oppose
+			}
+		}
+		set_variable = {
+			name = lam_bp_meeting_topic
+			value = flag:force
+		}
+		set_variable = {
+			name = lam_bp_meeting_side
+			value = flag:restraint
+		}
+	}
+	else_if = {
+		limit = {
+			OR = {
+				var:lam_bp_meeting_topic ?= flag:deal
+				var:lam_bp_meeting_topic ?= flag:quiet
+			}
+		}
+		set_variable = {
+			name = lam_bp_meeting_topic
+			value = flag:settlement
+		}
+		set_variable = {
+			name = lam_bp_meeting_side
+			value = flag:pressure
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_bp_meeting_topic ?= flag:withdraw
+		}
+		set_variable = {
+			name = lam_bp_meeting_topic
+			value = flag:court
+		}
+		set_variable = {
+			name = lam_bp_meeting_side
+			value = flag:participate
+		}
+	}
+	else_if = {
+		limit = {
+			OR = {
+				var:lam_bp_meeting_topic ?= flag:loyal
+				var:lam_bp_meeting_topic ?= flag:watch
+				var:lam_bp_meeting_topic ?= flag:people
+			}
+		}
+		set_variable = {
+			name = lam_bp_meeting_topic
+			value = flag:court
+		}
+	}
+}
+lam_bp_prepare_position_effect = {
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				has_variable = lam_bp_meeting_topic
+			}
+		}
+		set_variable = {
+			name = lam_bp_proposed_topic
+			value = scope:lam_cr_head.var:lam_bp_meeting_topic
+		}
+	}
+	else = {
+		remove_variable = lam_bp_proposed_topic
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				has_variable = lam_bp_meeting_side
+			}
+		}
+		set_variable = {
+			name = lam_bp_proposed_side
+			value = scope:lam_cr_head.var:lam_bp_meeting_side
+		}
+	}
+	else = {
+		remove_variable = lam_bp_proposed_side
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				has_variable = lam_bp_meeting_target
+			}
+		}
+		set_variable = {
+			name = lam_bp_proposed_target
+			value = scope:lam_cr_head.var:lam_bp_meeting_target
+		}
+	}
+	else = {
+		remove_variable = lam_bp_proposed_target
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				has_variable = lam_bp_meeting_alternative
+			}
+		}
+		set_variable = {
+			name = lam_bp_proposed_alternative
+			value = scope:lam_cr_head.var:lam_bp_meeting_alternative
+		}
+	}
+	else = {
+		remove_variable = lam_bp_proposed_alternative
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				has_variable = lam_bp_meeting_lord
+			}
+		}
+		set_variable = {
+			name = lam_bp_proposed_lord
+			value = scope:lam_cr_head.var:lam_bp_meeting_lord
+		}
+	}
+	else = {
+		remove_variable = lam_bp_proposed_lord
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				has_variable = lam_bp_meeting_object
+			}
+		}
+		set_variable = {
+			name = lam_bp_proposed_object
+			value = scope:lam_cr_head.var:lam_bp_meeting_object
+		}
+	}
+	else = {
+		remove_variable = lam_bp_proposed_object
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				has_variable = lam_bp_meeting_detail
+			}
+		}
+		set_variable = {
+			name = lam_bp_proposed_detail
+			value = scope:lam_cr_head.var:lam_bp_meeting_detail
+		}
+	}
+	else = {
+		remove_variable = lam_bp_proposed_detail
+	}
+	if = {
+		limit = {
+			var:lam_bp_proposed_topic ?= flag:heir
+			scope:lam_cr_head.var:lam_bp_meeting_old ?= {
+				is_alive = yes
+			}
+			NOT = {
+				scope:lam_cr_head.var:lam_bp_meeting_old ?= var:lam_bp_proposed_target
+			}
+			"opinion(scope:lam_cr_head.var:lam_bp_meeting_old)" >= "opinion(var:lam_bp_proposed_target)"
+		}
+		set_variable = {
+			name = lam_bp_proposed_side
+			value = flag:retain
+		}
+		set_variable = {
+			name = lam_bp_proposed_alternative
+			value = scope:lam_cr_head.var:lam_bp_meeting_old
+		}
+	}
+	else_if = {
+		limit = {
+			OR = {
+				var:lam_bp_proposed_topic ?= flag:council
+				var:lam_bp_proposed_topic ?= flag:land
+			}
+			OR = {
+				scope:lam_cr_head = {
+					has_variable = lam_bp_meeting_fair
+				}
+				AND = {
+					var:lam_st_reward_head ?= scope:lam_cr_head
+					var:lam_st_overlooked >= 1
+				}
+			}
+		}
+		set_variable = {
+			name = lam_bp_proposed_side
+			value = flag:fair
+		}
+	}
+}
+lam_bp_remember_position_effect = {
+	remove_variable = lam_er_kept_primary
+	if = {
+		limit = {
+			exists = scope:lam_cr_head
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					lam_bp_meeting_trigger = yes
+				}
+			}
+			lam_bp_prepare_position_effect = yes
+			if = {
+				limit = {
+					lam_er_keep_primary_dispute_trigger = yes
+				}
+				set_variable = {
+					name = lam_er_kept_primary
+					value = yes
+					days = 1
+				}
+			}
+			else = {
+				remove_variable = lam_gg_source
+				remove_variable = lam_er_observed_heir
+				if = {
+					limit = {
+						NOT = {
+							lam_ev_continuity_trigger = yes
+						}
+					}
+					set_variable = {
+						name = lam_cr_unrest
+						value = 0
+					}
+					lam_dr_clock_restart_effect = yes
+					set_variable = {
+						name = lam_ev_since
+						value = lam_now_m
+					}
+				}
+				if = {
+					limit = {
+						has_variable = lam_bp_proposed_topic
+					}
+					set_variable = {
+						name = lam_bp_position_topic
+						value = var:lam_bp_proposed_topic
+					}
+				}
+				else = {
+					remove_variable = lam_bp_position_topic
+				}
+				if = {
+					limit = {
+						has_variable = lam_bp_proposed_side
+					}
+					set_variable = {
+						name = lam_bp_position_side
+						value = var:lam_bp_proposed_side
+					}
+				}
+				else = {
+					remove_variable = lam_bp_position_side
+				}
+				if = {
+					limit = {
+						has_variable = lam_bp_proposed_target
+					}
+					set_variable = {
+						name = lam_bp_position_target
+						value = var:lam_bp_proposed_target
+					}
+				}
+				else = {
+					remove_variable = lam_bp_position_target
+				}
+				if = {
+					limit = {
+						has_variable = lam_bp_proposed_alternative
+					}
+					set_variable = {
+						name = lam_bp_position_alternative
+						value = var:lam_bp_proposed_alternative
+					}
+				}
+				else = {
+					remove_variable = lam_bp_position_alternative
+				}
+				if = {
+					limit = {
+						has_variable = lam_bp_proposed_lord
+					}
+					set_variable = {
+						name = lam_bp_position_lord
+						value = var:lam_bp_proposed_lord
+					}
+				}
+				else = {
+					remove_variable = lam_bp_position_lord
+				}
+				if = {
+					limit = {
+						has_variable = lam_bp_proposed_object
+					}
+					set_variable = {
+						name = lam_bp_position_object
+						value = var:lam_bp_proposed_object
+					}
+				}
+				else = {
+					remove_variable = lam_bp_position_object
+				}
+				if = {
+					limit = {
+						has_variable = lam_bp_proposed_detail
+					}
+					set_variable = {
+						name = lam_bp_position_detail
+						value = var:lam_bp_proposed_detail
+					}
+				}
+				else = {
+					remove_variable = lam_bp_position_detail
+				}
+				set_variable = {
+					name = lam_bp_position_head
+					value = scope:lam_cr_head
+				}
+				set_variable = {
+					name = lam_bp_position_id
+					value = scope:lam_cr_head.var:lam_cr_id
+				}
+				set_variable = {
+					name = lam_bp_position_until
+					value = {
+						value = lam_now_m
+						add = lam_ev_memory_months
+					}
+				}
+				remove_variable = lam_bp_position_record
+				if = {
+					limit = {
+						scope:lam_cr_head = {
+							has_variable = lam_fac_rec
+						}
+					}
+					set_variable = {
+						name = lam_bp_position_record
+						value = scope:lam_cr_head.var:lam_fac_rec
+					}
+				}
+				lam_ev_initialize_age_effect = yes
+			}
+		}
+	}
+}
+lam_bp_remember_voters_effect = {
+	if = {
+		limit = {
+			lam_bp_meeting_trigger = yes
+		}
+		save_scope_as = lam_cr_head
+		every_in_list = {
+			variable = lam_cr_voters
+			limit = {
+				lam_cr_saved_voter_trigger = yes
+				var:lam_cr_choice ?= flag:no
+				NOT = {
+					this = scope:lam_cr_head
+				}
+			}
+			lam_bp_remember_position_effect = yes
+		}
+	}
+}

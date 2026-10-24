@@ -1,0 +1,85 @@
+﻿lam_lf_endorse_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+			is_adult = yes
+			is_imprisoned = no
+			var:lam_bloc ?= scope:lam_ps_old
+			liege ?= scope:lam_ps_old.liege
+			var:lam_lf_endorse_open ?= scope:lam_ps_old
+			has_variable = lam_lf_endorse_deadline
+			var:lam_lf_endorse_deadline > lam_now_m
+			OR = {
+				AND = {
+					NOT = {
+						has_variable = lam_lf_endorse_record
+					}
+					scope:lam_ps_old = {
+						NOT = {
+							has_variable = lam_fac_rec
+						}
+					}
+				}
+				var:lam_lf_endorse_record ?= scope:lam_ps_old.var:lam_fac_rec
+			}
+			scope:lam_ps_old = {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+			}
+			$WHO$ ?= {
+				lam_fac_succ_eligible_trigger = {
+					LORD = scope:lam_ps_old.liege
+				}
+				OR = {
+					var:lam_bloc ?= scope:lam_ps_old
+					NOT = {
+						has_variable = lam_bloc
+					}
+				}
+			}
+		}
+		remove_variable = lam_lf_endorse_open
+		set_variable = {
+			name = lam_lf_endorse_head
+			value = scope:lam_ps_old
+		}
+		set_variable = {
+			name = lam_lf_endorse_person
+			value = $WHO$
+		}
+		set_variable = {
+			name = lam_lf_endorse_until
+			value = {
+				value = lam_now_m
+				add = 36
+			}
+		}
+	}
+}
+lam_lf_public_notice_effect = {
+	save_scope_as = lam_lf_news_head
+	if = {
+		limit = {
+			is_ai = no
+		}
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_lf_news_title
+			desc = lam_lf_news_$KEY$
+			right_icon = scope:lam_lf_news_head
+		}
+	}
+	liege = {
+		if = {
+			limit = {
+				is_ai = no
+			}
+			send_interface_message = {
+				type = event_generic_neutral
+				title = lam_lf_news_title
+				desc = lam_lf_news_$KEY$
+				right_icon = scope:lam_lf_news_head
+			}
+		}
+	}
+}

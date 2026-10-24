@@ -1,0 +1,139 @@
+﻿namespace = nickname_event
+
+nickname_event.1 = {
+	type = character_event
+	title = nickname_event.1.t
+	desc = nickname_event.1.desc
+	theme = court
+
+	immediate = {
+		if = {
+			limit = { exists = scope:recipient }
+			scope:recipient = { save_scope_as = recipient }
+		}
+		if = {
+			limit = { exists = scope:actor }
+			scope:actor = { save_scope_as = actor }
+		}
+	}
+
+	left_portrait = {
+		character = scope:recipient
+		animation = personality_bold
+	}
+
+	widget = {
+		gui = "mod_event_window_widget_enter_nickname"
+		container = "dynamic_birth_name"
+		controller = {
+			type = text
+			data = {
+				key = nickname_text
+				default = {
+					localization_key = nickname_1
+				}
+			}
+		}
+		setup_scope = {
+			scope:recipient = { save_scope_as = text_target }
+		}
+	}
+
+	option = {
+		name = nickname.1.a
+		custom_tooltip = nickname.1.a.tt
+
+		scope:recipient = {
+			set_variable = {
+				name = nickname_text
+				value = flag:custom
+			}
+			store_localized_text_in_death = nickname_text
+		}
+		scope:actor = {
+			trigger_event = {
+				id = nickname_event.2
+			}
+		}
+	}
+
+	option = {
+		name = nickname.1.b
+		custom_tooltip = nickname.1.b.tt
+	}
+}
+
+nickname_event.2 = {
+	type = character_event
+	title = nickname_event.2.t
+	desc = nickname_event.2.desc
+	theme = court
+
+	immediate = {
+		if = {
+			limit = { exists = scope:recipient }
+			scope:recipient = { save_scope_as = recipient }
+		}
+		if = {
+			limit = { exists = scope:actor }
+			scope:actor = { save_scope_as = actor }
+		}
+	}
+
+	left_portrait = {
+		character = scope:recipient
+		animation = personality_bold
+	}
+
+	widget = {
+		gui = "mod_event_window_widget_enter_nickname_desc"
+		container = "dynamic_birth_name"
+		controller = {
+			type = text
+			data = {
+				key = nickname_desc_text
+				default = {
+					localization_key = nickname_1_desc
+				}
+			}
+		}
+		setup_scope = {
+			scope:recipient = { save_scope_as = text_target }
+		}
+	}
+
+	option = {
+		name = nickname.2.a
+		custom_tooltip = nickname.2.a.tt
+
+		scope:recipient = {
+			if = {
+				limit = {
+					has_any_nickname = yes
+				}
+				remove_nickname = yes
+			}
+			set_variable = {
+				name = nickname_desc_text
+				value = flag:custom
+			}
+			if = {
+				limit = { has_variable = nickname_desc_text }
+				hidden_effect = {
+					set_nickname_effect = { NICKNAME = nickname_2 }
+				}
+			}
+			store_localized_text_in_death = nickname_desc_text
+		}
+	}
+
+	option = {
+		name = nickname.2.b
+		custom_tooltip = nickname.2.b.tt
+
+		scope:recipient = {
+			remove_variable = nickname_text
+			remove_variable = nickname_desc_text
+		}
+	}
+}

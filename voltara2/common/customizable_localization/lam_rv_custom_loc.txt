@@ -1,0 +1,122 @@
+﻿# Living Factions - review fixes (tools/claude_fixes/review_1020.py)
+# This = a faction head: why the rise their council voted for raised no demand.
+LamRvStall = {
+	type = character
+	text = {
+		trigger = {
+			exists = joined_faction
+		}
+		localization_key = lam_rv_stall_joined
+	}
+	text = {
+		trigger = {
+			has_variable = lam_pb_retry
+		}
+		localization_key = lam_rv_stall_retry
+	}
+	text = {
+		trigger = {
+			NOT = {
+				lam_pb_legal_liberty_faction_trigger = yes
+			}
+			NOT = {
+				lam_pb_legal_independence_faction_trigger = yes
+			}
+		}
+		localization_key = lam_rv_stall_nolaw
+	}
+	text = {
+		localization_key = lam_rv_stall_other
+		fallback = yes
+	}
+}
+# This = a faction head: '(yours)' when it is the player's faction.
+LamUx2Mine = {
+	type = character
+	text = {
+		trigger = {
+			any_player = {
+				var:lam_bloc ?= root
+			}
+		}
+		localization_key = lam_rv_mine
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+# This = a faction head: the members' average opinion of the liege on the card's mood line, once the faction has been
+# counted (a faction founded since the last refresh has no figure yet and showed '?').
+LamUx2Op = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_fac_loyal
+		}
+		localization_key = lam_rv_op
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+# This = a faction head: the rising on the council chamber's agenda. The ballot event's text names
+# scope:lam_cr_head, which the chamber window does not have (it showed ERROR lines; seen in game 2026-10-21).
+LamCvRiseText = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_pb_council_kind
+			liege ?= {
+				lam_pb_managed_court_trigger = yes
+			}
+		}
+		localization_key = lam_rv_cv_rise_text
+	}
+	text = {
+		fallback = yes
+		localization_key = lam_rv_cv_rise_legacy
+	}
+}
+LamCvRiseClaimant = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_wc_plan_candidate
+			OR = {
+				var:lam_cr_action ?= flag:rise
+				var:lam_cr_action ?= flag:cp_rise
+			}
+		}
+		localization_key = lam_rv_cv_rise_claimant
+	}
+	text = {
+		fallback = yes
+		localization_key = lam_fac_empty
+	}
+}
+# This = any character: the faction they belong to, as a first line of the portrait hover.
+LamTipFaction = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_bloc_lead
+			var:lam_bloc ?= this
+		}
+		localization_key = lam_rv_tip_head
+	}
+	text = {
+		trigger = {
+			var:lam_bloc ?= {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+			}
+		}
+		localization_key = lam_rv_tip_member
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}

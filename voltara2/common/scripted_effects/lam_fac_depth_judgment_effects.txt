@@ -1,0 +1,68 @@
+﻿lam_pd_vote_effect = {
+	set_variable = {
+		name = lam_pd_vote_score
+		value = lam_pd_vote_value
+	}
+	set_variable = {
+		name = lam_pd_vote_issue
+		value = scope:lam_cr_head.var:lam_cr_issue
+	}
+	lam_cv_snapshot_effect = yes
+	if = {
+		limit = {
+			AND = {
+				has_variable = lam_pd_vote_score
+				var:lam_pd_vote_score >= 8
+			}
+		}
+		set_variable = {
+			name = lam_cr_choice
+			value = flag:yes
+		}
+	}
+	else_if = {
+		limit = {
+			AND = {
+				has_variable = lam_pd_vote_score
+				var:lam_pd_vote_score <= -8
+			}
+		}
+		set_variable = {
+			name = lam_cr_choice
+			value = flag:no
+		}
+	}
+	else = {
+		set_variable = {
+			name = lam_cr_choice
+			value = flag:abstain
+		}
+	}
+	if = {
+		limit = {
+			var:lam_cr_choice ?= flag:abstain
+			has_trait = ambitious
+			NOT = {
+				this = scope:lam_cr_head
+			}
+			NOT = {
+				has_variable = lam_cr_recognized
+			}
+		}
+		set_variable = {
+			name = lam_cr_choice
+			value = flag:pending
+		}
+		set_variable = {
+			name = lam_cr_requested
+			value = yes
+		}
+		save_scope_as = lam_cr_petitioner
+		scope:lam_cr_head = {
+			trigger_event = {
+				id = lam_cr.0005
+				days = 1
+			}
+		}
+	}
+}

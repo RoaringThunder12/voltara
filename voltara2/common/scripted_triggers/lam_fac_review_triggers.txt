@@ -1,0 +1,147 @@
+﻿# Review fixes: current participants, not stale saved roles.
+lam_fac_poaching_valid_trigger = {
+	is_alive = yes
+	NOT = { has_variable = lam_bloc_lead }
+	exists = scope:lam_x_lord
+	liege ?= scope:lam_x_lord
+	var:lam_bloc ?= scope:lam_x_head
+	scope:lam_x_head ?= {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		NOT = { has_variable = lam_fac_disband }
+		liege ?= scope:lam_x_lord
+	}
+	scope:lam_x_rival ?= {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		NOT = { has_variable = lam_fac_disband }
+		liege ?= scope:lam_x_lord
+		NOT = { this = scope:lam_x_head }
+		NOT = { this = root }
+	}
+}
+lam_fac_spy_member_valid_trigger = {
+	is_alive = yes
+	has_variable = lam_bloc_lead
+	NOT = { has_variable = lam_fac_disband }
+	exists = scope:lam_x_lord
+	liege ?= scope:lam_x_lord
+	scope:lam_x_mate ?= {
+		is_alive = yes
+		NOT = { this = root }
+		NOT = { has_variable = lam_bloc_lead }
+		var:lam_bloc ?= root
+		liege ?= scope:lam_x_lord
+	}
+	scope:lam_x_rival ?= {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		NOT = { has_variable = lam_fac_disband }
+		liege ?= scope:lam_x_lord
+		NOT = { this = root }
+	}
+}
+lam_fac_newcomer_valid_trigger = {
+	$HEAD$ = { is_alive = yes has_variable = lam_bloc_lead exists = liege }
+	is_alive = yes
+	is_ai = yes
+	is_adult = yes
+	is_imprisoned = no
+	NOT = { this = $HEAD$ }
+	liege ?= $HEAD$.liege
+	NOT = { has_variable = lam_bloc }
+	NOT = { has_variable = lam_bloc_lead }
+	NOT = { has_variable = lam_fac_unbound }
+	opinion = { target = $HEAD$ value >= 0 }
+}
+lam_fac_plot_valid_trigger = {
+	has_variable = lam_fac_conspiring
+	var:lam_fac_conspiring ?= scope:lam_st_head
+	NOT = { has_variable = lam_bloc_lead }
+	exists = scope:lam_st_head
+	liege ?= scope:lam_st_lord
+	var:lam_bloc ?= scope:lam_st_head
+	scope:lam_st_head = { is_alive = yes has_variable = lam_bloc_lead is_imprisoned = no liege ?= scope:lam_st_lord }
+}
+lam_fac_waver_ticket_trigger = {
+	var:lam_fac_waver_owner ?= root
+	var:lam_fac_waver_serial ?= scope:lam_wv_ticket
+}
+# A sulking wing refuses its head's missions until the recorded month.
+lam_fac_sulking_trigger = {
+	NOT = { has_variable = lam_bloc_lead }
+	var:lam_bloc ?= $HEAD$
+	has_variable = lam_fac_sulk
+	var:lam_fac_sulk ?= $HEAD$
+	OR = { NOT = { has_variable = lam_fac_sulk_m } var:lam_fac_sulk_m > lam_now_m }
+}
+# Vanilla uses can_marry_character_trigger for both marriage and betrothal.
+lam_fac_marriage_pair_possible_trigger = {
+	is_alive = yes
+	NOT = { this = $CANDIDATE$ }
+	is_betrothed = no
+	can_marry_character_trigger = { CHARACTER = $CANDIDATE$ }
+}
+lam_fac_marriage_to_lord_possible_trigger = {
+	is_alive = yes
+	is_betrothed = no
+	save_temporary_scope_as = lam_pm_candidate
+	$LORD$ = {
+		OR = {
+			lam_fac_marriage_pair_possible_trigger = { CANDIDATE = scope:lam_pm_candidate }
+			any_close_family_member = { lam_fac_marriage_pair_possible_trigger = { CANDIDATE = scope:lam_pm_candidate } }
+		}
+	}
+}
+lam_fac_marriage_possible_trigger = {
+	save_temporary_scope_as = lam_pm_head
+	OR = {
+		lam_fac_marriage_to_lord_possible_trigger = { LORD = $LORD$ }
+		any_close_family_member = { lam_fac_marriage_to_lord_possible_trigger = { LORD = $LORD$ } }
+		any_in_list = {
+			variable = lam_fac_members
+			is_alive = yes
+			var:lam_bloc ?= scope:lam_pm_head
+			OR = {
+				lam_fac_marriage_to_lord_possible_trigger = { LORD = $LORD$ }
+				any_close_family_member = { lam_fac_marriage_to_lord_possible_trigger = { LORD = $LORD$ } }
+			}
+		}
+	}
+}
+# Legacy treaties remain on their original signatory until the engine expires
+# that flag. Successors refer to it; neither a new treaty nor succession resets it.
+lam_fac_legacy_truce_trigger = {
+	$OTHER$ = { OR = { NOT = { has_variable = lam_fac_legacy_truce_suppressed } has_variable = lam_fac_legacy_truce_owner } }
+	OR = {
+		AND = {
+			NOT = { has_variable = lam_fac_legacy_truce_suppressed }
+			has_variable = lam_fac_truce
+			OR = {
+				is_target_in_variable_list = { name = lam_fac_truce_list target = $OTHER$ }
+				AND = { $OTHER$ = { has_variable = lam_fac_legacy_truce_owner } is_target_in_variable_list = { name = lam_fac_truce_list target = $OTHER$.var:lam_fac_legacy_truce_owner } }
+			}
+		}
+		var:lam_fac_legacy_truce_owner ?= {
+			has_variable = lam_fac_truce
+			OR = {
+				is_target_in_variable_list = { name = lam_fac_truce_list target = $OTHER$ }
+				AND = { $OTHER$ = { has_variable = lam_fac_legacy_truce_owner } is_target_in_variable_list = { name = lam_fac_truce_list target = $OTHER$.var:lam_fac_legacy_truce_owner } }
+			}
+		}
+	}
+}
+
+lam_fac_has_truce_trigger = {
+	$OTHER$ = { save_temporary_scope_as = lam_tr_check_other }
+	is_alive = yes
+	has_variable = lam_bloc_lead
+	OR = {
+		AND = { var:lam_fac_truce_1 ?= scope:lam_tr_check_other has_variable = lam_fac_truce_1_m var:lam_fac_truce_1_m > lam_now_m }
+		AND = { var:lam_fac_truce_2 ?= scope:lam_tr_check_other has_variable = lam_fac_truce_2_m var:lam_fac_truce_2_m > lam_now_m }
+		AND = { var:lam_fac_truce_3 ?= scope:lam_tr_check_other has_variable = lam_fac_truce_3_m var:lam_fac_truce_3_m > lam_now_m }
+		AND = { var:lam_fac_truce_4 ?= scope:lam_tr_check_other has_variable = lam_fac_truce_4_m var:lam_fac_truce_4_m > lam_now_m }
+		AND = { var:lam_fac_truce_5 ?= scope:lam_tr_check_other has_variable = lam_fac_truce_5_m var:lam_fac_truce_5_m > lam_now_m }
+		lam_fac_legacy_truce_trigger = { OTHER = scope:lam_tr_check_other }
+	}
+}

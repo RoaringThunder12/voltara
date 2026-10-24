@@ -1,0 +1,237 @@
+﻿lam_nc_managed_trigger = {
+	is_ai = yes
+	has_variable = lam_fac_blocked
+	exists = liege
+	var:lam_fac_weighed ?= liege
+	NOT = {
+		has_variable = lam_fac_armed
+	}
+	liege = {
+		has_game_rule = lam_fac_absorb_on
+		NOT = {
+			has_game_rule = lam_faction_scope_off
+		}
+		lam_fac_realm_in_scope_trigger = yes
+		NOT = {
+			lam_fac_vanilla_politics_trigger = yes
+		}
+	}
+	NOT = {
+		var:lam_bloc ?= {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			exists = joined_faction
+		}
+	}
+	var:lam_bloc ?= {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		var:lam_bloc ?= this
+		NOT = {
+			has_variable = lam_fac_disband
+		}
+		liege ?= prev.liege
+	}
+}
+lam_nc_control_trigger = {
+	is_alive = yes
+	$LORD$ ?= {
+		is_alive = yes
+		is_ruler = yes
+		var:lam_fac_puppet_master ?= prev
+	}
+	var:lam_fac_puppeteer_of ?= $LORD$
+}
+lam_nc_appoint_trigger = {
+	save_temporary_scope_as = lam_nc_office_lord
+	is_alive = yes
+	government_allows = council
+	$CANDIDATE$ ?= {
+		is_alive = yes
+		is_adult = yes
+		is_imprisoned = no
+		NOT = {
+			this = scope:lam_nc_office_lord
+		}
+		OR = {
+			liege ?= scope:lam_nc_office_lord
+			is_courtier_of = scope:lam_nc_office_lord
+		}
+		can_be_$SEAT$_trigger = {
+			COURT_OWNER = scope:lam_nc_office_lord
+		}
+	}
+	trigger_if = {
+		limit = {
+			exists = cp:councillor_$SEAT$
+		}
+		cp:councillor_$SEAT$ = {
+			can_be_fired_from_council_trigger = {
+				COURT_OWNER = scope:lam_nc_office_lord
+			}
+		}
+	}
+}
+lam_nc_heir_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+			exists = $CANDIDATE$
+		}
+		trigger_if = {
+			limit = {
+				$CANDIDATE$ = {
+					is_alive = yes
+				}
+			}
+			is_valid_designated_heir = $CANDIDATE$
+			save_temporary_scope_as = lam_nc_heir_lord
+			is_alive = yes
+			can_designate_heir_trigger = yes
+			prestige >= lam_nc_heir_prestige_value
+			$CANDIDATE$ ?= {
+				is_alive = yes
+				is_child_of = scope:lam_nc_heir_lord
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_nc_heir_lord.house
+						}
+						house ?= scope:lam_nc_heir_lord.house
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				NOR = {
+					has_trait = disinherited
+					has_trait = devoted
+					has_trait = order_member
+					has_trait = bastard
+				}
+				is_eunuch_trigger = no
+			}
+			NOT = {
+				designated_heir ?= $CANDIDATE$
+			}
+			trigger_if = {
+				limit = {
+					government_has_mechanic = administrative
+					government_has_flag = government_has_influence
+				}
+				influence >= designate_heir_admin_influence_cost
+				$CANDIDATE$.top_liege = top_liege
+			}
+			trigger_if = {
+				limit = {
+					government_has_flag = government_is_mandala
+				}
+				piety >= designate_heir_cost
+			}
+			trigger_if = {
+				limit = {
+					government_has_flag = government_is_landless_adventurer
+				}
+				$CANDIDATE$ = {
+					is_adult = yes
+				}
+			}
+			trigger_if = {
+				limit = {
+					is_roman_emperor_primary_title_trigger = no
+				}
+				NAND = {
+					primary_title ?= {
+						has_title_law_flag = elective_succession_law
+					}
+					dynasty ?= primary_heir.dynasty
+				}
+			}
+			trigger_if = {
+				limit = {
+					NOT = {
+						primary_heir ?= $CANDIDATE$
+					}
+				}
+				NOT = {
+					has_diarchy_active_parameter = diarchy_is_co_rulership
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_nc_county_pair_trigger = {
+	save_temporary_scope_as = lam_nc_grant_title
+	tier = tier_county
+	holder ?= $LORD$
+	NOT = {
+		this = $LORD$.capital_county
+	}
+	$LORD$ = {
+		save_temporary_scope_as = lam_nc_grant_actor
+		is_alive = yes
+	}
+	$RECIPIENT$ ?= {
+		save_temporary_scope_as = lam_nc_grant_recipient
+		is_alive = yes
+		is_adult = yes
+		is_imprisoned = no
+		liege ?= scope:lam_nc_grant_actor
+	}
+	trigger_if = {
+		limit = {
+			$LORD$ = {
+				government_has_mechanic = administrative
+			}
+			$RECIPIENT$ = {
+				government_has_mechanic = administrative
+			}
+		}
+		$RECIPIENT$ = {
+			is_landed = yes
+		}
+		lam_nc_native_governorship_trigger = yes
+	}
+	trigger_else = {
+		lam_nc_native_county_trigger = yes
+	}
+}
+lam_nc_county_available_trigger = {
+	save_temporary_scope_as = lam_nc_county_lord
+	any_held_title = {
+		lam_nc_county_pair_trigger = {
+			LORD = scope:lam_nc_county_lord
+			RECIPIENT = $RECIPIENT$
+		}
+	}
+}
+lam_nc_arrest_target_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	NOT = {
+		this = $MASTER$
+	}
+	save_temporary_scope_as = lam_nc_arrest_target
+	$LORD$ = {
+		allowed_to_imprison_character_trigger = {
+			CHARACTER = scope:lam_nc_arrest_target
+		}
+	}
+}
+lam_nc_war_veto_trigger = {
+	lam_nc_control_trigger = {
+		LORD = scope:lam_sw_king
+	}
+	exists = scope:lam_sw_war
+	scope:lam_sw_war = {
+		is_attacker = scope:lam_sw_king
+		is_war_leader = scope:lam_sw_king
+	}
+}

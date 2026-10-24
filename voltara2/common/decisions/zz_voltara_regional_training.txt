@@ -14,7 +14,7 @@ voltara_bear_lodge = {
  picture = { reference = "gfx/interface/illustrations/decisions/voltara_bear_lodge.dds" }
  desc = voltara_bear_lodge_desc selection_tooltip = voltara_bear_lodge_tooltip confirm_text = voltara_bear_lodge_confirm
  decision_group_type = major ai_check_interval = 0
- is_shown = { OR = { culture = culture:voltara_culture_30 has_trait = supernatural_werewolf } }
+ is_shown = { OR = { ven_northerner = yes has_trait = supernatural_werewolf } }
  is_valid = { is_adult = yes is_imprisoned = no } cooldown = { years = 3 } cost = { gold = 35 }
  effect = { trigger_event = voltara_training.4 }
 }

@@ -1,0 +1,157 @@
+﻿lam_pt_head_ready_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	has_variable = lam_bloc_lead
+	var:lam_bloc ?= this
+	liege ?= {
+		is_alive = yes
+	}
+	NOT = {
+		has_variable = lam_fac_disband
+	}
+	NOT = {
+		has_variable = lam_cr_active
+	}
+	NOT = {
+		has_variable = lam_cr_contract_pending
+	}
+	NOT = {
+		has_variable = lam_pd_active
+	}
+	NOT = {
+		has_variable = lam_pd_pending
+	}
+	NOT = {
+		liege = {
+			has_variable = lam_fac_viewonly
+		}
+	}
+}
+lam_pt_demand_ready_trigger = {
+	NOT = {
+		lam_wc_committed_trigger = yes
+	}
+	lam_pt_head_ready_trigger = yes
+	NOT = {
+		var:lam_fac_stage ?= 9
+	}
+	NOT = {
+		has_variable = lam_head_demand_cd
+	}
+	NOT = {
+		has_variable = lam_cr_retry_petition
+	}
+}
+lam_pt_order_ready_trigger = {
+	lam_pt_head_ready_trigger = yes
+	NOT = {
+		has_variable = lam_head_order_cd
+	}
+}
+lam_pt_order_member_trigger = {
+	is_alive = yes
+	var:lam_bloc ?= scope:lam_pt_order_head
+	liege ?= scope:lam_pt_order_head.liege
+	NOT = {
+		this = scope:lam_pt_order_head
+	}
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+}
+lam_pt_order_current_trigger = {
+	lam_pt_order_ready_trigger = yes
+	liege ?= scope:lam_pt_order_lord
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_fac_rec
+			}
+			NOT = {
+				exists = scope:lam_pt_order_record
+			}
+		}
+		AND = {
+			has_variable = lam_fac_rec
+			exists = scope:lam_pt_order_record
+			var:lam_fac_rec = scope:lam_pt_order_record
+		}
+	}
+}
+lam_pt_order_heir_trigger = {
+	is_alive = yes
+	is_child_of = scope:lam_pt_order_lord
+	NOT = {
+		has_trait = disinherited
+	}
+	NOT = {
+		this ?= scope:lam_pt_order_head.var:lam_fac_heir
+	}
+	scope:lam_pt_order_head = {
+		NOT = {
+			lam_wc_committed_trigger = yes
+		}
+	}
+}
+lam_pt_arms_member_trigger = {
+	scope:lam_ca_war = {
+		is_war_leader = scope:lam_ca_lord
+	}
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	is_ai = yes
+	is_ruler = yes
+	var:lam_bloc ?= scope:lam_ca_lord
+	liege ?= scope:lam_ca_lord.liege
+	NOT = {
+		this = scope:lam_ca_lord
+	}
+	OR = {
+		var:lam_fac_tier ?= 1
+		var:lam_fac_tier ?= 2
+	}
+	opinion = {
+		target = scope:lam_ca_lord
+		value >= -10
+	}
+	NOT = {
+		is_at_war_with = scope:lam_ca_lord
+	}
+	NOT = {
+		scope:lam_ca_war = {
+			is_participant = prev
+		}
+	}
+	trigger_if = {
+		limit = {
+			NOT = {
+				faith = scope:lam_ca_lord.faith
+			}
+		}
+		scope:lam_ca_war = {
+			NOR = {
+				using_cb = directed_great_holy_war
+				using_cb = undirected_great_holy_war
+			}
+		}
+	}
+	can_join_war_liege_vassal_check_trigger = {
+		JOINER = this
+		WARRIOR = scope:lam_ca_lord
+	}
+}
+lam_pt_arms_available_trigger = {
+	save_temporary_scope_as = lam_ca_lord
+	any_character_war = {
+		save_temporary_scope_as = lam_ca_war
+		save_temporary_scope_as = target
+		scope:lam_ca_lord = {
+			any_in_list = {
+				variable = lam_fac_members
+				lam_pt_arms_member_trigger = yes
+			}
+		}
+	}
+}

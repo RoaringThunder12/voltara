@@ -1,0 +1,76 @@
+﻿
+vkfu_authorize = { vkf_count_support = yes if = { limit = { vkf_chief = yes has_character_flag = vkf_council_concluded var:vkf_support >= 2 prestige >= 500 gold >= 100 NOT = { exists = title:e_voltara_sixth_southron_invasion.holder } } add_character_flag = vkfu_candidate } }
+vkfu_finish_council = {
+ if = { limit = { vkf_leader = yes } trigger_event = { id = vkf.125 days = 1 } }
+ else_if = { limit = { vkfu_candidate = yes } add_character_flag = vkfu_council_completed
+ if = { limit = { vkfu_foundation_ready = yes } trigger_event = { id = vkfu.10 days = 1 } }
+ else = { remove_character_flag = vkfu_council_completed trigger_event = { id = vkfu.11 days = 1 } } }
+ else_if = { limit = { has_character_flag = vkfu_candidate vkf_available = yes } remove_character_flag = vkfu_candidate remove_character_flag = vkfu_council_completed trigger_event = { id = vkfu.11 days = 1 } }
+}
+vkfu_found_empire = {
+ if = { limit = { vkfu_foundation_ready = yes }
+ save_scope_as = vkfu_founder remove_short_term_gold = 100 add_prestige = -500
+ create_title_and_vassal_change = { type = created save_scope_as = vkfu_creation add_claim_on_loss = no }
+ title:e_voltara_sixth_southron_invasion = { change_title_holder = { holder = scope:vkfu_founder change = scope:vkfu_creation } }
+ resolve_title_and_vassal_change = scope:vkfu_creation set_primary_title_to = title:e_voltara_sixth_southron_invasion
+ remove_character_flag = vkfu_candidate remove_character_flag = vkfu_council_completed remove_character_flag = vkf_council_concluded add_character_flag = vkf_recognized_leader
+ set_variable = { name = vkfu_promise value = $VOW$ } add_character_flag = { flag = vkfu_promise_deadline days = 7300 }
+ set_global_variable = { name = vkfu_founder value = this } set_global_variable = { name = vkfu_founding_promise value = $VOW$ }
+ if = { limit = { NOT = { has_global_variable = vkfu_world_announced } } set_global_variable = { name = vkfu_world_announced value = yes } every_player = { trigger_event = { id = vkfu.20 days = 2 } } }
+ trigger_event = { id = vkfu.21 days = 3650 }
+ vkfu_seek_submission = yes vkf_recount = yes
+ }
+}
+vkfu_heralds = {
+ if = { limit = { this = character:9999100 vkf_chief = yes NOT = { has_character_flag = vkfu_riders_pending } }
+ save_scope_as = vkfu_uniter add_character_flag = { flag = vkfu_riders_pending days = 120 } add_character_flag = vkfu_ambition
+ ordered_independent_ruler = { order_by = diplomacy max = 5 check_range_bounds = no limit = { vkf_chief = yes NOT = { this = scope:vkfu_uniter } NOT = { has_variable = vkf_patron } NOT = { has_character_flag = vkfu_herald_answered } }
+ set_variable = { name = vkfu_inviter value = scope:vkfu_uniter days = 120 } trigger_event = { id = vkfu.2 days = 3 } }
+ trigger_event = { id = vkfu.3 days = 90 }
+ }
+}
+vkfu_recognize = {
+ if = { limit = { vkf_chief = yes has_variable = vkfu_inviter var:vkfu_inviter = { vkf_chief = yes } NOT = { has_variable = vkf_patron } }
+ set_variable = { name = vkf_patron value = var:vkfu_inviter days = 1825 } set_variable = { name = vkf_oath value = $OATH$ days = 1825 }
+ add_character_flag = { flag = vkfu_herald_answered days = 730 } remove_variable = vkfu_inviter }
+}
+vkfu_seek_submission = {
+ if = { limit = { vkf_leader = yes NOT = { has_character_flag = vkfu_submission_round } }
+ add_character_flag = { flag = vkfu_submission_round days = 365 } save_scope_as = vkfu_emperor
+ ordered_independent_ruler = { order_by = diplomacy max = 5 check_range_bounds = no limit = { vkf_chief = yes NOT = { has_character_flag = vkfu_submission_answered } NOT = { has_variable = vkfu_submission_offer } OR = { NOT = { has_variable = vkf_patron } var:vkf_patron ?= scope:vkfu_emperor } }
+ set_variable = { name = vkfu_submission_offer value = scope:vkfu_emperor days = 120 } trigger_event = { id = vkfu.12 days = 5 } }
+ }
+}
+vkfu_submit = {
+ if = { limit = { vkf_chief = yes has_variable = vkfu_submission_offer var:vkfu_submission_offer = { vkf_leader = yes is_independent_ruler = yes } }
+ save_scope_as = vkfu_subject set_variable = { name = vkf_patron value = var:vkfu_submission_offer days = 1825 } set_variable = { name = vkf_oath value = 2 days = 1825 }
+ vkf_submit = yes add_character_flag = { flag = vkfu_submission_answered days = 1825 }
+ var:vkfu_submission_offer = { save_scope_as = vkfu_emperor trigger_event = { id = vkfu.13 days = 1 } vkf_recount = yes }
+ remove_variable = vkfu_submission_offer }
+}
+vkfu_monthly = {
+ character:9999100 = { if = { limit = { vkf_chief = yes NOT = { has_character_flag = vkfu_intro_seen } NOT = { has_character_flag = vkfu_intro_queued } } add_character_flag = { flag = vkfu_intro_queued days = 60 } trigger_event = { id = vkfu.1 days = 5 } } }
+ title:e_voltara_sixth_southron_invasion.holder ?= {
+ if = { limit = { vkfu_promise_fulfilled = yes } add_character_flag = vkfu_promise_resolved add_character_flag = vkfu_promise_kept add_prestige = 1500 add_character_modifier = { modifier = vkfu_promise_kept years = 20 } trigger_event = { id = vkfu.22 days = 1 } }
+ else_if = { limit = { vkfu_vow_active = yes NOT = { has_character_flag = vkfu_promise_deadline } } add_character_flag = vkfu_promise_resolved add_prestige = -1000 add_character_modifier = { modifier = vkfu_promise_broken years = 10 } vkf_clear_pledges = yes trigger_event = { id = vkfu.23 days = 1 } }
+ if = { limit = { is_ai = yes } vkfu_seek_submission = yes }
+ }
+}
+
+vkfu_settle_clan = {
+ if = { limit = { vkf_available = yes is_landed = yes vkfu_human_southron = yes OR = { has_government = tribal_government has_government = nomad_government } }
+ save_scope_as = vkfu_settler
+ if = { limit = { has_government = nomad_government has_domicile = yes } nomad_domicile_refund_effect = yes add_gold = { value = domicile.herd multiply = 0.3 min = 0 max = 10000 } }
+ every_held_title = { limit = { tier = tier_county } title_province = { if = { limit = { OR = { has_holding_type = tribal_holding has_holding_type = nomad_holding has_holding_type = herder_holding } } set_holding_type = castle_holding } } }
+ every_held_title = { limit = { is_nomad_title = yes NOT = { this = title:e_voltara_sixth_southron_invasion } } scope:vkfu_settler = { destroy_title = prev } }
+ change_government = feudal_government
+ }
+}
+vkfu_offer_settlement = {
+ if = { limit = { vkfu_vow_active = yes var:vkfu_promise = 3 gold >= 600 has_government = feudal_government }
+ save_scope_as = vkfu_settlement_patron
+ ordered_vassal_or_below = { order_by = diplomacy max = 3 check_range_bounds = no limit = { vkfu_human_southron = yes vkf_available = yes OR = { has_government = tribal_government has_government = nomad_government } NOT = { has_character_flag = vkfu_settlement_answered } NOT = { has_variable = vkfu_settlement_offer } }
+ scope:vkfu_settlement_patron = { remove_short_term_gold = 200 }
+ set_variable = { name = vkfu_settlement_offer value = scope:vkfu_settlement_patron days = 120 } trigger_event = { id = vkfu.25 days = 5 } }
+ }
+}

@@ -1,0 +1,132 @@
+﻿namespace = dhm_v090
+
+# A short instruction card. No search or payment occurs on opening or hovering.
+dhm_v090.0001 = {
+ type = character_event
+ title = dhm090_instructions_title
+ desc = {
+  desc = dhm090_instructions_intro
+  first_valid = {
+   triggered_desc = { trigger = { has_global_variable = dhm090_protect_reserve } desc = dhm090_reserve_on_desc }
+   desc = dhm090_reserve_off_desc
+  }
+  first_valid = {
+   triggered_desc = { trigger = { has_character_flag = dhm090_allow_officer_gift } desc = dhm090_allowance_on_desc }
+   desc = dhm090_allowance_off_desc
+  }
+  first_valid = {
+   triggered_desc = { trigger = { has_global_variable = dhm090_keep_capable_tutors } desc = dhm090_retention_on_desc }
+   desc = dhm090_retention_off_desc
+  }
+ }
+ theme = stewardship
+ override_background = { reference = dhm_living_letter }
+ trigger = { is_alive = yes is_ai = no }
+ option = {
+  name = dhm090_reserve_on
+  trigger = { NOT = { has_global_variable = dhm090_protect_reserve } }
+  set_global_variable = { name = dhm090_protect_reserve value = yes }
+  trigger_event = dhm_v090.0001
+ }
+ option = {
+  name = dhm090_reserve_off
+  trigger = { has_global_variable = dhm090_protect_reserve }
+  remove_global_variable = dhm090_protect_reserve
+  trigger_event = dhm_v090.0001
+ }
+ option = {
+  name = dhm090_allowance_on
+  trigger = { NOT = { has_character_flag = dhm090_allow_officer_gift } }
+  custom_tooltip = dhm090_allowance_permission_tt
+  add_character_flag = dhm090_allow_officer_gift
+  trigger_event = dhm_v090.0001
+ }
+ option = {
+  name = dhm090_allowance_off
+  trigger = { has_character_flag = dhm090_allow_officer_gift }
+  remove_character_flag = dhm090_allow_officer_gift
+  trigger_event = dhm_v090.0001
+ }
+ option = {
+  name = dhm090_retention_on
+  trigger = { NOT = { has_global_variable = dhm090_keep_capable_tutors } }
+  set_global_variable = { name = dhm090_keep_capable_tutors value = yes }
+  trigger_event = dhm_v090.0001
+ }
+ option = {
+  name = dhm090_retention_off
+  trigger = { has_global_variable = dhm090_keep_capable_tutors }
+  remove_global_variable = dhm090_keep_capable_tutors
+  trigger_event = dhm_v090.0001
+ }
+    option = {
+        name = dhm_manager.0091.enable_plans
+        trigger = { has_global_variable = dhm_setting_advanced_profiles_disabled }
+        remove_global_variable = dhm_setting_advanced_profiles_disabled
+        dhm_v070_mark_custom_preset_effect = yes
+        trigger_event = dhm_v090.0001
+    }
+    option = {
+        name = dhm_manager.0091.disable_plans
+        trigger = { NOT = { has_global_variable = dhm_setting_advanced_profiles_disabled } }
+        set_global_variable = { name = dhm_setting_advanced_profiles_disabled value = yes }
+        dhm_v070_mark_custom_preset_effect = yes
+        trigger_event = dhm_v090.0001
+    }
+    option = {
+        name = dhm_manager.0092.enable_identity
+        trigger = { has_global_variable = dhm_setting_legacy_mechanics_disabled }
+        hidden_effect = { remove_global_variable = dhm_setting_legacy_mechanics_disabled dhm_v070_mark_custom_preset_effect = yes dhm_v070_refresh_optional_modifiers_effect = yes }
+        trigger_event = dhm_v090.0001
+    }
+    option = {
+        name = dhm_manager.0092.disable_identity
+        trigger = { NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled } }
+        hidden_effect = { set_global_variable = { name = dhm_setting_legacy_mechanics_disabled value = yes } dhm_v070_mark_custom_preset_effect = yes dhm_v070_refresh_optional_modifiers_effect = yes }
+        trigger_event = dhm_v090.0001
+    }
+
+ option = { name = dhm090_instructions_back trigger_event = dhm_manager.0092 is_cancel_option = yes }
+}
+
+# A character-specific desk report, never a fresh spouse search.
+dhm_v090.0090 = {
+ type = character_event
+ title = dhm090_marriage_report_title
+ desc = {
+  desc = dhm090_marriage_report_intro
+  first_valid = {
+   triggered_desc = { trigger = { scope:dhm_profile_target = { OR = { is_imprisoned = yes is_hostage = yes has_trait = incapable } } } desc = dhm090_report_unavailable }
+   triggered_desc = { trigger = { scope:dhm_profile_target = { age < 12 } } desc = dhm090_report_age }
+   triggered_desc = { trigger = { scope:dhm_profile_target = { is_betrothed = yes } } desc = dhm090_report_betrothed }
+   triggered_desc = { trigger = { scope:dhm_profile_target = { has_been_promised_grand_wedding = yes } } desc = dhm090_report_wedding }
+   triggered_desc = { trigger = { scope:dhm_profile_target = { NOT = { is_in_the_same_court_as = root } } } desc = dhm090_report_away }
+   triggered_desc = { trigger = { scope:dhm_profile_target = { NOT = { dhm_subject_automation_enabled_trigger = yes } } } desc = dhm090_report_manual }
+   triggered_desc = { trigger = { scope:dhm_profile_target = { NOT = { OR = { is_child_of = root AND = { exists = matchmaker matchmaker = root } } } } } desc = dhm090_report_authority }
+   triggered_desc = { trigger = { scope:dhm_profile_target = { OR = { has_character_flag = dhm_matchmaking_proposal_pending has_variable = dhm_courtship_reserved_for } } } desc = dhm_v075_profile_pending }
+   triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_matchmaking_retry_cooldown } } desc = {
+    desc = dhm_v075_profile_retry
+    first_valid = {
+     triggered_desc = { trigger = { scope:dhm_profile_target = { var:dhm075_retry_reason ?= flag:no_candidate } } desc = dhm090_report_no_candidate }
+     triggered_desc = { trigger = { scope:dhm_profile_target = { var:dhm075_retry_reason ?= flag:refusal } } desc = dhm_v075_retry_refusal }
+     triggered_desc = { trigger = { scope:dhm_profile_target = { var:dhm075_retry_reason ?= flag:wish } } desc = dhm_v075_retry_wish }
+     triggered_desc = { trigger = { scope:dhm_profile_target = { var:dhm075_retry_reason ?= flag:negotiation } } desc = dhm_v075_retry_negotiation }
+     desc = dhm_v075_retry_legacy
+    }
+   } }
+   triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_matchmaking_cooldown } } desc = dhm_v075_profile_recent }
+   desc = dhm090_report_no_known_hold
+  }
+  triggered_desc = { trigger = { scope:dhm_profile_target = { OR = { has_character_flag = dhm_strategy_same_faith has_character_flag = dhm_strategy_same_culture } } } desc = dhm090_report_filters }
+  desc = dhm090_report_limits
+ }
+ theme = diplomacy
+ override_background = { reference = dhm_living_letter }
+ left_portrait = scope:dhm_profile_target
+ trigger = { is_alive = yes is_ai = no exists = scope:dhm_profile_target scope:dhm_profile_target = { is_alive = yes } }
+ option = { name = dhm_profile.0001.automation trigger_event = dhm_profile.0010 }
+ option = { name = dhm_profile.0001.strategy trigger_event = dhm_profile.0020 }
+ option = { name = dhm090_report_household trigger_event = dhm_manager.0004 }
+ option = { name = dhm_profile.back trigger = { scope:dhm_profile_target = { is_in_the_same_court_as = root } } trigger_event = dhm_profile.0001 is_cancel_option = yes }
+ option = { name = dhm_profile.0001.close trigger = { scope:dhm_profile_target = { NOT = { is_in_the_same_court_as = root } } } is_cancel_option = yes }
+}

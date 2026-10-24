@@ -1,0 +1,38 @@
+﻿hc_open_house_customizer_interaction = {
+    category = interaction_category_diplomacy
+    common_interaction = yes
+    interface_priority = 80
+
+    desc = hc_open_house_customizer_interaction_desc
+
+    use_diplomatic_range = no
+    auto_accept = yes
+
+    is_shown = {
+        scope:actor = {
+            is_ai = no
+            has_trait = hc_house_customizer
+        }
+
+        scope:recipient = {
+            is_alive = yes
+            is_lowborn = no
+
+            NOT = {
+                this = scope:actor
+            }
+        }
+    }
+
+    on_accept = {
+        scope:recipient = {
+            save_scope_as = hc_target
+        }
+
+        scope:actor = {
+            trigger_event = {
+                id = hc_house_customizer.0001
+            }
+        }
+    }
+}

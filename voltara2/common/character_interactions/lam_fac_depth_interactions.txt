@@ -1,0 +1,41 @@
+﻿lam_pd_fabricate_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_issue
+	auto_accept = yes
+	desc = lam_pd_fabricate_interaction_desc
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			is_adult = yes
+			exists = liege
+		}
+		scope:recipient = {
+			has_variable = lam_bloc_lead
+			liege ?= scope:actor.liege
+			NOT = {
+				this = scope:actor
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			is_imprisoned = no
+			prestige >= 100
+			NOT = {
+				has_variable = lam_pd_fabricate_target
+			}
+			NOT = {
+				has_variable = lam_pd_fabricate_cd
+			}
+		}
+		scope:recipient = {
+			is_alive = yes
+		}
+	}
+	on_accept = {
+		lam_pd_fabricate_begin_effect = yes
+	}
+	ai_will_do = {
+		base = 0
+	}
+}

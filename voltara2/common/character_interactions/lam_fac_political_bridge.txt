@@ -1,0 +1,28 @@
+﻿lam_pb_petition_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	auto_accept = yes
+	desc = lam_pb_petition_interaction_desc
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			liege ?= scope:recipient
+		}
+		scope:recipient = {
+			lam_pb_managed_court_trigger = yes
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			lam_pb_can_open_proposal_trigger = yes
+		}
+	}
+	on_accept = {
+		scope:actor = {
+			trigger_event = lam_pb.0004
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}

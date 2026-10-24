@@ -119,7 +119,7 @@ window = {
 				}
 
 
-				vbox = {
+				scrollbox = { layoutpolicy_horizontal = expanding layoutpolicy_vertical = expanding blockoverride "scrollbox_content" { vbox = {
 					name = "current_sub_region"
 					margin_top = 2
 					layoutpolicy_horizontal = expanding
@@ -218,13 +218,7 @@ window = {
 						}
 
 text_label_center = { text = "[SituationSubRegion.GetCurrentPhase.GetType.GetName]" }
-                        text_single = { text = "vkf_phase_thresholds" align = center }
-                        text_single = {
-                            margin_top = 10
-                            layoutpolicy_horizontal = expanding
-                            text = "[SituationWindow.GetSelectedOrLeadingFuturePhaseType.GetName]"
-                            align = right
-                        }
+                        text_multi = { layoutpolicy_horizontal = expanding text = "[SituationSubRegion.GetCurrentPhase.GetType.GetDesc]" }
                         ### LOCATION EFFECTS & PREDICITON ###
 						text_single = {
 							margin_top = 10
@@ -405,7 +399,7 @@ text_label_center = { text = "[SituationSubRegion.GetCurrentPhase.GetType.GetNam
 							}
 						}
 					}
-				}
+				} } }
 
 
 				vbox = {

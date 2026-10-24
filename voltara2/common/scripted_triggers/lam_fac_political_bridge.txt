@@ -1,0 +1,218 @@
+﻿lam_pb_managed_court_trigger = {
+	has_game_rule = lam_fac_absorb_on
+	lam_fac_realm_in_scope_trigger = yes
+	NOT = {
+		lam_fac_vanilla_politics_trigger = yes
+	}
+}
+lam_pb_can_propose_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_ruler = yes
+	is_imprisoned = no
+	highest_held_title_tier >= tier_county
+	exists = liege
+	NOT = {
+		exists = joined_faction
+	}
+	NOT = {
+		has_variable = lam_pb_gathering
+	}
+	NOT = {
+		has_variable = lam_pb_retry
+	}
+	NOT = {
+		has_variable = lam_cr_active
+	}
+	NOT = {
+		has_variable = lam_fac_oath
+	}
+	NOT = {
+		has_variable = lam_pd_pending
+	}
+	NOT = {
+		has_variable = lam_cr_contract_pending
+	}
+	NOT = {
+		is_at_war_with = liege
+	}
+	liege = {
+		lam_pb_managed_court_trigger = yes
+	}
+}
+lam_pb_can_open_proposal_trigger = {
+	lam_pb_can_propose_trigger = yes
+	trigger_if = {
+		limit = {
+			has_variable = lam_bloc_lead
+		}
+		NOT = {
+			has_variable = lam_cr_retry_rise
+		}
+	}
+}
+lam_pb_same_request_trigger = {
+	trigger_if = {
+		limit = {
+			exists = scope:lam_pb_host
+		}
+		scope:lam_pb_host = {
+			is_alive = yes
+			has_variable = lam_pb_gathering
+			exists = var:lam_pb_lord
+		}
+		trigger_if = {
+			limit = {
+				scope:lam_pb_host = {
+					exists = var:lam_pb_lord
+				}
+			}
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_pb_host.var:lam_pb_lord
+					}
+					liege ?= scope:lam_pb_host.var:lam_pb_lord
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_pb_can_support_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_ruler = yes
+	is_imprisoned = no
+	NOT = {
+		has_variable = lam_fac_oath
+	}
+	NOT = {
+		exists = joined_faction
+	}
+	lam_pb_same_request_trigger = yes
+	trigger_if = {
+		limit = {
+			scope:lam_pb_host = {
+				exists = var:lam_pb_lord
+			}
+		}
+		lam_pb_native_join_eligibility_trigger = {
+			FACTION_TARGET = scope:lam_pb_host.var:lam_pb_lord
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_pb_political_consent_trigger = {
+	NOT = {
+		scope:lam_pb_host = {
+			is_target_in_variable_list = {
+				name = lam_pb_refused
+				target = prev
+			}
+		}
+	}
+}
+lam_pb_objective_current_trigger = {
+	trigger_if = {
+		limit = {
+			exists = var:lam_pb_lord
+			exists = var:lam_pb_title
+		}
+		var:lam_pb_lord = {
+			is_alive = yes
+			lam_pb_managed_court_trigger = yes
+		}
+		AND = {
+			trigger_if = {
+				limit = {
+					exists = var:lam_pb_lord
+				}
+				liege ?= var:lam_pb_lord
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		AND = {
+			trigger_if = {
+				limit = {
+					exists = var:lam_pb_lord
+				}
+				var:lam_pb_title.holder ?= var:lam_pb_lord
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		AND = {
+			trigger_if = {
+				limit = {
+					exists = var:lam_pb_title
+				}
+				var:lam_pb_lord.primary_title ?= var:lam_pb_title
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		trigger_if = {
+			limit = {
+				var:lam_pb_kind ?= flag:claimant_faction
+			}
+			trigger_if = {
+				limit = {
+					exists = var:lam_pb_claimant
+				}
+				var:lam_pb_claimant = {
+					is_alive = yes
+					has_claim_on = prev.var:lam_pb_title
+				}
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_pb_invitation_current_trigger = {
+	trigger_if = {
+		limit = {
+			exists = scope:lam_pb_host
+			exists = scope:lam_pb_token
+		}
+		scope:lam_pb_host = {
+			is_alive = yes
+			has_variable = lam_pb_gathering
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_pb_token
+					}
+					var:lam_pb_serial ?= scope:lam_pb_token
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			lam_pb_objective_current_trigger = yes
+		}
+		lam_pb_can_support_trigger = yes
+	}
+	trigger_else = {
+		always = no
+	}
+}

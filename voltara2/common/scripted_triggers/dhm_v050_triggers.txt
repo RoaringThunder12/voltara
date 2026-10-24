@@ -1,0 +1,94 @@
+﻿# =============================================================================
+# Dynasty & Household Manager v0.5.0 — bounded story and institution eligibility
+# =============================================================================
+
+# These candidates are reached only through the human ruler's court iterator.
+dhm_v050_officer_candidate_trigger = {
+	dhm_v073_officer_available_trigger = yes
+	is_alive = yes
+	is_adult = yes
+	is_ai = yes
+	is_imprisoned = no
+	NOT = { has_trait = incapable }
+	is_in_the_same_court_as = scope:dhm_manager
+	NOR = {
+		has_character_flag = dhm_office_steward
+		has_character_flag = dhm_office_matchmaker
+		has_character_flag = dhm_office_tutor
+		has_character_flag = dhm_office_chronicler
+	}
+}
+
+dhm_v050_has_ambition_trigger = {
+	OR = {
+		has_character_flag = dhm_ambition_love
+		has_character_flag = dhm_ambition_status
+		has_character_flag = dhm_ambition_learning
+		has_character_flag = dhm_ambition_faith
+		has_character_flag = dhm_ambition_security
+		has_character_flag = dhm_ambition_freedom
+		has_character_flag = dhm_ambition_children
+		has_character_flag = dhm_ambition_reconciliation
+	}
+}
+
+dhm_v050_ambition_target_trigger = {
+	is_alive = yes
+	is_ai = yes
+	age >= 12
+	is_imprisoned = no
+	NOT = { has_trait = incapable }
+	is_in_the_same_court_as = scope:dhm_manager
+	dhm_v050_has_ambition_trigger = yes
+	NOT = { has_character_flag = dhm_ambition_story_recent }
+}
+
+dhm_v050_arc_relative_trigger = {
+	is_alive = yes
+	is_ai = yes
+	age >= 10
+	is_imprisoned = no
+	NOT = { has_trait = incapable }
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_character_flag = dhm_relationship_arc_recent }
+}
+
+dhm_v050_heir_trigger = {
+	dhm_v072_heir_lesson_available_trigger = yes
+	is_alive = yes
+	age >= 8
+	is_imprisoned = no
+	NOT = { has_trait = incapable }
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_character_flag = dhm_heir_journey_recent }
+	scope:dhm_manager = { var:dhm_heir_journey_stage < 3 }
+}
+
+dhm_v050_spouse_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	NOT = { has_trait = incapable }
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_character_flag = dhm_spouse_partner_recent }
+}
+
+dhm_v050_marriage_journey_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_married = yes
+	is_imprisoned = no
+	NOT = { has_trait = incapable }
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_character_flag = dhm_marriage_journey_recent }
+	NOT = { has_character_flag = dhm_marriage_matter_recent }
+	NOT = { has_character_flag = dhm_marriage_recovery_recent }
+	NOT = { has_character_flag = dhm_relationship_arc_recent }
+	any_spouse = {
+		is_alive = yes
+		is_in_the_same_court_as = scope:dhm_manager
+		NOT = { has_character_flag = dhm_marriage_matter_recent }
+		NOT = { has_character_flag = dhm_marriage_recovery_recent }
+		NOT = { has_character_flag = dhm_relationship_arc_recent }
+	}
+}

@@ -1,0 +1,160 @@
+﻿lam_ux_report_clear_effect = {
+	remove_variable = lam_ux_report_observer
+	remove_variable = lam_ux_report_source
+	remove_variable = lam_ux_report_kind
+	remove_variable = lam_ux_report_level
+	remove_variable = lam_ux_report_record
+	remove_variable = lam_ux_report_year
+	remove_variable = lam_ux_report_month
+	remove_variable = lam_ux_report_until
+	remove_variable = lam_ux_report_next
+}
+lam_ux_report_record_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+			exists = $SOURCE$
+			exists = $OBSERVER$
+			liege ?= $OBSERVER$
+		}
+		set_variable = {
+			name = lam_ux_report_observer
+			value = $OBSERVER$
+		}
+		set_variable = {
+			name = lam_ux_report_source
+			value = $SOURCE$
+		}
+		set_variable = {
+			name = lam_ux_report_kind
+			value = $KIND$
+		}
+		set_variable = {
+			name = lam_ux_report_level
+			value = $LEVEL$
+		}
+		set_variable = {
+			name = lam_ux_report_year
+			value = current_year
+		}
+		set_variable = {
+			name = lam_ux_report_month
+			value = lam_now_m
+		}
+		set_variable = {
+			name = lam_ux_report_until
+			value = {
+				value = lam_now_m
+				add = 6
+			}
+		}
+		set_variable = {
+			name = lam_ux_report_next
+			value = {
+				value = lam_now_m
+				add = 6
+			}
+		}
+		remove_variable = lam_ux_report_record
+		if = {
+			limit = {
+				has_variable = lam_fac_rec
+			}
+			set_variable = {
+				name = lam_ux_report_record
+				value = var:lam_fac_rec
+			}
+		}
+	}
+}
+lam_ux_observe_effect = {
+	if = {
+		limit = {
+			has_variable = lam_ux_report_observer
+			NOT = {
+				var:lam_ux_report_observer ?= liege
+			}
+		}
+		lam_ux_report_clear_effect = yes
+	}
+	if = {
+		limit = {
+			is_ai = yes
+			is_alive = yes
+			has_variable = lam_bloc_lead
+			liege ?= {
+				is_alive = yes
+				is_ai = no
+			}
+			OR = {
+				NOT = {
+					has_variable = lam_ux_report_next
+				}
+				var:lam_ux_report_next <= lam_now_m
+			}
+		}
+		set_variable = {
+			name = lam_ux_report_next
+			value = {
+				value = lam_now_m
+				add = 6
+			}
+		}
+		if = {
+			limit = {
+				lam_lf_campaign_current_trigger = yes
+			}
+			save_scope_as = lam_ux_head
+			liege = {
+				save_scope_as = lam_ux_observer
+			}
+			clear_saved_scope = lam_ux_spy
+			clear_saved_scope = lam_ux_contact
+			liege = {
+				cp:councillor_spymaster ?= {
+					if = {
+						limit = {
+							is_alive = yes
+							is_imprisoned = no
+							opinion = {
+								target = scope:lam_ux_observer
+								value >= 0
+							}
+						}
+						save_scope_as = lam_ux_spy
+					}
+				}
+			}
+			ordered_in_list = {
+				variable = lam_fac_members
+				max = 1
+				check_range_bounds = no
+				limit = {
+					lam_ux_contact_trigger = yes
+				}
+				order_by = lam_ux_contact_level_value
+				save_scope_as = lam_ux_contact
+			}
+			if = {
+				limit = {
+					exists = scope:lam_ux_contact
+				}
+				lam_ux_report_record_effect = {
+					OBSERVER = scope:lam_ux_observer
+					SOURCE = scope:lam_ux_contact
+					KIND = var:lam_st_campaign_kind
+					LEVEL = scope:lam_ux_contact.lam_ux_contact_level_value
+				}
+			}
+		}
+	}
+}
+lam_ux_report_transfer_clear_effect = {
+	$FROM$ = {
+		lam_ux_report_clear_effect = yes
+	}
+	$TO$ = {
+		lam_ux_report_clear_effect = yes
+	}
+}

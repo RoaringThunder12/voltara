@@ -1,0 +1,2 @@
+﻿on_game_start_after_lobby = { on_actions = { vkfu_start } }
+vkfu_start = { effect = { character:9999100 = { if = { limit = { vkf_chief = yes NOT = { has_character_flag = vkfu_intro_seen } NOT = { has_character_flag = vkfu_intro_queued } } add_character_flag = { flag = vkfu_intro_queued days = 60 } trigger_event = { id = vkfu.1 days = 10 } } } } }

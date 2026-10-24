@@ -1,0 +1,323 @@
+﻿# =============================================================================
+# Dynasty & Household Manager v0.6.0 — Family Sagas & Promises Kept
+# =============================================================================
+
+# Current scope = marriage subject. Candidate and manager scopes are supplied by
+# the existing ranked matcher. Only adult close-family matches open the connected
+# courtship chain; every other legal match keeps the proven direct execution path.
+dhm_v060_begin_match_effect = {
+	save_scope_as = dhm_marriage_subject
+	if = {
+		limit = {
+			exists = scope:dhm_manager
+			exists = scope:dhm_marriage_candidate
+			has_global_variable = dhm_setting_marriage_stories_all
+			is_adult = yes
+			dhm_v060_courtship_eligible_trigger = yes
+			scope:dhm_marriage_candidate = { is_alive = yes is_adult = yes NOT = { has_character_flag = dhm_courtship_recent } }
+			scope:dhm_manager = {
+				is_alive = yes
+				is_ai = no
+				NOT = { has_character_flag = dhm_courtship_story_cooldown }
+			}
+			NOT = { has_global_variable = dhm_setting_marriage_stories_off }
+		}
+		set_variable = { name = dhm_courtship_reserved_for value = scope:dhm_marriage_candidate months = 6 }
+		scope:dhm_marriage_candidate = { set_variable = { name = dhm_courtship_reserved_for value = scope:dhm_marriage_subject months = 6 } }
+		save_scope_value_as = { name = dhm071_courtship_chain value = yes }
+		add_character_flag = { flag = dhm_courtship_recent years = 5 }
+		scope:dhm_marriage_candidate = { add_character_flag = { flag = dhm_courtship_recent years = 5 } }
+		scope:dhm_manager = {
+			add_character_flag = { flag = dhm_courtship_story_cooldown years = 2 }
+			add_character_flag = dhm_v080_visible_story_scheduled_this_pass
+			trigger_event = { id = dhm_saga.5000 days = { 3 8 } }
+		}
+	}
+	else = { dhm_execute_match_effect = yes }
+}
+
+dhm_v060_initialize_character_effect = {
+	add_character_flag = dhm_v060_character_initialized
+	if = { limit = { NOT = { has_variable = dhm_heir_journey_stage } } set_variable = { name = dhm_heir_journey_stage value = 0 } }
+}
+
+dhm_v060_migration_effect = {
+	# Additive migration: all v0.5 settings, counters, memories, relations and
+	# cooldowns remain untouched.
+	if = { limit = { NOT = { has_global_variable = dhm_chapter_named_count } } set_global_variable = { name = dhm_chapter_named_count value = 0 } }
+	set_global_variable = { name = dhm_migration_0600 value = yes }
+	dhm_v060_initialize_character_effect = yes
+}
+
+# A light identity echo makes established house values react to later stories.
+# Every benefit carries an explicit burden from the same identity.
+dhm_v060_legacy_echo_effect = {
+	if = {
+		limit = {
+			NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled }
+			OR = {
+				has_global_variable = dhm_legacy_identity_scholarly
+				has_global_variable = dhm_legacy_identity_honorable
+				has_global_variable = dhm_legacy_identity_protective
+				has_global_variable = dhm_legacy_identity_ambitious
+				has_global_variable = dhm_legacy_identity_traditional
+				has_global_variable = dhm_legacy_identity_severe
+			}
+		}
+		custom_tooltip = dhm_v060_legacy_echo_tt
+		if = {
+			limit = { has_global_variable = dhm_legacy_identity_scholarly }
+			add_prestige = minor_prestige_gain
+			add_stress = miniscule_stress_gain
+		}
+		else_if = {
+			limit = { has_global_variable = dhm_legacy_identity_honorable }
+			dhm_v050_cohesion_gain_small_effect = yes
+			add_prestige = minor_prestige_loss
+		}
+		else_if = {
+			limit = { has_global_variable = dhm_legacy_identity_protective }
+			add_prestige = minor_prestige_gain
+			add_stress = miniscule_stress_gain
+		}
+		else_if = {
+			limit = { has_global_variable = dhm_legacy_identity_ambitious }
+			add_prestige = minor_prestige_gain
+			dhm_v050_cohesion_loss_small_effect = yes
+		}
+		else_if = {
+			limit = { has_global_variable = dhm_legacy_identity_traditional }
+			add_piety = minor_piety_gain
+			add_stress = miniscule_stress_gain
+		}
+		else_if = {
+			limit = { has_global_variable = dhm_legacy_identity_severe }
+			add_prestige = minor_prestige_gain
+			dhm_v050_cohesion_loss_small_effect = yes
+		}
+	}
+}
+
+dhm_v060_maintain_household_effect = {
+	save_scope_as = dhm_manager
+	dhm_v050_cleanup_officers_effect = yes
+
+	if = {
+		limit = { NOT = { has_character_flag = dhm_v060_character_initialized } }
+		dhm_v060_initialize_character_effect = yes
+	}
+
+	# Succession or a changed designated heir starts a fresh, save-safe journey.
+	if = {
+		limit = {
+			exists = player_heir
+			OR = {
+				NOT = { has_variable = dhm_heir_journey_subject }
+				NOT = { var:dhm_heir_journey_subject ?= player_heir }
+			}
+		}
+		set_variable = { name = dhm_heir_journey_subject value = player_heir }
+		set_variable = { name = dhm_heir_journey_stage value = 0 }
+		remove_character_flag = dhm_heir_journey_completed
+		remove_character_flag = dhm_heir_reassessment_pending
+	}
+
+	if = {
+		limit = { NOT = { has_character_flag = dhm_v070_institution_maintenance_cooldown } }
+		add_character_flag = { flag = dhm_v070_institution_maintenance_cooldown years = 1 }
+		dhm_v050_maintain_household_effect = yes
+
+		# Existing officers receive a neutral loyalty baseline. Personal treatment,
+		# traits, friendships and rivalries move it thereafter.
+		every_courtier = {
+			limit = { dhm_v060_officer_trigger = yes NOT = { has_variable = dhm_officer_loyalty } }
+			dhm_v071_initialize_officer_loyalty_effect = yes
+		}
+		every_courtier = {
+			limit = { dhm_v060_officer_trigger = yes has_variable = dhm_officer_loyalty }
+			dhm_v080_clamp_officer_loyalty_effect = yes
+		}
+		# Office loyalty is now earned through continuous service, while personal
+		# career plans advance only for the bounded members of this court.
+		dhm_v080_maintain_officer_tenures_effect = yes
+		dhm_v080_maintain_career_plans_effect = yes
+
+		# The death bridge is written only to close family and spouses. No world scan.
+		every_close_family_member = {
+			limit = { is_alive = yes }
+			set_variable = { name = dhm_v060_household_manager value = scope:dhm_manager }
+		}
+		every_spouse = {
+			limit = { is_alive = yes }
+			set_variable = { name = dhm_v060_household_manager value = scope:dhm_manager }
+		}
+	}
+}
+
+# Mood now changes both eligibility and weights. The two extreme moods have
+# exclusive stories; the middle states tilt officer, spouse and recovery scenes.
+dhm_v060_story_pulse_effect = {
+	save_scope_as = dhm_manager
+	if = { limit = { global_var:dhm_household_cohesion >= 40 } remove_character_flag = dhm090_policy_addressed }
+	if = { limit = { global_var:dhm_household_cohesion >= 20 global_var:dhm_household_cohesion < 80 } remove_variable = dhm090_mood_episode }
+	if = {
+		limit = {
+			is_alive = yes
+			is_ai = no
+			NOT = { has_character_flag = dhm_living_story_cooldown }
+			NOT = { has_character_flag = dhm081_aftermath_pause }
+			NOT = { has_global_variable = dhm_setting_stories_off }
+		}
+		random_list = {
+			12 = {
+				modifier = { global_var:dhm_household_cohesion < 40 add = 8 }
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:officer } any_courtier = { dhm_v060_officer_trigger = yes dhm_v090_officer_review_due_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } }
+				random_courtier = { limit = { dhm_v060_officer_trigger = yes dhm_v090_officer_review_due_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } save_scope_as = dhm_story_officer add_character_flag = { flag = dhm_officer_story_recent years = 2 } }
+				set_variable = { name = dhm081_last_story_family value = flag:officer years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				dhm_v081_capture_officer_role_effect = yes
+				dhm_v090_begin_officer_review_effect = yes
+				if = { limit = { dhm_v081_officer_self_reliant_trigger = yes } trigger_event = { id = dhm_saga.0110 days = { 4 12 } } }
+				else = { trigger_event = { id = dhm_legacy.0150 days = { 4 12 } } }
+			}
+			10 = {
+				modifier = { global_var:dhm_household_cohesion < 40 add = 10 }
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:officer }
+					any_courtier = {
+						dhm_v060_officer_trigger = yes
+						NOT = { has_character_flag = dhm_officer_story_recent }
+						any_relation = { type = rival dhm_v060_officer_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } }
+					}
+				}
+				random_courtier = { limit = { dhm_v060_officer_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } any_relation = { type = rival dhm_v060_officer_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } } save_scope_as = dhm_officer_first }
+				scope:dhm_officer_first = { random_relation = { type = rival limit = { dhm_v060_officer_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } this != scope:dhm_officer_first } save_scope_as = dhm_officer_second } }
+				if = {
+					limit = { exists = scope:dhm_officer_first exists = scope:dhm_officer_second }
+					scope:dhm_officer_first = { add_character_flag = { flag = dhm_officer_story_recent years = 2 } }
+					scope:dhm_officer_second = { add_character_flag = { flag = dhm_officer_story_recent years = 2 } }
+					set_variable = { name = dhm081_last_story_family value = flag:officer years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+					trigger_event = { id = dhm_saga.0120 days = { 4 12 } }
+				}
+			}
+			9 = {
+				modifier = { global_var:dhm_household_cohesion < 40 add = 6 }
+				trigger = { exists = player_heir player_heir = { dhm_v060_parent_heir_arc_trigger = yes } }
+				player_heir = { save_scope_as = dhm_arc_first add_character_flag = { flag = dhm_relationship_arc_recent years = 5 } }
+				save_scope_as = dhm_arc_second
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_saga.3040 days = { 4 12 } }
+			}
+			11 = {
+				trigger = { has_global_variable = dhm_setting_extended_sagas exists = player_heir player_heir = { dhm_v071_current_heir_trigger = yes NOT = { has_character_flag = dhm_heir_journey_recent } } var:dhm_heir_journey_stage >= 3 var:dhm_heir_journey_stage < 4 NOT = { has_character_flag = dhm_heir_journey_completed } }
+				player_heir = { save_scope_as = dhm_heir add_character_flag = { flag = dhm_heir_journey_recent years = 2 } }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_saga.2200 days = { 4 12 } }
+			}
+			11 = {
+				trigger = { has_global_variable = dhm_setting_extended_sagas exists = player_heir player_heir = { dhm_v071_current_heir_trigger = yes NOT = { has_character_flag = dhm_heir_journey_recent } } var:dhm_heir_journey_stage >= 4 var:dhm_heir_journey_stage < 5 NOT = { has_character_flag = dhm_heir_journey_completed } }
+				player_heir = { save_scope_as = dhm_heir add_character_flag = { flag = dhm_heir_journey_recent years = 2 } }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_saga.2210 days = { 4 12 } }
+			}
+			10 = {
+				trigger = { has_global_variable = dhm_setting_extended_sagas exists = player_heir player_heir = { dhm_v071_current_heir_trigger = yes NOT = { has_character_flag = dhm_heir_journey_recent } } NOT = { has_character_flag = dhm_heir_reassessment_pending } var:dhm_heir_journey_stage >= 5 NOT = { has_character_flag = dhm_heir_journey_completed } }
+				player_heir = { save_scope_as = dhm_heir }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_saga.2220 days = { 4 12 } }
+			}
+			9 = {
+				modifier = { global_var:dhm_household_cohesion >= 60 add = 6 }
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:spouse } any_spouse = { dhm_v050_spouse_trigger = yes } any_close_family_member = { dhm_v060_child_protection_target_trigger = yes } }
+				random_spouse = { limit = { dhm_v050_spouse_trigger = yes } save_scope_as = dhm_partner_spouse add_character_flag = { flag = dhm_spouse_partner_recent years = 4 } }
+				random_close_family_member = { limit = { dhm_v060_child_protection_target_trigger = yes } save_scope_as = dhm_protected_child add_character_flag = { flag = dhm_child_protection_recent years = 5 } }
+				set_variable = { name = dhm081_last_story_family value = flag:spouse years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_saga.4000 days = { 4 12 } }
+			}
+			9 = {
+				modifier = { global_var:dhm_household_cohesion < 60 add = 6 }
+				trigger = { global_var:dhm_household_cohesion < 40 NOT = { has_character_flag = dhm090_policy_addressed } NOT = { has_character_flag = dhm090_policy_pending } NOT = { var:dhm081_last_story_family ?= flag:spouse } any_spouse = { dhm_v050_spouse_trigger = yes } }
+				random_spouse = { limit = { dhm_v050_spouse_trigger = yes } save_scope_as = dhm_partner_spouse add_character_flag = { flag = dhm_spouse_partner_recent years = 4 } }
+				set_variable = { name = dhm081_last_story_family value = flag:spouse years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				dhm_v090_rc2_begin_policy_pending_effect = yes
+				trigger_event = { id = dhm_saga.4100 days = { 4 12 } }
+			}
+			10 = {
+				modifier = { global_var:dhm_household_cohesion < 40 add = 10 }
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:marriage } any_close_family_member = { dhm_v060_damaged_marriage_target_trigger = yes } }
+				random_close_family_member = {
+					limit = { dhm_v060_damaged_marriage_target_trigger = yes }
+					save_scope_as = dhm_crisis_relative
+					add_character_flag = { flag = dhm_marriage_recovery_recent years = 6 }
+					random_spouse = {
+						limit = {
+							is_alive = yes
+							is_in_the_same_court_as = scope:dhm_manager
+							NOT = { has_character_flag = dhm_marriage_recovery_recent }
+							NOT = { has_character_flag = dhm_marriage_matter_recent }
+							NOT = { has_character_flag = dhm_living_marriage_recent }
+							dhm_v081_marriage_may_reopen_trigger = yes
+							OR = { opinion = { target = prev value <= 0 } stress_level >= 2 prev = { stress_level >= 2 } }
+						}
+						save_scope_as = dhm_crisis_spouse
+						add_character_flag = { flag = dhm_marriage_recovery_recent years = 6 }
+					}
+				}
+				set_variable = { name = dhm081_last_story_family value = flag:marriage years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				if = { limit = { dhm_v081_couple_self_reliant_trigger = yes } dhm_v081_couple_settles_effect = yes }
+				else = { trigger_event = { id = dhm_saga.6300 days = { 4 12 } } }
+			}
+			8 = {
+				modifier = { global_var:dhm_household_cohesion < 40 add = 8 }
+				trigger = { any_close_family_member = { dhm_v060_scandal_target_trigger = yes } }
+				random_close_family_member = { limit = { dhm_v060_scandal_target_trigger = yes } save_scope_as = dhm_crisis_relative add_character_flag = { flag = dhm_scandal_recovery_recent years = 6 } }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_saga.6000 days = { 4 12 } }
+			}
+			14 = {
+				trigger = { NOT = { var:dhm090_mood_episode ?= flag:fractured } global_var:dhm_household_cohesion < 20 any_close_family_member = { is_alive = yes is_adult = yes is_in_the_same_court_as = scope:dhm_manager } }
+				random_close_family_member = { limit = { is_alive = yes is_adult = yes is_in_the_same_court_as = scope:dhm_manager } save_scope_as = dhm_mood_relative }
+				dhm_apply_living_story_cooldown_effect = yes
+				set_variable = { name = dhm090_mood_episode value = flag:fractured }
+				trigger_event = { id = dhm_saga.7000 days = { 4 12 } }
+			}
+			12 = {
+				trigger = { NOT = { var:dhm090_mood_episode ?= flag:devoted } global_var:dhm_household_cohesion >= 80 any_close_family_member = { is_alive = yes is_adult = yes is_in_the_same_court_as = scope:dhm_manager } }
+				random_close_family_member = { limit = { is_alive = yes is_adult = yes is_in_the_same_court_as = scope:dhm_manager } save_scope_as = dhm_mood_relative }
+				dhm_apply_living_story_cooldown_effect = yes
+				set_variable = { name = dhm090_mood_episode value = flag:devoted }
+				trigger_event = { id = dhm_saga.7010 days = { 4 12 } }
+			}
+			7 = {
+				trigger = {
+					has_global_variable = dhm_setting_extended_sagas
+					NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled }
+					OR = {
+						has_global_variable = dhm_legacy_identity_scholarly
+						has_global_variable = dhm_legacy_identity_honorable
+						has_global_variable = dhm_legacy_identity_protective
+						has_global_variable = dhm_legacy_identity_ambitious
+						has_global_variable = dhm_legacy_identity_traditional
+						has_global_variable = dhm_legacy_identity_severe
+					}
+					NOT = { has_character_flag = dhm_legacy_challenge_recent }
+					any_close_family_member = { is_alive = yes is_adult = yes is_in_the_same_court_as = scope:dhm_manager }
+				}
+				random_close_family_member = { limit = { is_alive = yes is_adult = yes is_in_the_same_court_as = scope:dhm_manager } save_scope_as = dhm_legacy_critic }
+				add_character_flag = { flag = dhm_legacy_challenge_recent years = 6 }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_saga.9000 days = { 4 12 } }
+			}
+			35 = {
+				if = {
+					limit = { has_global_variable = dhm_setting_extended_sagas }
+					dhm_v050_story_pulse_effect = yes
+				}
+				else = { dhm_v070_living_story_pulse_effect = yes }
+			}
+		}
+	}
+}

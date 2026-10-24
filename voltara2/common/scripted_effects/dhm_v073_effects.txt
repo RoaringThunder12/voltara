@@ -1,0 +1,57 @@
+﻿# v0.7.3: lazy, idempotent ownership repair. No save-wide reset is needed.
+# Current scope = human manager, also saved as dhm_manager by the caller.
+dhm_v073_reconcile_office_effect = {
+	if = {
+		limit = {
+			has_variable = $REFERENCE$
+			NOT = { var:$REFERENCE$ ?= { dhm_v073_officer_available_trigger = yes NOT = { has_character_flag = dhm073_office_claimed } } }
+		}
+		if = {
+			limit = { var:$REFERENCE$ ?= { is_alive = yes } }
+			var:$REFERENCE$ = {
+				remove_character_flag = $ROLE$
+				# Corrupted old saves may point two offices at one person. Removing
+				# one duplicate must not erase the tenure of the office they retain.
+				if = {
+					limit = {
+						NOR = {
+							has_character_flag = dhm_office_steward
+							has_character_flag = dhm_office_matchmaker
+							has_character_flag = dhm_office_tutor
+							has_character_flag = dhm_office_chronicler
+						}
+					}
+					dhm_v080_close_officer_tenure_effect = yes
+				}
+			}
+		}
+		remove_variable = $REFERENCE$
+	}
+	# Prefer an existing appointment. Otherwise recover one surviving officer's
+	# old role; a skill-ordered single selection resolves old duplicates.
+	if = {
+		limit = { NOT = { has_variable = $REFERENCE$ } }
+		ordered_courtier = {
+			limit = {
+				dhm_v073_officer_available_trigger = yes
+				has_character_flag = $ROLE$
+				NOT = { has_character_flag = dhm074_office_reserved }
+				NOT = { has_character_flag = dhm073_office_claimed }
+			}
+			order_by = $SKILL$
+			position = 0
+			check_range_bounds = no
+			scope:dhm_manager = { set_variable = { name = $REFERENCE$ value = prev } }
+			# An orphaned legacy role begins a newly measured continuous term.
+			dhm_v080_begin_officer_tenure_effect = yes
+		}
+	}
+	if = {
+		limit = { has_variable = $REFERENCE$ }
+		var:$REFERENCE$ = {
+			add_character_flag = dhm073_office_claimed
+			add_character_flag = $ROLE$
+			dhm_v071_initialize_officer_loyalty_effect = yes
+		}
+	}
+}

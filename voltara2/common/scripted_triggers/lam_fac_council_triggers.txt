@@ -1,0 +1,211 @@
+﻿lam_fac_vote_against_heir_trigger = {
+	exists = scope:lam_vt_old
+	opinion = {
+		target = scope:lam_vt_old
+		value >= 20
+	}
+	NOT = {
+		opinion = {
+			target = scope:lam_vt_new
+			value >= 20
+		}
+	}
+}
+lam_fac_vote_against_crown_trigger = {
+	OR = {
+		opinion = {
+			target = scope:lam_vt_new
+			value >= 20
+		}
+		AND = {
+			has_variable = lam_gui_att
+			var:lam_gui_att >= 15
+		}
+	}
+}
+lam_fac_vote_against_rise_trigger = {
+	OR = {
+		AND = {
+			has_variable = lam_gui_att
+			var:lam_gui_att >= 10
+		}
+		has_trait = craven
+		AND = {
+			has_trait = content
+			NOT = {
+				has_trait = vengeful
+			}
+		}
+	}
+}
+lam_fac_vote_against_deal_trigger = {
+	OR = {
+		AND = {
+			has_variable = lam_gui_att
+			var:lam_gui_att <= -25
+		}
+		AND = {
+			has_variable = lam_gui_att
+			var:lam_gui_att < 0
+			OR = {
+				has_trait = vengeful
+				has_trait = stubborn
+				has_trait = zealous
+			}
+		}
+	}
+}
+lam_fac_vote_grave_heir_trigger = {
+	always = yes
+}
+lam_fac_vote_grave_crown_trigger = {
+	always = yes
+}
+lam_fac_vote_grave_rise_trigger = {
+	always = no
+}
+lam_fac_vote_grave_deal_trigger = {
+	always = no
+}
+lam_fac_vote_against_ban_trigger = {
+	OR = {
+		AND = {
+			has_variable = lam_gui_att
+			var:lam_gui_att >= 0
+		}
+		has_trait = craven
+	}
+}
+lam_fac_vote_against_merge_trigger = {
+	OR = {
+		NOT = {
+			opinion = {
+				target = scope:lam_vt_new
+				value >= 0
+			}
+		}
+		has_relation_rival = scope:lam_vt_new
+	}
+}
+lam_fac_vote_against_court_trigger = {
+	has_variable = lam_gui_att
+	var:lam_gui_att <= -15
+}
+lam_fac_vote_against_confidence_trigger = {
+	OR = {
+		NOT = {
+			opinion = {
+				target = scope:lam_vt_head
+				value >= 0
+			}
+		}
+		has_relation_rival = scope:lam_vt_head
+		AND = {
+			scope:lam_vt_head = {
+				has_variable = lam_fac_defeated
+			}
+			NOT = {
+				opinion = {
+					target = scope:lam_vt_head
+					value >= 30
+				}
+			}
+			NOT = {
+				AND = {
+					scope:lam_vt_head = {
+						OR = {
+							has_variable = lam_fac_conceded
+							has_variable = lam_fac_crowned
+						}
+					}
+					opinion = {
+						target = scope:lam_vt_head
+						value >= 0
+					}
+				}
+			}
+		}
+		AND = {
+			scope:lam_vt_head = {
+				has_variable = lam_fac_disgraced
+			}
+			NOT = {
+				opinion = {
+					target = scope:lam_vt_head
+					value >= 40
+				}
+			}
+		}
+		AND = {
+			exists = scope:lam_vt_force
+			NOT = {
+				this = scope:lam_vt_force
+			}
+			opinion = {
+				target = scope:lam_vt_force
+				value >= 15
+			}
+			NOT = {
+				opinion = {
+					target = scope:lam_vt_head
+					value >= 40
+				}
+			}
+		}
+	}
+}
+lam_fac_vote_grave_ban_trigger = {
+	always = yes
+}
+lam_fac_vote_grave_merge_trigger = {
+	always = yes
+}
+lam_fac_vote_grave_court_trigger = {
+	always = no
+}
+lam_fac_vote_grave_confidence_trigger = {
+	always = yes
+}
+lam_fac_vote_depose_heir_trigger = {
+	always = no
+}
+lam_fac_vote_depose_crown_trigger = {
+	always = no
+}
+lam_fac_vote_depose_rise_trigger = {
+	always = no
+}
+lam_fac_vote_depose_deal_trigger = {
+	always = no
+}
+lam_fac_vote_depose_ban_trigger = {
+	always = no
+}
+lam_fac_vote_depose_merge_trigger = {
+	always = no
+}
+lam_fac_vote_depose_court_trigger = {
+	always = no
+}
+lam_fac_vote_depose_confidence_trigger = {
+	always = yes
+}
+lam_fac_can_split_trigger = {
+	NOT = {
+		has_variable = lam_fac_split_cd
+	}
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	NOT = {
+		liege ?= {
+			has_variable = lam_fac_split_court_cd
+		}
+	}
+}
+lam_fac_fit_head_trigger = {
+	is_alive = yes
+	is_ruler = yes
+	is_adult = yes
+	is_imprisoned = no
+}

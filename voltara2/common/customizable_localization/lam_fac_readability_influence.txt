@@ -1,0 +1,144 @@
+﻿LamUxBasis1 = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_basis_military_rank_value = 1
+		}
+		localization_key = lam_ux_basis1_military
+	}
+	text = {
+		trigger = {
+			lam_ux_basis_economy_rank_value = 1
+		}
+		localization_key = lam_ux_basis1_economy
+	}
+	text = {
+		trigger = {
+			lam_ux_basis_standing_rank_value = 1
+		}
+		localization_key = lam_ux_basis1_standing
+	}
+	text = {
+		trigger = {
+			lam_ux_basis_court_rank_value = 1
+		}
+		localization_key = lam_ux_basis1_court
+	}
+	text = {
+		trigger = {
+			lam_ux_basis_network_rank_value = 1
+		}
+		localization_key = lam_ux_basis1_network
+	}
+	text = {
+		trigger = {
+			lam_ux_basis_service_rank_value = 1
+		}
+		localization_key = lam_ux_basis1_service
+	}
+	text = {
+		localization_key = lam_ux_basis_none
+		fallback = yes
+	}
+}
+LamUxBasis2 = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_basis_military_rank_value = 2
+		}
+		localization_key = lam_ux_basis2_military
+	}
+	text = {
+		trigger = {
+			lam_ux_basis_economy_rank_value = 2
+		}
+		localization_key = lam_ux_basis2_economy
+	}
+	text = {
+		trigger = {
+			lam_ux_basis_standing_rank_value = 2
+		}
+		localization_key = lam_ux_basis2_standing
+	}
+	text = {
+		trigger = {
+			lam_ux_basis_court_rank_value = 2
+		}
+		localization_key = lam_ux_basis2_court
+	}
+	text = {
+		trigger = {
+			lam_ux_basis_network_rank_value = 2
+		}
+		localization_key = lam_ux_basis2_network
+	}
+	text = {
+		trigger = {
+			lam_ux_basis_service_rank_value = 2
+		}
+		localization_key = lam_ux_basis2_service
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamUxBallot = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_ballot_visible_trigger = yes
+			has_variable = lam_ux_ballot_base
+			has_variable = lam_ux_ballot_bonus
+		}
+		localization_key = lam_ux_ballot_detail
+	}
+	text = {
+		trigger = {
+			lam_ux_ballot_visible_trigger = yes
+		}
+		localization_key = lam_ux_ballot_legacy
+	}
+	text = {
+		localization_key = lam_ux_ballot_idle
+		fallback = yes
+	}
+}
+LamUxBallotReason = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_ux_ballot_issue ?= flag:rise
+		}
+		localization_key = lam_ux_ballot_rise
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_ux_ballot_issue ?= flag:court
+				var:lam_ux_ballot_issue ?= flag:withdraw
+			}
+		}
+		localization_key = lam_ux_ballot_court
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_ux_ballot_issue ?= flag:heir
+				var:lam_ux_ballot_issue ?= flag:crown
+			}
+		}
+		localization_key = lam_ux_ballot_heir
+	}
+	text = {
+		trigger = {
+			var:lam_ux_ballot_issue ?= flag:confidence
+		}
+		localization_key = lam_ux_ballot_confidence
+	}
+	text = {
+		localization_key = lam_ux_ballot_normal
+		fallback = yes
+	}
+}

@@ -1,0 +1,545 @@
+﻿l_english:
+ swear_oath_interaction:0 "Swear Oath of Loyalty"
+ swear_oath_interaction_desc:0 "Swear an oath of loyalty to [recipient.GetShortUIName]."
+ swear_oath_interaction_notification:0 "Oath Sworn!"
+
+ swear_oath_interaction_AI:0 "An Oath of Loyalty"
+ swear_oath_interaction_des_AI:0 "Swear an Oath of loyalty to [recipient.GetShortUIName]."
+ swear_oath_interaction_notification_AI:0 "Oath Sworn!"
+
+ break_oath_interaction:0 "Break Your Oath of Loyalty"
+ break_oath_interaction_desc:0 "Break the Oath of loyalty sworn to [recipient.GetShortUIName]."
+ break_oath_interaction_notification:0 "Oathbreaker!"
+
+ oathholder_propose_interaction:0 "Become My Oathbound"
+ oathholder_propose_interaction_desc:0 "Ask [recipient.GetShortUIName] to swear an oath."
+ oathholder_propose_interaction_notification:0 "Oath Sworn!"
+
+ oathbound_pay_ransom_interaction:0 "Pay Ransom"
+ oathbound_pay_ransom_interaction_desc:0 "Offer to pay the ransom for [secondary_recipient.GetShortUIName]."
+
+ oathbound_call_ally_interaction:0 "Call Oathbound to War"
+ oathbound_call_ally_interaction_desc:0 "Call on [recipient.GetShortUIName] to join your war."
+
+ oathholder_propose_interaction_ai:0 "Temporary"
+ oathholder_propose_interaction_ai_desc:0 "Temporary"
+
+ forge_oath:0 "Forge Oathbound"
+ forge_oath_interaction:0 "Forge Oathbound"
+ forge_oath_desc:0 "I will attempt to gain an Oathbound."
+ forge_oath_tt_approved:0 "Attempt to forge an oath against [recipient.GetShortUIName]."
+ forge_oath_action:0 "Forge Oathbound Against"
+ forge_oath_desc_general:0 "Starts a Scheme to forge an Oath."
+
+ scheme_target_has_new_oathholder:0 "[target.GetShortUIName] is bound to another Oathholder."
+ scheme_owner_has_new_oathbound:0 "You have already bound another character to your service."
+ scheme_target_is_now_dead:0 "[target.GetShortUIName] has died."
+
+ oathbound_sway_vassals_interaction:0 "Sway for Oathholder"
+ oathbound_sway_vassals_interaction_tt_sway_approved:0 "Attempt to sway [recipient.GetShortUIName] for your Oathholder."
+
+ oathbound_sway_vassals:0 "Sway for Oathholder"
+ oathbound_sway_vassals_action:0 "Swaying for Oathholder -"
+ oathbound_sway_vassals_desc_general:0 "Starts a sway Scheme to improve their relationship with your Oathholder."
+ oathbound_sway_vassals_desc:0 "I will attempt to make [SCHEME.GetTargetCharacter.GetShortUINameNoTooltip] like my Oathholder more."
+
+ representing_liege_desc:0 "Speaking with the Liege's Authority: #P +25#!"
+ target_hates_oathholder_desc:0 "Target despises your Oathholder: #N -20#!"
+ target_likes_envoy_desc:0 "Target has a high opinion of you: #P +15#!"
+ target_dislikes_envoy_desc:0 "Target has a low opinion of you: #N -15#!"
+ envoy_is_dreaded_desc:0 "Intimidating Envoy: #P +15#!"
+ target_arrogant_mercenary_desc:0 "Target is arrogant: #N -15#!"
+ target_craven_envoy_desc:0 "Target is craven: #P +15#!"
+
+ oathholder:0 "Oathholder"
+ oathbound:0 "Oathbound"
+
+ relation_oathholder:0 "Oathholder"
+ relation_oathbound:0 "Oathbound"
+
+ start_forge_oath_interaction:0 "Oathbound Forgery"
+ start_forge_oath_interaction_notification:0 "Forging an Oath"
+ forge_oath_on_cooldown_perp_tt:0 "You recently attempted to forge an oath and must wait five years."
+ forge_oath_on_cooldown_victim_tt:0 "[target.GetShortUIName] was recently the victim of a forge attempt and cannot be targetted for five years."
+ landless_on_proposal_cooldown_tt:0 "[recipient.GetShortUIName] has recently been approached with an Oathbound contract and is considering their options."
+ ruler_on_proposal_cooldown_tt:0 "You have recently proposed an Oathbound contract and must wait."
+
+ oathbound_absorb_stress_interaction:0 "Shoulder Their Burden"
+ oathbound_absorb_stress_interaction_desc:0 "The weight of leadership is crushing [recipient.GetTitledFirstNameNoTooltip]. I will step into their inner sanctum, listen to their darkest anxieties, and quietly take over their most grueling, thankless affairs so they might find a moment of peace.\n\nAs their Oathbound, it is my duty to bear the weight they cannot."
+ oathbound_absorb_stress_flavor_ui:0 "#I 'I will carry this weight so you do not have to.'#!"
+ oathbound_recipient_needs_stress_req:0 "More than 30 Stress"
+ oathbound_actor_stress_limit_req:0 "You are too close to a mental breakdown to shoulder their burden"
+
+ oathbound_increase_control_decision:0 "Enforce Local Order For Oathholder"
+ oathbound_increase_control_decision_desc:0 "As an Oathbound, my blade serves my holder, but right now, the local peasantry needs a stark reminder of who is in charge. By deploying my camp followers to patrol the roads, hang bandits, and dispense harsh justice, I can bring this unruly county to heel.\n\n#I The patrol modifier will be removed when you pack up and move your camp. #!"
+ oathbound_increase_control_decision_tooltip:0 "You will begin actively patrolling in the county, increasing its [control|E] over time."
+ oathbound_increase_control_decision_confirm:0 "Enforce Local Order For Oathholder"
+ oathbound_increase_control_decision_toast:0 "Patrols Established"
+ oathbound_increase_control_decision_toast_desc:0 "Your camp followers scatter across the county, ready to bring the unruly locals to heel."
+
+ oathbound_control_cooldown_tt:0 "You have recently established patrols in a county"
+
+ oathbound_enforcing_order_weak:0 "Unproven Patrols"
+ oathbound_enforcing_order_weak_desc:0 "A bound adventurer is attempting to patrol this region, but their lack of a fearsome reputation and martial coordination means the locals remain defiant and bandits continue to slip through the cracks."
+ 
+ oathbound_enforcing_order_normal:0 "Oathbound Patrols"
+ oathbound_enforcing_order_normal_desc:0 "A respected bound adventurer and their camp followers are actively patrolling this region. Their proven martial competence and steady presence are effectively bringing the unruly locals to heel."
+ 
+ oathbound_enforcing_order_strong:0 "Ironclad Order"
+ oathbound_enforcing_order_strong_desc:0 "A legendary Oathbound enforcer has locked down this region. Their terrifying reputation precedes them; crime ceases to exist where their banners fly, as the local peasantry lives in absolute awe and fear of their patrols."
+ I_LOSE_AN_OATHHOLDER:0 "You will no longer be bound to [TARGET_CHARACTER.GetShortUIName]."
+
+ I_GET_AN_OATHBOUND:0 "[TARGET_CHARACTER.GetShortUIName|U] becomes your Oathbound"
+ I_GOT_AN_OATHBOUND:0 "[TARGET_CHARACTER.GetShortUIName|U] became your Oathbound"
+ THEY_GET_AN_OATHBOUND:0 "[CHARACTER.GetShortUIName|U] becomes [TARGET_CHARACTER.GetShortUINamePossessive] Oathbound"
+ THEY_GOT_AN_OATHBOUND:0 "[CHARACTER.GetShortUIName|U] became [TARGET_CHARACTER.GetShortUINamePossessive] Oathbound"
+ GLOBAL_BECOME_OATHBOUND:0 "Becomes [TARGET_CHARACTER.GetShortUINamePossessive] Oathholder"
+ GLOBAL_BECAME_OATHBOUND:0 "Became [TARGET_CHARACTER.GetShortUINamePossessive] Oathholder"
+
+ I_GET_AN_OATHHOLDER:0 "[TARGET_CHARACTER.GetShortUIName|U] becomes your Oathholder"
+ I_GOT_AN_OATHHOLDER:0 "[TARGET_CHARACTER.GetShortUIName|U] became your Oathholder"
+ THEY_GET_AN_OATHHOLDER:0 "[CHARACTER.GetShortUIName|U] becomes [TARGET_CHARACTER.GetShortUINamePossessive] Oathholder"
+ THEY_GOT_AN_OATHHOLDER:0 "[CHARACTER.GetShortUIName|U] became [TARGET_CHARACTER.GetShortUINamePossessive] Oathholder"
+ GLOBAL_BECOME_OATHHOLDER:0 "Becomes [TARGET_CHARACTER.GetShortUINamePossessive] Oathbound"
+ GLOBAL_BECAME_OATHHOLDER:0 "Became [TARGET_CHARACTER.GetShortUINamePossessive] Oathbound"
+
+
+ oath_keeper_opinion:0 "Loyal Oathbound"
+ oath_holder_opinion:0 "Oathholder"
+ rejected_by_oathholder_opinion:0 "Rejected oath"
+
+ oathbound_broke_oath_opinion:0 "Refused the Call of Their Oath"
+ beneficiary_war_county_won_opinion:0 "Conquered a County in My Name"
+ beneficiary_war_duchy_won_opinion:0 "Conquered a Duchy in My Name"
+ beneficiary_war_kingdom_won_opinion:0 "Conquered a Kingdom in My Name"
+ oathbound_relieved_boss_stress_opinion:0 "Shouldered My Burden"
+ oathbound_completed_task_opinion:0 "Fulfilled Their Task"
+ oathbound_completed_kill_task_opinion:0 "Dealt With a Delicate Matter"
+ oathbound_abandoned_task_opinion:0 "Abandoned Their Task"
+ oathbound_abandoned_kill_task_opinion:0 "Abandoned a Delicate Matter"
+
+ cannot_call_oath_keeper_reason:0 "Cannot call your Oathholder into your war."
+ oathholder_is_calling_oathbound:0 "Your Oathholder is calling you to war."
+
+ trait_oathkeeper:0 "Oathbound"
+ oathholder_name_found:0 "[SCOPE.sC('oathholder_target').GetUIName]"
+ oathholder_name_missing:0 "their Oathholder"
+ trait_oathkeeper_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] is bound by an Oath of loyalty to [ROOT.GetCharacter.Custom('GetOathholderName')]."
+
+ trait_oathbreaker:0 "Oathbreaker"
+ trait_oathbreaker_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] broke an Oath of loyalty. Disdainful."
+
+ trait_oathholder:0 "Oathholder"
+ oathkeeper_name_found:0 "[SCOPE.sC('oathkeeper_target').GetUIName]"
+ oathkeeper_name_missing:0 "their loyal Oathbound" 
+ trait_oathholder_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] has been sworn an oath of loyalty by [ROOT.GetCharacter.Custom('GetOathkeeperName')]."
+
+ OATHBOUND_LABEL:0 "Oathbound"
+ OATHHOLDER_LABEL:0 "Oathholder"
+
+ AI_OATHBOUND:0 "[recipient.GetShortUIName] is your Oathholder: $VALUE|=+0$"
+
+ oathbound_heir_force:0 "Force Oathbound's Heir"
+ oathbound_heir_tooltip:0 "Force your Oathbound and their heir to swear an oath of loyalty to your successor."
+ oathbound_heir_force_desc:0 "Force your Oathbound and their heir to swear an oath of loyalty to your successor."
+ oathbound_heir_force_confirm:0 "Force Oathbound's Heir"
+
+ oathbound_permanent_oath:0 "Make Your Oath Permanent"
+ oathbound_permanent_oath_tooltip:0 "Swear the future of your dynasty to your Oathholder's line."
+ oathbound_permanent_oath_desc:0 "Swear the future of your dynasty to your Oathholder's line."
+ oathbound_permanent_oath_confirm:0 "Make Your Oath Permanent"
+
+ permanent_oath:0 "An Oath Made Permanent"
+ permanent_oath_desc:0 "Your lineage is bound to your Oathholder's dynasty #weak (providing the primary heir is of their dynasty.)#!"
+
+ oathholder_life:0 "Oathholder's Life"
+ oathholder_life_desc:0 "This character benefits from having a sworn Oathbound, who makes their life a little safer."
+
+ oathbound_provisions_toast_title:0 "Oathbound Supplies Arrive"
+ oathbound_provisions_toast_desc:0 "Supply wagons bearing [SCOPE.GetValue('final_provs_gained')|0] [provisions|E] have arrived at the camp, courtesy of [my_boss.GetTitledFirstName]."
+
+ oathbound_notif.0001.t:0 "Oathbound"
+ oathbound_notif.0001.desc:0 "Your Oathholder has passed away."
+
+ call_oathbound.0001.opening:0 "To my Oathbound, [scope_me.GetName]"
+ call_oathbound.0001.desc:0 "I call on you to honor your Oath and join me against my enemies!"
+ call_oathbound.0001.a:0 "To War!"
+
+ swore_oathbound_contract_memory:0 "Became Oathbound"
+ swore_oathbound_contract_memory_desc:0 "I swore a binding oath of service to [new_boss.GetUIName]"
+ gained_oathbound_contract_memory:0 "Became Oathholder"
+ gained_oathbound_contract_memory_desc:0 "[new_servant.GetUIName] swore a binding oath of service to me"
+
+ oath_events.0001.t:0 "Oathbound"
+ oath_events.0001.desc:0 "As the halls fall silent, you kneel before [recipient.GetShortUIName], your eyes steadfast and unwavering. The flickering torchlight casts elongated shadows, bearing witness to the gravity of this moment. The gathered courtiers watch intently as you begin your oath.\n\n'In the light of day and the dark of night, I stand unwavering by your side. I shall claim no land and seek no title. My sword is yours, my life devoted to your cause. I am the blade in your defense and the beacon against those that would oppose you. I pledge my service and honor to you, [recipient.GetShortUIName], now and for all days to come.'"
+ oath_events.0001.a:0 "So my Oath begins."
+ oath_events.0001.a.desc:0 "You become Oathbound."
+ oath_events.0001.b:0 "I have reconsidered."
+ oath_events.0001.b.desc:0 "You do not swear an oath."
+
+ oath_events.1001.t:0 "Oathbound"
+ oath_events.1001.desc:0 "As the halls fall silent, [actor.GetShortUIName] kneels before you, [actor.GetHerHis] eyes steadfast and unwavering. The flickering torchlight casts elongated shadows, bearing witness to the gravity of this moment. The gathered courtiers watch intently as [actor.GetShortUIName] begins [actor.GetHerHis] oath.\n\n'In the light of day and the dark of night, I stand unwavering by your side. I shall claim no land and seek no title. My sword is yours, my life devoted to your cause. I am the blade in your defense, the sentinel at your gate, the beacon against those that would oppose you. I pledge my existence and honor to you, [actor.GetShortUIName], now and for all days to come.'"
+ oath_events.1001.a:0 "I accept your pledge of loyalty."
+ oath_events.1001.a.desc:0 "[actor.GetShortUIName] becomes your Oathbound."
+ oath_events.1001.b:0 "I do not accept your oath."
+ oath_events.1001.b.desc:0 "[actor.GetShortUIName] is rejected."
+
+ oath_events.0002.t:0 "Becoming Oathbound"
+ oath_events.0002.desc:0 "The air in the camp is thick with unspoken tension. Before me sits [actor.GetTitledFirstName], looking down not with the usual disdain reserved for landless wanderers, but with a calculated need. A heavy pouch of coin is tossed to the stone floor at my feet.\n\n'Your reputation precedes you,' [actor.GetFirstNameNoTooltip] states, leaning forward. 'I have men of noble birth who cower at the first sign of blood, and enemies who test my borders. Swear your blade to me. Forsake your worldly ambitions, become my Oathbound, and you shall never lack for purpose."
+ oath_events.0002.a:0 "I shall be your sword."
+ oath_events.0002.a.desc:0 "You take the coin and become Oathbound."
+ oath_events.0002.b:0 "My destiny remains my own."
+ oath_events.0002.b.desc:0 "You refuse the offer and walk away."
+
+ oath_events.2001.t:0 "Becoming Oathholder"
+ oath_events.2001.desc:0 "The mud and canvas of the camp provide a stark contrast to the grandeur of my throne room, yet the weight of the moment is no less heavy. [recipient.GetTitledFirstName] weighs the heavy pouch of coin I brought before nodding slowly. Sinking to one knee amidst the bustling camp, [recipient.GetSheHe] looks up with a resolute gaze.\n\n'In the light of day and the dark of night, I stand unwavering by your side,' [recipient.GetSheHe] swears, repeating the ancient vow of the landless. 'I shall claim no land and seek no title. My sword is yours, my life devoted to your cause. I pledge my existence and honor to you, my [actor.GetTitleAsName], now and for all days to come.'"
+ oath_events.2001.a:0 "Rise, my Oathbound."
+ oath_events.2001.a.desc:0 "[recipient.GetShortUIName] swears [recipient.GetHerHis] sword to your service."
+ oath_events.2001.b:0 "On second thought, I have no need of you."
+ oath_events.2001.b.desc:0 "You retract your offer. The gold remains in your purse."
+
+ oath_events.3001.t:0 "A Forged Oath"
+ oath_events.3001.desc:0 "A smug messenger bearing the seal of [owner.GetTitledFirstName] has arrived at my camp. I broke the wax expecting a genuine contract of employment, but instead, my eyes fell upon a perfectly aged document complete with my own "signature" and the testimonies of a dozen paid witnesses.\n\nThe letter politely informs me that I am already bound to [owner.GetHerHis] service by an ancient, unbreakable oath. The forgery is flawless. If I deny it, the nobility will brand me a liar and an Oathbreaker. I have been completely outplayed."
+ oath_events.3001.a:0 "I have no choice..."
+ oath_events.3001.a.desc:0 "You submit to the blackmail and become Oathbound to [owner.GetTitledFirstName]."
+ oath_events.3001.b:0 "I deny the oath..."
+ oath_events.3001.b.desc:0 "You refuse to submit to [owner.GetTitledFirstName]'s' attempt."
+
+ oath_events.3002.t:0 "A Forged Failure"
+ oath_events.3002.desc:0 "A drunken scribe from the court of [owner.GetTitledFirstName] was caught boasting in a tavern about a grand forgery meant to ensnare me. Apparently, [owner.GetTitledFirstName] attempted to fabricate ancient documents proving I was [owner.GetHerHis] sworn servant.\n\nFortunately, the fools misspelled my name and used the wrong royal seal. The plot collapsed into a laughingstock before it could even be presented to me. I remain a free wanderer, though I will not forget this insult."
+ oath_events.3002.a:0 "Thank goodness..."
+ oath_events.3002.a.desc:0 "The scheme fails. You retain your freedom and lose opinion of [owner.GetTitledFirstName]."
+
+ oath_events.3003.t:0 "My New Oathbound"
+ oath_events.3003.desc:0 "The ink was barely dry, yet it was enough to bind a legend. My messengers have returned with wonderful news: [target.GetTitledFirstName] took one look at my 'ancient' documents, recognized the political checkmate, and bent the knee.\n\nWhy fight wars or spend fortunes when a simple piece of parchment and a forged wax seal can accomplish the same goal? I have successfully tethered a wandering hero to my court without shedding a single drop of blood."
+ oath_events.3003.a:0 "[target.GetFirstNameNoTooltip] belongs to me now."
+ oath_events.3003.a.desc:0 "#S Has Happened\n#!Your cunning succeeded. [target.GetTitledFirstName] has become your Oathbound."
+
+ oath_events.3004.t:0 "Enjoy Being An Oathbreaker"
+ oath_events.3004.desc:0 "It seems [target.GetTitledFirstName] possesses more stubborn pride than common sense. Rather than gracefully accepting their new place by my side, the fool publicly denounced my 'flawless' historical documents as vile forgeries!\n\nThey may have slipped my leash, but they have paid a terrible price. The nobility has already turned their backs, branding [target.GetHerHim] an Oathbreaker. Let us see how far a wanderer can travel with a completely ruined reputation."
+ oath_events.3004.a:0 "Let them choke on their pride."
+ oath_events.3004.a.desc:0 "The scheme fails to bind them, but [target.GetTitledFirstName] is severely punished and gains the Oathbreaker trait."
+
+ oath_events.3005.t:0 "A Ruined Oath Forgery"
+ oath_events.3005.desc:0 "Incompetence! My grand scheme has been undone by the careless tongues and clumsy hands of my own scribes. Rumors of the forged documents reached [target.GetTitledFirstName] before my envoys could even present the ultimatum.\n\nNow, the wanderer simply laughs at my efforts, and tavern gossips whisper of my failed manipulation. I am surrounded by absolute fools."
+ oath_events.3005.a:0 "Darn it!"
+ oath_events.3005.a.desc:0 "Your scheme fails completely. [target.GetTitledFirstName] keeps their freedom and loses opinion of you."
+
+ oathbound_heir_events.0002.t:0 "The Forced Oath"
+ oathbound_heir_events.0002.desc:0 "As [scope_oathholder.GetShortUIName] lies on [scope_oathholder.GetHerHis] deathbed, [scope_oathholder.GetHerHis] eyes burn with the intensity of a ruler who has always taken what [scope_oathholder.GetSheHe] desired. Weak in body, but not in will, [scope_oathholder.GetSheHe] grasps your hand tightly and pulls you close.\n\n'This oath will not die with me,' [scope_oathholder.GetSheHe] hisses through clenched teeth. 'I have built my legacy on the back of your service, and so it shall continue. You will swear yourself to my heir, and this bond will be stronger for it.' The Oath is not a request, but a command that you must obey.\n\nYou turn to face [scope_oathholder_primary_heir.GetShortUIName] and begin, 'In the light of day and the dark of night, I stand unwavering by your side. I shall claim no land and seek no title. My sword is yours, my life devoted to your cause. I am the blade in your defense, the sentinel at your gate, the beacon against those that would oppose you. I pledge my existence and honor to you, [scope_oathholder_primary_heir.GetShortUIName], now and for all days to come.'"
+ oathbound_heir_events.0002.a:0 "The Oath continues..."
+ oathbound_heir_events.0002.a.desc:0 "With no room to refuse, you bow to the Oathholder’s final demand, knowing that you will be tied to their heir’s will, whether wanted or not."
+
+ oathbound_heir_events.1002.t:0 "The Forced Oath"
+ oathbound_heir_events.1002.desc:0 "[scope_oathkeeper.GetShortUIName] enters your hall with a nervous look painted across [scope_oathkeeper.GetHerHis] face. You begin, 'I will not allow your oath to die with me, [scope_oathkeeper.GetShortUIName]. I have built my legacy on the back of your service, and so it shall continue. You will swear yourself to [scope_primary_heir.GetShortUIName], my successor, and this bond will be stronger for it.' The Oath is not a request but a command that an Oathbound must obey.\n\n[scope_oathkeeper.GetShortUIName] turns to face your heir, [scope_primary_heir.GetShortUIName], and begins, 'In the light of day and the dark of night, I stand unwavering by your side. I shall claim no land and seek no title. My sword is yours, my life devoted to your cause. I am the blade in your defense, the sentinel at your gate, the beacon against those that would oppose you. I pledge my existence and honor to you, [scope_primary_heir.GetShortUIName], now and for all days to come.'"
+ oathbound_heir_events.1002.a:0 "The Oath continues."
+ oathbound_heir_events.1002.a.desc:0 "With no room to refuse, your Oathbound bows to the your final demand, knowing that the future lies in service to your heir, [scope_primary_heir.GetShortUIName], whether wanted or not."
+ oathbound_heir_events.1002.b:0 "I reconsider."
+ oathbound_heir_events.1002.b.desc:0 "[scope_oathkeeper.GetShortUIName] leaves the hall."
+
+
+
+
+ oathbound_permanent_events.0001.t:0 "Blood Oath of Lineages"
+ oathbound_permanent_events.0001.desc:0 "Before the ancestral altar, you place your hand upon the weathered family tome. The scent of sacred incense hangs heavy as you address [scope_oathholder.GetShortUIName].\n\n'By blood and bone, I bind not just my sword but my lineage to yours. Let my family bear this oath as I have, and let your descendants command them as you command me.' You draw a dagger across your palm, letting blood drip upon the parchment. 'From this day until the last stone of your keep falls, my house shall serve yours. Our honor flows as one river.'\n\n'We are the blades in your defense, the sentinels at your gate...'"
+ oathbound_permanent_events.0001.a:0 "Our blood becomes their shield."
+ oathbound_permanent_events.0001.a.desc:0 "#S Has Happened\n#!Your lineage have become eternally Oathbound to [scope_oathholder.GetShortUIName]'s lineage. #weak (Only broken when the primary heir to [scope_oathholder.GetShortUIName] or yourself are not of their respective dynasties.)#!"
+
+ oathbound_permanent_events.0002.t:0 "Continued Blood Oath"
+ oathbound_permanent_events.0002.desc:0 "You stand where those that came before you once stood beside [scope_oathholder.GetShortUIName] and the sacred family tome of [scope_oathholder.GetHerHis] house.\n\n'By the honour of my house, the oath shall continue through me.'"
+ oathbound_permanent_events.0002.a:0 "For our honour."
+ oathbound_permanent_events.0002.a.desc:0 "#S Has Happened\n#!You have honoured the Blood Oath and became Oathbound to [scope_oathholder.GetShortUIName]."
+
+ oathbound_permanent_events.0003.t:0 "Continued Blood Oath"
+ oathbound_permanent_events.0003.desc:0 "You greet [scope_oathholder.GetShortUIName] by the sacred family tome of [scope_oathholder.GetHerHis] house.\n\n'By the honour of my house, the oath shall continue.'"
+ oathbound_permanent_events.0003.a:0 "For our honour."
+ oathbound_permanent_events.0003.a.desc:0 "#S Has Happened\n#!You have honoured the Blood Oath and became Oathbound to [scope_oathholder.GetShortUIName]."
+
+ oathbound_permanent_events.0004.t:0 "Blood Oath Invalidated"
+ oathbound_permanent_events.0004.desc:0 "With the untimely death of [scope_oathholder.GetShortUIName] and no legitimate heir to take over [scope_oathholder.GetHerHis] rulership, I and my house are freed from our Blood Oath."
+ oathbound_permanent_events.0004.a:0 "It is all over now."
+ oathbound_permanent_events.0004.a.desc:0 "#S Has Happened\n#!You are no longer Oathbound."
+
+ break_oath_events.0001.t:0 "Oathbreaker"
+ break_oath_events.0001.desc:0 "An Oath? You remember the very moment it was sworn to [recipient.GetShortUIName]. Words. Meaningless air shaped by the tongue to appease, to gain position, to bide time. 'I shall claim no land and seek no title,' you vowed. How quaint. How... limiting. The world turns, opportunities bloom, and clinging to outdated promises is the path of the weak. That Oath was a ladder; having climbed it, why wouldn't you kick it away? Let [recipient.GetShortUIName] learn the true value of sworn loyalty – nothing."
+ break_oath_events.0001.a:0 "The Oath means nothing."
+ break_oath_events.0001.a.desc:0 "You become an Oathbreaker."
+ break_oath_events.0001.b:0 "I have reconsidered."
+ break_oath_events.0001.b.desc:0 "You keep your Oath."
+
+ oathbound_absorb_stress_toast:0 "Mind at Ease"
+ oathbound_absorb_stress_toast_desc:0 "You have stepped in to handle matters personally, absorbing the mental toll of leadership so that [recipient.GetTitledFirstName] does not have to."
+
+
+
+
+ helpful_oathbound.0001.t:0 "Order Restored"
+ helpful_oathbound.0001.desc:0 "I stand over the town square, watching the local peasantry go about their day. The gallows are full, the roads are clear of bandits, and the fear of my camp followers has finally been hammered into this unruly populace.\n\nMy Oathholder's laws are now absolute here. [patrolled_county_scope.GetName] is entirely pacified. There is no more work for us here."
+ helpful_oathbound.0001.a:0 "Time to pack up the gallows."
+
+
+ oathholder_target_county_name_found:0 "[oathholder_target_county.GetName]"
+ oathholder_target_county_name_missing:0 "the targeted region"
+
+ oathbound_task_events.0001.t:0 "Task: Restore Order"
+ oathbound_task_events.0001.desc:0 "A missive arrives from [scope_oathholder.GetTitledFirstName]. The situation in [scope_target_county.GetName] has deteriorated. Taxes are being withheld, local magistrates are being ignored, and the peasantry grow bolder by the day.\n\n"The local guards are useless or corrupt," the letter reads. "I need my Oathbound. Bring your camp to the unruly province, draw your steel, and remind these people who rules them.""
+ oathbound_task_events.0001.a:0 "I accept the task."
+ oathbound_task_events.0001.a.desc:0 "You will immediately begin traveling to [scope_target_county.GetName]. [scope_oathholder.GetTitledFirstName] will provide your provisions.\n#I You must remain stationed in the county until Order reaches 100 to successfully complete this task.#!"
+ oathbound_task_events.0001.b:0 "I will make my own way there."
+ oathbound_task_events.0001.b.desc:0 "You accept the task, but will manually travel to the targeted county when you are ready. [scope_oathholder.GetTitledFirstName] will provide your provisions."
+
+ oathbound_task_events.0002.t:0 "Enforcing the Oathholder's Will"
+ oathbound_task_events.0002.desc:0 "I have arrived at [scope_target_county.GetName], and the tension in the air is palpable. Smugglers linger openly on the roadsides, and the locals sneer at the crown's banners without an ounce of fear.\n\nI give the order to my followers to unpack the wagons and set up camp. It is time to patrol the streets, knock in a few doors, and show this rabble exactly what happens when they defy the [ROOT.GetCharacter.Custom('GetOathholderName')]."
+ oathbound_task_events.0002.a:0 "Let's get to work."
+ oathbound_task_events.0002.a.desc:0 "You begin actively patrolling in [scope_target_county.GetName]. The effectiveness of your presence will depend on your Martial skill and level of Fame."
+
+ oathbound_task_complete_toast:0 "Task Completed: Order Restored"
+ oathbound_task_complete_toast_desc:0 "You have successfully stamped out the unrest. The streets are quiet, the taxes flow once more, and word of your brutal efficiency is spreading."
+
+ oathbound_task_increasing_control:0 "Task: Enforce Order"
+ oathbound_task_increasing_control_desc:0 "Word has arrived from [ROOT.GetCharacter.Custom('GetOathholderName')]. The peasantry in [ROOT.GetCharacter.Custom('GetOathholderControlTargetName')] are growing unruly, and the local garrison is failing to maintain the peace. I have been commanded to move my camp to the region and restore order by any means necessary.\n\nCurrent Control: #V [ROOT.Char.MakeScope.ScriptValue('oathholder_target_county_control_value')|0]/100#!\n#I Raise Control to 100.#!"
+ oathbound_task_increasing_control_tooltip:0 "You will travel to your Oathholder's targeted county and use your camp's presence to forcefully suppress local unrest until Order is fully restored."
+ oathbound_task_increasing_control_confirm:0 "Travel to the county"
+ oathbound_task_increasing_control_effect_tt_1:0 "You will travel to the targeted county."
+ oathbound_task_increasing_control_effect_tt_2:0 "Your Oathholder will provide the provisions."
+
+ oathholder_no_longer_capital_toast:0 "Task Cancelled: Target Lost"
+ oathholder_no_longer_capital_toast_desc:0 "The task has been abandoned because your Oathholder no longer controls the targeted county. The contract is null and void."
+
+ oathbound_task_cancelled_naturally_toast:0 "Task Concluded: Order Restored"
+ oathbound_task_cancelled_naturally_desc:0 "Word has reached your camp that the unrest in the county has already been quelled. The local magistrates have regained control, meaning your presence is no longer required."
+
+ oathbound_imprisoned_on_task_toast:0 "Task Failed: Stripped of Agency"
+ oathbound_imprisoned_on_task_toast_desc:0 "Stripped of your physical agency, you are entirely unable to command your camp or enforce your Oathholder's will in [ROOT.GetCharacter.Custom('GetOathholderControlTargetName')]. Without your strength to keep the rabble in line, the contract has been broken."
+
+ oathbound_broken_relation_on_task_toast:0 "Task Abandoned: Oaths Shattered"
+ oathbound_broken_relation_on_task_toast_desc:0 "An oath broken is a contract severed. You no longer serve your former master, and your word carries no weight. Your camp has packed up and ceased all operations in [ROOT.GetCharacter.Custom('GetOathholderControlTargetName')]."
+
+ oathbound_task_events.1001.t:0 "Task: Sway Vassal"
+ oathbound_task_events.1001.desc:0 "A runner arrives from [scope_oathholder.GetTitledFirstName] bearing a sealed missive. There is no call to arms, nor orders to march my camp. Instead, it is a request for delicate diplomacy.\n\nIt seems [scope_target_vassal.GetTitledFirstName] has been nursing a bitter grudge against my Oathholder, and their sour mood could threaten the stability of the realm. Rather than sending my mercenaries to crack skulls, my employer wants me to use a lighter touch.\n\n#I I am expected to warm [scope_target_vassal.GetFirstNameNoTooltip]'s disposition until they hold my Oathholder in reasonably high regard. #!"
+ oathbound_task_events.1001.a:0 "I shall begin sending letters at once!"
+ oathbound_task_events.1001.a.desc:0 "You will begin a scheme on behalf of your Oathholder to #V Sway#! [scope_target_vassal.GetTitledFirstName].\n\n#I You must raise their opinion of your Oathholder to at least 50. #!\n\n@warning_icon! #X You do not need to travel for this task.#!"
+
+
+ oathbound_task_events.1002.t:0 "Task Completed: Sway Vassal"
+ oathbound_task_events.1002.desc:0 "Through careful words, well-placed gifts, and persistent correspondence, I have successfully smoothed over the friction between [scope_target_vassal.GetTitledFirstName] and my employer.\n\nWhere there was once bitter resentment, [scope_target_vassal.GetSheHe] now speaks of [scope_oathholder.GetTitledFirstName] with newfound respect and understanding. I have sent word to [scope_oathholder.GetFirstNameNoTooltip] that the matter is resolved, and the realm is secure—without a single sword needing to be drawn."
+ 
+ oathbound_task_events.1002.a:0 "The quill is indeed mightier than the sword."
+
+ oathholder_send_to_kill_rival_ai_desc:0 "Command your Oathbound to fulfill their vows by eliminating a dangerous rival or nemesis."
+ oathholder_send_to_kill_rival_ai_tooltip:0 "Your Oathbound will be ordered to begin a Murder scheme against your chosen enemy."
+
+ oathbound_task_events.1003.t:0 "A Bloody Mandate"
+ 
+ oathbound_task_events.1003.desc:0 "I am summoned to meet with my Oathholder in absolute secrecy. When I arrive, [scope_oathholder.GetTitledFirstName] is pacing the stone floor, their expression dark and burdened by the burdens of rule.\n\n"There are threats to my reign that cannot be handled in the light of day," [scope_oathholder.GetFirstNameNoTooltip] begins, turning to face me. "You swore an oath to serve my interests, to be the shield at my side and the blade in the dark. I must call upon that vow now."\n\n[scope_oathholder.GetFirstNameNoTooltip] steps closer, lowering [scope_oathholder.GetHerHis] voice to a dangerous whisper. "[scope_target_rival.GetTitledFirstName] is a cancer upon my realm. I need [scope_target_rival.GetHerHim] removed. Permanently. Use your spies, use your poisons, use whatever means necessary, but do not fail me in this.""
+ 
+ oathbound_task_events.1003.a:0 "It will be done. By my oath."
+ oathbound_task_events.1003.a.desc:0 "You will begin a Murder scheme against [scope_target_rival.GetTitledFirstName]."
+
+ oathbound_task_events.1004.t:0 "A Promise Kept"
+ 
+ oathbound_task_events.1004.desc:0 "The deed is done. My Oathholder's rival is no more.\n\nI stand quietly before [scope_oathholder.GetTitledFirstName], awaiting my judgment. For a long moment, my Oathholder simply looks at me, a profound mixture of relief and immense gratitude washing over their features.\n\n"You have done me a service that can never truly be spoken of, yet will never be forgotten," [scope_oathholder.GetFirstNameNoTooltip] says softly, placing a hand on my shoulder. "You have proven the true weight of your oath today. I sleep safer knowing you are bound to me.""
+ 
+ oathbound_task_events.1004.a:0 "My blade is yours to command."
+
+ order_oathbound_to_push_my_claim:0 "Invoke the Oath: Press My Claim"
+ compell_oathbound_to_push_my_claim_desc:0 "Call upon your sworn Oathbound, ordering them to raise their banners and bleed their armies to press your claim."
+ compell_mesmerized_to_push_my_claim_notification:0 "Oath Invoked: War Declared"
+
+ oathholder_order_events.0100.t:0 "The Call to Arms"
+ 
+ oathholder_order_events.0100.desc:0 "I am summoned to the map room, where [my_oathholder.GetTitledFirstName] stands over a sprawling parchment depiction of the known world. A heavy iron dagger has been driven firmly into the lands belonging to [chosen_target.GetTitledFirstName].\n\n"You swore an oath to serve my interests," [my_oathholder.GetFirstNameNoTooltip] says, their voice ringing with absolute authority. "That territory—[chosen_claim.GetName]—is mine by right. Yet it sits in the hands of a usurper."\n\nThey turn to face me, their eyes hard and demanding. "I am calling upon your vow. Marshal your levies. Raise your knights. You will march on their borders and take my lands back for me.""
+ 
+ oathholder_order_events.0100.a:0 "My sword is yours. We march at dawn."
+ oathholder_order_events.0100.b:0 "I will not bleed my realm for this! (Break Oath)"
+
+ oathholder_order_events.0101.t:0 "Banners of Iron"
+ 
+ oathholder_order_events.0101.desc:0 "The horns echo through the courtyard as my commanders rally the troops. The declaration of war has already been sent; there is no turning back now. We will bleed for [chosen_claim.GetName].\n\n[my_oathholder.GetTitledFirstName] watches the men assemble, giving a solemn, approving nod. "You have honored your vow," they say quietly. "Bring me the usurper's crown, and your loyalty will be remembered."\n\nI bow my head. The cost in gold and lives will be steep, but my honor remains intact. I am bound to serve."
+ 
+ oathholder_order_events.0101.a:0 "By blood and iron, it will be yours."
+
+ oathholder_order_events.0102.t:0 "A Shattered Vow"
+ 
+ oathholder_order_events.0102.desc:0 "I look at the map, visualizing the thousands of my own peasants who would die in the mud for a title that isn't even mine. The weight of the crown feels heavier than the weight of my word.\n\n"No," I say, my voice steady despite the pounding in my chest. "I swore to aid you, but I will not bankrupt my realm and slaughter my people for your territorial ambitions."\n\n[my_oathholder.GetTitledFirstName]'s expression hardens into pure, absolute disgust. "Your word is as empty as your honor," they spit, turning their back on me. "Do not expect me to forget this betrayal.""
+ 
+ oathholder_order_events.0102.a:0 "My duty to my people comes first."
+
+
+ oathbound_COUNTY_CB_NAME:0 "Oathbound Claim on the [TITLE.GetBaseName]"
+ oathbound_CONQUEST_DUCHY_CB_NAME:0 "Oathbound Claim on the [TITLE.GetBaseName]"
+ oathbound_CONQUEST_KINGDOM_CB_NAME:0 "Oathbound Claim on the [TITLE.GetBaseName]"
+
+
+ oathbound_WAR_NAME:0 "[ConcatIfNeitherEmpty('$ORDER|q$', ' ')][ATTACKER.GetPrimaryTitle.GetAdjective] Oath-War for the [TITLE.GetBaseName]"
+ oathbound_WAR_NAME_BASE:0 "[ATTACKER.GetPrimaryTitle.GetAdjective] Oath-War"
+
+ oathbound_CONQUEST_WAR_NAME:0 "[ConcatIfNeitherEmpty('$ORDER|q$', ' ')][ATTACKER.GetPrimaryTitle.GetAdjective] Oath-War for the [TITLE.GetBaseName]"
+ oathbound_CONQUEST_WAR_NAME_BASE:0 "[ATTACKER.GetPrimaryTitle.GetAdjective] Oath-War"
+
+ oathbound_msg_county_conquest_war_invalidated_message:0 "The circumstances of the vow have changed, rendering the Oath-War invalid."
+
+ oathbound_county_conquest_cb_victory_desc_attacker:0 "By blood and iron, you have fulfilled your sworn vow. The contested lands have been successfully seized and delivered into the hands of your Oathholder, proving the absolute strength of your loyalty."
+ 
+ oathbound_county_conquest_cb_victory_desc:0 "[attacker.GetTitledFirstName] has successfully conquered the contested lands, fulfilling their sworn vow and transferring the seized territory directly to their Oathholder."
+
+
+
+
+ oathbound_sway_job_invalid_toast:0 "Assignment Terminated"
+ oathbound_sway_job_invalid_toast_desc:0 "Your diplomatic target has passed away. The task assigned by your Oathholder has been abruptly concluded."
+
+
+
+ oathbound_control_modifier_upgraded_toast:0 "Patrol Effectiveness Upgraded"
+ oathbound_control_modifier_upgraded_strong_desc:0 "Your growing reputation and martial skill have elevated the strength of your patrols. The county now benefits from the presence of a legendary enforcer. Locals and troublemakers alike know your name."
+ oathbound_control_modifier_upgraded_normal_desc:0 "Your rising profile has strengthened your patrols. Your enforcement is no longer going unnoticed, and the county benefits from a more capable hand keeping order."
+
+
+
+ oathbound_task_events.0003.t:0 "The Oathholder's Peace"
+ 
+ oathbound_task_events.0003.desc:0 "My boots hit the cobblestones as I lead a patrol through the streets of [scope_patrol_county.GetName]. As an Oathbound to my Oathholder, it is my sworn duty to ensure that their laws are respected and their peace is maintained, even in the darkest corners of the realm.\n\nThe locals watch me carefully from doorways and alleys. Some look with gratitude, others with veiled hostility. I keep my hand resting on the pommel of my blade, watching for any sign of dissent, banditry, or insurrection. Order will be kept today, no matter what it takes."
+ 
+ oathbound_task_events.0003.a:0 "We walk the streets until dusk."
+
+ oathbound_patrol_event_nothing_tt:0 "You spend the day patrolling, but find nothing of note."
+ oathbound_patrol_event_moderate_tt:0 "You break up a local disturbance and enforce your liege's laws."
+ oathbound_patrol_event_major_tt:0 "You decisively crush a budding criminal enterprise, bringing absolute order to the streets."
+
+
+ oathbound_patrol_toast_nothing:0 "Uneventful Patrol"
+ oathbound_patrol_toast_moderate:0 "Order Maintained"
+ oathbound_patrol_toast_major:0 "Decisive Justice"
+
+
+ oathholder_send_to_duel_rival_ai_desc:0 "Command your Oathbound to travel to your enemy's location and challenge them to a duel to the death."
+ oathholder_send_to_duel_rival_ai_tooltip:0 "Your Oathbound will be ordered to travel and initiate lethal Single Combat with your chosen enemy."
+
+
+ oathholder_target_duel_name_found:0 "[oathholder_target_duel.GetTitledFirstName]"
+ oathholder_target_duel_name_missing:0 "the target"
+ 
+ oathholder_target_duel_location_found:0 "[oathholder_target_duel_location.GetName]"
+ oathholder_target_duel_location_missing:0 "their current location"
+
+ oathbound_task_duel_rival:0 "Task: Duel [ROOT.GetCharacter.Custom('GetOathholderDuelTargetName')]"
+ 
+ oathbound_task_duel_rival_desc:0 "Word has arrived from [ROOT.GetCharacter.Custom('GetOathholderName')]. I have been commanded to track down [ROOT.GetCharacter.Custom('GetOathholderDuelTargetName')] and challenge them to mortal combat. I must pack my gear, travel to their location, and execute my sworn duty."
+ 
+ oathbound_task_duel_rival_tooltip:0 "Begin traveling to the target's current location to initiate the duel."
+ 
+ oathbound_task_duel_rival_effect_tt_1:0 "You will begin traveling to [ROOT.GetCharacter.Custom('GetOathholderDuelTargetLocationName')]."
+ 
+ oathbound_task_duel_rival_effect_tt_2:0 "Upon arrival, you will attempt to corner them and initiate single combat."
+
+ oathbound_task_events.0004.t:0 "A Champion's Errand"
+ 
+ oathbound_task_events.0004.desc:0 "I am called before [scope_oathholder.GetTitledFirstName]. [scope_oathholder.GetSheHe] stands tall, [scope_oathholder.GetHerHis] expression hard and resolute. \n\n"There is an insult to my honor that has gone unanswered for too long," [scope_oathholder.GetTitledFirstName] says, their voice echoing in the hall. "The coward [scope_target_rival.GetTitledFirstName] hides behind their walls, thinking themselves safe from my reach."\n\n[scope_oathholder.GetFirstNameNoTooltip] turns to me, eyes blazing with martial pride. "I am sending my finest blade to answer them. Ride out. Find them. Look them in the eye, and strike them down in my name.""
+ 
+ oathbound_task_events.0004.a:0 "I will saddle my horse immediately."
+ oathbound_task_events.0004.a.desc:0 "You will begin traveling to [scope_target_rival.GetTitledFirstName]'s location."
+ oathbound_task_events.0004.b:0 "I will make my preparations and depart soon."
+ oathbound_task_events.0004.b.desc:0 "You can begin the journey via the Decisions menu when you are ready."
+
+
+ oathbound_task_events.0005.t:0 "A Public Reckoning"
+ 
+ oathbound_task_events.0005.desc:0 "I have arrived at [scope_target_rival.GetCurrentLocation.GetName]. I did not come here to skulk in the shadows or slip a blade into [scope_target_rival.GetHerHis] ribs in the dead of night. I am the sworn Oathbound of [scope_oathholder.GetTitledFirstName], and I am here to deliver [scope_oathholder.GetHerHis] justice in the light of day.\n\nI make my way to the center of the local courtyard, ignoring the murmurs of the garrison. Drawing my weapon and planting it into the earth, I call out [scope_target_rival.GetHerHis] name for all to hear, formally demanding [scope_target_rival.GetSheHe] step forward and answer for [scope_target_rival.GetHerHis] transgressions with steel."
+ 
+ oathbound_task_events.0005.a:0 "Show yourself and face me!"
+ 
+ oathbound_duel_begun_tt:0 "Pride forces [scope_target_rival.GetTitledFirstName] to answer your call. A lethal duel begins!"
+ oathbound_duel_failed_tt:0 "[scope_target_rival.GetTitledFirstName] cowers behind [scope_target_rival.GetHerHis] guards and refuses the challenge. The task is abandoned."
+ 
+ oathbound_duel_failed_toast:0 "Challenge Refused"
+
+
+ oathbound_task_events.0008.t:0 "The Dust Settles"
+ 
+ oathbound_task_events.0008.desc:0 "The clash of steel has ended. The heavy breathing and the scent of blood fill the air as the duel reaches its definitive, brutal conclusion."
+ 
+ oathbound_task_events.0008.a:0 "A victory in my Oathholder's name."
+ oathbound_task_events.0008.a.desc:0 "You have emerged victorious from the duel!"
+ 
+ oathbound_task_events.0008.b:0 "Ugh... I have failed my oath..."
+ oathbound_task_events.0008.b.desc:0 "You have been defeated."
+
+ oathbound_task_events.0007.t:0 "A Hollow Journey"
+ 
+ oathbound_task_events.0007.desc:0 "I have arrived, my hand ready on the hilt of my sword... only to find that circumstances have drastically changed. My quarry is no longer in a position to cross blades with me. \n\nFate has robbed me of the chance to fulfill my vow. I have no choice but to pack my gear and return home."
+ 
+ oathbound_task_events.0007.a:0 "A disappointing end to the errand."
+
+ oathbound_duel_attempted_opinion:0 "Rode out for me"
+
+ oathholder_decided_duel_toast:0 "Orders: Honorable Combat"
+ oathholder_decided_duel_toast_desc:0 "[root.GetTitledFirstName] has decreed that any enemies of the realm shall be dealt with openly. Expect to be sent into direct, martial duels."
+
+ oathholder_decided_murder_toast:0 "Orders: Shadows & Silence"
+ oathholder_decided_murder_toast_desc:0 "[root.GetTitledFirstName] has decided that true threats are best handled quietly. Expect to be dispatched on clandestine murder schemes."
+
+ oathholder_decided_neither_toast:0 "Orders: Stay Your Blade"
+ oathholder_decided_neither_toast_desc:0 "[root.GetTitledFirstName] has chosen a path of mercy and diplomacy. For the foreseeable future, you will not be commanded to spill blood on their behalf."
+
+ oathbound_task_cancelled_epidemic_toast:0 "Task Abandoned: Epidemic"
+ oathbound_task_cancelled_epidemic_desc:0 "A deadly sickness has swept through the region. With the peasantry dying and panic taking hold, your mandate has collapsed. You have been forced to break camp and abandon your efforts to enforce order."
+
+ oathbound_sway_job_cancelled_toast:0 "Assignment Abandoned"
+ oathbound_sway_job_cancelled_toast_desc:0 "You have abandoned the sway scheme assigned by your Oathholder. They will not soon forget this failure of loyalty."
+
+ oathbound_kill_job_invalid_toast:0 "Target No Longer Valid"
+ oathbound_kill_job_invalid_toast_desc:0 "The target is no longer considered an enemy by your Oathholder. The murder assignment has been cancelled and your scheme has been ended."
+
+ oathbound_kill_scheme_discovered_toast:0 "Scheme Discovered"
+ oathbound_kill_scheme_discovered_toast_desc:0 "Your murder scheme has been uncovered. The assignment has been abandoned to protect both you and your Oathholder."
+
+ oathbound_kill_job_cancelled_toast:0 "Assignment Abandoned"
+ oathbound_kill_job_cancelled_toast_desc:0 "You have abandoned the murder scheme assigned by your Oathholder. They will remember this act of disloyalty."
+
+ oathbound_duel_target_dead_toast:0 "Target Already Dead"
+ oathbound_duel_target_dead_toast_desc:0 "Your duel target has already perished. The assignment has been concluded without your direct involvement."
+
+ oathbound_duel_target_invalid_toast:0 "Target No Longer Valid"
+ oathbound_duel_target_invalid_toast_desc:0 "The target is no longer considered an enemy by your Oathholder. The duel assignment has been cancelled."
+
+ oathbound_debug_cleanup_complete_toast:0 "Debug: Cleanup Complete"
+ oathbound_debug_cleanup_complete_desc:0 "All Oathbound variables, flags, and modifiers have been removed from this character."
+
+
+ oathbound_became_leader_events.0001.t:0 "From Sword to Scepter"
+ 
+ oathbound_became_leader_events.0001.desc:0 "For so long, my life was defined entirely by the oath I swore. I was a weapon pointed at the enemies of my liege, an enforcer of their will, and a loyal servant bound by a sacred, unyielding vow.\n\nBut the wheel of fortune turns. Today, I do not stand in a courtyard awaiting orders. I stand in my own hall. The earth beneath my feet, the titles to my name, and the subjects who look to me for protection—they are mine. My old vow has been respectfully dissolved, replaced by a formal alliance of peers.\n\nI am no longer merely Oathbound. I am a ruler in my own right."
+ 
+ oathbound_became_leader_events.0001.a:0 "Bring me my crown."
+ oathbound_became_leader_events.0001.a.desc:0 "You are no longer an Oathbound. All active tasks have been abandoned, and you have secured a lasting alliance with your former Oathholder."
+
+ oathbound_remove_all_vars_title:0 "Debug: Remove All Oathbound Variables"
+ oathbound_remove_all_vars_desc:0 "Removes every single variable, flag, and modifier related to the Oathbound system from yourself, your boss, and all counties."
+ oathbound_remove_all_vars_tooltip:0 "Remove all Oathbound variables and flags from this character."
+ oathbound_remove_all_vars_confirm:0 "Remove all Oathbound variables and flags from this character."
+
+ call_oathbound_to_war_decision_ai:0 "Call Oathbound to War"
+ call_oathbound_to_war_decision_ai_desc:0 "Your Oathbound has a duty to fight at your side. Command them to join your war."
+ call_oathbound_to_war_decision_ai_tooltip:0 "Order the Oathbound to march alongside your forces."
+ call_oathbound_to_war_decision_ai_confirm:0 "Order the Oathbound to join the war effort."
+
+ oathholder_send_increase_control_decision_ai_desc:0 "The time has come to assign your Oathbound a task in service of your realm."
+ oathholder_send_increase_control_decision_ai_tooltip:0 "Assign a task to your Oathbound."
+
+ oathholder_decide_rival_kill_type:0 "Deal with a Rival"
+ oathholder_decide_rival_kill_type_confirm:0 "Order the Oathbound to deal with this rival."
+
+ oathholder_send_to_sway_vassal_ai:0 "Send Oathbound to Sway a Vassal"
+ oathholder_send_to_sway_vassal_ai_confirm:0 "Order the Oathbound to win over this disloyal vassal."
+
+ oathholder_send_to_kill_rival_ai:0 "Order Oathbound to Eliminate a Rival"
+ oathholder_send_to_kill_rival_ai_confirm:0 "Order the Oathbound to eliminate this rival."
+
+ oathholder_send_increase_control_decision_all_counties_ai:0 "Send Oathbound to Restore Order"
+ oathholder_send_increase_control_decision_all_counties_ai_confirm:0 "Order the Oathbound to restore order in a troubled county."
+
+ oathholder_send_to_duel_rival_ai:0 "Order Oathbound to Challenge a Rival"
+ oathholder_send_to_duel_rival_ai_confirm:0 "Order the Oathbound to challenge this rival to a duel."
+
+ oathbound_task_duel_rival_confirm:0 "Ride out to face your appointed enemy in honorable combat."

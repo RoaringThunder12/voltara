@@ -1,0 +1,127 @@
+﻿# v0.7.4: confirmation-time guards. No candidate search or worldwide scan.
+
+dhm_v074_appoint_steward_trigger = {
+ OR = {
+  AND = { exists = scope:dhm074_appointment_role scope:dhm074_appointment_role = flag:steward }
+  AND = {
+   NOT = { exists = scope:dhm074_appointment_role }
+   has_character_flag = dhm_appoint_steward_context
+   NOR = { has_character_flag = dhm_appoint_matchmaker_context has_character_flag = dhm_appoint_tutor_context has_character_flag = dhm_appoint_chronicler_context }
+  }
+ }
+}
+
+dhm_v074_appoint_matchmaker_trigger = {
+ OR = {
+  AND = { exists = scope:dhm074_appointment_role scope:dhm074_appointment_role = flag:matchmaker }
+  AND = {
+   NOT = { exists = scope:dhm074_appointment_role }
+   has_character_flag = dhm_appoint_matchmaker_context
+   NOR = { has_character_flag = dhm_appoint_steward_context has_character_flag = dhm_appoint_tutor_context has_character_flag = dhm_appoint_chronicler_context }
+  }
+ }
+}
+
+dhm_v074_appoint_tutor_trigger = {
+ OR = {
+  AND = { exists = scope:dhm074_appointment_role scope:dhm074_appointment_role = flag:tutor }
+  AND = {
+   NOT = { exists = scope:dhm074_appointment_role }
+   has_character_flag = dhm_appoint_tutor_context
+   NOR = { has_character_flag = dhm_appoint_steward_context has_character_flag = dhm_appoint_matchmaker_context has_character_flag = dhm_appoint_chronicler_context }
+  }
+ }
+}
+
+dhm_v074_appoint_chronicler_trigger = {
+ OR = {
+  AND = { exists = scope:dhm074_appointment_role scope:dhm074_appointment_role = flag:chronicler }
+  AND = {
+   NOT = { exists = scope:dhm074_appointment_role }
+   has_character_flag = dhm_appoint_chronicler_context
+   NOR = { has_character_flag = dhm_appoint_steward_context has_character_flag = dhm_appoint_matchmaker_context has_character_flag = dhm_appoint_tutor_context }
+  }
+ }
+}
+
+dhm_v074_appointment_role_valid_trigger = {
+ OR = { dhm_v074_appoint_steward_trigger = yes dhm_v074_appoint_matchmaker_trigger = yes dhm_v074_appoint_tutor_trigger = yes dhm_v074_appoint_chronicler_trigger = yes }
+}
+dhm_v074_can_appoint_trigger = {
+ is_alive = yes
+ is_ai = no
+ this = scope:dhm_manager
+ dhm_v074_appointment_role_valid_trigger = yes
+ exists = scope:dhm_office_candidate
+ scope:dhm_office_candidate = {
+  dhm_v050_officer_candidate_trigger = yes
+  scope:dhm_manager = { NOR = { var:dhm_officer_steward ?= prev var:dhm_officer_matchmaker ?= prev var:dhm_officer_tutor ?= prev var:dhm_officer_chronicler ?= prev } }
+ }
+}
+
+# Ownership is per proposal, not just per character or per proposed spouse.
+# Legacy queued windows are accepted only when no new proposal owns the subject.
+dhm_v074_proposal_owned_trigger = {
+ exists = scope:dhm_marriage_subject
+ scope:dhm_marriage_subject = {
+  is_alive = yes
+  OR = {
+   AND = {
+    exists = scope:dhm074_proposal_id
+    var:dhm074_proposal_id ?= scope:dhm074_proposal_id
+    var:dhm074_proposal_candidate ?= scope:dhm_marriage_candidate
+    var:dhm074_proposal_manager ?= scope:dhm_manager
+   }
+   AND = {
+    NOT = { exists = scope:dhm074_proposal_id }
+    NOT = { has_variable = dhm074_proposal_id }
+    NOT = { has_variable = dhm074_proposal_candidate }
+    NOT = { has_variable = dhm074_proposal_manager }
+   }
+  }
+ }
+}
+
+# Cheap window checks do not run acceptance scoring on every option hover.
+dhm_v074_proposal_context_trigger = {
+ is_alive = yes
+ is_ai = no
+ exists = scope:dhm_manager
+ this = scope:dhm_manager
+ exists = scope:dhm_marriage_candidate
+ dhm_v074_proposal_owned_trigger = yes
+ scope:dhm_marriage_subject = {
+  is_ai = yes
+  age >= 12
+  is_in_the_same_court_as = root
+  is_imprisoned = no
+  is_hostage = no
+  is_betrothed = no
+  NOT = { has_trait = incapable }
+  NOT = { has_character_flag = dhm_matchmaking_cooldown }
+  NOT = { has_character_flag = dhm_matchmaking_retry_cooldown }
+  NOT = { has_variable = dhm_courtship_reserved_for }
+ }
+ scope:dhm_marriage_candidate = {
+  is_alive = yes
+  is_ai = yes
+  this != scope:dhm_marriage_subject
+  is_imprisoned = no
+  is_hostage = no
+  is_betrothed = no
+  NOT = { has_trait = incapable }
+  exists = matchmaker
+  matchmaker = { is_alive = yes is_imprisoned = no is_hostage = no }
+ }
+}
+dhm_v074_family_proposal_valid_trigger = {
+ dhm_v074_proposal_context_trigger = yes
+ scope:dhm_marriage_subject = { dhm_marriage_subject_event_valid_trigger = yes }
+ scope:dhm_marriage_candidate = { dhm_valid_marriage_candidate_trigger = yes }
+}
+dhm_v074_courtier_proposal_valid_trigger = {
+ dhm_v074_proposal_context_trigger = yes
+ NOT = { has_global_variable = dhm_setting_courtier_marriage_off }
+ scope:dhm_marriage_subject = { dhm_courtier_marriage_subject_event_valid_trigger = yes }
+ scope:dhm_marriage_candidate = { dhm_valid_courtier_marriage_candidate_trigger = yes }
+}

@@ -1,0 +1,9861 @@
+﻿namespace = lam_faction
+lam_faction.0100 = {
+	type = character_event
+	title = lam_pd_result_title
+	desc = lam_pd_old_request
+	theme = realm
+	option = {
+		name = lam_cr_close
+	}
+}
+lam_faction.0200 = {
+	type = character_event
+	title = lam_faction.0200.t
+	desc = lam_faction.0200.desc
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = scope:lam_fac_new
+		animation = personality_bold
+	}
+	immediate = {
+		scope:lam_fac_new ?= {
+			save_scope_as = lam_fac_new
+		}
+	}
+	option = {
+		name = lam_faction.0200.a
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_agenda
+				value = flag:loyalist
+			}
+		}
+		trigger_event = lam_faction.0210
+	}
+	option = {
+		name = lam_faction.0200.b
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_agenda
+				value = flag:courtly
+			}
+		}
+		trigger_event = lam_faction.0210
+	}
+	option = {
+		name = lam_faction.0200.c
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_agenda
+				value = flag:parochial
+			}
+		}
+		trigger_event = lam_faction.0210
+	}
+	option = {
+		name = lam_faction.0200.d
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_agenda
+				value = flag:glory_hound
+			}
+		}
+		trigger_event = lam_faction.0210
+	}
+	option = {
+		name = lam_faction.0200.e
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_agenda
+				value = flag:zealot
+			}
+		}
+		trigger_event = lam_faction.0210
+	}
+	option = {
+		name = lam_faction.0200.f
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_agenda
+				value = flag:dynastic
+			}
+		}
+		trigger_event = lam_faction.0210
+	}
+}
+lam_faction.0210 = {
+	type = character_event
+	title = lam_faction.0210.t
+	desc = lam_faction.0210.desc
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = scope:lam_fac_new
+		animation = happiness
+	}
+	option = {
+		name = lam_faction.0210.n0
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_nmv
+				value = 0
+			}
+			lam_gn_refresh_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.0210.n1
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_nmv
+				value = 1
+			}
+			lam_gn_refresh_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.0210.n2
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_nmv
+				value = 2
+			}
+			lam_gn_refresh_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.0210.n3
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_nmv
+				value = 3
+			}
+			lam_gn_refresh_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.0210.n4
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_nmv
+				value = 4
+			}
+			lam_gn_refresh_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.0210.n5
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_nmv
+				value = 5
+			}
+			lam_gn_refresh_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.0210.n6
+		scope:lam_fac_new = {
+			set_variable = {
+				name = lam_fac_nmv
+				value = 6
+			}
+			lam_gn_refresh_effect = yes
+		}
+	}
+}
+lam_faction.0290 = {
+	type = character_event
+	title = lam_faction.0290.t
+	desc = lam_faction.0290.desc
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	option = {
+		name = lam_faction.0290.a
+		trigger = {
+			exists = liege
+			custom_description = {
+				text = lam_ff_court_liege_tt
+				lam_ff_can_found_in_trigger = {
+					LORD = liege
+				}
+			}
+		}
+		show_as_unavailable = {
+			exists = liege
+		}
+		if = {
+			limit = {
+				lam_ff_can_found_in_trigger = {
+					LORD = liege
+				}
+			}
+			set_variable = {
+				name = lam_ff_lord
+				value = liege
+			}
+			trigger_event = lam_faction.0300
+		}
+	}
+	option = {
+		name = lam_faction.0290.b
+		trigger = {
+			custom_description = {
+				text = lam_ff_court_own_tt
+				lam_ff_can_found_in_trigger = {
+					LORD = root
+				}
+			}
+		}
+		show_as_unavailable = {
+			always = yes
+		}
+		if = {
+			limit = {
+				lam_ff_can_found_in_trigger = {
+					LORD = root
+				}
+			}
+			set_variable = {
+				name = lam_ff_lord
+				value = root
+			}
+			trigger_event = lam_faction.0300
+		}
+	}
+	option = {
+		name = lam_faction.0300.x
+		add_prestige = medium_prestige_value
+		remove_variable = lam_found_cd
+	}
+}
+lam_faction.0300 = {
+	type = character_event
+	title = lam_faction.0300.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					var:lam_ff_lord ?= root
+				}
+				desc = lam_faction.0300.own
+			}
+			desc = lam_faction.0300.peer
+		}
+	}
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	immediate = {
+		save_scope_as = lam_ff_founder
+		var:lam_ff_lord = {
+			save_scope_as = lam_ff_lord
+		}
+		clear_saved_scope = lam_ff_c1
+		clear_saved_scope = lam_ff_c2
+		clear_saved_scope = lam_ff_c3
+		scope:lam_ff_lord = {
+			ordered_vassal = {
+				limit = {
+					is_ai = yes
+					is_ruler = yes
+					is_adult = yes
+					is_imprisoned = no
+					NOT = {
+						this = scope:lam_ff_founder
+					}
+					NOT = {
+						has_variable = lam_bloc_lead
+					}
+					NOT = {
+						has_variable = lam_ff_refused
+					}
+				}
+				order_by = lam_ff_order_value
+				max = 3
+				check_range_bounds = no
+				set_variable = {
+					name = lam_ff_acc
+					value = lam_ff_accept_value
+				}
+				if = {
+					limit = {
+						NOT = {
+							exists = scope:lam_ff_c1
+						}
+					}
+					save_scope_as = lam_ff_c1
+				}
+				else_if = {
+					limit = {
+						NOT = {
+							exists = scope:lam_ff_c2
+						}
+					}
+					save_scope_as = lam_ff_c2
+				}
+				else = {
+					save_scope_as = lam_ff_c3
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0300.me
+		trigger = {
+			lam_ff_self_current_trigger = yes
+		}
+		custom_tooltip = lam_faction.0300.me_tt
+		custom_tooltip = lam_faction.0300.me_cofounders_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_ff_self_current_trigger = yes
+				}
+				scope:lam_ff_lord = {
+					lam_ff_install_player_effect = {
+						NEW = root
+						FAVOUR = 0
+						FOUNDER = root
+					}
+				}
+				if = {
+					limit = {
+						has_variable = lam_fac_cof1
+					}
+					remove_variable = lam_fac_cof1
+				}
+				if = {
+					limit = {
+						has_variable = lam_fac_cof2
+					}
+					remove_variable = lam_fac_cof2
+				}
+				scope:lam_ff_lord = {
+					ordered_vassal = {
+						limit = {
+							lam_ff_cofounder_trigger = yes
+						}
+						order_by = "opinion(root)"
+						max = 2
+						check_range_bounds = no
+						set_variable = {
+							name = lam_bloc
+							value = root
+						}
+						set_variable = {
+							name = lam_fac_tier
+							value = 1
+						}
+						set_variable = {
+							name = lam_fac_pinned
+							value = yes
+							years = 2
+						}
+						if = {
+							limit = {
+								has_variable = lam_fac_unbound
+							}
+							remove_variable = lam_fac_unbound
+						}
+						if = {
+							limit = {
+								house ?= root.house
+							}
+							set_variable = {
+								name = lam_fac_cof_why
+								value = flag:kin
+							}
+						}
+						else_if = {
+							limit = {
+								OR = {
+									has_relation_friend = root
+									has_relation_best_friend = root
+								}
+							}
+							set_variable = {
+								name = lam_fac_cof_why
+								value = flag:friend
+							}
+						}
+						else = {
+							set_variable = {
+								name = lam_fac_cof_why
+								value = flag:liking
+							}
+						}
+						root = {
+							if = {
+								limit = {
+									NOT = {
+										has_variable = lam_fac_cof1
+									}
+								}
+								set_variable = {
+									name = lam_fac_cof1
+									value = prev
+								}
+							}
+							else = {
+								set_variable = {
+									name = lam_fac_cof2
+									value = prev
+								}
+							}
+						}
+						root = {
+							send_interface_message = {
+								type = event_generic_good
+								title = lam_ff_cofounder_title
+								right_icon = prev
+							}
+						}
+					}
+				}
+				set_variable = {
+					name = lam_found_cd
+					value = yes
+					years = 5
+				}
+				if = {
+					limit = {
+						has_variable = lam_fac_pinned
+					}
+					remove_variable = lam_fac_pinned
+				}
+				save_scope_as = lam_fac_new
+				scope:lam_ff_lord = {
+					lam_fac_quick_refresh_effect = yes
+				}
+				trigger_event = lam_faction.0200
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0300.c1
+		trigger = {
+			lam_ff_candidate_current_trigger = {
+				WHO = scope:lam_ff_c1
+			}
+		}
+		custom_tooltip = lam_faction.0300.acc1
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_ff_candidate_current_trigger = {
+						WHO = scope:lam_ff_c1
+					}
+				}
+				lam_ff_ask_effect = {
+					WHO = scope:lam_ff_c1
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0300.c2
+		trigger = {
+			lam_ff_candidate_current_trigger = {
+				WHO = scope:lam_ff_c2
+			}
+		}
+		custom_tooltip = lam_faction.0300.acc2
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_ff_candidate_current_trigger = {
+						WHO = scope:lam_ff_c2
+					}
+				}
+				lam_ff_ask_effect = {
+					WHO = scope:lam_ff_c2
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0300.c3
+		trigger = {
+			lam_ff_candidate_current_trigger = {
+				WHO = scope:lam_ff_c3
+			}
+		}
+		custom_tooltip = lam_faction.0300.acc3
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_ff_candidate_current_trigger = {
+						WHO = scope:lam_ff_c3
+					}
+				}
+				lam_ff_ask_effect = {
+					WHO = scope:lam_ff_c3
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0300.x
+		add_prestige = medium_prestige_value
+		remove_variable = lam_found_cd
+	}
+}
+lam_faction.0400 = {
+	type = character_event
+	title = lam_faction.0400.t
+	desc = {
+		desc = lam_faction.0400.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_purged = scope:lam_purge_lead
+				}
+				desc = lam_faction.0400.desc.head
+			}
+			desc = lam_faction.0400.desc.core
+		}
+	}
+	theme = dungeon
+	override_background = {
+		reference = dungeon
+	}
+	left_portrait = {
+		character = scope:lam_purged
+		animation = prisonhouse
+	}
+	right_portrait = {
+		character = scope:lam_purge_lead
+		animation = anger
+	}
+	option = {
+		name = lam_faction.0400.a
+		remove_short_term_gold = medium_gold_value
+		scope:lam_purge_lead = {
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = 15
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					var:lam_fac_tier ?= 1
+				}
+				add_opinion = {
+					target = root
+					modifier = lam_fac_reassured_opinion
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0400.b
+		add_dread = 15
+		every_in_list = {
+			variable = lam_bloc_leads
+			set_variable = {
+				name = lam_fac_fear
+				value = yes
+				years = 3
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0400.c
+		add_dread = 5
+		scope:lam_purge_lead = {
+			every_in_list = {
+				variable = lam_fac_members
+				if = {
+					limit = {
+						has_variable = lam_bloc
+					}
+					remove_variable = lam_bloc
+				}
+				if = {
+					limit = {
+						has_variable = lam_fac_pinned
+					}
+					remove_variable = lam_fac_pinned
+				}
+				lam_pd_grievance_add_effect = {
+					KIND = policy
+					AMOUNT = 10
+					MONTHS = 36
+				}
+			}
+			set_variable = {
+				name = lam_fac_disband
+				value = yes
+			}
+		}
+	}
+}
+lam_faction.0500 = {
+	type = character_event
+	title = lam_faction.0500.t
+	desc = lam_faction.0500.desc
+	theme = realm
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_fs_lead
+		animation = anger
+	}
+	right_portrait = {
+		character = scope:lam_fs_new
+		animation = personality_bold
+	}
+	immediate = {
+		scope:lam_vt_head ?= {
+			save_scope_as = lam_fs_lead
+		}
+		scope:lam_vt_lead ?= {
+			save_scope_as = lam_fs_new
+		}
+	}
+	option = {
+		name = lam_faction.0500.a
+		scope:lam_fs_lead = {
+			change_variable = {
+				name = lam_fac_favour
+				add = 10
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+		}
+		scope:lam_fs_new = {
+			change_variable = {
+				name = lam_fac_favour
+				add = -20
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0500.b
+		scope:lam_fs_new = {
+			change_variable = {
+				name = lam_fac_favour
+				add = 15
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+		}
+		scope:lam_fs_lead = {
+			change_variable = {
+				name = lam_fac_favour
+				add = -15
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0500.c
+	}
+}
+lam_faction.0600 = {
+	type = character_event
+	title = lam_faction.0600.t
+	desc = lam_faction.0600.desc
+	theme = war
+	override_background = {
+		reference = army_camp
+	}
+	left_portrait = {
+		character = scope:lam_abs_lead
+		animation = war_attacker
+	}
+	trigger = {
+		exists = scope:lam_abs_vf
+		NOT = {
+			exists = joined_faction
+		}
+	}
+	option = {
+		name = lam_faction.0600.a
+		set_variable = {
+			name = lam_fac_armed
+			value = yes
+			years = 5
+		}
+		set_variable = {
+			name = lam_fac_rose_head
+			value = scope:lam_abs_lead
+			years = 5
+		}
+		set_variable = {
+			name = lam_fac_rose_vs
+			value = scope:lam_abs_lord
+			years = 5
+		}
+		lam_fac_unblock_effect = yes
+		if = {
+			limit = {
+				can_join_faction = scope:lam_abs_vf
+			}
+			join_faction = scope:lam_abs_vf
+		}
+		scope:lam_abs_lead = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_granted_opinion
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0600.b
+		remove_variable = lam_bloc
+		if = {
+			limit = {
+				has_variable = lam_fac_pinned
+			}
+			remove_variable = lam_fac_pinned
+		}
+		liege ?= {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_reassured_opinion
+			}
+		}
+		scope:lam_abs_lead = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_left_opinion
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0600.c
+	}
+}
+lam_faction.0700 = {
+	type = character_event
+	title = lam_faction.0700.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_cl_cause ?= flag:heir
+				}
+				desc = lam_faction.0700.heir
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cl_cause ?= flag:council
+				}
+				desc = lam_faction.0700.council
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cl_cause ?= flag:crown
+				}
+				desc = lam_faction.0700.crown
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cl_cause ?= flag:blood
+				}
+				desc = lam_faction.0700.blood
+			}
+			desc = lam_faction.0700.blood
+		}
+		desc = lam_faction.0700.end
+	}
+	theme = realm
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_cl_a
+		animation = anger
+	}
+	right_portrait = {
+		character = scope:lam_cl_b
+		animation = anger
+	}
+	trigger = {
+		exists = scope:lam_cl_a
+		exists = scope:lam_cl_b
+		scope:lam_cl_a = {
+			is_alive = yes
+		}
+		scope:lam_cl_b = {
+			is_alive = yes
+		}
+	}
+	option = {
+		name = lam_faction.0700.a
+		lam_fac_clash_side_effect = {
+			WIN = scope:lam_cl_a
+			LOSE = scope:lam_cl_b
+		}
+	}
+	option = {
+		name = lam_faction.0700.b
+		lam_fac_clash_side_effect = {
+			WIN = scope:lam_cl_b
+			LOSE = scope:lam_cl_a
+		}
+	}
+	option = {
+		name = lam_faction.0700.c
+		add_prestige = medium_prestige_loss
+		random_list = {
+			60 = {
+				desc = lam_faction.0700.c.ok
+				lam_fac_feud_clear_effect = {
+					A = scope:lam_cl_a
+					B = scope:lam_cl_b
+				}
+				scope:lam_cl_a = {
+					lam_fac_truce_set_effect = {
+						OTHER = scope:lam_cl_b
+					}
+				}
+				scope:lam_cl_b = {
+					lam_fac_truce_set_effect = {
+						OTHER = scope:lam_cl_a
+					}
+				}
+				scope:lam_cl_a = {
+					remove_opinion = {
+						target = scope:lam_cl_b
+						modifier = lam_fac_clash_opinion
+					}
+					change_variable = {
+						name = lam_fac_favour
+						add = 5
+					}
+					clamp_variable = {
+						name = lam_fac_favour
+						min = -100
+						max = 100
+					}
+				}
+				scope:lam_cl_b = {
+					remove_opinion = {
+						target = scope:lam_cl_a
+						modifier = lam_fac_clash_opinion
+					}
+					change_variable = {
+						name = lam_fac_favour
+						add = 5
+					}
+					clamp_variable = {
+						name = lam_fac_favour
+						min = -100
+						max = 100
+					}
+				}
+			}
+			40 = {
+				desc = lam_faction.0700.c.fail
+				modifier = {
+					add = -20
+					diplomacy >= 15
+				}
+				lam_fac_clash_drift_effect = yes
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0700.d
+		lam_fac_clash_drift_effect = yes
+	}
+}
+lam_faction.0800 = {
+	type = character_event
+	title = lam_faction.0800.t
+	desc = {
+		desc = lam_faction.0800.open
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_new
+			}
+			desc = lam_faction.0800.new
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_ends
+			}
+			desc = lam_faction.0800.ends
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_succ
+			}
+			desc = lam_faction.0800.succ
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_merge
+			}
+			desc = lam_faction.0800.merge
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_leave
+			}
+			desc = lam_faction.0800.leave
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_leave_radical
+			}
+			desc = lam_faction.0800.leave_radical
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_leave_loyal
+			}
+			desc = lam_faction.0800.leave_loyal
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_quiet
+			}
+			desc = lam_faction.0800.quiet
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_goal
+			}
+			desc = lam_faction.0800.goal
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_heir
+			}
+			desc = lam_faction.0800.heir
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_spurned
+			}
+			desc = lam_faction.0800.spurned
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_void
+			}
+			desc = lam_faction.0800.void
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_dig_scheme
+			}
+			desc = lam_faction.0800.scheme
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_crown
+			}
+			desc = lam_faction.0800.crown
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_is_any
+			}
+			desc = lam_is_dig_head
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_is_heir_open
+			}
+			desc = lam_is_dig_heir
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_heir_open
+					var:lam_is_heir_bar <= -5
+				}
+				desc = lam_is_dig_heir_lx
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_heir_open
+					var:lam_is_heir_bar >= 5
+				}
+				desc = lam_is_dig_heir_ly
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_heir_open
+				}
+				desc = lam_is_dig_heir_ev
+			}
+			desc = lam_is_none
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_is_crown_open
+			}
+			desc = lam_is_dig_crown
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_crown_open
+					var:lam_is_crown_bar <= -5
+				}
+				desc = lam_is_dig_crown_lx
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_crown_open
+					var:lam_is_crown_bar >= 5
+				}
+				desc = lam_is_dig_crown_ly
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_crown_open
+				}
+				desc = lam_is_dig_crown_ev
+			}
+			desc = lam_is_none
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_is_council_open
+			}
+			desc = lam_is_dig_council
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_council_open
+					var:lam_is_council_bar <= -5
+				}
+				desc = lam_is_dig_council_lx
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_council_open
+					var:lam_is_council_bar >= 5
+				}
+				desc = lam_is_dig_council_ly
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_council_open
+				}
+				desc = lam_is_dig_council_ev
+			}
+			desc = lam_is_none
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_is_faith_open
+			}
+			desc = lam_is_dig_faith
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_faith_open
+					var:lam_is_faith_bar <= -5
+				}
+				desc = lam_is_dig_faith_lx
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_faith_open
+					var:lam_is_faith_bar >= 5
+				}
+				desc = lam_is_dig_faith_ly
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_faith_open
+				}
+				desc = lam_is_dig_faith_ev
+			}
+			desc = lam_is_none
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_is_tax_open
+			}
+			desc = lam_is_dig_tax
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_tax_open
+					var:lam_is_tax_bar <= -5
+				}
+				desc = lam_is_dig_tax_lx
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_tax_open
+					var:lam_is_tax_bar >= 5
+				}
+				desc = lam_is_dig_tax_ly
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_tax_open
+				}
+				desc = lam_is_dig_tax_ev
+			}
+			desc = lam_is_none
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_is_war_open
+			}
+			desc = lam_is_dig_war
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_war_open
+					var:lam_is_war_bar <= -5
+				}
+				desc = lam_is_dig_war_lx
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_war_open
+					var:lam_is_war_bar >= 5
+				}
+				desc = lam_is_dig_war_ly
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_war_open
+				}
+				desc = lam_is_dig_war_ev
+			}
+			desc = lam_is_none
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_tip1
+			}
+			desc = lam_faction.0800.tips_head
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_tip1
+			}
+			desc = lam_faction.0800.tip1
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_tip2
+			}
+			desc = lam_faction.0800.tip2
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_news1_k
+			}
+			desc = lam_faction.0800.news_head
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_news1_k
+			}
+			desc = lam_faction.0800.news1
+		}
+		triggered_desc = {
+			trigger = {
+				has_variable = lam_news2_k
+			}
+			desc = lam_faction.0800.news2
+		}
+	}
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	option = {
+		name = lam_faction.0800.take_deal
+		trigger = {
+			OR = {
+				var:lam_tip1 ?= flag:deal
+				var:lam_tip1 ?= flag:amends
+			}
+			var:lam_tip1_who ?= {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				NOT = {
+					has_variable = lam_fac_deal_cd
+				}
+			}
+		}
+		var:lam_tip1_who = {
+			save_scope_as = lam_deal_lead
+		}
+		lam_fac_digest_clear_effect = yes
+		hidden_effect = {
+			lam_deal_clear_effect = yes
+			trigger_event = lam_faction.1000
+		}
+	}
+	option = {
+		name = lam_faction.0800.take_favour
+		trigger = {
+			OR = {
+				var:lam_tip1 ?= flag:make_cp
+				var:lam_tip1 ?= flag:rally
+			}
+			prestige >= minor_prestige_value
+			var:lam_tip1_who ?= {
+				is_alive = yes
+				has_variable = lam_fac_favour
+				NOT = {
+					has_variable = lam_fac_favour_cd
+				}
+				has_variable = lam_bloc_lead
+				liege ?= root
+				NOT = {
+					has_variable = lam_fac_disband
+				}
+			}
+		}
+		custom_tooltip = lam_fac_btn_favour_tt
+		var:lam_tip1_who = {
+			save_scope_as = target
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						var:lam_tip1 ?= flag:make_cp
+						var:lam_tip1 ?= flag:rally
+					}
+					prestige >= minor_prestige_value
+					var:lam_tip1_who ?= {
+						is_alive = yes
+						has_variable = lam_fac_favour
+						NOT = {
+							has_variable = lam_fac_favour_cd
+						}
+						has_variable = lam_bloc_lead
+						liege ?= root
+						NOT = {
+							has_variable = lam_fac_disband
+						}
+					}
+				}
+				add_prestige = {
+					value = minor_prestige_value
+					multiply = -1
+				}
+				lam_fac_favour_effect = {
+					ADD = 15
+				}
+				scope:target = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_granted_opinion
+					}
+				}
+			}
+		}
+		lam_fac_digest_clear_effect = yes
+	}
+	option = {
+		name = lam_faction.0800.take_press
+		trigger = {
+			var:lam_tip1 ?= flag:press
+			NOT = {
+				has_variable = lam_cp_press_cd
+			}
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_courtparty
+			}
+			var:lam_tip1_who ?= {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				NOT = {
+					has_variable = lam_fac_courtparty
+				}
+			}
+			any_in_list = {
+				variable = lam_bloc_leads
+				this = root.var:lam_tip1_who
+			}
+		}
+		custom_tooltip = lam_faction.1100.press_tt
+		random_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_courtparty
+			}
+			save_scope_as = lam_cp_lead
+		}
+		var:lam_tip1_who = {
+			save_scope_as = lam_cp_target
+		}
+		hidden_effect = {
+			lam_fac_cp_press_effect = yes
+		}
+		lam_fac_digest_clear_effect = yes
+	}
+	option = {
+		name = lam_faction.0800.open
+		hidden_effect = {
+			trigger_event = lam_faction.0801
+		}
+		lam_fac_digest_clear_effect = yes
+	}
+	option = {
+		name = lam_faction.0800.a
+		lam_fac_digest_clear_effect = yes
+	}
+}
+lam_faction.0900 = {
+	type = character_event
+	title = lam_faction.0900.t
+	desc = lam_faction.0900.desc
+	theme = dread
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = root
+		animation = dismissal
+	}
+	option = {
+		name = lam_faction.0900.a
+		add_tyranny = major_tyranny_gain
+		add_dread = medium_dread_gain
+		custom_tooltip = lam_faction.0900.a_tt
+		hidden_effect = {
+			lam_fac_ban_effect = {
+				KIND = all
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0900.b
+		add_tyranny = medium_tyranny_gain
+		add_dread = minor_dread_gain
+		custom_tooltip = lam_faction.0900.b_tt
+		hidden_effect = {
+			lam_fac_ban_effect = {
+				KIND = crown
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0900.c
+	}
+}
+lam_faction.1000 = {
+	type = character_event
+	title = lam_faction.1000.t
+	desc = lam_faction.1000.desc
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:lam_deal_lead
+		animation = personality_bold
+	}
+	trigger = {
+		scope:lam_deal_lead = {
+			is_alive = yes
+		}
+	}
+	option = {
+		name = lam_faction.1000.seat
+		trigger = {
+			scope:lam_deal_lead = {
+				NOT = {
+					has_variable = lam_fac_promise
+				}
+			}
+		}
+		custom_tooltip = lam_faction.1000.seat_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_give
+				value = flag:seat
+			}
+			trigger_event = lam_faction.1010
+		}
+	}
+	option = {
+		name = lam_faction.1000.county
+		trigger = {
+			any_held_title = {
+				tier = tier_county
+				count >= 2
+			}
+		}
+		custom_tooltip = lam_faction.1000.county_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_give
+				value = flag:county
+			}
+			trigger_event = lam_faction.1010
+		}
+	}
+	option = {
+		name = lam_faction.1000.gold
+		trigger = {
+			gold >= medium_gold_value
+		}
+		custom_tooltip = lam_faction.1000.gold_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_give
+				value = flag:gold
+			}
+			trigger_event = lam_faction.1010
+		}
+	}
+	option = {
+		name = lam_faction.1000.marriage
+		trigger = {
+			scope:lam_deal_lead = {
+				NOT = {
+					has_variable = lam_fac_promise
+				}
+			}
+		}
+		custom_tooltip = lam_faction.1000.marriage_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_give
+				value = flag:marriage
+			}
+			trigger_event = lam_faction.1010
+		}
+	}
+	option = {
+		name = lam_nc_law_offer
+		trigger = {
+			lam_nc_lower_law_trigger = yes
+		}
+		custom_tooltip = lam_nc_law_offer_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_give
+				value = flag:law
+			}
+			trigger_event = lam_faction.1010
+		}
+	}
+	option = {
+		name = lam_faction.1000.heir
+		trigger = {
+			scope:lam_deal_lead = {
+				lam_fac_heir_mismatch_trigger = {
+					LORD = root
+				}
+			}
+			lam_nc_heir_trigger = {
+				CANDIDATE = scope:lam_deal_lead.var:lam_fac_heir
+			}
+		}
+		custom_tooltip = lam_faction.1000.heir_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_give
+				value = flag:heir
+			}
+			trigger_event = lam_faction.1010
+		}
+	}
+	option = {
+		name = lam_faction.1000.amnesty
+		trigger = {
+			scope:lam_deal_lead = {
+				NOT = {
+					lam_fac_legal_trigger = {
+						LORD = root
+					}
+				}
+			}
+		}
+		custom_tooltip = lam_faction.1000.amnesty_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_give
+				value = flag:amnesty
+			}
+			trigger_event = lam_faction.1010
+		}
+	}
+	option = {
+		name = lam_faction.1000.bribe
+		trigger = {
+			gold >= medium_gold_value
+		}
+		custom_tooltip = lam_faction.1000.bribe_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_give
+				value = flag:bribe
+			}
+			trigger_event = lam_faction.1010
+		}
+	}
+	option = {
+		name = lam_faction.1000.x
+		lam_deal_clear_effect = yes
+	}
+}
+lam_faction.1010 = {
+	type = character_event
+	title = lam_faction.1010.t
+	desc = lam_faction.1010.desc
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:lam_deal_lead
+		animation = personality_bold
+	}
+	trigger = {
+		scope:lam_deal_lead = {
+			is_alive = yes
+		}
+	}
+	option = {
+		name = lam_faction.1010.oath
+		custom_tooltip = lam_faction.1010.oath_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_ask
+				value = flag:oath
+			}
+			trigger_event = lam_faction.1020
+		}
+	}
+	option = {
+		name = lam_faction.1010.heir
+		trigger = {
+			exists = primary_heir
+			scope:lam_deal_lead = {
+				NOT = {
+					var:lam_fac_heir ?= root.primary_heir
+				}
+			}
+		}
+		custom_tooltip = lam_faction.1010.heir_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_ask
+				value = flag:heir
+			}
+			trigger_event = lam_faction.1020
+		}
+	}
+	option = {
+		name = lam_faction.1010.disband
+		custom_tooltip = lam_faction.1010.disband_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_ask
+				value = flag:disband
+			}
+			trigger_event = lam_faction.1020
+		}
+	}
+	option = {
+		name = lam_faction.1010.counter
+		trigger = {
+			scope:lam_deal_lead = {
+				any_in_list = {
+					variable = lam_fac_foes
+					is_alive = yes
+					has_variable = lam_bloc_lead
+				}
+			}
+		}
+		custom_tooltip = lam_faction.1010.counter_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_ask
+				value = flag:counter
+			}
+			trigger_event = lam_faction.1020
+		}
+	}
+	option = {
+		name = lam_faction.1010.arms
+		custom_tooltip = lam_faction.1010.arms_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_ask
+				value = flag:arms
+			}
+			trigger_event = lam_faction.1020
+		}
+	}
+	option = {
+		name = lam_faction.1010.law_support
+		custom_tooltip = lam_faction.1010.law_support_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_deal_ask
+				value = flag:law_support
+			}
+			trigger_event = lam_faction.1020
+		}
+	}
+	option = {
+		name = lam_faction.1010.back
+		hidden_effect = {
+			trigger_event = lam_faction.1000
+		}
+	}
+}
+lam_faction.1020 = {
+	type = character_event
+	title = lam_faction.1020.t
+	desc = {
+		desc = lam_faction.1020.open
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					var:lam_deal_give ?= flag:seat
+				}
+				desc = lam_faction.1020.g.seat
+			}
+			triggered_desc = {
+				trigger = {
+					var:lam_deal_give ?= flag:county
+				}
+				desc = lam_faction.1020.g.county
+			}
+			triggered_desc = {
+				trigger = {
+					var:lam_deal_give ?= flag:gold
+				}
+				desc = lam_faction.1020.g.gold
+			}
+			triggered_desc = {
+				trigger = {
+					var:lam_deal_give ?= flag:marriage
+				}
+				desc = lam_faction.1020.g.marriage
+			}
+			triggered_desc = {
+				trigger = {
+					var:lam_deal_give ?= flag:law
+				}
+				desc = lam_faction.1020.g.law
+			}
+			triggered_desc = {
+				trigger = {
+					var:lam_deal_give ?= flag:heir
+				}
+				desc = lam_faction.1020.g.heir
+			}
+			triggered_desc = {
+				trigger = {
+					var:lam_deal_give ?= flag:amnesty
+				}
+				desc = lam_faction.1020.g.amnesty
+			}
+			desc = lam_faction.1020.g.bribe
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					var:lam_deal_ask ?= flag:oath
+				}
+				desc = lam_faction.1020.a.oath
+			}
+			triggered_desc = {
+				trigger = {
+					var:lam_deal_ask ?= flag:heir
+				}
+				desc = lam_faction.1020.a.heir
+			}
+			triggered_desc = {
+				trigger = {
+					var:lam_deal_ask ?= flag:disband
+				}
+				desc = lam_faction.1020.a.disband
+			}
+			triggered_desc = {
+				trigger = {
+					var:lam_deal_ask ?= flag:counter
+				}
+				desc = lam_faction.1020.a.counter
+			}
+			triggered_desc = {
+				trigger = {
+					var:lam_deal_ask ?= flag:arms
+				}
+				desc = lam_faction.1020.a.arms
+			}
+			desc = lam_faction.1020.a.law_support
+		}
+		desc = lam_faction.1020.chance
+	}
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:lam_deal_lead
+		animation = thinking
+	}
+	trigger = {
+		scope:lam_deal_lead = {
+			is_alive = yes
+		}
+	}
+	immediate = {
+		save_scope_as = lam_deal_lord
+		scope:lam_deal_lead = {
+			set_variable = {
+				name = lam_deal_acc
+				value = lam_fac_deal_accept_value
+			}
+		}
+	}
+	option = {
+		name = lam_faction.1020.a
+		hidden_effect = {
+			random_list = {
+				0 = {
+					modifier = {
+						add = scope:lam_deal_lead.var:lam_deal_acc
+					}
+					lam_deal_accepted_effect = yes
+					lam_deal_clear_effect = yes
+				}
+				0 = {
+					modifier = {
+						add = {
+							value = 100
+							subtract = scope:lam_deal_lead.var:lam_deal_acc
+						}
+					}
+					lam_deal_refused_effect = yes
+					lam_deal_clear_effect = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.1020.back
+		hidden_effect = {
+			trigger_event = lam_faction.1000
+		}
+	}
+	option = {
+		name = lam_faction.1020.x
+		lam_deal_clear_effect = yes
+	}
+}
+lam_faction.1030 = {
+	type = character_event
+	title = lam_faction.1030.t
+	desc = lam_faction.1030.desc
+	theme = realm
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_deal_lead
+		animation = personality_bold
+	}
+	trigger = {
+		is_alive = yes
+		this = scope:lam_cr_lord
+		scope:lam_cr_head ?= {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+			liege ?= root
+			var:lam_cr_contract_pending ?= scope:lam_cr_token
+			var:lam_cr_give ?= flag:county
+			lam_cr_deal_valid_trigger = yes
+		}
+	}
+	immediate = {
+		clear_saved_scope = lam_deal_r1
+		clear_saved_scope = lam_deal_r2
+		scope:lam_deal_lead = {
+			ordered_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					var:lam_fac_tier ?= 1
+				}
+				order_by = max_military_strength
+				save_scope_as = lam_deal_r1
+			}
+			ordered_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					NOT = {
+						this = scope:lam_deal_r1
+					}
+					OR = {
+						has_relation_rival = scope:lam_deal_lead
+						opinion = {
+							target = scope:lam_deal_lead
+							value <= 0
+						}
+					}
+				}
+				order_by = {
+					value = 0
+					subtract = "opinion(scope:lam_deal_lead)"
+				}
+				save_scope_as = lam_deal_r2
+			}
+		}
+	}
+	option = {
+		name = lam_faction.1030.lead
+		custom_tooltip = lam_faction.1030.lead_tt
+		hidden_effect = {
+			lam_cr_finish_county_contract_effect = {
+				RECIPIENT = scope:lam_deal_lead
+			}
+		}
+		trigger = {
+			is_alive = yes
+			this = scope:lam_cr_lord
+			scope:lam_cr_head ?= {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				liege ?= root
+				var:lam_cr_contract_pending ?= scope:lam_cr_token
+				var:lam_cr_give ?= flag:county
+				lam_cr_deal_valid_trigger = yes
+			}
+			scope:lam_deal_lead ?= {
+				is_alive = yes
+				liege ?= root
+				OR = {
+					this = scope:lam_cr_head
+					var:lam_bloc ?= scope:lam_cr_head
+				}
+			}
+			lam_nc_county_available_trigger = {
+				RECIPIENT = scope:lam_deal_lead
+			}
+		}
+	}
+	option = {
+		name = lam_faction.1030.r1
+		trigger = {
+			is_alive = yes
+			this = scope:lam_cr_lord
+			scope:lam_cr_head ?= {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				liege ?= root
+				var:lam_cr_contract_pending ?= scope:lam_cr_token
+				var:lam_cr_give ?= flag:county
+				lam_cr_deal_valid_trigger = yes
+			}
+			scope:lam_deal_r1 ?= {
+				is_alive = yes
+				liege ?= root
+				OR = {
+					this = scope:lam_cr_head
+					var:lam_bloc ?= scope:lam_cr_head
+				}
+			}
+			lam_nc_county_available_trigger = {
+				RECIPIENT = scope:lam_deal_r1
+			}
+		}
+		custom_tooltip = lam_faction.1030.r1_tt
+		hidden_effect = {
+			lam_cr_finish_county_contract_effect = {
+				RECIPIENT = scope:lam_deal_r1
+			}
+		}
+	}
+	option = {
+		name = lam_faction.1030.r2
+		trigger = {
+			is_alive = yes
+			this = scope:lam_cr_lord
+			scope:lam_cr_head ?= {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				liege ?= root
+				var:lam_cr_contract_pending ?= scope:lam_cr_token
+				var:lam_cr_give ?= flag:county
+				lam_cr_deal_valid_trigger = yes
+			}
+			scope:lam_deal_r2 ?= {
+				is_alive = yes
+				liege ?= root
+				OR = {
+					this = scope:lam_cr_head
+					var:lam_bloc ?= scope:lam_cr_head
+				}
+			}
+			lam_nc_county_available_trigger = {
+				RECIPIENT = scope:lam_deal_r2
+			}
+		}
+		custom_tooltip = lam_faction.1030.r2_tt
+		hidden_effect = {
+			lam_cr_finish_county_contract_effect = {
+				RECIPIENT = scope:lam_deal_r2
+			}
+		}
+	}
+	option = {
+		name = lam_cr_close
+		trigger = {
+			always = yes
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_contract_pending ?= scope:lam_cr_token
+					}
+				}
+				scope:lam_cr_head = {
+					remove_variable = lam_cr_contract_pending
+				}
+			}
+		}
+	}
+}
+lam_faction.0610 = {
+	type = character_event
+	title = lam_faction.0610.t
+	desc = lam_faction.0610.desc
+	theme = war
+	override_background = {
+		reference = army_camp
+	}
+	left_portrait = {
+		character = root
+		animation = war_attacker
+	}
+	option = {
+		name = lam_faction.0610.a
+		custom_tooltip = lam_faction.0610.a_tt
+		hidden_effect = {
+			liege ?= {
+				save_scope_as = lam_abs_lord
+				root = {
+					lam_fac_rise_effect = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.0610.b
+		custom_tooltip = lam_faction.0610.b_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_fac_fear
+				value = yes
+				years = 1
+			}
+		}
+	}
+}
+lam_faction.1100 = {
+	type = character_event
+	title = lam_faction.1100.t
+	desc = lam_faction.1100.desc
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:lam_cp_lead
+		animation = personality_bold
+	}
+	trigger = {
+		scope:lam_cp_lead = {
+			is_alive = yes
+		}
+	}
+	option = {
+		name = lam_faction.1100.arms
+		trigger = {
+			NOT = {
+				has_variable = lam_cp_arms_cd
+			}
+		}
+		custom_tooltip = lam_faction.1100.arms_tt
+		hidden_effect = {
+			lam_fac_cp_arms_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.1100.recruit
+		trigger = {
+			NOT = {
+				has_variable = lam_cp_recruit_cd
+			}
+			gold >= medium_gold_value
+		}
+		custom_tooltip = lam_faction.1100.recruit_tt
+		hidden_effect = {
+			lam_fac_cp_recruit_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.1100.press
+		trigger = {
+			NOT = {
+				has_variable = lam_cp_press_cd
+			}
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				NOT = {
+					has_variable = lam_fac_courtparty
+				}
+			}
+		}
+		custom_tooltip = lam_faction.1100.press_tt
+		hidden_effect = {
+			lam_fac_cp_press_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.1100.x
+	}
+}
+lam_faction.1200 = {
+	type = character_event
+	title = lam_faction.1200.t
+	desc = lam_faction.1200.desc
+	theme = realm
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+	right_portrait = {
+		character = scope:lam_hd_lord
+		animation = personality_rational
+	}
+	trigger = {
+		lam_pt_demand_ready_trigger = yes
+		liege ?= scope:lam_hd_lord
+	}
+	option = {
+		name = lam_faction.1200.law
+		trigger = {
+			scope:lam_hd_lord = {
+				OR = {
+					has_realm_law = crown_authority_1
+					has_realm_law = crown_authority_2
+					has_realm_law = crown_authority_3
+				}
+			}
+		}
+		hidden_effect = {
+			set_variable = {
+				name = lam_hd_ask
+				value = flag:law
+			}
+			trigger_event = lam_faction.1210
+		}
+	}
+	option = {
+		name = lam_faction.1200.heir
+		trigger = {
+			save_temporary_scope_as = lam_pt_petitioner
+			scope:lam_hd_lord = {
+				lam_nc_heir_trigger = {
+					CANDIDATE = scope:lam_pt_petitioner.var:lam_fac_heir
+				}
+			}
+		}
+		hidden_effect = {
+			set_variable = {
+				name = lam_hd_ask
+				value = flag:heir
+			}
+			trigger_event = lam_faction.1210
+		}
+	}
+	option = {
+		name = lam_faction.1200.tolerance
+		trigger = {
+			NOT = {
+				culture = scope:lam_hd_lord.culture
+			}
+			scope:lam_hd_lord = {
+				prestige >= 75
+			}
+		}
+		hidden_effect = {
+			set_variable = {
+				name = lam_hd_ask
+				value = flag:tolerance
+			}
+			trigger_event = lam_faction.1210
+		}
+	}
+	option = {
+		name = lam_faction.1200.gold
+		trigger = {
+			scope:lam_hd_lord = {
+				gold >= medium_gold_value
+			}
+		}
+		hidden_effect = {
+			set_variable = {
+				name = lam_hd_ask
+				value = flag:gold
+			}
+			trigger_event = lam_faction.1210
+		}
+	}
+	option = {
+		name = lam_faction.1200.council
+		trigger = {
+			lam_lf_office_pool_trigger = yes
+		}
+		hidden_effect = {
+			set_variable = {
+				name = lam_hd_ask
+				value = flag:council
+			}
+			trigger_event = lam_faction.1210
+		}
+	}
+	option = {
+		name = lam_faction.1200.taxes
+		trigger = {
+			has_government = feudal_government
+			vassal_contract_obligation_level:feudal_government_taxes > 0
+		}
+		hidden_effect = {
+			set_variable = {
+				name = lam_hd_ask
+				value = flag:taxes
+			}
+			trigger_event = lam_faction.1210
+		}
+	}
+	option = {
+		name = lam_faction.1200.release
+		trigger = {
+			any_in_list = {
+				variable = lam_fac_members
+				is_alive = yes
+				var:lam_bloc ?= prev
+				is_imprisoned_by = scope:lam_hd_lord
+			}
+		}
+		hidden_effect = {
+			set_variable = {
+				name = lam_hd_ask
+				value = flag:release
+			}
+			trigger_event = lam_faction.1210
+		}
+	}
+	option = {
+		name = lam_faction.1200.amnesty
+		trigger = {
+			NOT = {
+				has_variable = lam_fac_pardoned
+			}
+			NOT = {
+				lam_fac_legal_trigger = {
+					LORD = scope:lam_hd_lord
+				}
+			}
+		}
+		hidden_effect = {
+			set_variable = {
+				name = lam_hd_ask
+				value = flag:amnesty
+			}
+			trigger_event = lam_faction.1210
+		}
+	}
+	option = {
+		name = lam_faction.1200.x
+	}
+}
+lam_faction.1210 = {
+	type = character_event
+	title = lam_faction.1200.t
+	desc = lam_pd_submit_desc
+	theme = realm
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+	right_portrait = {
+		character = scope:lam_hd_lord
+		animation = thinking
+	}
+	trigger = {
+		lam_pt_demand_ready_trigger = yes
+		liege ?= scope:lam_hd_lord
+	}
+	immediate = {
+		save_scope_as = lam_hd_head
+		set_variable = {
+			name = lam_hd_acc
+			value = lam_fac_head_demand_value
+		}
+	}
+	option = {
+		name = lam_faction.1210.a
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_pt_demand_ready_trigger = yes
+					liege ?= scope:lam_hd_lord
+				}
+				lam_fac_head_demand_resolve_effect = yes
+			}
+			else = {
+				send_interface_message = {
+					type = event_generic_neutral
+					title = lam_pt_action_lapsed
+					desc = lam_pt_demand_lapsed
+				}
+			}
+			remove_variable = lam_hd_ask
+		}
+	}
+	option = {
+		name = lam_faction.1210.x
+		remove_variable = lam_hd_ask
+	}
+}
+lam_faction.1300 = {
+	type = character_event
+	title = lam_faction.1300.t
+	desc = lam_pt_order_desc
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	trigger = {
+		lam_pt_order_ready_trigger = yes
+	}
+	immediate = {
+		save_scope_as = lam_pt_order_head
+		liege = {
+			save_scope_as = lam_pt_order_lord
+		}
+		clear_saved_scope = lam_pt_order_record
+		if = {
+			limit = {
+				has_variable = lam_fac_rec
+			}
+			save_scope_value_as = {
+				name = lam_pt_order_record
+				value = var:lam_fac_rec
+			}
+		}
+		clear_saved_scope = lam_ds_out
+		clear_saved_scope = lam_ds_up
+		clear_saved_scope = lam_ds_heir
+		ordered_in_list = {
+			variable = lam_fac_members
+			limit = {
+				lam_pt_order_member_trigger = yes
+			}
+			order_by = {
+				value = 0
+				subtract = "opinion(scope:lam_pt_order_head)"
+			}
+			max = 1
+			check_range_bounds = no
+			save_scope_as = lam_ds_out
+		}
+		ordered_in_list = {
+			variable = lam_fac_members
+			limit = {
+				lam_pt_order_member_trigger = yes
+				var:lam_fac_tier ?= 2
+			}
+			order_by = {
+				value = "opinion(scope:lam_pt_order_head)"
+			}
+			max = 1
+			check_range_bounds = no
+			save_scope_as = lam_ds_up
+		}
+		scope:lam_pt_order_lord = {
+			ordered_child = {
+				limit = {
+					lam_pt_order_heir_trigger = yes
+				}
+				order_by = {
+					value = "opinion(scope:lam_pt_order_head)"
+				}
+				max = 1
+				check_range_bounds = no
+				save_scope_as = lam_ds_heir
+			}
+		}
+	}
+	option = {
+		name = lam_faction.1300.out
+		trigger = {
+			scope:lam_ds_out ?= {
+				lam_pt_order_member_trigger = yes
+			}
+		}
+		custom_tooltip = lam_faction.1300.out_tt
+		custom_tooltip = lam_pt_order_cooldown_tt
+		hidden_effect = {
+			lam_pt_order_expel_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.1300.up
+		trigger = {
+			scope:lam_ds_up ?= {
+				lam_pt_order_member_trigger = yes
+				var:lam_fac_tier ?= 2
+			}
+		}
+		custom_tooltip = lam_faction.1300.up_tt
+		custom_tooltip = lam_pt_order_cooldown_tt
+		hidden_effect = {
+			lam_pt_order_promote_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.1300.heir
+		trigger = {
+			scope:lam_ds_heir ?= {
+				lam_pt_order_heir_trigger = yes
+			}
+			NOT = {
+				has_variable = lam_fac_heir_locked
+			}
+			NOT = {
+				has_variable = lam_cr_retry_heir
+			}
+		}
+		custom_tooltip = lam_pt_order_heir_tt
+		custom_tooltip = lam_pt_order_cooldown_tt
+		hidden_effect = {
+			lam_pt_order_heir_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.1300.x
+	}
+}
+lam_faction.1400 = {
+	type = character_event
+	title = lam_faction.1400.t
+	desc = lam_faction.1400.desc
+	theme = intrigue
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+	right_portrait = {
+		character = scope:lam_pw_lord
+		animation = worry
+	}
+	trigger = {
+		scope:lam_pw_lord ?= {
+			is_alive = yes
+		}
+	}
+	option = {
+		name = lam_faction.1400.a
+		custom_tooltip = lam_faction.1400.a_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					is_alive = yes
+					exists = scope:lam_pw_lord
+					liege ?= scope:lam_pw_lord
+					lam_pol_ready_trigger = yes
+				}
+				scope:lam_pw_lord = {
+					lam_fac_seize_effect = {
+						LEAD = root
+					}
+				}
+			}
+		}
+		trigger = {
+			is_alive = yes
+			exists = scope:lam_pw_lord
+			liege ?= scope:lam_pw_lord
+			lam_pol_ready_trigger = yes
+		}
+	}
+	option = {
+		name = lam_faction.1400.b
+		hidden_effect = {
+			lam_pol_clear_progress_effect = yes
+		}
+	}
+}
+lam_faction.1410 = {
+	type = character_event
+	title = lam_faction.1410.t
+	desc = lam_faction.1410.desc
+	theme = intrigue
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = root
+		animation = shame
+	}
+	right_portrait = {
+		character = scope:lam_pm_lead
+		animation = scheme
+	}
+	option = {
+		name = lam_faction.1410.a
+		custom_tooltip = lam_faction.1410.a_tt
+	}
+}
+lam_faction.1500 = {
+	type = character_event
+	title = lam_faction.1500.t
+	desc = lam_faction.1500.desc
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	immediate = {
+		clear_saved_scope = lam_bd_1
+		clear_saved_scope = lam_bd_2
+		clear_saved_scope = lam_bd_3
+		liege = {
+			ordered_in_list = {
+				variable = lam_bloc_leads
+				limit = {
+					is_alive = yes
+					NOT = {
+						var:lam_fac_stage ?= 9
+					}
+				}
+				order_by = var:lam_fac_share
+				max = 3
+				check_range_bounds = no
+				set_variable = {
+					name = lam_bd_gold
+					value = lam_fac_bid_gold_value
+				}
+				if = {
+					limit = {
+						NOT = {
+							exists = scope:lam_bd_1
+						}
+					}
+					save_scope_as = lam_bd_1
+				}
+				else_if = {
+					limit = {
+						NOT = {
+							exists = scope:lam_bd_2
+						}
+					}
+					save_scope_as = lam_bd_2
+				}
+				else = {
+					save_scope_as = lam_bd_3
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.1500.o1
+		trigger = {
+			exists = scope:lam_bd_1
+		}
+		hidden_effect = {
+			lam_fac_bid_accept_effect = {
+				LEAD = scope:lam_bd_1
+			}
+		}
+	}
+	option = {
+		name = lam_faction.1500.o2
+		trigger = {
+			exists = scope:lam_bd_2
+		}
+		hidden_effect = {
+			lam_fac_bid_accept_effect = {
+				LEAD = scope:lam_bd_2
+			}
+		}
+	}
+	option = {
+		name = lam_faction.1500.o3
+		trigger = {
+			exists = scope:lam_bd_3
+		}
+		hidden_effect = {
+			lam_fac_bid_accept_effect = {
+				LEAD = scope:lam_bd_3
+			}
+		}
+	}
+	option = {
+		name = lam_faction.1500.x
+		add_prestige = minor_prestige_gain
+	}
+}
+lam_faction.1600 = {
+	type = character_event
+	title = lam_faction.1600.t
+	desc = lam_faction.1600.desc
+	theme = diplomacy
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = scope:lam_md_a
+		animation = anger
+	}
+	right_portrait = {
+		character = scope:lam_md_b
+		animation = anger
+	}
+	immediate = {
+		liege = {
+			ordered_in_list = {
+				variable = lam_bloc_leads
+				limit = {
+					is_alive = yes
+					any_in_list = {
+						variable = lam_fac_foes
+						is_alive = yes
+						has_variable = lam_bloc_lead
+					}
+				}
+				order_by = var:lam_fac_share
+				save_scope_as = lam_md_a
+			}
+		}
+		scope:lam_md_a ?= {
+			ordered_in_list = {
+				variable = lam_fac_foes
+				limit = {
+					is_alive = yes
+					has_variable = lam_bloc_lead
+				}
+				order_by = var:lam_fac_share
+				save_scope_as = lam_md_b
+			}
+		}
+		set_variable = {
+			name = lam_md_chance
+			value = lam_fac_mediate_chance_value
+		}
+	}
+	option = {
+		name = lam_faction.1600.a
+		trigger = {
+			exists = scope:lam_md_a
+			exists = scope:lam_md_b
+		}
+		custom_tooltip = lam_faction.1600.a_tt
+		hidden_effect = {
+			lam_fac_mediate_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.1600.x
+	}
+}
+lam_faction.1700 = {
+	type = character_event
+	title = lam_faction.1700.t
+	desc = {
+		desc = lam_faction.1700.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_ult_lead = {
+						has_variable = lam_fac_nf1
+					}
+				}
+				desc = lam_faction.1700.why
+			}
+			desc = lam_fac_empty
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_ult_lead = {
+						var:lam_fac_lord_wrong ?= root
+						has_variable = lam_fac_lord_wrong_m
+						var:lam_fac_lord_wrong_m > lam_now_m
+					}
+				}
+				desc = lam_faction.1700.past.wronged
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_ult_lead = {
+						has_variable = lam_fac_spurned
+					}
+				}
+				desc = lam_faction.1700.past.spurned
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_ult_lead = {
+						has_variable = lam_fac_betrayed
+					}
+				}
+				desc = lam_faction.1700.past.betrayed
+			}
+			desc = lam_fac_empty
+		}
+		desc = lam_faction.1700.ask
+	}
+	theme = war
+	override_background = {
+		reference = courtyard
+	}
+	left_portrait = {
+		character = scope:lam_ult_lead
+		animation = anger
+	}
+	right_portrait = {
+		character = root
+		animation = worry
+	}
+	trigger = {
+		scope:lam_ult_lead = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+		}
+	}
+	immediate = {
+		save_scope_as = lam_abs_lord
+	}
+	option = {
+		name = lam_faction.1700.a
+		custom_tooltip = lam_faction.1700.a_tt
+		add_prestige = {
+			value = medium_prestige_value
+			multiply = -1
+		}
+		scope:lam_ult_lead = {
+			change_variable = {
+				name = lam_fac_favour
+				add = 30
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+			set_variable = {
+				name = lam_fac_appeased
+				value = yes
+				years = 2
+			}
+			if = {
+				limit = {
+					has_variable = lam_fac_grievance
+				}
+				lam_pd_hearing_effect = yes
+			}
+			add_opinion = {
+				target = root
+				modifier = lam_fac_granted_opinion
+			}
+			lam_gn_event_effect = {
+				KEY = ult_yield
+			}
+		}
+		ai_chance = {
+			base = 30
+		}
+	}
+	option = {
+		name = lam_faction.1700.b
+		trigger = {
+			gold >= major_gold_value
+		}
+		show_as_unavailable = {
+			always = yes
+		}
+		custom_tooltip = lam_faction.1700.b_tt
+		random_list = {
+			60 = {
+				modifier = {
+					add = 20
+					scope:lam_ult_lead = {
+						has_trait = greedy
+					}
+				}
+				modifier = {
+					add = -25
+					scope:lam_ult_lead = {
+						has_trait = ambitious
+					}
+				}
+				modifier = {
+					add = -20
+					scope:lam_ult_lead = {
+						has_trait = vengeful
+					}
+				}
+				modifier = {
+					add = -30
+					scope:lam_ult_lead = {
+						var:lam_fac_lord_wrong ?= root
+					}
+				}
+				scope:lam_ult_lead = {
+					lam_cr_start_effect = {
+						ISSUE = deal
+						ACTION = ult_oath
+						TARGET = liege
+					}
+				}
+			}
+			40 = {
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_fac_ult_oath_no
+					right_icon = scope:lam_ult_lead
+				}
+				scope:lam_ult_lead = {
+					lam_gn_event_effect = {
+						KEY = ult_defied
+					}
+					lam_fac_rise_effect = yes
+				}
+			}
+		}
+		ai_chance = {
+			base = 30
+		}
+	}
+	option = {
+		name = lam_faction.1700.c
+		custom_tooltip = lam_faction.1700.c_tt
+		random_list = {
+			45 = {
+				modifier = {
+					add = 20
+					dread >= 40
+				}
+				modifier = {
+					add = 10
+					prowess >= 15
+				}
+				modifier = {
+					add = 10
+					any_in_list = {
+						variable = lam_bloc_leads
+						has_variable = lam_fac_courtparty
+					}
+				}
+				modifier = {
+					add = -20
+					scope:lam_ult_lead = {
+						has_variable = lam_fac_share
+						var:lam_fac_share >= 35
+					}
+				}
+				scope:lam_ult_lead = {
+					lam_gn_event_effect = {
+						KEY = ult_arrest
+					}
+				}
+				imprison = {
+					target = scope:lam_ult_lead
+					type = dungeon
+				}
+				add_tyranny = minor_tyranny_gain
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_fac_ult_arrest_yes
+					right_icon = scope:lam_ult_lead
+				}
+			}
+			55 = {
+				add_prestige = {
+					value = minor_prestige_value
+					multiply = -1
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_fac_ult_arrest_no
+					right_icon = scope:lam_ult_lead
+				}
+				scope:lam_ult_lead = {
+					lam_gn_event_effect = {
+						KEY = ult_defied
+					}
+					lam_fac_rise_effect = yes
+				}
+			}
+		}
+		ai_chance = {
+			base = 20
+		}
+	}
+	option = {
+		name = lam_faction.1700.d
+		custom_tooltip = lam_faction.1700.d_tt
+		add_prestige = minor_prestige_value
+		scope:lam_ult_lead = {
+			lam_gn_event_effect = {
+				KEY = ult_defied
+			}
+			lam_fac_rise_effect = yes
+		}
+		ai_chance = {
+			base = 20
+		}
+	}
+}
+lam_faction.1800 = {
+	type = character_event
+	title = lam_faction.1800.t
+	desc = lam_faction.1800.desc
+	theme = dread
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:lam_ban_lord
+		animation = dismissal
+	}
+	immediate = {
+		save_scope_as = lam_ban_lead
+		if = {
+			limit = {
+				NOT = {
+					exists = scope:lam_ban_lord
+				}
+			}
+			liege ?= {
+				save_scope_as = lam_ban_lord
+			}
+		}
+	}
+	option = {
+		name = lam_faction.1800.a
+		custom_tooltip = lam_faction.1800.a_tt
+		hidden_effect = {
+			lam_fac_ban_obey_effect = yes
+			lam_fac_ban_tell_members_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.1800.b
+		custom_tooltip = lam_faction.1800.b_tt
+		hidden_effect = {
+			lam_fac_ban_defy_effect = yes
+			lam_fac_ban_tell_members_effect = yes
+			scope:lam_ban_lord = {
+				lam_fac_veil_refresh_effect = yes
+			}
+		}
+	}
+}
+lam_faction.1810 = {
+	type = character_event
+	title = lam_faction.1810.t
+	desc = {
+		desc = lam_faction.1810.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_ban_lead = {
+						has_variable = lam_fac_disband
+					}
+				}
+				desc = lam_faction.1810.obey
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_ban_lead = {
+						has_variable = lam_fac_ug
+					}
+					var:lam_bloc ?= scope:lam_ban_lead
+				}
+				desc = lam_faction.1810.stay
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_ban_lead = {
+						has_variable = lam_fac_ug
+					}
+				}
+				desc = lam_faction.1810.cut
+			}
+			desc = lam_faction.1810.wait
+		}
+	}
+	theme = dread
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_ban_lord
+		animation = dismissal
+	}
+	right_portrait = {
+		character = scope:lam_ban_lead
+		animation = worry
+	}
+	option = {
+		name = lam_faction.1810.a
+	}
+}
+lam_faction.0801 = {
+	type = character_event
+	hidden = yes
+	immediate = {
+		lam_fac_default_view_effect = yes
+		lam_factions_refresh_effect = yes
+		set_variable = {
+			name = lam_factions_open
+			value = yes
+		}
+	}
+}
+lam_faction.1900 = {
+	type = character_event
+	title = lam_cr_result_title
+	desc = lam_cr_legacy_closed
+	theme = realm
+	option = {
+		name = lam_cr_close
+	}
+}
+lam_faction.1910 = {
+	type = character_event
+	title = lam_cr_result_title
+	desc = lam_cr_legacy_closed
+	theme = realm
+	option = {
+		name = lam_cr_close
+	}
+}
+lam_faction.2000 = {
+	type = character_event
+	title = lam_faction.2000.t
+	desc = lam_faction.2000.desc
+	theme = diplomacy
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = scope:lam_inv_head
+		animation = personality_rational
+	}
+	trigger = {
+		exists = scope:lam_inv_head
+		scope:lam_inv_head = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+		}
+		exists = liege
+		scope:lam_inv_head = {
+			liege ?= root.liege
+		}
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		NOT = {
+			has_variable = lam_fac_pinned
+		}
+	}
+	option = {
+		name = lam_faction.2000.a
+		set_variable = {
+			name = lam_bloc
+			value = scope:lam_inv_head
+		}
+		set_variable = {
+			name = lam_fac_pinned
+			value = yes
+		}
+		set_variable = {
+			name = lam_fac_tier
+			value = 2
+		}
+		scope:lam_inv_head = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_granted_opinion
+			}
+		}
+		hidden_effect = {
+			lam_fac_quick_refresh_court_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.2000.b
+		if = {
+			limit = {
+				has_variable = lam_bloc
+				NOT = {
+					has_variable = lam_fac_pinned
+				}
+			}
+			remove_variable = lam_bloc
+		}
+	}
+}
+lam_faction.2100 = {
+	type = character_event
+	title = lam_faction.2100.t
+	desc = lam_faction.2100.desc
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	option = {
+		name = lam_faction.2100.a
+		trigger = {
+			NOT = {
+				var:lam_fac_posture ?= flag:loyal
+			}
+			NOT = {
+				has_variable = lam_cr_active
+			}
+		}
+		custom_tooltip = lam_faction.2100.a.tt
+		hidden_effect = {
+			lam_cr_start_effect = {
+				ISSUE = loyal
+				ACTION = posture_loyal
+				TARGET = liege
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2100.b
+		trigger = {
+			NOT = {
+				var:lam_fac_posture ?= flag:watch
+			}
+			NOT = {
+				has_variable = lam_cr_active
+			}
+		}
+		custom_tooltip = lam_faction.2100.b.tt
+		hidden_effect = {
+			lam_cr_start_effect = {
+				ISSUE = watch
+				ACTION = posture_watch
+				TARGET = liege
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2100.c
+		trigger = {
+			NOT = {
+				var:lam_fac_posture ?= flag:quiet
+			}
+			NOT = {
+				has_variable = lam_cr_active
+			}
+		}
+		custom_tooltip = lam_faction.2100.c.tt
+		hidden_effect = {
+			lam_cr_start_effect = {
+				ISSUE = quiet
+				ACTION = posture_quiet
+				TARGET = liege
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2100.d
+		trigger = {
+			NOT = {
+				has_variable = lam_fac_oath
+			}
+			NOT = {
+				var:lam_fac_posture ?= flag:oppose
+			}
+			NOT = {
+				has_variable = lam_cr_active
+			}
+		}
+		custom_tooltip = lam_faction.2100.d.tt
+		hidden_effect = {
+			lam_cr_start_effect = {
+				ISSUE = oppose
+				ACTION = posture_oppose
+				TARGET = liege
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2100.e
+		trigger = {
+			NOT = {
+				has_variable = lam_fac_oath
+			}
+			NOT = {
+				var:lam_fac_posture ?= flag:arm
+			}
+			NOT = {
+				has_variable = lam_cr_active
+			}
+		}
+		custom_tooltip = lam_faction.2100.e.tt
+		hidden_effect = {
+			lam_cr_start_effect = {
+				ISSUE = arm
+				ACTION = posture_arm
+				TARGET = liege
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2100.f
+		trigger = {
+			has_variable = lam_fac_posture
+			NOT = {
+				has_variable = lam_cr_active
+			}
+		}
+		custom_tooltip = lam_faction.2100.f.tt
+		hidden_effect = {
+			lam_cr_start_effect = {
+				ISSUE = people
+				ACTION = posture_people
+				TARGET = liege
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2100.x
+	}
+}
+lam_faction.2110 = {
+	type = character_event
+	title = lam_faction.2110.t
+	desc = lam_faction.2110.desc
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	option = {
+		name = lam_faction.2110.g1
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 1
+			}
+		}
+		set_variable = {
+			name = lam_fac_goal_pick
+			value = 1
+		}
+		set_variable = {
+			name = lam_fac_goal
+			value = 1
+		}
+	}
+	option = {
+		name = lam_faction.2110.g2
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 2
+			}
+		}
+		set_variable = {
+			name = lam_fac_goal_pick
+			value = 2
+		}
+		set_variable = {
+			name = lam_fac_goal
+			value = 2
+		}
+	}
+	option = {
+		name = lam_faction.2110.g3
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 3
+			}
+		}
+		set_variable = {
+			name = lam_fac_goal_pick
+			value = 3
+		}
+		set_variable = {
+			name = lam_fac_goal
+			value = 3
+		}
+	}
+	option = {
+		name = lam_faction.2110.g4
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 4
+			}
+		}
+		set_variable = {
+			name = lam_fac_goal_pick
+			value = 4
+		}
+		set_variable = {
+			name = lam_fac_goal
+			value = 4
+		}
+	}
+	option = {
+		name = lam_faction.2110.g5
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 5
+			}
+		}
+		set_variable = {
+			name = lam_fac_goal_pick
+			value = 5
+		}
+		set_variable = {
+			name = lam_fac_goal
+			value = 5
+		}
+	}
+	option = {
+		name = lam_faction.2110.g6
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 6
+			}
+		}
+		set_variable = {
+			name = lam_fac_goal_pick
+			value = 6
+		}
+		set_variable = {
+			name = lam_fac_goal
+			value = 6
+		}
+	}
+	option = {
+		name = lam_faction.2110.g7
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 7
+			}
+		}
+		set_variable = {
+			name = lam_fac_goal_pick
+			value = 7
+		}
+		set_variable = {
+			name = lam_fac_goal
+			value = 7
+		}
+	}
+	option = {
+		name = lam_faction.2110.g8
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 8
+			}
+		}
+		set_variable = {
+			name = lam_fac_goal_pick
+			value = 8
+		}
+		set_variable = {
+			name = lam_fac_goal
+			value = 8
+		}
+	}
+	option = {
+		name = lam_faction.2110.g9
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 9
+			}
+		}
+		set_variable = {
+			name = lam_fac_goal_pick
+			value = 9
+		}
+		set_variable = {
+			name = lam_fac_goal
+			value = 9
+		}
+	}
+	option = {
+		name = lam_faction.2110.auto
+		trigger = {
+			has_variable = lam_fac_goal_pick
+		}
+		remove_variable = lam_fac_goal_pick
+	}
+	option = {
+		name = lam_faction.2100.x
+	}
+}
+lam_faction.2200 = {
+	type = character_event
+	title = lam_faction.2200.t
+	desc = lam_faction.2200.desc
+	theme = realm
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_cpw_lord
+		animation = anger
+	}
+	right_portrait = {
+		character = root
+		animation = worry
+	}
+	trigger = {
+		exists = scope:lam_cpw_lord
+		has_variable = lam_bloc_lead
+	}
+	option = {
+		name = lam_faction.2200.a
+		trigger = {
+			prestige >= medium_prestige_value
+		}
+		add_prestige = {
+			value = medium_prestige_value
+			multiply = -1
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_fac_favour
+				}
+			}
+			set_variable = {
+				name = lam_fac_favour
+				value = 0
+			}
+		}
+		change_variable = {
+			name = lam_fac_favour
+			add = 25
+		}
+		clamp_variable = {
+			name = lam_fac_favour
+			min = -100
+			max = 100
+		}
+		scope:lam_cpw_lord = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_granted_opinion
+			}
+		}
+		custom_tooltip = lam_faction.2200.a.tt
+	}
+	option = {
+		name = lam_faction.2200.b
+		custom_tooltip = lam_faction.2200.b.tt
+	}
+}
+lam_faction.2300 = {
+	type = character_event
+	title = lam_faction.2300.t
+	desc = lam_faction.2300.desc
+	theme = intrigue
+	left_portrait = {
+		character = scope:lam_st_head
+		animation = personality_rational
+	}
+	trigger = {
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		var:lam_bloc ?= scope:lam_st_head
+		liege ?= scope:lam_st_lord
+		exists = scope:lam_st_head
+		scope:lam_st_head = {
+			is_alive = yes
+		}
+	}
+	option = {
+		name = lam_faction.2300.a
+		trigger = {
+			gold >= minor_gold_value
+		}
+		pay_short_term_gold = {
+			target = scope:lam_st_head
+			gold = minor_gold_value
+		}
+		scope:lam_st_head = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_favor_done_opinion
+			}
+		}
+		if = {
+			limit = {
+				var:lam_fac_tier ?= 2
+			}
+			custom_tooltip = lam_faction.2300.a.tt
+			set_variable = {
+				name = lam_fac_tier
+				value = 1
+			}
+			set_variable = {
+				name = lam_fac_tier_fixed
+				value = yes
+				years = 5
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2300.b
+		add_prestige = minor_prestige_gain
+		scope:lam_st_head = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_favor_done_opinion
+			}
+		}
+		stress_impact = {
+			lazy = minor_stress_impact_gain
+		}
+	}
+	option = {
+		name = lam_faction.2300.c
+		scope:lam_st_head = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_favor_refused_opinion
+			}
+		}
+	}
+}
+lam_faction.2310 = {
+	type = character_event
+	title = lam_faction.2310.t
+	desc = lam_pd_story_contact_desc
+	theme = intrigue
+	left_portrait = {
+		character = scope:lam_st_a
+		animation = scheme
+	}
+	right_portrait = {
+		character = scope:lam_st_head
+		animation = personality_rational
+	}
+	trigger = {
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		var:lam_bloc ?= scope:lam_st_head
+		liege ?= scope:lam_st_lord
+		exists = scope:lam_st_a
+		scope:lam_st_a = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+		}
+	}
+	option = {
+		name = lam_pd_story_contact
+		scope:lam_st_a = {
+			save_scope_as = lam_rc_head
+		}
+		lam_pd_recruit_begin_effect = yes
+	}
+	option = {
+		name = lam_faction.2310.b
+		scope:lam_st_head = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_reported_opinion
+			}
+		}
+		scope:lam_st_a = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_against_opinion
+			}
+		}
+		scope:lam_st_head = {
+			if = {
+				limit = {
+					NOT = {
+						is_target_in_variable_list = {
+							name = lam_fac_foes
+							target = scope:lam_st_a
+						}
+					}
+				}
+				add_to_variable_list = {
+					name = lam_fac_foes
+					target = scope:lam_st_a
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2310.c
+	}
+}
+lam_faction.2320 = {
+	type = character_event
+	title = lam_faction.2320.t
+	desc = {
+		desc = lam_faction.2320.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2320_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2320_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2320_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2320_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2320_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2320_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2320_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2320_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2320_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2320_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2320_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2320_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = intrigue
+	left_portrait = {
+		character = scope:lam_st_b
+		animation = scheme
+	}
+	right_portrait = {
+		character = scope:lam_st_head
+		animation = thinking
+	}
+	trigger = {
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		var:lam_bloc ?= scope:lam_st_head
+		liege ?= scope:lam_st_lord
+		exists = scope:lam_st_b
+		scope:lam_st_b = {
+			is_alive = yes
+		}
+	}
+	option = {
+		name = lam_faction.2320.a
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 30
+						add = {
+							value = root.intrigue
+							multiply = 3
+						}
+					}
+				}
+				scope:lam_st_head = {
+					add_opinion = {
+						target = scope:lam_st_b
+						modifier = lam_fac_smeared_opinion
+					}
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2320.a_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 50
+				}
+				scope:lam_st_head = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_smeared_opinion
+					}
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2320.a_no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2320.b
+		random_list = {
+			0 = {
+				modifier = {
+					add = 40
+				}
+				modifier = {
+					scope:lam_st_head = {
+						opinion = {
+							target = root
+							value >= 20
+						}
+					}
+					add = 30
+				}
+				scope:lam_st_head = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_sided_with_opinion
+					}
+				}
+			}
+			0 = {
+				modifier = {
+					add = 40
+				}
+				scope:lam_st_head = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_smeared_opinion
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2320.c
+		scope:lam_st_head = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_smeared_opinion
+			}
+		}
+		stress_impact = {
+			vengeful = medium_stress_impact_gain
+			wrathful = minor_stress_impact_gain
+		}
+	}
+}
+lam_faction.2400 = {
+	type = character_event
+	title = lam_faction.2400.t
+	desc = {
+		desc = lam_faction.2400.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					var:lam_is_st_heir ?= flag:x
+				}
+				desc = lam_is_ctx_2400_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					var:lam_is_st_heir ?= flag:y
+				}
+				desc = lam_is_ctx_2400_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					var:lam_is_st_crown ?= flag:x
+				}
+				desc = lam_is_ctx_2400_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					var:lam_is_st_crown ?= flag:y
+				}
+				desc = lam_is_ctx_2400_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					var:lam_is_st_council ?= flag:x
+				}
+				desc = lam_is_ctx_2400_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					var:lam_is_st_council ?= flag:y
+				}
+				desc = lam_is_ctx_2400_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					var:lam_is_st_faith ?= flag:x
+				}
+				desc = lam_is_ctx_2400_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					var:lam_is_st_faith ?= flag:y
+				}
+				desc = lam_is_ctx_2400_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					var:lam_is_st_tax ?= flag:x
+				}
+				desc = lam_is_ctx_2400_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					var:lam_is_st_tax ?= flag:y
+				}
+				desc = lam_is_ctx_2400_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					var:lam_is_st_war ?= flag:x
+				}
+				desc = lam_is_ctx_2400_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					var:lam_is_st_war ?= flag:y
+				}
+				desc = lam_is_ctx_2400_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = diplomacy
+	left_portrait = {
+		character = scope:lam_st_a
+		animation = anger
+	}
+	right_portrait = {
+		character = scope:lam_st_b
+		animation = anger
+	}
+	trigger = {
+		has_variable = lam_bloc_lead
+		liege ?= scope:lam_st_lord
+		exists = scope:lam_st_a
+		exists = scope:lam_st_b
+	}
+	option = {
+		name = lam_faction.2400.a
+		scope:lam_st_a = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_with_opinion
+			}
+		}
+		scope:lam_st_b = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_against_opinion
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2400.b
+		scope:lam_st_b = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_with_opinion
+			}
+		}
+		scope:lam_st_a = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_against_opinion
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2400.c
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 30
+						add = {
+							value = root.diplomacy
+							multiply = 3
+						}
+					}
+				}
+				lam_fac_cohesion_add_effect = {
+					ADD = 6
+				}
+				scope:lam_st_a = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_mediated_opinion
+					}
+				}
+				scope:lam_st_b = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_mediated_opinion
+					}
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2400.c_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 45
+				}
+				lam_fac_cohesion_add_effect = {
+					ADD = -6
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2400.c_no
+				}
+			}
+		}
+	}
+}
+lam_faction.2410 = {
+	type = character_event
+	title = lam_faction.2410.t
+	desc = {
+		desc = lam_faction.2410.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					var:lam_is_st_heir ?= flag:x
+				}
+				desc = lam_is_ctx_2410_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					var:lam_is_st_heir ?= flag:y
+				}
+				desc = lam_is_ctx_2410_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					var:lam_is_st_crown ?= flag:x
+				}
+				desc = lam_is_ctx_2410_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					var:lam_is_st_crown ?= flag:y
+				}
+				desc = lam_is_ctx_2410_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					var:lam_is_st_council ?= flag:x
+				}
+				desc = lam_is_ctx_2410_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					var:lam_is_st_council ?= flag:y
+				}
+				desc = lam_is_ctx_2410_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					var:lam_is_st_faith ?= flag:x
+				}
+				desc = lam_is_ctx_2410_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					var:lam_is_st_faith ?= flag:y
+				}
+				desc = lam_is_ctx_2410_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					var:lam_is_st_tax ?= flag:x
+				}
+				desc = lam_is_ctx_2410_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					var:lam_is_st_tax ?= flag:y
+				}
+				desc = lam_is_ctx_2410_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					var:lam_is_st_war ?= flag:x
+				}
+				desc = lam_is_ctx_2410_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					var:lam_is_st_war ?= flag:y
+				}
+				desc = lam_is_ctx_2410_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = intrigue
+	left_portrait = {
+		character = scope:lam_st_traitor
+		animation = scheme
+	}
+	trigger = {
+		has_variable = lam_bloc_lead
+		liege ?= scope:lam_st_lord
+		exists = scope:lam_st_traitor
+		scope:lam_st_traitor = {
+			is_alive = yes
+			var:lam_bloc ?= root
+		}
+	}
+	option = {
+		name = lam_faction.2410.a
+		scope:lam_st_traitor = {
+			remove_variable = lam_bloc
+			if = {
+				limit = {
+					has_variable = lam_fac_tier
+				}
+				remove_variable = lam_fac_tier
+			}
+			if = {
+				limit = {
+					has_variable = lam_fac_pinned
+				}
+				remove_variable = lam_fac_pinned
+			}
+			set_variable = {
+				name = lam_fac_unbound
+				value = yes
+				years = 2
+			}
+			add_opinion = {
+				target = root
+				modifier = lam_fac_expelled_opinion
+			}
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 4
+		}
+	}
+	option = {
+		name = lam_faction.2410.b
+		trigger = {
+			gold >= minor_gold_value
+		}
+		pay_short_term_gold = {
+			target = scope:lam_st_traitor
+			gold = minor_gold_value
+		}
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 35
+						add = {
+							value = root.diplomacy
+							multiply = 3
+						}
+					}
+				}
+				scope:lam_st_traitor = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_praised_opinion
+					}
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2410.b_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 40
+				}
+				lam_fac_cohesion_add_effect = {
+					ADD = -5
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2410.b_no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2410.c
+		lam_fac_cohesion_add_effect = {
+			ADD = -3
+		}
+	}
+}
+lam_faction.2420 = {
+	type = character_event
+	title = lam_pd_petition_title
+	desc = lam_pd_submit_desc
+	theme = diplomacy
+	trigger = {
+		has_variable = lam_bloc_lead
+		liege ?= scope:lam_st_lord
+		NOT = {
+			has_variable = lam_pd_active
+		}
+	}
+	option = {
+		name = lam_pd_story_gold
+		lam_pd_begin_effect = {
+			KIND = gold
+		}
+	}
+	option = {
+		name = lam_cr_close
+	}
+}
+lam_faction.2500 = {
+	type = character_event
+	title = lam_faction.2500.t
+	desc = {
+		desc = lam_faction.2500.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					scope:lam_st_a ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+					scope:lam_st_b ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2500_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					scope:lam_st_a ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+					scope:lam_st_b ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2500_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					scope:lam_st_a ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+					scope:lam_st_b ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2500_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					scope:lam_st_a ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+					scope:lam_st_b ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2500_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					scope:lam_st_a ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+					scope:lam_st_b ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2500_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					scope:lam_st_a ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+					scope:lam_st_b ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2500_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					scope:lam_st_a ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+					scope:lam_st_b ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2500_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					scope:lam_st_a ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+					scope:lam_st_b ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2500_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					scope:lam_st_a ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+					scope:lam_st_b ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2500_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					scope:lam_st_a ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+					scope:lam_st_b ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2500_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					scope:lam_st_a ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+					scope:lam_st_b ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2500_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					scope:lam_st_a ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+					scope:lam_st_b ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2500_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = diplomacy
+	left_portrait = {
+		character = scope:lam_st_a
+		animation = personality_bold
+	}
+	right_portrait = {
+		character = scope:lam_st_b
+		animation = personality_rational
+	}
+	trigger = {
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		NOT = {
+			has_variable = lam_bloc
+		}
+		liege ?= scope:lam_st_lord
+		exists = scope:lam_st_a
+		exists = scope:lam_st_b
+		NOT = {
+			has_variable = lam_bloc
+		}
+	}
+	option = {
+		name = lam_faction.2500.a
+		set_variable = {
+			name = lam_bloc
+			value = scope:lam_st_a
+		}
+		set_variable = {
+			name = lam_fac_tier
+			value = 2
+		}
+		set_variable = {
+			name = lam_fac_pinned
+			value = yes
+		}
+		scope:lam_st_a = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_granted_opinion
+			}
+		}
+		scope:lam_st_b = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_against_opinion
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2500.b
+		set_variable = {
+			name = lam_bloc
+			value = scope:lam_st_b
+		}
+		set_variable = {
+			name = lam_fac_tier
+			value = 2
+		}
+		set_variable = {
+			name = lam_fac_pinned
+			value = yes
+		}
+		scope:lam_st_b = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_granted_opinion
+			}
+		}
+		scope:lam_st_a = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_against_opinion
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2500.c
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 30
+						add = {
+							value = root.intrigue
+							multiply = 3
+						}
+					}
+				}
+				add_gold = minor_gold_value
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2500.c_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 45
+				}
+				scope:lam_st_a = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_turned_coat_opinion
+					}
+				}
+				scope:lam_st_b = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_turned_coat_opinion
+					}
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2500.c_no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2500.d
+	}
+}
+lam_faction.2510 = {
+	type = character_event
+	title = lam_faction.2510.t
+	desc = lam_faction.2510.desc
+	theme = intrigue
+	left_portrait = {
+		character = scope:lam_st_plot
+		animation = scheme
+	}
+	trigger = {
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		NOT = {
+			has_variable = lam_bloc
+		}
+		liege ?= scope:lam_st_lord
+		exists = scope:lam_st_plot
+		scope:lam_st_plot = {
+			is_alive = yes
+		}
+	}
+	option = {
+		name = lam_faction.2510.a
+		scope:lam_st_lord = {
+			if = {
+				limit = {
+					NOT = {
+						this = root
+					}
+				}
+				add_opinion = {
+					target = root
+					modifier = lam_fac_reported_opinion
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						this = scope:lam_st_plot
+					}
+				}
+				add_opinion = {
+					target = scope:lam_st_plot
+					modifier = lam_fac_plot_reported_opinion
+				}
+			}
+		}
+		scope:lam_st_plot = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_turned_coat_opinion
+			}
+			if = {
+				limit = {
+					has_variable = lam_fac_intel
+				}
+				change_variable = {
+					name = lam_fac_intel
+					add = 1
+				}
+				clamp_variable = {
+					name = lam_fac_intel
+					min = 0
+					max = 3
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2510.b
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 30
+						add = {
+							value = root.intrigue
+							multiply = 3
+						}
+					}
+				}
+				scope:lam_st_plot = {
+					pay_short_term_gold = {
+						target = root
+						gold = minor_gold_value
+					}
+					add_opinion = {
+						target = root
+						modifier = lam_fac_blackmailed_opinion
+					}
+				}
+			}
+			0 = {
+				modifier = {
+					add = 40
+				}
+				scope:lam_st_plot = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_blackmailed_opinion
+					}
+				}
+				add_prestige = {
+					value = minor_prestige_value
+					multiply = -1
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2510.c
+		scope:lam_st_plot = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_favor_done_opinion
+			}
+		}
+	}
+}
+lam_faction.2600 = {
+	type = activity_event
+	title = lam_faction.2600.t
+	desc = lam_faction.2600.desc
+	theme = realm
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+	option = {
+		name = lam_faction.2600.a
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 30
+						add = {
+							value = root.diplomacy
+							multiply = 3
+						}
+					}
+				}
+				lam_fac_cohesion_add_effect = {
+					ADD = 5
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2600.a_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 40
+				}
+				send_interface_message = {
+					type = event_generic_neutral
+					title = lam_faction.2600.a_no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2600.b
+		trigger = {
+			gold >= minor_gold_value
+		}
+		remove_short_term_gold = minor_gold_value
+		lam_fac_cohesion_add_effect = {
+			ADD = 4
+		}
+		add_prestige = minor_prestige_gain
+	}
+	option = {
+		name = lam_faction.2600.c
+	}
+}
+lam_faction.2610 = {
+	type = activity_event
+	title = lam_faction.2610.t
+	desc = lam_faction.2610.desc
+	theme = realm
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	immediate = {
+		lam_fac_gathering_attendees_effect = yes
+	}
+	option = {
+		name = lam_faction.2610.a
+		lam_fac_cohesion_add_effect = {
+			ADD = lam_tune_gather_unity
+		}
+		custom_tooltip = lam_faction.2610.a.tt
+		hidden_effect = {
+			lam_fac_gather_note_effect = {
+				KEY = unity
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2610.b
+		trigger = {
+			exists = liege
+		}
+		lam_pd_grievance_add_effect = {
+			KIND = policy
+			AMOUNT = 10
+			MONTHS = 36
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 5
+		}
+		custom_tooltip = lam_faction.2610.b.tt
+		hidden_effect = {
+			lam_fac_gather_note_effect = {
+				KEY = plot
+			}
+		}
+		hidden_effect = {
+			random_list = {
+				0 = {
+					modifier = {
+						add = {
+							value = 30
+							subtract = {
+								value = root.intrigue
+								multiply = 1.5
+							}
+							min = 5
+						}
+					}
+					liege = {
+						add_opinion = {
+							target = root
+							modifier = lam_fac_plot_reported_opinion
+						}
+					}
+					send_interface_message = {
+						type = event_generic_bad
+						title = lam_faction.2610.b_leak
+					}
+				}
+				70 = {}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2610.c
+		trigger = {
+			exists = liege
+		}
+		if = {
+			limit = {
+				has_variable = lam_head_demand_cd
+			}
+			remove_variable = lam_head_demand_cd
+		}
+		if = {
+			limit = {
+				has_variable = lam_head_demand_cd_m
+			}
+			remove_variable = lam_head_demand_cd_m
+		}
+		set_variable = {
+			name = lam_hd_backed
+			value = yes
+			years = 1
+		}
+		custom_tooltip = lam_faction.2610.c.tt
+		hidden_effect = {
+			lam_fac_gather_note_effect = {
+				KEY = demand
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2610.d
+		trigger = {
+			scope:lam_ga = {
+				any_attending_character = {
+					NOT = {
+						this = root
+					}
+					is_ai = yes
+					is_ruler = yes
+					var:lam_bloc ?= root
+				}
+			}
+		}
+		scope:lam_ga = {
+			ordered_attending_character = {
+				limit = {
+					NOT = {
+						this = root
+					}
+					is_ai = yes
+					is_ruler = yes
+					var:lam_bloc ?= root
+				}
+				order_by = max_military_strength
+				save_scope_as = lam_ga_heir
+			}
+		}
+		set_variable = {
+			name = lam_fac_succ_pick
+			value = scope:lam_ga_heir
+		}
+		scope:lam_ga_heir = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_named_successor_opinion
+			}
+		}
+		custom_tooltip = lam_faction.2610.d.tt
+		hidden_effect = {
+			lam_fac_gather_note_effect = {
+				KEY = heir
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2610.e
+		trigger = {
+			scope:lam_ga = {
+				any_attending_character = {
+					NOT = {
+						this = root
+					}
+					is_ai = yes
+					is_ruler = yes
+					var:lam_bloc ?= root
+				}
+			}
+		}
+		scope:lam_ga = {
+			ordered_attending_character = {
+				limit = {
+					NOT = {
+						this = root
+					}
+					is_ai = yes
+					is_ruler = yes
+					var:lam_bloc ?= root
+				}
+				order_by = {
+					value = diplomacy
+					add = stewardship
+					if = {
+						limit = {
+							has_variable = lam_fac_merit
+						}
+						add = 100
+					}
+				}
+				save_scope_as = lam_ga_heir2
+			}
+		}
+		set_variable = {
+			name = lam_fac_succ_pick
+			value = scope:lam_ga_heir2
+		}
+		scope:lam_ga_heir2 = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_named_successor_opinion
+			}
+		}
+		custom_tooltip = lam_faction.2610.e.tt
+		hidden_effect = {
+			lam_fac_gather_note_effect = {
+				KEY = heir
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2610.f
+		trigger = {
+			scope:lam_ga = {
+				any_attending_character = {
+					NOT = {
+						this = root
+					}
+					var:lam_bloc ?= root
+					has_variable = lam_fac_merit
+					NOT = {
+						has_variable = lam_fac_merit_praised
+					}
+				}
+			}
+		}
+		scope:lam_ga = {
+			random_attending_character = {
+				limit = {
+					NOT = {
+						this = root
+					}
+					var:lam_bloc ?= root
+					has_variable = lam_fac_merit
+					NOT = {
+						has_variable = lam_fac_merit_praised
+					}
+				}
+				save_scope_as = lam_ga_praised
+			}
+		}
+		scope:lam_ga_praised = {
+			add_opinion = {
+				target = root
+				modifier = respect_opinion
+				opinion = 20
+			}
+			set_variable = {
+				name = lam_fac_merit_praised
+				value = yes
+				years = 5
+			}
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 3
+		}
+		custom_tooltip = lam_faction.2610.f.tt
+		hidden_effect = {
+			lam_fac_gather_note_effect = {
+				KEY = praise
+			}
+		}
+	}
+}
+lam_faction.2620 = {
+	type = activity_event
+	title = lam_faction.2620.t
+	desc = lam_faction.2620.desc
+	theme = realm
+	left_portrait = {
+		character = scope:lam_ga_host
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+	option = {
+		name = lam_faction.2620.a
+		scope:lam_ga_host = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_pledged_opinion
+			}
+		}
+		random = {
+			chance = 30
+			if = {
+				limit = {
+					var:lam_fac_tier ?= 2
+				}
+				set_variable = {
+					name = lam_fac_tier
+					value = 1
+				}
+				set_variable = {
+					name = lam_fac_tier_fixed
+					value = yes
+					years = 5
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_fac_mh_raised_title
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2620.b
+		add_prestige = minor_prestige_gain
+		scope:lam_ga_host = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_counselled_opinion
+			}
+		}
+		if = {
+			limit = {
+				max_military_strength >= {
+					value = scope:lam_ga_host.max_military_strength
+					multiply = 0.6
+				}
+				var:lam_fac_tier ?= 2
+			}
+			set_variable = {
+				name = lam_fac_tier
+				value = 1
+			}
+			set_variable = {
+				name = lam_fac_tier_fixed
+				value = yes
+				years = 5
+			}
+			custom_tooltip = lam_faction.2620.b.tt
+		}
+	}
+	option = {
+		name = lam_faction.2620.c
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 30
+						add = {
+							value = root.intrigue
+							multiply = 3
+						}
+					}
+				}
+				scope:lam_ga ?= {
+					every_attending_character = {
+						limit = {
+							NOT = {
+								this = root
+							}
+							NOT = {
+								this = scope:lam_ga_host
+							}
+							is_ai = yes
+						}
+						add_opinion = {
+							target = root
+							modifier = lam_fac_sided_with_opinion
+						}
+					}
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2620.c_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 40
+				}
+				scope:lam_ga_host = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_smeared_opinion
+					}
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2620.c_no
+				}
+			}
+		}
+	}
+}
+lam_faction.2330 = {
+	type = character_event
+	title = lam_faction.2330.t
+	trigger = {
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		var:lam_bloc ?= scope:lam_st_head
+		liege ?= scope:lam_st_lord
+	}
+	desc = {
+		desc = lam_faction.2330.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2330_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2330_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2330_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2330_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2330_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2330_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2330_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2330_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2330_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2330_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2330_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2330_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = intrigue
+	left_portrait = {
+		character = scope:lam_st_head
+		animation = worry
+	}
+	option = {
+		name = lam_faction.2330.a
+		scope:lam_st_head = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_pledged_opinion
+			}
+			lam_fac_cohesion_add_effect = {
+				ADD = 3
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2330.b
+		set_variable = {
+			name = lam_fac_conspiring
+			value = scope:lam_st_head
+			years = 2
+		}
+		custom_tooltip = lam_faction.2330.b.tt
+		scope:lam_st_head = {
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_ai = yes
+					NOT = {
+						this = root
+					}
+					opinion = {
+						target = scope:lam_st_head
+						value < 10
+					}
+				}
+				add_opinion = {
+					target = root
+					modifier = lam_fac_conspirator_opinion
+				}
+			}
+		}
+		trigger_event = {
+			id = lam_faction.2361
+			days = 180
+		}
+	}
+	option = {
+		name = lam_faction.2330.c
+	}
+}
+lam_faction.2340 = {
+	type = character_event
+	title = lam_faction.2340.t
+	trigger = {
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		var:lam_bloc ?= scope:lam_st_head
+		liege ?= scope:lam_st_lord
+	}
+	desc = {
+		desc = lam_faction.2340.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2340_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2340_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2340_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2340_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2340_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2340_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2340_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2340_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2340_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2340_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2340_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2340_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = realm
+	left_portrait = {
+		character = scope:lam_st_head
+		animation = personality_rational
+	}
+	option = {
+		name = lam_faction.2340.a
+		trigger = {
+			gold >= minor_gold_value
+		}
+		pay_short_term_gold = {
+			target = scope:lam_st_head
+			gold = minor_gold_value
+		}
+		scope:lam_st_head = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_favor_done_opinion
+			}
+			lam_fac_cohesion_add_effect = {
+				ADD = 2
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2340.b
+		trigger = {
+			gold >= medium_gold_value
+		}
+		pay_short_term_gold = {
+			target = scope:lam_st_head
+			gold = medium_gold_value
+		}
+		scope:lam_st_head = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_rewarded_opinion
+			}
+			lam_fac_cohesion_add_effect = {
+				ADD = 4
+			}
+		}
+		if = {
+			limit = {
+				var:lam_fac_tier ?= 2
+			}
+			set_variable = {
+				name = lam_fac_tier
+				value = 1
+			}
+			set_variable = {
+				name = lam_fac_tier_fixed
+				value = yes
+				years = 5
+			}
+			custom_tooltip = lam_faction.2340.b.tt
+		}
+	}
+	option = {
+		name = lam_faction.2340.c
+		scope:lam_st_head = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_favor_refused_opinion
+			}
+		}
+	}
+}
+lam_faction.2350 = {
+	type = character_event
+	title = lam_faction.2350.t
+	trigger = {
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		var:lam_bloc ?= scope:lam_st_head
+		liege ?= scope:lam_st_lord
+	}
+	desc = {
+		desc = lam_faction.2350.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2350_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2350_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2350_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2350_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2350_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2350_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2350_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2350_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2350_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2350_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2350_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2350_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = diplomacy
+	left_portrait = {
+		character = scope:lam_st_head
+		animation = thinking
+	}
+	option = {
+		name = lam_faction.2350.a
+		trigger = {
+			gold >= minor_gold_value
+		}
+		pay_short_term_gold = {
+			target = scope:lam_st_head
+			gold = minor_gold_value
+		}
+		random_list = {
+			0 = {
+				modifier = {
+					add = 60
+				}
+				set_variable = {
+					name = lam_fac_tier
+					value = 1
+				}
+				set_variable = {
+					name = lam_fac_tier_fixed
+					value = yes
+					years = 5
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_fac_mh_raised_title
+				}
+			}
+			0 = {
+				modifier = {
+					add = 40
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2350.no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2350.b
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 20
+						add = {
+							value = root.diplomacy
+							multiply = 3
+						}
+					}
+				}
+				set_variable = {
+					name = lam_fac_tier
+					value = 1
+				}
+				set_variable = {
+					name = lam_fac_tier_fixed
+					value = yes
+					years = 5
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_fac_mh_raised_title
+				}
+			}
+			0 = {
+				modifier = {
+					add = 50
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2350.no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2350.c
+	}
+}
+lam_faction.2360 = {
+	type = character_event
+	title = lam_faction.2360.t
+	desc = {
+		desc = lam_faction.2360.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2360_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2360_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2360_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2360_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2360_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2360_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2360_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2360_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2360_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2360_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2360_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					scope:lam_st_head ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2360_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = intrigue
+	left_portrait = {
+		character = scope:lam_st_plot
+		animation = scheme
+	}
+	right_portrait = {
+		character = scope:lam_st_head
+		animation = idle
+	}
+	trigger = {
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		var:lam_bloc ?= scope:lam_st_head
+		liege ?= scope:lam_st_lord
+		exists = scope:lam_st_plot
+		scope:lam_st_plot = {
+			is_alive = yes
+		}
+	}
+	option = {
+		name = lam_faction.2360.a
+		set_variable = {
+			name = lam_fac_conspiring
+			value = scope:lam_st_head
+			years = 2
+		}
+		scope:lam_st_plot = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_conspirator_opinion
+			}
+		}
+		custom_tooltip = lam_faction.2330.b.tt
+		trigger_event = {
+			id = lam_faction.2361
+			days = 180
+		}
+	}
+	option = {
+		name = lam_faction.2360.b
+		scope:lam_st_head = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_reported_opinion
+			}
+		}
+		scope:lam_st_plot = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_turned_coat_opinion
+			}
+			if = {
+				limit = {
+					var:lam_bloc ?= scope:lam_st_head
+				}
+				remove_variable = lam_bloc
+				set_variable = {
+					name = lam_fac_unbound
+					value = yes
+					years = 2
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2360.c
+	}
+}
+lam_faction.2361 = {
+	type = character_event
+	title = lam_faction.2361.t
+	desc = lam_faction.2361.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+	trigger = {
+		lam_fac_plot_valid_trigger = yes
+	}
+	on_trigger_fail = {
+		if = {
+			limit = {
+				var:lam_fac_conspiring ?= scope:lam_st_head
+			}
+			remove_variable = lam_fac_conspiring
+		}
+	}
+	option = {
+		name = lam_faction.2361.a
+		trigger = {
+			lam_fac_fit_head_trigger = yes
+			lam_fac_plot_valid_trigger = yes
+		}
+		if = {
+			limit = {
+				lam_fac_plot_valid_trigger = yes
+			}
+			remove_variable = lam_fac_conspiring
+			custom_tooltip = lam_faction.2361.a.tt
+			hidden_effect = {
+				if = {
+					limit = {
+						var:lam_bloc ?= scope:lam_st_head
+						liege ?= scope:lam_st_lord
+						scope:lam_st_head = {
+							is_alive = yes
+							has_variable = lam_bloc_lead
+							is_imprisoned = no
+						}
+					}
+					lam_fac_challenge_effect = {
+						CHALLENGER = root
+						HEAD = scope:lam_st_head
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2361.b
+		if = {
+			limit = {
+				lam_fac_plot_valid_trigger = yes
+			}
+			remove_variable = lam_fac_conspiring
+			stress_impact = {
+				ambitious = minor_stress_impact_gain
+			}
+		}
+	}
+}
+lam_faction.2430 = {
+	type = character_event
+	title = lam_faction.2430.t
+	trigger = {
+		has_variable = lam_bloc_lead
+		liege ?= scope:lam_st_lord
+	}
+	desc = {
+		desc = lam_faction.2430.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					var:lam_is_st_heir ?= flag:x
+				}
+				desc = lam_is_ctx_2430_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					var:lam_is_st_heir ?= flag:y
+				}
+				desc = lam_is_ctx_2430_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					var:lam_is_st_crown ?= flag:x
+				}
+				desc = lam_is_ctx_2430_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					var:lam_is_st_crown ?= flag:y
+				}
+				desc = lam_is_ctx_2430_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					var:lam_is_st_council ?= flag:x
+				}
+				desc = lam_is_ctx_2430_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					var:lam_is_st_council ?= flag:y
+				}
+				desc = lam_is_ctx_2430_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					var:lam_is_st_faith ?= flag:x
+				}
+				desc = lam_is_ctx_2430_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					var:lam_is_st_faith ?= flag:y
+				}
+				desc = lam_is_ctx_2430_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					var:lam_is_st_tax ?= flag:x
+				}
+				desc = lam_is_ctx_2430_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					var:lam_is_st_tax ?= flag:y
+				}
+				desc = lam_is_ctx_2430_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					var:lam_is_st_war ?= flag:x
+				}
+				desc = lam_is_ctx_2430_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					var:lam_is_st_war ?= flag:y
+				}
+				desc = lam_is_ctx_2430_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = realm
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	option = {
+		name = lam_faction.2430.a
+		every_in_list = {
+			variable = lam_fac_members
+			limit = {
+				is_alive = yes
+				is_ai = yes
+				var:lam_bloc ?= root
+				NOT = {
+					this = root
+				}
+				gold >= 10
+			}
+			pay_short_term_gold = {
+				target = root
+				gold = 10
+			}
+			add_opinion = {
+				target = root
+				modifier = lam_fac_dues_opinion
+			}
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = -3
+		}
+	}
+	option = {
+		name = lam_faction.2430.b
+		trigger = {
+			gold >= medium_gold_value
+		}
+		remove_short_term_gold = medium_gold_value
+		lam_fac_cohesion_add_effect = {
+			ADD = 8
+		}
+		every_in_list = {
+			variable = lam_fac_members
+			limit = {
+				is_alive = yes
+				is_ai = yes
+				var:lam_bloc ?= root
+			}
+			add_opinion = {
+				target = root
+				modifier = lam_fac_generous_head_opinion
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2430.c
+		lam_fac_cohesion_add_effect = {
+			ADD = -5
+		}
+	}
+}
+lam_faction.2440 = {
+	type = character_event
+	title = lam_faction.2440.t
+	trigger = {
+		has_variable = lam_bloc_lead
+		liege ?= scope:lam_st_lord
+	}
+	desc = lam_faction.2440.desc
+	theme = diplomacy
+	left_portrait = {
+		character = scope:lam_st_lord
+		animation = personality_rational
+	}
+	option = {
+		name = lam_faction.2440.a
+		trigger = {
+			gold >= medium_gold_value
+		}
+		pay_short_term_gold = {
+			target = scope:lam_st_lord
+			gold = medium_gold_value
+		}
+		scope:lam_st_lord = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_proved_loyal_opinion
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_fac_favour
+				}
+			}
+			set_variable = {
+				name = lam_fac_favour
+				value = 0
+			}
+		}
+		change_variable = {
+			name = lam_fac_favour
+			add = 15
+		}
+		clamp_variable = {
+			name = lam_fac_favour
+			min = -100
+			max = 100
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = -4
+		}
+	}
+	option = {
+		name = lam_faction.2440.b
+		add_prestige = {
+			value = minor_prestige_value
+			multiply = -1
+		}
+		set_variable = {
+			name = lam_fac_oath
+			value = yes
+			years = 2
+		}
+		lam_fac_timer_set_effect = {
+			NAME = lam_fac_oath
+			YEARS = 2
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_fac_favour
+				}
+			}
+			set_variable = {
+				name = lam_fac_favour
+				value = 0
+			}
+		}
+		change_variable = {
+			name = lam_fac_favour
+			add = 10
+		}
+		clamp_variable = {
+			name = lam_fac_favour
+			min = -100
+			max = 100
+		}
+	}
+	option = {
+		name = lam_faction.2440.c
+		scope:lam_st_lord = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_spurned_test_opinion
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_fac_favour
+				}
+			}
+			set_variable = {
+				name = lam_fac_favour
+				value = 0
+			}
+		}
+		change_variable = {
+			name = lam_fac_favour
+			add = -10
+		}
+		clamp_variable = {
+			name = lam_fac_favour
+			min = -100
+			max = 100
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 5
+		}
+	}
+}
+lam_faction.2450 = {
+	type = character_event
+	title = lam_faction.2450.t
+	trigger = {
+		has_variable = lam_bloc_lead
+		liege ?= scope:lam_st_lord
+	}
+	desc = {
+		desc = lam_faction.2450.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					var:lam_is_st_heir ?= flag:x
+					scope:lam_st_rival ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2450_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					var:lam_is_st_heir ?= flag:y
+					scope:lam_st_rival ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2450_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					var:lam_is_st_crown ?= flag:x
+					scope:lam_st_rival ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2450_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					var:lam_is_st_crown ?= flag:y
+					scope:lam_st_rival ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2450_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					var:lam_is_st_council ?= flag:x
+					scope:lam_st_rival ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2450_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					var:lam_is_st_council ?= flag:y
+					scope:lam_st_rival ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2450_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					var:lam_is_st_faith ?= flag:x
+					scope:lam_st_rival ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2450_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					var:lam_is_st_faith ?= flag:y
+					scope:lam_st_rival ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2450_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					var:lam_is_st_tax ?= flag:x
+					scope:lam_st_rival ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2450_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					var:lam_is_st_tax ?= flag:y
+					scope:lam_st_rival ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2450_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					var:lam_is_st_war ?= flag:x
+					scope:lam_st_rival ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2450_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					var:lam_is_st_war ?= flag:y
+					scope:lam_st_rival ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2450_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = martial
+	left_portrait = {
+		character = scope:lam_st_rival
+		animation = anger
+	}
+	option = {
+		name = lam_faction.2450.a
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 25
+						add = {
+							value = root.prowess
+							multiply = 3
+						}
+					}
+				}
+				add_prestige = medium_prestige_gain
+				lam_fac_cohesion_add_effect = {
+					ADD = 6
+				}
+				scope:lam_st_rival = {
+					add_prestige = {
+						value = minor_prestige_value
+						multiply = -1
+					}
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2450.a_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 45
+				}
+				add_prestige = {
+					value = minor_prestige_value
+					multiply = -1
+				}
+				add_stress = minor_stress_gain
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2450.a_no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2450.b
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 25
+						add = {
+							value = root.intrigue
+							multiply = 3
+						}
+					}
+				}
+				scope:lam_st_rival = {
+					lam_fac_cohesion_add_effect = {
+						ADD = -8
+					}
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2450.b_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 45
+				}
+				add_opinion = {
+					target = scope:lam_st_rival
+					modifier = lam_fac_insulted_opinion
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2450.b_no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2450.c
+		add_opinion = {
+			target = scope:lam_st_rival
+			modifier = lam_fac_insulted_opinion
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = -3
+		}
+		stress_impact = {
+			wrathful = medium_stress_impact_gain
+			arrogant = minor_stress_impact_gain
+		}
+	}
+}
+lam_faction.2460 = {
+	type = character_event
+	title = lam_faction.2460.t
+	trigger = {
+		has_variable = lam_bloc_lead
+		liege ?= scope:lam_st_lord
+	}
+	desc = {
+		desc = lam_faction.2460.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					var:lam_is_st_heir ?= flag:x
+				}
+				desc = lam_is_ctx_2460_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					var:lam_is_st_heir ?= flag:y
+				}
+				desc = lam_is_ctx_2460_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					var:lam_is_st_crown ?= flag:x
+				}
+				desc = lam_is_ctx_2460_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					var:lam_is_st_crown ?= flag:y
+				}
+				desc = lam_is_ctx_2460_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					var:lam_is_st_council ?= flag:x
+				}
+				desc = lam_is_ctx_2460_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					var:lam_is_st_council ?= flag:y
+				}
+				desc = lam_is_ctx_2460_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					var:lam_is_st_faith ?= flag:x
+				}
+				desc = lam_is_ctx_2460_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					var:lam_is_st_faith ?= flag:y
+				}
+				desc = lam_is_ctx_2460_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					var:lam_is_st_tax ?= flag:x
+				}
+				desc = lam_is_ctx_2460_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					var:lam_is_st_tax ?= flag:y
+				}
+				desc = lam_is_ctx_2460_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					var:lam_is_st_war ?= flag:x
+				}
+				desc = lam_is_ctx_2460_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					var:lam_is_st_war ?= flag:y
+				}
+				desc = lam_is_ctx_2460_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = realm
+	left_portrait = {
+		character = root
+		animation = stress
+	}
+	option = {
+		name = lam_faction.2460.a
+		trigger = {
+			gold >= medium_gold_value
+		}
+		remove_short_term_gold = medium_gold_value
+		lam_fac_cohesion_add_effect = {
+			ADD = 15
+		}
+	}
+	option = {
+		name = lam_faction.2460.b
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 20
+						add = {
+							value = root.diplomacy
+							multiply = 3
+						}
+					}
+				}
+				lam_fac_cohesion_add_effect = {
+					ADD = 12
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2460.b_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 50
+				}
+				lam_fac_cohesion_add_effect = {
+					ADD = -5
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2460.b_no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2460.c
+		ordered_in_list = {
+			variable = lam_fac_members
+			limit = {
+				is_alive = yes
+				is_ai = yes
+				var:lam_bloc ?= root
+				NOT = {
+					this = root
+				}
+			}
+			order_by = {
+				value = 0
+				subtract = "opinion(root)"
+			}
+			save_scope_as = lam_st_loud
+		}
+		scope:lam_st_loud ?= {
+			remove_variable = lam_bloc
+			if = {
+				limit = {
+					has_variable = lam_fac_tier
+				}
+				remove_variable = lam_fac_tier
+			}
+			set_variable = {
+				name = lam_fac_unbound
+				value = yes
+				years = 2
+			}
+			add_opinion = {
+				target = root
+				modifier = lam_fac_expelled_opinion
+			}
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 8
+		}
+		add_dread = minor_dread_gain
+	}
+}
+lam_faction.2470 = {
+	type = character_event
+	title = lam_faction.2470.t
+	trigger = {
+		has_variable = lam_bloc_lead
+		liege ?= scope:lam_st_lord
+	}
+	desc = lam_faction.2470.desc
+	theme = intrigue
+	left_portrait = {
+		character = scope:lam_st_rival
+		animation = scheme
+	}
+	option = {
+		name = lam_faction.2470.a
+		trigger = {
+			lam_fac_amity_pair_trigger = {
+				A = root
+				B = scope:lam_st_rival
+			}
+		}
+		hidden_effect = {
+			lam_fac_ally_effect = {
+				A = root
+				B = scope:lam_st_rival
+			}
+		}
+	}
+	option = {
+		name = lam_pd_public_information
+	}
+	option = {
+		name = lam_faction.2470.c
+	}
+}
+lam_faction.2480 = {
+	type = character_event
+	title = lam_faction.2480.t
+	trigger = {
+		has_variable = lam_bloc_lead
+		liege ?= scope:lam_st_lord
+	}
+	desc = {
+		desc = lam_faction.2480.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					var:lam_is_st_heir ?= flag:x
+				}
+				desc = lam_is_ctx_2480_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_heir_open
+					}
+					var:lam_is_st_heir ?= flag:y
+				}
+				desc = lam_is_ctx_2480_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					var:lam_is_st_crown ?= flag:x
+				}
+				desc = lam_is_ctx_2480_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_crown_open
+					}
+					var:lam_is_st_crown ?= flag:y
+				}
+				desc = lam_is_ctx_2480_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					var:lam_is_st_council ?= flag:x
+				}
+				desc = lam_is_ctx_2480_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_council_open
+					}
+					var:lam_is_st_council ?= flag:y
+				}
+				desc = lam_is_ctx_2480_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					var:lam_is_st_faith ?= flag:x
+				}
+				desc = lam_is_ctx_2480_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_faith_open
+					}
+					var:lam_is_st_faith ?= flag:y
+				}
+				desc = lam_is_ctx_2480_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					var:lam_is_st_tax ?= flag:x
+				}
+				desc = lam_is_ctx_2480_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_tax_open
+					}
+					var:lam_is_st_tax ?= flag:y
+				}
+				desc = lam_is_ctx_2480_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					var:lam_is_st_war ?= flag:x
+				}
+				desc = lam_is_ctx_2480_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_st_lord = {
+						has_variable = lam_is_war_open
+					}
+					var:lam_is_st_war ?= flag:y
+				}
+				desc = lam_is_ctx_2480_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = diplomacy
+	left_portrait = {
+		character = scope:lam_st_a
+		animation = personality_bold
+	}
+	right_portrait = {
+		character = scope:lam_st_b
+		animation = personality_bold
+	}
+	option = {
+		name = lam_faction.2480.a
+		set_variable = {
+			name = lam_fac_succ_pick
+			value = scope:lam_st_a
+		}
+		scope:lam_st_a = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_named_successor_opinion
+			}
+		}
+		scope:lam_st_b = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_against_opinion
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2480.b
+		set_variable = {
+			name = lam_fac_succ_pick
+			value = scope:lam_st_b
+		}
+		scope:lam_st_b = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_named_successor_opinion
+			}
+		}
+		scope:lam_st_a = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_against_opinion
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2480.c
+		scope:lam_st_a = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_favor_refused_opinion
+			}
+		}
+		scope:lam_st_b = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_favor_refused_opinion
+			}
+		}
+	}
+}
+lam_faction.2700 = {
+	type = character_event
+	title = lam_faction.2700.t
+	desc = {
+		desc = lam_faction.2700.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_heir_open
+					scope:lam_lo_a ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2700_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_heir_open
+					scope:lam_lo_a ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2700_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_crown_open
+					scope:lam_lo_a ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2700_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_crown_open
+					scope:lam_lo_a ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2700_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_council_open
+					scope:lam_lo_a ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2700_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_council_open
+					scope:lam_lo_a ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2700_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_faith_open
+					scope:lam_lo_a ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2700_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_faith_open
+					scope:lam_lo_a ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2700_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_tax_open
+					scope:lam_lo_a ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2700_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_tax_open
+					scope:lam_lo_a ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2700_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_war_open
+					scope:lam_lo_a ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2700_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_war_open
+					scope:lam_lo_a ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2700_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = diplomacy
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_lo_a
+		animation = personality_rational
+	}
+	option = {
+		name = lam_faction.2700.a
+		scope:lam_lo_a = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_heard_opinion
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = 10
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+			if = {
+				limit = {
+					has_variable = lam_fac_grievance
+				}
+				lam_pd_hearing_effect = yes
+			}
+		}
+		stress_impact = {
+			impatient = minor_stress_impact_gain
+			arrogant = minor_stress_impact_gain
+		}
+	}
+	option = {
+		name = lam_faction.2700.b
+		scope:lam_lo_a = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_dismissed_opinion
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = -5
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2700.c
+		add_dread = minor_dread_gain
+		scope:lam_lo_a = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_threatened_opinion
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = -10
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+			lam_fac_cohesion_add_effect = {
+				ADD = -5
+			}
+		}
+	}
+}
+lam_faction.2710 = {
+	type = character_event
+	title = lam_faction.2710.t
+	desc = lam_faction.2710.desc
+	theme = intrigue
+	left_portrait = {
+		character = scope:lam_lo_cp
+		animation = scheme
+	}
+	right_portrait = {
+		character = scope:lam_lo_plot
+		animation = idle
+	}
+	option = {
+		name = lam_faction.2710.a
+		add_tyranny = minor_tyranny_gain
+		scope:lam_lo_plot = {
+			lam_fac_cohesion_add_effect = {
+				ADD = -20
+			}
+			add_opinion = {
+				target = root
+				modifier = lam_fac_threatened_opinion
+			}
+		}
+		scope:lam_lo_cp = {
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = 10
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+			if = {
+				limit = {
+					NOT = {
+						is_target_in_variable_list = {
+							name = lam_fac_foes
+							target = scope:lam_lo_plot
+						}
+					}
+				}
+				add_to_variable_list = {
+					name = lam_fac_foes
+					target = scope:lam_lo_plot
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2710.b
+		scope:lam_lo_cp = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_dismissed_opinion
+			}
+		}
+	}
+}
+lam_faction.2720 = {
+	type = character_event
+	title = lam_faction.2720.t
+	desc = lam_faction.2720.desc
+	theme = intrigue
+	left_portrait = {
+		character = scope:lam_lo_plot
+		animation = scheme
+	}
+	option = {
+		name = lam_faction.2720.a
+		add_tyranny = medium_tyranny_gain
+		imprison = {
+			target = scope:lam_lo_plot
+			type = dungeon
+		}
+	}
+	option = {
+		name = lam_faction.2720.b
+		trigger = {
+			gold >= medium_gold_value
+		}
+		pay_short_term_gold = {
+			target = scope:lam_lo_plot
+			gold = medium_gold_value
+		}
+		scope:lam_lo_plot = {
+			set_variable = {
+				name = lam_fac_oath
+				value = yes
+				years = 3
+			}
+			lam_fac_timer_set_effect = {
+				NAME = lam_fac_oath
+				YEARS = 3
+			}
+			lam_fac_cohesion_add_effect = {
+				ADD = -10
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = 15
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2720.c
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 25
+						add = {
+							value = root.intrigue
+							multiply = 3
+						}
+					}
+				}
+				scope:lam_lo_plot = {
+					lam_fac_cohesion_add_effect = {
+						ADD = -15
+					}
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2720.c_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 45
+				}
+				scope:lam_lo_plot = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_threatened_opinion
+					}
+					lam_pd_grievance_add_effect = {
+						KIND = policy
+						AMOUNT = 10
+						MONTHS = 24
+					}
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2720.c_no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2720.d
+	}
+}
+lam_faction.2730 = {
+	type = character_event
+	title = lam_faction.2730.t
+	desc = {
+		desc = lam_faction.2730.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_heir_open
+					scope:lam_lo_b ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+					scope:lam_lo_c ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2730_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_heir_open
+					scope:lam_lo_b ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+					scope:lam_lo_c ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2730_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_crown_open
+					scope:lam_lo_b ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+					scope:lam_lo_c ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2730_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_crown_open
+					scope:lam_lo_b ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+					scope:lam_lo_c ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2730_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_council_open
+					scope:lam_lo_b ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+					scope:lam_lo_c ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2730_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_council_open
+					scope:lam_lo_b ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+					scope:lam_lo_c ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2730_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_faith_open
+					scope:lam_lo_b ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+					scope:lam_lo_c ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2730_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_faith_open
+					scope:lam_lo_b ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+					scope:lam_lo_c ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2730_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_tax_open
+					scope:lam_lo_b ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+					scope:lam_lo_c ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2730_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_tax_open
+					scope:lam_lo_b ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+					scope:lam_lo_c ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2730_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_war_open
+					scope:lam_lo_b ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+					scope:lam_lo_c ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2730_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_war_open
+					scope:lam_lo_b ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+					scope:lam_lo_c ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2730_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = diplomacy
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_lo_b
+		animation = anger
+	}
+	right_portrait = {
+		character = scope:lam_lo_c
+		animation = anger
+	}
+	option = {
+		name = lam_faction.2730.a
+		scope:lam_lo_b = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_with_opinion
+			}
+		}
+		scope:lam_lo_c = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_against_opinion
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = -10
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2730.b
+		scope:lam_lo_c = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_with_opinion
+			}
+		}
+		scope:lam_lo_b = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_sided_against_opinion
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = -10
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2730.c
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 30
+						add = {
+							value = root.diplomacy
+							multiply = 3
+						}
+					}
+				}
+				scope:lam_lo_b = {
+					if = {
+						limit = {
+							is_target_in_variable_list = {
+								name = lam_fac_foes
+								target = scope:lam_lo_c
+							}
+						}
+						remove_list_variable = {
+							name = lam_fac_foes
+							target = scope:lam_lo_c
+						}
+					}
+					add_opinion = {
+						target = root
+						modifier = lam_fac_mediated_opinion
+					}
+				}
+				scope:lam_lo_c = {
+					if = {
+						limit = {
+							is_target_in_variable_list = {
+								name = lam_fac_foes
+								target = scope:lam_lo_b
+							}
+						}
+						remove_list_variable = {
+							name = lam_fac_foes
+							target = scope:lam_lo_b
+						}
+					}
+					add_opinion = {
+						target = root
+						modifier = lam_fac_mediated_opinion
+					}
+				}
+				add_prestige = minor_prestige_gain
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2730.c_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 45
+				}
+				add_prestige = {
+					value = minor_prestige_value
+					multiply = -1
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2730.c_no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2730.d
+		scope:lam_lo_b = {
+			lam_fac_cohesion_add_effect = {
+				ADD = -5
+			}
+		}
+		scope:lam_lo_c = {
+			lam_fac_cohesion_add_effect = {
+				ADD = -5
+			}
+		}
+	}
+}
+lam_faction.2740 = {
+	type = character_event
+	title = lam_faction.2740.t
+	desc = {
+		desc = lam_faction.2740.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_heir_open
+					scope:lam_lo_loyal ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2740_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_heir_open
+					scope:lam_lo_loyal ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2740_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_crown_open
+					scope:lam_lo_loyal ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2740_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_crown_open
+					scope:lam_lo_loyal ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2740_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_council_open
+					scope:lam_lo_loyal ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2740_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_council_open
+					scope:lam_lo_loyal ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2740_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_faith_open
+					scope:lam_lo_loyal ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2740_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_faith_open
+					scope:lam_lo_loyal ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2740_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_tax_open
+					scope:lam_lo_loyal ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2740_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_tax_open
+					scope:lam_lo_loyal ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2740_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_war_open
+					scope:lam_lo_loyal ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2740_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_war_open
+					scope:lam_lo_loyal ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2740_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = diplomacy
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_lo_loyal
+		animation = personality_honorable
+	}
+	option = {
+		name = lam_faction.2740.a
+		trigger = {
+			gold >= medium_gold_value
+		}
+		pay_short_term_gold = {
+			target = scope:lam_lo_loyal
+			gold = medium_gold_value
+		}
+		scope:lam_lo_loyal = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_rewarded_opinion
+			}
+			lam_fac_cohesion_add_effect = {
+				ADD = 5
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2740.b
+		add_prestige = {
+			value = minor_prestige_value
+			multiply = -1
+		}
+		scope:lam_lo_loyal = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_heard_opinion
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = 15
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2740.c
+		scope:lam_lo_loyal = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_dismissed_opinion
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = -10
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+		}
+	}
+}
+lam_faction.2750 = {
+	type = character_event
+	title = lam_faction.2750.t
+	desc = {
+		desc = lam_faction.2750.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_heir_open
+					scope:lam_lo_big ?= {
+						var:lam_is_st_heir ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2750_heir_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_heir_open
+					scope:lam_lo_big ?= {
+						var:lam_is_st_heir ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2750_heir_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_crown_open
+					scope:lam_lo_big ?= {
+						var:lam_is_st_crown ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2750_crown_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_crown_open
+					scope:lam_lo_big ?= {
+						var:lam_is_st_crown ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2750_crown_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_council_open
+					scope:lam_lo_big ?= {
+						var:lam_is_st_council ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2750_council_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_council_open
+					scope:lam_lo_big ?= {
+						var:lam_is_st_council ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2750_council_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_faith_open
+					scope:lam_lo_big ?= {
+						var:lam_is_st_faith ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2750_faith_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_faith_open
+					scope:lam_lo_big ?= {
+						var:lam_is_st_faith ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2750_faith_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_tax_open
+					scope:lam_lo_big ?= {
+						var:lam_is_st_tax ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2750_tax_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_tax_open
+					scope:lam_lo_big ?= {
+						var:lam_is_st_tax ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2750_tax_y
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_war_open
+					scope:lam_lo_big ?= {
+						var:lam_is_st_war ?= flag:x
+					}
+				}
+				desc = lam_is_ctx_2750_war_x
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_is_war_open
+					scope:lam_lo_big ?= {
+						var:lam_is_st_war ?= flag:y
+					}
+				}
+				desc = lam_is_ctx_2750_war_y
+			}
+			desc = lam_is_none
+		}
+	}
+	theme = intrigue
+	left_portrait = {
+		character = scope:lam_lo_big
+		animation = personality_bold
+	}
+	option = {
+		name = lam_faction.2750.a
+		scope:lam_lo_big = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_rewarded_opinion
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = 20
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+		}
+		add_prestige = {
+			value = minor_prestige_value
+			multiply = -1
+		}
+	}
+	option = {
+		name = lam_faction.2750.b
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 25
+						add = {
+							value = root.intrigue
+							multiply = 3
+						}
+					}
+				}
+				scope:lam_lo_big = {
+					lam_fac_cohesion_add_effect = {
+						ADD = -20
+					}
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2750.b_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 45
+				}
+				scope:lam_lo_big = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_threatened_opinion
+					}
+					lam_pd_grievance_add_effect = {
+						KIND = policy
+						AMOUNT = 10
+						MONTHS = 24
+					}
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2750.b_no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2750.c
+	}
+}
+lam_faction.2800 = {
+	type = character_event
+	title = lam_faction.2800.t
+	desc = lam_faction.2800.desc
+	theme = diplomacy
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_cp_lord
+		animation = personality_honorable
+	}
+	right_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	immediate = {
+		set_variable = {
+			name = lam_cp_ms1
+			value = yes
+		}
+	}
+	option = {
+		name = lam_faction.2800.a
+		add_character_modifier = {
+			modifier = lam_cp_trusted_modifier
+			years = 10
+		}
+		add_prestige = medium_prestige_gain
+		scope:lam_cp_lord = {
+			add_opinion = {
+				target = root
+				modifier = lam_cp_loyal_servant_opinion
+			}
+		}
+		lam_fac_timeline_add_effect = {
+			KEY = kept
+		}
+	}
+}
+lam_faction.2810 = {
+	type = character_event
+	title = lam_faction.2810.t
+	desc = lam_faction.2810.desc
+	theme = diplomacy
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_cp_lord
+		animation = personality_honorable
+	}
+	right_portrait = {
+		character = root
+		animation = happiness
+	}
+	immediate = {
+		set_variable = {
+			name = lam_cp_ms2
+			value = yes
+		}
+		set_variable = {
+			name = lam_cp_house_n
+			value = 0
+		}
+		house ?= {
+			if = {
+				limit = {
+					var:lam_cp_dyn ?= scope:lam_cp_lord.dynasty
+				}
+				every_in_list = {
+					variable = lam_cp_paragons
+					root = {
+						change_variable = {
+							name = lam_cp_house_n
+							add = 1
+						}
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_cp_house_n
+			add = 1
+		}
+	}
+	option = {
+		name = lam_faction.2810.a
+		if = {
+			limit = {
+				has_character_modifier = lam_cp_trusted_modifier
+			}
+			remove_character_modifier = lam_cp_trusted_modifier
+		}
+		add_character_modifier = {
+			modifier = lam_cp_paragon_modifier
+			years = 20
+		}
+		give_nickname = lam_nick_loyal_minister
+		add_prestige = major_prestige_gain
+		scope:lam_cp_lord = {
+			pay_short_term_gold = {
+				target = root
+				gold = medium_gold_value
+			}
+			add_opinion = {
+				target = root
+				modifier = lam_cp_loyal_servant_opinion
+			}
+		}
+		lam_gn_event_effect = {
+			KEY = loyal_honor
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 10
+		}
+		custom_tooltip = lam_faction.2810.house_tt
+		hidden_effect = {
+			lam_cp_house_record_effect = yes
+		}
+	}
+}
+lam_faction.2820 = {
+	type = character_event
+	title = lam_faction.2820.t
+	desc = lam_faction.2820.desc
+	theme = diplomacy
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_cp_lord
+		animation = personality_honorable
+	}
+	right_portrait = {
+		character = root
+		animation = ecstasy
+	}
+	immediate = {
+		set_variable = {
+			name = lam_cp_ms3
+			value = yes
+		}
+	}
+	option = {
+		name = lam_faction.2820.a
+		if = {
+			limit = {
+				has_character_modifier = lam_cp_paragon_modifier
+			}
+			remove_character_modifier = lam_cp_paragon_modifier
+		}
+		add_character_modifier = {
+			modifier = lam_cp_legend_modifier
+		}
+		give_nickname = lam_nick_peerless_loyal
+		add_prestige = major_prestige_gain
+		dynasty ?= {
+			add_dynasty_prestige = 500
+		}
+		scope:lam_cp_lord = {
+			pay_short_term_gold = {
+				target = root
+				gold = major_gold_value
+			}
+			add_opinion = {
+				target = root
+				modifier = lam_cp_loyal_servant_opinion
+			}
+		}
+		lam_gn_event_effect = {
+			KEY = loyal_honor
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_fac_leg_will
+				}
+			}
+			set_variable = {
+				name = lam_fac_leg_will
+				value = 0
+			}
+		}
+		change_variable = {
+			name = lam_fac_leg_will
+			add = 1
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 15
+		}
+	}
+}
+lam_faction.2830 = {
+	type = character_event
+	title = lam_faction.2830.t
+	desc = lam_faction.2830.desc
+	theme = diplomacy
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_cp_lord
+		animation = personality_rational
+	}
+	option = {
+		name = lam_faction.2830.a
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 30
+						add = {
+							value = root.martial
+							multiply = 2
+						}
+						add = {
+							value = root.diplomacy
+							multiply = 1
+						}
+					}
+				}
+				scope:lam_cp_lord = {
+					add_gold = medium_gold_value
+					add_opinion = {
+						target = root
+						modifier = lam_cp_mission_opinion
+					}
+				}
+				lam_cp_merit_add_effect = {
+					ADD = 2
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2830.yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 45
+				}
+				add_prestige = {
+					value = minor_prestige_value
+					multiply = -1
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2830.no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2830.b
+		trigger = {
+			scope:lam_cp_lord = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					is_alive = yes
+					OR = {
+						var:lam_fac_stage ?= 2
+						var:lam_fac_stage ?= 3
+						var:lam_fac_stage ?= 4
+					}
+				}
+			}
+		}
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 30
+						add = {
+							value = root.intrigue
+							multiply = 3
+						}
+					}
+				}
+				scope:lam_cp_lord = {
+					random_in_list = {
+						variable = lam_bloc_leads
+						limit = {
+							is_alive = yes
+							OR = {
+								var:lam_fac_stage ?= 2
+								var:lam_fac_stage ?= 3
+								var:lam_fac_stage ?= 4
+							}
+						}
+						lam_fac_cohesion_add_effect = {
+							ADD = -10
+						}
+					}
+					add_opinion = {
+						target = root
+						modifier = lam_cp_mission_opinion
+					}
+				}
+				lam_cp_merit_add_effect = {
+					ADD = 2
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2830.yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 45
+				}
+				add_prestige = {
+					value = minor_prestige_value
+					multiply = -1
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2830.no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2830.c
+		trigger = {
+			exists = scope:lam_cp_lord.primary_heir
+		}
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 35
+						add = {
+							value = root.learning
+							multiply = 3
+						}
+					}
+				}
+				scope:lam_cp_lord.primary_heir = {
+					add_opinion = {
+						target = root
+						modifier = lam_cp_mission_opinion
+					}
+				}
+				scope:lam_cp_lord = {
+					add_opinion = {
+						target = root
+						modifier = lam_cp_mission_opinion
+					}
+				}
+				lam_cp_merit_add_effect = {
+					ADD = 1
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2830.yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 40
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2830.no
+				}
+			}
+		}
+	}
+}
+lam_faction.2840 = {
+	type = character_event
+	title = lam_faction.2840.t
+	desc = lam_faction.2840.desc
+	theme = intrigue
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+	trigger = {
+		has_variable = lam_cp_treason
+	}
+	option = {
+		name = lam_faction.2840.a
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 15
+						add = {
+							value = scope:lam_cp_lord.intrigue
+							multiply = 2
+						}
+						subtract = {
+							value = root.intrigue
+							multiply = 2
+						}
+						min = 5
+					}
+				}
+				random_secret = {
+					limit = {
+						secret_type = lam_secret_cp_treason
+					}
+					expose_secret = scope:lam_cp_lord
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2840.found
+				}
+			}
+			80 = {
+				custom_tooltip = lam_faction.2840.safe
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2840.b
+		set_variable = {
+			name = lam_cp_treason_m
+			value = {
+				value = lam_now_m
+				add = 12
+			}
+		}
+		custom_tooltip = lam_faction.2840.b.tt
+	}
+	option = {
+		name = lam_faction.2840.c
+		remove_variable = lam_cp_treason
+		if = {
+			limit = {
+				has_variable = lam_cp_treason_m
+			}
+			remove_variable = lam_cp_treason_m
+		}
+		random_secret = {
+			limit = {
+				secret_type = lam_secret_cp_treason
+			}
+			remove_secret = yes
+		}
+	}
+}
+lam_faction.2850 = {
+	type = character_event
+	title = lam_faction.2850.t
+	desc = lam_faction.2850.desc
+	theme = diplomacy
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_cp_lord
+		animation = personality_rational
+	}
+	option = {
+		name = lam_faction.2850.a
+		scope:lam_cp_lord = {
+			pay_short_term_gold = {
+				target = root
+				gold = minor_gold_value
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2850.b
+		every_in_list = {
+			variable = lam_fac_members
+			limit = {
+				is_alive = yes
+				var:lam_bloc ?= root
+			}
+			add_opinion = {
+				target = root
+				modifier = lam_fac_generous_head_opinion
+			}
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 6
+		}
+	}
+	option = {
+		name = lam_faction.2850.c
+		lam_cp_merit_add_effect = {
+			ADD = 1
+		}
+		add_prestige = minor_prestige_gain
+	}
+}
+lam_faction.2860 = {
+	type = character_event
+	title = lam_faction.2860.t
+	desc = lam_faction.2860.desc
+	theme = intrigue
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = scope:lam_cp_lord
+		animation = paranoia
+	}
+	option = {
+		name = lam_faction.2860.a
+		trigger = {
+			gold >= medium_gold_value
+		}
+		pay_short_term_gold = {
+			target = scope:lam_cp_lord
+			gold = medium_gold_value
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_fac_favour
+				}
+			}
+			set_variable = {
+				name = lam_fac_favour
+				value = 0
+			}
+		}
+		change_variable = {
+			name = lam_fac_favour
+			add = 20
+		}
+		clamp_variable = {
+			name = lam_fac_favour
+			min = -100
+			max = 100
+		}
+	}
+	option = {
+		name = lam_faction.2860.b
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 30
+						add = {
+							value = root.diplomacy
+							multiply = 3
+						}
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_variable = lam_fac_favour
+						}
+					}
+					set_variable = {
+						name = lam_fac_favour
+						value = 0
+					}
+				}
+				change_variable = {
+					name = lam_fac_favour
+					add = 15
+				}
+				clamp_variable = {
+					name = lam_fac_favour
+					min = -100
+					max = 100
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2860.b_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 45
+				}
+				scope:lam_cp_lord = {
+					add_opinion = {
+						target = root
+						modifier = lam_cp_suspect_opinion
+					}
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2860.b_no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2860.c
+		scope:lam_cp_lord = {
+			add_opinion = {
+				target = root
+				modifier = lam_cp_suspect_opinion
+			}
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 4
+		}
+	}
+}
+lam_faction.2870 = {
+	type = character_event
+	title = lam_faction.2870.t
+	desc = lam_faction.2870.desc
+	theme = intrigue
+	left_portrait = {
+		character = scope:lam_cp_envious
+		animation = anger
+	}
+	option = {
+		name = lam_faction.2870.a
+		trigger = {
+			gold >= minor_gold_value
+		}
+		pay_short_term_gold = {
+			target = scope:lam_cp_envious
+			gold = minor_gold_value
+		}
+		scope:lam_cp_envious = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_heard_opinion
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2870.b
+		random_list = {
+			0 = {
+				modifier = {
+					add = {
+						value = 30
+						add = {
+							value = root.intrigue
+							multiply = 3
+						}
+					}
+				}
+				scope:lam_cp_envious = {
+					lam_fac_cohesion_add_effect = {
+						ADD = -10
+					}
+				}
+				lam_cp_merit_add_effect = {
+					ADD = 1
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_faction.2870.b_yes
+				}
+			}
+			0 = {
+				modifier = {
+					add = 45
+				}
+				scope:lam_cp_envious = {
+					add_opinion = {
+						target = root
+						modifier = lam_cp_envy_opinion
+					}
+				}
+				send_interface_message = {
+					type = event_generic_bad
+					title = lam_faction.2870.b_no
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2870.c
+		scope:lam_cp_envious = {
+			add_opinion = {
+				target = root
+				modifier = lam_cp_envy_opinion
+			}
+		}
+	}
+}
+lam_faction.2890 = {
+	type = character_event
+	title = lam_faction.2890.t
+	desc = lam_faction.2890.desc
+	theme = dynasty
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = root
+		animation = ecstasy
+	}
+	right_portrait = {
+		character = scope:lam_cp_lord
+		animation = personality_honorable
+	}
+	option = {
+		name = lam_faction.2890.a
+		house = {
+			set_variable = {
+				name = lam_cp_house_honour
+				value = var:lam_cp_dyn
+			}
+			add_house_modifier = {
+				modifier = lam_cp_loyal_house_modifier
+			}
+		}
+		dynasty ?= {
+			add_dynasty_prestige = 1000
+		}
+		add_prestige = major_prestige_gain
+		lam_gn_event_effect = {
+			KEY = loyal_house
+		}
+		custom_tooltip = lam_faction.2890.a.tt
+	}
+}
+lam_faction.2891 = {
+	type = character_event
+	title = lam_faction.2891.t
+	desc = lam_faction.2891.desc
+	theme = dynasty
+	left_portrait = {
+		character = root
+		animation = sadness
+	}
+	option = {
+		name = lam_faction.2891.a
+	}
+}
+lam_faction.2895 = {
+	type = character_event
+	title = lam_faction.2895.t
+	desc = lam_faction.2895.desc
+	theme = dynasty
+	left_portrait = {
+		character = root
+		animation = shame
+	}
+	option = {
+		name = lam_faction.2895.a
+		custom_tooltip = lam_faction.2895.a.tt
+	}
+}
+lam_faction.2896 = {
+	type = character_event
+	title = lam_faction.2896.t
+	desc = lam_faction.2896.desc
+	theme = dynasty
+	left_portrait = {
+		character = scope:lam_hs_culprit
+		animation = anger
+	}
+	right_portrait = {
+		character = root
+		animation = sadness
+	}
+	trigger = {
+		exists = scope:lam_hs_culprit
+	}
+	option = {
+		name = lam_faction.2896.a
+		custom_tooltip = lam_faction.2896.a.tt
+	}
+}
+lam_faction.0011 = {
+	hidden = yes
+	trigger = {
+		is_ai = no
+	}
+	immediate = {
+		lam_fac_player_month_effect = yes
+	}
+}
+lam_faction.2900 = {
+	type = character_event
+	title = lam_faction.2900.t
+	desc = lam_faction.2900.desc
+	theme = intrigue
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+	right_portrait = {
+		character = scope:lam_sh_king
+		animation = shame
+	}
+	option = {
+		name = lam_faction.2900.a
+		custom_tooltip = lam_faction.2900.a.tt
+	}
+}
+lam_faction.2910 = {
+	type = character_event
+	title = lam_faction.2910.t
+	desc = lam_faction.2910.desc
+	theme = war
+	left_portrait = {
+		character = scope:lam_sw_king
+		animation = war_attacker
+	}
+	trigger = {
+		exists = scope:lam_sw_war
+	}
+	option = {
+		name = lam_faction.2910.a
+	}
+	option = {
+		name = lam_faction.2910.b
+		trigger = {
+			lam_nc_war_veto_trigger = yes
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_nc_war_veto_trigger = yes
+				}
+				scope:lam_sw_war = {
+					end_war = white_peace
+				}
+			}
+		}
+	}
+}
+lam_faction.2920 = {
+	hidden = yes
+	immediate = {
+		var:lam_sh_crown ?= {
+			holder ?= {
+				save_scope_as = lam_sh_new
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_puppeteer_of
+			}
+			remove_variable = lam_fac_puppeteer_of
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_puppeteer
+			}
+			remove_variable = lam_fac_puppeteer
+		}
+		if = {
+			limit = {
+				has_character_modifier = lam_fac_puppeteer_modifier
+			}
+			remove_character_modifier = lam_fac_puppeteer_modifier
+		}
+		if = {
+			limit = {
+				has_character_modifier = lam_sh_power_modifier
+			}
+			remove_character_modifier = lam_sh_power_modifier
+		}
+		if = {
+			limit = {
+				exists = scope:lam_sh_new
+				scope:lam_sh_new = {
+					is_alive = yes
+					is_ai = yes
+					NOT = {
+						this = root
+					}
+					NOT = {
+						has_variable = lam_fac_puppet_master
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_variable = lam_sh_crown_v
+				}
+				save_scope_value_as = {
+					name = lam_sh_pv
+					value = yes
+				}
+			}
+			if = {
+				limit = {
+					is_ai = no
+				}
+				trigger_event = lam_faction.2940
+			}
+			else = {
+				random = {
+					chance = lam_sh_hold_chance_value
+					lam_sh_pass_effect = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_sh_crown
+			}
+			remove_variable = lam_sh_crown
+		}
+		if = {
+			limit = {
+				has_variable = lam_sh_crown_v
+			}
+			remove_variable = lam_sh_crown_v
+		}
+	}
+}
+lam_faction.2925 = {
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				is_alive = yes
+				is_ruler = yes
+				var:lam_sh_next_master ?= {
+					is_alive = yes
+					NOT = {
+						this = root
+					}
+					NOT = {
+						var:lam_fac_puppeteer_of ?= {
+							is_alive = yes
+						}
+					}
+				}
+			}
+			var:lam_sh_next_master = {
+				save_scope_as = lam_sh_heir_m
+			}
+			if = {
+				limit = {
+					has_variable = lam_fac_puppet_vanilla
+				}
+				save_scope_value_as = {
+					name = lam_sh_pv
+					value = yes
+				}
+			}
+			if = {
+				limit = {
+					has_variable = lam_fac_puppet_master
+				}
+				lam_fac_release_effect = yes
+			}
+			save_scope_as = lam_sh_new
+			save_scope_value_as = {
+				name = lam_sh_heirpass
+				value = yes
+			}
+			scope:lam_sh_heir_m = {
+				if = {
+					limit = {
+						is_ai = no
+					}
+					trigger_event = lam_faction.2940
+				}
+				else = {
+					random = {
+						chance = lam_sh_hold_chance_value
+						lam_sh_pass_effect = yes
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_sh_next_master
+			}
+			remove_variable = lam_sh_next_master
+		}
+	}
+}
+lam_faction.3000 = {
+	type = character_event
+	title = lam_faction.3000.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_wv_who = {
+						var:lam_fac_want ?= {
+							is_alive = yes
+						}
+					}
+				}
+				desc = lam_faction.3000.desc_to
+			}
+			desc = lam_faction.3000.desc_out
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_wv_who = {
+						var:lam_fac_waver_why ?= flag:head
+					}
+				}
+				desc = lam_faction.3000.why_head
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_wv_who = {
+						var:lam_fac_waver_why ?= flag:other
+					}
+				}
+				desc = lam_faction.3000.why_other
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_wv_who = {
+						var:lam_fac_waver_why ?= flag:tired
+					}
+				}
+				desc = lam_faction.3000.why_tired
+			}
+			desc = lam_fac_empty
+		}
+	}
+	theme = diplomacy
+	override_background = {
+		reference = corridor_day
+	}
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:lam_wv_who
+		animation = dismissal
+	}
+	trigger = {
+		exists = scope:lam_wv_who
+		scope:lam_wv_who = {
+			is_alive = yes
+			var:lam_bloc ?= root
+			has_variable = lam_fac_wavering
+			lam_fac_waver_ticket_trigger = yes
+		}
+		has_variable = lam_bloc_lead
+		scope:lam_wv_who = {
+			liege ?= root.liege
+		}
+	}
+	on_trigger_fail = {
+		scope:lam_wv_who ?= {
+			if = {
+				limit = {
+					lam_fac_waver_ticket_trigger = yes
+				}
+				lam_fac_waver_clear_effect = yes
+			}
+		}
+	}
+	immediate = {
+		scope:lam_wv_who = {
+			save_scope_value_as = {
+				name = lam_wv_op
+				value = "opinion(root)"
+			}
+			var:lam_fac_want ?= {
+				save_scope_as = lam_wv_to
+			}
+		}
+	}
+	option = {
+		name = lam_faction.3000.a
+		if = {
+			limit = {
+				has_variable = lam_bloc_lead
+				scope:lam_wv_who = {
+					is_alive = yes
+					var:lam_bloc ?= root
+					has_variable = lam_fac_wavering
+					lam_fac_waver_ticket_trigger = yes
+				}
+			}
+			random = {
+				chance = {
+					value = lam_tune_waver_persuade_base
+					add = {
+						value = diplomacy
+						subtract = scope:lam_wv_who.diplomacy
+						multiply = 3
+					}
+					add = {
+						value = scope:lam_wv_op
+						multiply = 0.4
+					}
+					if = {
+						limit = {
+							has_variable = lam_fac_cohesion
+							var:lam_fac_cohesion >= 70
+						}
+						add = 10
+					}
+					if = {
+						limit = {
+							has_variable = lam_fac_cohesion
+							var:lam_fac_cohesion <= 30
+						}
+						add = -10
+					}
+					if = {
+						limit = {
+							scope:lam_wv_who = {
+								var:lam_fac_waver_why ?= flag:head
+							}
+						}
+						add = -10
+					}
+					if = {
+						limit = {
+							scope:lam_wv_who = {
+								var:lam_fac_waver_why ?= flag:tired
+							}
+						}
+						add = 10
+					}
+					if = {
+						limit = {
+							scope:lam_wv_who = {
+								has_variable = lam_fac_kept_once
+							}
+						}
+						add = -20
+					}
+					min = 10
+					max = 90
+				}
+				save_scope_value_as = {
+					name = lam_wv_ok
+					value = yes
+				}
+				custom_tooltip = lam_faction.3000.ok_tt
+				lam_fac_waver_keep_effect = {
+					YEARS = 2
+				}
+				scope:lam_wv_who = {
+					add_opinion = {
+						target = root
+						modifier = respect_opinion
+						opinion = 10
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						exists = scope:lam_wv_ok
+					}
+				}
+				custom_tooltip = lam_faction.3000.fail_tt
+				hidden_effect = {
+					lam_fac_waver_leave_effect = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.3000.b
+		trigger = {
+			gold >= medium_gold_value
+		}
+		if = {
+			limit = {
+				has_variable = lam_bloc_lead
+				scope:lam_wv_who = {
+					is_alive = yes
+					var:lam_bloc ?= root
+					has_variable = lam_fac_wavering
+					lam_fac_waver_ticket_trigger = yes
+				}
+			}
+			pay_short_term_gold = {
+				target = scope:lam_wv_who
+				gold = medium_gold_value
+			}
+			scope:lam_wv_who = {
+				add_opinion = {
+					target = root
+					modifier = bribed_opinion
+					opinion = 15
+				}
+			}
+			custom_tooltip = lam_faction.3000.ok_tt
+			hidden_effect = {
+				lam_fac_waver_keep_effect = {
+					YEARS = 2
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.3000.c
+		trigger = {
+			has_usable_hook = scope:lam_wv_who
+		}
+		if = {
+			limit = {
+				has_variable = lam_bloc_lead
+				scope:lam_wv_who = {
+					is_alive = yes
+					var:lam_bloc ?= root
+					has_variable = lam_fac_wavering
+					lam_fac_waver_ticket_trigger = yes
+				}
+			}
+			use_hook = scope:lam_wv_who
+			custom_tooltip = lam_faction.3000.hook_tt
+			hidden_effect = {
+				lam_fac_waver_keep_effect = {
+					YEARS = 3
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.3000.d
+		trigger = {
+			NOT = {
+				scope:lam_wv_who = {
+					var:lam_fac_tier ?= 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_bloc_lead
+				scope:lam_wv_who = {
+					is_alive = yes
+					var:lam_bloc ?= root
+					has_variable = lam_fac_wavering
+					lam_fac_waver_ticket_trigger = yes
+				}
+			}
+			add_prestige = minor_prestige_loss
+			custom_tooltip = lam_faction.3000.core_tt
+			hidden_effect = {
+				lam_fac_waver_keep_effect = {
+					YEARS = 2
+				}
+				scope:lam_wv_who = {
+					set_variable = {
+						name = lam_fac_tier
+						value = 1
+					}
+					set_variable = {
+						name = lam_fac_tier_fixed
+						value = yes
+						years = 2
+					}
+					add_opinion = {
+						target = root
+						modifier = grateful_opinion
+						opinion = 15
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_faction.3000.e
+		if = {
+			limit = {
+				has_variable = lam_bloc_lead
+				scope:lam_wv_who = {
+					is_alive = yes
+					var:lam_bloc ?= root
+					has_variable = lam_fac_wavering
+					lam_fac_waver_ticket_trigger = yes
+				}
+			}
+			scope:lam_wv_who = {
+				add_opinion = {
+					target = root
+					modifier = grateful_opinion
+					opinion = 10
+				}
+			}
+			scope:lam_wv_who = {
+				set_variable = {
+					name = lam_fac_parted
+					value = root
+					years = 10
+				}
+			}
+			custom_tooltip = lam_faction.3000.go_tt
+			hidden_effect = {
+				lam_fac_waver_leave_effect = yes
+			}
+		}
+	}
+}
+lam_faction.2940 = {
+	type = character_event
+	title = lam_faction.2940.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					exists = scope:lam_sh_heirpass
+				}
+				desc = lam_faction.2940.desc_heir
+			}
+			desc = lam_faction.2940.desc_king
+		}
+	}
+	theme = intrigue
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+	right_portrait = {
+		character = scope:lam_sh_new
+		animation = personality_bold
+	}
+	trigger = {
+		exists = scope:lam_sh_new
+		scope:lam_sh_new = {
+			is_alive = yes
+			is_ruler = yes
+			NOT = {
+				this = root
+			}
+			NOT = {
+				has_variable = lam_fac_puppet_master
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2940.a
+		random = {
+			chance = lam_sh_hold_chance_value
+			save_scope_value_as = {
+				name = lam_sh_held
+				value = yes
+			}
+			custom_tooltip = lam_faction.2940.ok_tt
+		}
+		hidden_effect = {
+			lam_sh_settle_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.2940.b
+		trigger = {
+			gold >= medium_gold_value
+		}
+		remove_short_term_gold = medium_gold_value
+		random = {
+			chance = {
+				value = lam_sh_hold_chance_value
+				add = 20
+				max = 95
+			}
+			save_scope_value_as = {
+				name = lam_sh_held
+				value = yes
+			}
+			custom_tooltip = lam_faction.2940.ok_tt
+		}
+		hidden_effect = {
+			lam_sh_settle_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.2940.c
+		add_dread = minor_dread_gain
+		scope:lam_sh_new = {
+			add_opinion = {
+				target = root
+				modifier = scared_opinion
+				opinion = -20
+			}
+		}
+		random = {
+			chance = {
+				value = lam_sh_hold_chance_value
+				add = 15
+				max = 95
+			}
+			save_scope_value_as = {
+				name = lam_sh_held
+				value = yes
+			}
+			custom_tooltip = lam_faction.2940.ok_tt
+		}
+		hidden_effect = {
+			lam_sh_settle_effect = yes
+		}
+	}
+	option = {
+		name = lam_faction.2940.d
+		custom_tooltip = lam_faction.2940.go_tt
+		add_prestige = minor_prestige_gain
+	}
+}
+lam_faction.3010 = {
+	type = character_event
+	title = lam_faction.3010.t
+	desc = {
+		desc = lam_faction.3010.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					var:lam_fac_clash_why ?= flag:heir
+				}
+				desc = lam_faction.3010.why_heir
+			}
+			triggered_desc = {
+				trigger = {
+					var:lam_fac_clash_why ?= flag:council
+				}
+				desc = lam_faction.3010.why_council
+			}
+			triggered_desc = {
+				trigger = {
+					var:lam_fac_clash_why ?= flag:crown
+				}
+				desc = lam_faction.3010.why_crown
+			}
+			desc = lam_faction.3010.why_old
+		}
+	}
+	theme = intrigue
+	override_background = {
+		reference = corridor_night
+	}
+	left_portrait = {
+		character = root
+		animation = anger
+	}
+	right_portrait = {
+		character = scope:lam_bf_foe
+		animation = schadenfreude
+	}
+	trigger = {
+		exists = scope:lam_bf_foe
+		scope:lam_bf_foe = {
+			is_alive = yes
+		}
+	}
+	option = {
+		name = lam_faction.3010.a
+		trigger = {
+			can_start_scheme = {
+				type = murder
+				target_character = scope:lam_bf_foe
+			}
+		}
+		start_scheme = {
+			type = murder
+			target_character = scope:lam_bf_foe
+		}
+	}
+	option = {
+		name = lam_faction.3010.b
+		trigger = {
+			gold >= medium_gold_value
+		}
+		remove_short_term_gold = medium_gold_value
+		lam_fac_feud_clear_effect = {
+			A = root
+			B = scope:lam_bf_foe
+		}
+		scope:lam_bf_foe = {
+			add_opinion = {
+				target = root
+				modifier = respect_opinion
+				opinion = 20
+			}
+		}
+		custom_tooltip = lam_faction.3010.b_tt
+	}
+	option = {
+		name = lam_faction.3010.c
+		custom_tooltip = lam_faction.3010.c_tt
+	}
+}
+lam_faction.3020 = {
+	type = character_event
+	title = lam_faction.3020.t
+	desc = {
+		desc = lam_faction.3020.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_fac_promise
+				}
+				desc = lam_faction.3020.promise
+			}
+			desc = lam_fac_empty
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					var:lam_fac_heir ?= {
+						is_alive = yes
+					}
+				}
+				desc = lam_faction.3020.heir
+			}
+			desc = lam_fac_empty
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_fac_oath
+				}
+				desc = lam_faction.3020.oath
+			}
+			desc = lam_fac_empty
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_fac_grievance
+				}
+				desc = lam_faction.3020.grievance
+			}
+			desc = lam_fac_empty
+		}
+	}
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	trigger = {
+		has_variable = lam_bloc_lead
+	}
+	option = {
+		name = lam_faction.3020.a
+	}
+	option = {
+		name = lam_faction.3020.b
+		custom_tooltip = lam_faction.3020.b_tt
+		trigger_event = lam_faction.2100
+	}
+}
+lam_faction.3030 = {
+	type = character_event
+	title = lam_faction.3030.t
+	desc = lam_faction.3030.desc
+	theme = realm
+	override_background = {
+		reference = throne_room
+	}
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:lam_rf_cur
+		animation = shame
+	}
+	trigger = {
+		exists = scope:lam_rf_cur
+		scope:lam_rf_cur = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+		}
+	}
+	option = {
+		name = lam_faction.3030.a
+		trigger = {
+			scope:lam_rf_rebel ?= {
+				is_alive = yes
+				is_imprisoned = no
+				has_variable = lam_fac_rebel_guilty
+				is_vassal_or_below_of = root
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_rf_rebel ?= {
+					is_alive = yes
+					is_imprisoned = no
+					has_variable = lam_fac_rebel_guilty
+					is_vassal_or_below_of = root
+				}
+			}
+			imprison = {
+				target = scope:lam_rf_rebel
+				type = dungeon
+			}
+		}
+		add_dread = minor_dread_gain
+	}
+	option = {
+		name = lam_faction.3030.b
+		add_prestige = minor_prestige_loss
+		scope:lam_rf_cur = {
+			change_variable = {
+				name = lam_fac_favour
+				add = 10
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+			add_opinion = {
+				target = root
+				modifier = grateful_opinion
+				opinion = 20
+			}
+		}
+		custom_tooltip = lam_faction.3030.b_tt
+	}
+	option = {
+		name = lam_faction.3030.c
+		scope:lam_rf_cur = {
+			set_variable = {
+				name = lam_fac_oath
+				value = yes
+				years = 5
+			}
+			lam_fac_timer_set_effect = {
+				NAME = lam_fac_oath
+				YEARS = 5
+			}
+		}
+		custom_tooltip = lam_faction.3030.c_tt
+	}
+	option = {
+		name = lam_faction.3030.d
+		add_tyranny = minor_tyranny_gain
+		scope:lam_rf_cur = {
+			add_opinion = {
+				target = root
+				modifier = angry_opinion
+				opinion = -30
+			}
+		}
+		custom_tooltip = lam_faction.3030.d_tt
+		hidden_effect = {
+			scope:lam_rf_cur = {
+				lam_fac_dissolve_effect = yes
+			}
+		}
+	}
+}

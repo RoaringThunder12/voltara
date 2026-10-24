@@ -1,0 +1,222 @@
+﻿# =============================================================================
+# DHM v0.8.0 — officer tenure and personal-plan status
+# All callers are the player, a saved household member, or the player's court.
+# =============================================================================
+
+dhm_v080_has_career_plan_trigger = {
+	OR = {
+		has_character_flag = dhm_career_diplomat
+		has_character_flag = dhm_career_commander
+		has_character_flag = dhm_career_steward
+		has_character_flag = dhm_career_spymaster
+		has_character_flag = dhm_career_scholar
+		has_character_flag = dhm_career_physician
+		has_character_flag = dhm_career_court_officer
+	}
+}
+
+# The confirmation remains valid only while the displayed incumbent is still
+# the actual holder of the selected office. This prevents a stale window from
+# dismissing a different person after maintenance or another appointment.
+dhm_v080_officer_appointment_confirmed_trigger = {
+	dhm_v074_can_appoint_trigger = yes
+	OR = {
+		AND = {
+			dhm_v074_appoint_steward_trigger = yes
+			OR = {
+				AND = { exists = scope:dhm_office_incumbent has_variable = dhm_officer_steward var:dhm_officer_steward ?= scope:dhm_office_incumbent }
+				AND = { NOT = { exists = scope:dhm_office_incumbent } NOT = { has_variable = dhm_officer_steward } }
+			}
+		}
+		AND = {
+			dhm_v074_appoint_matchmaker_trigger = yes
+			OR = {
+				AND = { exists = scope:dhm_office_incumbent has_variable = dhm_officer_matchmaker var:dhm_officer_matchmaker ?= scope:dhm_office_incumbent }
+				AND = { NOT = { exists = scope:dhm_office_incumbent } NOT = { has_variable = dhm_officer_matchmaker } }
+			}
+		}
+		AND = {
+			dhm_v074_appoint_tutor_trigger = yes
+			OR = {
+				AND = { exists = scope:dhm_office_incumbent has_variable = dhm_officer_tutor var:dhm_officer_tutor ?= scope:dhm_office_incumbent }
+				AND = { NOT = { exists = scope:dhm_office_incumbent } NOT = { has_variable = dhm_officer_tutor } }
+			}
+		}
+		AND = {
+			dhm_v074_appoint_chronicler_trigger = yes
+			OR = {
+				AND = { exists = scope:dhm_office_incumbent has_variable = dhm_officer_chronicler var:dhm_officer_chronicler ?= scope:dhm_office_incumbent }
+				AND = { NOT = { exists = scope:dhm_office_incumbent } NOT = { has_variable = dhm_officer_chronicler } }
+			}
+		}
+	}
+}
+
+# The chosen road has already led to a real, matching appointment. Household
+# offices count where their work clearly matches the recorded career.
+dhm_v080_career_plan_currently_achieved_trigger = {
+	OR = {
+		AND = {
+			has_character_flag = dhm_career_diplomat
+			OR = {
+				has_council_position = councillor_chancellor
+				has_character_flag = dhm_office_matchmaker
+			}
+		}
+		AND = {
+			has_character_flag = dhm_career_commander
+			OR = {
+				has_council_position = councillor_marshal
+				AND = { exists = scope:dhm_manager is_knight_of = scope:dhm_manager }
+			}
+		}
+		AND = {
+			has_character_flag = dhm_career_steward
+			OR = {
+				has_council_position = councillor_steward
+				has_character_flag = dhm_office_steward
+			}
+		}
+		AND = {
+			has_character_flag = dhm_career_spymaster
+			has_council_position = councillor_spymaster
+		}
+		AND = {
+			has_character_flag = dhm_career_scholar
+			OR = {
+				has_council_position = councillor_court_chaplain
+				has_court_position = court_scholar_court_position
+				has_court_position = court_tutor_court_position
+				has_court_position = antiquarian_court_position
+				has_court_position = chronicler_court_position
+				has_character_flag = dhm_office_tutor
+				has_character_flag = dhm_office_chronicler
+			}
+		}
+		AND = {
+			has_character_flag = dhm_career_physician
+			has_court_position = court_physician_court_position
+		}
+		AND = {
+			has_character_flag = dhm_career_court_officer
+			OR = {
+				has_any_court_position = yes
+				has_character_flag = dhm_office_steward
+				has_character_flag = dhm_office_matchmaker
+				has_character_flag = dhm_office_tutor
+				has_character_flag = dhm_office_chronicler
+			}
+		}
+	}
+}
+
+# A different substantial duty means the plan was redirected rather than lost.
+# Routine knight service can coexist with a civilian career. It only completes
+# a commander's plan; it must not redirect a diplomat, scholar or physician.
+dhm_v080_has_other_household_role_trigger = {
+	NOT = { dhm_v080_career_plan_currently_achieved_trigger = yes }
+	OR = {
+		is_councillor = yes
+		has_any_court_position = yes
+		has_character_flag = dhm_office_steward
+		has_character_flag = dhm_office_matchmaker
+		has_character_flag = dhm_office_tutor
+		has_character_flag = dhm_office_chronicler
+	}
+}
+
+dhm_v080_career_plan_ready_trigger = {
+	OR = {
+		AND = { has_character_flag = dhm_career_diplomat diplomacy >= 12 }
+		AND = { has_character_flag = dhm_career_commander martial >= 12 }
+		AND = { has_character_flag = dhm_career_steward stewardship >= 12 }
+		AND = { has_character_flag = dhm_career_spymaster intrigue >= 12 }
+		AND = { has_character_flag = dhm_career_scholar learning >= 12 }
+		AND = { has_character_flag = dhm_career_physician learning >= 12 }
+		AND = {
+			has_character_flag = dhm_career_court_officer
+			OR = { diplomacy >= 12 martial >= 12 stewardship >= 12 intrigue >= 12 learning >= 12 }
+		}
+	}
+}
+
+dhm_v080_career_plan_blocked_trigger = {
+	OR = {
+		is_imprisoned = yes
+		has_trait = incapable
+	}
+}
+
+dhm_v080_child_plan_matches_focus_trigger = {
+	OR = {
+		AND = { has_character_flag = dhm_child_plan_diplomacy has_focus = education_diplomacy }
+		AND = { has_character_flag = dhm_child_plan_martial has_focus = education_martial }
+		AND = { has_character_flag = dhm_child_plan_stewardship has_focus = education_stewardship }
+		AND = { has_character_flag = dhm_child_plan_intrigue has_focus = education_intrigue }
+		AND = { has_character_flag = dhm_child_plan_learning has_focus = education_learning }
+	}
+}
+
+dhm_v080_child_plan_promising_trigger = {
+	OR = {
+		AND = { has_character_flag = dhm_child_plan_diplomacy diplomacy >= 10 }
+		AND = { has_character_flag = dhm_child_plan_martial martial >= 10 }
+		AND = { has_character_flag = dhm_child_plan_stewardship stewardship >= 10 }
+		AND = { has_character_flag = dhm_child_plan_intrigue intrigue >= 10 }
+		AND = { has_character_flag = dhm_child_plan_learning learning >= 10 }
+	}
+}
+
+# A completed education of at least the second tier counts as achieving the
+# recorded childhood road. A first-tier result is honestly recorded as missed.
+dhm_v080_child_plan_matching_education_achieved_trigger = {
+	OR = {
+		AND = { has_character_flag = dhm_child_plan_diplomacy OR = { has_trait = education_diplomacy_2 has_trait = education_diplomacy_3 has_trait = education_diplomacy_4 has_trait = education_diplomacy_5 } }
+		AND = { has_character_flag = dhm_child_plan_martial OR = { has_trait = education_martial_2 has_trait = education_martial_3 has_trait = education_martial_4 has_trait = education_martial_5 } }
+		AND = { has_character_flag = dhm_child_plan_stewardship OR = { has_trait = education_stewardship_2 has_trait = education_stewardship_3 has_trait = education_stewardship_4 has_trait = education_stewardship_5 } }
+		AND = { has_character_flag = dhm_child_plan_intrigue OR = { has_trait = education_intrigue_2 has_trait = education_intrigue_3 has_trait = education_intrigue_4 has_trait = education_intrigue_5 } }
+		AND = { has_character_flag = dhm_child_plan_learning OR = { has_trait = education_learning_2 has_trait = education_learning_3 has_trait = education_learning_4 has_trait = education_learning_5 } }
+	}
+}
+
+dhm_v080_has_any_education_result_trigger = {
+	OR = {
+		has_trait = education_diplomacy_1
+		has_trait = education_diplomacy_2
+		has_trait = education_diplomacy_3
+		has_trait = education_diplomacy_4
+		has_trait = education_diplomacy_5
+		has_trait = education_martial_1
+		has_trait = education_martial_2
+		has_trait = education_martial_3
+		has_trait = education_martial_4
+		has_trait = education_martial_5
+		has_trait = education_stewardship_1
+		has_trait = education_stewardship_2
+		has_trait = education_stewardship_3
+		has_trait = education_stewardship_4
+		has_trait = education_stewardship_5
+		has_trait = education_intrigue_1
+		has_trait = education_intrigue_2
+		has_trait = education_intrigue_3
+		has_trait = education_intrigue_4
+		has_trait = education_intrigue_5
+		has_trait = education_learning_1
+		has_trait = education_learning_2
+		has_trait = education_learning_3
+		has_trait = education_learning_4
+		has_trait = education_learning_5
+	}
+}
+
+dhm_v080_child_plan_different_education_trigger = {
+	dhm_v080_has_any_education_result_trigger = yes
+	NOT = { dhm_v080_child_plan_matching_education_achieved_trigger = yes }
+	NOR = {
+		AND = { has_character_flag = dhm_child_plan_diplomacy has_trait = education_diplomacy_1 }
+		AND = { has_character_flag = dhm_child_plan_martial has_trait = education_martial_1 }
+		AND = { has_character_flag = dhm_child_plan_stewardship has_trait = education_stewardship_1 }
+		AND = { has_character_flag = dhm_child_plan_intrigue has_trait = education_intrigue_1 }
+		AND = { has_character_flag = dhm_child_plan_learning has_trait = education_learning_1 }
+	}
+}

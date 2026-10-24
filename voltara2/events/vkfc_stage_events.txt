@@ -1,0 +1,199 @@
+﻿namespace = vkfc
+vkfc.1 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_1 NOT = { has_variable = vkfc_stage_1 } } }
+ immediate = {
+  if = { limit = { has_activity_state = travel } trigger_event = { id = vkfc.1 days = 7 } }
+  else = {
+   scope:activity = { set_variable = { name = vkfc_stage_1 value = yes } add_activity_log_entry = { key = vkfc_stage_1_log character = scope:host } }
+   vkf_close_council_arrivals = yes
+      
+   scope:activity = { every_attending_character = {
+    limit = { this != scope:host location = scope:activity.activity_location }
+       
+   } }
+   
+   trigger_event = { id = vkfc.101 days = 14 }
+  }
+ }
+}
+vkfc.101 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_1 has_variable = vkfc_stage_1 } }
+ immediate = {
+  if = { limit = { always = yes } scope:activity = { skip_activity_phase = yes } }
+  else = { trigger_event = { id = vkfc.101 days = 3 } }
+ }
+}
+vkfc.2 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_2 NOT = { has_variable = vkfc_stage_2 } } }
+ immediate = {
+  if = { limit = { has_activity_state = travel } trigger_event = { id = vkfc.2 days = 7 } }
+  else = {
+   scope:activity = { set_variable = { name = vkfc_stage_2 value = yes } add_activity_log_entry = { key = vkfc_stage_2_log character = scope:host } }
+   vkf_close_council_arrivals = yes
+     if = { limit = { NOT = { this = scope:host } } if = { limit = { var:vkf_patron ?= scope:host } remove_character_flag = vkf_council_pledged } set_variable = { name = vkf_council_host value = scope:host days = 120 } if = { limit = { has_activity_intent = vkf_protection_intent } set_variable = { name = vkf_demand value = 1 } } if = { limit = { has_activity_intent = vkf_autonomy_intent } set_variable = { name = vkf_demand value = 2 } } if = { limit = { has_activity_intent = vkf_spoils_intent } set_variable = { name = vkf_demand value = 3 } } if = { limit = { has_activity_intent = vkf_alliance_intent } set_variable = { name = vkf_demand value = 4 } } if = { limit = { has_activity_intent = vkf_challenge_intent } set_variable = { name = vkf_demand value = 5 } } if = { limit = { has_activity_intent = vkf_vengeance_intent } set_variable = { name = vkf_demand value = 6 } } if = { limit = { has_activity_intent = vkf_peace_intent } set_variable = { name = vkf_demand value = 7 } } if = { limit = { has_activity_intent = vkf_intrigue_intent } set_variable = { name = vkf_demand value = 8 } }  } 
+   scope:activity = { every_attending_character = {
+    limit = { this != scope:host location = scope:activity.activity_location }
+      if = { limit = { NOT = { this = scope:host } } if = { limit = { var:vkf_patron ?= scope:host } remove_character_flag = vkf_council_pledged } set_variable = { name = vkf_council_host value = scope:host days = 120 } if = { limit = { has_activity_intent = vkf_protection_intent } set_variable = { name = vkf_demand value = 1 } } if = { limit = { has_activity_intent = vkf_autonomy_intent } set_variable = { name = vkf_demand value = 2 } } if = { limit = { has_activity_intent = vkf_spoils_intent } set_variable = { name = vkf_demand value = 3 } } if = { limit = { has_activity_intent = vkf_alliance_intent } set_variable = { name = vkf_demand value = 4 } } if = { limit = { has_activity_intent = vkf_challenge_intent } set_variable = { name = vkf_demand value = 5 } } if = { limit = { has_activity_intent = vkf_vengeance_intent } set_variable = { name = vkf_demand value = 6 } } if = { limit = { has_activity_intent = vkf_peace_intent } set_variable = { name = vkf_demand value = 7 } } if = { limit = { has_activity_intent = vkf_intrigue_intent } set_variable = { name = vkf_demand value = 8 } }  } 
+   } }
+   trigger_event = vkfc.20
+   trigger_event = { id = vkfc.102 days = 14 }
+  }
+ }
+}
+vkfc.102 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_2 has_variable = vkfc_stage_2 } }
+ immediate = {
+  if = { limit = { has_character_flag = vkfc_platform_chosen } scope:activity = { skip_activity_phase = yes } }
+  else = { trigger_event = { id = vkfc.102 days = 3 } }
+ }
+}
+vkfc.3 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_3 NOT = { has_variable = vkfc_stage_3 } } }
+ immediate = {
+  if = { limit = { has_activity_state = travel } trigger_event = { id = vkfc.3 days = 7 } }
+  else = {
+   scope:activity = { set_variable = { name = vkfc_stage_3 value = yes } add_activity_log_entry = { key = vkfc_stage_3_log character = scope:host } }
+   vkf_close_council_arrivals = yes
+     if = { limit = { NOT = { this = scope:host } } trigger_event = vkf.120 } 
+   scope:activity = { every_attending_character = {
+    limit = { this != scope:host location = scope:activity.activity_location }
+      if = { limit = { NOT = { this = scope:host } } trigger_event = vkf.120 } 
+   } }
+   scope:activity = { every_attending_character = {
+ limit = { this != scope:host location = scope:activity.activity_location vkf_chief = yes vkf_delegate_pending = yes }
+ add_to_temporary_list = vkfc_negotiators
+ } }
+ ordered_in_list = { list = vkfc_negotiators order_by = max_military_strength max = 3 check_range_bounds = no
+ save_scope_as = vkfc_delegate scope:host = { trigger_event = { id = vkfc.21 days = 2 } }
+ }
+   trigger_event = { id = vkfc.103 days = 14 }
+  }
+ }
+}
+vkfc.103 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_3 has_variable = vkfc_stage_3 } }
+ immediate = {
+  if = { limit = { always = yes } scope:activity = { skip_activity_phase = yes } }
+  else = { trigger_event = { id = vkfc.103 days = 3 } }
+ }
+}
+vkfc.4 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_4 NOT = { has_variable = vkfc_stage_4 } } }
+ immediate = {
+  if = { limit = { has_activity_state = travel } trigger_event = { id = vkfc.4 days = 7 } }
+  else = {
+   scope:activity = { set_variable = { name = vkfc_stage_4 value = yes } add_activity_log_entry = { key = vkfc_stage_4_log character = scope:host } }
+   vkf_close_council_arrivals = yes
+     if = { limit = { NOT = { this = scope:host } } trigger_event = vkf.121 } 
+   scope:activity = { every_attending_character = {
+    limit = { this != scope:host location = scope:activity.activity_location }
+      if = { limit = { NOT = { this = scope:host } } trigger_event = vkf.121 } 
+   } }
+   
+   trigger_event = { id = vkfc.104 days = 14 }
+  }
+ }
+}
+vkfc.104 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_4 has_variable = vkfc_stage_4 } }
+ immediate = {
+  if = { limit = { always = yes } scope:activity = { skip_activity_phase = yes } }
+  else = { trigger_event = { id = vkfc.104 days = 3 } }
+ }
+}
+vkfc.5 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_5 NOT = { has_variable = vkfc_stage_5 } } }
+ immediate = {
+  if = { limit = { has_activity_state = travel } trigger_event = { id = vkfc.5 days = 7 } }
+  else = {
+   scope:activity = { set_variable = { name = vkfc_stage_5 value = yes } add_activity_log_entry = { key = vkfc_stage_5_log character = scope:host } }
+   vkf_close_council_arrivals = yes
+     if = { limit = { this = scope:host } trigger_event = vkf.123 } 
+   scope:activity = { every_attending_character = {
+    limit = { this != scope:host location = scope:activity.activity_location }
+      if = { limit = { this = scope:host } trigger_event = vkf.123 } 
+   } }
+   
+   trigger_event = { id = vkfc.105 days = 14 }
+  }
+ }
+}
+vkfc.105 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_5 has_variable = vkfc_stage_5 } }
+ immediate = {
+  if = { limit = { has_character_flag = vkf_spoils_decided } scope:activity = { skip_activity_phase = yes } }
+  else = { trigger_event = { id = vkfc.105 days = 3 } }
+ }
+}
+vkfc.6 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_6 NOT = { has_variable = vkfc_stage_6 } } }
+ immediate = {
+  if = { limit = { has_activity_state = travel } trigger_event = { id = vkfc.6 days = 7 } }
+  else = {
+   scope:activity = { set_variable = { name = vkfc_stage_6 value = yes } add_activity_log_entry = { key = vkfc_stage_6_log character = scope:host } }
+   vkf_close_council_arrivals = yes
+     if = { limit = { this = scope:host } trigger_event = vkf.124 } 
+   scope:activity = { every_attending_character = {
+    limit = { this != scope:host location = scope:activity.activity_location }
+      if = { limit = { this = scope:host } trigger_event = vkf.124 } 
+   } }
+   
+   trigger_event = { id = vkfc.106 days = 14 }
+  }
+ }
+}
+vkfc.106 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_6 has_variable = vkfc_stage_6 } }
+ immediate = {
+  if = { limit = { has_character_flag = vkf_strategy_decided } scope:activity = { skip_activity_phase = yes } }
+  else = { trigger_event = { id = vkfc.106 days = 3 } }
+ }
+}
+vkfc.7 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_7 NOT = { has_variable = vkfc_stage_7 } } }
+ immediate = {
+  if = { limit = { has_activity_state = travel } trigger_event = { id = vkfc.7 days = 7 } }
+  else = {
+   scope:activity = { set_variable = { name = vkfc_stage_7 value = yes } add_activity_log_entry = { key = vkfc_stage_7_log character = scope:host } }
+   vkf_close_council_arrivals = yes
+      
+   scope:activity = { every_attending_character = {
+    limit = { this != scope:host location = scope:activity.activity_location }
+       
+   } }
+   trigger_event = vkfc.22
+   trigger_event = { id = vkfc.107 days = 14 }
+  }
+ }
+}
+vkfc.107 = { hidden = yes
+ trigger = { exists = scope:activity exists = scope:host this = scope:host is_participant_in_activity = scope:activity vkfu_council_host = yes scope:activity = { has_current_phase = vkf_council_phase_7 has_variable = vkfc_stage_7 } }
+ immediate = {
+  if = { limit = { scope:activity = { has_variable = vkfc_closing_read } } scope:activity = { skip_activity_phase = yes } }
+  else = { trigger_event = { id = vkfc.107 days = 3 } }
+ }
+}
+
+vkfc.20 = { type = character_event theme = realm title = vkfc.20.t desc = vkfc.20.desc
+ trigger = { vkfu_council_host = yes has_character_flag = vkf_war_council_active }
+ left_portrait = { character = root }
+ option = { name = vkfc.20.a custom_tooltip = vkfc.20.a.tt set_variable = { name = vkfc_policy value = 1 } add_character_flag = vkfc_platform_chosen ai_chance = { base = 50 } }
+ option = { name = vkfc.20.b trigger = { gold >= 100 } custom_tooltip = vkfc.20.b.tt remove_short_term_gold = 100 set_variable = { name = vkfc_policy value = 2 } add_character_flag = vkfc_platform_chosen ai_chance = { base = 30 } }
+ option = { name = vkfc.20.c custom_tooltip = vkfc.20.c.tt set_variable = { name = vkfc_policy value = 3 } add_character_flag = vkfc_platform_chosen ai_chance = { base = 20 } }
+}
+vkfc.21 = { type = character_event theme = realm title = vkfc.21.t desc = vkfc.21.desc
+ trigger = { vkfu_council_host = yes has_character_flag = vkf_war_council_active exists = scope:vkfc_delegate scope:vkfc_delegate = { vkf_delegate_pending = yes var:vkf_council_host = root } }
+ left_portrait = { character = root } right_portrait = { character = scope:vkfc_delegate }
+ option = { name = vkfc.21.a custom_tooltip = vkfc.21.a.tt
+ scope:vkfc_delegate = { vkf_council_oath = { TYPE = 2 } set_variable = { name = vkf_promised_by value = root days = 1825 } add_character_modifier = { modifier = vkf_promised_autonomy years = 5 } }
+ ai_chance = { base = 45 } }
+ option = { name = vkfc.21.b trigger = { gold >= 75 } custom_tooltip = vkfc.21.b.tt
+ remove_short_term_gold = 75 scope:vkfc_delegate = { add_gold = 75 vkf_council_oath = { TYPE = 1 } }
+ ai_chance = { base = 35 } }
+ option = { name = vkfc.21.c custom_tooltip = vkfc.21.c.tt ai_chance = { base = 20 } }
+}
+vkfc.22 = { type = character_event theme = realm title = vkfc.22.t desc = vkfc.22.desc
+ trigger = { vkfu_council_host = yes has_character_flag = vkf_war_council_active exists = scope:activity }
+ left_portrait = { character = root }
+ option = { name = vkfc.22.a custom_tooltip = vkfc.22.a.tt scope:activity = { set_variable = { name = vkfc_closing_read value = yes } } }
+}

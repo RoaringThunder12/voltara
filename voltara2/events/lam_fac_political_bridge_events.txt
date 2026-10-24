@@ -1,0 +1,187 @@
+﻿namespace = lam_pb
+lam_pb.0001 = {
+	type = character_event
+	title = lam_pb_invite_title
+	theme = realm
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_pb_host = {
+						var:lam_pb_kind ?= flag:claimant_faction
+					}
+					exists = scope:lam_pb_invited_claimant
+				}
+				desc = lam_pb_invite_claim_desc
+			}
+			desc = lam_pb_invite_desc
+		}
+	}
+	left_portrait = {
+		character = scope:lam_pb_host
+	}
+	trigger = {
+		lam_pb_invitation_current_trigger = yes
+	}
+	option = {
+		name = lam_pb_join
+		custom_tooltip = lam_pb_join_consequence_tt
+		trigger = {
+			lam_pb_invitation_current_trigger = yes
+			lam_pb_political_consent_trigger = yes
+		}
+		scope:lam_pb_host = {
+			add_to_variable_list = {
+				name = lam_pb_supporters
+				target = root
+			}
+		}
+	}
+	option = {
+		name = lam_pb_decline
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_pb_declined_reset
+				}
+			}
+			clear_variable_list = lam_pb_declined_hosts
+			set_variable = {
+				name = lam_pb_declined_reset
+				value = yes
+				years = 3
+			}
+		}
+		add_to_variable_list = {
+			name = lam_pb_declined_hosts
+			target = scope:lam_pb_host
+		}
+	}
+}
+lam_pb.0002 = {
+	type = character_event
+	hidden = yes
+	trigger = {
+		is_alive = yes
+	}
+	immediate = {
+		if = {
+			limit = {
+				exists = scope:lam_pb_token
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_pb_token
+						}
+						var:lam_pb_serial ?= scope:lam_pb_token
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				has_variable = lam_pb_gathering
+			}
+			lam_pb_finish_effect = yes
+		}
+	}
+}
+lam_pb.0003 = {
+	type = character_event
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				is_ai = yes
+				lam_pb_can_propose_trigger = yes
+				NOT = {
+					has_variable = lam_bloc
+				}
+				lam_pb_proposal_pressure_value >= 35
+			}
+			if = {
+				limit = {
+					has_claim_on = liege.primary_title
+				}
+				set_variable = {
+					name = lam_pb_claimant
+					value = this
+				}
+				lam_pb_begin_effect = {
+					KIND = claimant_faction
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = {
+						culture = liege.culture
+					}
+					opinion = {
+						target = liege
+						value <= -40
+					}
+					lam_pb_legal_independence_faction_trigger = yes
+				}
+				lam_pb_begin_effect = {
+					KIND = independence_faction
+				}
+			}
+			else = {
+				lam_pb_begin_effect = {
+					KIND = liberty_faction
+				}
+			}
+		}
+	}
+}
+lam_pb.0004 = {
+	type = character_event
+	title = lam_pb_request_title
+	desc = lam_pb_request_desc
+	theme = realm
+	trigger = {
+		lam_pb_can_open_proposal_trigger = yes
+	}
+	option = {
+		name = lam_pb_request_liberty
+		trigger = {
+			lam_pb_legal_liberty_faction_trigger = yes
+		}
+		lam_pb_player_proposal_effect = {
+			KIND = liberty_faction
+		}
+	}
+	option = {
+		name = lam_pb_request_independence
+		trigger = {
+			lam_pb_legal_independence_faction_trigger = yes
+		}
+		lam_pb_player_proposal_effect = {
+			KIND = independence_faction
+		}
+	}
+	option = {
+		name = lam_pb_request_claim
+		trigger = {
+			has_claim_on = liege.primary_title
+		}
+		set_variable = {
+			name = lam_pb_claimant
+			value = this
+		}
+		lam_pb_player_proposal_effect = {
+			KIND = claimant_faction
+		}
+	}
+	option = {
+		name = lam_pb_request_dissolution
+		trigger = {
+			lam_pb_legal_nation_fracturing_faction_trigger = yes
+		}
+		lam_pb_player_proposal_effect = {
+			KIND = nation_fracturing_faction
+		}
+	}
+	option = {
+		name = lam_pb_cancel
+	}
+}

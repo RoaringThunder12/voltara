@@ -1,0 +1,333 @@
+﻿# Living Factions - review fixes (tools/claude_fixes/review_1020.py)
+# This = an independent king or emperor (managed court, once a year): great lords standing together against the crown
+# break it apart. A faction led by a powerful vassal, mobilising or in arms, with a local or minority cause and another
+# powerful vassal among its members, raises the realm's dissolution; its members and the other great factions turned
+# against the crown stand with it.
+lam_rv_fracture_check_effect = {
+	if = {
+		limit = {
+			lam_pb_managed_court_trigger = yes
+			is_independent_ruler = yes
+			highest_held_title_tier >= tier_kingdom
+			NOT = {
+				has_variable = lam_rv_fracture_cd
+			}
+			any_in_list = {
+				variable = lam_bloc_leads
+				lam_rv_great_rebel_trigger = yes
+				lam_rv_fracture_cause_trigger = yes
+			}
+		}
+		save_scope_as = lam_rv_fr_lord
+		clear_saved_scope = lam_rv_fr_host
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				lam_rv_great_rebel_trigger = yes
+				lam_rv_fracture_cause_trigger = yes
+				is_ai = yes
+				lam_pb_can_propose_trigger = yes
+				lam_pb_legal_nation_fracturing_faction_trigger = yes
+				NOT = {
+					has_variable = lam_fac_rebel_cd
+				}
+				liege ?= scope:lam_rv_fr_lord
+			}
+			order_by = {
+				value = 0
+				if = {
+					limit = {
+						has_variable = lam_fac_share
+					}
+					add = var:lam_fac_share
+				}
+			}
+			save_scope_as = lam_rv_fr_host
+		}
+		scope:lam_rv_fr_host ?= {
+			scope:lam_rv_fr_lord = {
+				set_variable = {
+					name = lam_rv_fracture_cd
+					value = yes
+					years = 10
+				}
+			}
+			lam_pb_begin_effect = {
+				KIND = nation_fracturing_faction
+			}
+			if = {
+				limit = {
+					has_variable = lam_pb_gathering
+				}
+				# the faction rose: no new rising for five years (as after a council's vote)
+				set_variable = {
+					name = lam_fac_rebel_cd
+					value = yes
+					years = 5
+				}
+				lam_fac_timer_set_effect = {
+					NAME = lam_fac_rebel_cd
+					YEARS = 5
+				}
+				# AI members and great factions stand with it at once; a player is asked by the gathering's invitation
+				every_in_list = {
+					variable = lam_fac_members
+					limit = {
+						is_alive = yes
+						is_ai = yes
+						var:lam_bloc ?= scope:lam_rv_fr_host
+						NOT = {
+							this = scope:lam_rv_fr_host
+						}
+					}
+					scope:lam_rv_fr_host = {
+						add_to_variable_list = {
+							name = lam_pb_supporters
+							target = prev
+						}
+					}
+				}
+				scope:lam_rv_fr_lord = {
+					every_in_list = {
+						variable = lam_bloc_leads
+						limit = {
+							lam_rv_great_rebel_trigger = yes
+							is_ai = yes
+							liege ?= scope:lam_rv_fr_lord
+							NOT = {
+								this = scope:lam_rv_fr_host
+							}
+						}
+						scope:lam_rv_fr_host = {
+							add_to_variable_list = {
+								name = lam_pb_supporters
+								target = prev
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+# This = the leader of a gathered coalition: its ultimatum goes to the liege (the vanilla demand of its kind; if
+# refused, every member goes to war together).
+lam_rv_send_effect = {
+	joined_faction ?= {
+		if = {
+			limit = {
+				faction_is_type = independence_faction
+			}
+			lam_pb_demand_independence_faction_effect = yes
+		}
+		else_if = {
+			limit = {
+				faction_is_type = liberty_faction
+			}
+			lam_pb_demand_liberty_faction_effect = yes
+		}
+		else_if = {
+			limit = {
+				faction_is_type = claimant_faction
+			}
+			lam_pb_demand_claimant_faction_effect = yes
+		}
+		else_if = {
+			limit = {
+				faction_is_type = nation_fracturing_faction
+			}
+			lam_pb_demand_nation_fracturing_faction_effect = yes
+		}
+	}
+}
+# This = the vassal raising a council's demand: a demand the realm does not allow becomes the other one - no liberties
+# left to ask for, so independence; a liege who is no sovereign, so liberties.
+lam_rv_kind_fallback_effect = {
+	if = {
+		limit = {
+			var:lam_pb_selected_kind ?= flag:liberty_faction
+			NOT = {
+				lam_pb_legal_liberty_faction_trigger = yes
+			}
+			lam_pb_legal_independence_faction_trigger = yes
+		}
+		set_variable = {
+			name = lam_pb_selected_kind
+			value = flag:independence_faction
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_pb_selected_kind ?= flag:independence_faction
+			NOT = {
+				lam_pb_legal_independence_faction_trigger = yes
+			}
+			lam_pb_legal_liberty_faction_trigger = yes
+		}
+		set_variable = {
+			name = lam_pb_selected_kind
+			value = flag:liberty_faction
+		}
+	}
+	# the realm can no longer be broken (the liege became a vassal, a struggle forbids it): independence, else liberties
+	else_if = {
+		limit = {
+			var:lam_pb_selected_kind ?= flag:nation_fracturing_faction
+			NOT = {
+				lam_pb_legal_nation_fracturing_faction_trigger = yes
+			}
+		}
+		if = {
+			limit = {
+				lam_pb_legal_independence_faction_trigger = yes
+			}
+			set_variable = {
+				name = lam_pb_selected_kind
+				value = flag:independence_faction
+			}
+		}
+		else_if = {
+			limit = {
+				lam_pb_legal_liberty_faction_trigger = yes
+			}
+			set_variable = {
+				name = lam_pb_selected_kind
+				value = flag:liberty_faction
+			}
+		}
+	}
+}
+# This = a faction head whose council voted to rise (managed court): a player is told when no demand could be raised,
+# and who raises it when it is another member.
+lam_rv_rise_outcome_effect = {
+	if = {
+		limit = {
+			is_ai = no
+			NOT = {
+				has_variable = lam_pb_gathering
+			}
+			NOT = {
+				scope:lam_pb_mandated_host ?= {
+					has_variable = lam_pb_gathering
+				}
+			}
+		}
+		send_interface_message = {
+			type = event_generic_bad
+			title = lam_rv_stall_title
+			desc = lam_rv_stall_desc
+		}
+	}
+	else_if = {
+		limit = {
+			is_ai = no
+			NOT = {
+				has_variable = lam_pb_gathering
+			}
+			scope:lam_pb_mandated_host ?= {
+				has_variable = lam_pb_gathering
+			}
+		}
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_rv_proxy_title
+			right_icon = scope:lam_pb_mandated_host
+		}
+	}
+	# a rising that went ahead: the faction does not rise again for five years (as outside managed courts)
+	if = {
+		limit = {
+			OR = {
+				has_variable = lam_pb_gathering
+				scope:lam_pb_mandated_host ?= {
+					has_variable = lam_pb_gathering
+				}
+			}
+		}
+		set_variable = {
+			name = lam_fac_rebel_cd
+			value = yes
+			years = 5
+		}
+		lam_fac_timer_set_effect = {
+			NAME = lam_fac_rebel_cd
+			YEARS = 5
+		}
+	}
+	# an AI faction whose vote passed but could raise no demand does not ask its council again every six months
+	else_if = {
+		limit = {
+			is_ai = yes
+		}
+		set_variable = {
+			name = lam_fac_rebel_cd
+			value = yes
+			years = 3
+		}
+		lam_fac_timer_set_effect = {
+			NAME = lam_fac_rebel_cd
+			YEARS = 3
+		}
+	}
+}
+# The faction's hold on its lord is the lord as the head's puppet (lam_court_puppet), which gives the head the puppet's
+# actions. A puppet has one puppeteer and one puppet type, so the hold was announced with an empty puppet slot when
+# the lord was already a puppet (Steam, 2026-10-23/24): another ruler's - the court's own faction takes the strings
+# over - or the head's own vanilla puppet (external_ruler_puppet) - it moves to our type, whose actions include those.
+# ROOT = the lord. LEAD = the faction head who holds them.
+lam_rv_court_puppet_effect = {
+	save_scope_as = lam_rv_cp_lord
+	$LEAD$ = {
+		save_scope_as = lam_rv_cp_hand
+	}
+	if = {
+		limit = {
+			scope:lam_rv_cp_hand = {
+				can_have_puppets_trigger = yes
+			}
+			OR = {
+				NOT = {
+					puppeteer ?= scope:lam_rv_cp_hand
+				}
+				NOT = {
+					is_puppet_of_type = lam_court_puppet
+				}
+			}
+		}
+		puppeteer ?= {
+			save_scope_as = lam_rv_cp_old
+		}
+		if = {
+			limit = {
+				exists = scope:lam_rv_cp_old
+			}
+			clear_puppet_status = yes
+			if = {
+				limit = {
+					NOT = {
+						scope:lam_rv_cp_old = scope:lam_rv_cp_hand
+					}
+				}
+				remove_puppet_modifiers_effect = yes
+				scope:lam_rv_cp_old = {
+					if = {
+						limit = {
+							is_ai = no
+						}
+						send_interface_message = {
+							type = event_generic_bad
+							title = lam_rv_cp_lost_title
+							right_icon = scope:lam_rv_cp_lord
+						}
+					}
+				}
+			}
+		}
+		scope:lam_rv_cp_hand = {
+			set_puppet = {
+				target = scope:lam_rv_cp_lord
+				type = lam_court_puppet
+			}
+		}
+	}
+}

@@ -9,11 +9,11 @@ ek_story_cycle_necromancy_events.0001 = {
     desc = {
         first_valid = {
 			triggered_desc = {
-				trigger = { faith = { has_doctrine = doctrine_necromancy_crime } }
+				trigger = { rite = { rite_has_parameter = necromancy_criminal } }
 				desc = ek_story_cycle_necromancy_events.0001.desc.criminal
 			}
             triggered_desc = {
-				trigger = { faith = { has_doctrine = doctrine_necromancy_shunned } }
+				trigger = { rite = { rite_has_parameter = necromancy_shunned } }
 				desc = ek_story_cycle_necromancy_events.0001.desc.shunned
 			}
 			desc = ek_story_cycle_necromancy_events.0001.desc
@@ -48,7 +48,7 @@ ek_story_cycle_necromancy_events.0001 = {
     # Do it in Secrecy
     option = {
         trigger = {
-            faith = { has_doctrine = doctrine_necromancy_shunned }
+            rite = { rite_has_parameter = necromancy_shunned }
 		}
         name = ek_story_cycle_necromancy_events.0001.b
         custom_tooltip = ek_story_cycle_necromancy_events.0001.b.tt
@@ -66,7 +66,7 @@ ek_story_cycle_necromancy_events.0001 = {
             base = 0
             modifier = {
                 add = 100
-                faith = { has_doctrine = doctrine_necromancy_shunned }
+                rite = { rite_has_parameter = necromancy_shunned }
             }
         }
     }
@@ -259,9 +259,9 @@ ek_story_cycle_necromancy_events.0006 = {
         if = {
             limit = { NOT = { exists = scope:necromancy_tutor } }
             random_religion_global = {
-				limit = { any_faith = { has_doctrine = tenet_necromancy_worship } }
+				limit = { any_faith = { has_doctrine = voltara_necromancy_accepted } }
                 random_faith = {
-                    limit = { has_doctrine = tenet_necromancy_worship }
+                    limit = { has_doctrine = voltara_necromancy_accepted }
                     save_scope_as = necromancy_faith
                 }
             }
@@ -271,7 +271,7 @@ ek_story_cycle_necromancy_events.0006 = {
                 dynasty = none
                 save_scope_as = necromancy_tutor
                 after_creation = {
-                    set_character_faith = scope:necromancy_faith
+                    if = { limit = { exists = scope:necromancy_faith } set_character_faith = scope:necromancy_faith }
                 }
             }          
         }
@@ -1102,7 +1102,7 @@ ek_story_cycle_necromancy_events.0240 = {
 
     trigger = {
         NOR = { 
-            faith = { has_doctrine = doctrine_necromancy_accepted }
+            rite = { rite_has_parameter = necromancy_accepted }
             has_character_flag = has_necromancy_test_subject
         }
         is_travelling = no
@@ -1951,7 +1951,7 @@ ek_story_cycle_necromancy_events.0400 = {
                 has_relation_soulmate = root
             }
         }   
-        faith = { has_doctrine = doctrine_necromancy_shunned }
+        rite = { rite_has_parameter = necromancy_shunned }
     }
 
     cooldown = { years = 20 }
@@ -1965,10 +1965,10 @@ ek_story_cycle_necromancy_events.0400 = {
                     has_relation_lover = scope:root
                     has_relation_soulmate = scope:root
                 }
-                faith = { 
+                rite = { 
                     OR = {
-                        has_doctrine = doctrine_necromancy_crime 
-                        has_doctrine = doctrine_necromancy_shunned
+                        rite_has_parameter = necromancy_criminal 
+                        rite_has_parameter = necromancy_shunned
                     }
                 }
                 is_available_ai = yes
@@ -2052,7 +2052,7 @@ ek_story_cycle_necromancy_events.0405 = {
         exists = cp:councillor_court_chaplain
         cp:councillor_court_chaplain = { is_available_ai = yes }
         NOT = { has_character_flag = is_learning_secret_necromancy }
-        faith = { has_doctrine = doctrine_necromancy_shunned }
+        rite = { rite_has_parameter = necromancy_shunned }
     }
 
     cooldown = { years = 20 }

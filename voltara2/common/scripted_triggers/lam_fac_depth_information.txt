@@ -1,0 +1,46 @@
+﻿lam_pd_private_fact_trigger = {
+	var:lam_fac_tier ?= 1
+	has_variable = lam_cr_ballot_id
+	var:lam_bloc ?= {
+		has_variable = lam_cr_active
+		var:lam_cr_id ?= prev.var:lam_cr_ballot_id
+		NOT = {
+			var:lam_pd_reported_id ?= var:lam_cr_id
+		}
+		OR = {
+			var:lam_cr_issue ?= flag:rise
+			var:lam_cr_issue ?= flag:arm
+			var:lam_cr_issue ?= flag:crown
+			var:lam_cr_issue ?= flag:heir
+			var:lam_cr_issue ?= flag:merge
+		}
+	}
+}
+lam_pd_information_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	liege ?= scope:recipient
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+	NOT = {
+		has_variable = lam_fac_inform_cd
+	}
+	var:lam_bloc ?= {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		liege ?= scope:recipient
+	}
+	OR = {
+		var:lam_bloc = {
+			any_secret = {
+				is_known_by = scope:actor
+				NOT = {
+					is_known_by = scope:recipient
+				}
+			}
+		}
+		lam_pd_private_fact_trigger = yes
+	}
+}

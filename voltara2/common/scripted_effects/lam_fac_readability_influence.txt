@@ -1,0 +1,22 @@
+﻿lam_ux_ballot_snapshot_effect = {
+	set_variable = {
+		name = lam_ux_ballot_base
+		value = lam_cr_influence_value
+	}
+	set_variable = {
+		name = lam_ux_ballot_bonus
+		value = {
+			value = var:lam_cr_weight
+			subtract = var:lam_ux_ballot_base
+		}
+	}
+	set_variable = {
+		name = lam_ux_ballot_issue
+		value = scope:lam_cr_head.var:lam_cr_issue
+	}
+}
+lam_ux_ballot_clear_effect = {
+	remove_variable = lam_ux_ballot_base
+	remove_variable = lam_ux_ballot_bonus
+	remove_variable = lam_ux_ballot_issue
+}

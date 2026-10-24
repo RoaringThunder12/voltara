@@ -1,0 +1,20 @@
+﻿LamCrThreshold = {
+    type = character
+    text = { trigger = { lam_cr_supermajority_trigger = yes } localization_key = lam_cr_threshold_major }
+    text = { localization_key = lam_cr_threshold_normal }
+}
+LamCrStatus = {
+    type = character
+    text = { trigger = { has_variable = lam_cr_active } localization_key = lam_cr_status_active }
+    text = { trigger = { var:lam_cr_last_result ?= flag:passed } localization_key = lam_cr_status_passed }
+    text = { trigger = { var:lam_cr_last_result ?= flag:rejected } localization_key = lam_cr_status_rejected }
+    text = { trigger = { var:lam_cr_last_result ?= flag:cancelled } localization_key = lam_cr_status_cancelled }
+    text = { localization_key = lam_cr_status_none }
+}
+
+LamCrResult = {
+ type = character
+ text = { trigger = { scope:lam_cr_result ?= flag:passed } localization_key = lam_cr_status_passed }
+ text = { trigger = { scope:lam_cr_result ?= flag:rejected } localization_key = lam_cr_status_rejected }
+ text = { localization_key = lam_cr_status_cancelled }
+}

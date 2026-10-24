@@ -1,0 +1,78 @@
+﻿lam_bp_record_break_effect = {
+	if = {
+		limit = {
+			scope:lam_vt_lead.var:lam_bp_position_topic ?= flag:heir
+		}
+		lam_gn_event_effect = {
+			KEY = split_heir
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_vt_lead.var:lam_bp_position_side ?= flag:restraint
+		}
+		lam_gn_event_effect = {
+			KEY = split_restraint
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_vt_lead.var:lam_bp_position_side ?= flag:pressure
+		}
+		lam_gn_event_effect = {
+			KEY = split_pressure
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_vt_lead.var:lam_bp_position_side ?= flag:fair
+		}
+		lam_gn_event_effect = {
+			KEY = split_fair
+		}
+	}
+	else = {
+		lam_gn_event_effect = {
+			KEY = split_policy
+		}
+	}
+}
+lam_bp_record_found_effect = {
+	if = {
+		limit = {
+			var:lam_bp_origin_topic ?= flag:heir
+		}
+		lam_gn_event_effect = {
+			KEY = split_heir
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_bp_origin_side ?= flag:restraint
+		}
+		lam_gn_event_effect = {
+			KEY = split_restraint
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_bp_origin_side ?= flag:pressure
+		}
+		lam_gn_event_effect = {
+			KEY = split_pressure
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_bp_origin_side ?= flag:fair
+		}
+		lam_gn_event_effect = {
+			KEY = split_fair
+		}
+	}
+	else = {
+		lam_gn_event_effect = {
+			KEY = split_policy
+		}
+	}
+}

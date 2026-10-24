@@ -1,0 +1,22 @@
+﻿# Living Factions - the faction window (tools/claude_fixes/gui_redesign.py): how bold the faction is, in a word.
+LamUx2Nerve = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_fac_bold
+			var:lam_fac_bold >= 90
+		}
+		localization_key = lam_ux2_nerve_high
+	}
+	text = {
+		trigger = {
+			has_variable = lam_fac_bold
+			var:lam_fac_bold >= 50
+		}
+		localization_key = lam_ux2_nerve_mid
+	}
+	text = {
+		localization_key = lam_ux2_nerve_low
+		fallback = yes
+	}
+}

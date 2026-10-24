@@ -1,0 +1,4 @@
+﻿vbr_county = { tier = tier_county de_jure_liege.de_jure_liege.de_jure_liege = title:e_voltara_bryndale NOT = { has_variable = voltara_ruin_state } holder = { NOT = { voltara_is_ruins_placeholder = yes } } }
+vbr_ruler = { is_landed = yes is_adult = yes any_held_title = { vbr_county = yes } }
+vbr_traveller = { is_alive = yes is_adult = yes is_available_travelling = yes location = { geographical_region = world_vbr_bryndale } NOT = { has_trait = dragon } NOT = { has_character_flag = vbr_travel_cooldown } }
+vbr_safe_convoy = { exists = scope:vbr_site scope:vbr_site = { holder = prev has_county_modifier = vbr_patrolled NOT = { has_county_modifier = vbr_bandits } OR = { NOT = { any_county_province = { is_coastal = yes } } has_county_modifier = vbr_beacons } } }

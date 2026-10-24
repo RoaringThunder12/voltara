@@ -1,0 +1,20 @@
+﻿LamPolOrg = { type = character text = { trigger = { lam_pol_organization_trigger = yes } localization_key = lam_pol_check_Org_yes } text = { localization_key = lam_pol_check_Org_no fallback = yes } }
+LamPolBase = { type = character text = { trigger = { lam_pol_base_trigger = yes } localization_key = lam_pol_check_Base_yes } text = { localization_key = lam_pol_check_Base_no fallback = yes } }
+LamPolUnity = { type = character text = { trigger = { has_variable = lam_fac_cohesion var:lam_fac_cohesion >= lam_tune_seize_cohesion } localization_key = lam_pol_check_Unity_yes } text = { localization_key = lam_pol_check_Unity_no fallback = yes } }
+LamPolOffice = { type = character text = { trigger = { lam_pol_offices_trigger = yes } localization_key = lam_pol_check_Office_yes } text = { localization_key = lam_pol_check_Office_no fallback = yes } }
+LamPolLever = { type = character text = { trigger = { lam_pol_leverage_trigger = yes } localization_key = lam_pol_check_Lever_yes } text = { localization_key = lam_pol_check_Lever_no fallback = yes } }
+LamPolRival = { type = character text = { trigger = { lam_pol_no_rival_trigger = yes } localization_key = lam_pol_check_Rival_yes } text = { localization_key = lam_pol_check_Rival_no fallback = yes } }
+LamPolReady = { type = character
+ text = { trigger = { liege ?= { var:lam_fac_puppet_master ?= prev has_variable = lam_pol_weak_since } } localization_key = lam_pol_held_weak }
+ text = { trigger = { liege ?= { var:lam_fac_puppet_master ?= prev } } localization_key = lam_pol_held_yes }
+ text = { trigger = { lam_pol_ready_trigger = yes } localization_key = lam_pol_ready_yes }
+ text = { trigger = { lam_pol_control_trigger = yes } localization_key = lam_pol_ready_wait }
+ text = { localization_key = lam_pol_ready_no fallback = yes }
+}
+LamPolEmpty = { type = character
+ text = { trigger = { NOT = { any_vassal = { lam_fac_peer_trigger = yes } } } localization_key = lam_pol_empty_peers }
+ text = { trigger = { has_variable = lam_fac_ban } localization_key = lam_pol_empty_banned }
+ text = { trigger = { has_variable = lam_fac_newcd } localization_key = lam_pol_empty_cooldown }
+ text = { trigger = { any_vassal = { has_variable = lam_fac_proto } } localization_key = lam_pol_empty_preparing }
+ text = { localization_key = lam_pol_empty_general fallback = yes }
+}

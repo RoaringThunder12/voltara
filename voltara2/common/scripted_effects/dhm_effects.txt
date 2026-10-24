@@ -1,0 +1,1089 @@
+﻿# =============================================================================
+# Dynasty & Household Manager — Core scripted effects (v0.2.0)
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# EDUCATION — GUARDIAN
+# Current scope = child. Requires scope:dhm_manager.
+# -----------------------------------------------------------------------------
+dhm_try_assign_guardian_effect = {
+    save_scope_as = dhm_child
+
+    # Remove only an actually invalid Guardian. Stability matters more than
+    # constantly min-maxing a child's household attachment.
+    every_relation = {
+        type = guardian
+        limit = {
+            scope:dhm_child = { is_in_the_same_court_as = scope:dhm_manager }
+            dhm_guardian_requires_replacement_trigger = yes
+        }
+        save_scope_as = dhm_previous_guardian
+        scope:dhm_child = {
+            remove_relation_guardian = scope:dhm_previous_guardian
+        }
+    }
+
+    if = {
+        limit = {
+            age < 16
+            num_of_relation_guardian = 0
+            is_in_the_same_court_as = scope:dhm_manager
+        }
+
+        # Tier 1: parent of same culture AND faith.
+        ordered_parent = {
+            limit = {
+                dhm_valid_guardian_candidate_trigger = yes
+                is_in_the_same_court_as = scope:dhm_manager
+                culture = scope:dhm_child.culture
+                faith = scope:dhm_child.faith
+            }
+            order_by = dhm_guardian_score_value
+            position = 0
+            check_range_bounds = no
+            save_scope_as = dhm_selected_guardian
+            scope:dhm_child = {
+                set_relation_guardian = scope:dhm_selected_guardian
+            }
+        }
+
+        # Tier 2: trusted adult of same culture AND faith in the household court.
+        if = {
+            limit = { num_of_relation_guardian = 0 }
+            scope:dhm_manager = {
+                ordered_courtier = {
+                    limit = {
+                        dhm_valid_guardian_candidate_trigger = yes
+                        culture = scope:dhm_child.culture
+                        faith = scope:dhm_child.faith
+                    }
+                    order_by = dhm_guardian_score_value
+                    position = 0
+                    check_range_bounds = no
+                    save_scope_as = dhm_selected_guardian
+                    scope:dhm_child = {
+                        set_relation_guardian = scope:dhm_selected_guardian
+                            }
+                }
+            }
+        }
+
+        # Tier 3: parent preserving at least faith OR culture.
+        if = {
+            limit = { num_of_relation_guardian = 0 }
+            ordered_parent = {
+                limit = {
+                    dhm_valid_guardian_candidate_trigger = yes
+                    is_in_the_same_court_as = scope:dhm_manager
+                    OR = {
+                        culture = scope:dhm_child.culture
+                        faith = scope:dhm_child.faith
+                    }
+                }
+                order_by = dhm_guardian_score_value
+                position = 0
+                check_range_bounds = no
+                save_scope_as = dhm_selected_guardian
+                scope:dhm_child = {
+                    set_relation_guardian = scope:dhm_selected_guardian
+                    }
+            }
+        }
+
+        # Tier 4: court adult preserving at least faith OR culture.
+        if = {
+            limit = { num_of_relation_guardian = 0 }
+            scope:dhm_manager = {
+                ordered_courtier = {
+                    limit = {
+                        dhm_valid_guardian_candidate_trigger = yes
+                        OR = {
+                            culture = scope:dhm_child.culture
+                            faith = scope:dhm_child.faith
+                        }
+                    }
+                    order_by = dhm_guardian_score_value
+                    position = 0
+                    check_range_bounds = no
+                    save_scope_as = dhm_selected_guardian
+                    scope:dhm_child = {
+                        set_relation_guardian = scope:dhm_selected_guardian
+                            }
+                }
+            }
+        }
+
+        # Final realistic fallback: the player-ruler personally raises the child
+        # if eligible. DHM does not search the world for a foreign upbringing.
+        if = {
+            limit = {
+                num_of_relation_guardian = 0
+                scope:dhm_manager = { dhm_valid_guardian_candidate_trigger = yes }
+            }
+            scope:dhm_manager = { save_scope_as = dhm_selected_guardian }
+            set_relation_guardian = scope:dhm_selected_guardian
+        }
+    }
+}
+
+# Mark which actual education focus the current Specialist Tutor was selected for.
+dhm_mark_tutor_focus_effect = {
+    remove_character_flag = dhm_tutor_focus_diplomacy
+    remove_character_flag = dhm_tutor_focus_martial
+    remove_character_flag = dhm_tutor_focus_stewardship
+    remove_character_flag = dhm_tutor_focus_intrigue
+    remove_character_flag = dhm_tutor_focus_learning
+
+    if = { limit = { has_focus = education_diplomacy } add_character_flag = dhm_tutor_focus_diplomacy }
+    else_if = { limit = { has_focus = education_martial } add_character_flag = dhm_tutor_focus_martial }
+    else_if = { limit = { has_focus = education_stewardship } add_character_flag = dhm_tutor_focus_stewardship }
+    else_if = { limit = { has_focus = education_intrigue } add_character_flag = dhm_tutor_focus_intrigue }
+    else_if = { limit = { has_focus = education_learning } add_character_flag = dhm_tutor_focus_learning }
+}
+
+# -----------------------------------------------------------------------------
+# EDUCATION — SPECIALIST TUTOR
+# Current scope = child. Requires manager.
+# -----------------------------------------------------------------------------
+dhm_try_assign_tutor_effect = {
+    save_scope_as = dhm_child
+
+    # Retain a teacher who can teach the new subject, only if the player asked.
+    if = { limit = { is_in_the_same_court_as = scope:dhm_manager dhm_v090_keep_capable_tutor_trigger = yes } dhm_mark_tutor_focus_effect = yes }
+
+    # If the player/vanilla changes the child's education focus, a specialist
+    # chosen for the old subject is no longer the right teacher. Replace once.
+    if = {
+        limit = {
+            is_in_the_same_court_as = scope:dhm_manager
+            any_relation = { type = dhm_specialist_tutor always = yes }
+            OR = {
+                AND = { has_focus = education_diplomacy NOT = { has_character_flag = dhm_tutor_focus_diplomacy } }
+                AND = { has_focus = education_martial NOT = { has_character_flag = dhm_tutor_focus_martial } }
+                AND = { has_focus = education_stewardship NOT = { has_character_flag = dhm_tutor_focus_stewardship } }
+                AND = { has_focus = education_intrigue NOT = { has_character_flag = dhm_tutor_focus_intrigue } }
+                AND = { has_focus = education_learning NOT = { has_character_flag = dhm_tutor_focus_learning } }
+            }
+        }
+        every_relation = {
+            type = dhm_specialist_tutor
+            save_scope_as = dhm_previous_tutor
+            scope:dhm_child = { remove_relation_dhm_specialist_tutor = scope:dhm_previous_tutor }
+        }
+        dhm_mark_tutor_focus_effect = yes
+    }
+
+    every_relation = {
+        type = dhm_specialist_tutor
+        limit = {
+            scope:dhm_child = { is_in_the_same_court_as = scope:dhm_manager }
+            OR = {
+                is_alive = no
+                is_imprisoned = yes
+                is_hostage = yes
+                has_trait = incapable
+                NOT = { is_in_the_same_court_as = scope:dhm_manager }
+                has_relation_rival = scope:dhm_child
+                has_relation_nemesis = scope:dhm_child
+            }
+        }
+        save_scope_as = dhm_previous_tutor
+        scope:dhm_child = {
+            remove_relation_dhm_specialist_tutor = scope:dhm_previous_tutor
+        }
+    }
+
+    if = {
+        limit = {
+            age >= 6
+            age < 16
+            is_in_the_same_court_as = scope:dhm_manager
+            has_education_focus_trigger = yes
+            NOT = {
+                any_relation = {
+                    type = dhm_specialist_tutor
+                    always = yes
+                }
+            }
+        }
+
+        scope:dhm_manager = {
+            ordered_courtier = {
+                limit = { dhm_valid_tutor_candidate_trigger = yes }
+                order_by = dhm_tutor_score_value
+                position = 0
+                check_range_bounds = no
+                save_scope_as = dhm_selected_tutor
+                scope:dhm_child = {
+                    set_relation_dhm_specialist_tutor = scope:dhm_selected_tutor
+                    dhm_mark_tutor_focus_effect = yes
+                }
+            }
+        }
+
+        # Ruler may teach personally only if not already the child's Guardian.
+        if = {
+            limit = {
+                NOT = {
+                    any_relation = {
+                        type = dhm_specialist_tutor
+                        always = yes
+                    }
+                }
+                scope:dhm_manager = { dhm_valid_tutor_candidate_trigger = yes }
+            }
+            scope:dhm_manager = { save_scope_as = dhm_selected_tutor }
+            set_relation_dhm_specialist_tutor = scope:dhm_selected_tutor
+            dhm_mark_tutor_focus_effect = yes
+        }
+    }
+}
+
+# Current scope = child. A Specialist Tutor gives a modest REAL education effect.
+# Manual scans cannot be spammed for points because the attempt itself is yearly.
+dhm_apply_tutor_education_bonus_effect = {
+    save_scope_as = dhm_child
+
+    if = {
+        limit = {
+            age >= 7
+            age < 16
+            is_in_the_same_court_as = scope:dhm_manager
+            has_education_focus_trigger = yes
+            NOT = { has_character_flag = dhm_tutor_bonus_cooldown }
+            any_relation = {
+                type = dhm_specialist_tutor
+                always = yes
+            }
+        }
+
+        random_relation = {
+            type = dhm_specialist_tutor
+            save_scope_as = dhm_selected_tutor
+        }
+
+        if = {
+            limit = { scope:dhm_selected_tutor = { dhm_tutor_score_value >= 200 } }
+            random = {
+                chance = 50
+                education_point_add_general_effect = { VALUE = 1 }
+            }
+        }
+        else_if = {
+            limit = { scope:dhm_selected_tutor = { dhm_tutor_score_value >= 155 } }
+            random = {
+                chance = 35
+                education_point_add_general_effect = { VALUE = 1 }
+            }
+        }
+        else_if = {
+            limit = { scope:dhm_selected_tutor = { dhm_tutor_score_value >= 115 } }
+            random = {
+                chance = 20
+                education_point_add_general_effect = { VALUE = 1 }
+            }
+        }
+        else = {
+            random = {
+                chance = 10
+                education_point_add_general_effect = { VALUE = 1 }
+            }
+        }
+
+        add_character_flag = {
+            flag = dhm_tutor_bonus_cooldown
+            years = 1
+        }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# MARRIAGE — CANDIDATE SEARCH
+# Current scope = marriage subject. Requires scope:dhm_manager.
+# Uses CK3's spouse-candidate iterators instead of a whole-world living scan.
+# -----------------------------------------------------------------------------
+dhm_process_marriage_subject_effect = {
+    save_scope_as = dhm_marriage_subject
+    dhm_v080_auto_mark_marriage_attempt_effect = yes
+
+    scope:dhm_manager = {
+        dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_family_attempted }
+    }
+
+    # Local event lists survive nested scripted-effect calls, so clear the pool
+    # before and after every subject when processing several people in one pass.
+    every_in_list = {
+        list = dhm_marriage_candidate_pool
+        remove_from_list = dhm_marriage_candidate_pool
+    }
+
+    every_opposite_sex_spouse_candidate = {
+        limit = { dhm_valid_marriage_candidate_trigger = yes }
+        scope:dhm_manager = {
+            dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_candidates_evaluated }
+        }
+        add_to_list = dhm_marriage_candidate_pool
+    }
+
+    if = {
+        limit = { allowed_to_marry_same_sex_trigger = yes }
+        every_same_sex_spouse_candidate = {
+            limit = {
+                this != scope:dhm_marriage_subject
+                dhm_valid_marriage_candidate_trigger = yes
+            }
+            scope:dhm_manager = {
+                dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_candidates_evaluated }
+            }
+            add_to_list = dhm_marriage_candidate_pool
+        }
+    }
+
+    if = {
+        limit = {
+            any_in_list = {
+                list = dhm_marriage_candidate_pool
+                always = yes
+            }
+        }
+        if = {
+            limit = {
+                scope:dhm_marriage_subject = { dhm_subject_uses_full_auto_trigger = yes }
+            }
+
+            # Try the best three ranked prospects. A successful first match adds
+            # the subject cooldown, so later entries safely skip. If final
+            # revalidation rejects one candidate, the next is still attempted.
+            ordered_in_list = {
+                list = dhm_marriage_candidate_pool
+                order_by = dhm_marriage_score_value
+                max = 3
+                check_range_bounds = no
+                save_scope_as = dhm_marriage_candidate
+
+                if = {
+                    limit = {
+                        scope:dhm_marriage_subject = {
+                            dhm_valid_marriage_subject_trigger = yes
+                        }
+                    }
+                    scope:dhm_marriage_subject = { dhm_route_family_match_effect = yes }
+                }
+            }
+
+            # Every tried candidate failed final validation. Defer this subject
+            # for six months and let the outer queue continue to the next person.
+            if = {
+                limit = {
+                    scope:dhm_marriage_subject = {
+                        dhm_valid_marriage_subject_trigger = yes
+                    }
+                }
+                scope:dhm_marriage_subject = {
+                    dhm_v080_auto_set_no_candidate_retry_effect = yes
+                }
+                scope:dhm_manager = {
+                    dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_no_candidate }
+                    set_variable = {
+                        name = dhm_scan_last_no_candidate
+                        value = scope:dhm_marriage_subject
+                    }
+                }
+            }
+        }
+        else = {
+            # Assisted now means assisted for every family proposal.
+            ordered_in_list = {
+                list = dhm_marriage_candidate_pool
+                order_by = dhm_marriage_score_value
+                position = 0
+                check_range_bounds = no
+                save_scope_as = dhm_marriage_candidate
+                scope:dhm_manager = {
+                    dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_proposals }
+                    scope:dhm_marriage_subject = {
+                        dhm_v074_mark_proposal_effect = yes
+                    }
+                    trigger_event = dhm_marriage.0100
+                }
+            }
+        }
+    }
+    else = {
+        dhm_v080_auto_set_no_candidate_retry_effect = yes
+        scope:dhm_manager = {
+            dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_no_candidate }
+            set_variable = {
+                name = dhm_scan_last_no_candidate
+                value = scope:dhm_marriage_subject
+            }
+        }
+    }
+
+    every_in_list = {
+        list = dhm_marriage_candidate_pool
+        remove_from_list = dhm_marriage_candidate_pool
+    }
+}
+
+# Current scope = marriage subject. Requires candidate + manager.
+dhm_execute_match_effect = {
+    save_scope_as = dhm_marriage_subject
+
+    if = {
+        limit = {
+            exists = scope:dhm_marriage_candidate
+            dhm_valid_marriage_subject_trigger = yes
+        scope:dhm_marriage_candidate = {
+                dhm_valid_marriage_candidate_trigger = yes
+            }
+        }
+
+        dhm_mark_arranged_union_pending_effect = yes
+
+        # Betrothal whenever either party is still a child.
+        if = {
+            limit = {
+                OR = {
+                    is_adult = no
+                    scope:dhm_marriage_candidate = { is_adult = no }
+                }
+            }
+            if = {
+                limit = { dhm_subject_should_use_matrilineal_trigger = yes }
+                create_betrothal_matrilineal = scope:dhm_marriage_candidate
+            }
+            else = {
+                create_betrothal = scope:dhm_marriage_candidate
+            }
+        }
+        else = {
+            if = {
+                limit = { dhm_subject_should_use_matrilineal_trigger = yes }
+                marry_matrilineal = scope:dhm_marriage_candidate
+            }
+            else = {
+                marry = scope:dhm_marriage_candidate
+            }
+        }
+
+        # Confirm that CK3 actually created the relationship before recording a
+        # success. If an engine-side condition changed, the next ranked prospect
+        # remains eligible and the failure is visible in the report.
+        if = {
+            limit = {
+                OR = {
+                    is_spouse_of = scope:dhm_marriage_candidate
+                    betrothed = scope:dhm_marriage_candidate
+                }
+            }
+            add_character_flag = {
+                flag = dhm_matchmaking_cooldown
+                years = 2
+            }
+            dhm_v080_auto_clear_no_candidate_history_effect = yes
+            scope:dhm_manager = {
+                dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_matched }
+                dhm_v075_count_digest_effect = { COUNTER = dhm075_digest_matches }
+                dhm_v090_note_office_work_effect = { ROLE = matchmaker }
+                dhm_v090_note_office_work_effect = { ROLE = steward }
+            }
+        }
+        else = {
+            scope:dhm_manager = {
+                dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_execution_failed }
+            }
+            dhm_clear_pending_arranged_union_state_effect = yes
+        }
+    }
+    else = {
+        scope:dhm_manager = {
+            dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_execution_failed }
+        }
+    }
+}
+
+
+
+# -----------------------------------------------------------------------------
+# COURTIER MATCHMAKING — CANDIDATE SEARCH
+# Current scope = managed courtier. Requires scope:dhm_manager.
+# Uses CK3 spouse-candidate iterators and a bounded multi-candidate fallback.
+# -----------------------------------------------------------------------------
+dhm_process_courtier_marriage_subject_effect = {
+    save_scope_as = dhm_marriage_subject
+    dhm_v080_auto_mark_marriage_attempt_effect = yes
+
+    scope:dhm_manager = {
+        dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_courtier_attempted }
+    }
+
+    every_in_list = {
+        list = dhm_courtier_candidate_pool
+        remove_from_list = dhm_courtier_candidate_pool
+    }
+
+    every_opposite_sex_spouse_candidate = {
+        limit = { dhm_valid_courtier_marriage_candidate_trigger = yes }
+        scope:dhm_manager = {
+            dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_candidates_evaluated }
+        }
+        add_to_list = dhm_courtier_candidate_pool
+    }
+
+    if = {
+        limit = { allowed_to_marry_same_sex_trigger = yes }
+        every_same_sex_spouse_candidate = {
+            limit = {
+                this != scope:dhm_marriage_subject
+                dhm_valid_courtier_marriage_candidate_trigger = yes
+            }
+            scope:dhm_manager = {
+                dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_candidates_evaluated }
+            }
+            add_to_list = dhm_courtier_candidate_pool
+        }
+    }
+
+    if = {
+        limit = {
+            any_in_list = {
+                list = dhm_courtier_candidate_pool
+                always = yes
+            }
+        }
+        if = {
+            limit = { has_global_variable = dhm_setting_courtier_marriage_assisted }
+            ordered_in_list = {
+                list = dhm_courtier_candidate_pool
+                order_by = dhm_courtier_marriage_score_value
+                position = 0
+                check_range_bounds = no
+                save_scope_as = dhm_marriage_candidate
+                scope:dhm_manager = {
+                    dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_proposals }
+                    scope:dhm_marriage_subject = {
+                        dhm_v074_mark_proposal_effect = yes
+                    }
+                    trigger_event = dhm_marriage.0200
+                }
+            }
+        }
+        else = {
+            ordered_in_list = {
+                list = dhm_courtier_candidate_pool
+                order_by = dhm_courtier_marriage_score_value
+                max = 3
+                check_range_bounds = no
+                save_scope_as = dhm_marriage_candidate
+                if = {
+                    limit = {
+                        scope:dhm_marriage_subject = {
+                            dhm_valid_courtier_marriage_subject_trigger = yes
+                        }
+                    }
+                    scope:dhm_marriage_subject = {
+                        dhm_execute_courtier_match_effect = yes
+                    }
+                }
+            }
+
+            if = {
+                limit = {
+                    scope:dhm_marriage_subject = {
+                        dhm_valid_courtier_marriage_subject_trigger = yes
+                    }
+                }
+                scope:dhm_marriage_subject = {
+                    dhm_v080_auto_set_no_candidate_retry_effect = yes
+                }
+                scope:dhm_manager = {
+                    dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_no_candidate }
+                    set_variable = {
+                        name = dhm_scan_last_no_candidate
+                        value = scope:dhm_marriage_subject
+                    }
+                }
+            }
+        }
+    }
+    else = {
+        dhm_v080_auto_set_no_candidate_retry_effect = yes
+        scope:dhm_manager = {
+            dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_no_candidate }
+            set_variable = {
+                name = dhm_scan_last_no_candidate
+                value = scope:dhm_marriage_subject
+            }
+        }
+    }
+
+    every_in_list = {
+        list = dhm_courtier_candidate_pool
+        remove_from_list = dhm_courtier_candidate_pool
+    }
+}
+
+# Current scope = managed courtier. Candidate + manager scopes required.
+# Rule #21 court retention: candidate must still be unlanded/valid and marriage
+# direction keeps the player's courtier as the major household partner.
+dhm_execute_courtier_match_effect = {
+    save_scope_as = dhm_marriage_subject
+
+    if = {
+        limit = {
+            exists = scope:dhm_marriage_candidate
+            dhm_valid_courtier_marriage_subject_trigger = yes
+            scope:dhm_marriage_candidate = {
+                dhm_valid_courtier_marriage_candidate_trigger = yes
+            }
+        }
+
+        if = {
+            limit = { dhm_courtier_should_use_matrilineal_trigger = yes }
+            marry_matrilineal = scope:dhm_marriage_candidate
+        }
+        else = {
+            marry = scope:dhm_marriage_candidate
+        }
+
+        if = {
+            limit = { is_spouse_of = scope:dhm_marriage_candidate }
+            add_character_flag = {
+                flag = dhm_matchmaking_cooldown
+                years = 2
+            }
+            dhm_v080_auto_clear_no_candidate_history_effect = yes
+            scope:dhm_manager = {
+                dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_matched }
+                dhm_v075_count_digest_effect = { COUNTER = dhm075_digest_matches }
+                dhm_v090_note_office_work_effect = { ROLE = matchmaker }
+                dhm_v090_note_office_work_effect = { ROLE = steward }
+            }
+        }
+        else = {
+            scope:dhm_manager = {
+                dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_execution_failed }
+            }
+        }
+    }
+    else = {
+        scope:dhm_manager = {
+            dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_execution_failed }
+        }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# MATCHMAKING OBSERVABILITY
+# Current scope = human player-ruler.
+# -----------------------------------------------------------------------------
+dhm_reset_scan_counters_effect = {
+    set_variable = { name = dhm_scan_family_attempted value = 0 }
+    set_variable = { name = dhm_scan_courtier_attempted value = 0 }
+    set_variable = { name = dhm_scan_candidates_evaluated value = 0 }
+    set_variable = { name = dhm_scan_matched value = 0 }
+    set_variable = { name = dhm_scan_proposals value = 0 }
+    set_variable = { name = dhm_scan_no_candidate value = 0 }
+    set_variable = { name = dhm_scan_execution_failed value = 0 }
+    set_variable = { name = dhm_scan_consent_reviews value = 0 }
+    set_variable = { name = dhm_scan_negotiations value = 0 }
+    set_variable = { name = dhm_scan_native_handoffs value = 0 }
+    remove_variable = dhm_scan_last_no_candidate
+}
+
+# Refresh a user-facing explanation of adult, unmarried close-family alerts.
+# This only scans the player's family, never the world or an entire realm.
+dhm_refresh_matchmaking_report_effect = {
+    save_scope_as = dhm_manager
+
+    set_variable = { name = dhm_report_total value = 0 }
+    set_variable = { name = dhm_report_manual value = 0 }
+    set_variable = { name = dhm_report_ready value = 0 }
+    set_variable = { name = dhm_report_outside_court value = 0 }
+    set_variable = { name = dhm_report_unavailable value = 0 }
+    set_variable = { name = dhm_report_no_authority value = 0 }
+    set_variable = { name = dhm_report_success_cooldown value = 0 }
+    set_variable = { name = dhm_report_no_candidate value = 0 }
+
+    remove_variable = dhm_report_manual_example
+    remove_variable = dhm_report_ready_example
+    remove_variable = dhm_report_outside_example
+    remove_variable = dhm_report_unavailable_example
+    remove_variable = dhm_report_authority_example
+    remove_variable = dhm_report_cooldown_example
+    remove_variable = dhm_report_no_candidate_example
+
+    every_close_family_member = {
+        limit = {
+            is_alive = yes
+            is_ai = yes
+            is_adult = yes
+            is_married = no
+            is_betrothed = no
+            can_marry_trigger = yes
+        }
+        save_scope_as = dhm_report_subject
+        scope:dhm_manager = {
+            change_variable = { name = dhm_report_total add = 1 }
+        }
+
+        if = {
+            limit = { NOT = { dhm_subject_automation_enabled_trigger = yes } }
+            scope:dhm_manager = {
+                change_variable = { name = dhm_report_manual add = 1 }
+                if = {
+                    limit = { NOT = { has_variable = dhm_report_manual_example } }
+                    set_variable = {
+                        name = dhm_report_manual_example
+                        value = scope:dhm_report_subject
+                    }
+                }
+            }
+        }
+        else_if = {
+            limit = { NOT = { is_in_the_same_court_as = scope:dhm_manager } }
+            scope:dhm_manager = {
+                change_variable = { name = dhm_report_outside_court add = 1 }
+                if = {
+                    limit = { NOT = { has_variable = dhm_report_outside_example } }
+                    set_variable = {
+                        name = dhm_report_outside_example
+                        value = scope:dhm_report_subject
+                    }
+                }
+            }
+        }
+        else_if = {
+            limit = {
+                OR = {
+                    is_imprisoned = yes
+                    is_hostage = yes
+                    has_trait = incapable
+                    has_been_promised_grand_wedding = yes
+                    NOT = { bp2_valid_for_standard_interactions_trigger = yes }
+                }
+            }
+            scope:dhm_manager = {
+                change_variable = { name = dhm_report_unavailable add = 1 }
+                if = {
+                    limit = { NOT = { has_variable = dhm_report_unavailable_example } }
+                    set_variable = {
+                        name = dhm_report_unavailable_example
+                        value = scope:dhm_report_subject
+                    }
+                }
+            }
+        }
+        else_if = {
+            limit = {
+                NOT = {
+                    OR = {
+                        AND = {
+                            exists = matchmaker
+                            matchmaker = scope:dhm_manager
+                        }
+                        is_child_of = scope:dhm_manager
+                    }
+                }
+            }
+            scope:dhm_manager = {
+                change_variable = { name = dhm_report_no_authority add = 1 }
+                if = {
+                    limit = { NOT = { has_variable = dhm_report_authority_example } }
+                    set_variable = {
+                        name = dhm_report_authority_example
+                        value = scope:dhm_report_subject
+                    }
+                }
+            }
+        }
+        else_if = {
+            limit = { has_character_flag = dhm_matchmaking_cooldown }
+            scope:dhm_manager = {
+                change_variable = { name = dhm_report_success_cooldown add = 1 }
+                if = {
+                    limit = { NOT = { has_variable = dhm_report_cooldown_example } }
+                    set_variable = {
+                        name = dhm_report_cooldown_example
+                        value = scope:dhm_report_subject
+                    }
+                }
+            }
+        }
+        else_if = {
+            limit = { has_character_flag = dhm_matchmaking_retry_cooldown }
+            scope:dhm_manager = {
+                change_variable = { name = dhm_report_no_candidate add = 1 }
+                if = {
+                    limit = { NOT = { has_variable = dhm_report_no_candidate_example } }
+                    set_variable = {
+                        name = dhm_report_no_candidate_example
+                        value = scope:dhm_report_subject
+                    }
+                }
+            }
+        }
+        else = {
+            scope:dhm_manager = {
+                change_variable = { name = dhm_report_ready add = 1 }
+                if = {
+                    limit = { NOT = { has_variable = dhm_report_ready_example } }
+                    set_variable = {
+                        name = dhm_report_ready_example
+                        value = scope:dhm_report_subject
+                    }
+                }
+            }
+        }
+    }
+
+    dhm_refresh_v030_dashboard_effect = yes
+}
+
+# -----------------------------------------------------------------------------
+# HOUSEHOLD MAINTENANCE
+# Current scope = human player-ruler.
+# -----------------------------------------------------------------------------
+dhm_process_household_effect = {
+    save_scope_as = dhm_manager
+
+    # A sixteenth-birthday conclusion may already be on its way from the native
+    # birthday on-action. Keep routine work running, but admit no second visible
+    # household window until that conclusion has had room to land.
+    if = {
+        limit = {
+            OR = {
+                has_character_flag = dhm_v080_birthday_story_pending
+                has_character_flag = dhm_v080_visible_followup_pending
+            }
+        }
+        add_character_flag = dhm_v080_visible_story_scheduled_this_pass
+    }
+
+    # Expired or abandoned proposal markers must not leave permanent character
+    # variables behind. Active unions and live follow-ups are preserved.
+    every_close_family_member = {
+        limit = {
+            has_variable = dhm_arranged_union_spouse
+            NOR = {
+                has_character_flag = dhm_arranged_union_active
+                has_character_flag = dhm_first_child_followup_pending
+                has_character_flag = dhm_arranged_union_pending
+                has_character_flag = dhm_awaiting_native_marriage
+            }
+        }
+        remove_variable = dhm_arranging_manager
+        remove_variable = dhm_arranged_union_spouse
+    }
+
+    # Retire Tutor relationships immediately after education ends.
+    every_close_family_member = {
+        limit = {
+            is_alive = yes
+            age >= 16
+            any_relation = {
+                type = dhm_specialist_tutor
+                always = yes
+            }
+        }
+        save_scope_as = dhm_former_student
+        every_relation = {
+            type = dhm_specialist_tutor
+            save_scope_as = dhm_previous_tutor
+            scope:dhm_former_student = {
+                remove_relation_dhm_specialist_tutor = scope:dhm_previous_tutor
+                remove_character_flag = dhm_tutor_focus_diplomacy
+                remove_character_flag = dhm_tutor_focus_martial
+                remove_character_flag = dhm_tutor_focus_stewardship
+                remove_character_flag = dhm_tutor_focus_intrigue
+                remove_character_flag = dhm_tutor_focus_learning
+            }
+        }
+    }
+
+    # EDUCATION — enabled by default and follows close family in the player's court.
+    if = {
+        limit = {
+            NOT = { has_global_variable = dhm_setting_education_disabled }
+            NOT = { has_character_flag = dhm_education_maintenance_cooldown }
+        }
+        add_character_flag = { flag = dhm_education_maintenance_cooldown years = 1 }
+        every_close_family_member = {
+            limit = {
+                is_alive = yes
+                age < 16
+                is_in_the_same_court_as = scope:dhm_manager
+            }
+            save_scope_as = dhm_child
+            dhm_try_assign_guardian_effect = yes
+            dhm_try_assign_tutor_effect = yes
+            dhm_apply_tutor_education_bonus_effect = yes
+        }
+    }
+
+    # Personality work has its own child-owned three-year interval. A manual
+    # matchmaking scan may maintain tutors, but must neither roll a lesson nor
+    # consume its next opportunity. Ordinary quarterly passes can also recover
+    # a lesson postponed by RC1 without resetting any annual education bonus.
+    if = {
+        limit = {
+            NOT = { has_global_variable = dhm_setting_education_disabled }
+            NOT = { has_global_variable = dhm091_personality_disabled }
+            NOT = { has_character_flag = dhm_v070_skip_story_pulse }
+        }
+        every_close_family_member = {
+            limit = { dhm_v091_pupil_eligible_trigger = yes }
+            dhm_v091_try_personality_guidance_effect = yes
+        }
+    }
+
+    # Age twelve has no native CK3 birthday on-action. One guarded checkpoint is
+    # therefore discovered here, at most one child per quarter, without replacing
+    # vanilla birthday files or scanning beyond the player's close family.
+    if = {
+        limit = {
+            NOT = { has_global_variable = dhm_setting_education_disabled }
+            NOT = { has_global_variable = dhm_setting_development_reports_disabled }
+            # Manual scans are for matchmaking, not surprise schoolroom windows.
+            NOT = { has_character_flag = dhm_v070_skip_story_pulse }
+            NOT = { has_character_flag = dhm_v080_visible_story_scheduled_this_pass }
+        }
+        ordered_close_family_member = {
+            limit = {
+                is_alive = yes
+                age >= 12
+                age < 16
+                is_in_the_same_court_as = scope:dhm_manager
+                NOT = { has_character_flag = dhm_age_twelve_reviewed }
+            }
+            order_by = age
+            max = 1
+            check_range_bounds = no
+            save_scope_as = dhm_child
+            add_character_flag = dhm_age_twelve_reviewed
+            scope:dhm_manager = {
+                add_character_flag = dhm_v080_visible_story_scheduled_this_pass
+                trigger_event = dhm_education.0101
+            }
+        }
+    }
+
+    # MARRIAGE — a twice-yearly pass is responsive enough for a multi-year game
+    # while avoiding the same court-wide candidate work every quarter. Manual
+    # scans remove this cooldown before entering the effect.
+    if = {
+        limit = {
+            NOT = { has_character_flag = dhm_marriage_maintenance_cooldown }
+            NOT = { has_character_flag = dhm_v080_visible_story_scheduled_this_pass }
+        }
+
+        add_character_flag = { flag = dhm_marriage_maintenance_cooldown months = 6 }
+        dhm_v075_record_scan_effect = yes
+        # Keep the last real scan visible during intervening quarterly upkeep.
+        dhm_reset_scan_counters_effect = yes
+
+        every_in_list = {
+            list = dhm_family_marriage_queue
+            remove_from_list = dhm_family_marriage_queue
+        }
+
+        every_close_family_member = {
+            limit = { dhm_valid_marriage_subject_trigger = yes }
+            add_to_list = dhm_family_marriage_queue
+        }
+        every_courtier = {
+            limit = { dhm_valid_dynasty_courtier_marriage_subject_trigger = yes }
+            add_to_list = dhm_family_marriage_queue
+        }
+
+        ordered_in_list = {
+            list = dhm_family_marriage_queue
+            order_by = dhm_marriage_subject_priority_value
+            max = dhm_family_scan_limit_value
+            check_range_bounds = no
+            save_scope_as = dhm_marriage_subject
+            # Routine full-automatic matches may continue while no ruling is
+            # needed. Once any proposal/consent window is dispatched, the rest of
+            # this pass stops so decisions cannot pile up behind the player's back.
+            if = {
+                limit = {
+                    scope:dhm_manager = {
+                        NOT = { has_character_flag = dhm_v080_auto_assisted_proposal_active }
+                        NOT = { has_character_flag = dhm_v080_visible_story_scheduled_this_pass }
+                    }
+                }
+                dhm_process_marriage_subject_effect = yes
+            }
+        }
+
+        every_in_list = {
+            list = dhm_family_marriage_queue
+            remove_from_list = dhm_family_marriage_queue
+        }
+        # Courtier matchmaking shares the same six-month pass but keeps its own
+        # Assisted/Automatic/Off policy.
+        if = {
+            limit = {
+                NOT = { has_global_variable = dhm_setting_courtier_marriage_off }
+                NOT = { has_character_flag = dhm_v080_visible_story_scheduled_this_pass }
+            }
+            ordered_courtier = {
+                limit = { dhm_valid_courtier_marriage_subject_trigger = yes }
+                order_by = dhm_courtier_marriage_subject_priority_value
+                max = dhm_courtier_scan_limit_value
+                check_range_bounds = no
+                save_scope_as = dhm_marriage_subject
+                if = {
+                    limit = {
+                        scope:dhm_manager = {
+                            NOT = { has_character_flag = dhm_v080_auto_assisted_proposal_active }
+                            NOT = { has_character_flag = dhm_v080_visible_story_scheduled_this_pass }
+                        }
+                    }
+                    dhm_process_courtier_marriage_subject_effect = yes
+                }
+            }
+        }
+    }
+
+    # The council is on demand in Quiet and Living modes. Full Chronicle alone
+    # keeps the old annual visit, and still respects the existing opt-out.
+    if = {
+        limit = {
+            NOT = { has_character_flag = dhm_v070_skip_story_pulse }
+            NOT = { has_global_variable = dhm_setting_council_disabled }
+            NOT = { has_character_flag = dhm_annual_council_cooldown }
+            NOT = { has_character_flag = dhm_v080_visible_story_scheduled_this_pass }
+        }
+        add_character_flag = { flag = dhm_annual_council_cooldown years = 1 }
+        # Keep this quarter's ordinary story from landing a few days before the
+        # council. This marker is removed below, so the unused story check can
+        # run normally on the next quarterly pulse.
+        add_character_flag = dhm_v080_visible_story_scheduled_this_pass
+        trigger_event = { id = dhm_council.0001 days = { 10 30 } }
+    }
+
+    # Institutional maintenance is internally yearly. Story eligibility is also
+    # checked yearly, never during a manual scan, and remains governed by the
+    # existing longer story cooldown.
+    dhm_v075_digest_pulse_effect = yes
+    dhm_v060_maintain_household_effect = yes
+    if = {
+        limit = {
+            NOT = { has_character_flag = dhm_v070_skip_story_pulse }
+            NOT = { has_character_flag = dhm_v070_story_check_cooldown }
+            NOT = { has_character_flag = dhm_v080_visible_story_scheduled_this_pass }
+        }
+        add_character_flag = { flag = dhm_v070_story_check_cooldown years = 1 }
+        # The story director may find no eligible tale. Reserving this pass is
+        # still safe: a waiting Triumph is retried next quarter.
+        add_character_flag = dhm_v080_visible_story_scheduled_this_pass
+        dhm_v060_story_pulse_effect = yes
+    }
+
+	# Chronicle milestones are checked after ordinary maintenance. The helper is
+	# constant-time and its timed global cooldown survives succession.
+	dhm_v080_maybe_schedule_triumph_effect = yes
+    remove_character_flag = dhm_v080_visible_story_scheduled_this_pass
+}

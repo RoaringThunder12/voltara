@@ -1771,7 +1771,7 @@ is_valid = {
 
 		scope:puppet_or_actor ?= {
 			is_ai = no
-			has_title = title:e_minister_of_rites
+			always = no
 			scope:recipient = {
 				top_liege ?= scope:puppet_or_actor.top_liege
 				this != top_liege

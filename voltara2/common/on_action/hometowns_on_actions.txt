@@ -1,0 +1,114 @@
+﻿on_game_start = {
+	on_actions = {
+		on_hometowns_start
+	}
+}
+
+on_game_start_after_lobby = {
+	on_actions = {
+		hometowns_county_modifier_init
+	}
+}
+
+on_birth_child = {
+	on_actions = {
+		hometowns_save_location
+	}
+}
+
+on_title_gain = {
+	on_actions = {
+		hometowns_county_modifier
+	}
+}
+
+############################
+### Hometowns on_actions ###
+############################
+
+on_hometowns_start = {
+	effect = {
+		# Mod Compatibility: Create global variable to check if this mod exists.
+		set_global_variable = {
+			name = hometowns_is_loaded
+			value = yes
+		}
+	}
+	events = {
+		# Assign birthplaces to historical characters.
+		hometowns.01
+	}
+}
+
+hometowns_save_location = {
+	effect = {
+		# Save location at birth as the character's birthplace.
+		scope:child = {
+ if = { limit = { exists = scope:mother.location }
+			set_variable = {
+				name = hometowns_birthplace
+				value = scope:mother.location
+			}
+ remove_character_flag = voltara_hometown_recorded_residence
+ }
+		}
+	}
+}
+
+hometowns_county_modifier_init = {
+	effect = {
+		if = {
+			limit = { has_game_rule = hometowns_features }
+
+			# Check every ruler's held county's provinces; if any match their birthplace, they get the modifier. (Seperate from on_hometowns_start to apply after the init event)
+			every_ruler = {
+				limit = {
+					has_variable = hometowns_birthplace
+					var:hometowns_birthplace.county.holder ?= this
+				}
+				var:hometowns_birthplace.county = { add_county_modifier = hometowns_county_modifier }
+			}
+		}
+	}
+}
+
+hometowns_county_modifier = {
+	effect = {
+
+		if = {
+			limit = { has_game_rule = hometowns_features }
+
+			# Remove the modifier if its not your birthplace.
+			every_held_title = {
+				limit = {
+					tier = tier_county
+					has_county_modifier = hometowns_county_modifier
+					NOT = {
+						any_county_province = {
+							this ?= county.holder.var:hometowns_birthplace
+						}
+					}
+				}
+				random_county_province = {
+					limit = {
+						NOT = {
+							this ?= county.holder.var:hometowns_birthplace
+						}					
+					}
+					county = {
+						remove_county_modifier = hometowns_county_modifier
+					}
+				}
+			}
+
+			# Add the modifier if it is your birthplace.
+			if = {
+				limit = {
+					has_variable = hometowns_birthplace
+					var:hometowns_birthplace.county.holder ?= this
+				}
+				var:hometowns_birthplace.county = { add_county_modifier = hometowns_county_modifier }
+			}
+		}
+	}
+}

@@ -1,0 +1,91 @@
+﻿# =============================================================================
+# Dynasty & Household Manager v0.4.0 — bounded living-family story eligibility
+# =============================================================================
+
+# All story candidates are close family or courtiers already reached through the
+# player's household iterators. These triggers never scan the world or realm.
+
+dhm_v040_letter_relative_trigger = {
+	dhm_v090_letter_has_news_trigger = yes
+	is_alive = yes
+	NOT = { has_character_flag = dhm081_family_recent }
+	is_adult = yes
+	is_married = yes
+	is_ai = yes
+	NOT = { is_in_the_same_court_as = scope:dhm_manager }
+	NOT = { has_character_flag = dhm_living_letter_recent }
+	NOT = { has_character_flag = dhm_relationship_arc_recent }
+}
+
+dhm_v040_student_trigger = {
+	dhm_v090_school_has_reason_trigger = yes
+	is_alive = yes
+	is_imprisoned = no
+	is_hostage = no
+	NOT = { has_trait = incapable }
+	NOT = { has_character_flag = dhm081_family_recent }
+	age >= 8
+	age < 16
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_character_flag = dhm_living_education_recent }
+	NOT = { has_character_flag = dhm_relationship_arc_recent }
+	any_relation = { type = dhm_specialist_tutor dhm_v082_story_tutor_eligible_trigger = yes }
+}
+
+dhm_v040_married_relative_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_married = yes
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_character_flag = dhm_living_marriage_recent }
+	NOT = { has_character_flag = dhm_marriage_matter_recent }
+	any_spouse = { is_alive = yes }
+}
+
+dhm_v040_marriage_wish_trigger = {
+	is_alive = yes
+	NOT = { has_character_flag = dhm081_family_recent }
+	is_ai = yes
+	is_adult = yes
+	is_married = no
+	is_betrothed = no
+	can_marry_trigger = yes
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_character_flag = dhm_living_wish_recent }
+	NOT = { has_character_flag = dhm_profile_do_not_marry }
+}
+
+dhm_v040_dispute_relative_trigger = {
+	is_alive = yes
+	NOT = { has_character_flag = dhm081_dispute_settled }
+	NOT = { has_character_flag = dhm081_family_recent }
+	is_ai = yes
+	is_adult = yes
+	is_imprisoned = no
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_trait = incapable }
+	NOT = { has_character_flag = dhm_living_dispute_recent }
+}
+
+dhm_v040_ceremony_relative_trigger = {
+	is_alive = yes
+	NOT = { has_character_flag = dhm081_family_recent }
+	is_ai = yes
+	age >= 6
+	is_imprisoned = no
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_trait = incapable }
+	NOT = { has_character_flag = dhm_living_ceremony_recent }
+}
+
+# The annual report is always non-negative. Referencing every snapshot here also
+# gives CK3's script validator a real gameplay use beyond localization display.
+dhm_v040_report_snapshot_valid_trigger = {
+	var:dhm_report_year_letters >= 0
+	var:dhm_report_year_education >= 0
+	var:dhm_report_year_marriages >= 0
+	var:dhm_report_year_wishes >= 0
+	var:dhm_report_year_disputes >= 0
+	var:dhm_report_year_reconciliations >= 0
+	var:dhm_report_year_ceremonies >= 0
+}

@@ -1,0 +1,278 @@
+﻿lam_pd_pact_clear_effect = {
+	var:lam_pd_pact_partner ?= {
+		if = {
+			limit = {
+				var:lam_pd_pact_partner ?= prev
+			}
+			lam_lf_exchange_clear_local_effect = yes
+		}
+	}
+	lam_lf_exchange_clear_local_effect = yes
+	save_scope_as = lam_pd_pact_old
+	var:lam_pd_pact_partner ?= {
+		if = {
+			limit = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_pd_pact_old
+						}
+						var:lam_pd_pact_partner ?= scope:lam_pd_pact_old
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			remove_list_variable = {
+				name = lam_fac_allies
+				target = scope:lam_pd_pact_old
+			}
+			remove_variable = lam_pd_pact_partner
+			if = {
+				limit = {
+					has_variable = lam_pd_pact_kind
+				}
+				remove_variable = lam_pd_pact_kind
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_pact_partner
+		}
+		remove_list_variable = {
+			name = lam_fac_allies
+			target = var:lam_pd_pact_partner
+		}
+		remove_variable = lam_pd_pact_partner
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_pact_kind
+		}
+		remove_variable = lam_pd_pact_kind
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_pact_target
+		}
+		remove_variable = lam_pd_pact_target
+	}
+}
+lam_pd_pact_install_effect = {
+	set_variable = {
+		name = lam_pd_pact_partner
+		value = $PARTNER$
+	}
+	set_variable = {
+		name = lam_pd_pact_lord
+		value = liege
+	}
+	set_variable = {
+		name = lam_pd_pact_record
+		value = var:lam_fac_rec
+	}
+	set_variable = {
+		name = lam_pd_pact_until
+		value = {
+			value = lam_now_m
+			add = 24
+		}
+	}
+	set_variable = {
+		name = lam_pd_pact_kind
+		value = scope:lam_pd_pact_kind
+	}
+	if = {
+		limit = {
+			exists = scope:lam_pd_pact_target
+		}
+		set_variable = {
+			name = lam_pd_pact_target
+			value = scope:lam_pd_pact_target
+		}
+	}
+	if = {
+		limit = {
+			NOT = {
+				is_target_in_variable_list = {
+					name = lam_fac_allies
+					target = $PARTNER$
+				}
+			}
+		}
+		add_to_variable_list = {
+			name = lam_fac_allies
+			target = $PARTNER$
+		}
+	}
+	remove_list_variable = {
+		name = lam_fac_foes
+		target = $PARTNER$
+	}
+	lam_fac_timeline_add_effect = {
+		KEY = allied
+	}
+	if = {
+		limit = {
+			is_ai = no
+		}
+		if = {
+			limit = {
+				var:lam_pd_pact_kind ?= flag:exchange
+			}
+			send_interface_message = {
+				type = event_generic_good
+				title = lam_pd_pact_title
+				desc = lam_lf_exchange_notice
+				right_icon = $PARTNER$
+			}
+		}
+		else = {
+			send_interface_message = {
+				type = event_generic_good
+				title = lam_pd_pact_title
+				desc = lam_pd_pact_desc
+				right_icon = $PARTNER$
+			}
+		}
+	}
+}
+lam_pd_pact_create_effect = {
+	$A$ = {
+		save_scope_as = lam_pd_pact_a
+	}
+	$B$ = {
+		save_scope_as = lam_pd_pact_b
+	}
+	if = {
+		limit = {
+			lam_pd_pact_pair_trigger = {
+				A = scope:lam_pd_pact_a
+				B = scope:lam_pd_pact_b
+			}
+		}
+		clear_saved_scope = lam_pd_pact_target
+		if = {
+			limit = {
+				scope:lam_pd_pact_a = {
+					has_variable = lam_fac_heir
+				}
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_pd_pact_b.var:lam_fac_heir
+						}
+						scope:lam_pd_pact_a.var:lam_fac_heir ?= scope:lam_pd_pact_b.var:lam_fac_heir
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			save_scope_value_as = {
+				name = lam_pd_pact_kind
+				value = flag:heir
+			}
+			scope:lam_pd_pact_a.var:lam_fac_heir = {
+				save_scope_as = lam_pd_pact_target
+			}
+		}
+		else_if = {
+			limit = {
+				scope:lam_pd_pact_a = {
+					lam_pol_office_excluded_trigger = yes
+				}
+				scope:lam_pd_pact_b = {
+					lam_pol_office_excluded_trigger = yes
+				}
+			}
+			save_scope_value_as = {
+				name = lam_pd_pact_kind
+				value = flag:office
+			}
+		}
+		else_if = {
+			limit = {
+				scope:lam_pd_pact_a = {
+					var:lam_fac_goal ?= 1
+				}
+				scope:lam_pd_pact_b = {
+					var:lam_fac_goal ?= 1
+				}
+			}
+			save_scope_value_as = {
+				name = lam_pd_pact_kind
+				value = flag:law
+			}
+		}
+		else = {
+			save_scope_value_as = {
+				name = lam_pd_pact_kind
+				value = flag:defense
+			}
+		}
+		scope:lam_pd_pact_a = {
+			lam_pd_pact_install_effect = {
+				PARTNER = scope:lam_pd_pact_b
+			}
+		}
+		scope:lam_pd_pact_b = {
+			lam_pd_pact_install_effect = {
+				PARTNER = scope:lam_pd_pact_a
+			}
+		}
+	}
+}
+lam_pd_pact_search_effect = {
+	lam_lf_exchange_search_effect = yes
+	if = {
+		limit = {
+			is_ai = yes
+			NOT = {
+				any_in_list = {
+					variable = lam_fac_allies
+					is_alive = yes
+					liege ?= prev.liege
+				}
+			}
+		}
+		save_scope_as = lam_am_seeker
+		random = {
+			chance = 20
+			liege = {
+				random_in_list = {
+					variable = lam_bloc_leads
+					limit = {
+						is_ai = yes
+						lam_fac_amity_pair_trigger = {
+							A = scope:lam_am_seeker
+							B = this
+						}
+						opinion = {
+							target = scope:lam_am_seeker
+							value >= 30
+						}
+						scope:lam_am_seeker = {
+							opinion = {
+								target = prev
+								value >= 30
+							}
+						}
+						NOT = {
+							lam_fac_issue_opposite_side_trigger = {
+								A = scope:lam_am_seeker
+								B = this
+							}
+						}
+					}
+					lam_fac_ally_effect = {
+						A = scope:lam_am_seeker
+						B = this
+					}
+				}
+			}
+		}
+	}
+}

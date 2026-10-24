@@ -1,0 +1,383 @@
+﻿namespace = dhm_education
+
+# Single-player birth hook. If the newborn's court host is the human player and
+# the child is close family, assign the upbringing Guardian immediately.
+dhm_education.0001 = {
+    type = character_event
+    hidden = yes
+
+    trigger = {
+        age = 0
+        NOT = { has_global_variable = dhm_setting_education_disabled }
+        OR = {
+            mother ?= {
+                is_ai = no
+                is_in_the_same_court_as = root
+            }
+            father ?= {
+                is_ai = no
+                is_in_the_same_court_as = root
+            }
+            host ?= {
+                is_ai = no
+                is_close_family_of = root
+                is_in_the_same_court_as = root
+            }
+        }
+    }
+
+    immediate = {
+        save_scope_as = dhm_child
+        if = {
+            limit = { mother ?= { is_ai = no is_in_the_same_court_as = root } }
+            mother = { save_scope_as = dhm_manager }
+        }
+        else_if = {
+            limit = { father ?= { is_ai = no is_in_the_same_court_as = root } }
+            father = { save_scope_as = dhm_manager }
+        }
+        else = { host = { save_scope_as = dhm_manager } }
+        scope:dhm_child = { dhm_try_assign_guardian_effect = yes }
+    }
+}
+
+# Sixth birthday: do NOT choose the Tutor yet. Vanilla assigns the education
+# focus on this birthday; wait one day so DHM reads the actual final focus.
+dhm_education.0002 = {
+    type = character_event
+    hidden = yes
+
+    trigger = {
+        age = 6
+        NOT = { has_global_variable = dhm_setting_education_disabled }
+        OR = {
+            mother ?= {
+                is_ai = no
+                is_in_the_same_court_as = root
+            }
+            father ?= {
+                is_ai = no
+                is_in_the_same_court_as = root
+            }
+            host ?= {
+                is_ai = no
+                is_close_family_of = root
+                is_in_the_same_court_as = root
+            }
+        }
+    }
+
+    immediate = {
+        trigger_event = {
+            id = dhm_education.0004
+            days = 1
+        }
+    }
+}
+
+# One day after the sixth birthday, actual-focus Tutor appointment.
+dhm_education.0004 = {
+    type = character_event
+    hidden = yes
+
+    trigger = {
+        age = 6
+        NOT = { has_global_variable = dhm_setting_education_disabled }
+        has_education_focus_trigger = yes
+        OR = {
+            mother ?= {
+                is_ai = no
+                is_in_the_same_court_as = root
+            }
+            father ?= {
+                is_ai = no
+                is_in_the_same_court_as = root
+            }
+            host ?= {
+                is_ai = no
+                is_close_family_of = root
+                is_in_the_same_court_as = root
+            }
+        }
+    }
+
+    immediate = {
+        save_scope_as = dhm_child
+        if = {
+            limit = { mother ?= { is_ai = no is_in_the_same_court_as = root } }
+            mother = { save_scope_as = dhm_manager }
+        }
+        else_if = {
+            limit = { father ?= { is_ai = no is_in_the_same_court_as = root } }
+            father = { save_scope_as = dhm_manager }
+        }
+        else = { host = { save_scope_as = dhm_manager } }
+        scope:dhm_child = {
+            dhm_try_assign_guardian_effect = yes
+            dhm_try_assign_tutor_effect = yes
+            dhm_assign_default_child_plan_effect = yes
+            dhm_v091_try_personality_guidance_effect = yes
+        }
+    }
+}
+
+# Native age-ten maintenance remains hidden. The old visible report is retained
+# as a save-safe event ID but is no longer scheduled automatically.
+dhm_education.0005 = {
+    type = character_event
+    hidden = yes
+
+    trigger = {
+        age = 10
+        NOT = { has_global_variable = dhm_setting_education_disabled }
+        OR = {
+            mother ?= { is_ai = no is_in_the_same_court_as = root }
+            father ?= { is_ai = no is_in_the_same_court_as = root }
+            host ?= { is_ai = no is_close_family_of = root is_in_the_same_court_as = root }
+        }
+    }
+
+    immediate = {
+        save_scope_as = dhm_child
+        if = { limit = { mother ?= { is_ai = no is_in_the_same_court_as = root } } mother = { save_scope_as = dhm_manager } }
+        else_if = { limit = { father ?= { is_ai = no is_in_the_same_court_as = root } } father = { save_scope_as = dhm_manager } }
+        else = { host = { save_scope_as = dhm_manager } }
+
+        if = { limit = { NOT = { dhm_has_child_development_plan_trigger = yes } } dhm_assign_default_child_plan_effect = yes }
+        dhm_try_assign_guardian_effect = yes
+        dhm_try_assign_tutor_effect = yes
+        dhm_v091_try_personality_guidance_effect = yes
+    }
+}
+
+# Sixteenth birthday: Tutor role ends with childhood education.
+dhm_education.0003 = {
+    type = character_event
+    hidden = yes
+
+    trigger = {
+        age = 16
+        any_relation = {
+            type = dhm_specialist_tutor
+            always = yes
+        }
+    }
+
+    immediate = {
+        save_scope_as = dhm_former_student
+        random_relation = { type = dhm_specialist_tutor save_scope_as = dhm_selected_tutor }
+        if = { limit = { mother ?= { is_ai = no } } mother = { save_scope_as = dhm_manager } }
+        else_if = { limit = { father ?= { is_ai = no } } father = { save_scope_as = dhm_manager } }
+        else_if = { limit = { host ?= { is_ai = no } } host = { save_scope_as = dhm_manager } }
+
+        if = {
+            limit = { exists = scope:dhm_selected_tutor }
+            create_character_memory = {
+                type = dhm_guided_education_memory
+                participants = { tutor = scope:dhm_selected_tutor }
+            }
+            add_opinion = { target = scope:dhm_selected_tutor modifier = dhm_guided_education_opinion }
+        }
+        every_relation = {
+            type = dhm_specialist_tutor
+            save_scope_as = dhm_previous_tutor
+            scope:dhm_former_student = {
+                remove_relation_dhm_specialist_tutor = scope:dhm_previous_tutor
+                remove_character_flag = dhm_tutor_focus_diplomacy
+                remove_character_flag = dhm_tutor_focus_martial
+                remove_character_flag = dhm_tutor_focus_stewardship
+                remove_character_flag = dhm_tutor_focus_intrigue
+                remove_character_flag = dhm_tutor_focus_learning
+            }
+        }
+		# Recommended mode reports only exceptional results. Full Chronicle keeps
+		# every graduation; a poor result uses the recovery story below instead.
+        if = {
+            limit = {
+                exists = scope:dhm_manager
+                NOT = { has_global_variable = dhm_setting_development_reports_disabled }
+				NOT = { dhm_v060_failed_education_trigger = yes }
+				OR = {
+					has_global_variable = dhm_setting_extended_sagas
+					dhm_v070_exceptional_education_trigger = yes
+				}
+            }
+            if = {
+                limit = { scope:dhm_manager = { NOT = { has_character_flag = dhm_v080_birthday_story_pending } } }
+                scope:dhm_manager = {
+                    add_character_flag = { flag = dhm_v080_birthday_story_pending months = 3 }
+                    trigger_event = dhm_education.0102
+                }
+            }
+            else_if = {
+                limit = { scope:dhm_manager = { NOT = { has_character_flag = dhm_v080_birthday_story_deferred } } }
+                # Twins still receive separate conclusions, but never on the
+                # same day. One deferred slot also covers wards and modded births.
+                scope:dhm_manager = {
+                    add_character_flag = { flag = dhm_v080_birthday_story_pending months = 5 }
+                    add_character_flag = { flag = dhm_v080_birthday_story_deferred months = 6 }
+                    trigger_event = { id = dhm_education.0102 months = 4 }
+                    trigger_event = { id = dhm_core.0001 months = 6 }
+                }
+            }
+        }
+		if = {
+			limit = {
+				exists = scope:dhm_manager
+				NOT = { has_global_variable = dhm_setting_stories_off }
+				dhm_v060_failed_education_trigger = yes
+			}
+			if = {
+				limit = { scope:dhm_manager = { NOT = { has_character_flag = dhm_v080_birthday_story_pending } } }
+				scope:dhm_manager = {
+					add_character_flag = { flag = dhm_v080_birthday_story_pending months = 3 }
+					trigger_event = { id = dhm_saga.6100 days = { 20 45 } }
+				}
+			}
+			else_if = {
+				limit = { scope:dhm_manager = { NOT = { has_character_flag = dhm_v080_birthday_story_deferred } } }
+				scope:dhm_manager = {
+					add_character_flag = { flag = dhm_v080_birthday_story_pending months = 5 }
+					add_character_flag = { flag = dhm_v080_birthday_story_deferred months = 6 }
+					trigger_event = { id = dhm_saga.6100 months = 4 }
+					trigger_event = { id = dhm_core.0001 months = 6 }
+				}
+			}
+		}
+    }
+}
+
+dhm_education.0100 = {
+	orphan = yes # Compatibility-only: allow old queued saves, never reschedule.
+    type = character_event
+    title = dhm_education.0100.t
+    desc = dhm_education.0100.desc
+    theme = learning
+    override_background = { reference = dhm_living_schoolroom }
+    left_portrait = scope:dhm_child
+    right_portrait = scope:dhm_selected_tutor
+    trigger = { exists = scope:dhm_child scope:dhm_child = { is_alive = yes age = 10 } }
+
+    option = {
+        name = dhm_education.0100.keep
+        scope:dhm_child = {
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_steady_lessons_modifier YEARS = 2 RENEWAL_TT = dhm_steady_lessons_modifier_renewed_2_tt }
+            add_opinion = { target = root modifier = dhm_quiet_encouragement_opinion }
+        }
+    }
+    option = {
+        name = dhm_education.0100.reselect
+        custom_tooltip = dhm_education.reselect_tt
+        if = {
+            limit = { exists = scope:dhm_selected_tutor }
+            scope:dhm_child = {
+                dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_disrupted_lessons_modifier YEARS = 1 RENEWAL_TT = dhm_disrupted_lessons_modifier_renewed_1_tt }
+                add_opinion = { target = root modifier = dhm_disrupted_education_opinion }
+            }
+        }
+        hidden_effect = { scope:dhm_child = { dhm_force_reselect_tutor_effect = yes } }
+    }
+    option = {
+        name = dhm_education.0100.plan
+        scope:dhm_child = { save_scope_as = dhm_profile_target }
+        trigger_event = dhm_profile.0040
+    }
+}
+
+dhm_education.0101 = {
+    type = character_event
+    title = dhm_education.0101.t
+    desc = dhm_education.0101.desc
+    theme = learning
+    override_background = { reference = dhm_living_schoolroom }
+    left_portrait = scope:dhm_child
+    trigger = {
+        exists = scope:dhm_child
+        scope:dhm_child = { is_alive = yes age >= 12 age < 16 }
+        NOT = { has_global_variable = dhm_setting_development_reports_disabled }
+    }
+    immediate = {
+        scope:dhm_child = {
+            if = { limit = { NOT = { dhm_has_child_development_plan_trigger = yes } } dhm_assign_default_child_plan_effect = yes }
+            random_relation = { type = dhm_specialist_tutor save_scope_as = dhm_selected_tutor }
+        }
+    }
+    option = {
+        name = dhm_education.0101.keep
+        scope:dhm_child = {
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_steady_lessons_modifier YEARS = 2 RENEWAL_TT = dhm_steady_lessons_modifier_renewed_2_tt }
+            add_opinion = { target = root modifier = dhm_quiet_encouragement_opinion }
+        }
+    }
+    option = {
+        name = dhm_education.0101.reselect
+        custom_tooltip = dhm_education.reselect_tt
+        if = {
+            limit = { exists = scope:dhm_selected_tutor }
+            scope:dhm_child = {
+                dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_disrupted_lessons_modifier YEARS = 1 RENEWAL_TT = dhm_disrupted_lessons_modifier_renewed_1_tt }
+                add_opinion = { target = root modifier = dhm_disrupted_education_opinion }
+            }
+        }
+        hidden_effect = { scope:dhm_child = { dhm_force_reselect_tutor_effect = yes } }
+    }
+    option = {
+        name = dhm_education.0101.plan
+        scope:dhm_child = { save_scope_as = dhm_profile_target }
+        trigger_event = dhm_profile.0040
+    }
+}
+
+dhm_education.0102 = {
+    type = character_event
+    title = dhm_education.0102.t
+    desc = {
+        desc = dhm_education.0102.desc
+        triggered_desc = {
+            trigger = { exists = scope:dhm_selected_tutor scope:dhm_selected_tutor = { is_alive = yes } }
+            desc = dhm_education.0102.tutor
+        }
+        triggered_desc = {
+            trigger = { scope:dhm_former_student = { learning >= 12 } }
+            desc = dhm_education.0102.university
+        }
+    }
+    theme = learning
+    override_background = { reference = dhm_living_schoolroom }
+    left_portrait = scope:dhm_former_student
+    right_portrait = scope:dhm_selected_tutor
+    trigger = {
+		is_alive = yes
+		is_ai = no
+        exists = scope:dhm_former_student
+        scope:dhm_former_student = { is_alive = yes age = 16 }
+    }
+    option = {
+        name = dhm_education.0102.celebrate
+        trigger = { short_term_gold >= minor_gold_value }
+        remove_short_term_gold = minor_gold_value
+        add_prestige = minor_prestige_gain
+        scope:dhm_former_student = {
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_commended_scholar_modifier YEARS = 5 RENEWAL_TT = dhm_commended_scholar_modifier_renewed_5_tt }
+            add_opinion = { target = root modifier = dhm_honored_education_opinion }
+        }
+        if = {
+            limit = { exists = scope:dhm_selected_tutor scope:dhm_selected_tutor = { is_alive = yes } }
+            scope:dhm_selected_tutor = {
+                dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_honored_tutor_modifier YEARS = 5 RENEWAL_TT = dhm_honored_tutor_modifier_renewed_5_tt }
+                add_opinion = { target = root modifier = dhm_guided_education_opinion }
+            }
+        }
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_education_legacy_modifier YEARS = 5 RENEWAL_TT = dhm_reward_education_legacy_renewed_5_tt }
+    }
+    option = {
+        name = dhm_education.0102.note
+        add_prestige = minor_prestige_gain
+        add_stress = minor_stress_loss
+        scope:dhm_former_student = {
+            add_stress = minor_stress_loss
+            add_opinion = { target = root modifier = dhm_quiet_encouragement_opinion }
+        }
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_trusted_counsel_modifier YEARS = 3 RENEWAL_TT = dhm_reward_trusted_counsel_renewed_3_tt }
+    }
+}

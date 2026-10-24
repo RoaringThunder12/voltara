@@ -1,0 +1,464 @@
+﻿oathholder_send_to_sway_vassal_ai = { # Oatholder sends Oathbound to sway vassal with low opinion ----- NEED TO MAKE SURE WE DONT TARGET RIVALS
+    picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = oathholder_send_increase_control_decision_ai_desc
+	selection_tooltip = oathholder_send_increase_control_decision_ai_tooltip
+
+    cooldown = { months = 7 }
+
+	is_shown = {
+        NOT = { has_character_flag = oathholder_sway_job_set }
+        any_relation = {
+            type = oathbound
+            this = {
+                NOT = { has_character_flag = oathbound_sway_job }
+                is_ai = no
+                is_adult = yes
+                diplomacy >= 5
+            }
+        }
+
+        is_ai = yes
+        is_ruler = yes
+        is_landed = yes
+        is_landless_adventurer = no
+
+		num_of_relation_oathbound > 0
+
+        any_vassal = {
+            opinion = {
+                target = root
+                value <= -30
+            }
+            AND = {
+                is_imprisoned = no
+                NOT = { is_at_war_with = root }
+                NOT = {
+                    OR = {
+                        has_relation_rival = root
+                        has_relation_nemesis = root
+                    }
+                }
+            }
+        }
+	}
+
+	is_valid = {
+		NOT = { 
+			is_imprisoned = yes
+			has_trait = incapable 
+            #is_at_war = yes
+            #is_travelling = yes
+		}
+        any_relation = {
+            type = oathbound
+            this = {
+                NOT = {
+                    is_imprisoned = yes
+                    has_trait = incapable 
+                    #is_at_war = yes
+                    #is_travelling = yes
+                }
+            }
+        }
+	}
+
+    ai_check_interval = 4
+    ai_potential = { num_of_relation_oathbound > 0 }
+    ai_will_do = {
+        base = 50
+
+        # 1. THE CRISIS MODIFIERS: How deep is the hatred?
+        modifier = {
+            add = 50
+            any_vassal = { 
+                opinion = { 
+                    target = root 
+                    value <= -50 
+                }
+                AND = {
+                    is_imprisoned = no
+                    
+                }
+            }
+        }
+        modifier = {
+            add = 100
+            any_vassal = { 
+                opinion = { 
+                    target = root 
+                    value <= -80 
+                }
+                AND = {
+                    is_imprisoned = no
+                    
+                }
+            }
+        }
+
+        # 2. THE THREAT LEVEL: Is the angry vassal actually dangerous?
+        # A liege cares way more if a Powerful Vassal hates them compared to a 1-county Count.
+        modifier = {
+            factor = 2.0
+            any_vassal = {
+                opinion = { 
+                    target = root 
+                    value <= -30 
+                }
+                is_powerful_vassal = yes 
+            }
+        }
+
+        # 3. THE PEACEMAKERS: Diplomatic and kind rulers prefer to mend fences
+        modifier = {
+            factor = 2.0
+            OR = {
+                has_trait = gregarious
+                has_trait = forgiving
+                has_trait = compassionate
+                has_trait = trusting
+                has_trait = patient
+            }
+        }
+
+        # 4. THE PARANOID: Rulers terrified of plots want to pacify their court
+        modifier = {
+            factor = 1.5
+            OR = {
+                has_trait = craven
+                has_trait = paranoid
+            }
+        }
+
+        # 5. THE TYRANTS: Too proud to beg. They'd rather fight a rebellion than sway.
+        modifier = {
+            factor = 0.25 # Drastically reduces the chance they click it
+            OR = {
+                has_trait = arrogant
+                has_trait = wrathful
+                has_trait = callous
+                has_trait = sadistic
+                has_trait = stubborn
+            }
+        }
+    }
+
+	effect = {
+        # 1. Target the angry vassal
+        random_vassal = {
+            limit = {
+                opinion = { 
+                    target = root 
+                    value <= -30 
+                }
+                is_imprisoned = no
+                NOT = { is_at_war_with = root }
+                NOT = {
+                    OR = {
+                        has_relation_rival = root
+                        has_relation_nemesis = root
+                    }
+                }
+            }
+            
+            # The Lottery System: Prioritize the angriest and most dangerous
+            weight = {
+                base = 50
+
+                modifier = {
+                    add = 50 
+                    opinion = { 
+                        target = root 
+                        value <= -50 
+                    }
+                }
+                modifier = {
+                    add = 100 
+                    opinion = { 
+                        target = root 
+                        value <= -80 
+                    }
+                }
+
+                # Priority: Powerful Vassals get double tickets
+                modifier = { 
+                    factor = 2.0
+                    is_powerful_vassal = yes
+                }
+            }
+            
+            save_scope_as = chosen_target_vassal
+        }
+
+        # 2. Set the Oathholder's Flags
+        add_character_flag = {
+            flag = oathholder_stationary_job_set
+            years = 200
+        }
+        add_character_flag = {
+            flag = oathholder_sway_job_set
+            years = 200
+        }
+
+        # 3. Apply the Job to the Oathbound (The Player)
+        var:val_oathkeeper = {
+            add_character_flag = {
+                flag = oathbound_on_stationary_job
+                years = 200
+            }
+            add_character_flag = {
+                flag = oathbound_sway_job
+                years = 200
+            }
+            # Save the target character so your scheme/event knows who to look at
+            set_variable = {
+                name = oathbound_sway_task_target_var
+                value = scope:chosen_target_vassal
+            }
+            
+            # Fire the notification event to the player
+            trigger_event = oathbound_task_events.1001 # Remember to change your event ID!
+        }
+    }
+}
+
+# Oatholder asks Oathbound to begin a murder scheme against a rival or nemesis.
+oathholder_send_to_kill_rival_ai = {
+    picture = {
+        reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+    }
+    desc = oathholder_send_to_kill_rival_ai_desc
+    selection_tooltip = oathholder_send_to_kill_rival_ai_tooltip
+
+    cooldown = { months = 24 }  # Longer than sway (7) — murder is a last resort
+
+    is_shown = {
+        has_character_flag = oathholder_prefers_murder
+        NOT = { has_character_flag = oathholder_kill_job_set }
+        any_relation = {
+            type = oathbound
+            this = {
+                NOT = { has_character_flag = oathbound_kill_job }
+                is_ai = no
+                is_adult = yes
+                intrigue >= 12  # Must be at least this good.
+            }
+        }
+
+        is_ai = yes
+        is_ruler = yes
+        is_landed = yes
+        is_landless_adventurer = no
+
+		num_of_relation_oathbound > 0
+
+        # Must have at least one valid rival or nemesis to target
+        OR = {
+            any_relation = {
+                type = rival
+                this = {
+                    is_alive = yes
+                    is_imprisoned = no
+                }
+            }
+            any_relation = {
+                type = nemesis
+                this = {
+                    is_alive = yes
+                    is_imprisoned = no
+                }
+            }
+        }
+	}
+
+    is_valid = {
+		NOT = { 
+			is_imprisoned = yes
+			has_trait = incapable 
+		}
+        any_relation = {
+            type = oathbound
+            this = {
+                NOT = {
+                    is_imprisoned = yes
+                    has_trait = incapable 
+                }
+            }
+        }
+        # Target must still exist
+        OR = {
+            any_relation = {
+                type = rival
+                this = {
+                    is_alive = yes
+                    is_imprisoned = no
+                }   
+            }
+            any_relation = {
+                type = nemesis
+                this = {
+                    is_alive = yes
+                    is_imprisoned = no
+                }
+            }
+        }
+	}
+
+	   ai_check_interval = 3
+	   ai_potential = { num_of_relation_oathbound > 0 }
+	   ai_will_do = {
+        base = 10 # Murder alone is not enough, there must be a skilled Oathbound or a state of war.
+
+        # 1. THE TARGET IS AT WAR: An active military threat demands an urgent reckoning
+        modifier = {
+            add = 75
+            any_relation = {
+                type = rival
+                this = { is_at_war_with = root }
+            }
+        }
+        modifier = {
+            add = 75
+            any_relation = {
+                type = nemesis
+                this = { is_at_war_with = root }
+            }
+        }
+
+        # 2. OATHBOUND ABSOLUTE SKILL: How good is our killer?
+        # Level 1: Competent (16+)
+        modifier = {
+            add = 50
+            any_relation = {
+                type = oathbound
+                this = { intrigue >= 16 }
+            }
+        }
+        # Level 2: Expert (20+)
+        modifier = {
+            add = 100
+            any_relation = {
+                type = oathbound
+                this = { intrigue >= 20 }
+            }
+        }
+        # Level 3: Master (25+)
+        modifier = {
+            add = 200
+            any_relation = {
+                type = oathbound
+                this = { intrigue >= 25 }
+            }
+        }
+
+        # Don't double assign
+        modifier = {
+            factor = 0
+            has_character_flag = oathholder_duel_job_set
+        }
+    }
+
+    effect = {
+        # 1. Choose the target pool using random_list
+        # If one pool is empty or invalid, the factor = 0 will ensure it's not chosen.
+        random_list = {
+            # Pool A: Nemeses (Weighted higher because they are more important targets)
+            100 = {
+                modifier = {
+                    factor = 0
+                    NOT = {
+                        any_relation = {
+                            type = nemesis
+                            this = {
+                                is_alive = yes
+                                is_imprisoned = no
+                            }
+                        }
+                    }
+                }
+                random_relation = {
+                    type = nemesis
+                    limit = {
+                        is_alive = yes
+                        is_imprisoned = no
+                    }
+                    weight = {
+                        base = 50
+                        modifier = { add = 75 is_at_war_with = root }
+                        # Preference for landed/powerful targets
+                        modifier = {
+                            factor = 2.0
+                            is_landed = yes
+                            highest_held_title_tier >= tier_duchy
+                        }
+                    }
+                    save_scope_as = chosen_target_rival
+                }
+            }
+
+            # Pool B: Rivals (Weighted lower, but still a valid choice)
+            50 = {
+                modifier = {
+                    factor = 0
+                    NOT = {
+                        any_relation = {
+                            type = rival
+                            this = {
+                                is_alive = yes
+                                is_imprisoned = no
+                            }
+                        }
+                    }
+                }
+                random_relation = {
+                    type = rival
+                    limit = {
+                        is_alive = yes
+                        is_imprisoned = no
+                    }
+                    weight = {
+                        base = 50
+                        modifier = { add = 75 is_at_war_with = root }
+                        # Preference for landed/powerful targets
+                        modifier = {
+                            factor = 2.0
+                            is_landed = yes
+                            highest_held_title_tier >= tier_duchy
+                        }
+                    }
+                    save_scope_as = chosen_target_rival
+                }
+            }
+        }
+
+        # 2. Set the Oathholder's kill job flags
+        add_character_flag = {
+            flag = oathholder_stationary_job_set
+            years = 200
+        }
+        add_character_flag = {
+            flag = oathholder_kill_job_set
+            years = 200
+        }
+
+        # 3. Apply the job to the Oathbound (The Player)
+        var:val_oathkeeper = {
+            add_character_flag = {
+                flag = oathbound_on_stationary_job
+                years = 200
+            }
+            add_character_flag = {
+                flag = oathbound_kill_job
+                years = 200
+            }
+            # Store the target so the event and pulse check know who to look at
+            set_variable = {
+                name = oathbound_kill_task_target_var
+                value = scope:chosen_target_rival
+            }
+
+            trigger_event = oathbound_task_events.1003
+        }
+    }
+}

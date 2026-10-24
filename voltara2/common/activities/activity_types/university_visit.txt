@@ -910,12 +910,10 @@
 				subtract = root.adult_education_activity_cost
 				desc = activity_cost_scale_by_era_desc
 			}
-			if = {
-				limit = {
+			if = { limit = {
 					always = no
-				}
-				multiply = 0.85
-			}
+				} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 		}
 		piety = {
 			add = {
@@ -977,12 +975,10 @@
 			divide = 5
 			ceiling = yes 
 			multiply = 5
-			if = {
-				limit = {
+			if = { limit = {
 					always = no
-				}
-				multiply = 0.85
-			}
+				} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 		}
 	}
 

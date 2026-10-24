@@ -1,0 +1,914 @@
+﻿@kCAFG_rite_tolerance_law_cooldown_years = 5
+
+kCAFG_rite_intolerant_law = {
+	law_group_type = kCAFG_rite_tolerance_law
+	index = 0
+
+	modifier = {
+		different_faith_opinion = -20
+		minority_different_faith_opinion = -20
+		clergy_opinion = 10
+		zealot_same_faith_opinion = 10
+		glory_hound_same_faith_opinion = 5
+	}
+	can_keep = {
+		trigger_if = { # To remove trigger tooltip
+			limit = {
+				NAND = {
+					NOT = { has_game_rule = kCAFG_tolerance_laws_off }
+					T_kCAFG_can_have_rite_tolerance_law = yes
+					NOR = {
+						faith ?= { has_doctrine = doctrine_pluralism_fundamentalist }
+						faith ?= { has_doctrine = doctrine_pluralism_pluralistic }
+					}
+					OR = {
+						is_independent_ruler = yes
+						OR = {
+							T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+							any_liege_or_above = { T_kCAFG_has_any_realm_rite_intolerant_law = yes }
+						}
+					}
+				}
+			}
+			always = no
+		}
+	}
+	can_have = {
+		T_kCAFG_can_have_rite_tolerance_law = yes
+		NOR = {
+			faith ?= { has_doctrine = doctrine_pluralism_fundamentalist }
+			faith ?= { has_doctrine = doctrine_pluralism_pluralistic }
+		}
+	}
+	can_pass = {
+		has_realm_law = kCAFG_rite_indifferent_law
+		T_kCAFG_can_decrease_rite_tolerance_law_trigger = yes
+		custom_tooltip = {
+			text = "kCAFG_allowed_to_change_tolerance_laws_tt"
+			OR = {
+				is_independent_ruler = yes
+				T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+			}
+		}
+	}
+	should_start_with = {
+		trigger_if = {
+			limit = { is_independent_ruler = no }
+			top_liege = { T_kCAFG_has_any_realm_rite_intolerant_law = yes }
+		}
+		trigger_else = {
+			T_kCAFG_should_start_with_intolerant_rite_law = yes
+		}
+	}
+	flag = F_kCAFG_intolerant_to_other_rites
+
+	pass_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+	revoke_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+
+	on_pass = {
+		set_variable = {
+			name = kCAFG_rite_tolerance_law_cooldown
+			years = @kCAFG_rite_tolerance_law_cooldown_years
+		}
+		
+		# the flag is applied after the on_pass effects, but we need to update now
+		add_character_flag = kCAFG_TMP_applying_rite_intolerance_law
+		every_realm_county = {
+			every_county_province = {
+				E_kCAFG_update_province_target_rite_tension = yes
+			}
+		}
+		remove_character_flag = kCAFG_TMP_applying_rite_intolerance_law
+	}
+
+	ai_will_do = {
+		if = {
+			limit = {
+				has_realm_law = kCAFG_rite_indifferent_law
+				ai_zeal > V_kCAFG_ai_law_change_threshold
+			}
+			value = 1
+		}
+	}
+}
+
+kCAFG_rite_indifferent_law = {
+	law_group_type = kCAFG_rite_tolerance_law
+	index = 1
+
+	modifier = {}
+	can_keep = {
+		trigger_if = { # To remove trigger tooltip
+			limit = {
+				NAND = {
+					NOT = { has_game_rule = kCAFG_tolerance_laws_off }
+					T_kCAFG_can_have_rite_tolerance_law = yes
+					NOR = {
+						faith ?= { has_doctrine = doctrine_pluralism_fundamentalist }
+						faith ?= { has_doctrine = doctrine_pluralism_pluralistic }
+					}
+					OR = {
+						is_independent_ruler = yes
+						OR = {
+							T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+							any_liege_or_above = { T_kCAFG_has_any_realm_rite_indifferent_law = yes }
+						}
+					}
+				}
+			}
+			always = no
+		}
+	}
+	can_have = {
+		T_kCAFG_can_have_rite_tolerance_law = yes
+		NOR = {
+			faith ?= { has_doctrine = doctrine_pluralism_fundamentalist }
+			faith ?= { has_doctrine = doctrine_pluralism_pluralistic }
+		}
+	}
+	can_pass = {
+		trigger_if = {
+			limit = { has_realm_law = kCAFG_rite_intolerant_law }
+			T_kCAFG_can_increase_rite_tolerance_law_trigger = yes
+		}
+		trigger_else_if = {
+			limit = { has_realm_law = kCAFG_rite_tolerant_law }
+			T_kCAFG_can_decrease_rite_tolerance_law_trigger = yes
+		}
+		trigger_else = {
+			T_kCAFG_can_change_rite_tolerance_law_trigger = yes
+		}
+		custom_tooltip = {
+			text = "kCAFG_allowed_to_change_tolerance_laws_tt"
+			OR = {
+				is_independent_ruler = yes
+				T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+			}
+		}
+	}
+	should_start_with = {
+		trigger_if = {
+			limit = { is_independent_ruler = no }
+			top_liege = { T_kCAFG_has_any_realm_rite_indifferent_law = yes }
+		}
+		trigger_else = {
+			NOR = {
+				T_kCAFG_should_start_with_intolerant_rite_law = yes
+				T_kCAFG_should_start_with_tolerant_rite_law = yes
+			}
+		}
+	}
+
+	pass_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+	revoke_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+
+	on_pass = {
+		set_variable = {
+			name = kCAFG_rite_tolerance_law_cooldown
+			years = @kCAFG_rite_tolerance_law_cooldown_years
+		}
+		
+		# the flag is applied after the on_pass effects, but we need to update now
+		add_character_flag = kCAFG_TMP_applying_rite_indifference_law
+		every_realm_county = {
+			every_county_province = {
+				E_kCAFG_update_province_target_rite_tension = yes
+			}
+		}
+		remove_character_flag = kCAFG_TMP_applying_rite_indifference_law
+	}
+
+	ai_will_do = {
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						has_realm_law = kCAFG_rite_intolerant_law
+						ai_zeal < V_kCAFG_ai_law_change_negative_threshold
+					}
+					AND = {
+						has_realm_law = kCAFG_rite_tolerant_law
+						ai_zeal > V_kCAFG_ai_law_change_threshold
+					}
+				}
+			}
+			value = 1
+		}
+	}
+}
+
+kCAFG_rite_tolerant_law = {
+	law_group_type = kCAFG_rite_tolerance_law
+	index = 2
+
+	modifier = {
+		different_faith_opinion = 8
+		minority_different_faith_opinion = 17
+		clergy_opinion = -5
+		zealot_same_faith_opinion = -15
+		glory_hound_same_faith_opinion = -10
+	}
+	can_keep = {
+		trigger_if = { # To remove trigger tooltip
+			limit = {
+				NAND = {
+					NOT = { has_game_rule = kCAFG_tolerance_laws_off }
+					T_kCAFG_can_have_rite_tolerance_law = yes
+					NOR = {
+						faith ?= { has_doctrine = doctrine_pluralism_fundamentalist }
+						faith ?= { has_doctrine = doctrine_pluralism_pluralistic }
+					}
+					OR = {
+						is_independent_ruler = yes
+						OR = {
+							T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+							any_liege_or_above = { T_kCAFG_has_any_realm_rite_tolerant_law = yes }
+						}
+					}
+				}
+			}
+			always = no
+		}
+	}
+	can_have = {
+		T_kCAFG_can_have_rite_tolerance_law = yes
+		NOR = {
+			faith ?= { has_doctrine = doctrine_pluralism_fundamentalist }
+			faith ?= { has_doctrine = doctrine_pluralism_pluralistic }
+		}
+	}
+	can_pass = {
+		has_realm_law = kCAFG_rite_indifferent_law
+		T_kCAFG_can_increase_rite_tolerance_law_trigger = yes
+		custom_tooltip = {
+			text = "kCAFG_allowed_to_change_tolerance_laws_tt"
+			OR = {
+				is_independent_ruler = yes
+				T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+			}
+		}
+	}
+	should_start_with = {
+		trigger_if = {
+			limit = { is_independent_ruler = no }
+			top_liege = { T_kCAFG_has_any_realm_rite_tolerant_law = yes }
+		}
+		trigger_else = {
+			T_kCAFG_should_start_with_tolerant_rite_law = yes
+		}
+	}
+	flag = F_kCAFG_tolerant_to_other_rites
+
+	pass_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+	revoke_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+
+	on_pass = {
+		set_variable = {
+			name = kCAFG_rite_tolerance_law_cooldown
+			years = @kCAFG_rite_tolerance_law_cooldown_years
+		}
+
+		# the flag is applied after the on_pass effects, but we need to update now
+		add_character_flag = kCAFG_TMP_applying_rite_tolerance_law
+		every_realm_county = {
+			every_county_province = {
+				E_kCAFG_update_province_target_rite_tension = yes
+			}
+		}
+		remove_character_flag = kCAFG_TMP_applying_rite_tolerance_law
+	}
+
+	ai_will_do = {
+		if = {
+			limit = {
+				has_realm_law = kCAFG_rite_indifferent_law
+				ai_zeal < V_kCAFG_ai_law_change_negative_threshold
+			}
+			value = 1
+		}
+	}
+}
+
+kCAFG_rite_intolerant_law_fundamentalist = {
+	law_group_type = kCAFG_rite_tolerance_law_fundamentalist
+	index = 0
+
+	modifier = {
+		different_faith_opinion = -10
+		minority_different_faith_opinion = -25
+		clergy_opinion = 15
+		zealot_same_faith_opinion = 20
+		glory_hound_same_faith_opinion = 10
+	}
+	can_keep = {
+		trigger_if = { # To remove trigger tooltip
+			limit = {
+				NAND = {
+					NOT = { has_game_rule = kCAFG_tolerance_laws_off }
+					T_kCAFG_can_have_rite_tolerance_law = yes
+					faith ?= { has_doctrine = doctrine_pluralism_fundamentalist }
+					OR = {
+						is_independent_ruler = yes
+						OR = {
+							T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+							any_liege_or_above = { T_kCAFG_has_any_realm_rite_intolerant_law = yes }
+						}
+					}
+				}
+			}
+			always = no
+		}
+	}
+	can_have = {
+		T_kCAFG_can_have_rite_tolerance_law = yes
+		faith ?= { has_doctrine = doctrine_pluralism_fundamentalist }
+	}
+	can_pass = {
+		has_realm_law = kCAFG_rite_indifferent_law_fundamentalist
+		T_kCAFG_can_decrease_rite_tolerance_law_trigger = yes
+		custom_tooltip = {
+			text = "kCAFG_allowed_to_change_tolerance_laws_tt"
+			OR = {
+				is_independent_ruler = yes
+				T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+			}
+		}
+	}
+	should_start_with = {
+		trigger_if = {
+			limit = { is_independent_ruler = no }
+			top_liege = { T_kCAFG_has_any_realm_rite_intolerant_law = yes }
+		}
+		trigger_else = {
+			T_kCAFG_should_start_with_intolerant_rite_law = yes
+		}
+	}
+	flag = F_kCAFG_intolerant_to_other_rites
+
+	pass_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+	revoke_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+
+	on_pass = {
+		set_variable = {
+			name = kCAFG_rite_tolerance_law_cooldown
+			years = @kCAFG_rite_tolerance_law_cooldown_years
+		}
+		
+		# the flag is applied after the on_pass effects, but we need to update now
+		add_character_flag = kCAFG_TMP_applying_rite_intolerance_law
+		every_realm_county = {
+			every_county_province = {
+				E_kCAFG_update_province_target_rite_tension = yes
+			}
+		}
+		remove_character_flag = kCAFG_TMP_applying_rite_intolerance_law
+	}
+
+	ai_will_do = {
+		if = {
+			limit = {
+				has_realm_law = kCAFG_rite_indifferent_law_fundamentalist
+				ai_zeal > V_kCAFG_ai_law_change_threshold
+			}
+			value = 1
+		}
+	}
+}
+
+kCAFG_rite_indifferent_law_fundamentalist = {
+	law_group_type = kCAFG_rite_tolerance_law_fundamentalist
+	index = 1
+
+	modifier = {
+		clergy_opinion = -10
+		zealot_same_faith_opinion = -10
+	}
+	can_keep = {
+		trigger_if = { # To remove trigger tooltip
+			limit = {
+				NAND = {
+					NOT = { has_game_rule = kCAFG_tolerance_laws_off }
+					T_kCAFG_can_have_rite_tolerance_law = yes
+					faith ?= { has_doctrine = doctrine_pluralism_fundamentalist }
+					OR = {
+						is_independent_ruler = yes
+						OR = {
+							T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+							any_liege_or_above = { T_kCAFG_has_any_realm_rite_indifferent_law = yes }
+						}
+					}
+				}
+			}
+			always = no
+		}
+	}
+	can_have = {
+		T_kCAFG_can_have_rite_tolerance_law = yes
+		faith ?= { has_doctrine = doctrine_pluralism_fundamentalist }
+	}
+	can_pass = {
+		trigger_if = {
+			limit = { has_realm_law = kCAFG_rite_intolerant_law_fundamentalist }
+			T_kCAFG_can_increase_rite_tolerance_law_trigger = yes
+		}
+		trigger_else_if = {
+			limit = { has_realm_law = kCAFG_rite_tolerant_law_fundamentalist }
+			T_kCAFG_can_decrease_rite_tolerance_law_trigger = yes
+		}
+		trigger_else = {
+			T_kCAFG_can_change_rite_tolerance_law_trigger = yes
+		}
+		custom_tooltip = {
+			text = "kCAFG_allowed_to_change_tolerance_laws_tt"
+			OR = {
+				is_independent_ruler = yes
+				T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+			}
+		}
+	}
+	should_start_with = {
+		trigger_if = {
+			limit = { is_independent_ruler = no }
+			top_liege = { T_kCAFG_has_any_realm_rite_indifferent_law = yes }
+		}
+		trigger_else = {
+			NOR = {
+				T_kCAFG_should_start_with_intolerant_rite_law = yes
+				T_kCAFG_should_start_with_tolerant_rite_law = yes
+			}
+		}
+	}
+
+	pass_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+	revoke_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+
+	on_pass = {
+		set_variable = {
+			name = kCAFG_rite_tolerance_law_cooldown
+			years = @kCAFG_rite_tolerance_law_cooldown_years
+		}
+		
+		# the flag is applied after the on_pass effects, but we need to update now
+		add_character_flag = kCAFG_TMP_applying_rite_indifference_law
+		every_realm_county = {
+			every_county_province = {
+				E_kCAFG_update_province_target_rite_tension = yes
+			}
+		}
+		remove_character_flag = kCAFG_TMP_applying_rite_indifference_law
+	}
+
+	ai_will_do = {
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						has_realm_law = kCAFG_rite_intolerant_law_fundamentalist
+						ai_zeal < V_kCAFG_ai_law_change_negative_threshold
+					}
+					AND = {
+						has_realm_law = kCAFG_rite_tolerant_law_fundamentalist
+						ai_zeal > V_kCAFG_ai_law_change_threshold
+					}
+				}
+			}
+			value = 1
+		}
+	}
+}
+
+kCAFG_rite_tolerant_law_fundamentalist = {
+	law_group_type = kCAFG_rite_tolerance_law_fundamentalist
+	index = 2
+
+	modifier = {
+		different_faith_opinion = 8
+		minority_different_faith_opinion = 17
+		clergy_opinion = -25
+		zealot_same_faith_opinion = -30
+		glory_hound_same_faith_opinion = -10
+	}
+	can_keep = {
+		trigger_if = { # To remove trigger tooltip
+			limit = {
+				NAND = {
+					NOT = { has_game_rule = kCAFG_tolerance_laws_off }
+					T_kCAFG_can_have_rite_tolerance_law = yes
+					faith ?= { has_doctrine = doctrine_pluralism_fundamentalist }
+					OR = {
+						is_independent_ruler = yes
+						OR = {
+							T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+							any_liege_or_above = { T_kCAFG_has_any_realm_rite_tolerant_law = yes }
+						}
+					}
+				}
+			}
+			always = no
+		}
+	}
+	can_have = {
+		T_kCAFG_can_have_rite_tolerance_law = yes
+		faith ?= { has_doctrine = doctrine_pluralism_fundamentalist }
+	}
+	can_pass = {
+		has_realm_law = kCAFG_rite_indifferent_law_fundamentalist
+		T_kCAFG_can_increase_rite_tolerance_law_trigger = yes
+		custom_tooltip = {
+			text = "kCAFG_allowed_to_change_tolerance_laws_tt"
+			OR = {
+				is_independent_ruler = yes
+				T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+			}
+		}
+	}
+	should_start_with = {
+		trigger_if = {
+			limit = { is_independent_ruler = no }
+			top_liege = { T_kCAFG_has_any_realm_rite_tolerant_law = yes }
+		}
+		trigger_else = {
+			T_kCAFG_should_start_with_tolerant_rite_law = yes
+		}
+	}
+	flag = F_kCAFG_tolerant_to_other_rites
+
+	pass_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+	revoke_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+
+	on_pass = {
+		set_variable = {
+			name = kCAFG_rite_tolerance_law_cooldown
+			years = @kCAFG_rite_tolerance_law_cooldown_years
+		}
+
+		# the flag is applied after the on_pass effects, but we need to update now
+		add_character_flag = kCAFG_TMP_applying_rite_tolerance_law
+		every_realm_county = {
+			every_county_province = {
+				E_kCAFG_update_province_target_rite_tension = yes
+			}
+		}
+		remove_character_flag = kCAFG_TMP_applying_rite_tolerance_law
+	}
+
+	ai_will_do = {
+		if = {
+			limit = {
+				has_realm_law = kCAFG_rite_indifferent_law_fundamentalist
+				ai_zeal < V_kCAFG_ai_law_change_negative_threshold
+			}
+			value = 1
+		}
+	}
+}
+
+kCAFG_rite_intolerant_law_pluralistic = {
+	law_group_type = kCAFG_rite_tolerance_law_pluralistic
+	index = 0
+
+	modifier = {
+		different_faith_opinion = -20
+		minority_different_faith_opinion = -20
+		clergy_opinion = -25
+		zealot_same_faith_opinion = -30
+	}
+	can_keep = {
+		trigger_if = { # To remove trigger tooltip
+			limit = {
+				NAND = {
+					NOT = { has_game_rule = kCAFG_tolerance_laws_off }
+					T_kCAFG_can_have_rite_tolerance_law = yes
+					faith ?= { has_doctrine = doctrine_pluralism_pluralistic }
+					OR = {
+						is_independent_ruler = yes
+						OR = {
+							T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+							any_liege_or_above = { T_kCAFG_has_any_realm_rite_intolerant_law = yes }
+						}
+					}
+				}
+			}
+			always = no
+		}
+	}
+	can_have = {
+		T_kCAFG_can_have_rite_tolerance_law = yes
+		faith ?= { has_doctrine = doctrine_pluralism_pluralistic }
+	}
+	can_pass = {
+		has_realm_law = kCAFG_rite_indifferent_law_pluralistic
+		T_kCAFG_can_decrease_rite_tolerance_law_trigger = yes
+		custom_tooltip = {
+			text = "kCAFG_allowed_to_change_tolerance_laws_tt"
+			OR = {
+				is_independent_ruler = yes
+				T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+			}
+		}
+	}
+	should_start_with = {
+		trigger_if = {
+			limit = { is_independent_ruler = no }
+			top_liege = { T_kCAFG_has_any_realm_rite_intolerant_law = yes }
+		}
+		trigger_else = {
+			T_kCAFG_should_start_with_intolerant_rite_law = yes
+		}
+	}
+	flag = F_kCAFG_intolerant_to_other_rites
+
+	pass_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+	revoke_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+
+	on_pass = {
+		set_variable = {
+			name = kCAFG_rite_tolerance_law_cooldown
+			years = @kCAFG_rite_tolerance_law_cooldown_years
+		}
+		
+		# the flag is applied after the on_pass effects, but we need to update now
+		add_character_flag = kCAFG_TMP_applying_rite_intolerance_law
+		every_realm_county = {
+			every_county_province = {
+				E_kCAFG_update_province_target_rite_tension = yes
+			}
+		}
+		remove_character_flag = kCAFG_TMP_applying_rite_intolerance_law
+	}
+
+	ai_will_do = {
+		if = {
+			limit = {
+				has_realm_law = kCAFG_rite_indifferent_law_pluralistic
+				ai_zeal > V_kCAFG_ai_law_change_threshold
+			}
+			value = 1
+		}
+	}
+}
+
+kCAFG_rite_indifferent_law_pluralistic = {
+	law_group_type = kCAFG_rite_tolerance_law_pluralistic
+	index = 1
+
+	modifier = {
+		zealot_same_faith_opinion = -5
+	}
+	can_keep = {
+		trigger_if = { # To remove trigger tooltip
+			limit = {
+				NAND = {
+					NOT = { has_game_rule = kCAFG_tolerance_laws_off }
+					T_kCAFG_can_have_rite_tolerance_law = yes
+					faith ?= { has_doctrine = doctrine_pluralism_pluralistic }
+					OR = {
+						is_independent_ruler = yes
+						OR = {
+							T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+							any_liege_or_above = { T_kCAFG_has_any_realm_rite_indifferent_law = yes }
+						}
+					}
+				}
+			}
+			always = no
+		}
+	}
+	can_have = {
+		T_kCAFG_can_have_rite_tolerance_law = yes
+		faith ?= { has_doctrine = doctrine_pluralism_pluralistic }
+	}
+	can_pass = {
+		trigger_if = {
+			limit = { has_realm_law = kCAFG_rite_intolerant_law_pluralistic }
+			T_kCAFG_can_increase_rite_tolerance_law_trigger = yes
+		}
+		trigger_else_if = {
+			limit = { has_realm_law = kCAFG_rite_tolerant_law_pluralistic }
+			T_kCAFG_can_decrease_rite_tolerance_law_trigger = yes
+		}
+		trigger_else = {
+			T_kCAFG_can_change_rite_tolerance_law_trigger = yes
+		}
+		custom_tooltip = {
+			text = "kCAFG_allowed_to_change_tolerance_laws_tt"
+			OR = {
+				is_independent_ruler = yes
+				T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+			}
+		}
+	}
+	should_start_with = {
+		trigger_if = {
+			limit = { is_independent_ruler = no }
+			top_liege = { T_kCAFG_has_any_realm_rite_indifferent_law = yes }
+		}
+		trigger_else = {
+			NOR = {
+				T_kCAFG_should_start_with_intolerant_rite_law = yes
+				T_kCAFG_should_start_with_tolerant_rite_law = yes
+			}
+		}
+	}
+
+	pass_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+	revoke_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+
+	on_pass = {
+		set_variable = {
+			name = kCAFG_rite_tolerance_law_cooldown
+			years = @kCAFG_rite_tolerance_law_cooldown_years
+		}
+		
+		# the flag is applied after the on_pass effects, but we need to update now
+		add_character_flag = kCAFG_TMP_applying_rite_indifference_law
+		every_realm_county = {
+			every_county_province = {
+				E_kCAFG_update_province_target_rite_tension = yes
+			}
+		}
+		remove_character_flag = kCAFG_TMP_applying_rite_indifference_law
+	}
+
+	ai_will_do = {
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						has_realm_law = kCAFG_rite_intolerant_law_pluralistic
+						ai_zeal < V_kCAFG_ai_law_change_negative_threshold
+					}
+					AND = {
+						has_realm_law = kCAFG_rite_tolerant_law_pluralistic
+						ai_zeal > V_kCAFG_ai_law_change_threshold
+					}
+				}
+			}
+			value = 1
+		}
+	}
+}
+
+kCAFG_rite_tolerant_law_pluralistic = {
+	law_group_type = kCAFG_rite_tolerance_law_pluralistic
+	index = 2
+
+	modifier = {
+		different_faith_opinion = 8
+		minority_different_faith_opinion = 17
+		clergy_opinion = 25
+		zealot_same_faith_opinion = 20
+	}
+	can_keep = {
+		trigger_if = { # To remove trigger tooltip
+			limit = {
+				NAND = {
+					NOT = { has_game_rule = kCAFG_tolerance_laws_off }
+					T_kCAFG_can_have_rite_tolerance_law = yes
+					faith ?= { has_doctrine = doctrine_pluralism_pluralistic }
+					OR = {
+						is_independent_ruler = yes
+						OR = {
+							T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+							any_liege_or_above = { T_kCAFG_has_any_realm_rite_tolerant_law = yes }
+						}
+					}
+				}
+			}
+			always = no
+		}
+	}
+	can_have = {
+		T_kCAFG_can_have_rite_tolerance_law = yes
+		faith ?= { has_doctrine = doctrine_pluralism_pluralistic }
+	}
+	can_pass = {
+		has_realm_law = kCAFG_rite_indifferent_law_pluralistic
+		T_kCAFG_can_increase_rite_tolerance_law_trigger = yes
+		custom_tooltip = {
+			text = "kCAFG_allowed_to_change_tolerance_laws_tt"
+			OR = {
+				is_independent_ruler = yes
+				T_kCAFG_vassal_is_allowed_to_change_rite_tolerance_laws = yes
+			}
+		}
+	}
+	should_start_with = {
+		trigger_if = {
+			limit = { is_independent_ruler = no }
+			top_liege = { T_kCAFG_has_any_realm_rite_tolerant_law = yes }
+		}
+		trigger_else = {
+			T_kCAFG_should_start_with_tolerant_rite_law = yes
+		}
+	}
+	flag = F_kCAFG_tolerant_to_other_rites
+
+	pass_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+	revoke_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+
+	on_pass = {
+		set_variable = {
+			name = kCAFG_rite_tolerance_law_cooldown
+			years = @kCAFG_rite_tolerance_law_cooldown_years
+		}
+
+		# the flag is applied after the on_pass effects, but we need to update now
+		add_character_flag = kCAFG_TMP_applying_rite_tolerance_law
+		every_realm_county = {
+			every_county_province = {
+				E_kCAFG_update_province_target_rite_tension = yes
+			}
+		}
+		remove_character_flag = kCAFG_TMP_applying_rite_tolerance_law
+	}
+
+	ai_will_do = {
+		if = {
+			limit = {
+				has_realm_law = kCAFG_rite_indifferent_law_pluralistic
+				ai_zeal < V_kCAFG_ai_law_change_negative_threshold
+			}
+			value = 1
+		}
+	}
+}
+
+
+# kCAFG_rite_tolerance_title_law = {
+# 	default = kCAFG_rite_indifferent_title_law
+
+# 	kCAFG_rite_intolerant_title_law = {
+# 		modifier = {
+#             different_faith_opinion = -20
+# 			minority_different_faith_opinion = -30
+# 			zealot_same_faith_opinion = 25
+# 			glory_hound_same_faith_opinion = 10
+# 		}
+# 		can_title_have = { T_kCAFG_can_title_have_rite_tolerance_law = yes }
+# 		can_pass = { T_kCAFG_can_change_rite_tolerance_law_trigger = yes }
+# 		flag = F_kCAFG_intolerant_to_other_rites
+
+# 		pass_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+# 		revoke_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+
+#         on_pass = {
+# 			set_variable = {
+# 				name = kCAFG_rite_tolerance_law_cooldown
+# 				years = @kCAFG_rite_tolerance_law_cooldown_years
+# 			}
+# 			every_realm_county = {
+#                 every_county_province = {
+#                     E_kCAFG_update_province_target_rite_tension = yes
+#                 }
+#             }
+#         }
+# 	}
+
+#     kCAFG_rite_indifferent_title_law = {
+# 		modifier = {}
+# 		can_title_have = { T_kCAFG_can_title_have_rite_tolerance_law = yes }
+# 		can_pass = { T_kCAFG_can_change_rite_tolerance_law_trigger = yes }
+# 		pass_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+# 		revoke_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+
+#         on_pass = {
+# 			set_variable = {
+# 				name = kCAFG_rite_tolerance_law_cooldown
+# 				years = @kCAFG_rite_tolerance_law_cooldown_years
+# 			}
+# 			every_realm_county = {
+#                 every_county_province = {
+#                     E_kCAFG_update_province_target_rite_tension = yes
+#                 }
+#             }
+#         }
+# 	}
+
+#     kCAFG_rite_tolerant_title_law = {
+# 		modifier = {
+#             different_faith_opinion = 10
+# 			minority_different_faith_opinion = 20
+# 			zealot_same_faith_opinion = -25
+# 			glory_hound_same_faith_opinion = -10
+# 		}
+# 		can_title_have = { T_kCAFG_can_title_have_rite_tolerance_law = yes }
+# 		can_pass = { T_kCAFG_can_change_rite_tolerance_law_trigger = yes }
+# 		flag = F_kCAFG_tolerant_to_other_rites
+
+# 		pass_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+# 		revoke_cost = { piety = V_kCAFG_change_rite_tolerance_law_piety_cost }
+
+#         on_pass = {
+# 			set_variable = {
+# 				name = kCAFG_rite_tolerance_law_cooldown
+# 				years = @kCAFG_rite_tolerance_law_cooldown_years
+# 			}
+# 			every_realm_county = {
+#                 every_county_province = {
+#                     E_kCAFG_update_province_target_rite_tension = yes
+#                 }
+#             }
+#         }
+# 	}
+# }

@@ -1,0 +1,913 @@
+﻿# Vanilla values were for a complete county conversion, so we will scale that with the granularity we have
+V_kCAFG_rite_chaplain_conversion_values_scale = 20
+
+V_kCAFG_rite_conversion_fp2_thriving_jewish_community_modifier_factor = -0.75
+V_kCAFG_rite_conversion_fp2_conversos_persecution_modifier_factor = 0.75
+V_kCAFG_rite_conversion_fp2_jewish_community_denied_modifier_factor = 0.5
+V_kCAFG_rite_conversion_persecuted_minorities_expelled_factor = 1.75
+V_kCAFG_rite_conversion_minority_persecution_forbidden_factor = 0.25
+V_kCAFG_rite_conversion_tougher_to_convert_factor = 0.75
+V_kCAFG_rite_conversion_easier_to_convert_factor = 1.25
+V_kCAFG_rite_conversion_savior_liege = 0.75
+V_kCAFG_rite_conversion_divine_blood_liege = 0.25
+V_kCAFG_rite_conversion_monophysite_conviction_liege = 0.25
+V_kCAFG_rite_conversion_literalism_scholar_liege = 0.25
+
+# Conversion multiplier for a rite converting in a province with no specific character associated with that conversion
+# Scope : province
+# kCAFG_converting_rite
+V_kCAFG_province_rite_conversion_multiplier = {
+	if = {
+		limit = {
+			NOT = { T_kCAFG_province_only_rite = { RITE = scope:kCAFG_converting_rite } }
+		}
+		save_temporary_scope_as = kCAFG_converted_province
+		value = 1
+		save_temporary_value_as = kCAFG_conversion_base_total
+		multiply = {
+			value = {
+				value = 1
+				desc = BASE_VALUE
+			}
+
+			## Converting Rites Modifiers
+			add = scope:kCAFG_converting_rite.V_kCAFG_rite_conversion_converting_rite_modifiers
+
+			## Converted Rites Modifiers
+			add = {
+				every_in_list = {
+					variable = kCAFG_province_rite_structs
+					limit = { scope:kCAFG_converting_rite != var:rite }
+					add = {
+						value = var:rite.V_kCAFG_rite_conversion_converted_rite_modifiers
+						multiply = var:factor
+					}
+				}
+				# rescale by excluding converting rite
+				divide = {
+					value = 1
+					scope:kCAFG_converting_rite = { scope:kCAFG_converted_province = { subtract = V_kCAFG_province_prev_rite_factor } }
+            		min = V_kCAFG_smallest_minority_factor
+				}
+				desc = kCAFG_task_conversion_various_rites
+			}
+
+			## Converted Cultures Modifiers
+			add = {
+				every_in_list = {
+					variable = kCAFG_province_culture_structs
+					add = {
+						value = var:culture.V_kCAFG_rite_conversion_converted_culture_modifiers
+						multiply = var:factor
+					}
+				}
+				desc = kCAFG_task_conversion_various_cultures
+			}
+
+			min = 0
+		}
+
+		county = { add = V_kCAFG_rite_conversion_county_modifiers_add }
+
+		## MULTIPLICATIVE MODIFIERS ##
+
+		multiply = V_kCAFG_rite_conversion_fervor_multiplier
+
+		multiply = V_kCAFG_rite_conversion_province_modifiers_mult
+
+		county = { multiply = V_kCAFG_rite_conversion_county_modifiers_mult }
+
+		scope:kCAFG_converting_rite = { multiply = V_kCAFG_rite_conversion_converting_rite_modifiers_mult }
+	}
+}
+
+# Scope : province
+# kCAFG_converting_rite
+V_kCAFG_rite_conversion_fervor_multiplier = {
+	value = 1
+	add = {
+		add = scope:kCAFG_converting_rite.V_kCAFG_fervor_factor
+		subtract = {
+			every_in_list = {
+				variable = kCAFG_province_rite_structs
+				limit = { scope:kCAFG_converting_rite != var:rite }
+				add = {
+					value = var:rite.V_kCAFG_fervor_factor
+					multiply = var:factor
+				}
+			}
+			# rescale by excluding converting rite
+			divide = {
+				value = 1
+				scope:kCAFG_converting_rite = { scope:kCAFG_converted_province = { subtract = V_kCAFG_province_prev_rite_factor } }
+            	min = V_kCAFG_smallest_minority_factor
+			}
+		}
+		multiply = convert_faith_fervor_modifier_scale
+		desc = kCAFG_rite_conversion_fervor_against_converting
+	}
+}
+
+## Each bonus/malus is separated to build exhaustive descriptions/tooltips
+# Scope : rite
+# prev : province
+V_kCAFG_rite_conversion_converting_rite_modifiers = {
+	#Conversion modifiers from where the Rite is on the Pluralism spectrum.
+	if = {
+		limit = {
+			rite_has_parameter = pluralism_fundamentalist_proselytization_bonus
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_pluralism_fundamentalist_proselytization_bonus
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_FUNDAMENTALIST_FAITH_BONUS
+		}
+	}
+	if = {
+		limit = {
+			rite_has_parameter = pluralism_pluralistic_proselytization_penalty
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_pluralism_pluralistic_proselytization_malus
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_PLURALISTIC_FAITH_PENALTY
+		}
+	}
+
+	add = V_kCAFG_rite_conversion_converting_rite_modifiers_VANILLA_B
+	add = V_kCAFG_rite_conversion_converting_rite_modifiers_VANILLA
+}
+
+# Scope : rite
+V_kCAFG_rite_conversion_converting_rite_modifiers_VANILLA_B = {
+
+	# Tenet Modifiers
+	## Bonuses
+	### Mendicant Preachers
+	if = {
+		limit = {
+			rite_has_parameter = mendicant_preachers_conversion_active
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_mendicant_preachers_conversion_active_bonus
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_MENDICANT_PREACHERS_MODIFIER
+		}
+	}
+	### GHW sans HoF buffs
+	if = {
+		limit = {
+			faith = {
+				has_doctrine_parameter = ghw_no_hof_conversion_buffs_active
+				OR = {
+					has_doctrine_parameter = no_head_of_faith
+					NOT = { exists = religious_head }
+				}
+				holy_sites_controlled >= 1
+			}
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = faith.kCAFG_conversion_ghw_tenet_no_hof_bonus
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_GHW_TENET_NO_HOF_MODIFIER
+		}
+	}
+	### Chthonic Redoubts
+	if = {
+		limit = {
+			exists = scope:kCAFG_converted_province
+			rite_has_parameter = easier_to_convert_faith_in_mountains
+			scope:kCAFG_converted_province = {
+				OR = {
+					terrain = mountains
+					terrain = desert_mountains
+				}
+			}
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_easier_to_convert_in_mountains_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_EASIER_TO_CONVERT_FAITH_IN_MOUNTAINS_BONUS_MODIFIER
+		}
+	}
+}
+
+V_kCAFG_rite_conversion_converting_rite_modifiers_VANILLA = {
+	#Conversion bonuses from certain Holy Sites.
+	if = {
+		limit = {
+			faith = { controls_holy_site_with_parameter = jerusalem_conversion_bonus }
+			always = no # Absent original-world title; archived in predicate-audit.json.
+
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_holy_site_jerusalem_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_HOLY_SITE_JERUSALEM
+		}
+	}
+	if = {
+		limit = {
+			faith = { controls_holy_site_with_parameter = kerala_conversion_bonus }
+			always = no # Absent original-world title; archived in predicate-audit.json.
+
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_holy_site_kerala_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_HOLY_SITE_KERALA
+		}
+	}
+	if = {
+		limit = {
+			faith = { controls_holy_site_with_parameter = iona_conversion_bonus }
+			always = no # Absent original-world title; archived in predicate-audit.json.
+
+			scope:kCAFG_converted_province = {
+				geographical_region = world_europe_west_britannia
+			}
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_holy_site_iona_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_HOLY_SITE_IONA
+		}
+	}
+	
+	if = {
+		limit = {
+			faith = { controls_holy_site_with_parameter = cordoba_conversion_bonus }
+			always = no # Absent original-world title; archived in predicate-audit.json.
+
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_holy_site_cordoba_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_HOLY_SITE_CORDOBA
+		}
+	}
+
+	# FP3 ending
+	if = {
+		limit = {
+			exists = global_var:fp3_struggle_ending
+			global_var:fp3_struggle_ending = flag:fp3_struggle_shia_caliphate_ending
+			rite_has_doctrine = muhammad_succession_shia_doctrine
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_fp3_struggle_shia_caliphate_ending_factor
+			}
+			desc = CONVERSION_FP3_STRUGGLE_ENDING_BONUS
+		}
+	}
+	else_if = {
+		limit = {
+			exists = global_var:fp3_struggle_ending
+			global_var:fp3_struggle_ending = flag:fp3_struggle_strengthen_caliphate_ending
+			rite_has_doctrine = muhammad_succession_sunni_doctrine
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_fp3_struggle_strengthen_caliphate_ending_factor
+			}
+			desc = CONVERSION_FP3_STRUGGLE_ENDING_BONUS
+		}
+	}
+}
+
+# Scope : converted rite
+V_kCAFG_rite_conversion_converted_rite_modifiers = {
+	add = V_kCAFG_rite_conversion_converted_rite_modifiers_VANILLA_B
+	add = V_kCAFG_rite_conversion_converted_rite_modifiers_VANILLA
+}
+
+V_kCAFG_rite_conversion_converted_rite_modifiers_VANILLA_B = {
+	#Conversion penalties for County Rite Tenets
+	if = {
+		limit = {
+			rite_has_tenet = tenet_false_conversion_sanction
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_tenet_false_conversion_sanction_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_FALSE_CONVERSION_MODIFIER
+		}
+	}
+	if = {
+		limit = {
+			rite_has_tenet = tenet_reincarnation
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_tenet_reincarnation_resistance_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_REINCARNATION_MODIFIER
+		}
+	}
+	if = {
+		limit = {
+			rite_has_tenet = tenet_dharmic_pacifism
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_tenet_dharmic_pacifism_resistance_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_DHARMIC_PACIFISM_MODIFIER
+		}
+	}
+	if = {
+		limit = {
+			rite_has_parameter = tenet_adaptive_conversion_resistance
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_tenet_adaptive_conversion_resistance_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_ADAPTIVE_MODIFIER
+		}
+	}
+	if = {
+		limit = {
+			rite_has_tenet = tenet_pastoral_isolation
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_tenet_pastoral_isolation_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_PASTORAL_ISOLATION_MODIFIER
+		}
+	}
+
+	## Maluses
+	### Chthonic Redoubts
+	if = {
+		limit = {
+			exists = scope:kCAFG_converted_province
+			rite_has_parameter = harder_to_convert_faith_away_in_mountains
+			scope:kCAFG_converted_province = {
+				OR = {
+					terrain = mountains
+					terrain = desert_mountains
+				}
+			}
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_harder_to_convert_rite_away_in_mountains_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_HARDER_TO_CONVERT_FAITH_AWAY_IN_MOUNTAINS_MALUS_MODIFIER
+		}
+	}
+
+	### Syncretics
+	#### Syncretic tenets aim to allow a rite and a separate religion/family to coexist without one eating the other. Accordingly, we make it harder for you to syncretise with a rite *then* wipe it out.
+	if = {
+		limit = {
+			save_temporary_scope_as = kCAFG_syncretism_target_rite
+			scope:kCAFG_converting_rite.faith = { faith_is_syncretic_with = { FAITH = scope:kCAFG_syncretism_target_rite.faith } }
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_syncretic_with_religion_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_SYNCRETIC_WITH_RELIGION_MODIFIER
+		}
+	}
+}
+
+V_kCAFG_rite_conversion_converted_rite_modifiers_VANILLA = {
+	if = {
+		limit = {
+			exists = scope:converting_character
+			scope:converting_character = {
+				OR = {
+					has_character_modifier = defiant_high_king_conversion_boost_modifier
+					has_character_modifier = defiant_high_queen_conversion_boost_modifier
+				}
+				religion = religion:germanic_religion
+			}
+			NOT = { has_doctrine_parameter = unreformed }
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_defiant_high_monarch_conversion_boost_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LIEGE_IS_DEFIANT_HIGH_MONARCH
+		}
+	}
+	
+	if = {
+		limit = {
+			faith = { controls_holy_site_with_parameter = wadi_el_milk_conversion_resistance_bonus }
+			always = no # Absent original-world title; archived in predicate-audit.json.
+
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_holy_site_wadi_el_milk_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_HOLY_SITE_WADI_EL_MILK
+		}
+	}
+	if = {
+		limit = {
+			faith = { controls_holy_site_with_parameter = visoki_conversion_resistance_bonus }
+			always = no # Absent original-world title; archived in predicate-audit.json.
+
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_holy_site_visoki_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_HOLY_SITE_VISOKI
+		}
+	}
+
+	#Other
+	if = {
+		limit = {
+			exists = scope:converting_character
+			scope:converting_character = { has_trait = savior }
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_savior_liege
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LIEGE_IS_SAVIOR
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:converting_character
+			scope:converting_character = { has_trait = divine_blood }
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_divine_blood_liege
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LIEGE_IS_DIVINE_BLOOD
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:converting_character
+			scope:converting_character = {
+				has_personal_tenet_flag = tenet_literalism_scholar_conversion
+				has_trait = lifestyle_scholar
+			}
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_literalism_scholar_liege
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LIEGE_IS_LITERALIST_SCHOLAR
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:converting_character
+			scope:converting_character = { has_personal_tenet_flag = tenet_monophysitism_conversion_conviction }
+			NOT = { faith = scope:converting_character.faith }
+			faith.religion = scope:converting_character.faith.religion
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_monophysite_conviction_liege
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LIEGE_IS_MONOPHYSITE_CONVICTION
+		}
+	}
+
+	if = {
+        limit = {
+            scope:kCAFG_converting_rite.faith = { has_doctrine_parameter = adoptionists_attractively_intuitive_theology }
+            religion = religion:christianity_religion
+        }
+        add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_fp2_lyonese_monk_factor
+			}
+            desc = fp2_lyonese_monk_faith_conversion_task_desc
+        }
+    }
+	
+	## Jewish Communities
+    if = {
+        limit = {
+            religion = religion:judaism_religion
+			scope:kCAFG_converted_province.county = { has_county_modifier = fp2_thriving_jewish_community_modifier }
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_fp2_thriving_jewish_community_modifier_factor
+			}
+			desc = fp2_thriving_jewish_community_modifier
+		}
+    }
+    if = {
+        limit = {
+			OR = {
+				faith = faith:conversos
+            	religion = religion:judaism_religion
+			}
+			scope:kCAFG_converted_province.county = { has_county_modifier = fp2_conversos_persecution_modifier }
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_fp2_conversos_persecution_modifier_factor
+			}
+			desc = fp2_conversos_persecution_modifier
+		}
+    }
+}
+
+# Scope : culture
+V_kCAFG_rite_conversion_converted_culture_modifiers = {
+	#Tradition modifiers
+	if = {
+		limit = {
+			has_cultural_parameter = more_easily_converted
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_culture_more_easily_converted_factor
+			}
+			desc = TRADITION_RELIGION_BLENDING_CONVERSION_MODIFIER
+		}
+	}
+	if = {
+		limit = {
+			has_cultural_parameter = harder_to_convert_county_faith
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_culture_harder_to_convert_factor
+			}
+			desc = TRADITION_HARDER_TO_CONVERT_CONVERSION_MODIFIER
+		}
+	}
+	if = {
+		limit = { exists = scope:kCAFG_converting_culture }
+
+		if = {
+			limit = {
+				scope:kCAFG_converting_rite = { rite_has_parameter = same_culture_conversion_bonus_active }
+				this = scope:kCAFG_converting_culture
+			}
+			add = {
+				value = {
+					value = scope:kCAFG_conversion_base_total
+					multiply = V_kCAFG_rite_conversion_tenet_communal_identity_bonus
+				}
+				desc = COURT_CHAPLAIN_CONVERSION_COMMUNAL_IDENTITY_BONUS_MODIFIER
+			}
+		}
+
+		if = {
+			limit = {
+				scope:kCAFG_converting_rite = { rite_has_parameter = other_culture_conversion_penalty_active }
+				NOT = { this = scope:kCAFG_converting_culture }
+			}
+			add = {
+				value = {
+					value = scope:kCAFG_conversion_base_total
+					multiply = V_kCAFG_rite_conversion_tenet_communal_identity_malus
+				}
+				desc = COURT_CHAPLAIN_CONVERSION_COMMUNAL_IDENTITY_PENALTY_MODIFIER
+			}
+		}
+	}
+}
+
+V_kCAFG_rite_conversion_county_modifiers_add = {
+	add = V_kCAFG_rite_conversion_county_modifiers_add_VANILLA_B
+	add = V_kCAFG_rite_conversion_county_modifiers_add_VANILLA
+}
+
+V_kCAFG_rite_conversion_county_modifiers_add_VANILLA_B = {
+	#Various Modifier Penalties
+	if = {
+		limit = {
+			has_county_modifier = governance_1074_local_faith_respected_modifier
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_governance_1074_local_faith_respected_modifier_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LOCAL_COUNTY_MODIFIERS
+		}
+	}
+	if = {
+		limit = {
+			has_county_modifier = governance_1074_population_fled_persecution_modifier
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_governance_1074_population_fled_persecution_modifier_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LOCAL_COUNTY_MODIFIERS
+		}
+	}
+	if = {
+		limit = {
+			has_county_modifier = court_6090_almoners_county_modifier
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_court_6090_almoners_county_modifier_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LOCAL_COUNTY_MODIFIERS
+		}
+	}
+	if = {
+		limit = {
+			has_county_modifier = hold_court_8200_vassal_modifier
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_hold_court_8200_vassal_modifier_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LOCAL_COUNTY_MODIFIERS
+		}
+	}	
+	if = {
+		limit = {
+			has_county_modifier = petition_liege_county_control_modifier
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_petition_liege_county_control_modifier_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LOCAL_COUNTY_MODIFIERS
+		}
+	}
+	
+	if = {
+		limit = {
+			has_county_modifier = internal_affairs_county_religious_tensions_modifier
+		}
+		add = {
+			value = -0.2
+			desc = RELIGIOUS_TENSIONS_DESC
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:county
+			has_county_modifier = internal_affairs_county_religious_tolerance_modifier
+		}
+		add = {
+			value = -0.1
+			desc = RELIGIOUS_TOLERANCE_DESC
+		}
+	}
+}
+
+V_kCAFG_rite_conversion_county_modifiers_add_VANILLA = {
+	# Struggle Bonuses/Penalties
+	## Boost conversion in some phases.
+	if = {
+		limit = {
+			any_county_struggle = { has_struggle_phase_parameter = county_faith_conversion_in_region_proceeds_faster }
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_county_faith_conversion_in_region_proceeds_faster_factor
+			}
+			desc = CHAPLAIN_CONVERT_COUNTY_STRUGGLE_BONUS
+		}
+	}
+	## Reduce it in others.
+	if = {
+		limit = {
+			any_county_struggle = { has_struggle_phase_parameter = county_faith_conversion_in_region_proceeds_slower }
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_county_faith_conversion_in_region_proceeds_slower_factor
+			}
+			desc = CHAPLAIN_CONVERT_COUNTY_STRUGGLE_PENALTY
+		}
+	}
+
+	if = {
+		limit = {
+			has_variable = learning_encouraged_conversion
+		}
+		add = {
+			value = {
+				value = scope:kCAFG_conversion_base_total
+				multiply = V_kCAFG_rite_conversion_learning_encouraged_conversion_factor
+			}
+			desc = COURT_CHAPLAIN_CONVERSION_LEARNING_THEOLOGY
+		}
+	}
+}
+
+#Scope: county
+V_kCAFG_rite_conversion_county_modifiers_mult = {
+	value = 1
+	multiply = V_kCAFG_rite_conversion_county_modifiers_mult_VANILLA_B
+	multiply = V_kCAFG_rite_conversion_county_modifiers_mult_VANILLA
+}
+
+V_kCAFG_rite_conversion_county_modifiers_mult_VANILLA = {
+	value = 1
+
+    if = {
+        limit = { has_county_modifier = fp2_jewish_community_denied_modifier }
+		multiply = {
+			value = V_kCAFG_rite_conversion_fp2_jewish_community_denied_modifier_factor
+			desc = fp2_jewish_community_denied_modifier
+		}
+    }
+}
+
+V_kCAFG_rite_conversion_county_modifiers_mult_VANILLA_B = {
+	value = 1
+
+    if = {
+        limit = { has_county_modifier = persecuted_minorities_expelled }
+		multiply = {
+			value = V_kCAFG_rite_conversion_persecuted_minorities_expelled_factor
+			desc = persecuted_minorities_expelled
+		}
+    }
+
+    if = {
+        limit = { has_county_modifier = minority_persecution_forbidden }
+		multiply = {
+			value = V_kCAFG_rite_conversion_minority_persecution_forbidden_factor
+			desc = minority_persecution_forbidden
+		}
+    }
+	
+	if = {
+		limit = { has_county_modifier = tougher_to_convert }
+		multiply = {
+			value = V_kCAFG_rite_conversion_tougher_to_convert_factor
+			desc = COURT_CHAPLAIN_CONVERSION_LOCAL_COUNTY_MODIFIERS
+		}
+	}
+	if = {
+		limit = { has_county_modifier = easier_to_convert }
+		multiply = {
+			value = V_kCAFG_rite_conversion_easier_to_convert_factor
+			desc = COURT_CHAPLAIN_CONVERSION_LOCAL_COUNTY_MODIFIERS
+		}
+	}
+}
+
+# Scope : province
+V_kCAFG_rite_conversion_province_modifiers_mult = {
+	value = 1
+	if = {
+		limit = {
+			has_ongoing_construction = yes
+			scope:kCAFG_converting_rite = { scope:kCAFG_converted_province = { V_kCAFG_province_prev_culture_factor < 0.5 } }
+		}
+		if = {
+			limit = { has_holding = no }
+			multiply = {
+				value = 1.5
+				scope:kCAFG_converting_rite = { scope:kCAFG_converted_province = { subtract = V_kCAFG_province_prev_culture_factor } }
+				min = 1
+				desc = kCAFG_conversion_constructing_new_holding
+			}
+		}
+		# Not yet implemented to avoid exploit with building cancellation
+		# else = {
+		# 	multiply = {
+		# 		value = 1.15
+		# 		desc = constructing
+		# 	}
+		# }
+	}
+}
+
+# Scope : faith
+V_kCAFG_rite_conversion_converting_rite_modifiers_mult = {
+	value = 1
+	
+	if = {
+		limit = {
+			faith = { has_doctrine_parameter = unreformed }
+		}
+		multiply = {
+			value = conversion_unreformed_faith_penalty
+			desc = COURT_CHAPLAIN_CONVERSION_UNREFORMED_FAITH_PENALTY
+		}
+	}
+
+	multiply = V_kCAFG_rite_conversion_converting_rite_modifiers_mult_VANILLA
+}
+
+# Scope : faith
+V_kCAFG_rite_conversion_converting_rite_modifiers_mult_VANILLA = {
+	value = 1
+	# FP3 faster conversion struggle ending rewards
+    if = {
+        limit = {
+            exists = global_var:fp3_struggle_ending_assertion_school
+            switch = {
+                trigger = global_var:fp3_struggle_ending_assertion_school
+                flag:sunni = {
+                    scope:kCAFG_converting_rite = { has_doctrine = muhammad_succession_sunni_doctrine }
+                }
+                flag:shia = {
+                    scope:kCAFG_converting_rite = { has_doctrine = muhammad_succession_shia_doctrine }
+                }
+                flag:muhakkima = {
+                    scope:kCAFG_converting_rite = { has_doctrine = muhammad_succession_muhakkima_doctrine }
+                }
+                flag:zandaqa = {
+                    scope:kCAFG_converting_rite = { has_doctrine = muhammad_succession_zandaqa_doctrine }
+                }
+            }
+        }
+        multiply = {
+            value = fp3_struggle_ending_conversion_modifier_value
+            desc = fp3_struggle_ending_conversion_modifier_desc
+        }
+    }
+}
+
+# Scope : faith
+kCAFG_conversion_ghw_tenet_no_hof_bonus = {
+	value = holy_sites_controlled
+	max = 10
+	multiply = conversion_ghw_tenet_multiplier_control
+}
+
+# If only rites below this threshold remain, AI will stop converting the province
+# Scope : character
+V_kCAFG_ai_stop_task_rite_conversion_threshold = {
+    value = 0.1
+    add = {
+        value = 0.15
+        multiply = {
+            value = 1
+            subtract = {
+                value = ai_zeal # Can be negative so the multiplier can be above 1
+                divide = 100 # -1,1
+            
+                # Irrationality will amplify personality effects effect by a variance of 50%
+                multiply = {
+                    value = ai_rationality # Can be negative so the multiplier can be above 1
+                    divide = 100
+                    multiply = -0.5
+                    add = 1
+                }
+            }
+        }
+    }
+    min = 0
+}

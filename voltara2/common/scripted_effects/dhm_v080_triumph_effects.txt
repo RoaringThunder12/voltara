@@ -1,0 +1,100 @@
+﻿# Dynasty & Household Manager v0.8.0 — rare Chronicle milestone rewards.
+# Existing saves begin at the next unearned multiple of three named chapters.
+
+dhm_v080_triumph_migration_effect = {
+	# A direct upgrade from before v0.7.1 must rebuild the Chronicle first.
+	# Use mutually exclusive branches: regardless of same-tick visibility, a
+	# rebuild cannot also initialize the milestone from an intermediate count.
+	if = {
+		limit = {
+			OR = {
+				NOT = { has_global_variable = dhm_migration_0710 }
+				NOT = { has_global_variable = dhm_chapter_named_count }
+			}
+		}
+		dhm_v071_migration_effect = yes
+	}
+	else_if = {
+		limit = {
+			has_global_variable = dhm_migration_0710
+			has_global_variable = dhm_chapter_named_count
+			NOT = { has_global_variable = dhm_migration_0800 }
+		}
+		if = { limit = { NOT = { has_global_variable = dhm_v080_triumph_count } } set_global_variable = { name = dhm_v080_triumph_count value = 0 } }
+		set_global_variable = { name = dhm_v080_next_triumph value = 3 }
+		if = { limit = { global_var:dhm_chapter_named_count >= 3 } set_global_variable = { name = dhm_v080_next_triumph value = 6 } }
+		if = { limit = { global_var:dhm_chapter_named_count >= 6 } set_global_variable = { name = dhm_v080_next_triumph value = 9 } }
+		if = { limit = { global_var:dhm_chapter_named_count >= 9 } set_global_variable = { name = dhm_v080_next_triumph value = 12 } }
+		if = { limit = { global_var:dhm_chapter_named_count >= 12 } set_global_variable = { name = dhm_v080_next_triumph value = 15 } }
+		if = { limit = { global_var:dhm_chapter_named_count >= 15 } set_global_variable = { name = dhm_v080_next_triumph value = 18 } }
+		if = { limit = { global_var:dhm_chapter_named_count >= 18 } set_global_variable = { name = dhm_v080_next_triumph value = 21 } }
+		set_global_variable = { name = dhm_migration_0800 value = yes }
+	}
+	# Older v0.8 candidates have no absolute expiry record. Preserve an active
+	# old global/ruler cooldown conservatively, once only. Never reseed an expired
+	# deadline, and never depend on the engine's accelerated global timer tick.
+	if = {
+		limit = {
+			NOT = { has_global_variable = dhm_v080_triumph_until }
+			OR = {
+				has_character_flag = dhm_v080_triumph_recent
+				has_global_variable = dhm_v080_triumph_recent
+			}
+		}
+		set_global_variable = { name = dhm_v080_triumph_until value = { value = current_date add = 1825 } }
+	}
+}
+
+# Called from the bounded household pulse and after a new named chapter.
+dhm_v080_maybe_schedule_triumph_effect = {
+	if = {
+		limit = {
+			is_ai = no
+			is_alive = yes
+			has_global_variable = dhm_migration_0800
+			has_global_variable = dhm_chapter_named_count
+			has_global_variable = dhm_v080_next_triumph
+			global_var:dhm_chapter_named_count >= global_var:dhm_v080_next_triumph
+			NOT = { has_global_variable = dhm_setting_stories_off }
+			NOT = { has_character_flag = dhm_v080_triumph_pending }
+			NOT = { dhm_v080_triumph_cooldown_active_trigger = yes }
+			NOT = { has_character_flag = dhm_v080_visible_story_scheduled_this_pass }
+		}
+		add_character_flag = { flag = dhm_v080_triumph_pending years = 1 }
+		if = { limit = { has_global_variable = dhm090_last_named_chapter } save_scope_value_as = { name = dhm090_triumph_chapter value = global_var:dhm090_last_named_chapter } }
+		trigger_event = { id = dhm_v080.1000 days = { 4 12 } }
+	}
+}
+
+# Current scope = player. These two display-only copies let localization show
+# global Chronicle progress without mutating the real milestone counters.
+dhm_v080_prepare_triumph_report_effect = {
+	if = { limit = { NOT = { has_global_variable = dhm_migration_0800 } } dhm_v080_triumph_migration_effect = yes }
+	if = { limit = { has_global_variable = dhm_chapter_named_count } set_variable = { name = dhm_v080_report_named_chapters value = global_var:dhm_chapter_named_count } }
+	else = { set_variable = { name = dhm_v080_report_named_chapters value = 0 } }
+	if = { limit = { has_global_variable = dhm_v080_next_triumph } set_variable = { name = dhm_v080_report_next_triumph value = global_var:dhm_v080_next_triumph } }
+	else = { set_variable = { name = dhm_v080_report_next_triumph value = 3 } }
+}
+
+dhm_v080_clear_triumph_rewards_effect = {
+	hidden_effect = {
+		remove_character_modifier = dhm_v080_triumph_acclaimed_modifier
+		remove_character_modifier = dhm_v080_triumph_shared_modifier
+		remove_character_modifier = dhm_v080_triumph_recorded_modifier
+		remove_variable = dhm073_expiry_dhm_v080_triumph_acclaimed_modifier
+		remove_variable = dhm073_expiry_dhm_v080_triumph_shared_modifier
+		remove_variable = dhm073_expiry_dhm_v080_triumph_recorded_modifier
+	}
+}
+
+# Every conclusion advances the milestone once. The absolute global deadline
+# matches the five-year reward and remains in force when the ruler changes.
+dhm_v080_finish_triumph_effect = {
+	change_global_variable = { name = dhm_v080_triumph_count add = 1 }
+	change_global_variable = { name = dhm_v080_next_triumph add = 3 }
+	set_global_variable = { name = dhm_v080_triumph_until value = { value = current_date add = 1825 } }
+	remove_global_variable = dhm_v080_triumph_recent
+	remove_character_flag = dhm_v080_triumph_pending
+	# Keep the legacy flag for old queued contexts; the deadline is authoritative.
+	add_character_flag = { flag = dhm_v080_triumph_recent years = 5 }
+}

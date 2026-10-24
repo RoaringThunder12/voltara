@@ -1,0 +1,972 @@
+﻿window = {
+	name = "lam_fac_detail_window"
+	parentanchor = center
+	layer = middle
+	size = {
+		1240
+		880
+	}
+	movable = yes
+	visible = "[And( GetPlayer.IsValid, And( GetPlayer.MakeScope.Var('lam_fac_detail').IsSet, GetPlayer.MakeScope.Var('lam_fac_detail').Char.IsAlive ) )]"
+	datacontext = "[GetPlayer.MakeScope.Var('lam_fac_detail').Char]"
+	using = Window_Background
+	using = Window_Decoration
+	vbox = {
+		using = Window_Margins
+		background = {
+			using = Background_Area_Dark
+		}
+		header_pattern = {
+			layoutpolicy_horizontal = expanding
+			blockoverride
+			"header_text"
+			  {
+				text = "lam_fac_detail_title"
+			}
+			blockoverride
+			"button_close"
+			  {
+				onclick = "[GetScriptedGui('lam_sgui_fac_detail_close').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			}
+		}
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			margin = {
+				14
+				6
+			}
+			spacing = 16
+			coa_house_big = {
+				datacontext = "[Character.MakeScope.Var('lam_fac_founder').Char.GetHouse]"
+				visible = "[DynastyHouse.IsValid]"
+				tooltip = "lam_fac_detail_banner_tt"
+			}
+			vbox = {
+				spacing = 3
+				text_single = {
+					text = "lam_fac_card_title"
+					fontsize = 24
+					fontsize_min = 16
+					max_width = 620
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_card_title_tt"
+				}
+				text_single = {
+					text = "lam_fac_card_lead"
+					fontsize = 16
+					fontsize_min = 13
+					max_width = 620
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+				}
+				text_single = {
+					text = "lam_fac_card_rep"
+					fontsize = 15
+					fontsize_min = 12
+					max_width = 600
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+				}
+				text_single = {
+					text = "lam_fac_detail_line1"
+					fontsize = 16
+					fontsize_min = 13
+					max_width = 620
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_detail_line1"
+				}
+				text_single = {
+					text = "lam_fac_detail_line2"
+					fontsize = 16
+					fontsize_min = 13
+					max_width = 620
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_detail_line2"
+					visible = no
+				}
+				text_single = {
+					text = "lam_fac_detail_line3"
+					fontsize = 16
+					fontsize_min = 13
+					max_width = 620
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_detail_line3"
+				}
+			}
+			expand = {}
+			vbox = {
+				spacing = 6
+				margin = {
+					10
+					8
+				}
+				background = {
+					using = Background_Area
+				}
+				hbox = {
+					spacing = 8
+					text_single = {
+						text = "lam_fac_bar_cohesion"
+						fontsize = 15
+						fontsize_min = 12
+						max_width = 96
+						align = left|nobaseline
+						default_format = "#weak"
+						tooltip = "lam_fac_bar_cohesion_tt"
+						minimumsize = {
+							96
+							0
+						}
+					}
+					progressbar_standard = {
+						size = {
+							180
+							12
+						}
+						min = 0
+						max = 100
+						value = "[Character.MakeScope.Var('lam_fac_cohesion').GetValue]"
+					}
+					text_single = {
+						text = "lam_fac_barv_cohesion"
+						fontsize = 15
+						fontsize_min = 12
+						max_width = 44
+						align = right|nobaseline
+						minimumsize = {
+							44
+							0
+						}
+					}
+				}
+				hbox = {
+					spacing = 8
+					text_single = {
+						text = "lam_fac_bar_favour"
+						fontsize = 15
+						fontsize_min = 12
+						max_width = 96
+						align = left|nobaseline
+						default_format = "#weak"
+						tooltip = "lam_fac_bar_favour_tt"
+						minimumsize = {
+							96
+							0
+						}
+					}
+					progressbar_standard = {
+						size = {
+							180
+							12
+						}
+						min = -100
+						max = 100
+						value = "[Character.MakeScope.Var('lam_fac_favour').GetValue]"
+					}
+					text_single = {
+						text = "lam_fac_barv_favour"
+						fontsize = 15
+						fontsize_min = 12
+						max_width = 44
+						align = right|nobaseline
+						minimumsize = {
+							44
+							0
+						}
+					}
+				}
+				hbox = {
+					spacing = 8
+					text_single = {
+						text = "lam_fac_bar_share"
+						fontsize = 15
+						fontsize_min = 12
+						max_width = 96
+						align = left|nobaseline
+						default_format = "#weak"
+						tooltip = "lam_fac_bar_share_tt"
+						minimumsize = {
+							96
+							0
+						}
+					}
+					progressbar_standard = {
+						size = {
+							180
+							12
+						}
+						min = 0
+						max = 100
+						value = "[Character.MakeScope.Var('lam_fac_share').GetValue]"
+					}
+					text_single = {
+						text = "lam_fac_barv_share"
+						fontsize = 15
+						fontsize_min = 12
+						max_width = 44
+						align = right|nobaseline
+						minimumsize = {
+							44
+							0
+						}
+					}
+				}
+				hbox = {
+					spacing = 8
+					text_single = {
+						text = "lam_fac_bar_loyal"
+						fontsize = 15
+						fontsize_min = 12
+						max_width = 96
+						align = left|nobaseline
+						default_format = "#weak"
+						tooltip = "lam_fac_bar_loyal_tt"
+						minimumsize = {
+							96
+							0
+						}
+					}
+					progressbar_standard = {
+						size = {
+							180
+							12
+						}
+						min = -100
+						max = 100
+						value = "[Character.MakeScope.Var('lam_fac_loyal').GetValue]"
+					}
+					text_single = {
+						text = "lam_fac_barv_loyal"
+						fontsize = 15
+						fontsize_min = 12
+						max_width = 44
+						align = right|nobaseline
+						minimumsize = {
+							44
+							0
+						}
+					}
+					visible = no
+				}
+			}
+		}
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			layoutpolicy_vertical = expanding
+			margin = {
+				12
+				4
+			}
+			spacing = 12
+			vbox = {
+				minimumsize = {
+					330
+					0
+				}
+				maximumsize = {
+					330
+					-1
+				}
+				background = {
+					using = Background_Area
+				}
+				margin = {
+					8
+					8
+				}
+				widget = {
+					size = {
+						314
+						28
+					}
+					background = {
+						using = Background_Area
+					}
+					text_single = {
+						text = "lam_ux2_now"
+						fontsize = 17
+						fontsize_min = 14
+						max_width = 302
+						align = left|nobaseline
+						position = {
+							6
+							4
+						}
+					}
+				}
+				text_single = {
+					text = "lam_ux2_want"
+					fontsize = 15
+					fontsize_min = 12
+					max_width = 306
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_card_goal"
+					minimumsize = {
+						306
+						0
+					}
+				}
+				text_single = {
+					text = "lam_ux2_mood"
+					fontsize = 15
+					fontsize_min = 12
+					max_width = 306
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_stage_tt"
+					minimumsize = {
+						306
+						0
+					}
+				}
+				text_single = {
+					text = "lam_ux2_next"
+					fontsize = 15
+					fontsize_min = 12
+					max_width = 306
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_card_nerve"
+					minimumsize = {
+						306
+						0
+					}
+				}
+				widget = {
+					size = {
+						314
+						28
+					}
+					background = {
+						using = Background_Area
+					}
+					text_single = {
+						text = "lam_ux2_stands"
+						fontsize = 17
+						fontsize_min = 14
+						max_width = 302
+						align = left|nobaseline
+						position = {
+							6
+							4
+						}
+					}
+				}
+				text_multi = {
+					text = "lam_is_card_stance_line"
+					fontsize = 15
+					max_width = 306
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					minimumsize = {
+						306
+						0
+					}
+					visible = "[Or( Or( Or( Character.MakeScope.Var('lam_is_st_heir').IsSet, Character.MakeScope.Var('lam_is_st_crown').IsSet ), Or( Character.MakeScope.Var('lam_is_st_council').IsSet, Character.MakeScope.Var('lam_is_st_faith').IsSet ) ), Or( Character.MakeScope.Var('lam_is_st_tax').IsSet, Character.MakeScope.Var('lam_is_st_war').IsSet ) )]"
+					autoresize = yes
+				}
+				text_single = {
+					text = "lam_fac_card_heir_lawful"
+					fontsize = 15
+					fontsize_min = 12
+					max_width = 306
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					visible = "[Character.MakeScope.Var('lam_fac_heir').IsSet]"
+					minimumsize = {
+						306
+						0
+					}
+				}
+				widget = {
+					size = {
+						314
+						26
+					}
+					background = {
+						using = Background_Area_Dark
+					}
+					text_single = {
+						text = "lam_fac_detail_relations"
+						fontsize = 17
+						fontsize_min = 14
+						max_width = 302
+						align = left|nobaseline
+						tooltip = "lam_fac_detail_relations_tt"
+						position = {
+							6
+							4
+						}
+					}
+				}
+				scrollbox = {
+					size = {
+						314
+						120
+					}
+					blockoverride
+					"scrollbox_content"
+					  {
+						vbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 2
+							datamodel = "[Character.MakeScope.GetList('lam_fac_rel_list')]"
+							item = {
+								text_single = {
+									text = "lam_fac_detail_rel_row"
+									fontsize = 14
+									fontsize_min = 11
+									max_width = 294
+									layoutpolicy_horizontal = expanding
+									align = left|nobaseline
+									tooltip = "lam_fac_detail_rel_row"
+									datacontext = "[Scope.Char]"
+									minimumsize = {
+										294
+										0
+									}
+								}
+							}
+						}
+					}
+				}
+				text_single = {
+					text = "lam_fac_detail_ctrl"
+					fontsize = 15
+					fontsize_min = 12
+					max_width = 306
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_detail_ctrl_tt"
+					minimumsize = {
+						306
+						0
+					}
+				}
+				expand = {}
+				layoutpolicy_vertical = expanding
+				spacing = 6
+			}
+			vbox = {
+				minimumsize = {
+					470
+					0
+				}
+				maximumsize = {
+					470
+					-1
+				}
+				layoutpolicy_vertical = expanding
+				background = {
+					using = Background_Area
+				}
+				margin = {
+					8
+					8
+				}
+				spacing = 6
+				widget = {
+					size = {
+						454
+						26
+					}
+					background = {
+						using = Background_Area_Dark
+					}
+					text_single = {
+						text = "lam_fac_detail_members_head"
+						fontsize = 17
+						fontsize_min = 14
+						max_width = 442
+						align = left|nobaseline
+						position = {
+							6
+							4
+						}
+					}
+				}
+				scrollbox = {
+					size = {
+						454
+						600
+					}
+					blockoverride
+					"scrollbox_content"
+					  {
+						vbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 6
+							text_single = {
+								text = "lam_fac_detail_core"
+								fontsize = 16
+								fontsize_min = 13
+								max_width = 440
+								layoutpolicy_horizontal = expanding
+								align = left|nobaseline
+								minimumsize = {
+									440
+									0
+								}
+							}
+							fixedgridbox = {
+								addcolumn = 104
+								addrow = 118
+								datamodel_wrap = 4
+								flipdirection = yes
+								datamodel = "[Character.MakeScope.GetList('lam_fac_core')]"
+								item = {
+									widget = {
+										datacontext = "[Scope.Char]"
+										size = {
+											104
+											118
+										}
+										vbox = {
+											portrait_head_small = {}
+											text_single = {
+												text = "lam_cr_person_name"
+												tooltip = "lam_fac_member_row"
+												fontsize = 14
+												fontsize_min = 11
+												max_width = 98
+												align = center|nobaseline
+											}
+										}
+									}
+								}
+							}
+							text_single = {
+								text = "lam_fac_none"
+								fontsize = 14
+								fontsize_min = 11
+								max_width = 200
+								layoutpolicy_horizontal = expanding
+								align = left|nobaseline
+								visible = "[IsDataModelEmpty( Character.MakeScope.GetList('lam_fac_core') )]"
+								minimumsize = {
+									200
+									0
+								}
+							}
+							text_single = {
+								text = "lam_fac_detail_clients"
+								fontsize = 16
+								fontsize_min = 13
+								max_width = 440
+								layoutpolicy_horizontal = expanding
+								align = left|nobaseline
+								minimumsize = {
+									440
+									0
+								}
+							}
+							fixedgridbox = {
+								addcolumn = 104
+								addrow = 118
+								datamodel_wrap = 4
+								flipdirection = yes
+								datamodel = "[Character.MakeScope.GetList('lam_fac_clients')]"
+								item = {
+									widget = {
+										datacontext = "[Scope.Char]"
+										size = {
+											104
+											118
+										}
+										vbox = {
+											portrait_head_small = {}
+											text_single = {
+												text = "lam_cr_person_name"
+												tooltip = "lam_fac_member_row"
+												fontsize = 14
+												fontsize_min = 11
+												max_width = 98
+												align = center|nobaseline
+											}
+										}
+									}
+								}
+							}
+							text_single = {
+								text = "lam_fac_none"
+								fontsize = 14
+								fontsize_min = 11
+								max_width = 200
+								layoutpolicy_horizontal = expanding
+								align = left|nobaseline
+								visible = "[IsDataModelEmpty( Character.MakeScope.GetList('lam_fac_clients') )]"
+								minimumsize = {
+									200
+									0
+								}
+							}
+							text_single = {
+								text = "lam_fac_detail_sym"
+								fontsize = 16
+								fontsize_min = 13
+								max_width = 440
+								layoutpolicy_horizontal = expanding
+								align = left|nobaseline
+								minimumsize = {
+									440
+									0
+								}
+							}
+							fixedgridbox = {
+								addcolumn = 104
+								addrow = 118
+								datamodel_wrap = 4
+								flipdirection = yes
+								datamodel = "[Character.MakeScope.GetList('lam_fac_sym')]"
+								item = {
+									widget = {
+										datacontext = "[Scope.Char]"
+										size = {
+											104
+											118
+										}
+										vbox = {
+											portrait_head_small = {}
+											text_single = {
+												text = "lam_cr_person_name"
+												tooltip = "lam_fac_member_row"
+												fontsize = 14
+												fontsize_min = 11
+												max_width = 98
+												align = center|nobaseline
+											}
+										}
+									}
+								}
+							}
+							text_single = {
+								text = "lam_fac_none"
+								fontsize = 14
+								fontsize_min = 11
+								max_width = 200
+								layoutpolicy_horizontal = expanding
+								align = left|nobaseline
+								visible = "[IsDataModelEmpty( Character.MakeScope.GetList('lam_fac_sym') )]"
+								minimumsize = {
+									200
+									0
+								}
+							}
+						}
+					}
+				}
+			}
+			vbox = {
+				minimumsize = {
+					330
+					0
+				}
+				maximumsize = {
+					330
+					-1
+				}
+				layoutpolicy_vertical = expanding
+				background = {
+					using = Background_Area
+				}
+				margin = {
+					8
+					8
+				}
+				spacing = 4
+				widget = {
+					size = {
+						314
+						26
+					}
+					background = {
+						using = Background_Area_Dark
+					}
+					text_single = {
+						text = "lam_fac_detail_renown"
+						fontsize = 17
+						fontsize_min = 14
+						max_width = 302
+						align = left|nobaseline
+						tooltip = "lam_fac_detail_renown_tt"
+						position = {
+							6
+							4
+						}
+					}
+				}
+				text_single = {
+					text = "lam_fac_detail_traditions"
+					fontsize = 16
+					fontsize_min = 13
+					max_width = 306
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_detail_traditions_tt"
+					minimumsize = {
+						306
+						0
+					}
+				}
+				text_single = {
+					text = "lam_fac_leg_org_line"
+					fontsize = 15
+					fontsize_min = 12
+					max_width = 290
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_leg_org_tt"
+					margin = {
+						8
+						0
+					}
+					minimumsize = {
+						290
+						0
+					}
+				}
+				text_single = {
+					text = "lam_fac_leg_ties_line"
+					fontsize = 15
+					fontsize_min = 12
+					max_width = 290
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_leg_ties_tt"
+					margin = {
+						8
+						0
+					}
+					minimumsize = {
+						290
+						0
+					}
+				}
+				text_single = {
+					text = "lam_fac_leg_purse_line"
+					fontsize = 15
+					fontsize_min = 12
+					max_width = 290
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_leg_purse_tt"
+					margin = {
+						8
+						0
+					}
+					minimumsize = {
+						290
+						0
+					}
+				}
+				text_single = {
+					text = "lam_fac_leg_arms_line"
+					fontsize = 15
+					fontsize_min = 12
+					max_width = 290
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_leg_arms_tt"
+					margin = {
+						8
+						0
+					}
+					minimumsize = {
+						290
+						0
+					}
+				}
+				text_single = {
+					text = "lam_fac_leg_cause_line"
+					fontsize = 15
+					fontsize_min = 12
+					max_width = 290
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_leg_cause_tt"
+					margin = {
+						8
+						0
+					}
+					minimumsize = {
+						290
+						0
+					}
+				}
+				text_single = {
+					text = "lam_fac_leg_will_line"
+					fontsize = 15
+					fontsize_min = 12
+					max_width = 290
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_leg_will_tt"
+					margin = {
+						8
+						0
+					}
+					minimumsize = {
+						290
+						0
+					}
+				}
+				widget = {
+					size = {
+						314
+						26
+					}
+					background = {
+						using = Background_Area_Dark
+					}
+					text_single = {
+						text = "lam_fac_detail_heads"
+						fontsize = 17
+						fontsize_min = 14
+						max_width = 222
+						align = left|nobaseline
+						position = {
+							6
+							4
+						}
+					}
+				}
+				hbox = {
+					spacing = 6
+					portrait_head_small = {}
+					text_single = {
+						text = "lam_fac_detail_head_now"
+						fontsize = 15
+						fontsize_min = 12
+						max_width = 150
+						align = left|nobaseline
+					}
+				}
+				scrollbox = {
+					size = {
+						314
+						160
+					}
+					blockoverride
+					"scrollbox_content"
+					  {
+						vbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 4
+							datamodel = "[Character.MakeScope.GetList('lam_fac_lineage')]"
+							item = {
+								hbox = {
+									datacontext = "[Scope.Char]"
+									spacing = 6
+									portrait_head_small = {}
+									text_single = {
+										text = "lam_fac_detail_head_past"
+										fontsize = 14
+										fontsize_min = 11
+										max_width = 140
+										align = left|nobaseline
+									}
+								}
+							}
+						}
+					}
+				}
+				widget = {
+					size = {
+						314
+						26
+					}
+					background = {
+						using = Background_Area_Dark
+					}
+					text_single = {
+						text = "lam_fac_detail_timeline"
+						fontsize = 17
+						fontsize_min = 14
+						max_width = 302
+						align = left|nobaseline
+						position = {
+							6
+							4
+						}
+					}
+				}
+				text_single = {
+					text = "lam_fac_detail_t1"
+					fontsize = 14
+					fontsize_min = 11
+					max_width = 306
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_detail_t1"
+					visible = "[Character.MakeScope.Var('lam_fac_t1').IsSet]"
+					minimumsize = {
+						306
+						0
+					}
+				}
+				text_single = {
+					text = "lam_fac_detail_t2"
+					fontsize = 14
+					fontsize_min = 11
+					max_width = 306
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_detail_t2"
+					visible = "[Character.MakeScope.Var('lam_fac_t2').IsSet]"
+					minimumsize = {
+						306
+						0
+					}
+				}
+				text_single = {
+					text = "lam_fac_detail_t3"
+					fontsize = 14
+					fontsize_min = 11
+					max_width = 306
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_detail_t3"
+					visible = "[Character.MakeScope.Var('lam_fac_t3').IsSet]"
+					minimumsize = {
+						306
+						0
+					}
+				}
+				text_single = {
+					text = "lam_fac_detail_t4"
+					fontsize = 14
+					fontsize_min = 11
+					max_width = 306
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_detail_t4"
+					visible = "[Character.MakeScope.Var('lam_fac_t4').IsSet]"
+					minimumsize = {
+						306
+						0
+					}
+				}
+				text_single = {
+					text = "lam_fac_detail_t5"
+					fontsize = 14
+					fontsize_min = 11
+					max_width = 306
+					layoutpolicy_horizontal = expanding
+					align = left|nobaseline
+					tooltip = "lam_fac_detail_t5"
+					visible = "[Character.MakeScope.Var('lam_fac_t5').IsSet]"
+					minimumsize = {
+						306
+						0
+					}
+				}
+				expand = {}
+			}
+		}
+	}
+}

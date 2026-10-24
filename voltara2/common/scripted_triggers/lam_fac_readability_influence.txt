@@ -1,0 +1,17 @@
+﻿lam_ux_ballot_current_trigger = {
+	exists = var:lam_cr_ballot_head
+	var:lam_cr_ballot_head = {
+		lam_cr_owner_valid_trigger = yes
+		save_temporary_scope_as = lam_cr_head
+		liege = {
+			save_temporary_scope_as = lam_cr_lord
+		}
+	}
+	lam_cr_saved_voter_trigger = yes
+}
+lam_ux_ballot_visible_trigger = {
+	lam_ux_ballot_current_trigger = yes
+	var:lam_cr_ballot_head = {
+		lam_ux_insider_view_trigger = yes
+	}
+}

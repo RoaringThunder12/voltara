@@ -1,0 +1,168 @@
+﻿# Culture tension variable is expressed in a 0-1 value
+
+# Scope : province
+E_kCAFG_update_province_target_culture_tension = {
+	hidden_effect = {
+        set_variable = {
+            name = kCAFG_target_culture_tension
+            value = 0
+        }
+
+        save_temporary_scope_as = kCAFG_province
+        county.holder = {
+            culture = {
+                save_temporary_scope_as = kCAFG_target_culture # used by V_kCAFG_culture_tension_target_baseline_complete
+            }
+        }
+        every_in_list = {
+            variable = kCAFG_province_culture_structs
+            if = {
+                limit = { scope:kCAFG_target_culture != var:culture }
+                save_temporary_scope_as = struct
+
+                set_variable = {
+                    name = tension_baseline
+                    value = var:culture.V_kCAFG_culture_tension_target_baseline_complete
+                }
+
+                scope:kCAFG_province = {
+                    change_variable = {
+                        name = kCAFG_target_culture_tension
+                        add = scope:struct.V_kCAFG_province_culture_tension_target_baseline_culture_struct_contribution
+                    }
+                }
+            }
+            else = {
+                set_variable = { name = tension_baseline value = 0 }
+            }
+        }
+    
+        # Clamp
+        set_variable = {
+            name = kCAFG_target_culture_tension
+            value = {
+                value = var:kCAFG_target_culture_tension
+                min = 0
+                max = 1
+            }
+        }
+
+        E_kCAFG_update_province_culture_tension_update_status = yes
+
+        #debug_log = "Calculated Target Culture Tension for Province [THIS.Province.GetNameNoTooltip] ([THIS.Province.GetID]) : [THIS.Province.MakeScope.Var('kCAFG_target_culture_tension').GetValue]"
+    }
+}
+
+# this HAS to be called when setting the kCAFG_culture_tension variable from anywhere
+# on action instead ?
+# Scope : province
+E_kCAFG_on_province_culture_tension_updated = {
+    # Clamp
+    set_variable = {
+        name = kCAFG_culture_tension
+        value = {
+            value = var:kCAFG_culture_tension
+            min = 0
+            max = 1
+        }
+    }
+
+    # Cultural benefits eligibility update
+    if = {
+        limit = {
+            var:kCAFG_culture_tension <= V_kCAFG_cultural_benefits_maximum_tension
+            NOT = { has_variable = kCAFG_cultural_benefits_eligible }
+        }
+        set_variable = kCAFG_cultural_benefits_eligible
+        set_variable = {
+            name = kCAFG_cultural_benefits_eligible_cooldown
+            days = V_kCAFG_cultural_benefits_days_required
+        }
+    }
+    else_if = {
+        limit = {
+            var:kCAFG_culture_tension > V_kCAFG_cultural_benefits_maximum_tension
+            has_variable = kCAFG_cultural_benefits_eligible
+        }
+        remove_variable = kCAFG_cultural_benefits_eligible
+        if = {
+            limit = { has_variable = kCAFG_cultural_benefits_eligible_cooldown }
+            remove_variable = kCAFG_cultural_benefits_eligible_cooldown
+        }
+    }
+
+    E_kCAFG_update_province_culture_tension_update_status = yes
+
+    E_kCAFG_update_province_culture_tension_modifier = yes
+}
+
+E_kCAFG_update_province_culture_tension_update_status = {
+    if = {
+        limit = {
+            has_variable = kCAFG_culture_tension
+            has_variable = kCAFG_target_culture_tension
+            var:kCAFG_culture_tension != var:kCAFG_target_culture_tension
+        }
+        add_to_global_variable_list = {
+            name = kCAFG_culture_tension_provinces_to_update
+            target = this
+        }
+    }
+    else = {
+        remove_list_global_variable = {
+            name = kCAFG_culture_tension_provinces_to_update
+            target = this
+        }
+    }
+}
+
+# Scope : province
+E_kCAFG_update_province_culture_tension_modifier = {
+    if = {
+        limit = {
+            NOT = { has_game_rule = kCAFG_tension_effects_impact_none }
+        }
+        if = {
+            limit = { has_province_modifier = kCAFG_province_culture_tension_modifier }
+            remove_all_province_modifier_instances = kCAFG_province_culture_tension_modifier
+        }
+        if = {
+            limit = { has_province_modifier = kCAFG_province_culture_tension_no_holding_modifier }
+            remove_all_province_modifier_instances = kCAFG_province_culture_tension_no_holding_modifier
+        }
+        if = {
+            limit = {
+                has_variable = kCAFG_culture_tension
+                var:kCAFG_culture_tension >= V_kCAFG_culture_tension_minimum_for_modifier
+            }
+
+            if = {
+                limit = { province_has_no_holding_trigger = yes }
+                add_province_modifier = kCAFG_province_culture_tension_no_holding_modifier
+            }
+            else = {
+                add_province_modifier = kCAFG_province_culture_tension_modifier
+            }
+        }
+    }
+}
+
+# Scope : province
+E_kCAFG_apply_province_culture_tension_monthly_change = {
+    save_temporary_scope_value_as = {
+        name = change
+        value = V_kCAFG_culture_tension_monthly_change
+    }
+    if = {
+        limit = {
+            has_variable = kCAFG_culture_tension
+            has_variable = kCAFG_target_culture_tension
+            scope:change != 0
+        }
+        change_variable = {
+            name = kCAFG_culture_tension
+            add = scope:change
+        }
+        E_kCAFG_on_province_culture_tension_updated = yes
+    }
+}

@@ -1,0 +1,33 @@
+﻿lam_pd_activity_peer_trigger = {
+	lam_fac_peer_trigger = yes
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+}
+lam_pd_has_valid_allegiance_trigger = {
+	save_temporary_scope_as = lam_pd_allegiance_person
+	var:lam_bloc ?= {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		liege ?= scope:lam_pd_allegiance_person.liege
+		NOT = {
+			has_variable = lam_fac_disband
+		}
+	}
+}
+lam_pd_recruit_needed_trigger = {
+	OR = {
+		is_ai = no
+		lam_pd_local_activity_value >= 45
+		AND = {
+			has_variable = lam_pd_gr_total
+			var:lam_pd_gr_total >= 10
+		}
+		lam_pol_office_excluded_trigger = yes
+		AND = {
+			has_trait = ambitious
+			has_variable = lam_fac_count
+			var:lam_fac_count < 3
+		}
+	}
+}

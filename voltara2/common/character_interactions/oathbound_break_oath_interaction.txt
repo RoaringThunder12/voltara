@@ -1,0 +1,37 @@
+﻿break_oath_interaction = {                         
+	category = interaction_category_diplomacy
+	common_interaction = yes
+	desc = break_oath_interaction_desc
+
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			is_adult = yes
+			is_landless_adventurer = yes
+			is_imprisoned = no
+			OR = {
+				has_trait = ambitious
+				has_trait = deceitful
+			}
+		}
+		scope:recipient = {
+			is_alive = yes
+			has_relation_oathbound = scope:actor
+		}
+	}
+
+    auto_accept = yes
+
+    ai_accept = {
+        base = 100
+    }
+
+	on_accept = {
+		scope:actor = {
+			trigger_event = { 
+				id = break_oath_events.0001
+				#days = 1
+			}
+		}
+	}
+}

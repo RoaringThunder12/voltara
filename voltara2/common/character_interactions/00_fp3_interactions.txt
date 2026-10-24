@@ -32,7 +32,7 @@ is_valid = {
 
 		scope:actor != scope:recipient
 		struggle:persian_struggle ?= { has_struggle_phase_parameter = demand_submission_interaction_unlocked }
-		scope:actor = { has_title = title:d_sunni }
+		scope:actor = { always = no }
 		scope:recipient = {
 			faith.religious_head ?= scope:actor
 			has_trait = fp3_struggle_supporter
@@ -420,7 +420,9 @@ is_valid = {
 			trigger_else = {
 				OR = {
 					any_character_struggle = { is_struggle_type = persian_struggle }
-					title:d_sunni.holder ?= this
+					# Optional native title is absent on the Voltara map.
+# title:d_sunni.holder ?= this
+always = no
 				}
 				top_liege ?= this
 
@@ -479,9 +481,13 @@ is_valid = {
 						}
 						any_neighboring_top_liege_realm = {
 							OR = {
-								title:h_china ?= this
+								# Optional native title is absent on the Voltara map.
+# title:h_china ?= this
+always = no
 								any_title_to_title_neighboring_empire = {
-									title:h_china ?= hegemony
+									# Optional native title is absent on the Voltara map.
+# title:h_china ?= hegemony
+always = no
 								}
 							}
 						}
@@ -547,7 +553,7 @@ is_valid = {
 			}
 			if = {
 				limit = {
-					scope:recipient = { has_title = title:d_sunni }
+					scope:recipient = { always = no }
 					struggle:persian_struggle = { has_struggle_phase_parameter = cheaper_incursions_vs_caliph }
 				}
 				divide = 2
@@ -701,7 +707,7 @@ is_valid = {
 					}
 					if = {
 						limit = {
-							scope:recipient = { has_title = title:d_sunni }
+							scope:recipient = { always = no }
 							struggle:persian_struggle = { has_struggle_phase_parameter = cheaper_incursions_vs_caliph }
 						}
 						divide = 2
@@ -1673,7 +1679,7 @@ is_valid = {
 		has_fp3_dlc_trigger = yes
 		# There has to be a caliph around to sway on.
 		## Arguably narratively not, but mechanically, everything will break if we don't.
-		exists = title:d_sunni.holder
+		always = no
 		scope:recipient != scope:actor
 		scope:actor = {
 			OR = {
@@ -1705,7 +1711,7 @@ is_valid = {
 		scope:recipient = {
 			any_character_struggle = { is_struggle_type = persian_struggle }
 			# You cannot ask the Caliph!
-			NOT = { this = title:d_sunni.holder }
+			NOT = { always = no }
 		}
 	}
 
@@ -1805,10 +1811,9 @@ is_valid = {
 			multiplier = {
 				value = 1
 				# Despawn this if you're not the caliph.
-				if = {
-					limit = { scope:actor = title:d_sunni.holder }
-					multiply = 0
-				}
+				if = { limit = { always = no } # Proven unreachable; original effects retained below.
+# multiply = 0
+}
 			}
 		}
 		## Opinion of the caliph
@@ -1818,10 +1823,9 @@ is_valid = {
 			multiplier = {
 				value = 0.5
 				# If you're the caliph, you can take the full amount.
-				if = {
-					limit = { scope:actor = title:d_sunni.holder }
-					add = 0.5
-				}
+				if = { limit = { always = no } # Proven unreachable; original effects retained below.
+# add = 0.5
+}
 			}
 		}
 		# Traits.
@@ -2086,7 +2090,7 @@ is_valid = {
 
 		# The caliph wants to use this all the time.
 		modifier = {
-			has_title = title:d_sunni
+			always = no
 			add = 200
 		}
 		
@@ -2212,7 +2216,7 @@ fp3_request_honorary_titles_interaction = {
 					scope:actor = {
 						any_vassal = {
 							any_held_title = {
-								this = title:d_sunni
+								always = no
 							}
 						}
 					}
@@ -2227,7 +2231,7 @@ fp3_request_honorary_titles_interaction = {
 			limit = { is_ai = yes }
 			any_vassal = {
 				any_held_title = {
-					this = title:d_sunni
+					always = no
 				}
 			}
 		}
@@ -2487,7 +2491,7 @@ fp3_request_house_unity_change_interaction = {
 			limit = { is_ai = yes }
 			any_vassal = {
 				any_held_title = {
-					this = title:d_sunni
+					always = no
 				}
 			}
 		}
@@ -2514,7 +2518,7 @@ fp3_request_house_unity_change_interaction = {
 			}
 			scope:recipient = {
 				any_held_title = {
-					this = title:d_sunni
+					always = no
 				}
 			}
 		}

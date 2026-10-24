@@ -1,0 +1,163 @@
+﻿vip_seed_opening_blocs = {
+ if = { limit = {
+ NOT = { has_global_variable = vip_opening_blocs_seeded }
+ current_date < 3782.1.1
+ exists = title:h_voltara_severos.holder
+ character:19060001 = { has_title = title:h_voltara_severos is_alive = yes }
+ character:19060034 = { is_alive = yes }
+ character:19060003 = { is_alive = yes }
+ NOT = { global_var:vic_stage >= 3 }
+ }
+ set_global_variable = { name = vip_opening_blocs_seeded value = yes }
+character:19060034 = { set_variable = { name = vip_imperial_bloc_head value = 1 } }
+character:19060034 ?= {
+ if = { limit = { is_alive = yes voltara_in_hegemony = yes }
+ remove_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian remove_character_flag = vic_neutral_house
+ add_character_flag = vic_pledged_cassian
+ set_variable = { name = vip_alignment value = 1 }
+ set_variable = { name = lam_bloc value = character:19060034 }
+ set_variable = { name = vip_previous_bloc value = character:19060034 }
+ set_variable = { name = lam_fac_pinned value = yes months = 12 }
+ } }
+title:e_voltara_bryndale.holder ?= {
+ if = { limit = { is_alive = yes voltara_in_hegemony = yes }
+ remove_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian remove_character_flag = vic_neutral_house
+ add_character_flag = vic_pledged_cassian
+ set_variable = { name = vip_alignment value = 1 }
+ set_variable = { name = lam_bloc value = character:19060034 }
+ set_variable = { name = vip_previous_bloc value = character:19060034 }
+ set_variable = { name = lam_fac_pinned value = yes months = 12 }
+ } }
+title:e_voltara_thornfall.holder ?= {
+ if = { limit = { is_alive = yes voltara_in_hegemony = yes }
+ remove_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian remove_character_flag = vic_neutral_house
+ add_character_flag = vic_pledged_cassian
+ set_variable = { name = vip_alignment value = 1 }
+ set_variable = { name = lam_bloc value = character:19060034 }
+ set_variable = { name = vip_previous_bloc value = character:19060034 }
+ set_variable = { name = lam_fac_pinned value = yes months = 12 }
+ } }
+title:e_voltara_kedith.holder ?= {
+ if = { limit = { is_alive = yes voltara_in_hegemony = yes }
+ remove_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian remove_character_flag = vic_neutral_house
+ add_character_flag = vic_pledged_cassian
+ set_variable = { name = vip_alignment value = 1 }
+ set_variable = { name = lam_bloc value = character:19060034 }
+ set_variable = { name = vip_previous_bloc value = character:19060034 }
+ set_variable = { name = lam_fac_pinned value = yes months = 12 }
+ } }
+character:19060003 = { set_variable = { name = vip_imperial_bloc_head value = 2 } }
+character:19060003 ?= {
+ if = { limit = { is_alive = yes voltara_in_hegemony = yes }
+ remove_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian remove_character_flag = vic_neutral_house
+ add_character_flag = vic_pledged_octavian
+ set_variable = { name = vip_alignment value = 2 }
+ set_variable = { name = lam_bloc value = character:19060003 }
+ set_variable = { name = vip_previous_bloc value = character:19060003 }
+ set_variable = { name = lam_fac_pinned value = yes months = 12 }
+ } }
+title:e_voltara_enderal.holder ?= {
+ if = { limit = { is_alive = yes voltara_in_hegemony = yes }
+ remove_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian remove_character_flag = vic_neutral_house
+ add_character_flag = vic_pledged_octavian
+ set_variable = { name = vip_alignment value = 2 }
+ set_variable = { name = lam_bloc value = character:19060003 }
+ set_variable = { name = vip_previous_bloc value = character:19060003 }
+ set_variable = { name = lam_fac_pinned value = yes months = 12 }
+ } }
+title:e_voltara_halithor.holder ?= {
+ if = { limit = { is_alive = yes voltara_in_hegemony = yes }
+ remove_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian remove_character_flag = vic_neutral_house
+ add_character_flag = vic_pledged_octavian
+ set_variable = { name = vip_alignment value = 2 }
+ set_variable = { name = lam_bloc value = character:19060003 }
+ set_variable = { name = vip_previous_bloc value = character:19060003 }
+ set_variable = { name = lam_fac_pinned value = yes months = 12 }
+ } }
+title:k_voltara_luminous_see.holder ?= {
+ if = { limit = { is_alive = yes voltara_in_hegemony = yes }
+ remove_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian remove_character_flag = vic_neutral_house
+ add_character_flag = vic_pledged_octavian
+ set_variable = { name = vip_alignment value = 2 }
+ set_variable = { name = lam_bloc value = character:19060003 }
+ set_variable = { name = vip_previous_bloc value = character:19060003 }
+ set_variable = { name = lam_fac_pinned value = yes months = 12 }
+ } }
+ }
+}
+vip_refresh_opening_blocs = {
+ vip_seed_opening_blocs = yes
+ if = { limit = { has_global_variable = vip_opening_blocs_seeded exists = title:h_voltara_severos.holder NOT = { global_var:vic_stage >= 5 } }
+ title:h_voltara_severos.holder = {
+ save_scope_as = vip_bloc_court save_scope_as = lam_fac_lordscope
+ if = { limit = { NOT = { has_variable = lam_crown } } lam_crown_strength_effect = yes }
+ set_variable = { name = vip_bloc_total value = max_military_strength }
+if = { limit = { character:19060034 = { is_alive = yes voltara_in_hegemony = yes NOT = { has_variable = lam_fac_disband } } }
+ character:19060034 = {
+ save_scope_as = vip_bloc_head
+ if = { limit = { NOT = { has_variable = lam_fac_founded } } lam_fac_new_identity_effect = yes }
+ set_variable = { name = lam_bloc_lead value = yes }
+ set_variable = { name = lam_bloc value = this }
+ set_variable = { name = lam_fac_agenda value = flag:loyalist }
+ clear_variable_list = lam_fac_members
+ lam_fac_init_leader_effect = yes
+ set_variable = { name = lam_fac_power value = max_military_strength }
+ }
+ if = { limit = { NOT = { is_target_in_variable_list = { name = lam_bloc_leads target = character:19060034 } } } add_to_variable_list = { name = lam_bloc_leads target = character:19060034 } }
+ remove_variable = lam_bloc_leads_none
+ every_ruler = { limit = { vip_public_lord = yes is_alive = yes has_character_flag = vic_pledged_cassian NOT = { this = character:19060034 } NOT = { has_variable = vip_imperial_bloc_head } }
+ # Public pledges are the canonical allegiance; no conspiracy flags are read.
+ if = { limit = { exists = var:lam_bloc NOT = { var:lam_bloc = scope:vip_bloc_head } } lam_pb_clear_membership_effect = yes }
+ set_variable = { name = lam_bloc value = scope:vip_bloc_head }
+ set_variable = { name = vip_previous_bloc value = scope:vip_bloc_head }
+ set_variable = { name = lam_fac_tier value = 1 }
+ lam_fac_attitude_effect = yes
+ set_variable = { name = lam_gui_att value = scope:lam_att }
+ lam_fac_add_member_effect = { LEADER = scope:vip_bloc_head }
+ save_scope_as = vip_bloc_member
+ scope:vip_bloc_court = { remove_list_variable = { name = lam_bloc_unaligned target = scope:vip_bloc_member } }
+ if = { limit = { NOT = { any_liege_or_above = { has_character_flag = vic_pledged_cassian NOT = { this = scope:vip_bloc_court } } } }
+ scope:vip_bloc_head = { change_variable = { name = lam_fac_power add = scope:vip_bloc_member.max_military_strength } }
+ }
+ }
+ character:19060034 = { lam_fac_finish_leader_effect = { TOTAL = scope:vip_bloc_court.var:vip_bloc_total CROWN = scope:vip_bloc_court.var:lam_crown } }
+ remove_list_variable = { name = lam_bloc_unaligned target = character:19060034 }
+ }
+if = { limit = { character:19060003 = { is_alive = yes voltara_in_hegemony = yes NOT = { has_variable = lam_fac_disband } } }
+ character:19060003 = {
+ save_scope_as = vip_bloc_head
+ if = { limit = { NOT = { has_variable = lam_fac_founded } } lam_fac_new_identity_effect = yes }
+ set_variable = { name = lam_bloc_lead value = yes }
+ set_variable = { name = lam_bloc value = this }
+ set_variable = { name = lam_fac_agenda value = flag:belligerent }
+ clear_variable_list = lam_fac_members
+ lam_fac_init_leader_effect = yes
+ set_variable = { name = lam_fac_power value = max_military_strength }
+ }
+ if = { limit = { NOT = { is_target_in_variable_list = { name = lam_bloc_leads target = character:19060003 } } } add_to_variable_list = { name = lam_bloc_leads target = character:19060003 } }
+ remove_variable = lam_bloc_leads_none
+ every_ruler = { limit = { vip_public_lord = yes is_alive = yes has_character_flag = vic_pledged_octavian NOT = { this = character:19060003 } NOT = { has_variable = vip_imperial_bloc_head } }
+ # Public pledges are the canonical allegiance; no conspiracy flags are read.
+ if = { limit = { exists = var:lam_bloc NOT = { var:lam_bloc = scope:vip_bloc_head } } lam_pb_clear_membership_effect = yes }
+ set_variable = { name = lam_bloc value = scope:vip_bloc_head }
+ set_variable = { name = vip_previous_bloc value = scope:vip_bloc_head }
+ set_variable = { name = lam_fac_tier value = 1 }
+ lam_fac_attitude_effect = yes
+ set_variable = { name = lam_gui_att value = scope:lam_att }
+ lam_fac_add_member_effect = { LEADER = scope:vip_bloc_head }
+ save_scope_as = vip_bloc_member
+ scope:vip_bloc_court = { remove_list_variable = { name = lam_bloc_unaligned target = scope:vip_bloc_member } }
+ if = { limit = { NOT = { any_liege_or_above = { has_character_flag = vic_pledged_octavian NOT = { this = scope:vip_bloc_court } } } }
+ scope:vip_bloc_head = { change_variable = { name = lam_fac_power add = scope:vip_bloc_member.max_military_strength } }
+ }
+ }
+ character:19060003 = {
+ if = { limit = { vip_octavian_self_backing = yes }
+  set_variable = { name = lam_fac_heir value = this }
+  remove_variable = lam_fac_heir_lawful
+ }
+ lam_fac_finish_leader_effect = { TOTAL = scope:vip_bloc_court.var:vip_bloc_total CROWN = scope:vip_bloc_court.var:lam_crown } }
+ remove_list_variable = { name = lam_bloc_unaligned target = character:19060003 }
+ }
+ } }
+}

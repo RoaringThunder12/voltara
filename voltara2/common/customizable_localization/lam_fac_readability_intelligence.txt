@@ -1,0 +1,167 @@
+﻿LamUxIntel = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_report_visible_trigger = yes
+			var:lam_ux_report_level >= 3
+		}
+		localization_key = lam_ux_report_exact
+	}
+	text = {
+		trigger = {
+			lam_ux_report_visible_trigger = yes
+			var:lam_ux_report_level = 2
+		}
+		localization_key = lam_ux_report_partial
+	}
+	text = {
+		trigger = {
+			lam_ux_report_visible_trigger = yes
+		}
+		localization_key = lam_ux_report_rumor
+	}
+	text = {
+		trigger = {
+			lam_ux_insider_view_trigger = yes
+		}
+		localization_key = lam_ux_report_inside
+	}
+	text = {
+		localization_key = lam_ux_report_unknown
+		fallback = yes
+	}
+}
+LamUxObservedExact = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:council
+		}
+		localization_key = lam_ux_observed_exact_council
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:gold
+		}
+		localization_key = lam_ux_observed_exact_gold
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:land
+		}
+		localization_key = lam_ux_observed_exact_land
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:heir
+		}
+		localization_key = lam_ux_observed_exact_heir
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:release
+		}
+		localization_key = lam_ux_observed_exact_release
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:law
+		}
+		localization_key = lam_ux_observed_exact_law
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:rise
+		}
+		localization_key = lam_ux_observed_exact_rise
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:arm
+		}
+		localization_key = lam_ux_observed_exact_arm
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:crown
+		}
+		localization_key = lam_ux_observed_exact_crown
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:merge
+		}
+		localization_key = lam_ux_observed_exact_merge
+	}
+	text = {
+		localization_key = lam_ux_observed_unknown
+		fallback = yes
+	}
+}
+LamUxObservedPartial = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:council
+		}
+		localization_key = lam_ux_observed_partial_council
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:gold
+		}
+		localization_key = lam_ux_observed_partial_gold
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:land
+		}
+		localization_key = lam_ux_observed_partial_land
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:heir
+		}
+		localization_key = lam_ux_observed_partial_heir
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:release
+		}
+		localization_key = lam_ux_observed_partial_release
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:law
+		}
+		localization_key = lam_ux_observed_partial_law
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:rise
+		}
+		localization_key = lam_ux_observed_partial_rise
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:arm
+		}
+		localization_key = lam_ux_observed_partial_arm
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:crown
+		}
+		localization_key = lam_ux_observed_partial_crown
+	}
+	text = {
+		trigger = {
+			var:lam_ux_report_kind ?= flag:merge
+		}
+		localization_key = lam_ux_observed_partial_merge
+	}
+	text = {
+		localization_key = lam_ux_observed_unknown
+		fallback = yes
+	}
+}

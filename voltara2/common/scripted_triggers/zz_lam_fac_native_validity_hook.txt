@@ -1,0 +1,45 @@
+﻿common_character_validity_trigger = {
+	custom_description = {
+		text = "FACTION_CANT_JOIN_CREATE_IMPRISONED"
+		trigger_if = {
+			limit = {
+				joined_faction ?= {
+					faction_is_at_war = yes
+				}
+			}
+		}
+		trigger_else = {
+			is_imprisoned = no
+		}
+	}
+	OR = {
+		$FACTION_TARGET$ = liege
+		any_character_active_contract = {
+			task_contract_target = $FACTION_TARGET$
+		}
+	}
+	highest_held_title_tier > tier_barony
+	custom_description = {
+		text = character_blocked_from_joining
+		NOT = {
+			has_character_flag = joining_faction_block
+		}
+	}
+	trigger_if = {
+		limit = {
+			government_is_japanese_trigger = yes
+			$FACTION_TARGET$ = {
+				government_is_japanese_trigger = yes
+			}
+			exists = house.house_confederation
+			exists = $FACTION_TARGET$.house.house_confederation
+		}
+		custom_tooltip = {
+			text = house_confederation_faction_blocker_tt
+			house.house_confederation != $FACTION_TARGET$.house.house_confederation
+		}
+	}
+	NOT = {
+		has_relation_blood_brother = $FACTION_TARGET$
+	}
+}

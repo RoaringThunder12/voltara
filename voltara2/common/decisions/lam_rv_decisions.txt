@@ -1,0 +1,28 @@
+﻿# Living Factions - review fixes (tools/claude_fixes/review_1020.py)
+# Send the gathered coalition's ultimatum (when its player leader chose to wait).
+lam_rv_ultimatum_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/lam_decision_mypeople.dds"
+	}
+	desc = lam_rv_ultimatum_decision_desc
+	selection_tooltip = lam_rv_ultimatum_decision_tooltip
+	is_shown = {
+		lam_rv_can_send_trigger = yes
+	}
+	is_valid = {
+		is_imprisoned = no
+	}
+	effect = {
+		custom_tooltip = lam_rv_send_tt
+		hidden_effect = {
+			lam_rv_send_effect = yes
+		}
+	}
+	ai_check_interval = 0
+	ai_potential = {
+		always = no
+	}
+	ai_will_do = {
+		base = 0
+	}
+}

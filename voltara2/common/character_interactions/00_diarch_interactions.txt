@@ -8863,9 +8863,9 @@ is_valid = {
 			trigger_else = {
 				scope:actor = {
 					OR = {
-						has_title = title:e_minister_grand_marshal
-						has_title = title:e_minister_chancellor
-						has_title = title:e_minister_censor
+						always = no
+						always = no
+						always = no
 					}
 				}
 			}
@@ -8939,7 +8939,7 @@ is_valid = {
 						if = {
 							limit = {
 								scope:actor = {
-									has_title = title:e_minister_grand_marshal
+									always = no
 								}
 							}
 							add_realm_law = grand_marshal_law
@@ -8947,7 +8947,7 @@ is_valid = {
 						else_if = {
 							limit = {
 								scope:actor = {
-									has_title = title:e_minister_chancellor
+									always = no
 								}
 							}
 							add_realm_law = grand_chancellor_law
@@ -8955,7 +8955,7 @@ is_valid = {
 						else_if = {
 							limit = {
 								scope:actor = {
-									has_title = title:e_minister_censor
+									always = no
 								}
 							}
 							add_realm_law = grand_censor_law

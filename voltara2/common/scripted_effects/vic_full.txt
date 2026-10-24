@@ -74,6 +74,8 @@ if = { limit = { this = character:19060001 is_alive = yes has_title = title:h_vo
  set_global_variable = { name = vic_rebellion_required value = yes }
  vic_start_rebellion = yes
  }
+
+vip_story_public_consequences = yes
 }
 vic_start_rebellion = {
 if = { limit = {
@@ -120,10 +122,20 @@ if = { limit = { scope:attacker = { is_alive = yes is_landed = yes } exists = ti
  title:h_voltara_severos.holder = { save_scope_as = vic_former_emperor every_vassal = { limit = { NOT = { this = scope:attacker } } add_to_temporary_list = vic_crown_vassals } }
  create_title_and_vassal_change = { type = usurped save_scope_as = vic_crown_transfer add_claim_on_loss = yes }
  title:h_voltara_severos = { change_title_holder = { holder = scope:attacker change = scope:vic_crown_transfer } }
+title:e_voltara_21 = { if = { limit = { holder = scope:vic_former_emperor } change_title_holder = { holder = scope:attacker change = scope:vic_crown_transfer } } }
+title:k_voltara_21 = { if = { limit = { holder = scope:vic_former_emperor } change_title_holder = { holder = scope:attacker change = scope:vic_crown_transfer } } }
+title:d_voltara_21 = { if = { limit = { holder = scope:vic_former_emperor } change_title_holder = { holder = scope:attacker change = scope:vic_crown_transfer } } }
+title:c_voltara_323 = { if = { limit = { holder = scope:vic_former_emperor } change_title_holder = { holder = scope:attacker change = scope:vic_crown_transfer take_baronies = yes } } }
  every_in_list = { list = vic_crown_vassals limit = { is_alive = yes is_landed = yes NOT = { this = scope:attacker } } change_liege = { liege = scope:attacker change = scope:vic_crown_transfer } }
  scope:vic_former_emperor = { if = { limit = { is_alive = yes is_landed = yes NOT = { this = scope:attacker } highest_held_title_tier < tier_hegemony } change_liege = { liege = scope:attacker change = scope:vic_crown_transfer } } }
  resolve_title_and_vassal_change = scope:vic_crown_transfer
- scope:attacker = { add_prestige = 500 change_government = lp_feudal_government }
+ scope:attacker = { add_prestige = 500 change_government = lp_feudal_government
+ if = { limit = { has_title = title:c_voltara_323 } set_realm_capital = title:c_voltara_323 }
+ if = { limit = { this = character:19060003 NOT = { has_character_flag = vic_heirs_resolved } }
+ add_character_flag = vic_heirs_pending trigger_event = { id = vic_heirs.1 days = 3 }
+ vic_thorne_victory_exile = yes
+ }
+}
  }
 }
 vic_war_end = {
@@ -206,6 +218,8 @@ if = { limit = { global_var:vic_negotiation_state = 1 character:19060001 = { is_
  character:19060001 = { add_character_flag = vic_negotiated_with_octavian }
  character:19060003 = { add_character_flag = vic_negotiated_with_cassian }
  }
+
+vip_story_public_consequences = yes
 }
 vic_find_cleric = {
 if = { limit = { global_var:vic_cleric_state = 0 this = character:19060033 }
@@ -281,6 +295,8 @@ if = { limit = { vic_investigator = yes global_var:vic_public_case = 0 vic_has_n
  character:19060033 = { add_character_flag = vic_publicly_implicated add_character_modifier = { modifier = vic_exposed_conspirator years = 10 } }
  } else = { vic_change = { KEY = legitimacy AMOUNT = -10 } vic_change = { KEY = noble_opposition AMOUNT = 10 }  }
  }
+
+vip_story_public_consequences = yes
 }
 vic_regional_settlement = {
 if = { limit = { has_title = title:h_voltara_severos global_var:vic_regional_policy = 0 }
@@ -293,6 +309,8 @@ if = { limit = { has_title = title:h_voltara_severos global_var:vic_regional_pol
  else = { add_character_modifier = { modifier = vic_unsettled_realm years = 5 } }
  trigger_event = { id = vic_story.80 days = 5 }
  }
+
+vip_story_public_consequences = yes
 }
 vic_tharn_opening_followup = {
 if = { limit = {
@@ -394,27 +412,27 @@ character:19060033 ?= { if = { limit = {
  is_ai = yes vic_participant_available = yes has_character_flag = vic_opening_complete
  NOT = { AND = { this = character:19060033 global_var:vic_assassination = 2 } }
  NOT = { has_character_flag = vic_action_pending } NOT = { has_character_flag = vic_action_cooldown }
- } add_character_flag = vic_action_pending trigger_event = { id = vic_story.10 days = 2 } } }
+ } add_character_flag = vic_action_pending if = { limit = { is_ai = yes } trigger_event = { id = vic_story.10 days = 2 } } else = { remove_character_flag = vic_action_pending lam_fac_default_view_effect = yes lam_factions_refresh_effect = yes set_variable = { name = lam_factions_open value = yes } } } }
 character:19060003 ?= { if = { limit = {
  is_ai = yes vic_participant_available = yes has_character_flag = vic_opening_complete
  NOT = { AND = { this = character:19060033 global_var:vic_assassination = 2 } }
  NOT = { has_character_flag = vic_action_pending } NOT = { has_character_flag = vic_action_cooldown }
- } add_character_flag = vic_action_pending trigger_event = { id = vic_story.11 days = 2 } } }
+ } add_character_flag = vic_action_pending if = { limit = { is_ai = yes } trigger_event = { id = vic_story.11 days = 2 } } else = { remove_character_flag = vic_action_pending lam_fac_default_view_effect = yes lam_factions_refresh_effect = yes set_variable = { name = lam_factions_open value = yes } } } }
 character:19060031 ?= { if = { limit = {
  is_ai = yes vic_participant_available = yes has_character_flag = vic_opening_complete
  NOT = { AND = { this = character:19060033 global_var:vic_assassination = 2 } }
  NOT = { has_character_flag = vic_action_pending } NOT = { has_character_flag = vic_action_cooldown }
- } add_character_flag = vic_action_pending trigger_event = { id = vic_story.12 days = 2 } } }
+ } add_character_flag = vic_action_pending if = { limit = { is_ai = yes } trigger_event = { id = vic_story.12 days = 2 } } else = { remove_character_flag = vic_action_pending lam_fac_default_view_effect = yes lam_factions_refresh_effect = yes set_variable = { name = lam_factions_open value = yes } } } }
 character:19060029 ?= { if = { limit = {
  is_ai = yes vic_participant_available = yes has_character_flag = vic_opening_complete
  NOT = { AND = { this = character:19060033 global_var:vic_assassination = 2 } }
  NOT = { has_character_flag = vic_action_pending } NOT = { has_character_flag = vic_action_cooldown }
- } add_character_flag = vic_action_pending trigger_event = { id = vic_story.13 days = 2 } } }
+ } add_character_flag = vic_action_pending if = { limit = { is_ai = yes } trigger_event = { id = vic_story.13 days = 2 } } else = { remove_character_flag = vic_action_pending lam_fac_default_view_effect = yes lam_factions_refresh_effect = yes set_variable = { name = lam_factions_open value = yes } } } }
 character:19060001 ?= { if = { limit = {
  is_ai = yes vic_participant_available = yes has_character_flag = vic_opening_complete
  NOT = { AND = { this = character:19060033 global_var:vic_assassination = 2 } }
  NOT = { has_character_flag = vic_action_pending } NOT = { has_character_flag = vic_action_cooldown }
- } add_character_flag = vic_action_pending trigger_event = { id = vic_story.15 days = 2 } } }
+ } add_character_flag = vic_action_pending if = { limit = { is_ai = yes } trigger_event = { id = vic_story.15 days = 2 } } else = { remove_character_flag = vic_action_pending lam_fac_default_view_effect = yes lam_factions_refresh_effect = yes set_variable = { name = lam_factions_open value = yes } } } }
 
  # A settled or disrupted conspiracy must not hold the whole campaign hostage.
  if = { limit = { global_var:vic_assassination >= 3 global_var:vic_war_started = 0 NOT = { has_global_variable = vic_rebellion_required } }
@@ -438,6 +456,10 @@ character:19060001 ?= { if = { limit = {
  }
  }
  }
+
+vip_refresh_public = yes
+
+vip_story_public_consequences = yes
 }
 vic_finish_aftermath = {
 if = { limit = { global_var:vic_stage = 6 NOT = { has_global_variable = vic_aftermath_final } has_title = title:h_voltara_severos is_alive = yes }
@@ -490,9 +512,9 @@ if = { limit = { NOT = { has_global_variable = vic_family_notified } }
 vic_refuge_family = {
 if = { limit = { exists = title:e_voltara_bryndale.holder title:e_voltara_bryndale.holder = { is_alive = yes } }
  title:e_voltara_bryndale.holder = { save_scope_as = vic_refuge }
- character:19060002 ?= { if = { limit = { is_alive = yes is_landed = no is_imprisoned = no } save_scope_as = vic_family_member scope:vic_refuge = { add_courtier = scope:vic_family_member } } }
-character:19060004 ?= { if = { limit = { is_alive = yes is_landed = no is_imprisoned = no } save_scope_as = vic_family_member scope:vic_refuge = { add_courtier = scope:vic_family_member } } }
-character:19060005 ?= { if = { limit = { is_alive = yes is_landed = no is_imprisoned = no } save_scope_as = vic_family_member scope:vic_refuge = { add_courtier = scope:vic_family_member } } }
+ character:19060002 ?= { if = { limit = { is_alive = yes is_landed = no is_imprisoned = no NOT = { is_courtier_of = scope:vic_refuge } } save_scope_as = vic_family_member scope:vic_refuge = { add_courtier = scope:vic_family_member } } }
+character:19060004 ?= { if = { limit = { is_alive = yes is_landed = no is_imprisoned = no NOT = { is_courtier_of = scope:vic_refuge } } save_scope_as = vic_family_member scope:vic_refuge = { add_courtier = scope:vic_family_member } } }
+character:19060005 ?= { if = { limit = { is_alive = yes is_landed = no is_imprisoned = no NOT = { is_courtier_of = scope:vic_refuge } } save_scope_as = vic_family_member scope:vic_refuge = { add_courtier = scope:vic_family_member } } }
 set_global_variable = { name = vic_family_safe value = 1 }  }
 }
 vic_thorne_departure = {
@@ -518,7 +540,7 @@ if = { limit = { this = character:19060033 vic_participant_available = yes vic_p
 }
 vic_route_cassian_opening = {
 if = { limit = { is_ai = no }
- if = { limit = { has_character_flag = vic_letter_inquiry } trigger_event = { id = vic_story.13 days = 10 } }
+ if = { limit = { has_character_flag = vic_letter_inquiry } if = { limit = { is_ai = yes } trigger_event = { id = vic_story.13 days = 10 } } else = { remove_character_flag = vic_action_pending lam_fac_default_view_effect = yes lam_factions_refresh_effect = yes set_variable = { name = lam_factions_open value = yes } } }
  else_if = { limit = { OR = { has_character_flag = vic_family_protection has_character_flag = vic_bryndale_guards } } trigger_event = { id = vic_story.40 days = 10 } }
  }
 }

@@ -1,0 +1,37 @@
+﻿LamUxNext = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_insider_view_trigger = yes
+		}
+		localization_key = lam_ux_next_inside
+	}
+	text = {
+		trigger = {
+			has_variable = lam_pd_pending
+		}
+		localization_key = lam_pd_next_reply
+	}
+	text = {
+		trigger = {
+			has_variable = lam_fac_demand
+		}
+		localization_key = lam_fac_next_demand
+	}
+	text = {
+		trigger = {
+			has_variable = lam_fac_armed
+		}
+		localization_key = lam_fac_next_armed
+	}
+	text = {
+		trigger = {
+			has_variable = lam_fac_courtparty
+		}
+		localization_key = lam_fac_next_court
+	}
+	text = {
+		localization_key = lam_ux_next_unknown
+		fallback = yes
+	}
+}

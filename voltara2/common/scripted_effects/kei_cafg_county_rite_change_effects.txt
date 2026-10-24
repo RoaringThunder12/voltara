@@ -1,0 +1,67 @@
+﻿# Root = County title
+# scope:old_rite = old rite
+E_kCAFG_on_county_rite_changed = {
+    if = {
+        limit = {
+            has_variable = kCAFG_county_rite_change_reason
+        }
+    
+        # if = {
+        #     limit = { var:kCAFG_county_rite_change_reason = flag:kCAFG_default_reason }
+        #     debug_log = "Kei CAFG - Rite Change - Non-specific County Update - happened in county [THIS.Title.GetNameNoTooltip] - From [old_rite.GetNameNoTooltip] to [THIS.Title.GetProvince.GetCounty.GetRite.GetNameNoTooltip]"
+        # }
+        # else_if = {
+        #     limit = { var:kCAFG_county_rite_change_reason = flag:kCAFG_replacement }
+        #     debug_log = "Kei CAFG - Rite Change - Replacement - happened in county [THIS.Title.GetNameNoTooltip] - From [old_rite.GetNameNoTooltip] to [THIS.Title.GetProvince.GetCounty.GetRite.GetNameNoTooltip]"
+        # }
+        # else_if = {
+        #     limit = { var:kCAFG_county_rite_change_reason = flag:kCAFG_invasion }
+        #     debug_log = "Kei CAFG - Rite Change - Invasion - happened in county [THIS.Title.GetNameNoTooltip] - From [old_rite.GetNameNoTooltip] to [THIS.Title.GetProvince.GetCounty.GetRite.GetNameNoTooltip]"
+        # }
+        # else_if = {
+        #     limit = { var:kCAFG_county_rite_change_reason = flag:kCAFG_religious_exiles }
+        #     debug_log = "Kei CAFG - Rite Change - Religious Exiles - happened in county [THIS.Title.GetNameNoTooltip] - From [old_rite.GetNameNoTooltip] to [THIS.Title.GetProvince.GetCounty.GetRite.GetNameNoTooltip]"
+        # }
+        # else_if = {
+        #     limit = { var:kCAFG_county_rite_change_reason = flag:kCAFG_task_conversion }
+        #     debug_log = "Kei CAFG - Rite Change - Court Chaplain Conversion Task - happened in county [THIS.Title.GetNameNoTooltip] - From [old_rite.GetNameNoTooltip] to [THIS.Title.GetProvince.GetCounty.GetRite.GetNameNoTooltip]"
+        # }
+        # else_if = {
+        #     limit = { var:kCAFG_county_rite_change_reason = flag:kCAFG_natural_evolution }
+        #     debug_log = "Kei CAFG - Rite Change - Natural Evolution - happened in county [THIS.Title.GetNameNoTooltip] - From [old_rite.GetNameNoTooltip] to [THIS.Title.GetProvince.GetCounty.GetRite.GetNameNoTooltip]"
+        # }
+        # else = {
+        #     debug_log = "Kei CAFG - Rite Change - Unhandled - happened in county [THIS.Title.GetNameNoTooltip] - From [old_rite.GetNameNoTooltip] to [THIS.Title.GetProvince.GetCounty.GetRite.GetNameNoTooltip]"
+        # }
+
+        remove_variable = kCAFG_county_rite_change_reason
+    }
+    else = {
+        # debug_log = "Kei CAFG - Rite Change -- Default Behaviour -- happened in county [THIS.Title.GetNameNoTooltip] - From [old_rite.GetNameNoTooltip] to [THIS.Title.GetProvince.GetCounty.GetRite.GetNameNoTooltip]"
+    
+
+        rite = { save_temporary_scope_as = county_converting_rite }
+
+        if = {
+            # prevent double conversion
+            limit = {
+                NAND = {
+                    has_variable = kCAFG_faith_just_changed_with_default_behaviour
+                    var:kCAFG_faith_just_changed_with_default_behaviour = scope:county_converting_rite.faith
+                }
+            }
+
+            # default conversion behaviour - we assume it's a mass majority conversion 
+            E_kCAFG_convert_rite_in_all_county_provinces = {
+                FACTOR = 0.625
+                VARIANCE = 0.075
+                RITE = scope:county_converting_rite
+                MAX = 0.875
+            }
+        }
+        else = {
+            # We prevented double conversion, now we remove the variable
+            remove_variable = kCAFG_faith_just_changed_with_default_behaviour
+        }
+    }
+}

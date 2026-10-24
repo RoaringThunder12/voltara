@@ -1,0 +1,106 @@
+﻿lam_pol_founder_value = {
+	value = lam_cr_influence_value
+	add = {
+		value = var:lam_fac_engage
+		multiply = 0.25
+	}
+	if = {
+		limit = {
+			has_trait = ambitious
+		}
+		add = 5
+	}
+}
+lam_pol_seats_value = {
+	value = 0
+	save_temporary_scope_as = lam_pol_office_head
+	liege ?= {
+		every_councillor = {
+			limit = {
+				is_alive = yes
+				OR = {
+					this = scope:lam_pol_office_head
+					var:lam_bloc ?= scope:lam_pol_office_head
+				}
+			}
+			add = 1
+		}
+	}
+}
+lam_pol_coalition_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_cr_share
+		}
+		add = var:lam_cr_share
+	}
+	add = lam_pd_political_ally_value
+	max = 100
+}
+lam_pol_hold_months_value = {
+	value = lam_tune_seize_hold_ai
+	if = {
+		limit = {
+			is_ai = no
+		}
+		value = lam_tune_seize_hold_player
+	}
+	multiply = 3
+}
+lam_pol_hold_left_value = {
+	value = lam_pol_hold_months_value
+	if = {
+		limit = {
+			has_variable = lam_pol_control_since
+		}
+		subtract = {
+			value = lam_now_m
+			subtract = var:lam_pol_control_since
+			min = 0
+		}
+	}
+	min = 0
+}
+lam_pol_ctrl_count_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_pol_organization_trigger = yes
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			lam_pol_base_trigger = yes
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			AND = {
+				has_variable = lam_fac_cohesion
+				var:lam_fac_cohesion >= lam_tune_seize_cohesion
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			lam_pol_offices_trigger = yes
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			lam_pol_leverage_trigger = yes
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			lam_pol_no_rival_trigger = yes
+		}
+		add = 1
+	}
+}

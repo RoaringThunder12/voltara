@@ -1,0 +1,12 @@
+﻿oathholder_target_county_control_value = {
+    value = 0 
+    
+    if = {
+        limit = { exists = var:oathbound_control_task_county_var }
+        
+        # We drop the extra .county because the variable IS the county!
+        add = var:oathbound_control_task_county_var.county_control
+    }    
+    
+    round = yes 
+}

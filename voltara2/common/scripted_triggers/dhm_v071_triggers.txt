@@ -1,0 +1,75 @@
+﻿# DHM v0.7.1 — isolated choices, reservations and truthful state.
+# Saved event values travel with that event chain. Old queued events without
+# the new value may still read their original character flag.
+dhm_v071_choice_is_trigger = {
+	OR = {
+		AND = { exists = scope:$KEY$ scope:$KEY$ = $VALUE$ }
+		AND = { NOT = { exists = scope:$KEY$ } has_character_flag = $LEGACY$ }
+	}
+}
+
+# Current scope = the human manager. Both participants must still be available.
+# Pre-patch queued courtships have no reservation token: honor their original
+# legal eligibility, but never erase an unrelated retry/consent cooldown.
+dhm_v071_courtship_can_finish_trigger = {
+	is_alive = yes
+	is_ai = no
+	exists = scope:dhm_manager
+	this = scope:dhm_manager
+	exists = scope:dhm_marriage_subject
+	exists = scope:dhm_marriage_candidate
+	scope:dhm_marriage_subject = {
+		dhm_marriage_subject_event_valid_trigger = yes
+		NOT = { has_character_flag = dhm_matchmaking_retry_cooldown }
+		NOT = { has_character_flag = dhm_matchmaking_proposal_pending }
+	}
+	scope:dhm_marriage_candidate = { dhm_valid_marriage_candidate_trigger = yes }
+	OR = {
+		AND = {
+			exists = scope:dhm071_courtship_chain
+			scope:dhm071_courtship_chain = yes
+			scope:dhm_marriage_subject = { var:dhm_courtship_reserved_for ?= scope:dhm_marriage_candidate }
+			scope:dhm_marriage_candidate = { var:dhm_courtship_reserved_for ?= scope:dhm_marriage_subject }
+		}
+		AND = {
+			NOT = { exists = scope:dhm071_courtship_chain }
+			scope:dhm_marriage_subject = { NOT = { has_variable = dhm_courtship_reserved_for } }
+			scope:dhm_marriage_candidate = { NOT = { has_variable = dhm_courtship_reserved_for } }
+		}
+	}
+}
+
+# Used only from a manager-rooted heir event/director.
+dhm_v071_current_heir_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	is_hostage = no
+	NOT = { has_trait = incapable }
+	is_in_the_same_court_as = root
+	this = root.player_heir
+}
+
+dhm_v071_has_named_chapter_trigger = {
+	OR = {
+		has_global_variable = dhm_chapter_first_command
+		has_global_variable = dhm_chapter_heir_ready
+		has_global_variable = dhm_chapter_siblings_reconciled
+		has_global_variable = dhm_chapter_siblings_divided
+		has_global_variable = dhm_chapter_reconciliation
+		has_global_variable = dhm_chapter_parent_heir_trust
+		has_global_variable = dhm_chapter_spouses_stood_together
+		has_global_variable = dhm_chapter_marriage_saved
+		has_global_variable = dhm_chapter_marriage_freed
+		has_global_variable = dhm_chapter_officers_feud
+		has_global_variable = dhm_chapter_officer_triumph
+		has_global_variable = dhm_chapter_scandal_endured
+		has_global_variable = dhm_chapter_failed_lesson
+		has_global_variable = dhm_chapter_shared_grief
+		has_global_variable = dhm_chapter_ambition_kept
+		has_global_variable = dhm_chapter_tutor_bond
+		has_global_variable = dhm_chapter_inlaw_welcomed
+		has_global_variable = dhm_chapter_policy_mediated
+		has_global_variable = dhm_chapter_legacy_challenged
+	}
+}

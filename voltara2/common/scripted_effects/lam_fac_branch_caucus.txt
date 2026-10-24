@@ -1,0 +1,34 @@
+﻿lam_bp_caucus_anchor_effect = {
+	if = {
+		limit = {
+			lam_bp_meeting_trigger = yes
+		}
+		clear_saved_scope = lam_bp_caucus_anchor
+		if = {
+			limit = {
+				lam_lf_pledge_current_trigger = yes
+			}
+			var:lam_lf_caucus_rep = {
+				save_scope_as = lam_bp_caucus_anchor
+			}
+		}
+		else = {
+			ordered_in_list = {
+				variable = lam_cr_voters
+				max = 1
+				check_range_bounds = no
+				order_by = lam_cr_influence_value
+				limit = {
+					lam_cr_saved_voter_trigger = yes
+					lam_bp_position_current_trigger = yes
+					var:lam_cr_choice ?= flag:no
+					var:lam_cr_unrest >= 2
+					NOT = {
+						has_variable = lam_bloc_lead
+					}
+				}
+				save_scope_as = lam_bp_caucus_anchor
+			}
+		}
+	}
+}

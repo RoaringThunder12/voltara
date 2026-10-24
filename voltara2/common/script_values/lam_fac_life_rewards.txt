@@ -1,0 +1,130 @@
+﻿lam_lf_merit_value = {
+	value = 10
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_head
+					}
+					var:lam_cr_service_head ?= scope:lam_lf_head
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			has_variable = lam_cr_service
+		}
+		add = {
+			value = var:lam_cr_service
+			min = 0
+			max = 20
+			multiply = 3
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_merit
+		}
+		add = 12
+	}
+	if = {
+		limit = {
+			var:lam_fac_tier ?= 1
+		}
+		add = 8
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_head
+					}
+					var:lam_st_reward_head ?= scope:lam_lf_head
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			has_variable = lam_st_overlooked
+		}
+		add = {
+			value = var:lam_st_overlooked
+			multiply = 6
+		}
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_head
+					}
+					this = scope:lam_lf_head
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		add = 8
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_head
+					}
+					var:lam_lf_reward_head ?= scope:lam_lf_head
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			has_variable = lam_lf_reward_until
+			var:lam_lf_reward_until > lam_now_m
+		}
+		add = -25
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_head.var:lam_lf_pledged_member
+					}
+					this = scope:lam_lf_head.var:lam_lf_pledged_member
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			scope:lam_lf_head = {
+				lam_lf_pledge_current_trigger = yes
+			}
+		}
+		add = 80
+	}
+	add = lam_bp_fair_merit_value
+}
+lam_lf_office_merit_value = {
+	value = lam_lf_merit_value
+	add = {
+		value = diplomacy
+		max = 20
+	}
+	add = {
+		value = stewardship
+		max = 20
+	}
+	add = {
+		value = martial
+		max = 20
+	}
+	add = {
+		value = intrigue
+		max = 20
+	}
+}

@@ -1,0 +1,14 @@
+﻿vtf_enforce = { every_ruler = { limit = { vtf_protected = yes } if = { limit = { NOT = { has_realm_law = voltara_slavery_banned } } add_realm_law_skip_effects = voltara_slavery_banned } }
+every_living_character = { limit = { has_trait = voltara_slave exists = var:voltara_slave_owner var:voltara_slave_owner = { vtf_protected = yes } } clear_saved_scope = voltara_liberator voltara_free_character = yes } }
+vtf_shelter = { remove_short_term_gold = 50 add_character_modifier = { modifier = vtf_sanctuary years = 5 } capital_county = { add_county_modifier = { modifier = vtf_settlement years = 5 } } }
+vtf_support = { remove_short_term_gold = 100 save_scope_as = vtf_patron
+set_global_variable = { name = vtf_reform_support value = 1 years = 5 }
+character:19060001 = { add_gold = 100 add_opinion = { target = scope:vtf_patron modifier = vtf_reformer_opinion years = 5 } trigger_event = vtf.12 }
+if = { limit = { has_global_variable = vic_initialized } vic_change = { KEY = legitimacy AMOUNT = 5 } vic_change = { KEY = popular_unrest AMOUNT = -5 } vic_change = { KEY = noble_opposition AMOUNT = 3 } }
+add_prestige = 50 }
+vtf_clear_bandits = { scope:vtf_site = { remove_county_modifier = vtf_bandits every_county_province = { remove_province_modifier = vtf_unsafe } } }
+vtf_damage = { scope:vtf_site = { add_county_modifier = { modifier = vtf_bandits years = 3 } every_county_province = { add_province_modifier = { modifier = vtf_unsafe years = 3 } } } }
+vtf_patrol = { remove_short_term_gold = 60 random_held_title = { limit = { vtf_county = yes NOT = { has_county_modifier = vtf_watch } } save_scope_as = vtf_site add_county_modifier = { modifier = vtf_watch years = 3 } every_county_province = { add_province_modifier = { modifier = vtf_safe_roads years = 3 } } } vtf_clear_bandits = yes }
+vtf_petition = { save_scope_as = vtf_petitioner random_ruler = { limit = { vtf_petition_target = yes } save_scope_as = vtf_slaveholder } if = { limit = { exists = scope:vtf_slaveholder } remove_short_term_gold = 25 add_character_flag = { flag = vtf_petition_cooldown years = 2 } scope:vtf_slaveholder = { trigger_event = vtf.10 } } }
+vtf_manumit = { save_scope_as = voltara_liberator every_courtier = { limit = { has_trait = voltara_slave is_imprisoned = no var:voltara_slave_owner ?= prev NOT = { has_character_flag = voltara_slave_sale_pending } } voltara_free_character = yes } add_prestige = 50 if = { limit = { exists = scope:vtf_petitioner scope:vtf_petitioner = { is_alive = yes } } scope:vtf_petitioner = { trigger_event = vtf.11 } } }
+vtf_travel = { if = { limit = { is_available_travelling = yes is_adult = yes location = { geographical_region = world_vtf_thornfall } NOT = { has_character_flag = vtf_travel_cooldown } } random = { chance = 25 add_character_flag = { flag = vtf_travel_cooldown days = 60 } random_list = { 50 = { trigger_event = vtf.1 } 50 = { trigger_event = vtf.2 } } } } }

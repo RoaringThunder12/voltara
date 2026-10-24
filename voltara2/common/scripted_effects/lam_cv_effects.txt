@@ -1,0 +1,232 @@
+﻿# Living Factions - the faction council chamber (tools/claude_fixes/council_ui.py)
+# This = an AI voter right after lam_pd_vote_effect scored them (scope:lam_cr_head): why they voted as they did, split
+# like lam_pd_vote_value - ties to the head, the head's standing (and their own merit), their view of the agenda.
+lam_cv_snapshot_effect = {
+	set_variable = {
+		name = lam_cv_op
+		value = {
+			value = "opinion(scope:lam_cr_head)"
+			multiply = 0.2
+		}
+	}
+	set_variable = {
+		name = lam_cv_rep
+		value = {
+			value = 0
+			if = {
+				limit = {
+					this = scope:lam_cr_head
+				}
+				add = 20
+			}
+			if = {
+				limit = {
+					scope:lam_cr_head = {
+						has_variable = lam_fac_hoarded
+					}
+				}
+				add = -15
+			}
+			if = {
+				limit = {
+					scope:lam_cr_head = {
+						has_variable = lam_fac_betrayed
+					}
+				}
+				add = -10
+			}
+			if = {
+				limit = {
+					has_variable = lam_fac_merit
+				}
+				add = 5
+			}
+		}
+	}
+	set_variable = {
+		name = lam_cv_iss
+		value = {
+			value = var:lam_pd_vote_score
+			subtract = var:lam_cv_op
+			subtract = var:lam_cv_rep
+		}
+	}
+	set_variable = {
+		name = lam_cv_tot
+		value = var:lam_pd_vote_score
+	}
+	remove_variable = lam_cv_swayed
+}
+
+# Root = a player elector (or the head), scope:target = an AI elector of the session in root.var:lam_cr_view: costs
+# prestige; on success the elector's ballot moves one step toward root's own vote (the head of a confidence vote, who
+# does not vote, sways toward keeping them).
+lam_cv_sway_effect = {
+	var:lam_cr_view = {
+		save_scope_as = lam_cv_head
+	}
+	save_scope_value_as = {
+		name = lam_cv_dir
+		value = flag:no
+	}
+	if = {
+		limit = {
+			OR = {
+				AND = {
+					var:lam_cr_ballot_head ?= scope:lam_cv_head
+					var:lam_cr_choice ?= flag:yes
+				}
+				AND = {
+					this = scope:lam_cv_head
+					NOT = {
+						scope:lam_cv_head = {
+							var:lam_cr_issue ?= flag:confidence
+						}
+					}
+					NOT = {
+						var:lam_cr_choice ?= flag:no
+					}
+					NOT = {
+						var:lam_cr_choice ?= flag:abstain
+					}
+				}
+			}
+		}
+		save_scope_value_as = {
+			name = lam_cv_dir
+			value = flag:yes
+		}
+	}
+	add_prestige = -50
+	scope:target = {
+		set_variable = {
+			name = lam_cv_sway_head
+			value = scope:lam_cv_head
+			months = 1
+		}
+		save_scope_value_as = {
+			name = lam_cv_chance
+			value = {
+				value = "opinion(root)"
+				multiply = 0.5
+				add = 35
+				min = 10
+				max = 85
+			}
+		}
+	}
+	random = {
+		chance = {
+			value = scope:lam_cv_chance
+		}
+		save_scope_value_as = {
+			name = lam_cv_ok
+			value = yes
+		}
+		scope:target = {
+			if = {
+				limit = {
+					scope:lam_cv_dir = flag:yes
+				}
+				if = {
+					limit = {
+						var:lam_cr_choice ?= flag:no
+					}
+					set_variable = {
+						name = lam_cr_choice
+						value = flag:abstain
+					}
+				}
+				else = {
+					set_variable = {
+						name = lam_cr_choice
+						value = flag:yes
+					}
+				}
+			}
+			else = {
+				if = {
+					limit = {
+						var:lam_cr_choice ?= flag:yes
+					}
+					set_variable = {
+						name = lam_cr_choice
+						value = flag:abstain
+					}
+				}
+				else = {
+					set_variable = {
+						name = lam_cr_choice
+						value = flag:no
+					}
+				}
+			}
+			set_variable = {
+				name = lam_cv_swayed
+				value = yes
+				months = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_cv_ok
+		}
+		send_interface_message = {
+			type = event_generic_good
+			title = lam_cv_sway_ok
+			right_icon = scope:target
+		}
+	}
+	else = {
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_cv_sway_no
+			right_icon = scope:target
+		}
+	}
+	scope:lam_cv_head = {
+		lam_cr_restore_context_effect = yes
+		lam_cr_recount_effect = yes
+	}
+}
+
+# The agenda 'goal': the head proposes the faction's goal (lam_cr_goal_n 1-9, 0 = leave it to circumstance).
+lam_cr_ai_vote_goal_effect = {
+	lam_pd_vote_effect = yes
+}
+lam_cv_goal_commit_effect = {
+	if = {
+		limit = {
+			var:lam_cr_goal_n ?= 0
+		}
+		remove_variable = lam_fac_goal_pick
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_cr_goal_n
+		}
+		set_variable = {
+			name = lam_fac_goal_pick
+			value = var:lam_cr_goal_n
+		}
+		set_variable = {
+			name = lam_fac_goal
+			value = var:lam_cr_goal_n
+		}
+	}
+	# the council seat goal can name the member the head wants on the council (lam_pd_goal_prepare_effect uses it)
+	if = {
+		limit = {
+			var:lam_cr_goal_n ?= 5
+			exists = var:lam_cr_goal_person
+		}
+		set_variable = {
+			name = lam_fac_seat_pick
+			value = var:lam_cr_goal_person
+		}
+	}
+	else = {
+		remove_variable = lam_fac_seat_pick
+	}
+}

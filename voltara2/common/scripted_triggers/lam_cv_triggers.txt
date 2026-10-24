@@ -1,0 +1,79 @@
+﻿# Living Factions - the faction council chamber (tools/claude_fixes/council_ui.py)
+# This = a council's head: a player heads it or has a ballot in it.
+lam_cv_player_stake_trigger = {
+	OR = {
+		is_ai = no
+		any_in_list = {
+			variable = lam_cr_voters
+			is_ai = no
+		}
+	}
+}
+
+# This = a possible candidate; HEAD and LORD are fixed character scopes.
+# Political support is not a promise that vanilla heir designation is legal.
+lam_cv_heir_candidate_trigger = {
+	is_alive = yes
+	NOT = {
+		this = $LORD$
+	}
+	$HEAD$ = {
+		NOT = {
+			var:lam_fac_heir ?= prev
+		}
+	}
+	OR = {
+		AND = {
+			is_child_of = $LORD$
+			NOT = {
+				has_trait = disinherited
+			}
+		}
+		$LORD$ = {
+			primary_heir ?= prev
+		}
+		any_claim = {
+			pressed = yes
+			$LORD$ = {
+				primary_title ?= prev
+			}
+		}
+	}
+}
+
+# This = the player head. The button and picker use the same live eligibility.
+lam_cv_has_heir_candidate_trigger = {
+	exists = liege
+	save_temporary_scope_as = lam_cv_pick_head
+	liege ?= {
+		save_temporary_scope_as = lam_cv_pick_lord
+		OR = {
+			any_child = {
+				lam_cv_heir_candidate_trigger = {
+					HEAD = scope:lam_cv_pick_head
+					LORD = scope:lam_cv_pick_lord
+				}
+			}
+			AND = {
+				exists = primary_heir
+				primary_heir ?= {
+					lam_cv_heir_candidate_trigger = {
+						HEAD = scope:lam_cv_pick_head
+						LORD = scope:lam_cv_pick_lord
+					}
+				}
+			}
+			AND = {
+				exists = primary_title
+				primary_title ?= {
+					any_claimant = {
+						lam_cv_heir_candidate_trigger = {
+							HEAD = scope:lam_cv_pick_head
+							LORD = scope:lam_cv_pick_lord
+						}
+					}
+				}
+			}
+		}
+	}
+}

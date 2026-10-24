@@ -1,0 +1,69 @@
+﻿# Shared availability and ownership contracts. Saved dhm_manager is the office owner.
+dhm_v073_officer_available_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_ai = yes
+	is_imprisoned = no
+	is_hostage = no
+	NOT = { has_trait = incapable }
+	is_in_the_same_court_as = scope:dhm_manager
+}
+
+# These follow-ups may be letters from another court, but require the exact
+# continuing relationship and participants capable of taking part.
+dhm_v073_partner_continuing_trigger = {
+	exists = scope:dhm_partner_spouse
+	scope:dhm_partner_spouse = {
+		is_alive = yes
+		is_spouse_of = root
+		is_imprisoned = no
+		is_hostage = no
+		NOT = { has_trait = incapable }
+	}
+}
+
+dhm_v073_couple_continuing_trigger = {
+	exists = scope:dhm_journey_relative
+	exists = scope:dhm_journey_spouse
+	scope:dhm_journey_relative = {
+		is_alive = yes
+		is_spouse_of = scope:dhm_journey_spouse
+		is_imprisoned = no
+		is_hostage = no
+		NOT = { has_trait = incapable }
+	}
+	scope:dhm_journey_spouse = {
+		is_alive = yes
+		is_imprisoned = no
+		is_hostage = no
+		NOT = { has_trait = incapable }
+	}
+}
+
+dhm_v073_school_recipient_valid_trigger = {
+	exists = scope:dhm_story_child
+	scope:dhm_story_child = {
+		is_alive = yes
+		is_imprisoned = no
+		is_hostage = no
+		NOT = { has_trait = incapable }
+	}
+}
+
+dhm_v073_school_still_current_trigger = {
+	dhm_v073_school_recipient_valid_trigger = yes
+	exists = scope:dhm_story_tutor
+	scope:dhm_story_child = {
+		age >= 6
+		age < 16
+		is_in_the_same_court_as = root
+		any_relation = { type = dhm_specialist_tutor this = scope:dhm_story_tutor }
+	}
+	scope:dhm_story_tutor = {
+		is_alive = yes
+		is_in_the_same_court_as = root
+		is_imprisoned = no
+		is_hostage = no
+		NOT = { has_trait = incapable }
+	}
+}

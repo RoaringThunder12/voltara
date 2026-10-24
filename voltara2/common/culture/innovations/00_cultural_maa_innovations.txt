@@ -160,7 +160,7 @@ innovation_desert_tactics = {
 	culture_era = culture_era_high_medieval
 	icon = @special_maa_02
 
-	potential = { vt_generic_human_culture_access = yes  has_innovation = innovation_war_camels OR = { this = culture:voltara_culture_26 this = culture:voltara_desert_southron this = culture:voltara_southorion any_parent_culture_or_above = { OR = { this = culture:voltara_culture_26 this = culture:voltara_desert_southron this = culture:voltara_southorion } } } }
+	potential = { vt_generic_human_culture_access = yes  has_innovation = innovation_war_camels OR = { this = culture:voltara_culture_26 this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } any_parent_culture_or_above = { OR = { this = culture:voltara_culture_26 this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } } } }
 
 
 	flag = global_maa
@@ -280,7 +280,7 @@ innovation_sahel_horsemen = {
 		value = 100
 	}
 
- potential = { vt_generic_human_culture_access = yes  OR = { this = culture:voltara_culture_26 this = culture:voltara_desert_southron this = culture:voltara_southorion any_parent_culture_or_above = { OR = { this = culture:voltara_culture_26 this = culture:voltara_desert_southron this = culture:voltara_southorion } } } }
+ potential = { vt_generic_human_culture_access = yes  OR = { this = culture:voltara_culture_26 this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } any_parent_culture_or_above = { OR = { this = culture:voltara_culture_26 this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } } } }
 }
 
 innovation_sarawit = {

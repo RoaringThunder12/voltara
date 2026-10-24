@@ -1,0 +1,732 @@
+﻿V_kCAFG_rite_tension_minimum_for_modifier = 0.05 # Tension under this value will not have the province modifier effects
+
+V_kCAFG_rite_tension_baseline_astray = 0.15
+V_kCAFG_rite_tension_baseline_hostile = 0.25 # Cumulative with previous values
+V_kCAFG_rite_tension_baseline_evil = 0.3 # Cumulative with previous values
+
+# At 0% fervor, baseline tension will be multiplied by this amount (100% fervor means no change)
+V_kCAFG_rite_tension_baseline_fervor_factor = 0.5
+
+# Having a fundamentalist rite will raise the minimum baselines by the remaining amount multiplied by the following factor
+V_kCAFG_rite_tension_baseline_fundamentalist_remaining_amount_factor = 0.5
+V_kCAFG_rite_tension_baseline_fundamentalist_astray = {
+    value = 1
+    subtract = V_kCAFG_rite_tension_baseline_astray
+    multiply = V_kCAFG_rite_tension_baseline_fundamentalist_remaining_amount_factor
+}
+V_kCAFG_rite_tension_baseline_fundamentalist_hostile = {
+    value = 1
+    subtract = V_kCAFG_rite_tension_baseline_hostile
+    multiply = V_kCAFG_rite_tension_baseline_fundamentalist_remaining_amount_factor
+}
+V_kCAFG_rite_tension_baseline_fundamentalist_evil = {
+    value = 1
+    subtract = V_kCAFG_rite_tension_baseline_evil
+    multiply = V_kCAFG_rite_tension_baseline_fundamentalist_remaining_amount_factor
+}
+
+# Pluralistic multiplier
+V_kCAFG_rite_tension_baseline_pluralistic_factor = 0.5
+
+V_kCAFG_cultural_emissary_baseline_rite_tension_reduction_max = 0.2
+
+V_kCAFG_province_rite_tension_scaled_relative_amount_modifier = {
+    value = V_kCAFG_province_rite_tension_scaled_relative_amount
+    switch = {
+        trigger = has_game_rule
+		kCAFG_tension_effects_impact_025 = { multiply = 0.25 }
+		kCAFG_tension_effects_impact_050 = { multiply = 0.50 }
+		kCAFG_tension_effects_impact_075 = { multiply = 0.75 }
+		kCAFG_tension_effects_impact_125 = { multiply = 1.25 }
+		kCAFG_tension_effects_impact_150 = { multiply = 1.50 }
+		kCAFG_tension_effects_impact_175 = { multiply = 1.75 }
+		kCAFG_tension_effects_impact_200 = { multiply = 2 }
+    }
+}
+
+# Used by modifiers, how much tension is there relative to the province county
+# Returns value between 0-1
+# Scope : province
+V_kCAFG_province_rite_tension_scaled_relative_amount = {
+    value = var:kCAFG_rite_tension
+    multiply = V_kCAFG_province_relative_values_scale
+}
+
+## Rite Tension Baseline for a specific rite
+# Returns value between 0-1
+# Scope : province
+# Scopes :
+# kCAFG_rite
+# kCAFG_province
+# kCAFG_target_rite
+V_kCAFG_province_rite_tension_target_baseline_rite_contribution = {
+    value = V_kCAFG_province_rite_factor
+    multiply = scope:kCAFG_rite.V_kCAFG_rite_tension_target_baseline_complete
+    max = 1
+}
+
+## Rite Tension Baseline for a specific rite
+# Returns value between 0-1
+# Scope : rite struct
+# kCAFG_province
+# kCAFG_target_rite
+V_kCAFG_province_rite_tension_target_baseline_rite_struct_contribution = {
+    value = var:factor
+    multiply = var:tension_baseline
+    max = 1
+}
+
+## Province Rite Tension Baseline for a specific rite
+# Returns value between 0-1
+# Scope : rite
+# kCAFG_target_rite
+# kCAFG_province
+V_kCAFG_rite_tension_target_baseline_complete = {
+    value = V_kCAFG_rite_tension_target_baseline
+    multiply = V_kCAFG_rite_tension_target_baseline_holder_factor
+    multiply = scope:kCAFG_province.V_kCAFG_rite_tension_target_baseline_province_factor
+    max = 1
+}
+
+## Rite Tension Baseline for a specific rite
+# Returns value between 0-1
+# Scope : rite
+# kCAFG_target_rite
+# Linked to kCAFG_province_rite_opinion_breakdown
+V_kCAFG_rite_tension_target_baseline = {
+
+    # Tension goes both way
+    value = {
+        value = V_kCAFG_rite_tension_target_baseline_scope_opinion_of_target
+        add = V_kCAFG_rite_tension_target_baseline_target_opinion_of_scope
+        divide = 2
+    }
+
+    min = 0
+    max = 1
+}
+
+# Scope : rite
+# kCAFG_target_rite
+V_kCAFG_rite_tension_target_baseline_fervor_factor_average_impact = {
+    value = V_kCAFG_rite_tension_target_baseline_scope_opinion_of_target_fervor_factor
+    scope:kCAFG_target_rite = {
+        add = V_kCAFG_rite_tension_target_baseline_target_opinion_of_scope_fervor_factor
+    }
+    divide = 2
+    subtract = V_kCAFG_rite_tension_baseline_pluralistic_factor
+    divide = {
+        value = 1
+        subtract = V_kCAFG_rite_tension_baseline_pluralistic_factor
+    }
+}
+
+# Reversed version of V_kCAFG_rite_tension_target_baseline_target_opinion_of_scope
+# Scope : rite
+# kCAFG_target_rite
+# kCAFG_province
+V_kCAFG_rite_tension_target_baseline_scope_opinion_of_target = {
+    value = 0
+    
+    add = {
+        value = 0
+        if = {
+            limit = {
+                rite_hostility_level = {
+                    target = scope:kCAFG_target_rite
+                    value >= faith_astray_level
+                }
+            }
+
+            add = V_kCAFG_rite_tension_baseline_astray
+        }
+        if = {
+            limit = {
+                rite_hostility_level = {
+                    target = scope:kCAFG_target_rite
+                    value >= faith_hostile_level
+                }
+            }
+
+            add = V_kCAFG_rite_tension_baseline_hostile
+        }
+        if = {
+            limit = {
+                rite_hostility_level = {
+                    target = scope:kCAFG_target_rite
+                    value >= faith_evil_level
+                }
+            }
+
+            add = V_kCAFG_rite_tension_baseline_evil
+        }
+    
+        if = {
+            limit = {
+                rite_has_doctrine = doctrine_pluralism_pluralistic
+            }
+
+            multiply = V_kCAFG_rite_tension_baseline_pluralistic_factor
+        }
+        else_if = {
+            limit = {
+                rite_has_doctrine = doctrine_pluralism_fundamentalist
+            }
+
+            if = {
+                limit = {
+                    rite_hostility_level = {
+                        target = scope:kCAFG_target_rite
+                        value = faith_astray_level
+                    }
+                }
+
+                add = V_kCAFG_rite_tension_baseline_fundamentalist_astray
+            }
+            else_if = {
+                limit = {
+                    rite_hostility_level = {
+                        target = scope:kCAFG_target_rite
+                        value = faith_hostile_level
+                    }
+                }
+
+                add = V_kCAFG_rite_tension_baseline_fundamentalist_hostile
+            }
+            else_if = {
+                limit = {
+                    rite_hostility_level = {
+                        target = scope:kCAFG_target_rite
+                        value = faith_evil_level
+                    }
+                }
+
+                add = V_kCAFG_rite_tension_baseline_fundamentalist_evil
+            }
+        }
+        # desc = kCAFG_target_rite_view_of_this_rite
+		# format = "BREAKDOWN_FORMAT_PERCENTAGE_POSITIVE_IS_BAD"
+    }
+
+    multiply = {
+        value = V_kCAFG_rite_tension_target_baseline_scope_opinion_of_target_fervor_factor
+        # desc = kCAFG_this_rite_fervor_factor
+        # format = "BREAKDOWN_FORMAT_PERCENTAGE_POSITIVE_IS_BAD"
+    }
+}
+
+V_kCAFG_rite_tension_target_baseline_scope_opinion_of_target_fervor_factor = {
+    value = 1
+    subtract = V_kCAFG_rite_tension_baseline_fervor_factor
+    add = {
+        value = faith.fervor
+        divide = define:NFaith|MAX_FERVOR
+        multiply = V_kCAFG_rite_tension_baseline_fervor_factor
+    }
+}
+
+# Reversed version of V_kCAFG_rite_tension_target_baseline_scope_opinion_of_target
+# Scope : rite
+# kCAFG_target_rite
+# kCAFG_province
+V_kCAFG_rite_tension_target_baseline_target_opinion_of_scope = {
+    value = 0
+    scope:kCAFG_target_rite = {
+        add = {
+            value = 0
+            if = {
+                limit = {
+                    rite_hostility_level = {
+                        target = prev
+                        value >= faith_astray_level
+                    }
+                }
+
+                add = V_kCAFG_rite_tension_baseline_astray
+            }
+            if = {
+                limit = {
+                    rite_hostility_level = {
+                        target = prev
+                        value >= faith_hostile_level
+                    }
+                }
+
+                add = V_kCAFG_rite_tension_baseline_hostile
+            }
+            if = {
+                limit = {
+                    rite_hostility_level = {
+                        target = prev
+                        value >= faith_evil_level
+                    }
+                }
+
+                add = V_kCAFG_rite_tension_baseline_evil
+            }
+            if = {
+                limit = {
+                    rite_has_doctrine = doctrine_pluralism_pluralistic
+                }
+
+                multiply = V_kCAFG_rite_tension_baseline_pluralistic_factor
+            }
+            else_if = {
+                limit = {
+                    rite_has_doctrine = doctrine_pluralism_fundamentalist
+                }
+
+                if = {
+                    limit = {
+                        rite_hostility_level = {
+                            target = prev
+                            value = faith_astray_level
+                        }
+                    }
+
+                    add = V_kCAFG_rite_tension_baseline_fundamentalist_astray
+                }
+                else_if = {
+                    limit = {
+                        rite_hostility_level = {
+                            target = prev
+                            value = faith_hostile_level
+                        }
+                    }
+
+                    add = V_kCAFG_rite_tension_baseline_fundamentalist_hostile
+                }
+                else_if = {
+                    limit = {
+                        rite_hostility_level = {
+                            target = prev
+                            value = faith_evil_level
+                        }
+                    }
+
+                    add = V_kCAFG_rite_tension_baseline_fundamentalist_evil
+                }
+            }
+            # desc = kCAFG_this_rite_view_of_kCAFG_target_rite
+		    # format = "BREAKDOWN_FORMAT_PERCENTAGE_POSITIVE_IS_BAD"
+        }
+
+        multiply = {
+            value = V_kCAFG_rite_tension_target_baseline_target_opinion_of_scope_fervor_factor
+            # desc = kCAFG_target_rite_fervor_factor
+		    # format = "BREAKDOWN_FORMAT_PERCENTAGE_POSITIVE_IS_BAD"
+        }
+    }
+}
+
+V_kCAFG_rite_tension_target_baseline_target_opinion_of_scope_fervor_factor = {
+    value = 1
+    subtract = V_kCAFG_rite_tension_baseline_fervor_factor
+    add = {
+        value = faith.fervor
+        divide = define:NFaith|MAX_FERVOR
+        multiply = V_kCAFG_rite_tension_baseline_fervor_factor
+    }
+}
+
+# Holder is taken into account
+# Scope : rite
+# kCAFG_target_rite
+# kCAFG_province
+V_kCAFG_rite_tension_target_baseline_holder_factor = {
+    value = 1
+
+    multiply = {
+        value = scope:kCAFG_province.county.holder.V_kCAFG_character_different_rite_county_opinion_mult
+        # desc = kCAFG_holder_different_rite_county_opinion_mult
+		# format = "BREAKDOWN_FORMAT_PERCENTAGE_POSITIVE_IS_BAD"
+    }
+
+    scope:kCAFG_province.county.holder = {
+        multiply = V_kCAFG_rite_tension_target_baseline_holder_factor_mult_VANILLA
+        multiply = V_kCAFG_rite_tension_target_baseline_holder_factor_mult_VANILLA_B
+    }
+
+    scope:kCAFG_province = {
+        multiply = V_kCAFG_rite_tension_tolerance_law_factor
+    }
+}
+
+# Scopes : character
+V_kCAFG_rite_tension_target_baseline_holder_factor_mult_VANILLA = {
+    value = 1
+
+    ####
+    # different_rite_county_opinion_mult modifiers
+
+    if = {
+        limit = {
+            any_character_struggle = {
+                involvement = involved
+                is_struggle_type = iberian_struggle
+                is_struggle_phase = struggle_iberia_phase_conciliation
+            }
+        }
+        multiply = 0.5
+    }
+
+    if = {
+        limit = { has_character_modifier = hc_7010_holy_war }
+        multiply = 1.25
+    }
+
+    if = {
+        limit = { has_character_modifier = hc_7010_tolerance }
+        multiply = 0.75
+    }
+
+    if = {
+        limit = { has_character_modifier = roaming_the_hermit_modifier }
+        multiply = 0.5
+    }
+
+    if = {
+        limit = { has_character_modifier = fp3_sided_with_different_faith_vassal_tax_dispute }
+        multiply = 1.15
+    }
+
+    if = {
+        limit = {
+            has_character_modifier = fp2_mozarab_rejected_modifier
+            prev = rite:mozarabic_church
+        }
+        multiply = 1.25
+    }
+
+    if = {
+        limit = { has_character_modifier = fp2_lenient_towards_foreign_merchants_modifier }
+        multiply = 0.85
+    }
+
+    if = {
+        limit = { has_character_modifier = fp2_epitaph_modifier }
+        multiply = 1.15
+    }
+
+    if = {
+        limit = { has_character_modifier = tolerance_gospel_modifier }
+        multiply = 0.85
+    }
+
+    if = {
+        limit = { has_character_modifier = ep3_pilgrim_protector_other_modifier }
+        multiply = 0.7
+    }
+    ####
+}
+
+# Scopes : character
+V_kCAFG_rite_tension_target_baseline_holder_factor_mult_VANILLA_B = {
+    value = 1
+
+    ####
+    # different_rite_county_opinion_mult modifiers
+
+    if = {
+        limit = { has_court_position = cultural_emissary_court_position }
+        multiply = {
+            value = 1
+            subtract = V_kCAFG_cultural_emissary_baseline_rite_tension_reduction_max
+        }
+    }
+
+    # if = {
+    #     limit = { exists = court_position:cultural_emissary_court_position }
+	# 	court_position:cultural_emissary_court_position ?= {
+    #         multiply = {
+    #             value = 1
+    #             subtract = {
+    #                 value = aptitude:cultural_emissary_court_position # 0-4
+    #                 divide = V_kCAFG_cultural_emissary_max_aptitude
+    #                 multiply = V_kCAFG_cultural_emissary_baseline_rite_tension_reduction_max
+    #             }
+    #         }
+    #     }
+    # }
+
+    if = {
+        limit = { culture = { has_cultural_tradition = tradition_tgp_religious_hospitality } }
+        multiply = 0.5
+    }
+    else_if = {
+        limit = {
+            culture = {
+                OR = {
+                    has_cultural_tradition = tradition_steppe_tolerance
+                    has_cultural_tradition = tradition_african_tolerance
+                }
+            }
+        }
+        multiply = 0.75
+    }
+    else_if = {
+        limit = { culture = { has_cultural_tradition = tradition_malleable_invaders } }
+        multiply = 0.8
+    }
+
+    if = {
+        limit = {
+            OR = {
+                rite = { rite_has_tenet = tenet_adaptive }
+                has_personal_tenet = tenet_adaptive
+            }
+        }
+        multiply = 0.75
+    }
+
+    if = { 
+        limit = {
+            OR = {
+                rite = { rite_has_tenet = tenet_household_gods }
+                has_personal_tenet = tenet_household_gods
+            }
+        }
+        multiply = 0.9
+    }
+
+    if = {
+        limit = { has_trait = nomadic_philosophy }
+        multiply = 0.75
+    }
+
+    if = {
+        limit = { has_character_modifier = claimed_mantle_of_maitreya_modifier }
+        multiply = 0.5
+    }
+
+    if = {
+        limit = {
+            exists = dynasty
+			dynasty = { has_dynasty_perk = fp1_adventure_legacy_3 }
+        }
+        multiply = 0.5
+    }
+    ####
+}
+
+# Province is taken into account
+# Scope : province
+# kCAFG_target_rite
+V_kCAFG_rite_tension_target_baseline_province_factor = {
+    value = 1
+
+    if = {
+        limit = { has_holding_type = church_holding }
+        multiply = {
+            value = 1.2
+            # desc = kCAFG_province_rite_tooltip_desc_province_has_church_holding
+		    # format = "BREAKDOWN_FORMAT_PERCENTAGE_POSITIVE_IS_BAD"
+        }
+    }
+
+    # Calculate weighted multiplier
+    if = {
+        limit = { T_kCAFG_province_cultures_count_at_least = { VALUE = 1 } }
+        multiply = {
+            value = V_kCAFG_rite_tension_target_baseline_province_factor_cultures_different_faith_county_opinion_factor
+            # desc = kCAFG_culture_different_rite_county_opinion_mult
+		    # format = "BREAKDOWN_FORMAT_PERCENTAGE_POSITIVE_IS_BAD"
+        }
+    }
+}
+
+V_kCAFG_rite_tension_target_baseline_province_factor_cultures_different_faith_county_opinion_factor = {
+    value = 0
+    every_in_list = {
+        variable = kCAFG_province_culture_structs
+        add = {
+            value = var:culture.V_kCAFG_culture_different_faith_county_opinion_mult
+            multiply = var:factor
+        }
+    }
+}
+
+V_kCAFG_rite_tension_difference_from_target = {
+    value = var:kCAFG_target_rite_tension
+    subtract = var:kCAFG_rite_tension
+}
+
+V_kCAFG_rite_tension_monthly_drift_factor = 0.075 # Tension will drift by this value multiplied by the difference with the baseline
+V_kCAFG_rite_tension_drift_minimum_value = 0.005
+V_kCAFG_rite_tension_drift_minimum_value_negative = {
+    value = V_kCAFG_rite_tension_drift_minimum_value
+    multiply = -1
+}
+
+# Scope : province
+V_kCAFG_rite_tension_monthly_change = {
+    value = 0
+    add = {
+        value = V_kCAFG_rite_tension_monthly_drift
+        desc = kCAFG_rite_tension_monthly_drift_tt
+		format = "BREAKDOWN_FORMAT_PERCENTAGE_POSITIVE_IS_BAD_2_DECIMALS"
+    }
+    if = {
+        limit = {
+            county = { has_county_modifier = divine_guidance }
+        }
+        subtract = {
+            value = -0.05
+            desc = divine_guidance
+            format = "BREAKDOWN_FORMAT_PERCENTAGE_POSITIVE_IS_BAD_2_DECIMALS"
+        }
+    }
+}
+
+V_kCAFG_rite_tension_monthly_change_desc = {
+    value = V_kCAFG_rite_tension_monthly_change
+    save_temporary_scope_as = kCAFG_province
+    add = {
+        county.holder = {
+            add = V_kCAFG_rite_tension_monthly_change_desc_warring_character
+            every_liege_or_above = {
+                add = V_kCAFG_rite_tension_monthly_change_desc_warring_character
+            }
+        }
+        desc = kCAFG_rite_tension_on_lieges_warring_faiths_tt
+        format = "BREAKDOWN_FORMAT_PERCENTAGE_POSITIVE_IS_BAD_2_DECIMALS"
+    }
+}
+
+# Scope : character
+# Required scope : kCAFG_province
+V_kCAFG_rite_tension_monthly_change_desc_warring_character = {
+    value = 0
+    save_temporary_scope_as = warring_character
+    if = {
+        limit = {
+            is_at_war = yes
+            any_character_war = {
+                primary_defender.rite != prev.rite
+                using_holy_war_cb_trigger = yes
+                is_attacker = prev
+                primary_defender.rite = {
+                    save_temporary_scope_as = kCAFG_rite
+                    scope:kCAFG_province = {
+                        T_kCAFG_does_province_contain_rite = { RITE = scope:kCAFG_rite }
+                    }
+                }
+            }
+        }
+        ordered_character_war = {
+            limit = {
+                primary_defender.rite != prev.rite
+                using_holy_war_cb_trigger = yes
+                is_attacker = prev
+                primary_defender.rite = {
+                    save_temporary_scope_as = kCAFG_rite
+                    scope:kCAFG_province = {
+                        T_kCAFG_does_province_contain_rite = { RITE = scope:kCAFG_rite }
+                    }
+                }
+            }
+            order_by = {
+                value = 0
+                casus_belli = {
+                    every_target_title = {
+                        if = { limit = { tier = tier_county } add = 1 }
+                        else_if = { limit = { tier = tier_duchy } add = 5 }
+                        else_if = { limit = { tier = tier_kingdom } add = 15 }
+                        else_if = { limit = { tier = tier_empire } add = 50 }
+                        else_if = { limit = { tier = tier_hegemony } add = 100 }
+                    }
+                }
+            }
+            primary_defender.rite = { save_temporary_scope_as = kCAFG_rite }
+            casus_belli = {
+                ordered_target_title = {
+                    order_by = tier
+                    max = 1
+                    save_temporary_scope_as = highest_tiered_title # used by V_kCAFG_rite_tension_on_religious_warring_quarterly
+                }
+            }
+            scope:kCAFG_province = {
+                add = {
+                    value = V_kCAFG_rite_tension_on_religious_warring_quarterly
+                    multiply = {
+                        value = 0.1
+                        add = {
+                            value = V_kCAFG_province_rite_factor
+                            multiply = {
+                                value = 1
+                                subtract = 0.1
+                            }
+                        }
+                    }
+                    divide = 3 # Quarterly to monthly
+                }
+            }
+        }
+    }
+}
+
+# Scope : province
+V_kCAFG_rite_tension_monthly_drift = {
+    value = 0
+    if = {
+        limit = {
+            OR = {
+                V_kCAFG_rite_tension_difference_from_target > V_kCAFG_rite_tension_drift_minimum_value
+                V_kCAFG_rite_tension_difference_from_target < V_kCAFG_rite_tension_drift_minimum_value_negative
+            }
+        }
+        value = V_kCAFG_rite_tension_difference_from_target
+        multiply = V_kCAFG_rite_tension_monthly_drift_factor
+        if = {
+            limit = { var:kCAFG_target_rite_tension > var:kCAFG_rite_tension }
+            min = V_kCAFG_rite_tension_drift_minimum_value
+        }
+        else_if = {
+            limit = { var:kCAFG_target_rite_tension < var:kCAFG_rite_tension }
+            max = V_kCAFG_rite_tension_drift_minimum_value_negative
+        }
+    }
+    else_if = {
+        limit = { var:kCAFG_rite_tension != var:kCAFG_target_rite_tension }
+        value = V_kCAFG_rite_tension_difference_from_target
+    }
+}
+
+# Scope : province
+# highest_tiered_title : title the war is targeting
+V_kCAFG_rite_tension_on_religious_war_declaration = {
+    switch = {
+        trigger = scope:highest_tiered_title.tier
+        tier_county = { value = 0.15 }
+        tier_duchy = { value = 0.30 }
+        tier_kingdom = { value = 0.50 }
+        tier_empire = { value = 0.70 }
+        tier_hegemony = { value = 0.90 }
+    }
+}
+
+# Scope : province
+# highest_tiered_title : title the war is targeting
+V_kCAFG_rite_tension_on_religious_war_join = {
+    switch = {
+        trigger = scope:highest_tiered_title.tier
+        tier_county = { value = 0.10 }
+        tier_duchy = { value = 0.20 }
+        tier_kingdom = { value = 0.35 }
+        tier_empire = { value = 0.50 }
+        tier_hegemony = { value = 0.65 }
+    }
+}
+
+# Scope : province
+# highest_tiered_title : title the war is targeting
+V_kCAFG_rite_tension_on_religious_warring_quarterly = {
+    switch = {
+        trigger = scope:highest_tiered_title.tier
+        tier_county = { value = 0.04 }
+        tier_duchy = { value = 0.08 }
+        tier_kingdom = { value = 0.16 }
+        tier_empire = { value = 0.28 }
+        tier_hegemony = { value = 0.40 }
+    }
+}

@@ -1,0 +1,19 @@
+﻿# CB scope: attacker and defender are supplied by the engine.
+voltara_keeper_war_permitted = {
+ custom_tooltip = {
+  text = voltara_keeper_imperial_protection_tt
+  NAND = {
+   scope:attacker = { voltara_in_hegemony = yes }
+   scope:defender = { OR = { has_title = title:k_voltara_22 any_liege_or_above = { has_title = title:k_voltara_22 } } }
+  }
+ }
+}
+# The sender's heritage must be represented in the de jure Empire of Severos.
+voltara_keeper_sender_culture = {
+ title:e_voltara_21 = {
+  any_in_de_jure_hierarchy = {
+   tier = tier_county
+   culture = { has_same_culture_heritage = scope:actor.culture }
+  }
+ }
+}

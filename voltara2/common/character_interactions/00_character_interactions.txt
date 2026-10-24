@@ -85,7 +85,7 @@ is_valid = {
 			}
 			trigger_if = {
 				limit = {
-					has_title = title:h_china
+					always = no
 				}
 				situation:dynastic_cycle ?= {
 					NOT = {
@@ -1793,9 +1793,8 @@ is_valid = {
 					expose_secret = scope:puppet_or_actor
 				}
 			}
-			if = {
-				limit = {
-					has_title = title:e_minister_of_justice
+			if = { limit = {
+					always = no
 					top_participant_group:dynastic_cycle ?= {
 						NOT = { participant_group_type = other_rulers }
 					}
@@ -1811,31 +1810,8 @@ is_valid = {
 							}
 						}
 					}
-				}
-				add_merit_if_relevant_effect = {
-					MERIT = minor_merit_value
-				}
-				if = {
-					limit = {
-						government_has_flag = government_has_influence
-					}
-					change_influence = {
-						value = minor_influence_gain
-						multiply = scope:recipient.highest_held_title_tier
-					}
-				}
-				situation:dynastic_cycle = {
-					if = {
-						limit = {
-							situation_top_has_catalyst = catalyst_minister_exposed_secret
-						}
-						trigger_situation_catalyst = {
-							catalyst = catalyst_minister_exposed_secret
-							character = scope:puppet_or_actor
-						}
-					}
-				}
-			}
+				} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 			# Only get stressed/SP penalties if you don't have the parameter
 			if = {
 				limit = {

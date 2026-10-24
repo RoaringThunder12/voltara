@@ -243,7 +243,7 @@ is_valid = {
 				if = {
 					limit = {
 						scope:recipient = {
-							has_title = title:h_china
+							always = no
 							this != scope:actor
 						}
 					}
@@ -255,7 +255,7 @@ is_valid = {
 				else_if = {
 					limit = {
 						scope:actor = {
-							has_title = title:h_china
+							always = no
 						}
 					}
 					scope:actor = {
@@ -383,7 +383,7 @@ is_valid = {
 		modifier = {
 			add = -100
 			scope:recipient = {
-				has_title = title:h_china
+				always = no
 			}
 			situation:dynastic_cycle ?= {
 				any_participant_group = {
@@ -462,14 +462,18 @@ celestial_demand_treasury_interaction = {
 			trigger_if = {
 				limit = {
 					vassal_contract_has_flag = celestial_military_appointment
-					title:e_minister_of_war.holder ?= scope:actor
+					# Optional native title is absent on the Voltara map.
+# title:e_minister_of_war.holder ?= scope:actor
+always = no
 				}
 				top_liege = scope:actor.top_liege
 			}
 			trigger_else_if = {
 				limit = {
 					NOT = { vassal_contract_has_flag = celestial_military_appointment }
-					title:e_minister_of_revenue.holder ?= scope:actor
+					# Optional native title is absent on the Voltara map.
+# title:e_minister_of_revenue.holder ?= scope:actor
+always = no
 				}
 				top_liege = scope:actor.top_liege
 			}
@@ -811,14 +815,14 @@ celestial_demand_treasury_interaction = {
 		}
 		modifier = {
 			scope:actor = {
-				has_title = title:e_minister_of_revenue
+				always = no
 			}
 			add = 10
 			desc = MINISTER_OF_REVENUE_REASON
 		}
 		modifier = {
 			scope:actor = {
-				has_title = title:e_minister_of_war
+				always = no
 			}
 			add = 10
 			desc = MINISTER_OF_WAR_REASON
@@ -3122,16 +3126,15 @@ is_valid = {
 
 	on_accept = {
 		# hegemon can only ask characters to join the pro hegemon movement
-		if = {
-			limit = {
-				scope:actor = title:h_china.holder
-			}
-			situation:dynastic_cycle ?= {
-				situation_participant_group:pro_hegemon_movement = {
-					save_scope_as = actors_movement
-				}
-			}
-		}
+		if = { limit = {
+				always = no
+			} # Proven unreachable; original effects retained below.
+# situation:dynastic_cycle ?= {
+# 				situation_participant_group:pro_hegemon_movement = {
+# 					save_scope_as = actors_movement
+# 				}
+# 			}
+}
 		# other characters ask to join their movement
 		else = {
 			situation:dynastic_cycle ?= {
@@ -4509,7 +4512,7 @@ is_valid = {
 			# Ministers
 			if = {
 				limit = {
-					scope:actor = { has_title = title:e_minister_chancellor }
+					scope:actor = { always = no }
 				}
 				add = {
 					value = scope:calculated_base_cost
@@ -4519,7 +4522,7 @@ is_valid = {
 			}
 			if = {
 				limit = {
-					scope:actor = { has_title = title:e_minister_of_personnel }
+					scope:actor = { always = no }
 				}
 				add = {
 					value = scope:calculated_base_cost
@@ -4947,14 +4950,12 @@ is_valid = {
 				limit = {
 					this = scope:actor.top_liege
 				}
-				if = {
-					limit = {
+				if = { limit = {
 						tgp_has_access_to_ministry_trigger = yes
-						exists = title:e_minister_of_war.holder
-						title:e_minister_of_war.holder.top_liege = scope:actor.top_liege
-					}
-					title:e_minister_of_war.holder = { save_scope_as = recipient }
-				}
+						always = no
+						always = no
+					} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 				else = {
 					save_scope_as = recipient
 				}
@@ -4973,7 +4974,7 @@ is_valid = {
 		}
 		OR = {
 			is_governor = yes
-			has_title = title:e_minister_grand_marshal
+			always = no
 		}
 		top_liege != this
 		government_has_mechanic = administrative
@@ -4991,7 +4992,7 @@ is_valid = {
 			OR = {
 				this = scope:actor.top_liege
 				AND = {
-					has_title = title:e_minister_of_war
+					always = no
 					liege ?= {
 						tgp_has_access_to_ministry_trigger = yes
 						this = scope:actor.top_liege
@@ -5524,7 +5525,7 @@ is_valid = {
 				this = scope:actor.top_liege
 				OR = {
 					AND = {
-						has_title = title:e_minister_of_war
+						always = no
 						liege ?= {
 							highest_held_title_tier >= tier_hegemony
 							government_has_flag = government_is_celestial
@@ -5535,7 +5536,7 @@ is_valid = {
 						}
 					}
 					AND = {
-						has_title = title:e_minister_of_revenue
+						always = no
 						liege ?= {
 							highest_held_title_tier >= tier_hegemony
 							government_has_flag = government_is_celestial
@@ -5604,8 +5605,8 @@ is_valid = {
 			}
 			scope:recipient = {
 				OR = {
-					has_title = title:e_minister_of_revenue
-					has_title = title:e_minister_of_war
+					always = no
+					always = no
 					this = scope:actor.top_liege
 				}
 			}
@@ -5967,7 +5968,7 @@ is_valid = {
 		}
 		OR = {
 			top_liege ?= this
-			has_title = title:e_minister_grand_marshal
+			always = no
 			AND = {
 				vassal_contract_has_flag = celestial_military_appointment
 				OR = { # We limit the AI to being direct vassals of the top liege to reduce the amount of requests
@@ -5988,7 +5989,7 @@ is_valid = {
 		}
 		scope:actor.top_liege ?= scope:recipient.top_liege
 		scope:recipient = {
-			has_title = title:e_minister_of_war
+			always = no
 		}
 	}
 
@@ -6391,7 +6392,7 @@ is_valid = {
 		}
 		scope:actor.top_liege ?= scope:recipient.top_liege
 		scope:recipient = {
-			has_title = title:e_minister_of_rites
+			always = no
 		}
 	}
 
@@ -6768,7 +6769,7 @@ is_valid = {
 			}
 			if = {
 				limit = {
-					scope:actor = { has_title = title:e_minister_of_war }
+					scope:actor = { always = no }
 				}
 				multiply = {
 					value = 0.25
@@ -6787,7 +6788,7 @@ is_valid = {
 				government_has_mechanic = administrative
 			}
 			# If you are the minister of war
-			has_title = title:e_minister_of_war
+			always = no
 		}
 		trigger_if = {
 			limit = { is_ai = yes }
@@ -6801,7 +6802,7 @@ is_valid = {
 					government_has_mechanic = administrative
 				}
 				# If you are the minister of war
-				has_title = title:e_minister_of_war
+				always = no
 			}
 		}
 	}
@@ -6815,7 +6816,7 @@ is_valid = {
 			top_liege ?= scope:actor.top_liege
 			OR = {
 				is_landed = yes
-				has_title = title:e_minister_grand_marshal
+				always = no
 			}
 		}
 	}
@@ -7014,7 +7015,7 @@ is_valid = {
 				top_liege = this
 			}
 			scope:secondary_recipient = {
-				has_title = title:e_minister_grand_marshal
+				always = no
 			}
 		}
 
@@ -7282,7 +7283,7 @@ is_valid = {
 				has_trait = arrogant
 				has_trait = deceitful
 				has_trait = disloyal
-				has_title = title:h_china # the hegemon should rather not be doing this
+				always = no # the hegemon should rather not be doing this
 			}
 			NOT = {
 				any_scheme = {
@@ -7555,7 +7556,7 @@ is_valid = {
 				has_trait = just
 				has_trait = content
 				has_trait = loyal
-				has_title = title:h_china # the hegemon should rather not be doing this
+				always = no # the hegemon should rather not be doing this
 				any_scheme = {
 					is_scheme_category = political
 				}
@@ -8228,7 +8229,7 @@ is_valid = {
 		# Grand Chancellor less likely to accept if you're not high enough rank
 		modifier = {
 			scope:secondary_recipient.primary_title ?= {
-				this = title:e_minister_chancellor
+				always = no
 			}
 			scope:actor.highest_held_title_tier < tier_kingdom
 			add = -10
@@ -11490,7 +11491,7 @@ is_valid = {
 		triggered_desc = {
 			trigger = {
 				scope:actor = {
-					has_title = title:e_minister_censor
+					always = no
 					has_council_position = councillor_spymaster
 				}
 			}
@@ -11499,7 +11500,7 @@ is_valid = {
 		triggered_desc = {
 			trigger = {
 				scope:actor = {
-					has_title = title:e_minister_of_justice
+					always = no
 					has_council_position = minister_justice
 				}
 			}
@@ -11510,11 +11511,11 @@ is_valid = {
 		OR = {
 			AND = {
 				has_council_position = minister_justice
-				has_title = title:e_minister_of_justice
+				always = no
 			}
 			AND = {
 				has_council_position = councillor_spymaster
-				has_title = title:e_minister_censor
+				always = no
 			}
 		}
 		top_liege ?= {
@@ -11618,11 +11619,15 @@ is_valid = {
 				is_imprisoned_by = scope:actor
 				AND = {
 					is_imprisoned_by = title:e_minister_censor.holder
-					title:e_minister_censor.holder.top_liege ?= scope:actor
+					# Optional native title is absent on the Voltara map.
+# title:e_minister_censor.holder.top_liege ?= scope:actor
+always = no
 				}
 				AND = {
 					is_imprisoned_by = title:e_minister_of_justice.holder
-					title:e_minister_of_justice.holder.top_liege ?= scope:actor
+					# Optional native title is absent on the Voltara map.
+# title:e_minister_of_justice.holder.top_liege ?= scope:actor
+always = no
 				}
 			}
 			top_liege ?= scope:actor
@@ -11983,8 +11988,8 @@ is_valid = {
 
 		scope:actor = {
 			OR = {
-				has_title = title:e_minister_of_war
-				has_title = title:e_minister_of_revenue
+				always = no
+				always = no
 				this = scope:recipient.top_liege
 			}
 		}
@@ -11993,13 +11998,17 @@ is_valid = {
 			has_treasury = yes
 			trigger_if = {
 				limit = {
-					title:e_minister_of_revenue.holder ?= scope:actor
+					# Optional native title is absent on the Voltara map.
+# title:e_minister_of_revenue.holder ?= scope:actor
+always = no
 					NOT = { vassal_contract_has_flag = celestial_military_appointment }
 				}
 			}
 			trigger_else_if = {
 				limit = {
-					title:e_minister_of_war.holder ?= scope:actor
+					# Optional native title is absent on the Voltara map.
+# title:e_minister_of_war.holder ?= scope:actor
+always = no
 					vassal_contract_has_flag = celestial_military_appointment
 				}
 			}

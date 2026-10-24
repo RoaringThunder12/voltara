@@ -1,0 +1,7 @@
+﻿# Explicit player entry point. NEW may be an AI proxy; caller identity grants the extra seat.
+lam_ff_install_player_effect = { if = { limit = { scope:lam_ff_lord ?= this lam_ff_player_seat_open_trigger = yes $NEW$ = { is_alive = yes is_adult = yes is_imprisoned = no is_ruler = yes liege ?= prev lam_ff_not_head_trigger = yes }
+ NOT = { is_target_in_variable_list = { name = lam_bloc_leads target = $NEW$ } }
+$FOUNDER$ = { is_ai = no lam_ff_founder_current_trigger = yes } } add_to_variable_list = { name = lam_bloc_leads target = $NEW$ }
+ $NEW$ = { lam_fac_new_identity_effect = yes set_variable = { name = lam_bloc value = this } set_variable = { name = lam_fac_favour value = $FAVOUR$ } set_variable = { name = lam_rv_found_grace value = yes years = 1 } }
+ if = { limit = { has_variable = lam_fac_ban } $NEW$ = { lam_fac_ug_start_effect = yes } }
+ } }

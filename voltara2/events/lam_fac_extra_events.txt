@@ -1,0 +1,585 @@
+﻿namespace = lam_facx
+
+# Living Factions - more faction life (step_fac_extra_events).
+
+lam_facx.0001 = {
+	type = character_event
+	title = lam_facx.0001.t
+	desc = { random_valid = { desc = lam_facx.0001.d1 desc = lam_facx.0001.d2 desc = lam_facx.0001.d3 } }
+	theme = realm
+	override_background = { reference = tavern }
+	left_portrait = { character = root animation = happiness }
+	right_portrait = { character = scope:lam_x_mate animation = happiness }
+	trigger = { NOT = { has_variable = lam_bloc_lead } exists = scope:lam_x_head var:lam_bloc ?= scope:lam_x_head liege ?= scope:lam_x_lord exists = scope:lam_x_mate scope:lam_x_mate = { is_alive = yes } }
+	option = {
+		name = lam_facx.0001.a
+		scope:lam_x_mate = { add_opinion = { target = root modifier = pleased_opinion opinion = 15 } }
+		add_stress = minor_stress_loss
+	}
+	option = {
+		name = lam_facx.0001.b
+		add_prestige = minor_prestige_gain
+	}
+	option = {
+		name = lam_facx.0001.c
+		trigger = { intrigue >= 8 }
+		random = { chance = 35 add_hook = { type = favor_hook target = scope:lam_x_mate years = 5 } }
+		custom_tooltip = lam_facx.0001.c_tt
+	}
+}
+
+lam_facx.0002 = {
+	type = character_event
+	title = lam_facx.0002.t
+	desc = { random_valid = { desc = lam_facx.0002.d1 desc = lam_facx.0002.d2 desc = lam_facx.0002.d3 } }
+	theme = realm
+	override_background = { reference = throne_room }
+	left_portrait = { character = root animation = personality_rational }
+	right_portrait = { character = scope:lam_x_head animation = beg }
+	trigger = { NOT = { has_variable = lam_bloc_lead } exists = scope:lam_x_head var:lam_bloc ?= scope:lam_x_head liege ?= scope:lam_x_lord exists = scope:lam_x_head scope:lam_x_head = { is_alive = yes } }
+	option = {
+		name = lam_facx.0002.a
+		trigger = { gold >= minor_gold_value }
+		pay_short_term_gold = { target = scope:lam_x_head gold = minor_gold_value }
+		scope:lam_x_head = { add_opinion = { target = root modifier = grateful_opinion opinion = 20 } }
+	}
+	option = {
+		name = lam_facx.0002.b
+		scope:lam_x_head = { add_opinion = { target = root modifier = insulted_opinion opinion = -10 } }
+	}
+}
+
+lam_facx.0003 = {
+	type = character_event
+	title = lam_facx.0003.t
+	desc = { random_valid = { desc = lam_facx.0003.d1 desc = lam_facx.0003.d2 desc = lam_facx.0003.d3 } }
+	theme = realm
+	override_background = { reference = corridor_night }
+	left_portrait = { character = root animation = scheme }
+	right_portrait = { character = scope:lam_x_rival animation = scheme }
+	trigger = { lam_fac_poaching_valid_trigger = yes }
+	option = {
+		name = lam_facx.0003.a
+		# Review: validate current participants again at choice time.
+		if = {
+			limit = { lam_fac_poaching_valid_trigger = yes }
+			scope:lam_x_head = { add_opinion = { target = root modifier = respect_opinion opinion = 15 } }
+			scope:lam_x_rival = { add_opinion = { target = root modifier = angry_opinion opinion = -10 } }
+		}
+	}
+	option = {
+		name = lam_facx.0003.b
+		# Review: validate current participants again at choice time.
+		if = {
+			limit = { lam_fac_poaching_valid_trigger = yes }
+			scope:lam_x_rival = { add_opinion = { target = root modifier = pleased_opinion opinion = 10 } }
+		}
+	}
+	option = {
+		name = lam_facx.0003.c
+		# Review: validate current participants again at choice time.
+		if = {
+			limit = { lam_fac_poaching_valid_trigger = yes }
+			custom_tooltip = lam_facx.0003.c_tt
+			hidden_effect = { set_variable = { name = lam_bloc value = scope:lam_x_rival } set_variable = { name = lam_fac_pinned value = yes years = 2 } set_variable = { name = lam_fac_tier value = 1 } lam_fac_quick_refresh_court_effect = yes }
+			scope:lam_x_head = { add_opinion = { target = root modifier = angry_opinion opinion = -25 } }
+		}
+	}
+}
+
+lam_facx.0004 = {
+	type = character_event
+	title = lam_facx.0004.t
+	desc = { random_valid = { desc = lam_facx.0004.d1 desc = lam_facx.0004.d2 } }
+	theme = realm
+	override_background = { reference = council_chamber }
+	left_portrait = { character = root animation = personality_bold }
+	right_portrait = { character = scope:lam_x_head animation = happiness }
+	trigger = { NOT = { has_variable = lam_bloc_lead } exists = scope:lam_x_head var:lam_bloc ?= scope:lam_x_head liege ?= scope:lam_x_lord exists = scope:lam_x_head scope:lam_x_head = { is_alive = yes } }
+	option = {
+		name = lam_facx.0004.a
+		trigger = { gold >= medium_gold_value }
+		pay_short_term_gold = { target = scope:lam_x_head gold = medium_gold_value }
+		scope:lam_x_head = { add_opinion = { target = root modifier = grateful_opinion opinion = 10 } }
+		scope:lam_x_head = { lam_fac_cohesion_add_effect = { ADD = 3 } }
+	}
+	option = {
+		name = lam_facx.0004.b
+		trigger = { gold >= major_gold_value }
+		pay_short_term_gold = { target = scope:lam_x_head gold = major_gold_value }
+		scope:lam_x_head = { add_opinion = { target = root modifier = grateful_opinion opinion = 25 } }
+		scope:lam_x_head = { lam_fac_cohesion_add_effect = { ADD = 5 } }
+		set_variable = { name = lam_fac_tier value = 1 }
+		set_variable = { name = lam_fac_tier_fixed value = yes }
+		custom_tooltip = lam_facx.0004.b_tt
+	}
+	option = {
+		name = lam_facx.0004.c
+		add_prestige = minor_prestige_loss
+	}
+}
+
+lam_facx.0005 = {
+	type = character_event
+	title = lam_facx.0005.t
+	desc = { first_valid = { triggered_desc = { trigger = { scope:lam_x_mate = { gold < 30 } } desc = lam_facx.0005.d1 } triggered_desc = { trigger = { scope:lam_x_mate = { OR = { has_trait = ill has_trait = pneumonic has_trait = consumption has_trait = wounded_1 has_trait = wounded_2 } } } desc = lam_facx.0005.d2 } triggered_desc = { trigger = { scope:lam_x_mate = { is_at_war = yes } } desc = lam_facx.0005.d3 } desc = lam_facx.0005.d1 } }
+	theme = realm
+	override_background = { reference = courtyard }
+	left_portrait = { character = root animation = worry }
+	right_portrait = { character = scope:lam_x_mate animation = sadness }
+	trigger = { NOT = { has_variable = lam_bloc_lead } exists = scope:lam_x_head var:lam_bloc ?= scope:lam_x_head liege ?= scope:lam_x_lord exists = scope:lam_x_mate scope:lam_x_mate = { is_alive = yes } }
+	option = {
+		name = lam_facx.0005.a
+		trigger = { gold >= minor_gold_value }
+		pay_short_term_gold = { target = scope:lam_x_mate gold = minor_gold_value }
+		scope:lam_x_mate = { add_opinion = { target = root modifier = grateful_opinion opinion = 25 } }
+	}
+	option = {
+		name = lam_facx.0005.b
+		add_stress = minor_stress_gain
+	}
+}
+
+lam_facx.0006 = {
+	type = character_event
+	title = lam_facx.0006.t
+	desc = { random_valid = { desc = lam_facx.0006.d1 desc = lam_facx.0006.d2 desc = lam_facx.0006.d3 } }
+	theme = realm
+	override_background = { reference = feast }
+	left_portrait = { character = root animation = personality_cynical }
+	right_portrait = { character = scope:lam_x_head animation = disapproval }
+	trigger = { NOT = { has_variable = lam_bloc_lead } exists = scope:lam_x_head var:lam_bloc ?= scope:lam_x_head liege ?= scope:lam_x_lord exists = scope:lam_x_head scope:lam_x_head = { is_alive = yes } }
+	option = {
+		name = lam_facx.0006.a
+		add_prestige = medium_prestige_gain
+		scope:lam_x_head = { add_opinion = { target = root modifier = insulted_opinion opinion = -10 } }
+	}
+	option = {
+		name = lam_facx.0006.b
+		scope:lam_x_head = { add_opinion = { target = root modifier = respect_opinion opinion = 10 } }
+	}
+}
+
+lam_facx.0101 = {
+	type = character_event
+	title = lam_facx.0101.t
+	desc = { random_valid = { desc = lam_facx.0101.d1 desc = lam_facx.0101.d2 desc = lam_facx.0101.d3 } }
+	theme = realm
+	override_background = { reference = throne_room }
+	left_portrait = { character = root animation = happiness }
+	right_portrait = { character = scope:lam_x_new animation = admiration }
+	trigger = { has_variable = lam_bloc_lead liege ?= scope:lam_x_lord exists = scope:lam_x_new scope:lam_x_new = { lam_fac_newcomer_valid_trigger = { HEAD = root } } }
+	option = {
+		name = lam_facx.0101.a
+		if = { limit = { scope:lam_x_new = { lam_fac_newcomer_valid_trigger = { HEAD = root } } }
+		add_prestige = minor_prestige_loss
+		custom_tooltip = lam_facx.0101.a_tt
+		hidden_effect = { scope:lam_x_new = { lam_fac_newcomer_join_effect = { HEAD = root TIER = 1 YEARS = 2 } } }
+		scope:lam_x_new = { add_opinion = { target = root modifier = grateful_opinion opinion = 15 } }
+		}
+	}
+	option = {
+		name = lam_facx.0101.b
+		if = { limit = { scope:lam_x_new = { lam_fac_newcomer_valid_trigger = { HEAD = root } } }
+		custom_tooltip = lam_facx.0101.b_tt
+		hidden_effect = { scope:lam_x_new = { lam_fac_newcomer_join_effect = { HEAD = root TIER = 2 YEARS = 1 } } }
+		}
+	}
+	option = {
+		name = lam_facx.0101.c
+		if = { limit = { scope:lam_x_new = { lam_fac_newcomer_valid_trigger = { HEAD = root } } }
+		scope:lam_x_new = { add_opinion = { target = root modifier = insulted_opinion opinion = -5 } }
+		}
+	}
+}
+
+lam_facx.0102 = {
+	type = character_event
+	title = lam_facx.0102.t
+	desc = { random_valid = { desc = lam_facx.0102.d1 desc = lam_facx.0102.d2 desc = lam_facx.0102.d3 } }
+	theme = realm
+	override_background = { reference = council_chamber }
+	left_portrait = { character = root animation = personality_bold }
+	right_portrait = { character = scope:lam_x_mate animation = admiration }
+	trigger = { has_variable = lam_bloc_lead liege ?= scope:lam_x_lord exists = scope:lam_x_mate scope:lam_x_mate = { is_alive = yes } }
+	option = {
+		name = lam_facx.0102.a
+		trigger = { gold >= medium_gold_value }
+		remove_short_term_gold = medium_gold_value
+		root = { lam_fac_cohesion_add_effect = { ADD = 10 } }
+	}
+	option = {
+		name = lam_facx.0102.b
+		random = { chance = { value = 30 add = { value = diplomacy multiply = 2 } max = 80 } root = { lam_fac_cohesion_add_effect = { ADD = 5 } } }
+	}
+}
+
+lam_facx.0103 = {
+	type = character_event
+	title = lam_facx.0103.t
+	desc = { random_valid = { desc = lam_facx.0103.d1 desc = lam_facx.0103.d2 desc = lam_facx.0103.d3 } }
+	theme = realm
+	override_background = { reference = council_chamber }
+	left_portrait = { character = root animation = worry }
+	right_portrait = { character = scope:lam_x_mate animation = anger }
+	trigger = { has_variable = lam_bloc_lead liege ?= scope:lam_x_lord exists = scope:lam_x_mate scope:lam_x_mate = { is_alive = yes } }
+	option = {
+		name = lam_facx.0103.a
+		scope:lam_x_mate = { add_opinion = { target = root modifier = grateful_opinion opinion = 20 } }
+		scope:lam_x_mate = { set_variable = { name = lam_fac_tier_fixed value = yes } }
+		add_prestige = minor_prestige_loss
+	}
+	option = {
+		name = lam_facx.0103.b
+		scope:lam_x_mate = { add_opinion = { target = root modifier = angry_opinion opinion = -20 } }
+		add_dread = minor_dread_gain
+	}
+	option = {
+		name = lam_facx.0103.c
+		trigger = { gold >= minor_gold_value }
+		remove_short_term_gold = minor_gold_value
+		scope:lam_x_mate = { add_opinion = { target = root modifier = bribed_opinion opinion = 15 } }
+	}
+}
+
+lam_facx.0104 = {
+	type = character_event
+	title = lam_facx.0104.t
+	desc = { random_valid = { desc = lam_facx.0104.d1 desc = lam_facx.0104.d2 desc = lam_facx.0104.d3 } }
+	theme = realm
+	override_background = { reference = corridor_night }
+	left_portrait = { character = root animation = paranoia }
+	right_portrait = { character = scope:lam_x_mate animation = fear }
+	trigger = { lam_fac_spy_member_valid_trigger = yes }
+	option = {
+		name = lam_facx.0104.a
+		# Review: validate current participants again at choice time.
+		if = {
+			limit = { lam_fac_spy_member_valid_trigger = yes }
+			scope:lam_x_mate = { set_variable = { name = lam_fac_let_go value = yes months = 6 } if = { limit = { has_variable = lam_fac_pinned } remove_variable = lam_fac_pinned } if = { limit = { has_variable = lam_bloc } remove_variable = lam_bloc } lam_fac_quick_refresh_court_effect = yes }
+			scope:lam_x_rival = { add_opinion = { target = root modifier = angry_opinion opinion = -15 } }
+			custom_tooltip = lam_facx.0104.a_tt
+		}
+	}
+	option = {
+		name = lam_facx.0104.b
+		trigger = { intrigue >= 10 }
+		# Review: validate current participants again at choice time.
+		if = {
+			limit = { lam_fac_spy_member_valid_trigger = yes }
+			random = { chance = 50 add_hook = { type = favor_hook target = scope:lam_x_rival years = 5 } }
+			custom_tooltip = lam_facx.0104.b_tt
+		}
+	}
+	option = {
+		name = lam_facx.0104.c
+		# Review: validate current participants again at choice time.
+		if = {
+			limit = { lam_fac_spy_member_valid_trigger = yes }
+			root = { lam_fac_cohesion_add_effect = { ADD = -5 } }
+		}
+	}
+}
+
+lam_facx.0105 = {
+	type = character_event
+	title = lam_facx.0105.t
+	desc = { random_valid = { desc = lam_facx.0105.d1 desc = lam_facx.0105.d2 } }
+	theme = realm
+	override_background = { reference = courtyard }
+	left_portrait = { character = root animation = admiration }
+	trigger = { has_variable = lam_bloc_lead liege ?= scope:lam_x_lord  }
+	option = {
+		name = lam_facx.0105.a
+		trigger = { gold >= minor_gold_value }
+		remove_short_term_gold = minor_gold_value
+		add_prestige = medium_prestige_gain
+		root = { lam_fac_cohesion_add_effect = { ADD = 5 } }
+	}
+	option = {
+		name = lam_facx.0105.b
+		add_prestige = minor_prestige_loss
+	}
+}
+
+lam_facx.0106 = {
+	type = character_event
+	title = lam_facx.0106.t
+	desc = { random_valid = { desc = lam_facx.0106.d1 desc = lam_facx.0106.d2 desc = lam_facx.0106.d3 } }
+	theme = realm
+	override_background = { reference = study }
+	left_portrait = { character = root animation = personality_rational }
+	right_portrait = { character = scope:lam_x_mate animation = personality_rational }
+	trigger = { has_variable = lam_bloc_lead liege ?= scope:lam_x_lord exists = scope:lam_x_mate scope:lam_x_mate = { is_alive = yes } }
+	option = {
+		name = lam_facx.0106.a
+		root = { lam_fac_cohesion_add_effect = { ADD = 5 } }
+		add_stress = minor_stress_gain
+		scope:lam_x_mate = { add_opinion = { target = root modifier = respect_opinion opinion = 15 } }
+	}
+	option = {
+		name = lam_facx.0106.b
+		scope:lam_x_mate = { add_opinion = { target = root modifier = insulted_opinion opinion = -10 } }
+	}
+}
+
+lam_facx.0201 = {
+	type = character_event
+	title = lam_facx.0201.t
+	desc = { random_valid = { desc = lam_facx.0201.d1 desc = lam_facx.0201.d2 desc = lam_facx.0201.d3 } }
+	theme = realm
+	override_background = { reference = feast }
+	left_portrait = { character = root animation = happiness }
+	right_portrait = { character = scope:lam_x_rival animation = happiness }
+	trigger = { NOT = { has_variable = lam_bloc_lead } NOT = { has_variable = lam_bloc } liege ?= scope:lam_x_lord exists = scope:lam_x_rival scope:lam_x_rival = { is_alive = yes } exists = scope:lam_x_rival2 scope:lam_x_rival2 = { is_alive = yes } }
+	option = {
+		name = lam_facx.0201.a
+		scope:lam_x_rival = { add_opinion = { target = root modifier = pleased_opinion opinion = 20 } }
+		scope:lam_x_rival2 = { add_opinion = { target = root modifier = insulted_opinion opinion = -10 } }
+	}
+	option = {
+		name = lam_facx.0201.b
+		scope:lam_x_rival2 = { add_opinion = { target = root modifier = pleased_opinion opinion = 20 } }
+		scope:lam_x_rival = { add_opinion = { target = root modifier = insulted_opinion opinion = -10 } }
+	}
+	option = {
+		name = lam_facx.0201.c
+		add_prestige = minor_prestige_gain
+	}
+}
+
+lam_facx.0202 = {
+	type = character_event
+	title = lam_facx.0202.t
+	desc = { random_valid = { desc = lam_facx.0202.d1 desc = lam_facx.0202.d2 } }
+	theme = realm
+	override_background = { reference = throne_room }
+	left_portrait = { character = root animation = worry }
+	right_portrait = { character = scope:lam_x_rival animation = disapproval }
+	trigger = { NOT = { has_variable = lam_bloc_lead } NOT = { has_variable = lam_bloc } liege ?= scope:lam_x_lord exists = scope:lam_x_rival scope:lam_x_rival = { is_alive = yes } exists = scope:lam_x_rival2 scope:lam_x_rival2 = { is_alive = yes } }
+	option = {
+		name = lam_facx.0202.a
+		trigger = { gold >= medium_gold_value }
+		pay_short_term_gold = { target = scope:lam_x_rival gold = minor_gold_value }
+		pay_short_term_gold = { target = scope:lam_x_rival2 gold = minor_gold_value }
+		scope:lam_x_rival = { add_opinion = { target = root modifier = pleased_opinion opinion = 10 } }
+		scope:lam_x_rival2 = { add_opinion = { target = root modifier = pleased_opinion opinion = 10 } }
+	}
+	option = {
+		name = lam_facx.0202.b
+		add_prestige = medium_prestige_gain
+		scope:lam_x_rival = { add_opinion = { target = root modifier = insulted_opinion opinion = -5 } }
+		scope:lam_x_rival2 = { add_opinion = { target = root modifier = insulted_opinion opinion = -5 } }
+	}
+}
+
+lam_facx.0203 = {
+	type = character_event
+	title = lam_facx.0203.t
+	desc = { random_valid = { desc = lam_facx.0203.d1 desc = lam_facx.0203.d2 desc = lam_facx.0203.d3 } }
+	theme = realm
+	override_background = { reference = council_chamber }
+	left_portrait = { character = root animation = personality_rational }
+	right_portrait = { character = scope:lam_x_rival animation = anger }
+	trigger = { NOT = { has_variable = lam_bloc_lead } NOT = { has_variable = lam_bloc } liege ?= scope:lam_x_lord exists = scope:lam_x_rival scope:lam_x_rival = { is_alive = yes } exists = scope:lam_x_rival2 scope:lam_x_rival2 = { is_alive = yes } }
+	option = {
+		name = lam_facx.0203.a
+		random_list = {
+			50 = { modifier = { add = { value = diplomacy multiply = 2 } } desc = lam_facx.0203.ok add_prestige = medium_prestige_gain scope:lam_x_rival = { add_opinion = { target = root modifier = respect_opinion opinion = 15 } } scope:lam_x_rival2 = { add_opinion = { target = root modifier = respect_opinion opinion = 15 } } }
+			50 = { desc = lam_facx.0203.fail add_prestige = minor_prestige_loss scope:lam_x_rival = { add_opinion = { target = root modifier = insulted_opinion opinion = -10 } } scope:lam_x_rival2 = { add_opinion = { target = root modifier = insulted_opinion opinion = -10 } } }
+		}
+	}
+	option = {
+		name = lam_facx.0203.b
+		add_stress = minor_stress_loss
+	}
+}
+
+lam_facx.0301 = {
+	type = character_event
+	title = lam_facx.0301.t
+	desc = { random_valid = { desc = lam_facx.0301.d1 desc = lam_facx.0301.d2 desc = lam_facx.0301.d3 } }
+	theme = realm
+	override_background = { reference = feast }
+	left_portrait = { character = root animation = happiness }
+	right_portrait = { character = scope:lam_x_rival animation = happiness }
+	trigger = { NOT = { has_variable = lam_fac_viewonly } any_in_list = { variable = lam_bloc_leads is_alive = yes } exists = scope:lam_x_rival scope:lam_x_rival = { is_alive = yes } }
+	option = {
+		name = lam_facx.0301.a
+		trigger = { gold >= medium_gold_value }
+		remove_short_term_gold = medium_gold_value
+		every_in_list = { variable = lam_bloc_leads limit = { is_alive = yes NOT = { this = root } } add_opinion = { target = root modifier = pleased_opinion opinion = 10 } }
+	}
+	option = {
+		name = lam_facx.0301.b
+		add_prestige = minor_prestige_loss
+	}
+}
+
+lam_facx.0302 = {
+	type = character_event
+	title = lam_facx.0302.t
+	desc = {
+		random_valid = {
+			desc = lam_facx.0302.d1
+			desc = lam_facx.0302.d2
+			desc = lam_facx.0302.d3
+		}
+	}
+	theme = realm
+	override_background = {
+		reference = study
+	}
+	left_portrait = {
+		character = root
+		animation = paranoia
+	}
+	right_portrait = {
+		character = scope:lam_x_rival
+		animation = scheme
+	}
+	trigger = {
+		NOT = {
+			has_variable = lam_fac_viewonly
+		}
+		any_in_list = {
+			variable = lam_bloc_leads
+			is_alive = yes
+		}
+		exists = scope:lam_x_rival
+		scope:lam_x_rival = {
+			is_alive = yes
+		}
+	}
+	option = {
+		name = lam_facx.0302.a
+		hidden_effect = {
+			if = {
+				limit = {
+					scope:lam_x_rival ?= {
+						is_alive = yes
+						liege ?= root
+						any_secret = {
+							NOT = {
+								is_known_by = root
+							}
+						}
+					}
+				}
+				scope:lam_x_rival = {
+					random_secret = {
+						limit = {
+							NOT = {
+								is_known_by = root
+							}
+						}
+						reveal_to = root
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_facx.0302.b
+		add_stress = minor_stress_gain
+	}
+	option = {
+		name = lam_facx.0302.c
+		scope:lam_x_rival = {
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = -30
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+		}
+		scope:lam_x_rival = {
+			add_opinion = {
+				target = root
+				modifier = angry_opinion
+				opinion = -30
+			}
+		}
+		add_dread = medium_dread_gain
+	}
+}
+
+lam_facx.0303 = {
+	type = character_event
+	title = lam_facx.0303.t
+	desc = { random_valid = { desc = lam_facx.0303.d1 desc = lam_facx.0303.d2 } }
+	theme = realm
+	override_background = { reference = throne_room }
+	left_portrait = { character = root animation = personality_rational }
+	right_portrait = { character = scope:lam_x_rival animation = beg }
+	trigger = { NOT = { has_variable = lam_fac_viewonly } any_in_list = { variable = lam_bloc_leads is_alive = yes } exists = scope:lam_x_rival scope:lam_x_rival = { is_alive = yes } }
+	option = {
+		name = lam_facx.0303.a
+		add_prestige = minor_prestige_loss
+		every_in_list = { variable = lam_bloc_leads limit = { is_alive = yes NOT = { this = root } } if = { limit = { NOT = { has_variable = lam_fac_favour } } set_variable = { name = lam_fac_favour value = 0 } } change_variable = { name = lam_fac_favour add = 5 } clamp_variable = { name = lam_fac_favour min = -100 max = 100 } }
+	}
+	option = {
+		name = lam_facx.0303.b
+		add_dread = minor_dread_gain
+		scope:lam_x_rival = { add_opinion = { target = root modifier = insulted_opinion opinion = -10 } }
+	}
+}
+
+lam_facx.0304 = {
+	type = character_event
+	title = lam_facx.0304.t
+	desc = { random_valid = { desc = lam_facx.0304.d1 desc = lam_facx.0304.d2 desc = lam_facx.0304.d3 } }
+	theme = realm
+	override_background = { reference = courtyard }
+	left_portrait = { character = root animation = shock }
+	right_portrait = { character = scope:lam_x_rival animation = anger }
+	trigger = { NOT = { has_variable = lam_fac_viewonly } any_in_list = { variable = lam_bloc_leads is_alive = yes } exists = scope:lam_x_rival scope:lam_x_rival = { is_alive = yes } exists = scope:lam_x_rival2 scope:lam_x_rival2 = { is_alive = yes } }
+	option = {
+		name = lam_facx.0304.a
+		random_list = {
+			50 = { desc = lam_facx.0304.a_win scope:lam_x_rival = { add_prestige = medium_prestige_gain } scope:lam_x_rival2 = { add_prestige = medium_prestige_loss } }
+			50 = { desc = lam_facx.0304.b_win scope:lam_x_rival2 = { add_prestige = medium_prestige_gain } scope:lam_x_rival = { add_prestige = medium_prestige_loss } }
+		}
+		add_prestige = minor_prestige_gain
+	}
+	option = {
+		name = lam_facx.0304.b
+		scope:lam_x_rival = { add_opinion = { target = root modifier = insulted_opinion opinion = -5 } }
+		scope:lam_x_rival2 = { add_opinion = { target = root modifier = insulted_opinion opinion = -5 } }
+	}
+}
+
+lam_facx.0305 = {
+	type = character_event
+	title = lam_facx.0305.t
+	desc = { random_valid = { desc = lam_facx.0305.d1 desc = lam_facx.0305.d2 } }
+	theme = realm
+	override_background = { reference = throne_room }
+	left_portrait = { character = root animation = personality_cynical }
+	right_portrait = { character = scope:lam_x_rival2 animation = beg }
+	trigger = { NOT = { has_variable = lam_fac_viewonly } any_in_list = { variable = lam_bloc_leads is_alive = yes } exists = scope:lam_x_rival scope:lam_x_rival = { is_alive = yes } exists = scope:lam_x_rival2 scope:lam_x_rival2 = { is_alive = yes } }
+	option = {
+		name = lam_facx.0305.a
+		scope:lam_x_rival2 = { if = { limit = { NOT = { has_variable = lam_fac_favour } } set_variable = { name = lam_fac_favour value = 0 } } change_variable = { name = lam_fac_favour add = 15 } clamp_variable = { name = lam_fac_favour min = -100 max = 100 } }
+		scope:lam_x_rival2 = { add_opinion = { target = root modifier = grateful_opinion opinion = 15 } }
+		scope:lam_x_rival = { add_opinion = { target = root modifier = insulted_opinion opinion = -10 } }
+	}
+	option = {
+		name = lam_facx.0305.b
+		add_stress = minor_stress_loss
+	}
+}

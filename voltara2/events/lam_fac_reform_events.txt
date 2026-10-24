@@ -1,0 +1,1148 @@
+﻿namespace = lam_cr
+lam_cr.0001 = {
+	type = character_event
+	title = lam_cr_ballot_title
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:petition
+					}
+				}
+				desc = lam_pd_ballot_desc
+			}
+			desc = lam_fac_empty
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = {
+						lam_cr_ballot_valid_trigger = yes
+					}
+				}
+				desc = lam_cr_ballot_stale
+			}
+			desc = lam_cr_ballot_intro
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:court
+					}
+				}
+				desc = lam_cr_issue_court
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:heir
+					}
+				}
+				desc = lam_cr_issue_heir
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:crown
+					}
+				}
+				desc = lam_cr_issue_crown
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:rise
+					}
+				}
+				desc = lam_cr_issue_rise
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:deal
+					}
+				}
+				desc = lam_cr_issue_deal
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:merge
+					}
+				}
+				desc = lam_cr_issue_merge
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:confidence
+					}
+				}
+				desc = lam_cr_issue_confidence
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:ban
+					}
+				}
+				desc = lam_cr_issue_ban
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:dissolve
+					}
+				}
+				desc = lam_cr_issue_dissolve
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:withdraw
+					}
+				}
+				desc = lam_cr_issue_withdraw
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:loyal
+					}
+				}
+				desc = lam_cr_issue_loyal
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:oppose
+					}
+				}
+				desc = lam_cr_issue_oppose
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:arm
+					}
+				}
+				desc = lam_cr_issue_arm
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:watch
+					}
+				}
+				desc = lam_cr_issue_watch
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:quiet
+					}
+				}
+				desc = lam_cr_issue_quiet
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:people
+					}
+				}
+				desc = lam_cr_issue_people
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:stance
+					}
+				}
+				desc = lam_cr_issue_stance
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:goal
+						var:lam_cr_goal_n ?= 5
+					}
+				}
+				desc = lam_cr_issue_goal_seat
+			}
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:goal
+					}
+				}
+				desc = lam_cr_issue_goal
+			}
+			desc = lam_fac_empty
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					lam_cr_ballot_valid_trigger = yes
+				}
+				desc = lam_cr_ballot_numbers
+			}
+			desc = lam_fac_empty
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:seat
+			}
+			desc = lam_cr_term_give_seat
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:marriage
+			}
+			desc = lam_cr_term_give_marriage
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:county
+			}
+			desc = lam_cr_term_give_county
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:gold
+			}
+			desc = lam_cr_term_give_gold
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:bribe
+			}
+			desc = lam_cr_term_give_bribe
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:law
+			}
+			desc = lam_cr_term_give_law
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:heir
+			}
+			desc = lam_cr_term_give_heir
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:amnesty
+			}
+			desc = lam_cr_term_give_amnesty
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_ask ?= flag:oath
+			}
+			desc = lam_cr_term_ask_oath
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_ask ?= flag:heir
+			}
+			desc = lam_cr_term_ask_heir
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_ask ?= flag:disband
+			}
+			desc = lam_cr_term_ask_disband
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_ask ?= flag:counter
+			}
+			desc = lam_cr_term_ask_counter
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_ask ?= flag:arms
+			}
+			desc = lam_cr_term_ask_arms
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_ask ?= flag:law_support
+			}
+			desc = lam_cr_term_ask_law_support
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:ult_oath
+			}
+			desc = lam_cr_term_ult_oath
+		}
+	}
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = scope:lam_cr_head
+	}
+	right_portrait = {
+		character = root
+	}
+	option = {
+		name = lam_cr_vote_yes
+		trigger = {
+			lam_cr_ballot_valid_trigger = yes
+		}
+		custom_tooltip = lam_cr_vote_binding_tt
+		hidden_effect = {
+			lam_cr_cast_effect = {
+				CHOICE = yes
+			}
+		}
+	}
+	option = {
+		name = lam_cr_vote_no
+		trigger = {
+			lam_cr_ballot_valid_trigger = yes
+		}
+		custom_tooltip = lam_cr_vote_binding_tt
+		hidden_effect = {
+			lam_cr_cast_effect = {
+				CHOICE = no
+			}
+		}
+	}
+	option = {
+		name = lam_cr_vote_abstain
+		trigger = {
+			lam_cr_ballot_valid_trigger = yes
+		}
+		custom_tooltip = lam_cr_abstain_tt
+		hidden_effect = {
+			lam_cr_cast_effect = {
+				CHOICE = abstain
+			}
+		}
+	}
+	option = {
+		name = lam_cr_vote_request
+		trigger = {
+			lam_cr_ballot_valid_trigger = yes
+			NOT = {
+				this = scope:lam_cr_head
+			}
+			NOT = {
+				has_variable = lam_cr_requested
+			}
+			scope:lam_cr_head = {
+				prestige >= 75
+				NOT = {
+					var:lam_cr_issue ?= flag:confidence
+				}
+			}
+		}
+		custom_tooltip = lam_cr_request_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_cr_ballot_valid_trigger = yes
+					NOT = {
+						has_variable = lam_cr_requested
+					}
+				}
+				set_variable = {
+					name = lam_cr_requested
+					value = yes
+				}
+				save_scope_as = lam_cr_petitioner
+				scope:lam_cr_head = {
+					trigger_event = lam_cr.0005
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_cr_vote_chamber
+		trigger = {
+			lam_cr_ballot_valid_trigger = yes
+		}
+		custom_tooltip = lam_cr_vote_chamber_tt
+		set_variable = {
+			name = lam_cr_view
+			value = scope:lam_cr_head
+		}
+	}
+	option = {
+		name = lam_cr_close
+		fallback = yes
+		trigger = {
+			NOT = {
+				lam_cr_ballot_valid_trigger = yes
+			}
+		}
+	}
+}
+lam_cr.0002 = {
+	hidden = yes
+	immediate = {
+		lam_cr_timeout_effect = yes
+	}
+}
+lam_cr.0003 = {
+	type = character_event
+	title = lam_cr_result_title
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:petition
+					}
+				}
+				desc = lam_pd_ballot_desc
+			}
+			desc = lam_fac_empty
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result = flag:passed
+				}
+				desc = lam_cr_result_passed
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result = flag:rejected
+				}
+				desc = lam_cr_result_rejected
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result = flag:cancelled
+				}
+				desc = lam_cr_result_cancelled
+			}
+			desc = lam_cr_result_cancelled
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:court
+				}
+				desc = lam_cr_issue_court
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:heir
+				}
+				desc = lam_cr_issue_heir
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:crown
+				}
+				desc = lam_cr_issue_crown
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:rise
+				}
+				desc = lam_cr_issue_rise
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:deal
+				}
+				desc = lam_cr_issue_deal
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:merge
+				}
+				desc = lam_cr_issue_merge
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:confidence
+				}
+				desc = lam_cr_issue_confidence
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:ban
+				}
+				desc = lam_cr_issue_ban
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:dissolve
+				}
+				desc = lam_cr_issue_dissolve
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:withdraw
+				}
+				desc = lam_cr_issue_withdraw
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:loyal
+				}
+				desc = lam_cr_issue_loyal
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:oppose
+				}
+				desc = lam_cr_issue_oppose
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:arm
+				}
+				desc = lam_cr_issue_arm
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:watch
+				}
+				desc = lam_cr_issue_watch
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:quiet
+				}
+				desc = lam_cr_issue_quiet
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_result_issue = flag:people
+				}
+				desc = lam_cr_issue_people
+			}
+			desc = lam_fac_empty
+		}
+		desc = lam_cr_result_numbers
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:seat
+			}
+			desc = lam_cr_term_give_seat
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:marriage
+			}
+			desc = lam_cr_term_give_marriage
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:county
+			}
+			desc = lam_cr_term_give_county
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:gold
+			}
+			desc = lam_cr_term_give_gold
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:bribe
+			}
+			desc = lam_cr_term_give_bribe
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:law
+			}
+			desc = lam_cr_term_give_law
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:heir
+			}
+			desc = lam_cr_term_give_heir
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_give ?= flag:amnesty
+			}
+			desc = lam_cr_term_give_amnesty
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_ask ?= flag:oath
+			}
+			desc = lam_cr_term_ask_oath
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_ask ?= flag:heir
+			}
+			desc = lam_cr_term_ask_heir
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_ask ?= flag:disband
+			}
+			desc = lam_cr_term_ask_disband
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_ask ?= flag:counter
+			}
+			desc = lam_cr_term_ask_counter
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_ask ?= flag:arms
+			}
+			desc = lam_cr_term_ask_arms
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:deal
+				scope:lam_cr_display_ask ?= flag:law_support
+			}
+			desc = lam_cr_term_ask_law_support
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_cr_display_action ?= flag:ult_oath
+			}
+			desc = lam_cr_term_ult_oath
+		}
+	}
+	theme = realm
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = scope:lam_cr_head
+	}
+	option = {
+		name = lam_cr_close
+	}
+}
+lam_cr.0004 = {
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				is_alive = yes
+				this = scope:lam_cr_lord
+				scope:lam_cr_head = {
+					var:lam_cr_contract_pending ?= scope:lam_cr_token
+					is_alive = yes
+					has_variable = lam_bloc_lead
+					liege ?= root
+					lam_cr_deal_valid_trigger = yes
+				}
+			}
+			if = {
+				limit = {
+					scope:lam_cr_head = {
+						var:lam_cr_give ?= flag:county
+					}
+				}
+				scope:lam_cr_head = {
+					save_scope_as = lam_deal_lead
+				}
+				trigger_event = lam_faction.1030
+			}
+			else = {
+				scope:lam_cr_head = {
+					remove_variable = lam_cr_contract_pending
+					save_scope_as = lam_deal_lead
+				}
+				clear_saved_scope = lam_cr_old_give
+				clear_saved_scope = lam_cr_old_ask
+				if = {
+					limit = {
+						has_variable = lam_deal_give
+					}
+					clear_saved_scope = lam_cr_old_give
+					if = {
+						limit = {
+							var:lam_deal_give ?= flag:amnesty
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_give
+							value = flag:amnesty
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_deal_give ?= flag:bribe
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_give
+							value = flag:bribe
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_deal_give ?= flag:county
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_give
+							value = flag:county
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_deal_give ?= flag:gold
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_give
+							value = flag:gold
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_deal_give ?= flag:heir
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_give
+							value = flag:heir
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_deal_give ?= flag:law
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_give
+							value = flag:law
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_deal_give ?= flag:marriage
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_give
+							value = flag:marriage
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_deal_give ?= flag:seat
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_give
+							value = flag:seat
+						}
+					}
+				}
+				if = {
+					limit = {
+						has_variable = lam_deal_ask
+					}
+					clear_saved_scope = lam_cr_old_ask
+					if = {
+						limit = {
+							var:lam_deal_ask ?= flag:arms
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_ask
+							value = flag:arms
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_deal_ask ?= flag:counter
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_ask
+							value = flag:counter
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_deal_ask ?= flag:disband
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_ask
+							value = flag:disband
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_deal_ask ?= flag:heir
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_ask
+							value = flag:heir
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_deal_ask ?= flag:law_support
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_ask
+							value = flag:law_support
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_deal_ask ?= flag:oath
+						}
+						save_scope_value_as = {
+							name = lam_cr_old_ask
+							value = flag:oath
+						}
+					}
+				}
+				set_variable = {
+					name = lam_deal_give
+					value = scope:lam_cr_head.var:lam_cr_give
+				}
+				set_variable = {
+					name = lam_deal_ask
+					value = scope:lam_cr_head.var:lam_cr_ask
+				}
+				lam_cr_execute_deal_effect = yes
+				if = {
+					limit = {
+						exists = scope:lam_cr_old_give
+					}
+					set_variable = {
+						name = lam_deal_give
+						value = scope:lam_cr_old_give
+					}
+				}
+				else = {
+					remove_variable = lam_deal_give
+				}
+				if = {
+					limit = {
+						exists = scope:lam_cr_old_ask
+					}
+					set_variable = {
+						name = lam_deal_ask
+						value = scope:lam_cr_old_ask
+					}
+				}
+				else = {
+					remove_variable = lam_deal_ask
+				}
+			}
+		}
+		else = {
+			scope:lam_cr_head ?= {
+				if = {
+					limit = {
+						var:lam_cr_contract_pending ?= scope:lam_cr_token
+					}
+					remove_variable = lam_cr_contract_pending
+					scope:lam_cr_lord ?= {
+						send_interface_message = {
+							type = event_generic_neutral
+							title = lam_cr_contract_cancelled
+						}
+					}
+				}
+			}
+		}
+	}
+}
+lam_cr.0005 = {
+	type = character_event
+	title = lam_cr_request_title
+	desc = {
+		desc = lam_cr_request_desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:court
+					}
+				}
+				desc = lam_cr_req_issue_court
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:heir
+					}
+				}
+				desc = lam_cr_req_issue_heir
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:crown
+					}
+				}
+				desc = lam_cr_req_issue_crown
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:rise
+					}
+				}
+				desc = lam_cr_req_issue_rise
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:deal
+					}
+				}
+				desc = lam_cr_req_issue_deal
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:merge
+					}
+				}
+				desc = lam_cr_req_issue_merge
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:confidence
+					}
+				}
+				desc = lam_cr_req_issue_confidence
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:ban
+					}
+				}
+				desc = lam_cr_req_issue_ban
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:dissolve
+					}
+				}
+				desc = lam_cr_req_issue_dissolve
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:withdraw
+					}
+				}
+				desc = lam_cr_req_issue_withdraw
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:loyal
+					}
+				}
+				desc = lam_cr_req_issue_loyal
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:oppose
+					}
+				}
+				desc = lam_cr_req_issue_oppose
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:arm
+					}
+				}
+				desc = lam_cr_req_issue_arm
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:watch
+					}
+				}
+				desc = lam_cr_req_issue_watch
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:quiet
+					}
+				}
+				desc = lam_cr_req_issue_quiet
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:people
+					}
+				}
+				desc = lam_cr_req_issue_people
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:stance
+					}
+				}
+				desc = lam_cr_req_issue_stance
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_cr_head ?= {
+						var:lam_cr_issue ?= flag:goal
+					}
+				}
+				desc = lam_cr_req_issue_goal
+			}
+			desc = lam_fac_empty
+		}
+	}
+	theme = realm
+	left_portrait = {
+		character = scope:lam_cr_petitioner
+	}
+	option = {
+		name = lam_cr_request_accept
+		trigger = {
+			scope:lam_cr_petitioner ?= {
+				lam_cr_ballot_valid_trigger = yes
+				has_variable = lam_cr_requested
+			}
+			prestige >= 75
+		}
+		custom_tooltip = lam_cr_request_accept_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					scope:lam_cr_petitioner ?= {
+						lam_cr_ballot_valid_trigger = yes
+						has_variable = lam_cr_requested
+					}
+					prestige >= 75
+				}
+				add_prestige = -75
+				scope:lam_cr_petitioner = {
+					set_variable = {
+						name = lam_cr_recognized
+						value = yes
+						years = 2
+					}
+					lam_cr_cast_effect = {
+						CHOICE = yes
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 40
+			modifier = {
+				add = 40
+				scope:lam_cr_petitioner = {
+					var:lam_cr_weight >= 50
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_cr_request_refuse
+		trigger = {
+			scope:lam_cr_petitioner ?= {
+				lam_cr_ballot_valid_trigger = yes
+				has_variable = lam_cr_requested
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					scope:lam_cr_petitioner ?= {
+						lam_cr_ballot_valid_trigger = yes
+						has_variable = lam_cr_requested
+					}
+				}
+				scope:lam_cr_petitioner = {
+					if = {
+						limit = {
+							is_ai = yes
+						}
+						lam_cr_cast_effect = {
+							CHOICE = abstain
+						}
+					}
+					else = {
+						trigger_event = lam_cr.0001
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 60
+		}
+	}
+	option = {
+		name = lam_cr_close
+		trigger = {
+			NOT = {
+				scope:lam_cr_petitioner ?= {
+					lam_cr_ballot_valid_trigger = yes
+					has_variable = lam_cr_requested
+				}
+			}
+		}
+	}
+}

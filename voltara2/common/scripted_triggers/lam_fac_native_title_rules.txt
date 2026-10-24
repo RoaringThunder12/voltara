@@ -1,0 +1,681 @@
+﻿lam_nc_native_county_trigger = {
+scope:lam_nc_grant_actor != scope:lam_nc_grant_recipient
+scope:lam_nc_grant_actor ?= {
+	NOT = {
+		government_has_flag = cannot_be_vassal_or_liege
+	}
+}
+scope:lam_nc_grant_recipient = {
+	OR = {
+		target_is_liege_or_above = scope:lam_nc_grant_actor
+		is_pool_guest_of = scope:lam_nc_grant_actor
+		AND = {
+			scope:lam_nc_grant_actor.faith.religious_head ?= scope:lam_nc_grant_recipient
+			top_liege ?= this
+		}
+	}
+}
+trigger_if = {
+	limit = {
+		scope:lam_nc_grant_actor = {
+			government_has_mechanic = administrative
+		}
+	}
+	scope:lam_nc_grant_recipient = {
+		NOT = {
+			government_has_mechanic = administrative
+		}
+	}
+}
+trigger_if = {
+	limit = {
+		scope:lam_nc_grant_actor = {
+			government_has_flag = government_is_nomadic
+		}
+	}
+	scope:lam_nc_grant_recipient = {
+		NOT = {
+			government_has_flag = government_is_herder
+		}
+	}
+}
+scope:lam_nc_grant_recipient = {
+	custom_tooltip = {
+		text = can_be_granted_titles_interaction_tt
+		OR = {
+			can_be_granted_titles_by = {
+				RULER = scope:lam_nc_grant_actor
+			}
+			can_be_granted_theocratic_titles_by = {
+				RULER = scope:lam_nc_grant_actor
+			}
+			AND = {
+				is_diarch_of_target = scope:lam_nc_grant_actor
+				scope:lam_nc_grant_actor = {
+					has_diarchy_active_parameter = diarchy_is_co_rulership
+				}
+			}
+		}
+	}
+	NOT = {
+		is_at_war_with = scope:lam_nc_grant_actor
+	}
+	OR = {
+		NOT = {
+			has_trait = devoted
+		}
+		scope:lam_nc_grant_actor = {
+			government_has_flag = government_is_theocracy
+		}
+	}
+	bp2_valid_for_standard_interactions_trigger = yes
+	trigger_if = {
+		limit = {
+			is_ruler = no
+		}
+		is_imprisoned = no
+	}
+	custom_description = {
+		text = grant_title_stealing_acclaimed_knight
+		subject = scope:lam_nc_grant_recipient
+		NOR = {
+			AND = {
+				is_acclaimed = yes
+				liege ?= {
+					is_ai = no
+					this != scope:lam_nc_grant_actor
+				}
+			}
+			AND = {
+				is_acclaimed = yes
+				scope:lam_nc_grant_actor = {
+					is_ai = yes
+				}
+			}
+		}
+	}
+	NOT = {
+		has_trait = gallivanter
+	}
+	tgp_japan_grant_titles_restriction_trigger = {
+		GRANTER = scope:lam_nc_grant_actor
+		GRANTEE = scope:lam_nc_grant_recipient
+	}
+}
+custom_description = {
+	text = is_not_theocratic_court_chaplain
+	subject = scope:lam_nc_grant_recipient
+	NAND = {
+		scope:lam_nc_grant_actor.rite = {
+			rite_has_doctrine = doctrine_theocracy_temporal
+		}
+		scope:lam_nc_grant_actor = {
+			NOT = {
+				government_has_flag = government_is_theocracy
+			}
+		}
+		scope:lam_nc_grant_recipient = {
+			rite = {
+				rite_has_doctrine = doctrine_theocracy_temporal
+			}
+			has_council_position = councillor_court_chaplain
+		}
+		scope:lam_nc_grant_actor.faith.religious_head != scope:lam_nc_grant_recipient
+	}
+}
+scope:lam_nc_grant_actor = {
+	any_held_title = {
+		count > 1
+	}
+}
+trigger_if = {
+	limit = {
+		scope:lam_nc_grant_actor = {
+			highest_held_title_tier >= tier_kingdom
+			has_diarchy_active_parameter = primeminister_requires_duchy
+			diarch = scope:lam_nc_grant_recipient
+		}
+	}
+	custom_tooltip = {
+		text = primeminister_requires_duchy.tt.blocked_grant
+		scope:lam_nc_grant_title = {
+			tier >= tier_duchy
+		}
+	}
+}
+scope:lam_nc_grant_title = {
+	is_leased_out = no
+	trigger_if = {
+		limit = {
+			is_noble_family_title = yes
+		}
+		custom_tooltip = {
+			text = GRANT_TITLES_ITEM_CANT_GIVE_NOBLE_FAMILY
+			always = no
+		}
+	}
+	trigger_if = {
+		limit = {
+			scope:lam_nc_grant_actor = {
+				NOT = {
+					has_government = nomad_government
+				}
+			}
+			title_province = {
+				OR = {
+					has_holding_type = nomad_holding
+					has_holding_type = herder_holding
+				}
+			}
+			scope:lam_nc_grant_recipient = {
+				is_ruler = no
+			}
+		}
+		custom_tooltip = {
+			text = GRANT_TITLES_ITEM_CANT_GIVE_NOMADIC_TITLES_TO_NON_NOMADS_TITLE
+			always = no
+		}
+	}
+	trigger_if = {
+		limit = {
+			is_nomad_title = yes
+		}
+		custom_tooltip = {
+			text = GRANT_TITLES_ITEM_CANT_GIVE_NOMAD_TITLE
+			always = no
+		}
+	}
+	trigger_if = {
+		limit = {
+			is_head_of_faith = yes
+			scope:lam_nc_grant_recipient.faith.religious_head != scope:lam_nc_grant_actor.faith.religious_head
+		}
+		custom_tooltip = {
+			text = GRANT_TITLES_ITEM_CANT_HEAD_OF_FAITH_TO_INFIDEL
+			scope:lam_nc_grant_recipient.faith.religious_head = scope:lam_nc_grant_actor.faith.religious_head
+		}
+	}
+	trigger_if = {
+		limit = {
+			scope:lam_nc_grant_recipient = scope:lam_nc_grant_actor.player_heir
+			scope:lam_nc_grant_actor = {
+				has_partition_succession_realm_law_trigger = yes
+			}
+		}
+		custom_description = {
+			text = partition_primary_heir_unfair
+			subject = scope:lam_nc_grant_recipient
+			object = scope:lam_nc_grant_actor
+			current_heir = scope:lam_nc_grant_recipient
+		}
+	}
+	trigger_if = {
+		limit = {
+			# Original-world predicate is false on Voltara.
+# scope:lam_nc_grant_title = title:k_fashion
+always = no
+		}
+		NOT = {
+			# Original-world predicate is false on Voltara.
+# scope:lam_nc_grant_title = title:k_fashion
+always = no
+		}
+	}
+	custom_tooltip = {
+		text = cannot_grant_ceremonial_title
+		NOT = {
+			exists = var:ceremonial_title
+		}
+	}
+	trigger_if = {
+		limit = {
+			has_clerical_region = yes
+		}
+		custom_tooltip = {
+			text = GRANT_TITLES_ITEM_CANT_GIVE_CLERICAL_TITLE
+			always = no
+		}
+	}
+	trigger_if = {
+		limit = {
+			pam_title_is_clerical_elector_trigger = yes
+		}
+		custom_tooltip = {
+			text = GRANT_TITLES_ITEM_CANT_GIVE_CLERICAL_ELECTOR
+			always = no
+		}
+	}
+	trigger_if = {
+		limit = {
+			pam_title_is_antipope_office_trigger = yes
+		}
+		custom_tooltip = {
+			text = GRANT_TITLES_ITEM_CANT_GIVE_ANTIPOPE_TITLE
+			always = no
+		}
+	}
+	trigger_if = {
+		limit = {
+			exists = situation:the_christian_church
+			# Original-world predicate is false on Voltara.
+# this = title:k_papal_state
+always = no
+		}
+		custom_tooltip = {
+			text = GRANT_TITLES_ITEM_CANT_HEAD_OF_FAITH
+			always = no
+		}
+	}
+}
+custom_description = {
+	text = grant_titles_interaction_can_only_give_diarch_de_jure_liege_to_diarch
+	subject = scope:lam_nc_grant_actor.diarch
+	NAND = {
+		scope:lam_nc_grant_actor = {
+			has_active_diarchy = yes
+		}
+		scope:lam_nc_grant_title = {
+			any_dejure_vassal_title_holder = {
+				this = scope:lam_nc_grant_actor.diarch
+			}
+			scope:lam_nc_grant_recipient != scope:lam_nc_grant_actor.diarch
+			tier < scope:lam_nc_grant_actor.highest_held_title_tier
+		}
+	}
+}
+custom_description = {
+	text = grant_titles_interaction_children_not_allowed_temple
+	subject = scope:lam_nc_grant_recipient
+	NOR = {
+		AND = {
+			scope:lam_nc_grant_recipient = {
+				is_adult = no
+			}
+			scope:lam_nc_grant_title = {
+				tier = tier_barony
+				title_province = {
+					has_building_with_flag = temple
+				}
+			}
+		}
+		AND = {
+			scope:lam_nc_grant_recipient = {
+				is_adult = no
+			}
+			scope:lam_nc_grant_title = {
+				tier = tier_county
+				title_province = {
+					is_county_capital = yes
+					has_building_with_flag = temple
+				}
+			}
+		}
+	}
+}
+custom_description = {
+	text = grant_titles_interaction_title_being_wagered
+	NOT = {
+		scope:lam_nc_grant_title = {
+			has_variable = wagered_county
+		}
+	}
+}
+
+}
+lam_nc_native_governorship_trigger = {
+scope:lam_nc_grant_actor != scope:lam_nc_grant_recipient
+scope:lam_nc_grant_recipient = {
+	OR = {
+		target_is_liege_or_above = scope:lam_nc_grant_actor
+		is_pool_guest_of = scope:lam_nc_grant_actor
+	}
+}
+scope:lam_nc_grant_actor ?= {
+	government_has_mechanic = administrative
+	highest_held_title_tier >= tier_county
+}
+trigger_if = {
+	limit = {
+		scope:lam_nc_grant_actor = {
+			is_ai = yes
+		}
+	}
+	scope:lam_nc_grant_recipient = {
+		NOT = {
+			any_parent = {
+				is_ai = no
+			}
+		}
+	}
+}
+scope:lam_nc_grant_actor = {
+	custom_tooltip = {
+		text = grant_governorship_interaction_no_title_tt
+		any_held_title = {
+			tier >= tier_county
+			is_noble_family_title = no
+			is_landless_type_title = no
+			NOR = {
+				this = scope:lam_nc_grant_actor.capital_county
+				this = scope:lam_nc_grant_actor.primary_title
+			}
+		}
+	}
+}
+scope:lam_nc_grant_recipient = {
+	is_adult = yes
+	NOT = {
+		is_at_war_with = scope:lam_nc_grant_actor
+	}
+	bp2_valid_for_standard_interactions_trigger = yes
+	trigger_if = {
+		limit = {
+			is_ruler = no
+		}
+		is_imprisoned = no
+	}
+	government_has_mechanic = administrative
+	trigger_if = {
+		limit = {
+			scope:lam_nc_grant_actor = {
+				OR = {
+					has_realm_law = male_only_law
+					has_realm_law = male_preference_law
+				}
+			}
+			is_landed = no
+		}
+		custom_tooltip = {
+			text = recipient_cannot_be_appointed_gender_laws_tt
+			is_female = no
+		}
+	}
+	trigger_if = {
+		limit = {
+			scope:lam_nc_grant_actor = {
+				OR = {
+					has_realm_law = female_only_law
+					has_realm_law = female_preference_law
+				}
+			}
+			is_landed = no
+		}
+		custom_tooltip = {
+			text = recipient_cannot_be_appointed_gender_laws_tt
+			is_female = yes
+		}
+	}
+	custom_description = {
+		text = grant_title_stealing_acclaimed_knight
+		subject = scope:lam_nc_grant_recipient
+		NOR = {
+			AND = {
+				is_acclaimed = yes
+				liege ?= {
+					is_ai = no
+					this != scope:lam_nc_grant_actor
+				}
+			}
+			AND = {
+				is_acclaimed = yes
+				scope:lam_nc_grant_actor = {
+					is_ai = yes
+				}
+			}
+		}
+	}
+	is_clergy = no
+	NOT = {
+		has_trait = gallivanter
+	}
+	tgp_japan_grant_titles_restriction_trigger = {
+		GRANTER = scope:lam_nc_grant_actor
+		GRANTEE = scope:lam_nc_grant_recipient
+	}
+	custom_tooltip = {
+		text = recipient_is_a_minister_desc
+		tgp_is_any_minister = no
+	}
+}
+scope:lam_nc_grant_recipient = {
+	custom_tooltip = {
+		text = promote_candidate_interaction_existing_holder_tt
+		this != scope:lam_nc_grant_title.holder
+	}
+	trigger_if = {
+		limit = {
+			is_governor = yes
+			scope:lam_nc_grant_title = {
+				is_noble_family_title = no
+			}
+		}
+		custom_tooltip = {
+			text = only_one_province_of_highest_rank_tt
+			NAND = {
+				highest_held_title_tier = scope:lam_nc_grant_title.tier
+				scope:lam_nc_grant_title.tier >= tier_duchy
+				scope:lam_nc_grant_title = {
+					any_de_jure_county = {
+						count < 1
+						OR = {
+							holder = scope:lam_nc_grant_recipient
+							holder = {
+								is_vassal_or_below_of = scope:lam_nc_grant_recipient
+							}
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			text = admin_must_be_de_jure_or_neighboring
+			any_held_title = {
+				OR = {
+					is_de_jure_liege_or_above_target = scope:lam_nc_grant_title
+					target_is_de_jure_liege_or_above = scope:lam_nc_grant_title
+					AND = {
+						NOT = {
+							tier = tier_barony
+						}
+						any_title_to_title_neighboring_county = {
+							this = scope:lam_nc_grant_title
+						}
+						scope:lam_nc_grant_title = {
+							tier = tier_county
+							duchy = {
+								OR = {
+									NOT = {
+										exists = holder
+									}
+									holder = {
+										NOR = {
+											is_vassal_or_below_of = scope:lam_nc_grant_actor
+											this = scope:lam_nc_grant_actor
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			is_landless_ruler = yes
+			any_held_title = {
+				is_noble_family_title = yes
+			}
+			scope:lam_nc_grant_title.tier < min_appointment_tier
+		}
+		primary_title.tier <= scope:lam_nc_grant_title.tier
+	}
+	trigger_if = {
+		limit = {
+			highest_held_title_tier = tier_county
+			main_administrative_tier > tier_county
+			is_landed = yes
+			scope:lam_nc_grant_title.tier = tier_county
+		}
+		custom_tooltip = {
+			text = admin_count_grant_only_counties
+			any_held_title = {
+				duchy = scope:lam_nc_grant_title.duchy
+			}
+		}
+	}
+	tgp_is_ceremonial_liege_trigger = no
+}
+scope:lam_nc_grant_title = {
+	is_leased_out = no
+	scope:lam_nc_grant_recipient = {
+		trigger_if = {
+			limit = {
+				is_governor = yes
+				scope:lam_nc_grant_title = {
+					is_noble_family_title = no
+				}
+			}
+			custom_tooltip = {
+				text = only_one_province_of_highest_rank_tt
+				NAND = {
+					highest_held_title_tier = scope:lam_nc_grant_title.tier
+					scope:lam_nc_grant_title.tier >= main_administrative_tier
+					trigger_if = {
+						limit = {
+							scope:lam_nc_grant_title.tier >= tier_duchy
+						}
+						scope:lam_nc_grant_title = {
+							any_de_jure_county = {
+								count < 1
+								OR = {
+									holder = scope:lam_nc_grant_recipient
+									holder = {
+										is_vassal_or_below_of = scope:lam_nc_grant_recipient
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			custom_tooltip = {
+				text = admin_must_be_de_jure_or_neighboring
+				any_held_title = {
+					OR = {
+						is_de_jure_liege_or_above_target = scope:lam_nc_grant_title
+						target_is_de_jure_liege_or_above = scope:lam_nc_grant_title
+						AND = {
+							tier >= tier_county
+							any_title_to_title_neighboring_county = {
+								this = scope:lam_nc_grant_title
+							}
+							scope:lam_nc_grant_title = {
+								tier = tier_county
+								duchy = {
+									OR = {
+										NOT = {
+											exists = holder
+										}
+										holder = {
+											NOR = {
+												is_vassal_or_below_of = scope:lam_nc_grant_actor
+												this = scope:lam_nc_grant_actor
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				is_landless_ruler = yes
+				any_held_title = {
+					is_noble_family_title = yes
+				}
+				scope:lam_nc_grant_title.tier < min_appointment_tier
+			}
+			primary_title.tier <= scope:lam_nc_grant_title.tier
+		}
+		trigger_if = {
+			limit = {
+				highest_held_title_tier = tier_county
+				main_administrative_tier > tier_county
+				is_landed = yes
+				scope:lam_nc_grant_title.tier = tier_county
+			}
+			custom_tooltip = {
+				text = admin_count_grant_only_counties
+				any_held_title = {
+					duchy = scope:lam_nc_grant_title.duchy
+				}
+			}
+		}
+		tgp_is_ceremonial_liege_trigger = no
+	}
+	custom_tooltip = {
+		text = GRANT_TITLES_ITEM_CANT_GIVE_ADMIN_PRIMARY
+		this != scope:lam_nc_grant_actor.capital_province.duchy
+	}
+	trigger_if = {
+		limit = {
+			is_noble_family_title = yes
+		}
+		custom_tooltip = {
+			text = GRANT_TITLES_ITEM_CANT_GIVE_NOBLE_FAMILY
+			always = no
+		}
+	}
+	trigger_if = {
+		limit = {
+			exists = var:ceremonial_title
+		}
+		custom_tooltip = {
+			text = GRANT_TITLES_ITEM_CANT_GIVE_CEREMONIAL_TITLE
+			always = no
+		}
+	}
+	trigger_if = {
+		limit = {
+			# Original-world predicate is false on Voltara.
+# scope:lam_nc_grant_title = title:k_fashion
+always = no
+		}
+		NOT = {
+			# Original-world predicate is false on Voltara.
+# scope:lam_nc_grant_title = title:k_fashion
+always = no
+		}
+	}
+}
+custom_description = {
+	text = grant_titles_interaction_can_only_give_diarch_de_jure_liege_to_diarch
+	subject = scope:lam_nc_grant_actor.diarch
+	NAND = {
+		scope:lam_nc_grant_actor = {
+			has_active_diarchy = yes
+		}
+		scope:lam_nc_grant_title = {
+			any_dejure_vassal_title_holder = {
+				this = scope:lam_nc_grant_actor.diarch
+			}
+			scope:lam_nc_grant_recipient != scope:lam_nc_grant_actor.diarch
+			tier < scope:lam_nc_grant_actor.highest_held_title_tier
+		}
+	}
+}
+custom_description = {
+	text = grant_titles_interaction_title_being_wagered
+	NOT = {
+		scope:lam_nc_grant_title = {
+			has_variable = wagered_county
+		}
+	}
+}
+
+}

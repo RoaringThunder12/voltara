@@ -1,0 +1,14 @@
+﻿voltara_luminary_defense_effect = {
+ if = { limit = {
+  scope:defender = { has_title = title:k_voltara_luminous_see }
+  exists = title:h_voltara_severos.holder
+  title:h_voltara_severos.holder = {
+   is_alive = yes
+   NOT = { is_attacker_in_war = scope:war }
+   NOT = { is_defender_in_war = scope:war }
+   NOT = { is_at_war_with = scope:defender }
+  }
+ }
+ scope:war = { add_defender = title:h_voltara_severos.holder }
+ }
+}

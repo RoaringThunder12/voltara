@@ -1,0 +1,88 @@
+﻿# v0.7.5: bounded display predicates. Full native legality stays at confirmation.
+dhm_v075_courtship_context_trigger = {
+ is_alive = yes
+ is_ai = no
+ exists = scope:dhm_manager
+ this = scope:dhm_manager
+ exists = scope:dhm_marriage_subject
+ exists = scope:dhm_marriage_candidate
+ scope:dhm_marriage_subject = {
+  is_alive = yes
+  is_ai = yes
+  age >= 12
+  is_in_the_same_court_as = root
+  is_imprisoned = no
+  is_hostage = no
+  is_betrothed = no
+  NOT = { has_trait = incapable }
+  NOT = { has_character_flag = dhm_matchmaking_cooldown }
+  NOT = { has_character_flag = dhm_matchmaking_retry_cooldown }
+  NOT = { has_character_flag = dhm_matchmaking_proposal_pending }
+ }
+ scope:dhm_marriage_candidate = {
+  is_alive = yes
+  is_ai = yes
+  age >= 12
+  this != scope:dhm_marriage_subject
+  is_imprisoned = no
+  is_hostage = no
+  is_betrothed = no
+  NOT = { has_trait = incapable }
+  exists = matchmaker
+  matchmaker = { is_alive = yes is_imprisoned = no is_hostage = no }
+ }
+ OR = {
+  AND = {
+   exists = scope:dhm071_courtship_chain
+   scope:dhm071_courtship_chain = yes
+   scope:dhm_marriage_subject = { var:dhm_courtship_reserved_for ?= scope:dhm_marriage_candidate }
+   scope:dhm_marriage_candidate = { var:dhm_courtship_reserved_for ?= scope:dhm_marriage_subject }
+  }
+  AND = {
+   NOT = { exists = scope:dhm071_courtship_chain }
+   scope:dhm_marriage_subject = { NOT = { has_variable = dhm_courtship_reserved_for } }
+   scope:dhm_marriage_candidate = { NOT = { has_variable = dhm_courtship_reserved_for } }
+  }
+ }
+}
+
+# A Christian chapel is used only for an explicitly Christian host AND couple.
+# Missing/old/other-faith contexts get the religiously neutral solar.
+dhm_v075_christian_courtship_art_trigger = {
+ faith = { religion = religion:christianity_religion }
+ OR = {
+  AND = {
+   exists = scope:dhm_marriage_subject
+   exists = scope:dhm_marriage_candidate
+   scope:dhm_marriage_subject = { faith = { religion = religion:christianity_religion } }
+   scope:dhm_marriage_candidate = { faith = { religion = religion:christianity_religion } }
+  }
+  AND = {
+   # A new courtship pair takes priority over an older saved wedding pair.
+   NOT = { exists = scope:dhm_marriage_subject }
+   NOT = { exists = scope:dhm_marriage_candidate }
+   exists = scope:dhm_union_subject
+   exists = scope:dhm_union_spouse
+   scope:dhm_union_subject = { faith = { religion = religion:christianity_religion } }
+   scope:dhm_union_spouse = { faith = { religion = religion:christianity_religion } }
+  }
+ }
+}
+
+# v0.8.0 automation foundation. A manual review must never start while a
+# proposal or consent ruling already waits for the player. The search stays bounded to
+# close family and the player's own court; the manager-side lock also covers a
+# proposal whose subject left court before its three-month ownership expired.
+dhm_v080_auto_pending_proposal_trigger = {
+ OR = {
+  has_character_flag = dhm_v080_auto_assisted_proposal_active
+  any_close_family_member = {
+   is_alive = yes
+   has_character_flag = dhm_matchmaking_proposal_pending
+  }
+  any_courtier = {
+   is_alive = yes
+   has_character_flag = dhm_matchmaking_proposal_pending
+  }
+ }
+}

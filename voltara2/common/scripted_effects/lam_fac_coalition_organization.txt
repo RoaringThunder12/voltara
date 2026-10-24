@@ -1,0 +1,221 @@
+﻿lam_co_count_effect = {
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_co_$KEY$
+			}
+		}
+		set_variable = {
+			name = lam_co_$KEY$
+			value = 0
+		}
+	}
+	change_variable = {
+		name = lam_co_$KEY$
+		add = 1
+	}
+}
+lam_co_diagnostic_effect = {
+	if = {
+		limit = {
+			NOT = {
+				var:lam_co_counted_m ?= lam_now_m
+			}
+		}
+		set_variable = {
+			name = lam_co_counted_m
+			value = lam_now_m
+		}
+		lam_co_count_effect = {
+			KEY = checks
+		}
+		if = {
+			limit = {
+				var:lam_co_organizers > 0
+			}
+			lam_co_count_effect = {
+				KEY = organized
+			}
+		}
+		if = {
+			limit = {
+				var:lam_cu_best_count >= 2
+			}
+			lam_co_count_effect = {
+				KEY = group2
+			}
+		}
+		if = {
+			limit = {
+				var:lam_er_best_share >= 30
+				var:lam_cu_best_count >= 2
+			}
+			lam_co_count_effect = {
+				KEY = share30
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_ev_done
+			}
+			lam_co_count_effect = {
+				KEY = splits
+			}
+		}
+	}
+	set_variable = {
+		name = lam_co_state
+		value = flag:no_dispute
+	}
+	if = {
+		limit = {
+			var:lam_er_disputants > 0
+		}
+		set_variable = {
+			name = lam_co_state
+			value = flag:no_organizer
+		}
+		if = {
+			limit = {
+				var:lam_co_organizers > 0
+			}
+			set_variable = {
+				name = lam_co_state
+				value = flag:no_followers
+			}
+			if = {
+				limit = {
+					var:lam_cu_best_count >= 2
+				}
+				set_variable = {
+					name = lam_co_state
+					value = flag:weak_group
+				}
+				if = {
+					limit = {
+						var:lam_er_best_share >= {
+							value = lam_ev_split_share
+							multiply = 100
+						}
+					}
+					set_variable = {
+						name = lam_co_state
+						value = var:lam_er_state
+					}
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_ev_done
+		}
+		set_variable = {
+			name = lam_co_state
+			value = flag:split
+		}
+	}
+}
+lam_co_root_context_effect = {
+	set_variable = {
+		name = lam_co_root_context
+		value = flag:empty
+	}
+	if = {
+		limit = {
+			scope:lam_bloc_lord = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					lam_co_existing_party_trigger = yes
+				}
+			}
+		}
+		set_variable = {
+			name = lam_co_root_context
+			value = flag:young
+		}
+		if = {
+			limit = {
+				scope:lam_bloc_lord = {
+					any_in_list = {
+						variable = lam_bloc_leads
+						trigger_if = {
+							limit = {
+								lam_co_existing_party_trigger = yes
+							}
+							trigger_if = {
+								limit = {
+									has_variable = lam_fac_age
+								}
+								var:lam_fac_age >= 5
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+			}
+			set_variable = {
+				name = lam_co_root_context
+				value = flag:old_small
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_bloc_lord = {
+					any_in_list = {
+						variable = lam_bloc_leads
+						lam_co_existing_party_trigger = yes
+						lam_cu_mature_party_trigger = yes
+					}
+				}
+			}
+			set_variable = {
+				name = lam_co_root_context
+				value = flag:established
+			}
+		}
+	}
+	set_variable = {
+		name = lam_co_root_month
+		value = lam_now_m
+	}
+}
+lam_co_root_record_effect = {
+	if = {
+		limit = {
+			var:lam_co_root_context ?= flag:empty
+		}
+		lam_fac_stat_add_effect = {
+			KEY = root_empty
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_co_root_context ?= flag:young
+		}
+		lam_fac_stat_add_effect = {
+			KEY = root_young
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_co_root_context ?= flag:old_small
+		}
+		lam_fac_stat_add_effect = {
+			KEY = root_old_small
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_co_root_context ?= flag:established
+		}
+		lam_fac_stat_add_effect = {
+			KEY = root_established
+		}
+	}
+}

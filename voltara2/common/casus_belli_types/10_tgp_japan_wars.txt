@@ -41,6 +41,8 @@ japan_install_bloc_member_cb = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -367,6 +369,8 @@ japan_soryo_conquest_county_landless_cb = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -646,6 +650,8 @@ japan_soryo_conquest_county_landless_cb = {
 # War for feudal to take land
 japan_soryo_conquest_county_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -994,6 +1000,8 @@ japan_demand_administrative_cb = {
 
 	# root = scope:attacker, scope:defender, scope:target
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -1347,6 +1355,8 @@ japan_imperial_expansion_cb = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -1648,7 +1658,7 @@ japan_imperial_reconquest_cb = {
 		prestige = {
 			scope:defender = {
 				every_sub_realm_county = {
-					limit = { empire = title:e_japan }
+					limit = { always = no }
 					add = {
 						value = 50
 						desc = japan_imperial_reconquest_cb_cost_tt
@@ -1689,13 +1699,15 @@ japan_imperial_reconquest_cb = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
 
 		scope:target = {
 			tier = tier_duchy
-			empire = title:e_japan
+			always = no
 		}
 	}
 
@@ -1943,6 +1955,8 @@ japan_refused_ritsuryo_cb = {
 	target_de_jure_regions_above = yes
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -2230,6 +2244,8 @@ eradicate_house_cb = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -2525,6 +2541,8 @@ eradicate_house_cb = {
 # War to become Soryo as Kampaku
 japan_establish_soryo_administration_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -2775,6 +2793,8 @@ allowed_against_character = {
 # War to disrupt Bloc
 japan_bloc_war_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }

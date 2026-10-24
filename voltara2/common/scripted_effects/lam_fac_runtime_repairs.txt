@@ -1,0 +1,299 @@
+﻿lam_pb_register_existing_head_effect = {
+	if = {
+		limit = {
+			lam_pb_head_belongs_trigger = {
+				COURT = scope:lam_pb_checked_court
+			}
+		}
+		scope:lam_pb_checked_court = {
+			if = {
+				limit = {
+					NOT = {
+						is_target_in_variable_list = {
+							name = lam_bloc_leads
+							target = prev
+						}
+					}
+				}
+				add_to_variable_list = {
+					name = lam_bloc_leads
+					target = prev
+				}
+			}
+			remove_variable = lam_bloc_leads_none
+		}
+		set_variable = {
+			name = lam_bloc
+			value = this
+		}
+	}
+}
+lam_pb_reconcile_court_heads_effect = {
+	if = {
+		limit = {
+			lam_fac_realm_in_scope_trigger = yes
+		}
+		every_vassal = {
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				if = {
+					limit = {
+						has_variable = lam_bloc_lead
+					}
+					lam_wc_sync_effect = yes
+					lam_pb_register_existing_head_effect = yes
+				}
+			}
+		}
+	}
+	every_in_list = {
+		variable = lam_bloc_leads
+		if = {
+			limit = {
+				is_alive = no
+			}
+			scope:lam_pb_checked_court = {
+				remove_list_variable = {
+					name = lam_bloc_leads
+					target = prev
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+			}
+			scope:lam_pb_checked_court = {
+				remove_list_variable = {
+					name = lam_bloc_leads
+					target = prev
+				}
+			}
+		}
+		else = {
+			lam_wc_sync_effect = yes
+			if = {
+				limit = {
+					NOT = {
+						lam_pb_head_belongs_trigger = {
+							COURT = scope:lam_pb_checked_court
+						}
+					}
+				}
+				lam_pb_departed_head_effect = yes
+			}
+		}
+	}
+}
+lam_pb_departed_head_effect = {
+	save_scope_as = lam_pb_departing_head
+	if = {
+		limit = {
+			exists = var:lam_wc_war
+		}
+		scope:lam_pb_checked_court = {
+			remove_list_variable = {
+				name = lam_bloc_leads
+				target = scope:lam_pb_departing_head
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			exists = liege
+			liege = {
+				is_target_in_variable_list = {
+					name = lam_bloc_leads
+					target = scope:lam_pb_departing_head
+				}
+			}
+			NOT = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_pb_checked_court
+						}
+						liege = scope:lam_pb_checked_court
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		scope:lam_pb_checked_court = {
+			remove_list_variable = {
+				name = lam_bloc_leads
+				target = scope:lam_pb_departing_head
+			}
+		}
+	}
+	else = {
+		scope:lam_pb_checked_court = {
+			remove_list_variable = {
+				name = lam_bloc_leads
+				target = scope:lam_pb_departing_head
+			}
+		}
+		if = {
+			limit = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_pb_checked_court
+						}
+						this = scope:lam_pb_checked_court
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			lam_fac_crowned_head_effect = {
+				LORD = scope:lam_pb_checked_court
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					exists = liege
+				}
+				any_in_list = {
+					variable = lam_fac_members
+					is_alive = yes
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_pb_departing_head
+							}
+							liege ?= scope:lam_pb_departing_head
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+			}
+			lam_fac_crowned_head_effect = {
+				LORD = scope:lam_pb_departing_head
+			}
+		}
+		else = {
+			clear_saved_scope = lam_succ
+			clear_saved_scope = lam_ps_dying
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_disband
+					}
+				}
+				lam_fac_pick_successor_effect = {
+					LORD = scope:lam_pb_checked_court
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:lam_succ
+				}
+				if = {
+					limit = {
+						scope:lam_succ = {
+							lam_fac_succ_eligible_trigger = {
+								LORD = scope:lam_pb_checked_court
+							}
+						}
+					}
+					lam_fac_pass_identity_effect = {
+						FROM = scope:lam_pb_departing_head
+						TO = scope:lam_succ
+					}
+					scope:lam_pb_checked_court = {
+						add_to_variable_list = {
+							name = lam_bloc_leads
+							target = scope:lam_succ
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_end_why
+					}
+				}
+				set_variable = {
+					name = lam_fac_end_why
+					value = flag:left
+				}
+			}
+			lam_fac_drop_identity_effect = yes
+			clear_saved_scope = lam_succ
+		}
+	}
+}
+lam_pb_retire_members_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+		}
+		save_scope_as = lam_pb_retiring_head
+		every_in_list = {
+			variable = lam_fac_members
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				if = {
+					limit = {
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = scope:lam_pb_retiring_head
+								}
+								var:lam_bloc ?= scope:lam_pb_retiring_head
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+					lam_pb_clear_membership_effect = yes
+				}
+			}
+		}
+		every_in_list = {
+			variable = lam_fac_prev_members
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				if = {
+					limit = {
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = scope:lam_pb_retiring_head
+								}
+								var:lam_bloc ?= scope:lam_pb_retiring_head
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+					lam_pb_clear_membership_effect = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				var:lam_bloc ?= this
+			}
+			lam_pb_clear_membership_effect = yes
+		}
+	}
+}

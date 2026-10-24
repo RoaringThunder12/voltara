@@ -1,0 +1,81 @@
+﻿lam_pd_pact_partner_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_cr_share
+		}
+		add = var:lam_cr_share
+	}
+	add = {
+		value = "opinion(scope:lam_pd_pact_seeker)"
+		multiply = 0.2
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_betrayed
+		}
+		add = -40
+	}
+}
+lam_pd_political_ally_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_pd_pact_current_trigger = yes
+			NOT = {
+				var:lam_pd_pact_kind ?= flag:defense
+			}
+			OR = {
+				AND = {
+					var:lam_pd_pact_kind ?= flag:office
+					OR = {
+						var:lam_pd_kind ?= flag:council
+						var:lam_fac_goal ?= 5
+					}
+				}
+				AND = {
+					var:lam_pd_pact_kind ?= flag:law
+					OR = {
+						var:lam_pd_kind ?= flag:law
+						var:lam_fac_goal ?= 1
+					}
+				}
+				AND = {
+					var:lam_pd_pact_kind ?= flag:heir
+					OR = {
+						var:lam_pd_kind ?= flag:heir
+						var:lam_cr_issue ?= flag:heir
+						var:lam_cr_issue ?= flag:crown
+					}
+				}
+			}
+		}
+		add = {
+			value = var:lam_pd_pact_partner.var:lam_cr_share
+			multiply = 0.5
+		}
+	}
+	if = {
+		limit = {
+			lam_lf_exchange_current_trigger = yes
+			var:lam_lf_exchange_role ?= flag:sponsor
+			OR = {
+				AND = {
+					var:lam_lf_exchange_stage ?= 1
+					var:lam_pd_kind ?= flag:heir
+					var:lam_pd_target ?= var:lam_lf_exchange_heir
+				}
+				AND = {
+					var:lam_lf_exchange_stage ?= 2
+					var:lam_pd_kind ?= flag:council
+					var:lam_lf_beneficiary ?= var:lam_lf_exchange_person
+				}
+			}
+		}
+		add = {
+			value = var:lam_pd_pact_partner.var:lam_cr_share
+			multiply = 0.5
+		}
+	}
+	max = 30
+}

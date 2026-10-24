@@ -1,0 +1,22 @@
+﻿lam_bp_policy_trigger = {
+	is_alive = yes
+	has_variable = lam_bloc_lead
+	NOT = {
+		has_variable = lam_fac_disband
+	}
+	has_variable = lam_bp_policy_until
+	var:lam_bp_policy_until > lam_now_m
+	var:lam_bp_origin_lord ?= liege
+	trigger_if = {
+		limit = {
+			var:lam_bp_origin_side ?= flag:retain
+		}
+		var:lam_bp_origin_alternative ?= {
+			is_alive = yes
+		}
+		NOT = {
+			var:lam_bp_origin_alternative ?= liege
+		}
+		var:lam_fac_heir ?= var:lam_bp_origin_alternative
+	}
+}

@@ -1,0 +1,19 @@
+﻿namespace = lam_pb_repair
+lam_pb_repair.0001 = {
+	type = character_event
+	hidden = yes
+	trigger = {
+		is_alive = yes
+	}
+	immediate = {
+		remove_variable = lam_pb_membership_pending
+		lam_ob_person_membership_effect = yes
+		if = {
+			limit = {
+				is_ruler = yes
+			}
+			lam_wc_court_sync_effect = yes
+			lam_pb_court_membership_effect = yes
+		}
+	}
+}

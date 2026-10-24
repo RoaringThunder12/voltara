@@ -1,0 +1,560 @@
+﻿namespace = oath_events
+
+
+oath_events.0001 = { # An Oath Sworn - from landless perspective
+	type = character_event
+	title = oath_events.0001.t
+	desc = oath_events.0001.desc
+	theme = crown
+
+	override_background = {
+		reference = throne_room
+	}
+
+	left_portrait = {
+		character = root
+		animation = throne_room_kneel_1
+	}
+
+	right_portrait = {
+		character = var:val_oathholder
+		animation = spymaster
+	}
+
+	option = { # "So my Oath begins."
+		name = oath_events.0001.a
+        custom_tooltip = {
+			text = oath_events.0001.a.desc
+		}
+
+        add_trait = oathkeeper
+		add_trait = loyal
+		remove_trait = disloyal
+
+		set_relation_oathholder = {
+			target = var:val_oathholder
+		}
+		        
+		var:val_oathholder = {
+			add_hook = {
+				target = root
+				type = obligation_hook
+			}
+			add_character_modifier = { modifier = oathholder_life }
+			if = {
+				limit = { is_female = yes }
+				add_trait = oathholder_female
+			}
+			else = {
+				add_trait = oathholder_male
+			}
+        }
+	}
+
+    option = { # "I have reconsidered."
+		name = oath_events.0001.b
+        custom_tooltip = {
+			text = oath_events.0001.b.desc
+		}
+	}
+}
+
+oath_events.1001 = { # An Oath Sworn - from ruler perspective
+	type = character_event
+	title = oath_events.1001.t
+	desc = oath_events.1001.desc
+	theme = crown
+
+	override_background = {
+		reference = throne_room
+	}
+
+	left_portrait = {
+		character = root
+		animation = spymaster
+	}
+
+	right_portrait = {
+		character = var:val_oathkeeper
+		animation = throne_room_kneel_1
+	}
+
+	option = { # "I accept your oath."
+		name = oath_events.1001.a
+        custom_tooltip = {
+			text = oath_events.1001.a.desc
+		}
+
+		var:val_oathkeeper = {
+			add_trait = oathkeeper
+			remove_trait = disloyal
+			add_trait = loyal
+		}
+        
+
+		set_relation_oathbound = {
+			target = var:val_oathkeeper
+		}
+		        
+		add_hook = {
+			target = var:val_oathkeeper
+			type = obligation_hook
+		}
+		add_character_modifier = { modifier = oathholder_life }
+		if = {
+			limit = { is_female = yes }
+			add_trait = oathholder_female
+		}
+		else = {
+			add_trait = oathholder_male
+		}
+	}
+
+    option = { # "I do not accept."
+		name = oath_events.1001.b
+        custom_tooltip = {
+			text = oath_events.1001.b.desc
+		}
+
+		var:val_oathkeeper = {
+			add_opinion = {
+				target = root
+				modifier = rejected_by_oathholder_opinion
+			}
+		}
+	}
+}
+
+oath_events.0002 = { # Ruler approaches Landless - from landless perspective
+	type = character_event
+	title = oath_events.0002.t
+	desc = oath_events.0002.desc
+	theme = crown
+
+	override_background = {
+		reference = army_camp
+	}
+
+	left_portrait = {
+		character = scope:recipient
+		animation = interested_left
+	}
+
+	right_portrait = {
+		character = scope:actor
+		animation = admiration
+	}
+
+	option = { # "I Will Swear The Oath"
+		name = oath_events.0002.a
+        custom_tooltip = {
+			text = oath_events.0002.a.desc
+		}
+
+        add_trait = oathkeeper
+		add_trait = loyal
+		remove_trait = disloyal
+
+		scope:recipient = {
+			oathholder_assigned = { CHARACTER = scope:actor }
+			create_character_memory = {
+                type = swore_oathbound_contract_memory
+                participants = {
+                    new_boss = scope:actor
+                }
+            }
+			set_relation_oathholder = {
+				target = scope:actor
+			}
+		}
+
+		scope:actor = {
+			oathkeeper_assigned = { CHARACTER = scope:recipient }
+			create_character_memory = {
+                type = gained_oathbound_contract_memory
+                participants = {
+                    new_servant = scope:recipient
+                }
+            }
+			#set_relation_oathbound = {
+			#	target = scope:recipient
+			#}
+			add_hook = {
+				target = scope:recipient
+				type = obligation_hook
+			}
+			add_character_modifier = { modifier = oathholder_life }
+			if = {
+				limit = { is_female = yes }
+				add_trait = oathholder_female
+			}
+			else = {
+				add_trait = oathholder_male
+			}
+			pay_short_term_gold = {
+				target = scope:recipient
+				gold = 250
+			}
+			add_prestige = -250
+		}
+
+		ai_chance = {
+			base = 0
+
+			# Circumstances
+			modifier = {
+				add = 40
+				gold < 50 # Adventurer is broke. 
+			}
+			modifier = {
+				add = 20
+				scope:actor = { prestige_level >= 3 }
+			}
+
+			# Relations
+			modifier = {
+                add = 100
+                has_relation_best_friend = scope:actor
+            }
+			modifier = {
+                add = 100
+                has_relation_soulmate = scope:actor
+            }
+			modifier = {
+                add = 50
+                has_relation_friend = scope:actor
+            }
+			modifier = {
+                add = 50
+                has_relation_lover = scope:actor
+            }
+
+			# Traits
+			modifier = {
+				add = 30
+				has_trait = loyal
+			}
+			modifier = {
+				add = 30
+				has_trait = trusting
+			}
+			modifier = {
+				add = 30
+				has_trait = content
+			}
+		}
+		        
+	}
+
+    option = { # "I will not!"
+		name = oath_events.0002.b
+        custom_tooltip = {
+			text = oath_events.0002.b.desc
+		}
+		scope:actor = {
+			add_prestige = -250
+		}
+
+		ai_chance = {
+			base = 40
+
+			#Circumstances
+			modifier = {
+                add = 40
+                gold > 500 
+            }
+			modifier = {
+                add = 50
+                has_relation_grudge = scope:actor
+            }
+			modifier = {
+                add = 1000
+                has_relation_rival = scope:actor
+            }
+			modifier = {
+                add = 1000
+                has_relation_nemesis = scope:actor
+            }
+
+			# Traits
+			modifier = {
+				add = 50
+				has_trait = arrogant
+			}
+			modifier = {
+				add = 50
+				has_trait = stubborn
+			}
+			modifier = {
+				add = 1000
+				has_trait = ambitious
+			}
+		}
+	}
+}
+
+oath_events.2001 = { # Ruler approached Landless - Landless Accepted - from ruler perspective
+	type = character_event
+	title = oath_events.2001.t
+	desc = oath_events.2001.desc
+	theme = crown
+
+	override_background = {
+		reference = army_camp
+	}
+
+	left_portrait = {
+		character = scope:recipient
+		animation = throne_room_kneel_1
+	}
+
+	right_portrait = {
+		character = scope:actor
+		animation = admiration
+	}
+
+	option = { # "Very good."
+		name = oath_events.2001.a
+        custom_tooltip = {
+			text = oath_events.2001.a.desc
+		}
+
+		scope:recipient = {
+			oathholder_assigned = { CHARACTER = scope:actor }
+			create_character_memory = {
+                type = swore_oathbound_contract_memory
+                participants = {
+                    new_boss = scope:actor
+                }
+            }
+			set_relation_oathholder = {
+				target = scope:actor
+			}
+			add_trait = oathkeeper
+			remove_trait = disloyal
+			add_trait = loyal
+		}
+
+		scope:actor = {
+			oathkeeper_assigned = { CHARACTER = scope:recipient }
+
+			create_character_memory = {
+                type = gained_oathbound_contract_memory
+                participants = {
+                    new_servant = scope:recipient
+                }
+            }
+
+			add_hook = {
+				target = scope:recipient
+				type = obligation_hook
+			}
+
+			add_character_modifier = { modifier = oathholder_life }
+			if = {
+				limit = { is_female = yes }
+				add_trait = oathholder_female
+			}
+			else = {
+				add_trait = oathholder_male
+			}
+
+			pay_short_term_gold = {
+				target = scope:recipient
+				gold = 250
+			}
+		}
+	}
+
+	option = { # "I have reconsidered."
+		name = oath_events.2001.b
+        custom_tooltip = {
+			text = oath_events.2001.b.desc
+		}
+	}
+}
+
+# Forge Oath Scheme
+oath_events.3001 = {
+    type = character_event
+    title = oath_events.3001.t
+    desc = oath_events.3001.desc
+    theme = intrigue
+
+    left_portrait = {
+        character = scope:target # The Adventurer
+        animation = worry
+    }
+    
+    right_portrait = {
+        character = scope:owner # The Ruler
+        animation = scheme
+    }
+
+
+    option = {
+        name = oath_events.3001.a
+        custom_tooltip = oath_events.3001.a.desc
+
+        add_stress = minor_stress_impact_gain 
+        
+        add_trait = oathkeeper
+        add_trait = loyal
+        remove_trait = disloyal
+
+        set_relation_oathholder = {
+            target = scope:owner
+        }
+        
+        oathholder_assigned = { CHARACTER = scope:owner }
+		create_character_memory = {
+                type = swore_oathbound_contract_memory
+                participants = {
+                    new_boss = scope:owner
+                }
+            }
+        
+        scope:owner = {
+            add_hook = {
+                target = root
+                type = obligation_hook
+            }
+            add_character_modifier = { modifier = oathholder_life }
+			if = {
+				limit = { is_female = yes }
+				add_trait = oathholder_female
+			}
+			else = {
+				add_trait = oathholder_male
+			}
+            oathkeeper_assigned = { CHARACTER = scope:target }
+			create_character_memory = {
+                type = gained_oathbound_contract_memory
+                participants = {
+                    new_servant = scope:target
+                }
+            }
+            
+            # Tell the Ruler it worked!
+            trigger_event = oath_events.3003
+        }
+    }
+
+    option = {
+        name = oath_events.3001.b
+        custom_tooltip = oath_events.3001.b.desc
+        
+        add_trait = oathbreaker
+        
+        # Tell the Ruler they refused!
+        scope:owner = {
+            trigger_event = oath_events.3004
+        }
+    }
+}
+
+oath_events.3002 = {
+    type = character_event
+    title = oath_events.3002.t
+    desc = oath_events.3002.desc
+    theme = intrigue
+
+    left_portrait = {
+        character = scope:target # The Adventurer
+        animation = relief
+    }
+    
+    right_portrait = {
+        character = scope:owner 
+        animation = frustration
+    }
+
+
+    option = {
+        name = oath_events.3002.a
+        custom_tooltip = oath_events.3002.a.desc
+        
+        reverse_add_opinion = {
+            target = scope:owner
+            modifier = attempted_murder_me_crime 
+            opinion = -20
+        }
+        
+        # Tell the Ruler the forgery was ruined!
+        scope:owner = {
+            trigger_event = oath_events.3005
+        }
+    }
+}
+
+oath_events.3003 = {
+    type = character_event
+    title = oath_events.3003.t
+    desc = oath_events.3003.desc
+    theme = intrigue
+
+    left_portrait = {
+        character = root # The Ruler
+        animation = scheme
+    }
+    
+    right_portrait = {
+        character = scope:target # The Adventurer
+        animation = throne_room_kneel_1
+    }
+
+
+    option = {
+        name = oath_events.3003.a
+        custom_tooltip = oath_events.3003.a.desc
+        # No mechanical effects needed here, everything was handled in 3001.a!
+    }
+}
+
+oath_events.3004 = {
+    type = character_event
+    title = oath_events.3004.t
+    desc = oath_events.3004.desc
+    theme = intrigue
+
+    left_portrait = {
+        character = root # The Ruler
+        animation = anger
+    }
+    
+    right_portrait = {
+        character = scope:target # The Adventurer
+        animation = stress
+    }
+
+
+    option = {
+        name = oath_events.3004.a
+        custom_tooltip = oath_events.3004.a.desc
+        # No mechanical effects needed here, they already got the Oathbreaker trait in 3001.b.
+    }
+}
+
+oath_events.3005 = {
+    type = character_event
+    title = oath_events.3005.t
+    desc = oath_events.3005.desc
+    theme = intrigue
+
+    left_portrait = {
+        character = root # The Ruler
+        animation = disbelief
+    }
+    
+    right_portrait = {
+        character = scope:target # The Adventurer
+        animation = laugh
+    }
+
+
+    option = {
+        name = oath_events.3005.a
+        custom_tooltip = oath_events.3005.a.desc
+        # The scheme failed completely.
+    }
+}

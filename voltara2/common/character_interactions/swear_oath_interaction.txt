@@ -1,0 +1,243 @@
+﻿swear_oath_interaction = {                         
+	category = interaction_category_diplomacy
+	common_interaction = yes
+	desc = swear_oath_interaction_desc
+
+	is_shown = {
+		OR = {
+			#scope:actor.liege = scope:recipient
+			scope:actor = {
+				is_landless_adventurer = yes
+			}
+		}
+		NOT = { scope:recipient = scope:actor }
+		scope:actor = {
+			is_adult = yes
+			is_landless_adventurer = yes
+			is_imprisoned = no
+			NOT = { num_of_relation_oathholder > 0 }
+			NOT = { num_of_relation_oathbound > 0 }
+			NOT = { has_trait = oathbreaker }
+		}
+		scope:recipient = {
+			is_alive = yes
+			is_landed = yes
+			is_imprisoned = no
+			NOT = { num_of_relation_oathholder > 0 }
+			NOT = { num_of_relation_oathbound > 0 }
+		}
+	}
+
+    auto_accept = yes
+
+    ai_accept = {
+        base = 100
+    }
+
+	on_accept = {
+		scope:actor = {
+			oathholder_assigned = { CHARACTER = scope:recipient }
+
+			create_character_memory = {
+                type = swore_oathbound_contract_memory
+                participants = {
+                    new_boss = scope:recipient
+                }
+            }
+		}
+		scope:recipient = {
+			oathkeeper_assigned = { CHARACTER = scope:actor }
+
+			create_character_memory = {
+                type = gained_oathbound_contract_memory
+                participants = {
+                    new_servant = scope:actor
+                }
+            }
+		}
+		scope:actor = {
+			trigger_event = { 
+				id = oath_events.0001
+				#days = 1
+			}
+		}
+	}
+
+	ai_will_do = {
+		base = -10000  # Never
+	}
+}
+
+swear_oath_interaction_AI = {                         
+	category = interaction_category_diplomacy
+	common_interaction = yes
+	desc = swear_oath_interaction_desc
+
+	cooldown = {
+		years = 5
+	}
+
+	is_shown = {
+		NOT = { scope:recipient = scope:actor }
+		scope:actor = { 
+			is_ai = yes 
+			is_landless_adventurer = yes
+			is_imprisoned = no
+			NOT = { num_of_relation_oathholder > 0 }
+			NOT = { num_of_relation_oathbound > 0 }
+		}
+		scope:recipient = {
+			is_alive = yes
+			is_landed = yes
+			is_imprisoned = no
+			NOT = { num_of_relation_oathholder > 0 }
+			NOT = { num_of_relation_oathbound > 0 }
+		}
+	}
+
+	ai_potential = {
+        is_adult = yes
+		is_imprisoned = no
+		is_landless_adventurer = yes
+        num_of_relation_oathholder = 0
+    }
+
+    ai_targets = {
+		ai_recipients = neighboring_rulers
+		ai_recipients = contacts
+    }
+
+    ai_frequency = 36
+
+	auto_accept = yes
+
+    ai_accept = {
+        base = 100
+    }
+
+	on_accept = {
+		scope:actor = {
+			oathholder_assigned = { CHARACTER = scope:recipient }
+
+			create_character_memory = {
+                type = swore_oathbound_contract_memory
+                participants = {
+                    new_boss = scope:recipient
+                }
+            }
+		}
+		scope:recipient = {
+			oathkeeper_assigned = { CHARACTER = scope:actor }
+
+			create_character_memory = {
+                type = gained_oathbound_contract_memory
+                participants = {
+                    new_servant = scope:actor
+                }
+            }
+		}
+		scope:recipient = {
+			trigger_event = { 
+				id = oath_events.1001
+				#days = 1
+			}
+		}
+	}
+
+	ai_will_do = {
+		base = -50  # Start with a generally hesitant attitude towards becoming Oathbound
+
+		# Opinion modifiers will stack
+		modifier = {
+			trigger = {
+				scope:actor = {
+					opinion = {
+						target = scope:recipient
+						value >= 25  
+					}
+				}
+			}
+			add = 25  
+		}
+		modifier = {
+			trigger = {
+				scope:actor = {
+					opinion = {
+						target = scope:recipient
+						value >= 50  
+					}
+				}
+			}
+			add = 50  
+		}
+
+		# Trait influence
+		modifier = {
+			add = 1000
+			scope:actor = { has_trait = loyal }
+		}
+		modifier = {
+			add = 100
+			scope:actor = { has_trait = content }
+		}
+		modifier = {
+			add = 50
+			scope:actor = { has_trait = trusting }
+		}
+		modifier = {
+			add = -15
+			scope:actor = { has_trait = shy }
+		}
+		modifier = {
+			add = -25
+			scope:actor = { has_trait = stubborn }
+		}
+		modifier = {
+			add = -25
+			scope:actor = { has_trait = lazy }
+		}
+		modifier = {
+			add = -50
+			scope:actor = { has_trait = greedy }
+		}
+		modifier = {
+			add = -100
+			scope:actor = { has_trait = arrogant }
+		}
+		modifier = {
+			add = -100
+			scope:actor = { has_trait = paranoid }
+		}
+
+		modifier = {
+			add = -1000
+			scope:actor = { has_trait = ambitious }
+		}
+		modifier = {
+			add = -1000
+			scope:actor = { has_trait = disloyal }
+		}
+
+		# Impossible
+		modifier = {
+			add = -50000
+			scope:actor = { has_trait = conqueror }
+		}
+        modifier = {
+			add = -50000
+			scope:actor = { num_of_relation_oathholder > 0 }
+		}
+		modifier = {
+			add = -50000
+			scope:actor = { num_of_relation_oathbound > 0 }
+		}
+		modifier = {
+			add = -50000
+			scope:recipient = { is_landed = no }
+		}
+		modifier = {
+			add = -50000
+			scope:recipient = { is_landless_adventurer = yes }
+		}
+	}
+}

@@ -1,0 +1,58 @@
+﻿namespace = oathbound_sway_vassals_outcome
+
+oathbound_sway_vassals_outcome.0001 = {
+	hidden = yes
+
+	immediate = {
+		send_interface_message = {
+			type = sway_good_message
+			title = sway_sway_success_message
+			left_icon = scope:target
+			scope:target = {
+				if = {
+					limit = {
+						is_alive = yes
+						scope:owner = { is_alive = yes }
+					}
+					if = {
+						limit = {
+							any_character_struggle = {
+								is_struggle_type = persian_struggle
+								has_struggle_phase_parameter = fp3_sway_vassals_removes_disloyalty
+							}
+						}
+						add_opinion = {
+							target = scope:owner.var:val_oathholder
+							modifier = scheme_sway_and_compelled_to_submit_opinion
+							opinion = sway_opinion_increase_per_success
+						}
+					}
+					else = {
+						add_opinion = {
+							target = scope:owner.var:val_oathholder
+							modifier = scheme_sway_opinion
+							opinion = sway_opinion_increase_per_success
+						}
+					}
+				}
+			}
+			sway_end_effect = yes
+		}
+	}
+}
+
+oathbound_sway_vassals_outcome.0002 = {
+	hidden = yes
+
+	immediate = {
+		send_interface_message = {
+			type = sway_bad_message
+			title = sway_sway_failed_message
+			left_icon = scope:target
+			stress_impact = {
+				gregarious = minor_stress_impact_gain
+			}
+			sway_end_effect = yes
+		}
+	}
+}

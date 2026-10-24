@@ -1,0 +1,381 @@
+﻿lam_cs_snapshot_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+		}
+		set_variable = {
+			name = lam_cs_weight
+			value = lam_cs_weight_value
+		}
+	}
+}
+lam_cs_success_effect = {
+	if = {
+		limit = {
+			has_variable = lam_bloc_lead
+			NOT = {
+				has_variable = lam_fac_disband
+			}
+		}
+		set_variable = {
+			name = lam_cs_success
+			value = yes
+			years = 3
+		}
+	}
+}
+lam_cs_merge_retry_effect = {
+	if = {
+		limit = {
+			has_variable = lam_cr_active
+			var:lam_cr_action ?= flag:merge
+		}
+		set_variable = {
+			name = lam_cr_retry_merge
+			value = yes
+			years = 3
+		}
+	}
+}
+lam_cs_clear_pair_effect = {
+	remove_variable = lam_cs_partner
+	remove_variable = lam_cs_pair_since
+	remove_variable = lam_cs_pair_seen
+	remove_variable = lam_cs_pair_lord
+}
+lam_cs_court_effect = {
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_fac_viewonly
+			}
+		}
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+			}
+			if = {
+				limit = {
+					lam_cs_small_trigger = yes
+				}
+				save_scope_as = lam_cs_small
+				clear_saved_scope = lam_cs_target
+				var:lam_cs_partner ?= {
+					if = {
+						limit = {
+							lam_cs_pair_trigger = {
+								OTHER = scope:lam_cs_small
+							}
+							lam_cs_rank_value > scope:lam_cs_small.lam_cs_rank_value
+						}
+						save_scope_as = lam_cs_target
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							exists = scope:lam_cs_target
+						}
+					}
+					liege = {
+						ordered_in_list = {
+							variable = lam_bloc_leads
+							max = 1
+							check_range_bounds = no
+							limit = {
+								lam_cs_pair_trigger = {
+									OTHER = scope:lam_cs_small
+								}
+								lam_cs_rank_value > scope:lam_cs_small.lam_cs_rank_value
+							}
+							order_by = lam_cs_rank_value
+							save_scope_as = lam_cs_target
+						}
+					}
+				}
+				if = {
+					limit = {
+						exists = scope:lam_cs_target
+					}
+					if = {
+						limit = {
+							NOT = {
+								var:lam_cs_partner ?= scope:lam_cs_target
+								var:lam_cs_pair_lord ?= liege
+								has_variable = lam_cs_pair_since
+								has_variable = lam_cs_pair_seen
+							}
+						}
+						set_variable = {
+							name = lam_cs_partner
+							value = scope:lam_cs_target
+						}
+						set_variable = {
+							name = lam_cs_pair_lord
+							value = liege
+						}
+						set_variable = {
+							name = lam_cs_pair_since
+							value = lam_now_m
+						}
+					}
+					else_if = {
+						limit = {
+							var:lam_cs_pair_seen < {
+								value = lam_now_m
+								subtract = 27
+							}
+						}
+						set_variable = {
+							name = lam_cs_pair_since
+							value = lam_now_m
+						}
+					}
+					set_variable = {
+						name = lam_cs_pair_seen
+						value = lam_now_m
+					}
+					if = {
+						limit = {
+							has_variable = lam_cs_pair_since
+						}
+						if = {
+							limit = {
+								var:lam_cs_pair_since <= {
+									value = lam_now_m
+									subtract = lam_cs_merge_wait_value
+								}
+								lam_cs_council_ready_trigger = {
+									OTHER = scope:lam_cs_target
+								}
+							}
+							lam_fac_stat_add_effect = {
+								KEY = cs_merge_proposed
+							}
+							lam_cr_start_effect = {
+								ISSUE = merge
+								ACTION = merge
+								TARGET = scope:lam_cs_target
+							}
+						}
+					}
+				}
+				else = {
+					lam_cs_clear_pair_effect = yes
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = {
+						has_variable = lam_cr_active
+					}
+				}
+				lam_cs_clear_pair_effect = yes
+			}
+		}
+	}
+}
+lam_cs_merged_effect = {
+	lam_fac_stat_add_effect = {
+		KEY = cs_merged
+	}
+	lam_cs_clear_pair_effect = yes
+	set_variable = {
+		name = lam_fac_pinned
+		value = yes
+		months = 24
+	}
+	scope:lam_fm_big = {
+		set_variable = {
+			name = lam_cs_settling
+			value = yes
+			months = 36
+		}
+	}
+	every_in_list = {
+		variable = lam_fac_members
+		limit = {
+			is_alive = yes
+			var:lam_bloc ?= scope:lam_fm_big
+		}
+		if = {
+			limit = {
+				var:lam_cr_service_head ?= scope:lam_fm_small
+			}
+			set_variable = {
+				name = lam_cr_service_head
+				value = scope:lam_fm_big
+			}
+		}
+	}
+}
+lam_cs_clear_root_effect = {
+	remove_variable = lam_cs_topic
+	remove_variable = lam_cs_root_since
+	remove_variable = lam_cs_root_seen
+	remove_variable = lam_cs_root_lord
+}
+lam_cs_found_context_effect = {
+	if = {
+		limit = {
+			exists = scope:lam_bloc_lord
+			scope:lam_bloc_lord = {
+				NOT = {
+					has_variable = lam_fac_viewonly
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:lam_bloc_lord
+				is_ai = yes
+				scope:lam_bloc_lord = {
+					NOT = {
+						has_variable = lam_fac_viewonly
+					}
+					lam_cs_small_court_trigger = yes
+				}
+			}
+			remove_variable = lam_cs_old_topic
+			if = {
+				limit = {
+					has_variable = lam_cs_topic
+				}
+				set_variable = {
+					name = lam_cs_old_topic
+					value = var:lam_cs_topic
+				}
+			}
+			remove_variable = lam_cs_topic
+			if = {
+				limit = {
+					opinion = {
+						target = scope:lam_bloc_lord
+						value < -20
+					}
+				}
+				set_variable = {
+					name = lam_cs_topic
+					value = flag:opposition
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = {
+						faith = scope:lam_bloc_lord.faith
+					}
+					opinion = {
+						target = scope:lam_bloc_lord
+						value < 20
+					}
+				}
+				set_variable = {
+					name = lam_cs_topic
+					value = flag:faith
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = {
+						culture = scope:lam_bloc_lord.culture
+					}
+					opinion = {
+						target = scope:lam_bloc_lord
+						value < 20
+					}
+				}
+				set_variable = {
+					name = lam_cs_topic
+					value = flag:culture
+				}
+			}
+			else_if = {
+				limit = {
+					opinion = {
+						target = scope:lam_bloc_lord
+						value >= 40
+					}
+					scope:lam_bloc_lord = {
+						OR = {
+							is_at_war = yes
+							has_variable = lam_fac_newreign
+							tyranny >= 10
+						}
+					}
+				}
+				set_variable = {
+					name = lam_cs_topic
+					value = flag:crown
+				}
+			}
+			if = {
+				limit = {
+					has_variable = lam_cs_topic
+					scope:lam_bloc_lord = {
+						any_in_list = {
+							variable = lam_fac_pool
+							count >= 2
+							lam_cs_found_support_trigger = yes
+						}
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_variable = lam_cs_old_topic
+							has_variable = lam_cs_root_since
+							has_variable = lam_cs_root_seen
+							var:lam_cs_root_lord ?= scope:lam_bloc_lord
+						}
+					}
+					set_variable = {
+						name = lam_cs_root_since
+						value = lam_now_m
+					}
+				}
+				else_if = {
+					limit = {
+						OR = {
+							NOT = {
+								var:lam_cs_topic = var:lam_cs_old_topic
+							}
+							var:lam_cs_root_seen < {
+								value = lam_now_m
+								subtract = 27
+							}
+						}
+					}
+					set_variable = {
+						name = lam_cs_root_since
+						value = lam_now_m
+					}
+				}
+				set_variable = {
+					name = lam_cs_root_seen
+					value = lam_now_m
+				}
+				set_variable = {
+					name = lam_cs_root_lord
+					value = scope:lam_bloc_lord
+				}
+			}
+			else = {
+				lam_cs_clear_root_effect = yes
+			}
+		}
+		else = {
+			lam_cs_clear_root_effect = yes
+		}
+		remove_variable = lam_cs_old_topic
+	}
+}
+lam_cs_identity_clear_effect = {
+	lam_cs_clear_pair_effect = yes
+	lam_cs_clear_root_effect = yes
+	remove_variable = lam_cs_success
+	remove_variable = lam_cs_weight
+	remove_variable = lam_cs_settling
+	remove_variable = lam_cs_old_topic
+}

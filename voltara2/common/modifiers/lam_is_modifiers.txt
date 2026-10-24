@@ -1,0 +1,21 @@
+﻿# Living Factions - court issues (tools/claude_fixes/issue.py)
+lam_is_tax_relief_modifier = {
+	icon = stewardship_negative
+	vassal_tax_mult = -0.15
+	vassal_levy_contribution_mult = -0.15
+	vassal_opinion = 5
+}
+lam_is_tax_firm_modifier = {
+	icon = stewardship_positive
+	vassal_tax_mult = 0.1
+	vassal_opinion = -3
+}
+lam_is_tolerance_modifier = {
+	icon = diplomacy_positive
+	different_faith_opinion = 10
+}
+lam_is_orthodoxy_modifier = {
+	icon = piety_positive
+	monthly_piety_gain_mult = 0.1
+	same_faith_opinion = 5
+}

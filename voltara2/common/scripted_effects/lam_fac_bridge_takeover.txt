@@ -1,0 +1,58 @@
+﻿lam_pb_takeover_effect = {
+	if = {
+		limit = {
+			has_variable = lam_pb_owned
+			NOT = {
+				lam_pb_managed_court_trigger = yes
+			}
+		}
+		remove_variable = lam_pb_owned
+	}
+	if = {
+		limit = {
+			lam_pb_managed_court_trigger = yes
+			NOT = {
+				has_variable = lam_pb_owned
+			}
+		}
+		set_variable = {
+			name = lam_pb_owned
+			value = yes
+		}
+		every_targeting_faction = {
+			limit = {
+				OR = {
+					faction_is_type = liberty_faction
+					faction_is_type = independence_faction
+					faction_is_type = claimant_faction
+					faction_is_type = nation_fracturing_faction
+				}
+				NOT = {
+					has_variable = lam_pb_managed
+				}
+			}
+			set_variable = {
+				name = lam_pb_managed
+				value = yes
+			}
+			set_variable = {
+				name = lam_pb_inherited
+				value = yes
+			}
+			set_variable = {
+				name = lam_pb_approved
+				value = yes
+			}
+			save_scope_as = lam_pb_imported_faction
+			every_faction_member = {
+				scope:lam_pb_imported_faction = {
+					add_to_variable_list = {
+						name = lam_pb_consented
+						target = prev
+					}
+				}
+			}
+			lam_pb_snapshot_backend_effect = yes
+		}
+	}
+}

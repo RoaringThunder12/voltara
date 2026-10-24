@@ -1,0 +1,34 @@
+﻿on_domicile_moved = {
+	on_actions = {
+        oathbound_cleanup_patrol_action
+    }
+}
+
+oathbound_cleanup_patrol_action = {
+    effect = {
+        if = {
+            limit = {
+                # 1. Make sure we have an owner
+                exists = scope:owner
+                
+                # 2. Check if that owner has a patrolled county saved
+                scope:owner = {
+                    exists = var:oathbound_patrolled_county_var
+                }
+            }
+            
+            # If both are true, clean up the county!
+            scope:owner = {
+                # Go to the saved county and remove the modifier
+                var:oathbound_patrolled_county_var = {
+                    remove_county_modifier = oathbound_enforcing_order_weak
+                    remove_county_modifier = oathbound_enforcing_order_normal
+                    remove_county_modifier = oathbound_enforcing_order_strong
+                }
+                
+                # Delete the variable so it's ready for the next camp move
+                remove_variable = oathbound_patrolled_county_var
+            }
+        }
+    }
+}

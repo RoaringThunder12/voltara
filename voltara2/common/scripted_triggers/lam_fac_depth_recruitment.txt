@@ -1,0 +1,68 @@
+﻿lam_pd_recruit_candidate_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	is_ruler = yes
+	liege ?= scope:lam_rc_head.liege
+	NOT = {
+		this = scope:lam_rc_head
+	}
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+	NOT = {
+		var:lam_bloc ?= scope:lam_rc_head
+	}
+	NOT = {
+		has_variable = lam_pd_recruit_from
+	}
+	NOT = {
+		has_variable = lam_fac_pinned
+	}
+	NOT = {
+		has_variable = lam_pd_recruit_cd
+	}
+}
+lam_pd_recruit_current_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+	has_variable = lam_pd_recruit_from
+	has_variable = lam_pd_recruit_id
+	var:lam_pd_recruit_id ?= scope:lam_pd_recruit_token
+	AND = {
+		has_variable = lam_pd_recruit_until
+		var:lam_pd_recruit_until >= lam_now_m
+	}
+	liege ?= var:lam_pd_recruit_lord
+	var:lam_pd_recruit_from = {
+		is_alive = yes
+		is_adult = yes
+		is_imprisoned = no
+		has_variable = lam_bloc_lead
+		var:lam_bloc ?= this
+		liege ?= scope:lam_pd_recruit_lord
+		var:lam_fac_rec ?= scope:lam_pd_recruit_record
+		var:lam_pd_recruit_target ?= scope:lam_pd_recruit_person
+	}
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_pd_recruit_old
+			}
+			NOT = {
+				has_variable = lam_bloc
+			}
+		}
+		AND = {
+			has_variable = lam_pd_recruit_old
+			var:lam_bloc ?= var:lam_pd_recruit_old
+		}
+	}
+	NOT = {
+		has_variable = lam_pd_recruit_retained
+	}
+}

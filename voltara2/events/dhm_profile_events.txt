@@ -1,0 +1,352 @@
+﻿namespace = dhm_profile
+
+# Right-click management profile for one close-family or same-court dynast.
+dhm_profile.0001 = {
+	type = character_event
+	title = dhm_profile.0001.t
+	desc = {
+		desc = dhm_profile.0001.desc
+		triggered_desc = {
+			trigger = {
+				scope:dhm_profile_target = {
+					has_variable = dhm091_lesson_trait
+					has_variable = dhm091_lesson_age
+					has_variable = dhm091_lesson_chance
+					has_variable = dhm091_lesson_success
+				}
+			}
+			desc = {
+				first_valid = {
+					triggered_desc = { trigger = { scope:dhm_profile_target = { var:dhm091_lesson_success = 1 } } desc = dhm091_profile_success }
+					desc = dhm091_profile_failure
+				}
+				triggered_desc = { trigger = { exists = scope:dhm_profile_target.var:dhm091_lesson_mentor } desc = dhm091_profile_teacher }
+				triggered_desc = { trigger = { scope:dhm_profile_target = { age < 16 has_character_flag = dhm091_personality_recent } } desc = dhm091_profile_wait }
+			}
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:dhm_profile_target = { has_character_flag = dhm_matchmaking_retry_cooldown } }
+				desc = {
+					desc = dhm_v075_profile_retry
+					first_valid = {
+						triggered_desc = { trigger = { scope:dhm_profile_target = { var:dhm075_retry_reason ?= flag:no_candidate } } desc = dhm_v075_retry_no_candidate }
+						triggered_desc = { trigger = { scope:dhm_profile_target = { var:dhm075_retry_reason ?= flag:refusal } } desc = dhm_v075_retry_refusal }
+						triggered_desc = { trigger = { scope:dhm_profile_target = { var:dhm075_retry_reason ?= flag:wish } } desc = dhm_v075_retry_wish }
+						triggered_desc = { trigger = { scope:dhm_profile_target = { var:dhm075_retry_reason ?= flag:negotiation } } desc = dhm_v075_retry_negotiation }
+						desc = dhm_v075_retry_legacy
+					}
+				}
+			}
+			triggered_desc = { trigger = { scope:dhm_profile_target = { OR = { has_character_flag = dhm_matchmaking_proposal_pending has_variable = dhm_courtship_reserved_for } } } desc = dhm_v075_profile_pending }
+			triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_matchmaking_cooldown } } desc = dhm_v075_profile_recent }
+		}
+
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_profile_full_auto } } desc = dhm_profile.status.full_auto }
+			triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_profile_ask } } desc = dhm_profile.status.ask }
+			triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_profile_manual } } desc = dhm_profile.status.manual }
+			triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_profile_do_not_marry } } desc = dhm_profile.status.do_not_marry }
+			desc = dhm_profile.status.follow_household
+		}
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_strategy_dynasty } } desc = dhm_profile.strategy.dynasty }
+			triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_strategy_alliance } } desc = dhm_profile.strategy.alliance }
+			triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_strategy_claims } } desc = dhm_profile.strategy.claims }
+			triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_strategy_bloodline } } desc = dhm_profile.strategy.bloodline }
+			triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_strategy_compatibility } } desc = dhm_profile.strategy.compatibility }
+			desc = dhm_profile.strategy.balanced
+		}
+		triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_strategy_same_faith } } desc = dhm_profile.constraint.same_faith }
+		triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_strategy_same_culture } } desc = dhm_profile.constraint.same_culture }
+		triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_strategy_grand_wedding } } desc = dhm_profile.constraint.grand_wedding }
+		triggered_desc = {
+			trigger = { scope:dhm_profile_target = { dhm_v080_has_career_plan_trigger = yes } }
+			desc = {
+				first_valid = {
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_career_diplomat } } desc = dhm_v080_profile_career_diplomat }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_career_commander } } desc = dhm_v080_profile_career_commander }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_career_steward } } desc = dhm_v080_profile_career_steward }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_career_spymaster } } desc = dhm_v080_profile_career_spymaster }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_career_scholar } } desc = dhm_v080_profile_career_scholar }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_career_physician } } desc = dhm_v080_profile_career_physician }
+					desc = dhm_v080_profile_career_officer
+				}
+				first_valid = {
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_v080_career_plan_achieved } } desc = dhm_v080_profile_career_achieved }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_v080_career_plan_redirected } } desc = dhm_v080_profile_career_redirected }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { dhm_v080_career_plan_blocked_trigger = yes } } desc = dhm_v080_profile_career_blocked }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { dhm_v080_career_plan_ready_trigger = yes } } desc = dhm_v080_profile_career_ready }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_v080_career_plan_missed } } desc = dhm_v080_profile_career_missed }
+					desc = dhm_v080_profile_career_preparing
+				}
+			}
+		}
+		triggered_desc = {
+			trigger = { scope:dhm_profile_target = { dhm_has_child_development_plan_trigger = yes } }
+			desc = {
+				first_valid = {
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_child_plan_diplomacy } } desc = dhm_v080_profile_child_diplomacy }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_child_plan_martial } } desc = dhm_v080_profile_child_martial }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_child_plan_stewardship } } desc = dhm_v080_profile_child_stewardship }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_child_plan_intrigue } } desc = dhm_v080_profile_child_intrigue }
+					desc = dhm_v080_profile_child_learning
+				}
+				first_valid = {
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_v080_child_plan_achieved } } desc = dhm_v080_profile_child_achieved }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_v080_child_plan_redirected } } desc = dhm_v080_profile_child_redirected }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { has_character_flag = dhm_v080_child_plan_missed } } desc = dhm_v080_profile_child_missed }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { age < 10 } } desc = dhm_v080_profile_child_foundation }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { NOT = { dhm_v080_child_plan_matches_focus_trigger = yes } } } desc = dhm_v080_profile_child_focus_changed }
+					triggered_desc = { trigger = { scope:dhm_profile_target = { dhm_v080_child_plan_promising_trigger = yes } } desc = dhm_v080_profile_child_promising }
+					desc = dhm_v080_profile_child_needs_work
+				}
+			}
+		}
+		triggered_desc = { trigger = { var:dhm_v080_auto_manual_scan_result ?= flag:proposal_pending } desc = dhm_v080_auto_scan_pending_menu }
+		triggered_desc = { trigger = { var:dhm_v080_auto_manual_scan_result ?= flag:cooldown } desc = dhm_v080_auto_scan_wait_menu }
+		triggered_desc = { trigger = { var:dhm_v080_auto_manual_scan_result ?= flag:story_pending } desc = dhm_v080_auto_scan_story_menu }
+	}
+	theme = stewardship
+	override_background = { reference = study }
+	left_portrait = scope:dhm_profile_target
+
+	trigger = {
+		exists = scope:dhm_profile_target
+		scope:dhm_profile_target = { is_alive = yes is_in_the_same_court_as = root }
+	}
+	immediate = {
+		save_scope_as = dhm_manager
+		if = {
+			limit = { scope:dhm_profile_target = { is_adult = yes dhm_v080_has_career_plan_trigger = yes } }
+			scope:dhm_profile_target = { dhm_v080_refresh_career_plan_status_effect = yes }
+		}
+		if = {
+			limit = {
+				scope:dhm_profile_target = {
+					is_adult = yes
+					dhm_has_child_development_plan_trigger = yes
+					NOR = {
+						has_character_flag = dhm_v080_child_plan_achieved
+						has_character_flag = dhm_v080_child_plan_redirected
+						has_character_flag = dhm_v080_child_plan_missed
+					}
+				}
+			}
+			scope:dhm_profile_target = { dhm_v080_finalize_child_plan_effect = yes }
+		}
+	}
+
+	option = { name = dhm090_marriage_report_open trigger_event = dhm_v090.0090 }
+	option = { name = dhm_profile.0001.automation trigger_event = dhm_profile.0010 }
+	option = { name = dhm_profile.0001.strategy trigger_event = dhm_profile.0020 }
+	option = {
+		name = dhm_profile.0001.child_plan
+		trigger = { NOT = { has_global_variable = dhm_setting_advanced_profiles_disabled } scope:dhm_profile_target = { age < 16 } }
+		trigger_event = dhm_profile.0040
+	}
+	option = {
+		name = dhm_profile.0001.career
+		trigger = { NOT = { has_global_variable = dhm_setting_advanced_profiles_disabled } scope:dhm_profile_target = { is_adult = yes } }
+		trigger_event = dhm_profile.0030
+	}
+	option = {
+		name = dhm_profile.0001.reset
+		scope:dhm_profile_target = {
+			dhm_clear_profile_automation_effect = yes
+			dhm_clear_profile_strategy_effect = yes
+			dhm_clear_career_plan_effect = yes
+			dhm_clear_child_plan_effect = yes
+		}
+		trigger_event = dhm_profile.0001
+	}
+	option = { name = dhm_profile.0001.close is_cancel_option = yes }
+}
+
+dhm_profile.0010 = {
+	type = character_event
+	title = dhm_profile.0010.t
+	desc = dhm_profile.0010.desc
+	theme = diplomacy
+	override_background = { reference = study }
+	left_portrait = scope:dhm_profile_target
+	trigger = { exists = scope:dhm_profile_target scope:dhm_profile_target = { is_alive = yes } }
+
+	option = {
+		name = dhm_profile.0010.follow
+		scope:dhm_profile_target = { dhm_clear_profile_automation_effect = yes }
+		trigger_event = dhm_profile.0001
+	}
+	option = {
+		name = dhm_profile.0010.full_auto
+		scope:dhm_profile_target = {
+			dhm_clear_profile_automation_effect = yes
+			add_character_flag = dhm_profile_full_auto
+			remove_character_flag = dhm_matchmaking_retry_cooldown
+		}
+		show_as_tooltip = { custom_tooltip = dhm_profile.0010.full_auto_tt }
+		trigger_event = dhm_profile.0099
+	}
+	option = {
+		name = dhm_profile.0010.ask
+		scope:dhm_profile_target = { dhm_clear_profile_automation_effect = yes add_character_flag = dhm_profile_ask }
+		trigger_event = dhm_profile.0001
+	}
+	option = {
+		name = dhm_profile.0010.manual
+		scope:dhm_profile_target = { dhm_clear_profile_automation_effect = yes add_character_flag = dhm_profile_manual }
+		trigger_event = dhm_profile.0001
+	}
+	option = {
+		name = dhm_profile.0010.do_not_marry
+		scope:dhm_profile_target = { dhm_clear_profile_automation_effect = yes add_character_flag = dhm_profile_do_not_marry }
+		trigger_event = dhm_profile.0001
+	}
+	option = { name = dhm_profile.back trigger_event = dhm_profile.0001 is_cancel_option = yes }
+}
+
+dhm_profile.0020 = {
+	type = character_event
+	title = dhm_profile.0020.t
+	desc = dhm_profile.0020.desc
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = scope:dhm_profile_target
+	trigger = { exists = scope:dhm_profile_target scope:dhm_profile_target = { is_alive = yes } }
+
+	option = {
+		name = dhm_profile.0020.balanced
+		scope:dhm_profile_target = { dhm_clear_primary_strategy_effect = yes }
+		trigger_event = dhm_profile.0020
+	}
+	option = {
+		name = dhm_profile.0020.dynasty
+		scope:dhm_profile_target = { dhm_clear_primary_strategy_effect = yes add_character_flag = dhm_strategy_dynasty }
+		trigger_event = dhm_profile.0020
+	}
+	option = {
+		name = dhm_profile.0020.alliance
+		scope:dhm_profile_target = { dhm_clear_primary_strategy_effect = yes add_character_flag = dhm_strategy_alliance }
+		trigger_event = dhm_profile.0020
+	}
+	option = {
+		name = dhm_profile.0020.claims
+		scope:dhm_profile_target = { dhm_clear_primary_strategy_effect = yes add_character_flag = dhm_strategy_claims }
+		trigger_event = dhm_profile.0020
+	}
+	option = {
+		name = dhm_profile.0020.bloodline
+		scope:dhm_profile_target = { dhm_clear_primary_strategy_effect = yes add_character_flag = dhm_strategy_bloodline }
+		trigger_event = dhm_profile.0020
+	}
+	option = {
+		name = dhm_profile.0020.compatibility
+		scope:dhm_profile_target = { dhm_clear_primary_strategy_effect = yes add_character_flag = dhm_strategy_compatibility }
+		trigger_event = dhm_profile.0020
+	}
+	option = { name = dhm_profile.0020.safeguards trigger_event = dhm_profile.0021 }
+	option = { name = dhm_profile.back trigger_event = dhm_profile.0001 is_cancel_option = yes }
+}
+
+dhm_profile.0021 = {
+	type = character_event
+	title = dhm_profile.0021.t
+	desc = dhm_profile.0021.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = scope:dhm_profile_target
+	trigger = { exists = scope:dhm_profile_target scope:dhm_profile_target = { is_alive = yes } }
+
+	option = {
+		name = dhm_profile.0021.same_faith_on
+		trigger = { scope:dhm_profile_target = { NOT = { has_character_flag = dhm_strategy_same_faith } } }
+		scope:dhm_profile_target = { add_character_flag = dhm_strategy_same_faith }
+		trigger_event = dhm_profile.0021
+	}
+	option = {
+		name = dhm_profile.0021.same_faith_off
+		trigger = { scope:dhm_profile_target = { has_character_flag = dhm_strategy_same_faith } }
+		scope:dhm_profile_target = { remove_character_flag = dhm_strategy_same_faith }
+		trigger_event = dhm_profile.0021
+	}
+	option = {
+		name = dhm_profile.0021.same_culture_on
+		trigger = { scope:dhm_profile_target = { NOT = { has_character_flag = dhm_strategy_same_culture } } }
+		scope:dhm_profile_target = { add_character_flag = dhm_strategy_same_culture }
+		trigger_event = dhm_profile.0021
+	}
+	option = {
+		name = dhm_profile.0021.same_culture_off
+		trigger = { scope:dhm_profile_target = { has_character_flag = dhm_strategy_same_culture } }
+		scope:dhm_profile_target = { remove_character_flag = dhm_strategy_same_culture }
+		trigger_event = dhm_profile.0021
+	}
+	option = {
+		name = dhm_profile.0021.grand_wedding_on
+		trigger = {
+			scope:dhm_profile_target = { NOT = { has_character_flag = dhm_strategy_grand_wedding } }
+			has_dlc_feature = tours_and_tournaments
+			has_dlc_feature = advanced_activities
+			highest_held_title_tier > tier_barony
+			is_landed_or_landless_administrative = yes
+		}
+		scope:dhm_profile_target = { add_character_flag = dhm_strategy_grand_wedding }
+		trigger_event = dhm_profile.0021
+	}
+	option = {
+		name = dhm_profile.0021.grand_wedding_off
+		trigger = { scope:dhm_profile_target = { has_character_flag = dhm_strategy_grand_wedding } }
+		scope:dhm_profile_target = { remove_character_flag = dhm_strategy_grand_wedding }
+		trigger_event = dhm_profile.0021
+	}
+	option = { name = dhm_profile.back trigger_event = dhm_profile.0020 is_cancel_option = yes }
+}
+
+dhm_profile.0030 = {
+	type = character_event
+	title = dhm_profile.0030.t
+	desc = dhm_profile.0030.desc
+	theme = stewardship
+	override_background = { reference = study }
+	left_portrait = scope:dhm_profile_target
+	trigger = { exists = scope:dhm_profile_target scope:dhm_profile_target = { is_alive = yes is_adult = yes } }
+
+	option = { name = dhm_profile.0030.none scope:dhm_profile_target = { dhm_clear_career_plan_effect = yes } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.0030.diplomat scope:dhm_profile_target = { dhm_clear_career_plan_effect = yes add_character_flag = dhm_career_diplomat dhm_v080_begin_career_plan_effect = yes } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.0030.commander scope:dhm_profile_target = { dhm_clear_career_plan_effect = yes add_character_flag = dhm_career_commander dhm_v080_begin_career_plan_effect = yes } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.0030.steward scope:dhm_profile_target = { dhm_clear_career_plan_effect = yes add_character_flag = dhm_career_steward dhm_v080_begin_career_plan_effect = yes } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.0030.spymaster scope:dhm_profile_target = { dhm_clear_career_plan_effect = yes add_character_flag = dhm_career_spymaster dhm_v080_begin_career_plan_effect = yes } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.0030.scholar scope:dhm_profile_target = { dhm_clear_career_plan_effect = yes add_character_flag = dhm_career_scholar dhm_v080_begin_career_plan_effect = yes } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.0030.physician scope:dhm_profile_target = { dhm_clear_career_plan_effect = yes add_character_flag = dhm_career_physician dhm_v080_begin_career_plan_effect = yes } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.0030.officer scope:dhm_profile_target = { dhm_clear_career_plan_effect = yes add_character_flag = dhm_career_court_officer dhm_v080_begin_career_plan_effect = yes } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.back trigger_event = dhm_profile.0001 is_cancel_option = yes }
+}
+
+dhm_profile.0040 = {
+	type = character_event
+	title = dhm_profile.0040.t
+	desc = dhm_profile.0040.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = scope:dhm_profile_target
+	trigger = { exists = scope:dhm_profile_target scope:dhm_profile_target = { is_alive = yes age < 16 } }
+
+	option = { name = dhm_profile.0040.actual_focus scope:dhm_profile_target = { dhm_assign_default_child_plan_effect = yes } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.0040.diplomacy scope:dhm_profile_target = { dhm_clear_child_plan_effect = yes add_character_flag = dhm_child_plan_diplomacy } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.0040.martial scope:dhm_profile_target = { dhm_clear_child_plan_effect = yes add_character_flag = dhm_child_plan_martial } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.0040.stewardship scope:dhm_profile_target = { dhm_clear_child_plan_effect = yes add_character_flag = dhm_child_plan_stewardship } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.0040.intrigue scope:dhm_profile_target = { dhm_clear_child_plan_effect = yes add_character_flag = dhm_child_plan_intrigue } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.0040.learning scope:dhm_profile_target = { dhm_clear_child_plan_effect = yes add_character_flag = dhm_child_plan_learning } trigger_event = dhm_profile.0001 }
+	option = { name = dhm_profile.back trigger_event = dhm_profile.0001 is_cancel_option = yes }
+}
+
+# Preserve the selected profile scope through a click-only scan job.
+dhm_profile.0099 = {
+ type = character_event
+ hidden = yes
+ trigger = { is_alive = yes is_ai = no }
+ immediate = {
+  dhm_v070_manual_household_scan_effect = yes
+  trigger_event = dhm_profile.0001
+ }
+}

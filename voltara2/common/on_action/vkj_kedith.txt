@@ -1,0 +1,6 @@
+﻿on_game_start = { on_actions = { vkj_initialize } }
+on_game_start_after_lobby = { on_actions = { vkj_initialize } }
+yearly_global_pulse = { on_actions = { vkj_initialize } }
+vkj_initialize = { effect = { vkj_seed_danger = yes vkw_init = yes } }
+on_travel_plan_movement = { on_actions = { vkj_movement } }
+vkj_movement = { effect = { vkj_encounter = yes } }

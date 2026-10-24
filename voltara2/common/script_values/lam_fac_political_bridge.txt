@@ -1,0 +1,122 @@
+﻿lam_pb_support_value = {
+	value = 0
+	if = {
+		limit = {
+			exists = scope:lam_pb_host
+		}
+		add = {
+			value = "opinion(scope:lam_pb_host)"
+			multiply = 0.25
+		}
+		if = {
+			limit = {
+				scope:lam_pb_host = {
+					exists = var:lam_pb_lord
+				}
+			}
+			subtract = {
+				value = "opinion(scope:lam_pb_host.var:lam_pb_lord)"
+				multiply = 0.5
+			}
+		}
+		if = {
+			limit = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_pb_host
+						}
+						var:lam_bloc ?= scope:lam_pb_host
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			add = 25
+		}
+		if = {
+			limit = {
+				has_trait = ambitious
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				has_trait = content
+			}
+			subtract = 25
+		}
+		if = {
+			limit = {
+				has_trait = craven
+			}
+			subtract = 15
+		}
+		if = {
+			limit = {
+				has_trait = brave
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_betrayed
+			}
+			add = 15
+		}
+		if = {
+			limit = {
+				scope:lam_pb_host = {
+					exists = var:lam_pb_claimant
+				}
+			}
+			add = {
+				value = "opinion(scope:lam_pb_host.var:lam_pb_claimant)"
+				multiply = 0.3
+			}
+		}
+	}
+}
+lam_pb_proposal_pressure_value = {
+	value = 0
+	if = {
+		limit = {
+			exists = liege
+		}
+		subtract = {
+			value = "opinion(liege)"
+			multiply = 0.75
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_betrayed
+			}
+			add = 20
+		}
+		if = {
+			limit = {
+				has_variable = lam_cr_excluded
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				has_trait = ambitious
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				has_trait = content
+			}
+			subtract = 30
+		}
+		if = {
+			limit = {
+				has_trait = craven
+			}
+			subtract = 15
+		}
+	}
+}

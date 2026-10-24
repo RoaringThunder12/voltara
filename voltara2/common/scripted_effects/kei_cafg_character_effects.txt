@@ -1,0 +1,53 @@
+﻿# Root is the newly created character
+# scope:creation_reason is why the character was created, options (need to be prefixed with flag: in comparisons) are:
+# 	script				- Created by the create_character effect
+#	ruler_designer		- Created by the ruler designer, any spouse or children generated for the custom character also have this reason
+# 	pool				- Created to populate the pool of wandering characters
+# 	guests				- Created to be a guest that randomly appears at a court
+# 	court_populator		- Created because a newly created court needed a courtier
+# 	mercenary_companies	- Created to be the commander of a mercenary band
+# The following five options are all automatically created new landed rulers:
+# 	succession			- Created as the new ruler of a title after succession if no existing character was a valid heir and the title shouldn't be destroyed
+# 	grant_titles		- Created when the AI wants to grant a county or barony away but no existing character is an appropriate recipient
+# 	great_holy_war		- Created to hold a barony after a victorious Great Holy War
+# 	migration			- A Herder created to hold titles left behind after nomadic migration
+# 	save_file_fix		- Created to be the holder of a County to fix a save game having a county without a holder that can sometimes be caused by baronies changing county 
+E_kCAFG_on_character_created = {
+    if = {
+        limit = {
+            NOT = { exists = scope:new_character_rite }
+            OR = {
+                #scope:creation_reason = flag:script
+                #scope:creation_reason = flag:pool
+                scope:creation_reason = flag:guests
+                scope:creation_reason = flag:court_populator
+                scope:creation_reason = flag:succession
+                scope:creation_reason = flag:migration
+                scope:creation_reason = flag:save_file_fix
+            }
+        }
+
+        if = {
+            limit = {
+                exists = liege
+                exists = liege.capital_barony
+                OR = {
+                    scope:creation_reason = flag:pool
+                    scope:creation_reason = flag:guests
+                    scope:creation_reason = flag:court_populator
+                }
+            }
+                liege.capital_barony.title_province = { save_temporary_scope_as = origin_province }
+        }
+        else = {
+            location = { save_temporary_scope_as = origin_province }
+        }
+
+        if = {
+            limit = { exists = scope:origin_province }
+
+            E_kCAFG_set_culture_from_province_random = { PROVINCE = scope:origin_province }
+            E_kCAFG_set_rite_from_province_random = { PROVINCE = scope:origin_province }
+        }
+    }
+}

@@ -1,0 +1,82 @@
+﻿namespace = faith_conversion
+
+# Fired when you convert to a new faith. Convert capital county.
+faith_conversion.0001 = {
+	hidden = yes
+
+	# kCAFG override : low priority, it's okay if this event is replaced
+	id_override_priority = 1
+
+	trigger = {
+		is_landed = yes
+		primary_title.tier > tier_barony
+		exists = capital_county
+		exists = scope:old_faith
+		capital_county.faith = scope:old_faith
+	}
+
+	immediate = {
+		capital_county ?= {
+			save_scope_as = converted_ruler_capital
+		}
+
+		# set_county_rite also sets the parent faith, so a faith change would convert the capital for free
+		if = {
+			limit = { capital_county.faith = root.faith }
+
+			# if their capital and ours coincide region holder's rite wins - try to convert adjacent county root owns
+			if = {
+				limit = {
+					capital_county.clerical_region_title ?= {
+						holder ?= {
+							capital_county = scope:converted_ruler_capital
+							faith = root.faith
+							rite != root.rite
+							NOR = {
+								root.puppet:theological_agent_puppet ?= this
+								root.puppet:external_theological_agent_puppet ?= this
+							}
+						}
+					}
+				}
+
+				capital_county = {
+					random_neighboring_county = {
+						limit = {
+							holder = root
+							faith = root.faith
+							clerical_region_title ?= {
+								OR = {
+									not = { exists = holder }
+									holder.rite = root.rite
+									holder.capital_county != prev
+								}
+							}
+						}
+
+						E_kCAFG_convert_rite_in_all_county_provinces = {
+							FACTOR = 0.65
+							VARIANCE = 0.1
+							RITE = root.rite
+							MAX = 0.9
+						}
+					}
+				}
+			}
+			else = {
+				capital_county = {
+					E_kCAFG_convert_rite_in_all_county_provinces = {
+						FACTOR = 0.7
+						VARIANCE = 0.15
+						RITE = root.rite
+						MAX = 0.9
+					}
+				}
+			}
+		}
+
+		root.rite = {
+			force_refresh_head_of_rite = yes
+		}
+	}
+}

@@ -259,13 +259,11 @@ magic_dup_evs.3010 = { #originally by Mathilda Bjarnehed -> witch.3010
 
 	after = {
 		hidden_effect = {
-			if = {
-				limit = {
+			if = { limit = {
 					#Host must be landed, so...
 					always = no	#...this will never happen, but it disables the error log message about the orphaned event witch.3010 event
-				}
-				trigger_event = witch.3010
-			}
+				} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 			#special for coven grandmaster
 			random_list = {
 				10 = {

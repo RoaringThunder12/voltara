@@ -1,0 +1,236 @@
+﻿# v0.8.0 continuity checks. Every memory lookup is bounded to event-carried
+# participants and first revalidates the living people and current relationship.
+
+# Timed globals lose two ticks per natural day in the tested 1.19.0.6 runtime.
+# An absolute day-count deadline stays correct across pulses, saves and rulers.
+# Retain expired deadlines: their presence prevents old flags restarting the wait.
+dhm_v080_triumph_cooldown_active_trigger = {
+	OR = {
+		AND = {
+			has_global_variable = dhm_v080_triumph_until
+			global_var:dhm_v080_triumph_until > { value = current_date }
+		}
+		AND = {
+			NOT = { has_global_variable = dhm_v080_triumph_until }
+			OR = {
+				has_global_variable = dhm_v080_triumph_recent
+				has_character_flag = dhm_v080_triumph_recent
+			}
+		}
+	}
+}
+
+# Courtship legality is evaluated once when the window arrives. Descriptions and
+# option visibility read this saved result instead of repeatedly running native
+# candidate validation while the event remains open. Click effects still recheck.
+dhm_v080_courtship_arrival_valid_trigger = {
+	exists = scope:dhm080_courtship_arrival_valid
+	scope:dhm080_courtship_arrival_valid = yes
+}
+
+dhm_v080_relative_letter_history_trigger = {
+	exists = scope:dhm_story_relative
+	scope:dhm_story_relative = {
+		is_alive = yes
+		is_close_or_extended_family_of = root
+		any_memory = {
+			has_memory_type = dhm_family_letter_memory
+			has_memory_participant = root
+		}
+	}
+}
+
+dhm_v080_school_pair_history_trigger = {
+	exists = scope:dhm_story_child
+	exists = scope:dhm_story_tutor
+	scope:dhm_story_tutor = { is_alive = yes }
+	scope:dhm_story_child = {
+		is_alive = yes
+		any_relation = { type = dhm_specialist_tutor this = scope:dhm_story_tutor }
+		any_memory = {
+			OR = {
+				has_memory_type = dhm_guided_education_memory
+				has_memory_type = dhm_education_breakthrough_memory
+			}
+			has_memory_participant = scope:dhm_story_tutor
+		}
+	}
+}
+
+dhm_v080_union_reconciliation_history_trigger = {
+	exists = scope:dhm_story_relative
+	exists = scope:dhm_story_spouse
+	scope:dhm_story_relative = {
+		is_alive = yes
+		is_spouse_of = scope:dhm_story_spouse
+	}
+	scope:dhm_story_spouse = {
+		is_alive = yes
+		is_spouse_of = scope:dhm_story_relative
+	}
+	OR = {
+		scope:dhm_story_relative = {
+			any_memory = {
+				OR = {
+					has_memory_type = dhm_marriage_reconciled_memory
+					has_memory_type = dhm_marriage_saved_memory
+				}
+				has_memory_participant = scope:dhm_story_spouse
+			}
+		}
+		scope:dhm_story_spouse = {
+			any_memory = {
+				OR = {
+					has_memory_type = dhm_marriage_reconciled_memory
+					has_memory_type = dhm_marriage_saved_memory
+				}
+				has_memory_participant = scope:dhm_story_relative
+			}
+		}
+	}
+}
+
+dhm_v080_dispute_pair_history_trigger = {
+	exists = scope:dhm_dispute_first
+	exists = scope:dhm_dispute_second
+	scope:dhm_dispute_first = {
+		is_alive = yes
+		is_close_or_extended_family_of = root
+	}
+	scope:dhm_dispute_second = {
+		is_alive = yes
+		is_close_or_extended_family_of = root
+	}
+	OR = {
+		scope:dhm_dispute_first = {
+			any_memory = {
+				has_memory_type = dhm_family_reconciliation_memory
+				has_memory_participant = scope:dhm_dispute_second
+			}
+		}
+		scope:dhm_dispute_second = {
+			any_memory = {
+				has_memory_type = dhm_family_reconciliation_memory
+				has_memory_participant = scope:dhm_dispute_first
+			}
+		}
+	}
+}
+
+dhm_v080_officer_service_history_trigger = {
+	exists = scope:dhm_story_officer
+	scope:dhm_story_officer = {
+		is_alive = yes
+		dhm_v060_officer_trigger = yes
+		any_memory = {
+			OR = {
+				has_memory_type = dhm_household_service_memory
+				has_memory_type = dhm_officer_triumph_memory
+			}
+			has_memory_participant = root
+		}
+	}
+}
+
+dhm_v080_officer_rivalry_history_trigger = {
+	exists = scope:dhm_officer_first
+	exists = scope:dhm_officer_second
+	scope:dhm_officer_first = {
+		is_alive = yes
+		dhm_v060_officer_trigger = yes
+		any_memory = {
+			has_memory_type = dhm_officer_rivalry_memory
+			has_memory_participant = scope:dhm_officer_second
+		}
+	}
+	scope:dhm_officer_second = { is_alive = yes dhm_v060_officer_trigger = yes }
+}
+
+dhm_v080_partner_promise_history_trigger = {
+	exists = scope:dhm_partner_spouse
+	scope:dhm_partner_spouse = {
+		is_alive = yes
+		is_spouse_of = root
+		any_memory = {
+			has_memory_type = dhm_household_promise_memory
+			has_memory_participant = root
+		}
+	}
+}
+
+dhm_v080_crisis_union_history_trigger = {
+	exists = scope:dhm_crisis_relative
+	exists = scope:dhm_crisis_spouse
+	scope:dhm_crisis_relative = {
+		is_alive = yes
+		is_spouse_of = scope:dhm_crisis_spouse
+	}
+	scope:dhm_crisis_spouse = {
+		is_alive = yes
+		is_spouse_of = scope:dhm_crisis_relative
+	}
+	OR = {
+		scope:dhm_crisis_relative = {
+			any_memory = {
+				OR = {
+					has_memory_type = dhm_marriage_reconciled_memory
+					has_memory_type = dhm_marriage_saved_memory
+				}
+				has_memory_participant = scope:dhm_crisis_spouse
+			}
+		}
+		scope:dhm_crisis_spouse = {
+			any_memory = {
+				OR = {
+					has_memory_type = dhm_marriage_reconciled_memory
+					has_memory_type = dhm_marriage_saved_memory
+				}
+				has_memory_participant = scope:dhm_crisis_relative
+			}
+		}
+	}
+}
+
+# Current scope = the human manager at the two-year relationship midpoint.
+# Continue only while the relationship named at the opening still makes sense.
+dhm_v080_relationship_arc_context_valid_trigger = {
+	exists = scope:dhm_arc_first
+	exists = scope:dhm_arc_second
+	scope:dhm_arc_first = { is_alive = yes }
+	scope:dhm_arc_second = { is_alive = yes }
+	OR = {
+		AND = {
+			dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:siblings LEGACY = dhm_arc_siblings_context }
+			scope:dhm_arc_first = { is_in_the_same_court_as = root is_sibling_of = scope:dhm_arc_second }
+			scope:dhm_arc_second = { is_in_the_same_court_as = root }
+		}
+		AND = {
+			dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:tutor LEGACY = dhm_arc_tutor_context }
+			scope:dhm_arc_first = { is_in_the_same_court_as = root }
+			scope:dhm_arc_second = { is_in_the_same_court_as = root this != root }
+		}
+		AND = {
+			dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:inlaw LEGACY = dhm_arc_inlaw_context }
+			scope:dhm_arc_first = { is_in_the_same_court_as = root is_spouse_of = scope:dhm_arc_second }
+			scope:dhm_arc_second = { is_in_the_same_court_as = root }
+		}
+		AND = {
+			dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:estranged LEGACY = dhm_arc_estranged_context }
+			scope:dhm_arc_first = { is_close_or_extended_family_of = root }
+			scope:dhm_arc_second = { is_close_or_extended_family_of = root }
+		}
+	}
+}
+
+# Current scope = the officer; root = the human manager receiving the story.
+# The post and the manager's authoritative appointment must still agree.
+dhm_v080_story_officer_current_trigger = {
+	is_alive = yes
+	is_in_the_same_court_as = root
+	OR = {
+		AND = { has_character_flag = dhm_office_steward root = { has_variable = dhm_officer_steward var:dhm_officer_steward ?= prev } }
+		AND = { has_character_flag = dhm_office_matchmaker root = { has_variable = dhm_officer_matchmaker var:dhm_officer_matchmaker ?= prev } }
+		AND = { has_character_flag = dhm_office_tutor root = { has_variable = dhm_officer_tutor var:dhm_officer_tutor ?= prev } }
+		AND = { has_character_flag = dhm_office_chronicler root = { has_variable = dhm_officer_chronicler var:dhm_officer_chronicler ?= prev } }
+	}
+}

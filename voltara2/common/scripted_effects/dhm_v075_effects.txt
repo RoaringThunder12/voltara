@@ -1,0 +1,134 @@
+﻿# v0.7.5 — record-keeping only. No scans in menus or the optional digest.
+
+dhm_v075_record_scan_effect = {
+ set_variable = { name = dhm075_last_scan_date value = current_date }
+}
+
+# Called on the waiting person. The native flag remains the authority.
+dhm_v075_set_retry_effect = {
+ add_character_flag = { flag = dhm_matchmaking_retry_cooldown months = $MONTHS$ }
+ set_variable = { name = dhm075_retry_reason value = $REASON$ months = $MONTHS$ }
+}
+
+# Current scope = a marriage subject. The permanent marker gives every new or
+# migrated subject one first fair turn; the short marker rotates recent attempts
+# behind people who have not been considered lately.
+dhm_v080_auto_mark_marriage_attempt_effect = {
+ add_character_flag = dhm_v080_auto_marriage_attempted_once
+ add_character_flag = { flag = dhm_v080_auto_recent_marriage_attempt months = 18 }
+}
+
+# Repeated "no candidate" results back off from 6 to 12 to 18 months. A primary
+# heir is capped at 12 months, preserving urgency without letting that one case
+# take every pass. The five-year history flags eventually forgive an old barren
+# search environment; refusal, negotiation and requested-time waits keep their
+# distinct durations.
+dhm_v080_auto_set_no_candidate_retry_effect = {
+ if = {
+ limit = {
+   is_primary_heir_of = scope:dhm_manager
+   OR = {
+    has_character_flag = dhm_v080_auto_no_candidate_once
+    has_character_flag = dhm_v080_auto_no_candidate_twice
+   }
+  }
+  add_character_flag = { flag = dhm_v080_auto_no_candidate_twice years = 5 }
+  dhm_v075_set_retry_effect = { MONTHS = 12 REASON = flag:no_candidate }
+ }
+ else_if = {
+  limit = { has_character_flag = dhm_v080_auto_no_candidate_twice }
+  dhm_v075_set_retry_effect = { MONTHS = 18 REASON = flag:no_candidate }
+ }
+ else_if = {
+  limit = { has_character_flag = dhm_v080_auto_no_candidate_once }
+  add_character_flag = { flag = dhm_v080_auto_no_candidate_twice years = 5 }
+  dhm_v075_set_retry_effect = { MONTHS = 12 REASON = flag:no_candidate }
+ }
+ else = {
+  add_character_flag = { flag = dhm_v080_auto_no_candidate_once years = 5 }
+  dhm_v075_set_retry_effect = { MONTHS = 6 REASON = flag:no_candidate }
+ }
+}
+
+dhm_v080_auto_clear_no_candidate_history_effect = {
+ remove_character_flag = dhm_v080_auto_no_candidate_once
+ remove_character_flag = dhm_v080_auto_no_candidate_twice
+}
+
+# Only explicitly enabled digests count new work; no historical backfill.
+dhm_v075_count_digest_effect = {
+ if = {
+  limit = { has_global_variable = dhm_setting_digest_enabled }
+  if = { limit = { NOT = { has_variable = $COUNTER$ } } set_variable = { name = $COUNTER$ value = 0 } }
+  change_variable = { name = $COUNTER$ add = 1 }
+ }
+}
+
+dhm_v075_initialize_digest_effect = {
+ if = { limit = { NOT = { has_variable = dhm075_digest_matches } } set_variable = { name = dhm075_digest_matches value = 0 } }
+ if = { limit = { NOT = { has_variable = dhm075_digest_letters } } set_variable = { name = dhm075_digest_letters value = 0 } }
+ if = { limit = { NOT = { has_variable = dhm075_digest_education } } set_variable = { name = dhm075_digest_education value = 0 } }
+ if = { limit = { NOT = { has_variable = dhm075_digest_marriage_stories } } set_variable = { name = dhm075_digest_marriage_stories value = 0 } }
+ if = { limit = { NOT = { has_variable = dhm075_digest_disputes } } set_variable = { name = dhm075_digest_disputes value = 0 } }
+ if = { limit = { NOT = { has_variable = dhm075_digest_wishes } } set_variable = { name = dhm075_digest_wishes value = 0 } }
+ if = { limit = { NOT = { has_variable = dhm075_digest_ceremonies } } set_variable = { name = dhm075_digest_ceremonies value = 0 } }
+ if = { limit = { NOT = { has_variable = dhm075_digest_reconciliations } } set_variable = { name = dhm075_digest_reconciliations value = 0 } }
+}
+
+dhm_v075_start_digest_effect = {
+ set_variable = { name = dhm075_digest_matches value = 0 }
+ set_variable = { name = dhm075_digest_letters value = 0 }
+ set_variable = { name = dhm075_digest_education value = 0 }
+ set_variable = { name = dhm075_digest_marriage_stories value = 0 }
+ set_variable = { name = dhm075_digest_disputes value = 0 }
+ set_variable = { name = dhm075_digest_wishes value = 0 }
+ set_variable = { name = dhm075_digest_ceremonies value = 0 }
+ set_variable = { name = dhm075_digest_reconciliations value = 0 }
+ add_character_flag = { flag = dhm075_digest_cooldown years = 1 }
+}
+
+dhm_v075_digest_pulse_effect = {
+ if = {
+  limit = { is_ai = no is_alive = yes has_global_variable = dhm_setting_digest_enabled NOT = { has_character_flag = dhm_v070_skip_story_pulse } NOT = { has_character_flag = dhm075_digest_cooldown } }
+  dhm_v075_initialize_digest_effect = yes
+  add_character_flag = { flag = dhm075_digest_cooldown years = 1 }
+  if = {
+   limit = { OR = {
+    var:dhm075_digest_matches > 0
+    var:dhm075_digest_letters > 0
+    var:dhm075_digest_education > 0
+    var:dhm075_digest_marriage_stories > 0
+    var:dhm075_digest_disputes > 0
+    var:dhm075_digest_wishes > 0
+    var:dhm075_digest_ceremonies > 0
+    var:dhm075_digest_reconciliations > 0
+   } }
+   save_scope_value_as = { name = dhm075_digest_matches value = var:dhm075_digest_matches }
+   set_variable = { name = dhm075_digest_last_matches value = var:dhm075_digest_matches }
+   set_variable = { name = dhm075_digest_matches value = 0 }
+   save_scope_value_as = { name = dhm075_digest_letters value = var:dhm075_digest_letters }
+   set_variable = { name = dhm075_digest_last_letters value = var:dhm075_digest_letters }
+   set_variable = { name = dhm075_digest_letters value = 0 }
+   save_scope_value_as = { name = dhm075_digest_education value = var:dhm075_digest_education }
+   set_variable = { name = dhm075_digest_last_education value = var:dhm075_digest_education }
+   set_variable = { name = dhm075_digest_education value = 0 }
+   save_scope_value_as = { name = dhm075_digest_marriage_stories value = var:dhm075_digest_marriage_stories }
+   set_variable = { name = dhm075_digest_last_marriage_stories value = var:dhm075_digest_marriage_stories }
+   set_variable = { name = dhm075_digest_marriage_stories value = 0 }
+   save_scope_value_as = { name = dhm075_digest_disputes value = var:dhm075_digest_disputes }
+   set_variable = { name = dhm075_digest_last_disputes value = var:dhm075_digest_disputes }
+   set_variable = { name = dhm075_digest_disputes value = 0 }
+   save_scope_value_as = { name = dhm075_digest_wishes value = var:dhm075_digest_wishes }
+   set_variable = { name = dhm075_digest_last_wishes value = var:dhm075_digest_wishes }
+   set_variable = { name = dhm075_digest_wishes value = 0 }
+   save_scope_value_as = { name = dhm075_digest_ceremonies value = var:dhm075_digest_ceremonies }
+   set_variable = { name = dhm075_digest_last_ceremonies value = var:dhm075_digest_ceremonies }
+   set_variable = { name = dhm075_digest_ceremonies value = 0 }
+   save_scope_value_as = { name = dhm075_digest_reconciliations value = var:dhm075_digest_reconciliations }
+   set_variable = { name = dhm075_digest_last_reconciliations value = var:dhm075_digest_reconciliations }
+   set_variable = { name = dhm075_digest_reconciliations value = 0 }
+   set_variable = { name = dhm075_digest_last_date value = current_date }
+   send_interface_message = { type = event_childhood_neutral_text title = dhm_v075_digest_title desc = dhm_v075_digest_letter_desc left_icon = root }
+  }
+ }
+}

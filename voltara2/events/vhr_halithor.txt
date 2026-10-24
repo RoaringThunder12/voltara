@@ -1,0 +1,13 @@
+﻿namespace = vhr
+vhr.1 = { type = character_event title = vhr.1.t desc = vhr.1.desc theme = stewardship
+ immediate = { random_list = { 60 = { add_character_flag = vhr_export_high } 25 = { add_character_flag = vhr_export_fair } 15 = { add_character_flag = vhr_export_lost } } }
+ option = { name = vhr.1.a trigger = { has_character_flag = vhr_export_high } add_gold = 80 remove_character_flag = vhr_export_high }
+ option = { name = vhr.1.b trigger = { has_character_flag = vhr_export_fair } add_gold = 50 remove_character_flag = vhr_export_fair }
+ option = { name = vhr.1.c trigger = { has_character_flag = vhr_export_lost } remove_character_flag = vhr_export_lost }
+}
+vhr.2 = { type = character_event title = vhr.2.t desc = vhr.2.desc theme = stewardship
+ trigger = { voltara_slavery_is_legal = yes any_courtier = { vhr_valid_worker = yes } }
+ option = { name = vhr.2.a vhr_quota = yes custom_tooltip = vhr_quota_risk ai_chance = { base = 30 modifier = { factor = 3 has_trait = greedy } modifier = { factor = 0 has_trait = compassionate } } }
+ option = { name = vhr.2.b trigger = { gold >= 20 } remove_short_term_gold = 20 capital_county = { remove_county_modifier = vhr_labor_unrest } ai_chance = { base = 50 } }
+ option = { name = vhr.2.c vhr_free_workers = yes add_prestige = 25 ai_chance = { base = 10 modifier = { factor = 5 has_trait = compassionate } } }
+}

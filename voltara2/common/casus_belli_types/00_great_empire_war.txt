@@ -1,4 +1,6 @@
 ﻿great_empire_cb = {
+ valid_to_start = { voltara_keeper_war_permitted = yes }
+
 	group = great
 	war_name = "Great [empire|E] War"
 	my_war_name = "Great [empire|E] War"
@@ -56,8 +58,6 @@
 	allowed_for_character = {
  NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins }
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
- scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
-
 		highest_held_title_tier = tier_empire
         is_independent_ruler = yes
 	}

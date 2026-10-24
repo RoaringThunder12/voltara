@@ -1,0 +1,251 @@
+﻿lam_lf_successor_value = {
+	value = lam_cr_influence_value
+	add = {
+		value = diplomacy
+		multiply = 2
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_ps_old
+					}
+					var:lam_bloc ?= scope:lam_ps_old
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			var:lam_fac_tier ?= 1
+		}
+		add = 25
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_ps_old.house
+					}
+					house ?= scope:lam_ps_old.house
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_merit
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_ps_old
+					}
+					var:lam_cr_service_head ?= scope:lam_ps_old
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			has_variable = lam_cr_service
+		}
+		add = {
+			value = var:lam_cr_service
+			min = 0
+			max = 20
+		}
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_ps_old.var:lam_fac_succ_pick
+					}
+					this ?= scope:lam_ps_old.var:lam_fac_succ_pick
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		add = 35
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_ps_old.primary_heir
+					}
+					this = scope:lam_ps_old.primary_heir
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		add = 15
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_ps_old.var:lam_lf_caucus_rep
+					}
+					this ?= scope:lam_ps_old.var:lam_lf_caucus_rep
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			scope:lam_ps_old = {
+				lam_lf_caucus_current_trigger = yes
+			}
+		}
+		add = 12
+	}
+	if = {
+		limit = {
+			has_trait = arbitrary
+		}
+		add = -15
+	}
+}
+lam_lf_successor_preference_value = {
+	value = 0
+	add = {
+		value = "opinion(scope:lam_lf_succ_a)"
+		multiply = 0.4
+	}
+	subtract = {
+		value = "opinion(scope:lam_lf_succ_b)"
+		multiply = 0.4
+	}
+	add = {
+		value = scope:lam_lf_succ_a.lam_lf_successor_value
+		multiply = 0.25
+	}
+	subtract = {
+		value = scope:lam_lf_succ_b.lam_lf_successor_value
+		multiply = 0.25
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_succ_a.house
+					}
+					house ?= scope:lam_lf_succ_a.house
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		add = 25
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_succ_b.house
+					}
+					house ?= scope:lam_lf_succ_b.house
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		add = -25
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_succ_a.faith
+					}
+					faith = scope:lam_lf_succ_a.faith
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		add = 8
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_succ_b.faith
+					}
+					faith = scope:lam_lf_succ_b.faith
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		add = -8
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_succ_a
+					}
+					this = scope:lam_lf_succ_a
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		add = 50
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_succ_b
+					}
+					this = scope:lam_lf_succ_b
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		add = -50
+	}
+	if = {
+		limit = {
+			has_relation_rival = scope:lam_lf_succ_a
+		}
+		add = -40
+	}
+	if = {
+		limit = {
+			has_relation_rival = scope:lam_lf_succ_b
+		}
+		add = 40
+	}
+}

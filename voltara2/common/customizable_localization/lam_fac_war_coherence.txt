@@ -1,0 +1,105 @@
+﻿LamWcObjective = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_wc_side ?= 2
+		}
+		localization_key = lam_wc_protect_lord
+	}
+	text = {
+		trigger = {
+			has_variable = lam_wc_phase
+			var:lam_wc_candidate ?= {
+				is_alive = yes
+			}
+		}
+		localization_key = lam_wc_crown_candidate
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_wc_war ?= {
+					using_cb = independence_faction_war
+				}
+				var:lam_wc_faction ?= {
+					faction_is_type = independence_faction
+				}
+			}
+		}
+		localization_key = lam_wc_independence
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_wc_war ?= {
+					using_cb = liberty_faction_war
+				}
+				var:lam_wc_faction ?= {
+					faction_is_type = liberty_faction
+				}
+			}
+		}
+		localization_key = lam_wc_liberty
+	}
+	text = {
+		trigger = {
+			var:lam_wc_phase ?= 2
+		}
+		localization_key = lam_wc_other_revolt
+	}
+	text = {
+		trigger = {
+			var:lam_wc_phase ?= 1
+		}
+		localization_key = lam_wc_other_preparation
+	}
+	text = {
+		fallback = yes
+		localization_key = lam_fac_empty
+	}
+}
+LamWcPeacetimeHeir = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_fac_heir ?= {
+				is_alive = yes
+			}
+		}
+		localization_key = lam_wc_peacetime_heir
+	}
+	text = {
+		fallback = yes
+		localization_key = lam_fac_empty
+	}
+}
+LamWcSharedFront = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_wc_shared_front
+		}
+		localization_key = lam_wc_shared_front
+	}
+	text = {
+		fallback = yes
+		localization_key = lam_fac_empty
+	}
+}
+LamWcCouncilClaimant = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_wc_plan_candidate
+			OR = {
+				var:lam_cr_action ?= flag:rise
+				var:lam_cr_action ?= flag:cp_rise
+			}
+		}
+		localization_key = lam_wc_council_claimant
+	}
+	text = {
+		fallback = yes
+		localization_key = lam_fac_empty
+	}
+}

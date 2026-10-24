@@ -1,0 +1,11 @@
+﻿voltara_kei_initialize = {
+ if = {
+  limit = { NOT = { has_global_variable = voltara_kei_population_ready } }
+  E_kCAFG_setup_all_counties = yes
+  set_global_variable = voltara_kei_population_ready
+  set_global_variable = kCAFG_is_loaded
+  set_global_variable = kCAFG_is_loaded_v2
+  trigger_event = { on_action = kCAFG_on_counties_setup_finished }
+ }
+ trigger_event = kCAFG_monthly_global_events.0001
+}

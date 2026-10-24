@@ -1,0 +1,234 @@
+﻿lam_ux_basis_military_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_cr_military_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_cr_economy_value > lam_cr_military_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_standing_value > lam_cr_military_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_court_value > lam_cr_military_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_network_value > lam_cr_military_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_service_value > lam_cr_military_value
+			}
+			add = 1
+		}
+	}
+}
+lam_ux_basis_economy_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_cr_economy_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_cr_military_value >= lam_cr_economy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_standing_value > lam_cr_economy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_court_value > lam_cr_economy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_network_value > lam_cr_economy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_service_value > lam_cr_economy_value
+			}
+			add = 1
+		}
+	}
+}
+lam_ux_basis_standing_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_cr_standing_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_cr_military_value >= lam_cr_standing_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_economy_value >= lam_cr_standing_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_court_value > lam_cr_standing_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_network_value > lam_cr_standing_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_service_value > lam_cr_standing_value
+			}
+			add = 1
+		}
+	}
+}
+lam_ux_basis_court_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_cr_court_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_cr_military_value >= lam_cr_court_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_economy_value >= lam_cr_court_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_standing_value >= lam_cr_court_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_network_value > lam_cr_court_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_service_value > lam_cr_court_value
+			}
+			add = 1
+		}
+	}
+}
+lam_ux_basis_network_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_cr_network_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_cr_military_value >= lam_cr_network_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_economy_value >= lam_cr_network_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_standing_value >= lam_cr_network_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_court_value >= lam_cr_network_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_service_value > lam_cr_network_value
+			}
+			add = 1
+		}
+	}
+}
+lam_ux_basis_service_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_cr_service_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_cr_military_value >= lam_cr_service_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_economy_value >= lam_cr_service_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_standing_value >= lam_cr_service_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_court_value >= lam_cr_service_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_cr_network_value >= lam_cr_service_value
+			}
+			add = 1
+		}
+	}
+}

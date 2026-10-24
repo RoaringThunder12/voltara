@@ -1,0 +1,761 @@
+﻿# Living Factions - court issues (tools/claude_fixes/issue.py). Push buttons on the issue cards.
+lam_is_push_heir_x = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		lam_is_can_push_trigger = yes
+		scope:target = {
+			has_variable = lam_is_heir_open
+		}
+	}
+	is_valid = {
+		lam_is_can_push_trigger = yes
+		lam_is_push_ready_trigger = yes
+		scope:target = {
+			has_variable = lam_is_heir_open
+		}
+
+		custom_description = {
+			text = lam_rv_is_held_tt
+			scope:target = {
+				save_temporary_scope_as = lam_is_lord
+				trigger_if = {
+					limit = {
+						exists = var:lam_is_heir_a
+					}
+					var:lam_is_heir_a = {
+						save_temporary_scope_as = lam_is_ca
+					}
+				}
+				trigger_if = {
+					limit = {
+						exists = var:lam_is_heir_b
+					}
+					var:lam_is_heir_b = {
+						save_temporary_scope_as = lam_is_cb
+					}
+				}
+				NOT = {
+					lam_is_held_trigger = {
+						T = heir
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_is_player_push_effect = {
+			T = heir
+			DIR = -1
+			FOR = x
+			AGAINST = y
+		}
+	}
+}
+lam_is_push_heir_y = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		lam_is_can_push_trigger = yes
+		scope:target = {
+			has_variable = lam_is_heir_open
+		}
+	}
+	is_valid = {
+		lam_is_can_push_trigger = yes
+		lam_is_push_ready_trigger = yes
+		scope:target = {
+			has_variable = lam_is_heir_open
+		}
+
+		custom_description = {
+			text = lam_rv_is_held_tt
+			scope:target = {
+				save_temporary_scope_as = lam_is_lord
+				trigger_if = {
+					limit = {
+						exists = var:lam_is_heir_a
+					}
+					var:lam_is_heir_a = {
+						save_temporary_scope_as = lam_is_ca
+					}
+				}
+				trigger_if = {
+					limit = {
+						exists = var:lam_is_heir_b
+					}
+					var:lam_is_heir_b = {
+						save_temporary_scope_as = lam_is_cb
+					}
+				}
+				NOT = {
+					lam_is_held_trigger = {
+						T = heir
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_is_player_push_effect = {
+			T = heir
+			DIR = 1
+			FOR = y
+			AGAINST = x
+		}
+	}
+}
+lam_is_push_crown_x = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		lam_is_can_push_trigger = yes
+		scope:target = {
+			has_variable = lam_is_crown_open
+		}
+	}
+	is_valid = {
+		lam_is_can_push_trigger = yes
+		lam_is_push_ready_trigger = yes
+		scope:target = {
+			has_variable = lam_is_crown_open
+		}
+
+		custom_description = {
+			text = lam_is_push_line_tt
+			OR = {
+				this = scope:target
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+				AND = {
+					var:lam_is_lk_crown_lord ?= scope:target
+					NOT = {
+						var:lam_is_lk_crown ?= flag:y
+					}
+				}
+				AND = {
+					NOT = {
+						var:lam_is_lk_crown_lord ?= scope:target
+					}
+					scope:target = {
+						save_temporary_scope_as = lam_is_lord
+					}
+					NOT = {
+						lam_is_side_crown_y_trigger = yes
+					}
+				}
+			}
+		}
+		custom_description = {
+			text = lam_rv_is_held_tt
+			scope:target = {
+				save_temporary_scope_as = lam_is_lord
+				NOT = {
+					lam_is_held_trigger = {
+						T = crown
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_is_player_push_effect = {
+			T = crown
+			DIR = -1
+			FOR = x
+			AGAINST = y
+		}
+	}
+}
+lam_is_push_crown_y = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		lam_is_can_push_trigger = yes
+		scope:target = {
+			has_variable = lam_is_crown_open
+		}
+	}
+	is_valid = {
+		lam_is_can_push_trigger = yes
+		lam_is_push_ready_trigger = yes
+		scope:target = {
+			has_variable = lam_is_crown_open
+		}
+
+		custom_description = {
+			text = lam_is_push_line_tt
+			OR = {
+				this = scope:target
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+				AND = {
+					var:lam_is_lk_crown_lord ?= scope:target
+					NOT = {
+						var:lam_is_lk_crown ?= flag:x
+					}
+				}
+				AND = {
+					NOT = {
+						var:lam_is_lk_crown_lord ?= scope:target
+					}
+					scope:target = {
+						save_temporary_scope_as = lam_is_lord
+					}
+					NOT = {
+						lam_is_side_crown_x_trigger = yes
+					}
+				}
+			}
+		}
+		custom_description = {
+			text = lam_rv_is_held_tt
+			scope:target = {
+				save_temporary_scope_as = lam_is_lord
+				NOT = {
+					lam_is_held_trigger = {
+						T = crown
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_is_player_push_effect = {
+			T = crown
+			DIR = 1
+			FOR = y
+			AGAINST = x
+		}
+	}
+}
+lam_is_push_council_x = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		lam_is_can_push_trigger = yes
+		scope:target = {
+			has_variable = lam_is_council_open
+		}
+	}
+	is_valid = {
+		lam_is_can_push_trigger = yes
+		lam_is_push_ready_trigger = yes
+		scope:target = {
+			has_variable = lam_is_council_open
+		}
+
+		custom_description = {
+			text = lam_is_push_line_tt
+			OR = {
+				this = scope:target
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+				AND = {
+					var:lam_is_lk_council_lord ?= scope:target
+					NOT = {
+						var:lam_is_lk_council ?= flag:y
+					}
+				}
+				AND = {
+					NOT = {
+						var:lam_is_lk_council_lord ?= scope:target
+					}
+					scope:target = {
+						save_temporary_scope_as = lam_is_lord
+					}
+					NOT = {
+						lam_is_side_council_y_trigger = yes
+					}
+				}
+			}
+		}
+		custom_description = {
+			text = lam_rv_is_held_tt
+			scope:target = {
+				save_temporary_scope_as = lam_is_lord
+				NOT = {
+					lam_is_held_trigger = {
+						T = council
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_is_player_push_effect = {
+			T = council
+			DIR = -1
+			FOR = x
+			AGAINST = y
+		}
+	}
+}
+lam_is_push_council_y = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		lam_is_can_push_trigger = yes
+		scope:target = {
+			has_variable = lam_is_council_open
+		}
+	}
+	is_valid = {
+		lam_is_can_push_trigger = yes
+		lam_is_push_ready_trigger = yes
+		scope:target = {
+			has_variable = lam_is_council_open
+		}
+
+		custom_description = {
+			text = lam_is_push_line_tt
+			OR = {
+				this = scope:target
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+				AND = {
+					var:lam_is_lk_council_lord ?= scope:target
+					NOT = {
+						var:lam_is_lk_council ?= flag:x
+					}
+				}
+				AND = {
+					NOT = {
+						var:lam_is_lk_council_lord ?= scope:target
+					}
+					scope:target = {
+						save_temporary_scope_as = lam_is_lord
+					}
+					NOT = {
+						lam_is_side_council_x_trigger = yes
+					}
+				}
+			}
+		}
+		custom_description = {
+			text = lam_rv_is_held_tt
+			scope:target = {
+				save_temporary_scope_as = lam_is_lord
+				NOT = {
+					lam_is_held_trigger = {
+						T = council
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_is_player_push_effect = {
+			T = council
+			DIR = 1
+			FOR = y
+			AGAINST = x
+		}
+	}
+}
+lam_is_push_faith_x = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		lam_is_can_push_trigger = yes
+		scope:target = {
+			has_variable = lam_is_faith_open
+		}
+	}
+	is_valid = {
+		lam_is_can_push_trigger = yes
+		lam_is_push_ready_trigger = yes
+		scope:target = {
+			has_variable = lam_is_faith_open
+		}
+
+		custom_description = {
+			text = lam_is_push_line_tt
+			OR = {
+				this = scope:target
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+				AND = {
+					var:lam_is_lk_faith_lord ?= scope:target
+					NOT = {
+						var:lam_is_lk_faith ?= flag:y
+					}
+				}
+				AND = {
+					NOT = {
+						var:lam_is_lk_faith_lord ?= scope:target
+					}
+					scope:target = {
+						save_temporary_scope_as = lam_is_lord
+					}
+					NOT = {
+						lam_is_side_faith_y_trigger = yes
+					}
+				}
+			}
+		}
+		custom_description = {
+			text = lam_rv_is_held_tt
+			scope:target = {
+				save_temporary_scope_as = lam_is_lord
+				NOT = {
+					lam_is_held_trigger = {
+						T = faith
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_is_player_push_effect = {
+			T = faith
+			DIR = -1
+			FOR = x
+			AGAINST = y
+		}
+	}
+}
+lam_is_push_faith_y = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		lam_is_can_push_trigger = yes
+		scope:target = {
+			has_variable = lam_is_faith_open
+		}
+	}
+	is_valid = {
+		lam_is_can_push_trigger = yes
+		lam_is_push_ready_trigger = yes
+		scope:target = {
+			has_variable = lam_is_faith_open
+		}
+
+		custom_description = {
+			text = lam_is_push_line_tt
+			OR = {
+				this = scope:target
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+				AND = {
+					var:lam_is_lk_faith_lord ?= scope:target
+					NOT = {
+						var:lam_is_lk_faith ?= flag:x
+					}
+				}
+				AND = {
+					NOT = {
+						var:lam_is_lk_faith_lord ?= scope:target
+					}
+					scope:target = {
+						save_temporary_scope_as = lam_is_lord
+					}
+					NOT = {
+						lam_is_side_faith_x_trigger = yes
+					}
+				}
+			}
+		}
+		custom_description = {
+			text = lam_rv_is_held_tt
+			scope:target = {
+				save_temporary_scope_as = lam_is_lord
+				NOT = {
+					lam_is_held_trigger = {
+						T = faith
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_is_player_push_effect = {
+			T = faith
+			DIR = 1
+			FOR = y
+			AGAINST = x
+		}
+	}
+}
+lam_is_push_tax_x = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		lam_is_can_push_trigger = yes
+		scope:target = {
+			has_variable = lam_is_tax_open
+		}
+	}
+	is_valid = {
+		lam_is_can_push_trigger = yes
+		lam_is_push_ready_trigger = yes
+		scope:target = {
+			has_variable = lam_is_tax_open
+		}
+
+		custom_description = {
+			text = lam_is_push_line_tt
+			OR = {
+				this = scope:target
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+				AND = {
+					var:lam_is_lk_tax_lord ?= scope:target
+					NOT = {
+						var:lam_is_lk_tax ?= flag:y
+					}
+				}
+				AND = {
+					NOT = {
+						var:lam_is_lk_tax_lord ?= scope:target
+					}
+					scope:target = {
+						save_temporary_scope_as = lam_is_lord
+					}
+					NOT = {
+						lam_is_side_tax_y_trigger = yes
+					}
+				}
+			}
+		}
+		custom_description = {
+			text = lam_rv_is_held_tt
+			scope:target = {
+				save_temporary_scope_as = lam_is_lord
+				NOT = {
+					lam_is_held_trigger = {
+						T = tax
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_is_player_push_effect = {
+			T = tax
+			DIR = -1
+			FOR = x
+			AGAINST = y
+		}
+	}
+}
+lam_is_push_tax_y = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		lam_is_can_push_trigger = yes
+		scope:target = {
+			has_variable = lam_is_tax_open
+		}
+	}
+	is_valid = {
+		lam_is_can_push_trigger = yes
+		lam_is_push_ready_trigger = yes
+		scope:target = {
+			has_variable = lam_is_tax_open
+		}
+
+		custom_description = {
+			text = lam_is_push_line_tt
+			OR = {
+				this = scope:target
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+				AND = {
+					var:lam_is_lk_tax_lord ?= scope:target
+					NOT = {
+						var:lam_is_lk_tax ?= flag:x
+					}
+				}
+				AND = {
+					NOT = {
+						var:lam_is_lk_tax_lord ?= scope:target
+					}
+					scope:target = {
+						save_temporary_scope_as = lam_is_lord
+					}
+					NOT = {
+						lam_is_side_tax_x_trigger = yes
+					}
+				}
+			}
+		}
+		custom_description = {
+			text = lam_rv_is_held_tt
+			scope:target = {
+				save_temporary_scope_as = lam_is_lord
+				NOT = {
+					lam_is_held_trigger = {
+						T = tax
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_is_player_push_effect = {
+			T = tax
+			DIR = 1
+			FOR = y
+			AGAINST = x
+		}
+	}
+}
+lam_is_push_war_x = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		lam_is_can_push_trigger = yes
+		scope:target = {
+			has_variable = lam_is_war_open
+		}
+	}
+	is_valid = {
+		lam_is_can_push_trigger = yes
+		lam_is_push_ready_trigger = yes
+		scope:target = {
+			has_variable = lam_is_war_open
+		}
+
+		custom_description = {
+			text = lam_is_push_line_tt
+			OR = {
+				this = scope:target
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+				AND = {
+					var:lam_is_lk_war_lord ?= scope:target
+					NOT = {
+						var:lam_is_lk_war ?= flag:y
+					}
+				}
+				AND = {
+					NOT = {
+						var:lam_is_lk_war_lord ?= scope:target
+					}
+					scope:target = {
+						save_temporary_scope_as = lam_is_lord
+					}
+					NOT = {
+						lam_is_side_war_y_trigger = yes
+					}
+				}
+			}
+		}
+		custom_description = {
+			text = lam_rv_is_held_tt
+			scope:target = {
+				save_temporary_scope_as = lam_is_lord
+				NOT = {
+					lam_is_held_trigger = {
+						T = war
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_is_player_push_effect = {
+			T = war
+			DIR = -1
+			FOR = x
+			AGAINST = y
+		}
+	}
+}
+lam_is_push_war_y = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		lam_is_can_push_trigger = yes
+		scope:target = {
+			has_variable = lam_is_war_open
+		}
+	}
+	is_valid = {
+		lam_is_can_push_trigger = yes
+		lam_is_push_ready_trigger = yes
+		scope:target = {
+			has_variable = lam_is_war_open
+		}
+
+		custom_description = {
+			text = lam_is_push_line_tt
+			OR = {
+				this = scope:target
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+				AND = {
+					var:lam_is_lk_war_lord ?= scope:target
+					NOT = {
+						var:lam_is_lk_war ?= flag:x
+					}
+				}
+				AND = {
+					NOT = {
+						var:lam_is_lk_war_lord ?= scope:target
+					}
+					scope:target = {
+						save_temporary_scope_as = lam_is_lord
+					}
+					NOT = {
+						lam_is_side_war_x_trigger = yes
+					}
+				}
+			}
+		}
+		custom_description = {
+			text = lam_rv_is_held_tt
+			scope:target = {
+				save_temporary_scope_as = lam_is_lord
+				NOT = {
+					lam_is_held_trigger = {
+						T = war
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_is_player_push_effect = {
+			T = war
+			DIR = 1
+			FOR = y
+			AGAINST = x
+		}
+	}
+}

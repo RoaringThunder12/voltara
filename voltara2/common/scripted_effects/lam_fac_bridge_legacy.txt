@@ -1,0 +1,87 @@
+﻿lam_pb_absorb_legacy_effect = {
+	save_scope_as = lam_abs_lord
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			NOT = {
+				lam_wc_committed_trigger = yes
+			}
+			is_ai = yes
+			var:lam_fac_stage ?= 4
+			NOT = {
+				has_variable = lam_fac_defiant
+			}
+			NOT = {
+				has_variable = lam_fac_rebel_cd
+			}
+			NOT = {
+				exists = joined_faction
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_abs_lord = {
+					is_ai = no
+					NOT = {
+						has_variable = lam_fac_viewonly
+					}
+				}
+				NOT = {
+					has_variable = lam_fac_ult_done
+				}
+			}
+			set_variable = {
+				name = lam_fac_ult_done
+				value = yes
+				years = 5
+			}
+			save_scope_as = lam_ult_lead
+			scope:lam_abs_lord = {
+				trigger_event = lam_faction.1700
+			}
+		}
+		else = {
+			lam_fac_rise_effect = yes
+		}
+	}
+	every_vassal = {
+		limit = {
+			lam_fac_peer_trigger = yes
+		}
+		if = {
+			limit = {
+				OR = {
+					scope:lam_abs_lord = {
+						lam_fac_vanilla_politics_trigger = yes
+					}
+					has_variable = lam_fac_armed
+					var:lam_bloc ?= {
+						is_ai = no
+						has_variable = lam_bloc_lead
+						exists = joined_faction
+					}
+					NOT = {
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = scope:lam_abs_lord
+								}
+								var:lam_fac_weighed ?= scope:lam_abs_lord
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+					NOT = {
+						lam_pt_membership_trigger = yes
+					}
+				}
+			}
+			lam_fac_unblock_effect = yes
+		}
+		else = {
+			lam_fac_block_effect = yes
+		}
+	}
+}

@@ -1,0 +1,14 @@
+﻿l_english:
+kCAFG_rite_MAP_MODE_TOOLTIP_FALLBACK: "[ROOT.Province.GetName]"
+kCAFG_rite_MAP_MODE_TOOLTIP_PERCENTAGE: "Percentage of $kCAFG_rite_MAP_MODE_TOOLTIP_adherents$: $kCAFG_rite_MAP_MODE_TOOLTIP_factor_percent$"
+kCAFG_rite_MAP_MODE_TOOLTIP_FULL: "$kCAFG_rite_MAP_MODE_TOOLTIP_amount$ $kCAFG_rite_MAP_MODE_TOOLTIP_adherents$ ($kCAFG_rite_MAP_MODE_TOOLTIP_factor_percent$)"
+kCAFG_rite_MAP_MODE_TOOLTIP_NONE: "No $kCAFG_rite_MAP_MODE_TOOLTIP_adherents$"
+kCAFG_rite_MAP_MODE_TOOLTIP_adherents: "[GetPlayer.MakeScope.Var('kCAFG_UI_rite_map_mode_viewed_rite').Rite.GetAdherentNamePluralNoTooltip|e] in [ROOT.Province.GetName]"
+kCAFG_rite_MAP_MODE_TOOLTIP_factor_percent: "[GuiScope.SetRoot(ROOT.Province.MakeScope).AddScope('kCAFG_rite', GetPlayer.MakeScope.Var('kCAFG_UI_rite_map_mode_viewed_rite').Rite.MakeScope).ScriptValue('V_kCAFG_province_rite_factor_rounded')|%v0]"
+kCAFG_rite_MAP_MODE_TOOLTIP_amount: "[GuiScope.SetRoot(ROOT.Province.MakeScope).AddScope('kCAFG_rite', GetPlayer.MakeScope.Var('kCAFG_UI_rite_map_mode_viewed_rite').Rite.MakeScope).ScriptValue('V_kCAFG_province_rite_amount_rounded')|v0]"
+
+kCAFG_rite_map_mode_header: "Showing [faith|e]: [GetPlayer.MakeScope.Var('kCAFG_UI_rite_map_mode_viewed_rite').Rite.GetName]"
+
+kCAFG_rite_tension_show_map_mode_tt: "#T Show [rite_tension|e] Map Mode#!"
+kCAFG_rite_tension_MAP_MODE_TOOLTIP: "[rite_tension|e] in [ROOT.Province.GetName]: [ROOT.Province.MakeScope.Var('kCAFG_rite_tension').GetValue|v0%]\n[Concept('rite_tension_baseline', 'Baseline')|E]: [ROOT.Province.MakeScope.Var('kCAFG_target_rite_tension').GetValue|v0%]"
+kCAFG_rite_tension_map_mode_header: "Showing [rite_tension|e]"

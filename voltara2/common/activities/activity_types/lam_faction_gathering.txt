@@ -1,0 +1,241 @@
+﻿# Living Factions - the faction's gathering (step_gathering). The head calls the members of their faction together.
+activity_lam_faction_gathering = {
+	is_shown = {
+		has_variable = lam_bloc_lead
+		exists = liege
+	}
+
+	can_start_showing_failures_only = {
+		is_available_adult = yes
+		NOT = { is_activity_type_on_cooldown = activity_lam_faction_gathering }
+		custom_tooltip = {
+			text = lam_gathering_members_tt
+			any_in_list = { variable = lam_fac_members is_alive = yes var:lam_bloc ?= root NOT = { this = root } count >= 2 }
+		}
+	}
+
+	is_valid = {
+		scope:host = {
+			is_alive = yes
+			is_imprisoned = no
+			is_incapable = no
+			has_variable = lam_bloc_lead
+		}
+	}
+
+	on_invalidated = {
+		invalidation_incapable_effect = yes
+		invalidation_imprisoned_effect = yes
+		invalidation_nobody_present_effect = yes
+		invalidation_host_isolated_effect = yes
+	}
+
+	on_host_death = {
+		invalidation_host_death_effect = yes
+	}
+
+	province_filter = domain
+	ai_province_filter = domain
+	max_province_icons = 3
+	is_single_location = yes
+
+	province_description = {
+		desc = activity_lam_faction_gathering_province_desc
+	}
+
+	province_score = {
+		value = 10
+		if = { limit = { this = scope:host.capital_province } add = 20 }
+	}
+
+	cost = {
+		gold = {
+			add = {
+				value = 30
+				desc = activity_lam_faction_gathering_cost
+			}
+		}
+	}
+
+	cooldown = { years = 2 }
+
+	###################
+	# PHASES
+	###################
+	phases = {
+		lam_gathering_phase_meet = {
+			is_predefined = yes
+			location_source = pickable
+
+			on_phase_active = {
+				# Not of the faction: not at its table.
+				if = {
+					limit = { NOT = { this = scope:host } NOT = { var:lam_bloc ?= scope:host } }
+					remove_from_activity = scope:activity
+				}
+				if = {
+					limit = { this = scope:host }
+					scope:activity = { progress_activity_phase_after = { days = 30 } }
+					trigger_event = lam_faction.2600
+				}
+			}
+
+			on_end = {
+				# The head puts the question; a player member who came has their say.
+				scope:activity = { save_scope_as = lam_ga }
+				scope:host = { save_scope_as = lam_ga_host }
+				if = {
+					limit = { this = scope:host }
+					if = { limit = { is_ai = no } trigger_event = lam_faction.2610 }
+					else = { lam_fac_gathering_ai_resolve_effect = yes }
+				}
+				else_if = {
+					limit = { is_ai = no var:lam_bloc ?= scope:host }
+					trigger_event = lam_faction.2620
+				}
+				else_if = {
+					limit = { var:lam_bloc ?= scope:host }
+					add_opinion = { target = scope:host modifier = lam_fac_gathered_opinion }
+				}
+			}
+		}
+	}
+
+	###################
+	# GUESTS
+	###################
+	open_invite = no
+	allow_zero_guest_invites = no
+	max_guests = 40
+
+	can_be_activity_guest = {
+		is_adult = yes
+		is_healthy = yes
+		NOT = { this = scope:host }
+		var:lam_bloc ?= scope:host
+	}
+
+	guest_invite_rules = {
+		defaults = {
+			1 = activity_invite_rule_fellow_vassals
+			1 = activity_invite_rule_vassals
+			2 = activity_invite_rule_councillors
+			2 = activity_invite_rule_friends
+			3 = activity_invite_rule_courtiers
+		}
+	}
+
+	guest_join_chance = {
+		base = 25
+		base_activity_modifier = yes
+		activity_guest_shared_ai_accept_modifier = yes
+		modifier = { var:lam_fac_tier ?= 1 add = 40 desc = lam_ai_fac_core_member_reason }
+		modifier = { var:lam_fac_tier ?= 2 add = 15 desc = lam_gathering_client_reason }
+	}
+
+	max_guest_arrival_delay_time = { months = 4 }
+
+	# Only the faction rides along: no spouse, bodyguard or courtier who is not of it.
+	travel_entourage_selection = {
+		weight = {
+			value = 10
+			if = {
+				limit = { NOR = { var:lam_bloc ?= scope:host this = scope:host } }
+				multiply = 0
+			}
+		}
+		max = 4
+		ai_max = 2
+		invite_rule_order = 1
+	}
+
+	host_intents = {
+		intents = { reduce_stress_intent befriend_attendee_intent }
+		default = reduce_stress_intent
+	}
+
+	guest_intents = {
+		intents = { reduce_stress_intent befriend_attendee_intent }
+		default = reduce_stress_intent
+	}
+
+	pulse_actions = {
+		entries = {
+			apa_friendly_discussions
+			host_gains_diplo_xp
+			host_gains_intrigue_xp
+			hook_trusting_guest
+		}
+		chance_of_no_event = 20
+	}
+
+	conclusion_description = {
+		desc = activity_lam_faction_gathering_conclusion_desc
+	}
+
+	###################
+	# AI
+	###################
+	ai_will_do = {
+		value = 0
+		if = {
+			limit = { has_variable = lam_fac_count var:lam_fac_count >= 4 }
+			add = 10
+		}
+		if = { limit = { has_trait = gregarious } add = 5 }
+		if = { limit = { has_trait = shy } add = -10 }
+	}
+	ai_check_interval = 36
+	ai_will_select_province = {
+		value = 10
+		if = { limit = { this = scope:host.capital_province } add = 50 }
+	}
+
+	###################
+	# GRAPHICS
+	###################
+	header_background = "gfx/interface/illustrations/activity_header_backgrounds/activity_debate.dds"
+	background = {
+		trigger = { always = yes }
+		texture = "gfx/interface/illustrations/event_scenes/councilchamber.dds"
+		environment = "environment_council"
+		ambience = "event:/SFX/Events/Backgrounds/meetingchamber_western"
+	}
+
+	window_characters = {
+		host = {
+			camera = camera_event_center
+			effect = { scope:host ?= { add_to_list = characters } }
+			scripted_animation = { animation = acknowledging }
+		}
+		guest = {
+			camera = camera_event_left
+			effect = {
+				if = {
+					limit = { scope:host.location = scope:activity.activity_location }
+					every_attending_character = {
+						limit = { location = scope:activity.activity_location this != scope:host }
+						add_to_list = characters
+					}
+				}
+			}
+			scripted_animation = {
+				triggered_animation = { trigger = { scope:character = { has_trait = shy } } animation = worry }
+				animation = personality_rational
+			}
+		}
+		guest = {
+			camera = camera_event_right
+			effect = {
+				if = {
+					limit = { scope:host.location = scope:activity.activity_location }
+					every_attending_character = {
+						limit = { location = scope:activity.activity_location this != scope:host }
+						add_to_list = characters
+					}
+				}
+			}
+			scripted_animation = { animation = personality_bold }
+		}
+	}
+}

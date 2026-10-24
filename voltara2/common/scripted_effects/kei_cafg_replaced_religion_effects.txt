@@ -1,0 +1,160 @@
+﻿# Openly convert all secret faith counties in your realm
+secret_faith_openly_convert_all_in_realm = {
+	if = {
+		limit = { any_sub_realm_county = { has_variable = false_convert } }
+		save_scope_value_as = { # Keeping track how many counties convert
+			name = num_false_converts_counties
+			value = 0
+		}
+
+		every_sub_realm_county = {
+			limit = { has_variable = false_convert }
+			save_temporary_scope_as = false_convert_county # Kei : var depends on scope, so we make sure the scope is right
+			E_kCAFG_convert_rite_in_all_county_provinces = { # Convert them
+				FACTOR = 0.7
+				VARIANCE = 0.4
+				RITE = scope:false_convert_county.var:false_convert.main_rite
+				MAX = 0.85
+			}
+			remove_county_modifier = false_convert_modifier # Remove modifier too
+			remove_variable = false_convert # No longer mark them as converts
+			add_county_modifier = { # Everyone likes practicing their faith in the open!
+				modifier = relieved_cryptos_modifier
+				years = 25
+			}
+			save_scope_value_as = { # Updating how many counties convert
+				name = num_false_converts_counties
+				value = {
+					value = scope:num_false_converts_counties
+					add = 1
+				}
+			}
+		}
+		if = { # Include counties in the message if there are any
+			limit = { scope:num_false_converts_counties > 0 }
+			root = { # There is an edgecase where root has a link to realm, but is not a character themselves!
+				send_interface_message = {
+					type = event_religious_good_text
+					title = event_false_converts.t
+					desc = event_false_converts_plus_counties.desc
+				}
+			}
+		}
+	}
+}
+
+# Openly convert all secret faith counties of your faith in your realm
+secret_faith_openly_convert_all_in_realm_specific = {
+	if = {
+		limit = {
+			any_sub_realm_county = {
+				has_variable = false_convert
+				var:false_convert = root.faith
+				faith != root.faith # Discount them if they've already been switched by the conversion action.
+			}
+		}
+
+		save_scope_value_as = { # Keeping track how many counties convert
+			name = num_false_converts_counties
+			value = 0
+		}
+
+		every_sub_realm_county = {
+			limit = {
+				has_variable = false_convert
+				var:false_convert = root.faith
+				faith != root.faith # Discount them if they've already been switched by the conversion action.
+			}
+			save_temporary_scope_as = false_convert_county # Kei : var depends on scope, so we make sure the scope is right
+			E_kCAFG_convert_rite_in_all_county_provinces = { # Convert them
+				FACTOR = 0.7
+				VARIANCE = 0.4
+				RITE = scope:false_convert_county.var:false_convert.main_rite
+				MAX = 0.85
+			}
+			remove_county_modifier = false_convert_modifier
+			remove_variable = false_convert # Cleanup
+			add_county_modifier = { # Everyone likes practicing their faith in the open!
+				modifier = relieved_cryptos_modifier
+				years = 25
+			}
+			save_scope_value_as = { # Updating how many counties convert
+				name = num_false_converts_counties
+				value = {
+					value = scope:num_false_converts_counties
+					add = 1
+				}
+			}
+		}
+
+		if = { # Include counties in the message if there are any
+			limit = { scope:num_false_converts_counties > 0 }
+			root = {
+				send_interface_message = {
+					type = event_religious_good_text
+					title = event_false_converts.t
+					desc = event_false_converts_plus_counties.desc
+				}
+			}
+		}
+	}
+}
+
+# Character scope (an AI ruler being swept into the new rite by rite_growth.0011).
+rite_growth_convert_ruler_to_new_rite_effect = {
+	if = {
+		limit = { rite != scope:new_rite }
+		set_character_rite_with_conversion = scope:new_rite
+	}
+	every_held_title = {
+		limit = {
+			tier = tier_county
+			rite = scope:source_rite
+		}
+		E_kCAFG_convert_rite_in_all_county_provinces = {
+			FACTOR = 0.65
+			VARIANCE = 0.2
+			RITE = scope:new_rite
+			MAX = 0.85
+		}
+	}
+	# The conversion above can cost the ruler their life
+	if = {
+		limit = { is_alive = yes }
+		add_character_flag = {
+			flag = recently_converted_by_rite_growth
+			years = 10
+		}
+		rite_growth_convert_court_to_new_rite_effect = yes
+	}
+	if = {
+		limit = { any_held_title = { has_clerical_region = yes } }
+		every_held_title = {
+			limit = { has_clerical_region = yes }
+			save_temporary_scope_as = title_check
+			every_county_in_clerical_region = {
+				limit = {
+					rite = scope:source_rite
+					OR = {
+						this = scope:title_check.title_capital_county
+						any_neighboring_county = {
+							this = scope:title_check.title_capital_county
+						}
+					}
+				}
+				E_kCAFG_convert_rite_in_all_county_provinces = {
+					FACTOR = 0.65
+					VARIANCE = 0.2
+					RITE = scope:new_rite
+					MAX = 0.85
+				}
+				holder = {
+					if = {
+						limit = { is_eligible_rite_growth_target_trigger = yes }
+						rite_growth_convert_ruler_to_new_rite_effect = yes
+					}
+				}
+			}
+		}
+	}
+}

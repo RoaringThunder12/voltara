@@ -1,0 +1,8 @@
+﻿namespace = vkf_intro
+vkf_intro.1 = { type = character_event theme = realm title = vkf_intro_title
+ desc = { desc = vkf_intro_desc triggered_desc = { trigger = { vkf_chief = yes } desc = vkf_guide_chief } triggered_desc = { trigger = { vkf_leader = yes } desc = vkf_guide_leader } triggered_desc = { trigger = { vkf_keeper = yes } desc = vkf_guide_keeper } triggered_desc = { trigger = { has_title = title:h_voltara_severos } desc = vkf_guide_crown } triggered_desc = { trigger = { vkf_southron = yes is_independent_ruler = no } desc = vkf_guide_subject } }
+ trigger = { is_ai = no vkf_regional_actor = yes NOT = { has_character_flag = vkf_introduced } }
+ immediate = { add_character_flag = vkf_introduced }
+ option = { name = vkf_intro_review vkf_recount = yes trigger_event = { id = vkf.100 days = 1 } }
+ option = { name = vkf_intro_later }
+}

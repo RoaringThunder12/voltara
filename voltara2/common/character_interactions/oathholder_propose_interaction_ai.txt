@@ -1,0 +1,318 @@
+﻿oathholder_propose_interaction = {                         
+	category = interaction_category_diplomacy
+	common_interaction = yes
+	desc = oathholder_propose_interaction_desc
+
+	cost = {
+		prestige = 250
+	}
+
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			age >= 12 # Maybe is_adult is better, but ai being young is most vulnerable... Doesn't make sense to ask when younger than 12?
+			#is_adult = yes
+			is_landless_adventurer = no
+			is_ruler = yes
+			is_imprisoned = no
+			num_of_relation_oathbound = 0
+			NOT = {
+				has_relation_nemesis = scope:recipient
+				has_relation_rival = scope:recipient
+			}
+		}
+		scope:recipient = {
+			is_ai = yes
+			is_alive = yes
+			is_landless_adventurer = yes
+			is_ruler = yes
+			num_of_relation_oathholder = 0
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = { gold >= 250 }
+		scope:recipient = {
+            NOT = { has_trait = oathbreaker }
+        }
+		custom_tooltip = {
+            text = ruler_on_proposal_cooldown_tt
+            scope:actor = {
+                NOT = { has_character_flag = ruler_approached_cooldown_flag }
+            }
+        }
+		custom_tooltip = {
+            text = landless_on_proposal_cooldown_tt
+            scope:recipient = {
+                NOT = { has_character_flag = landless_approached_cooldown_flag }
+            }
+        }
+	}
+
+
+    ai_accept = {
+        base = -50
+
+		#modifier = {
+		#	add = 40
+		#	scope:actor = { prestige_level >= 3 }
+		#}
+		#modifier = {
+		#	add = -40
+		#	scope:actor = { prestige_level <= 1 }
+		#}
+
+		modifier = {
+			add = 30
+			scope:actor = { dread >= 50 }
+		}
+
+		modifier = {
+			add = 30
+			scope:recipient = { gold < 50 }
+		}
+		modifier = {
+			add = -40
+			scope:actor = { short_term_gold < 0 }
+		}
+
+		modifier = {
+			add = 30
+			scope:recipient = { has_trait = content }
+		}
+		modifier = {
+			add = 30
+			scope:recipient = { has_trait = loyal }
+		}
+		modifier = {
+			add = 30
+			scope:recipient = { has_trait = trusting }
+		}
+		modifier = {
+			add = -1000
+			scope:recipient = { has_trait = ambitious }
+		}
+		modifier = {
+			add = -30
+			scope:recipient = { has_trait = arrogant }
+		}
+		modifier = {
+			add = -30
+			scope:recipient = { has_trait = stubborn }
+		}
+
+		modifier = {
+			add = 100
+			scope:actor = { has_relation_best_friend = scope:recipient }
+		}
+		modifier = {
+			add = 100
+			scope:actor = { has_relation_soulmate = scope:recipient }
+		}
+		modifier = {
+			add = 50
+			scope:actor = { has_relation_friend = scope:recipient }
+		}
+		modifier = {
+			add = 50
+			scope:actor = { has_relation_lover = scope:recipient }
+		}
+
+		# Opinions
+		opinion_modifier = {
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 1.0
+			desc = AI_OPINION_REASON
+		}
+    }
+
+	on_accept = {
+		scope:actor = {
+			trigger_event = oath_events.2001
+			add_character_flag = {
+                flag = ruler_approached_cooldown_flag
+                years = 5
+            }
+		}
+		scope:recipient = {
+			add_character_flag = {
+                flag = landless_approached_cooldown_flag
+                years = 5
+            }
+		}
+	}
+}
+
+oathholder_propose_interaction_ai = { # AI ruler asks landless adventurer to become Oathbound                         
+	category = interaction_category_diplomacy
+	common_interaction = yes
+	desc = oathholder_propose_interaction_ai_desc
+
+	cost = {
+		#prestige = 50
+	}
+
+	is_shown = {
+		scope:actor = {
+			is_ai = yes
+			is_adult = yes
+			is_landless_adventurer = no
+			is_ruler = yes
+			is_imprisoned = no
+			num_of_relation_oathbound = 0
+			highest_held_title_tier >= tier_duchy
+
+			gold >= 250
+
+			NOT = { has_character_flag = ruler_approached_cooldown_flag }
+
+			NOT = {
+				has_relation_nemesis = scope:recipient
+				has_relation_rival = scope:recipient
+			}
+		}
+		scope:recipient = {
+			is_ai = yes
+			is_alive = yes
+			is_landless_adventurer = yes
+			num_of_relation_oathholder = 0
+			NOT = { has_character_flag = landless_approached_cooldown_flag }
+            NOT = { has_trait = oathbreaker }
+		}
+	}
+
+    ai_frequency = 36
+
+	ai_potential = {
+		always = yes
+	}
+
+	ai_targets = {
+		ai_recipients = realm_characters
+		ai_recipients = top_realm_domicile_owners
+    }
+
+    ai_accept = {
+        base = 100
+    }
+
+	cooldown = { years = 5 }
+
+	ai_will_do = {
+		base = -50  # Low Base.
+
+		# Will never do.
+		modifier = {
+			add = -10000
+			scope:actor = { 
+				OR = {
+					short_term_gold < 250
+					prestige < 250
+				}
+			}
+		}
+
+		modifier = {
+            add = 40
+            scope:actor = { short_term_gold > 500 }
+        }
+
+		modifier = {
+            add = 30
+            scope:actor = { has_trait = callous } 
+        }
+        modifier = {
+            add = 30
+            scope:actor = { has_trait = sadistic } 
+        }
+        modifier = {
+            add = 30
+            scope:actor = { has_trait = cynical } 
+        }
+        modifier = {
+            add = 20
+            scope:actor = { has_trait = arrogant } 
+        }
+		modifier = {
+            add = 40
+            scope:actor = { has_trait = craven } 
+        }
+        modifier = {
+            add = 40
+            scope:actor = { has_trait = paranoid } 
+        }
+		modifier = {
+            add = -50
+            scope:actor = { has_trait = compassionate } 
+        }
+        modifier = {
+            add = -50
+            scope:actor = { has_trait = just } 
+        }
+        modifier = {
+            add = -30
+            scope:actor = { has_trait = honest } 
+        }
+		
+        modifier = {
+            add = -30
+            scope:actor = { has_trait = content } 
+        }
+
+		modifier = {
+            add = -40
+            scope:actor = { 
+                has_trait = greedy
+                gold < 500 # Greedy hates this if low on gold
+            }
+        }
+		modifier = {
+            add = 40
+            scope:actor = { 
+                has_trait = greedy
+                gold >= 500 # They only overcome their miserly nature if they are swimming in cash
+            }
+        }
+
+		modifier = {
+            add = 30
+            scope:actor = { piety_level <= 1 } # Low piety level could mean rather shameless to ask.
+        }
+		modifier = {
+            add = 30
+            scope:actor = { prestige_level <= 1 } # Low prestige level could mean rather shameless to ask too.
+        }
+	}
+
+	auto_accept = yes
+
+	on_accept = {
+		scope:recipient = {
+			trigger_event = { 
+				id = oath_events.0002
+			}
+			if = {
+                limit = {
+                    is_ai = no
+                }
+                add_character_flag = {
+                    flag = landless_approached_cooldown_flag
+                    years = 20
+                }
+            }
+            else = {
+                add_character_flag = {
+                    flag = landless_approached_cooldown_flag
+                    years = 5
+                }
+            }
+		}
+		scope:actor = {
+			add_character_flag = {
+                flag = ruler_approached_cooldown_flag
+                years = 5
+            }
+		}
+	}
+}

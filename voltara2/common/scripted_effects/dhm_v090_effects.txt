@@ -1,0 +1,275 @@
+﻿# New evidence is recorded only by actual decisions; old saves gain no invented history.
+dhm_v090_record_lesson_context_effect = {
+ scope:dhm_story_child = {
+  set_variable = { name = dhm090_review_age value = age }
+  set_variable = { name = dhm090_review_tutor value = scope:dhm_story_tutor }
+  if = { limit = { has_focus = education_diplomacy } set_variable = { name = dhm090_review_focus value = flag:diplomacy } }
+  else_if = { limit = { has_focus = education_martial } set_variable = { name = dhm090_review_focus value = flag:martial } }
+  else_if = { limit = { has_focus = education_stewardship } set_variable = { name = dhm090_review_focus value = flag:stewardship } }
+  else_if = { limit = { has_focus = education_intrigue } set_variable = { name = dhm090_review_focus value = flag:intrigue } }
+  else_if = { limit = { has_focus = education_learning } set_variable = { name = dhm090_review_focus value = flag:learning } }
+ }
+}
+# A supported relative remembers this ruler for ten years, including while abroad.
+dhm_v090_remember_help_effect = {
+ if = { limit = { is_alive = yes this != root } set_variable = { name = dhm090_helped_by value = root years = 10 } }
+}
+# Called after an actual, successful officer assignment. One gift per ruler per year;
+# the payment has no effect on marriage authority, relatives' money or gold outside DHM.
+dhm_v090_officer_thanks_effect = {
+ if = {
+  limit = { dhm_v090_may_spend_allowance_trigger = yes exists = scope:dhm_story_officer scope:dhm_story_officer = { is_alive = yes dhm_v060_officer_trigger = yes } }
+  remove_short_term_gold = 10
+  add_character_flag = { flag = dhm090_allowance_spent years = 1 }
+  scope:dhm_story_officer = {
+   add_opinion = { target = root modifier = dhm090_officer_thanked_opinion }
+   if = { limit = { has_trait = ambitious } add_stress = miniscule_stress_loss }
+   if = { limit = { has_trait = shy } add_stress = miniscule_stress_gain }
+  }
+  send_interface_message = {
+   type = event_stewardship_good_with_text
+   title = dhm090_allowance_receipt_title desc = dhm090_allowance_receipt_desc
+   left_icon = scope:dhm_story_officer
+  }
+ }
+}
+# Deliberate one-person offer, prepared once on event arrival, never scanned by a tooltip.
+dhm_v090_prepare_mediator_effect = {
+ clear_saved_scope = dhm090_mediator
+ clear_saved_scope = dhm090_mediator_result
+ clear_saved_scope = dhm090_mediation_recorded
+ random_close_family_member = {
+  limit = { dhm_v090_mediator_eligible_trigger = yes }
+  save_scope_as = dhm090_mediator
+ }
+}
+dhm_v090_accept_mediator_effect = {
+ if = {
+  limit = { dhm_v090_mediator_offer_current_trigger = yes }
+  add_stress = miniscule_stress_loss
+  add_prestige = minor_prestige_loss
+  scope:dhm090_mediator = {
+   add_character_flag = { flag = dhm090_mediation_recent years = 5 }
+   add_stress = minor_stress_gain
+   add_opinion = { target = root modifier = dhm090_responsibility_opinion }
+  }
+  random_list = {
+   60 = {
+    modifier = { add = 20 scope:dhm090_mediator = { diplomacy >= 12 } }
+    modifier = { add = 10 scope:dhm090_mediator = { has_trait = patient } }
+    modifier = { add = -15 scope:dhm090_mediator = { has_trait = wrathful } }
+    save_scope_value_as = { name = dhm072_dispute_result value = flag:reconciled }
+    scope:dhm_dispute_first = {
+     add_opinion = { target = scope:dhm_dispute_second modifier = dhm_mediated_family_dispute_opinion }
+     add_opinion = { target = scope:dhm090_mediator modifier = dhm090_mediator_peace_opinion }
+     create_character_memory = { type = dhm_family_reconciliation_memory participants = { reconciled_relative = scope:dhm_dispute_second } }
+    }
+    scope:dhm_dispute_second = {
+     add_opinion = { target = scope:dhm_dispute_first modifier = dhm_mediated_family_dispute_opinion }
+     add_opinion = { target = scope:dhm090_mediator modifier = dhm090_mediator_peace_opinion }
+     create_character_memory = { type = dhm_family_reconciliation_memory participants = { reconciled_relative = scope:dhm_dispute_first } }
+    }
+    save_scope_value_as = { name = dhm090_mediator_result value = flag:peace }
+    dhm_v090_rc2_record_mediated_peace_effect = yes
+   }
+   40 = {
+    save_scope_value_as = { name = dhm072_dispute_result value = flag:grievance_both }
+    scope:dhm_dispute_first = { add_opinion = { target = scope:dhm090_mediator modifier = dhm090_mediator_blame_opinion } }
+    scope:dhm_dispute_second = { add_opinion = { target = scope:dhm090_mediator modifier = dhm090_mediator_blame_opinion } }
+    save_scope_value_as = { name = dhm090_mediator_result value = flag:blame }
+   }
+  }
+  trigger_event = { id = dhm_living_family.0410 years = 2 }
+ }
+ else = { custom_tooltip = dhm090_offer_lapsed_tt }
+}
+
+# A spouse proposes help for somebody they actually like, not an invented victim.
+dhm_v090_prepare_spouse_plan_effect = {
+ clear_saved_scope = dhm090_overworked_relative
+ if = {
+  limit = { exists = scope:dhm_partner_spouse scope:dhm_partner_spouse = { is_alive = yes is_spouse_of = root is_in_the_same_court_as = root is_imprisoned = no is_hostage = no NOT = { has_trait = incapable } } }
+  random_close_family_member = {
+   limit = {
+    is_alive = yes is_adult = yes is_in_the_same_court_as = root
+    is_imprisoned = no is_hostage = no NOT = { has_trait = incapable }
+    this != root this != scope:dhm_partner_spouse
+    stress_level >= 1
+    scope:dhm_partner_spouse = { opinion = { target = prev value >= 20 } }
+   }
+   save_scope_as = dhm090_overworked_relative
+  }
+ }
+}
+dhm_v090_apply_spouse_plan_effect = {
+ save_scope_value_as = { name = dhm090_plan_approach value = $APPROACH$ }
+ if = {
+  limit = {
+   exists = scope:dhm090_overworked_relative exists = scope:dhm_partner_spouse
+   scope:dhm_partner_spouse = { is_alive = yes is_spouse_of = root is_in_the_same_court_as = root is_imprisoned = no is_hostage = no NOT = { has_trait = incapable } }
+   scope:dhm090_overworked_relative = { is_alive = yes is_in_the_same_court_as = root is_imprisoned = no is_hostage = no NOT = { has_trait = incapable } }
+  }
+  scope:dhm090_overworked_relative = {
+   if = {
+    limit = { scope:dhm090_plan_approach = flag:command }
+    add_opinion = { target = root modifier = dhm_parent_demanded_duty_opinion }
+    add_stress = miniscule_stress_gain
+   }
+   else = {
+    add_stress = minor_stress_loss
+    dhm_v090_remember_help_effect = yes
+    if = { limit = { scope:dhm090_plan_approach = flag:yield } add_opinion = { target = scope:dhm_partner_spouse modifier = dhm_spouse_consulted_opinion } }
+    else = { add_opinion = { target = root modifier = dhm_shared_family_burden_opinion } }
+   }
+  }
+ }
+}
+
+# A conclusion honours the people who did the work. No new skill award or popup.
+dhm_v090_school_recognition_effect = {
+ if = {
+  limit = { dhm_v073_school_recipient_valid_trigger = yes }
+  dhm_v090_note_office_work_effect = { ROLE = tutor }
+  dhm_v090_note_office_work_effect = { ROLE = steward }
+  scope:dhm_story_child = {
+   dhm_v090_remember_help_effect = yes
+   if = {
+    limit = { NOT = { has_character_flag = dhm090_school_recognition } }
+    add_prestige = 25
+    add_character_flag = dhm090_school_recognition
+   }
+  }
+  if = {
+   limit = { dhm_v090_rc2_tutor_can_receive_trigger = yes }
+   scope:dhm_story_tutor = {
+    if = {
+     limit = { NOT = { has_character_flag = dhm090_tutor_recognition_recent } }
+     add_prestige = 25
+     add_character_flag = { flag = dhm090_tutor_recognition_recent years = 3 }
+    }
+   }
+  }
+ }
+}
+
+# Exactly one new keepsake in this single-player campaign. Native inventory handles
+# equipment, gifting, damage and succession; changing ruler never resets eligibility.
+dhm_v090_create_keepsake_effect = {
+ clear_saved_scope = dhm090_keepsake
+ if = {
+  limit = { dhm_v090_keepsake_available_trigger = yes }
+  save_scope_as = dhm090_keepsake_patron
+  if = {
+   limit = { dhm_v090_school_triumph_trigger = yes }
+   create_artifact = {
+    name = dhm090_school_keepsake_name description = dhm090_school_keepsake_desc
+    type = miscellaneous visuals = small_box
+    modifier = artifact_monthly_prestige_1_modifier
+    save_scope_as = dhm090_keepsake
+   }
+  }
+  else_if = {
+   limit = { dhm_v090_private_triumph_trigger = yes }
+   create_artifact = {
+    name = dhm090_peace_keepsake_name description = dhm090_peace_keepsake_desc
+    type = miscellaneous visuals = small_box
+    modifier = artifact_monthly_prestige_1_modifier
+    save_scope_as = dhm090_keepsake
+   }
+  }
+  else = {
+   create_artifact = {
+    name = dhm090_chronicle_keepsake_name description = dhm090_chronicle_keepsake_desc
+    type = miscellaneous visuals = small_box
+    modifier = artifact_monthly_prestige_1_modifier
+    save_scope_as = dhm090_keepsake
+   }
+  }
+  if = {
+   limit = { exists = scope:dhm090_keepsake }
+   set_global_variable = { name = dhm090_keepsake_awarded value = yes }
+   custom_tooltip = dhm090_keepsake_awarded_tt
+  }
+ }
+}
+# Explicit migration deliberately does not grant rewards, rewrite policies, or
+# manufacture past relationships. Absence of spending permission means ask first.
+dhm_v090_migration_effect = {
+ dhm_v090_rc2_migration_effect = yes
+ if = {
+  limit = { NOT = { has_global_variable = dhm_migration_0900 } }
+  set_global_variable = { name = dhm_migration_0900 value = yes }
+ }
+}
+
+dhm_v090_note_office_work_effect = {
+ if = {
+  limit = { exists = var:dhm_officer_$ROLE$ var:dhm_officer_$ROLE$ = { is_alive = yes is_in_the_same_court_as = prev has_character_flag = dhm_office_$ROLE$ } }
+  var:dhm_officer_$ROLE$ = { add_character_flag = dhm090_officer_work_due }
+ }
+}
+dhm_v090_begin_officer_review_effect = {
+ if = {
+  limit = { exists = scope:dhm_story_officer exists = scope:dhm081_officer_role scope:dhm_story_officer = { is_alive = yes } }
+  scope:dhm_story_officer = {
+   set_variable = { name = dhm090_reviewed_by value = scope:dhm_manager }
+   set_variable = { name = dhm090_last_review_role value = scope:dhm081_officer_role }
+   remove_character_flag = dhm090_officer_work_due
+  }
+ }
+}
+
+dhm_v090_record_letter_news_effect = {
+ scope:dhm_story_relative = {
+  set_variable = { name = dhm090_letter_to value = root }
+  set_variable = { name = dhm090_letter_stress value = stress_level }
+  remove_character_flag = dhm090_marriage_news
+  every_child = {
+   limit = { is_alive = yes age < 2 }
+   add_character_flag = { flag = dhm090_birth_letter_sent years = 3 }
+  }
+ }
+}
+
+# Count one proven reconciliation, including a surviving RC1 queued conclusion.
+dhm_v090_rc2_record_mediated_peace_effect = {
+ if = {
+  limit = {
+   exists = scope:dhm090_mediator_result scope:dhm090_mediator_result = flag:peace
+   exists = scope:dhm072_dispute_result scope:dhm072_dispute_result = flag:reconciled
+   NOT = { exists = scope:dhm090_mediation_recorded }
+  }
+  dhm_record_reconciliation_effect = yes
+  save_scope_value_as = { name = dhm090_mediation_recorded value = yes }
+ }
+}
+dhm_v090_rc2_release_policy_pending_effect = {
+ if = {
+  limit = { exists = scope:dhm090_policy_ticket var:dhm090_policy_ticket ?= scope:dhm090_policy_ticket }
+  remove_character_flag = dhm090_policy_pending
+  remove_variable = dhm090_policy_ticket
+ }
+}
+dhm_v090_rc2_accept_policy_effect = {
+ dhm_v090_rc2_migration_effect = yes
+ add_character_flag = dhm090_policy_addressed
+ dhm_v090_rc2_release_policy_pending_effect = yes
+}
+# RC1 used one flag for both queued and answered councils, so its old receipt is
+# ambiguous. Release it once; do not invent an answer or reset any earned state.
+dhm_v090_rc2_migration_effect = {
+ if = {
+  limit = { NOT = { has_global_variable = dhm_migration_0902 } }
+  remove_character_flag = dhm090_policy_addressed
+  set_global_variable = { name = dhm_migration_0902 value = yes }
+ }
+}
+
+# Monotonic per-ruler ticket: even two same-day offers cannot share ownership.
+dhm_v090_rc2_begin_policy_pending_effect = {
+ if = { limit = { has_variable = dhm090_policy_serial } change_variable = { name = dhm090_policy_serial add = 1 } }
+ else = { set_variable = { name = dhm090_policy_serial value = 1 } }
+ add_character_flag = { flag = dhm090_policy_pending days = 30 }
+ set_variable = { name = dhm090_policy_ticket value = var:dhm090_policy_serial }
+ save_scope_value_as = { name = dhm090_policy_ticket value = var:dhm090_policy_serial }
+}

@@ -1,0 +1,887 @@
+﻿namespace = oathbound_task_events
+
+
+oathbound_task_events.0001 = { # TRAVEL - Send Oathbound to raise control in capital.
+	type = character_event
+	title = oathbound_task_events.0001.t
+	desc = oathbound_task_events.0001.desc
+	theme = crown
+
+	override_background = {
+		reference = bp1_bonfire
+	}
+
+	left_portrait = {
+		character = root
+		animation = marshal
+	}
+
+	right_portrait = {
+		character = var:val_oathholder
+		animation = scheme
+	}
+
+	immediate = {
+        # Scope the Boss
+        var:val_oathholder = {
+            save_scope_as = scope_oathholder
+        }
+        
+        # Scope the Target County Variable
+        var:oathbound_control_task_county_var = {
+            save_scope_as = scope_target_county
+        }
+    }
+
+	option = { # "I am heading there now."
+		name = oathbound_task_events.0001.a
+        custom_tooltip = {
+			text = oathbound_task_events.0001.a.desc
+		}
+
+        root = { 
+            add_character_modifier = {
+                modifier = laamp_provisions_forgiveness_travel_modifier 
+                months = 6
+            }
+        }
+        root = { 
+            domicile = { change_provisions = max_provisions }
+        }
+
+        root = {
+            start_travel_plan = {
+                destination = var:oathbound_control_task_county_var.title_province
+                travel_with_domicile = yes
+                return_trip = no
+                on_arrival_event = oathbound_task_events.0002
+                on_arrival_destinations = last
+            }   
+        }     
+    
+	}
+
+    option = { # "I will make my own way there." - Player might be busy, let them make their own way there.
+		name = oathbound_task_events.0001.b
+        custom_tooltip = {
+			text = oathbound_task_events.0001.b.desc
+		}
+        root = { 
+            root = { 
+                add_character_modifier = {
+                    modifier = laamp_provisions_forgiveness_travel_modifier 
+                    months = 6
+                }
+            }
+            domicile = { change_provisions = max_provisions }
+        }
+	}
+}
+
+oathbound_task_events.0002 = { # TRAVEL - Oathbound arrives and is about to get to work.
+	type = character_event
+	title = oathbound_task_events.0002.t
+	desc = oathbound_task_events.0002.desc
+	theme = crown
+
+	override_background = {
+		reference = bp1_bonfire
+	}
+
+	left_portrait = {
+		character = root
+		animation = marshal
+	}
+
+	right_portrait = {
+		character = var:val_oathholder
+		animation = scheme
+	}
+
+	immediate = {
+        # Scope the Boss
+        var:val_oathholder = {
+            save_scope_as = scope_oathholder
+        }
+        
+        # Scope the Target County Variable
+        var:oathbound_control_task_county_var = {
+            save_scope_as = scope_target_county
+        }
+    }
+
+	option = { # "Let's get to work"
+		name = oathbound_task_events.0002.a
+        custom_tooltip = {
+			text = oathbound_task_events.0002.a.desc
+		}
+
+        location.county = {
+            # Tier 3: Legendary Enforcer (Must be highly skilled AND highly famous)
+            if = {
+                limit = {
+                    root.martial >= 16
+                    root.prestige_level >= 4 # Exalted Among Men or higher
+                }
+                add_county_modifier = {
+                    modifier = oathbound_enforcing_order_strong
+                    years = 100 
+                }
+            }
+            
+            # Tier 2: Standard Enforcer (Must be decent AND somewhat known)
+            else_if = {
+                limit = {
+                    root.martial >= 12
+                    root.prestige_level >= 2 # Distinguished or higher
+                }
+                add_county_modifier = {
+                    modifier = oathbound_enforcing_order_normal
+                    years = 100 
+                }
+            }
+            
+            # Tier 1: The Nobodies (Either terrible at fighting, or completely unknown)
+            else = {
+                add_county_modifier = {
+                    modifier = oathbound_enforcing_order_weak
+                    years = 100 
+                }
+            }
+        }
+
+        # 2. Save the location to your character
+        set_variable = {
+            name = oathbound_patrolled_county_var
+            value = location.county
+        }
+
+        send_interface_toast = {
+            type = event_toast_effect_good
+            title = oathbound_increase_control_decision_toast
+            left_icon = root
+            right_icon = location.county.holder
+            custom_tooltip = oathbound_increase_control_decision_toast_desc
+        }
+	}
+}
+
+
+oathbound_task_events.0003 = { # CONTROL TASK - A patrol encounter while enforcing order
+    type = character_event
+    title = oathbound_task_events.0003.t
+    desc = oathbound_task_events.0003.desc
+    theme = crown
+
+    override_background = {
+        reference = bp1_bonfire
+    }
+
+    left_portrait = {
+        character = root
+        animation = marshal
+    }
+
+    immediate = {
+        var:oathbound_control_task_county_var = {
+            save_scope_as = scope_patrol_county
+        }
+
+        # =========================================================
+        # PATROL EFFECTIVENESS ALGORITHM
+        # Builds a score (clamped 5-35) that shifts both the
+        # outcome weights and the amount of control gained.
+        # =========================================================
+
+        # --- 1. Base + Core Stats ---
+        set_variable = {
+            name = temp_patrol_effectiveness
+            value = 10  # Flat base
+        }
+
+        # Martial is the primary driver — enforcing order is a martial task
+        change_variable = {
+            name = temp_patrol_effectiveness
+            add = {
+                value = martial
+                multiply = 0.5
+            }
+        }
+
+        # Prestige level (0–5) represents reputation and fear factor in the county
+        change_variable = {
+            name = temp_patrol_effectiveness
+            add = {
+                value = prestige_level
+                multiply = 2
+            }
+        }
+
+        # --- 2. Positive Trait Modifiers ---
+        if = {
+            limit = { has_trait = brave }
+            change_variable = { name = temp_patrol_effectiveness add = 3 }  # Commands respect on the streets
+        }
+        if = {
+            limit = { has_trait = diligent }
+            change_variable = { name = temp_patrol_effectiveness add = 3 }  # Thorough and consistent
+        }
+        if = {
+            limit = { has_trait = just }
+            change_variable = { name = temp_patrol_effectiveness add = 2 }  # Locals cooperate with fair enforcers
+        }
+        if = {
+            limit = { has_trait = patient }
+            change_variable = { name = temp_patrol_effectiveness add = 2 }  # Methodical, misses nothing
+        }
+        if = {
+            limit = { OR = { has_trait = physique_good_2 has_trait = strong has_trait = giant } }
+            change_variable = { name = temp_patrol_effectiveness add = 2 }  # Physically imposing presence
+        }
+
+        # --- 3. Negative Trait Modifiers ---
+        if = {
+            limit = { has_trait = craven }
+            change_variable = { name = temp_patrol_effectiveness subtract = 4 }  # Guards don't follow a coward with conviction
+        }
+        if = {
+            limit = { has_trait = lazy }
+            change_variable = { name = temp_patrol_effectiveness subtract = 3 }  # Cuts corners, patrols poorly
+        }
+        if = {
+            limit = { has_trait = drunkard }
+            change_variable = { name = temp_patrol_effectiveness subtract = 2 }  # Unreliable and unfocused
+        }
+
+        # --- 4. Clamp and save as named scope value, then wipe the temp ---
+        save_scope_value_as = {
+            name = patrol_effectiveness
+            value = {
+                value = var:temp_patrol_effectiveness
+                min = 5
+                max = 35
+            }
+        }
+
+        remove_variable = temp_patrol_effectiveness
+    }
+
+    option = {
+        name = oathbound_task_events.0003.a
+
+        random_list = {
+
+            # ---- Outcome 1: Nothing of note ----
+            40 = {
+                modifier = {
+                    add = -10   # Better patrollers spend less time finding nothing
+                    scope:patrol_effectiveness >= 20
+                }
+                modifier = {
+                    add = -10
+                    scope:patrol_effectiveness >= 28
+                }
+                
+                send_interface_toast = {
+                    type = event_toast_effect_neutral
+                    title = oathbound_patrol_toast_nothing
+                    left_icon = root
+                    right_icon = scope:scope_patrol_county.holder
+                    custom_tooltip = oathbound_patrol_event_nothing_tt
+                }
+            }
+
+            # ---- Outcome 2: A real incident resolved ----
+            35 = {
+                var:oathbound_control_task_county_var = {
+                    change_county_control = {
+                        value = scope:patrol_effectiveness
+                        multiply = 0.5
+                        round = yes
+                    }
+                }
+                
+                send_interface_toast = {
+                    type = event_toast_effect_good
+                    title = oathbound_patrol_toast_moderate
+                    left_icon = root
+                    right_icon = scope:scope_patrol_county.holder
+                    custom_tooltip = oathbound_patrol_event_moderate_tt
+                }
+            }
+
+            # ---- Outcome 3: A decisive intervention ----
+            25 = {
+                modifier = {
+                    add = 10    # Better patrollers push through to decisive results more often
+                    scope:patrol_effectiveness >= 20
+                }
+                modifier = {
+                    add = 10
+                    scope:patrol_effectiveness >= 28
+                }
+                var:oathbound_control_task_county_var = {
+                    change_county_control = {
+                        value = scope:patrol_effectiveness
+                        multiply = 1.0
+                        round = yes
+                    }
+                }
+                
+                send_interface_toast = {
+                    type = event_toast_effect_good
+                    title = oathbound_patrol_toast_major
+                    left_icon = root
+                    right_icon = scope:scope_patrol_county.holder
+                    custom_tooltip = oathbound_patrol_event_major_tt
+                }
+            }
+        }
+    }
+}
+
+
+oathbound_task_events.1001 = { # STATIONARY - Oathbound to sway vassal
+    type = character_event
+    title = oathbound_task_events.1001.t
+    desc = oathbound_task_events.1001.desc
+    theme = crown
+
+    override_background = {
+        reference = bp1_bonfire # You might want to change this to an interior like 'council_chamber' later!
+    }
+
+    left_portrait = {
+        character = root
+        animation = scheme # Changed from marshal to scheme for a desk job
+    }
+
+    right_portrait = {
+        character = var:val_oathholder
+        animation = worry # The boss is worried about their angry vassal
+    }
+
+    lower_left_portrait = {
+        character = var:oathbound_sway_task_target_var
+        animation = approval # The boss is pleased with your work
+    }
+
+    immediate = {
+        # Scope the Boss
+        var:val_oathholder = {
+            save_scope_as = scope_oathholder
+        }
+        
+        # Scope the Target Vassal Variable (The one we set in the decision!)
+        var:oathbound_sway_task_target_var = {
+            save_scope_as = scope_target_vassal
+        }
+    }
+
+    option = { # "I will make them see reason."
+        name = oathbound_task_events.1001.a
+        custom_tooltip = {
+            text = oathbound_task_events.1001.a.desc
+        }
+
+        # Start your custom sway scheme
+        root = {
+            start_scheme = {
+                type = oathbound_sway_vassals 
+                target_character = scope:scope_target_vassal
+            }
+        }
+    }
+}
+
+oathbound_task_events.1002 = { # STATIONARY - Oathholder's target successfully swayed
+    type = character_event
+    title = oathbound_task_events.1002.t
+    desc = oathbound_task_events.1002.desc
+    theme = crown
+
+    override_background = {
+        reference = sitting_room # A nice interior room to fit the diplomatic vibe
+    }
+
+    left_portrait = {
+        character = root
+        animation = happiness # You succeeded, be proud!
+    }
+
+    right_portrait = {
+        character = scope:scope_target_vassal 
+        animation = happiness # The vassal is no longer angry
+    }
+    
+    lower_left_portrait = {
+        character = var:val_oathholder
+        animation = approval # The boss is pleased with your work
+    }
+
+    immediate = {
+        # Scope the Boss
+        var:val_oathholder = {
+            save_scope_as = scope_oathholder
+        }
+        
+        # Scope the Target Vassal
+        var:oathbound_sway_task_target_var = {
+            save_scope_as = scope_target_vassal
+        }
+    }
+
+    option = { 
+        name = oathbound_task_events.1002.a
+
+        add_prestige = 150 # A little bonus for being a great diplomat
+        
+        # Kept entirely blank of effects, exactly as requested! 
+        # All the cleanup and rewards will fire from your pulse file.
+    }
+}
+
+
+
+
+
+oathbound_task_events.1003 = { # STATIONARY - Oathholder sends oathbound to murder their rival/nemesis
+    type = character_event
+    title = oathbound_task_events.1003.t
+    desc = oathbound_task_events.1003.desc
+    theme = intrigue  # Intentionally different from crown — this is a murder task
+
+    override_background = {
+        reference = dungeon
+    }
+
+    left_portrait = {
+        character = root
+        animation = scheme
+    }
+
+    right_portrait = {
+        character = var:val_oathholder
+        animation = scheme  # The boss wants this done
+    }
+
+    lower_left_portrait = {
+        character = var:oathbound_kill_task_target_var
+    }
+
+    immediate = {
+        # Scope the Boss
+        var:val_oathholder = {
+            save_scope_as = scope_oathholder
+        }
+
+        # Scope the Target Rival/Nemesis (The one set in the decision!)
+        var:oathbound_kill_task_target_var = {
+            save_scope_as = scope_target_rival
+        }
+    }
+
+    option = { # "It will be done."
+        name = oathbound_task_events.1003.a
+        custom_tooltip = {
+            text = oathbound_task_events.1003.a.desc
+        }
+
+        root = {
+            start_scheme = {
+                type = murder
+                target_character = scope:scope_target_rival
+            }
+        }
+    }
+}
+
+oathbound_task_events.1004 = { # STATIONARY - Oathbound's target has been killed
+    type = character_event
+    title = oathbound_task_events.1004.t
+    desc = oathbound_task_events.1004.desc
+    theme = intrigue
+
+    override_background = {
+        reference = dungeon
+    }
+
+    left_portrait = {
+        character = root
+        animation = marshal  # You succeeded!
+    }
+
+    right_portrait = {
+        character = var:val_oathholder
+        animation = happiness  # The boss is pleased
+    }
+
+    immediate = {
+        # Scope the Boss
+        var:val_oathholder = {
+            save_scope_as = scope_oathholder
+        }
+    }
+
+    option = {
+        name = oathbound_task_events.1004.a
+
+        add_prestige = 200  # Murder is riskier than swaying — the reward reflects it
+
+        # Kept entirely blank of effects beyond prestige, exactly as with the sway success event.
+        # All the cleanup and rewards will fire from the pulse file.
+    }
+}
+
+
+
+
+
+
+
+oathbound_task_events.0004 = { # TRAVEL - Oathholder assigns duel task to Oathbound.
+	type = character_event
+	title = oathbound_task_events.0004.t
+	desc = oathbound_task_events.0004.desc
+	theme = crown
+
+	override_background = {
+		reference = bp1_bonfire
+	}
+
+	left_portrait = {
+		character = root
+		animation = marshal
+	}
+
+	right_portrait = {
+		character = var:val_oathholder
+		animation = scheme
+	}
+
+	immediate = {
+        var:val_oathholder = {
+            save_scope_as = scope_oathholder
+        }
+
+        var:oathbound_duel_task_target_var = {
+            save_scope_as = scope_target_rival
+        }
+    }
+
+	option = { # "I will seek them out at once."
+		name = oathbound_task_events.0004.a
+        custom_tooltip = {
+            text = oathbound_task_events.0004.a.desc
+        }
+
+        root = { change_provisions = max_provisions }
+
+        root = {
+            start_travel_plan = {
+                destination = var:oathbound_duel_task_target_var.location
+                travel_with_domicile = no
+                return_trip = yes
+                on_arrival_event = oathbound_task_events.0005
+                on_arrival_destinations = all_but_last
+            }
+        }
+	}
+
+    option = { # "I will make my own way there."
+		name = oathbound_task_events.0004.b
+        custom_tooltip = {
+            text = oathbound_task_events.0004.b.desc
+        }
+	}
+}
+
+oathbound_task_events.0005 = { # TRAVEL - Oathbound arrives; rolls to corner the target.
+    type = character_event
+    title = oathbound_task_events.0005.t
+    desc = oathbound_task_events.0005.desc
+    theme = crown
+
+    override_background = {
+        reference = bp1_bonfire
+    }
+
+    left_portrait = {
+        character = root
+        animation = marshal
+    }
+
+    right_portrait = {
+        character = var:oathbound_duel_task_target_var
+        animation = anger
+        
+        # 1. THE DEFIANT: If they are brave, wrathful, or very skilled, they meet your gaze with anger
+        triggered_animation = {
+            trigger = {
+                OR = {
+                    has_trait = wrathful
+                    has_trait = vengeful
+                }
+            }
+            animation = anger
+        }
+
+        # 2. THE TERRIFIED: If they are a craven or hopelessly outmatched, they are visibly afraid
+        triggered_animation = {
+            trigger = {
+                OR = {
+                    has_trait = craven
+                }
+            }
+            animation = fear
+        }
+    }
+
+    immediate = {
+        # Save all our scopes immediately so they are ready for whichever outcome rolls
+        var:val_oathholder = { save_scope_as = scope_oathholder }
+        var:oathbound_duel_task_target_var = { save_scope_as = scope_target_rival }
+        root = { save_scope_as = actor }
+        scope:scope_target_rival = { save_scope_as = recipient }
+        root.location = { save_scope_as = terrain_scope }
+    }
+
+    # --- THE SINGLE OPTION: ROLL THE DICE ---
+    option = {
+        name = oathbound_task_events.0005.a
+
+        random_list = {
+            
+            # ==========================================
+            # OUTCOME A: SUCCESS (They answer the challenge)
+            # ==========================================
+            50 = {
+                # Oathbound's formal presence (Diplomacy to navigate the court / demand an audience)
+                modifier = { add = 20 diplomacy >= 12 }
+                modifier = { add = 30 diplomacy >= 16 }
+                
+                # Oathbound's Traits: Honorable, loud, or intimidating
+                modifier = {
+                    factor = 1.5
+                    OR = {
+                        has_trait = brave
+                        has_trait = just
+                        has_trait = arrogant
+                        has_trait = gregarious
+                    }
+                }
+                
+                # Target's Pride: They can't back down from a public challenge
+                modifier = {
+                    factor = 1.5
+                    scope:scope_target_rival = {
+                        OR = {
+                            has_trait = brave
+                            has_trait = arrogant
+                            has_trait = wrathful
+                            has_trait = arrogant
+                        }
+                    }
+                }
+
+                # Target's Cowardice: Less likely to answer if they are timid
+                modifier = {
+                    factor = 0.5
+                    scope:scope_target_rival = {
+                        OR = {
+                            has_trait = craven
+                            has_trait = shy
+                            has_trait = patient
+                        }
+                    }
+                }
+
+                # UI Display
+                custom_tooltip = oathbound_duel_begun_tt
+
+                # Opinion reward
+                var:val_oathholder = {
+                    add_opinion = {
+                        target = root
+                        modifier = oathbound_duel_attempted_opinion
+                    }
+                }
+
+                # Cleanup Flags
+                remove_character_flag = oathbound_on_travel_job
+                remove_character_flag = oathbound_duel_job
+                remove_variable = oathbound_duel_task_target_var
+                var:val_oathholder = {
+                    remove_character_flag = oathholder_travel_job_set
+                    remove_character_flag = oathholder_duel_job_set
+                }
+
+                # Start the duel
+                configure_start_single_combat_effect = {
+                    SC_INITIATOR = scope:actor
+                    SC_ATTACKER = scope:actor
+                    SC_DEFENDER = scope:recipient
+                    FATALITY = always
+                    FIXED = no
+                    LOCALE = scope:terrain_scope
+                    OUTPUT_EVENT = oathbound_task_events.0006
+                    INVALIDATION_EVENT = oathbound_task_events.0007
+                }
+            }
+
+            # ==========================================
+            # OUTCOME B: FAILURE (They refuse the challenge)
+            # ==========================================
+            50 = {
+                # Oathbound is terrible at public speaking/formalities
+                modifier = { add = 20 diplomacy < 8 }
+                modifier = {
+                    factor = 1.5
+                    OR = {
+                        has_trait = shy
+                        has_trait = craven
+                    }
+                }
+                
+                # Target's Cowardice: They refuse to face you
+                modifier = {
+                    factor = 2.0
+                    scope:scope_target_rival = {
+                        has_trait = craven
+                    }
+                }
+                
+                # Location Advantage: Easy to ignore you if they are inside their own capital keep
+                modifier = {
+                    factor = 1.5
+                    scope:scope_target_rival = {
+                        location = capital_province
+                    }
+                }
+
+                # UI Display
+                #custom_tooltip = oathbound_duel_failed_tt
+
+                send_interface_toast = {
+                    type = event_toast_effect_bad
+                    title = oathbound_duel_failed_toast
+                    left_icon = root
+                    right_icon = scope:scope_target_rival
+                    custom_tooltip = oathbound_duel_failed_tt
+                }
+
+                # Cleanup Flags
+                remove_character_flag = oathbound_on_travel_job
+                remove_character_flag = oathbound_duel_job
+                remove_variable = oathbound_duel_task_target_var
+                var:val_oathholder = {
+                    remove_character_flag = oathholder_travel_job_set
+                    remove_character_flag = oathholder_duel_job_set
+                }
+            }
+        }
+    }
+}
+# THE HIDDEN BOUNCE EVENT (Fired immediately by the combat engine)
+oathbound_task_events.0006 = {
+    hidden = yes
+
+    immediate = {
+        # Delay the actual narrative event by 1 day so the duel UI can close cleanly!
+        trigger_event = {
+            id = oathbound_task_events.0008
+            days = 1
+        }
+    }
+}
+
+# THE ACTUAL RESOLUTION EVENT (Fired 1 day later)
+oathbound_task_events.0008 = { 
+    type = character_event
+    title = oathbound_task_events.0008.t
+    desc = oathbound_task_events.0008.desc
+    theme = crown
+
+    override_background = {
+        reference = bp1_bonfire
+    }
+
+    left_portrait = {
+        character = root
+        animation = marshal
+    }
+
+    right_portrait = {
+        # Using the new, proven vanilla scope for the loser!
+        character = scope:sc_loser 
+        animation = worry
+    }
+
+    immediate = {
+        var:val_oathholder = {
+            save_scope_as = scope_oathholder
+        }
+    }
+
+    # OPTION A: Victory
+    option = {
+        name = oathbound_task_events.0008.a
+        trigger = { root = scope:sc_victor } # The true vanilla scope!
+        custom_tooltip = {
+            text = oathbound_task_events.0008.a.desc
+        }
+
+        add_prestige = 200
+        
+        # Failsafe: Ensure the loser dies, and you get the kill credit
+        scope:sc_loser = { 
+            death = {
+                death_reason = death_duel
+                killer = root
+            }
+        }
+    }
+
+    # OPTION B: Defeat
+    option = {
+        name = oathbound_task_events.0008.b
+        trigger = { root = scope:sc_loser } # The true vanilla scope!
+        custom_tooltip = {
+            text = oathbound_task_events.0008.b.desc
+        }
+
+        add_prestige = 75
+        
+        # Failsafe: You are slain by your target
+        root = {
+            death = {
+                death_reason = death_duel
+                killer = scope:sc_victor 
+            }
+        }
+    }
+}
+
+
+oathbound_task_events.0007 = { # TRAVEL - Duel invalidated before it could begin.
+	type = character_event
+	title = oathbound_task_events.0007.t
+	desc = oathbound_task_events.0007.desc
+	theme = crown
+
+	override_background = {
+		reference = bp1_bonfire
+	}
+
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	option = {
+		name = oathbound_task_events.0007.a
+        # No mechanical effects — all cleanup was done in event 0005 before combat was called.
+	}
+}
+
+

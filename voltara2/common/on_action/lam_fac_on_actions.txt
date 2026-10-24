@@ -1,0 +1,264 @@
+﻿# Living Factions - hooks. Only appends to vanilla on_action lists; never redefines their effects.
+
+# The player's court (and the court above them) every season.
+quarterly_playable_pulse = {
+	on_actions = { lam_fac_player_quarterly }
+}
+lam_fac_player_quarterly = {
+	trigger = { is_ai = no }
+	effect = {
+		lam_fac_unseated_clean_effect = yes
+		lam_fac_realm_pulse_effect = yes
+		# The numbers again a month and two months on (the full count stays seasonal).
+		trigger_event = { id = lam_faction.0011 days = 30 }
+		trigger_event = { id = lam_faction.0011 days = 60 }
+		# My own faction: what its council would say, and a vanilla faction I raised.
+		lam_fac_player_preview_effect = yes
+		lam_fac_vanilla_puppet_effect = yes
+		lam_sh_story_effect = yes
+		lam_fac_player_vanilla_faction_effect = yes
+		# The lord above me, too (my peers' factions).
+		liege ?= { lam_fac_realm_pulse_effect = yes }
+		# Members of my faction who would drift away: I hear of it first.
+		lam_fac_waver_pulse_effect = yes
+		# The vanilla factions button shows the living factions while they run here.
+		if = {
+			limit = {
+				OR = {
+					lam_fac_realm_in_scope_trigger = yes
+					liege ?= { lam_fac_realm_in_scope_trigger = yes }
+				}
+			}
+			set_variable = { name = lam_fac_active value = yes days = 120 }
+			lam_fac_default_view_effect = yes
+		}
+		else_if = {
+			limit = { has_variable = lam_fac_active }
+			remove_variable = lam_fac_active
+		}
+	}
+}
+
+# Living factions in AI realms: once a year, on vanilla's scattered yearly pulse.
+# (A court with a player among its direct vassals is kept each season by that player's pulse instead.)
+random_yearly_playable_pulse = {
+	on_actions = { lam_fac_ai_yearly lam_fac_unseated_yearly lam_fac_player_story_yearly }
+}
+# Faction marks left on a ruler who no longer has a liege.
+lam_fac_unseated_yearly = {
+	trigger = { OR = { has_variable = lam_bloc_lead has_variable = lam_bloc } }
+	effect = {
+		lam_fac_unseated_clean_effect = yes
+		lam_fac_stale_clean_effect = yes
+	}
+}
+lam_fac_ai_yearly = {
+	trigger = {
+		is_ai = yes
+		NOT = { has_game_rule = lam_faction_scope_off }
+		NOT = { any_vassal = { is_ai = no } }
+	}
+	effect = { lam_fac_realm_pulse_effect = yes }
+}
+
+# Loyal factions rally to a lord facing a civil war; glory-seekers count the years of peace.
+on_war_started = {
+	on_actions = { lam_fac_on_war_started }
+}
+lam_fac_on_war_started = {
+	trigger = {
+		exists = this
+		exists = scope:war
+	}
+	effect = {
+		lam_fac_rally_effect = yes
+		scope:attacker ?= {
+			if = {
+				limit = {
+					is_ai = yes
+					var:lam_fac_puppet_master ?= {
+						is_ai = no
+						is_alive = yes
+					}
+				}
+				save_scope_as = lam_sw_king
+				scope:war ?= {
+					save_scope_as = lam_sw_war
+				}
+				var:lam_fac_puppet_master = {
+					trigger_event = lam_faction.2910
+				}
+			}
+		}
+		scope:attacker ?= {
+			if = {
+				limit = {
+					is_alive = yes
+					is_ai = no
+				}
+				lam_cp_conduct_effect = yes
+			}
+		}
+		scope:attacker ?= {
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				set_variable = {
+					name = lam_fac_recent_war
+					value = yes
+					years = 3
+				}
+			}
+		}
+		scope:attacker ?= {
+			lam_fac_pledged_arms_effect = yes
+		}
+		scope:defender ?= {
+			lam_fac_pledged_arms_effect = yes
+		}
+	}
+}
+
+# A faction leader's death passes the faction on; a lord's death passes their factions to the heir.
+on_death = {
+	on_actions = { lam_fac_on_death lam_sh_on_death }
+}
+# The power behind the throne: the strings outlive the crown, and the hand (step_shadow_heir).
+lam_sh_on_death = {
+	trigger = { OR = { has_variable = lam_fac_puppet_master has_variable = lam_fac_puppeteer_of } }
+	effect = { lam_sh_death_effect = yes }
+}
+lam_fac_on_death = {
+	trigger = {
+		OR = {
+			has_variable = lam_bloc_lead
+			any_in_list = { variable = lam_bloc_leads }
+			has_variable = lam_gn_book
+			any_in_list = { variable = lam_gn_books_old }
+		}
+	}
+	effect = {
+		lam_fac_on_death_effect = yes
+		lam_fac_lord_death_effect = yes
+	}
+}
+
+# A faction's head or core thrown in prison by their own lord.
+on_imprison = {
+	on_actions = { lam_fac_on_imprison }
+}
+lam_fac_on_imprison = {
+	trigger = {
+		OR = {
+			has_variable = lam_bloc_lead
+			has_variable = lam_fac_tier
+		}
+	}
+	effect = {
+		lam_fac_on_imprison_effect = yes
+		lam_lf_imprison_memory_effect = yes
+	}
+}
+
+# A lord taking a vassal's title: the small lords count it (promises not to revoke, their demands).
+on_title_lost = {
+	on_actions = { lam_fac_on_title_lost }
+}
+lam_fac_on_title_lost = {
+	trigger = {
+		is_alive = yes
+		exists = scope:new_holder
+		exists = liege
+		scope:new_holder = root.liege
+		scope:title = {
+			tier >= tier_county
+		}
+		NOT = {
+			scope:new_holder = {
+				lam_fac_vanilla_politics_trigger = yes
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_fac_outlaw
+				}
+			}
+			if = {
+				limit = {
+					has_variable = lam_bloc_lead
+				}
+				lam_fac_oath_void_effect = yes
+			}
+			else = {
+				var:lam_bloc ?= {
+					if = {
+						limit = {
+							is_alive = yes
+							has_variable = lam_bloc_lead
+						}
+						lam_fac_oath_void_effect = yes
+					}
+				}
+			}
+		}
+		scope:new_holder = {
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_revokes
+					}
+				}
+				set_variable = {
+					name = lam_fac_revokes
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_revokes
+				add = 1
+			}
+			set_variable = {
+				name = lam_fac_recent_revoke
+				value = yes
+				years = 2
+			}
+		}
+		lam_lf_revoke_memory_effect = yes
+	}
+}
+
+# Variables shared with Love & Marriage (when it is present). Never runs; it only declares them.
+on_game_start_after_lobby = {
+	on_actions = { lam_fac_on_game_start }
+}
+lam_fac_on_game_start = {
+	effect = {
+		if = { limit = { always = no } # Redundant unreachable effects archived in error-batch/audit.json.
+}
+	}
+}
+
+# A faction's war that the lord held off: the rising failed.
+on_war_won_defender = {
+	on_actions = { lam_fac_on_rising_ended }
+}
+on_war_white_peace = {
+	on_actions = { lam_fac_on_rising_ended }
+}
+lam_fac_on_rising_ended = {
+	effect = {
+		scope:defender ?= { if = { limit = { exists = scope:attacker } lam_fac_rising_failed_effect = yes } }
+		# (Those who rode out for the crown, remembered: polish 054.)
+		scope:defender ?= { if = { limit = { exists = scope:war } lam_fac_rally_thanks_effect = yes } }
+	}
+}
+
+# A faction's life for a player: a story, now and then (lam_fac_player_story_effect).
+lam_fac_player_story_yearly = {
+	trigger = { is_ai = no NOT = { has_game_rule = lam_faction_scope_off } }
+	effect = { lam_fac_player_story_effect = yes lam_fac_extra_story_effect = yes }
+}

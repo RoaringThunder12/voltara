@@ -1,0 +1,108 @@
+﻿lam_ux_relief_begin_effect = {
+	remove_variable = lam_ux_relief_before
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_$KIND$
+			has_variable = lam_pd_gr_$KIND$_until
+			var:lam_pd_gr_$KIND$_until > lam_now_m
+		}
+		set_variable = {
+			name = lam_ux_relief_before
+			value = var:lam_pd_gr_$KIND$
+		}
+	}
+}
+lam_ux_relief_finish_effect = {
+	if = {
+		limit = {
+			has_variable = lam_ux_relief_before
+			var:lam_ux_relief_before > 0
+			has_variable = lam_pd_gr_$KIND$
+			var:lam_pd_gr_$KIND$ < var:lam_ux_relief_before
+			exists = liege
+		}
+		set_variable = {
+			name = lam_ux_relief_kind
+			value = flag:$KIND$
+		}
+		set_variable = {
+			name = lam_ux_relief_month
+			value = lam_now_m
+		}
+		set_variable = {
+			name = lam_ux_relief_until
+			value = {
+				value = lam_now_m
+				add = 12
+			}
+		}
+		set_variable = {
+			name = lam_ux_relief_lord
+			value = liege
+		}
+	}
+	remove_variable = lam_ux_relief_before
+}
+lam_ux_relief_clear_effect = {
+	remove_variable = lam_ux_relief_kind
+	remove_variable = lam_ux_relief_month
+	remove_variable = lam_ux_relief_until
+	remove_variable = lam_ux_relief_lord
+}
+lam_ux_relief_pass_effect = {
+	$TO$ = {
+		lam_ux_relief_clear_effect = yes
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_ux_relief_kind
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_ux_relief_kind
+					value = $FROM$.var:lam_ux_relief_kind
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_ux_relief_month
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_ux_relief_month
+					value = $FROM$.var:lam_ux_relief_month
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_ux_relief_until
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_ux_relief_until
+					value = $FROM$.var:lam_ux_relief_until
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_ux_relief_lord
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_ux_relief_lord
+					value = $FROM$.var:lam_ux_relief_lord
+				}
+			}
+		}
+	}
+}

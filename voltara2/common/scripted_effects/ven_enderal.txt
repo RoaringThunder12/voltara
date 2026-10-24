@@ -1,0 +1,37 @@
+﻿ven_join_lodge = { if = { limit = { NOT = { has_character_flag = ven_lodge_member } } add_character_flag = ven_lodge_member add_character_modifier = { modifier = ven_lodge_bond } add_prestige = 50 } }
+ven_install_law = { title:e_voltara_enderal = { if = { limit = { NOT = { has_title_law = ven_kingsmoot_law } } add_title_law = ven_kingsmoot_law } } }
+ven_hearth_service_effect = { add_character_modifier = { modifier = ven_hearth_service years = 5 }
+ every_held_title = { limit = { tier = tier_county } add_county_modifier = { modifier = ven_royal_hearth years = 3 } } }
+ven_oath_hearth = { remove_character_flag = ven_oath_ring remove_character_flag = ven_hearth_due add_character_flag = ven_oath_hearth add_character_flag = ven_hearth_due trigger_event = { id = ven.6 days = 180 } }
+ven_oath_ring = { remove_character_flag = ven_oath_hearth remove_character_flag = ven_hearth_due add_character_flag = ven_oath_ring add_prestige = 100 }
+ven_open_moot = { add_character_flag = { flag = ven_moot_open days = 60 } trigger_event = ven.1
+ every_vassal_or_below = { limit = { ven_member = yes is_adult = yes is_imprisoned = no } trigger_event = { id = ven.2 days = { 3 15 } } }
+ trigger_event = { id = ven.4 days = 45 } }
+ven_transfer_crown = { if = { limit = { ven_duel_valid = yes }
+ scope:ven_incumbent = { save_scope_as = ven_old_king
+ if = { limit = { NOT = { any_held_title = { tier >= tier_empire NOT = { this = title:e_voltara_enderal } } } } add_to_temporary_list = ven_transfer_vassals }
+ every_vassal = { limit = { NOT = { this = scope:ven_challenger } } add_to_temporary_list = ven_transfer_vassals } }
+ create_title_and_vassal_change = { type = usurped save_scope_as = ven_crown_change add_claim_on_loss = no }
+ title:e_voltara_enderal = { change_title_holder = { holder = scope:ven_challenger change = scope:ven_crown_change } }
+ every_in_list = { list = ven_transfer_vassals change_liege = { liege = scope:ven_challenger change = scope:ven_crown_change } }
+ resolve_title_and_vassal_change = scope:ven_crown_change
+ scope:ven_challenger = { change_government = ven_lodge_government add_character_modifier = { modifier = ven_ring_victor years = 10 } add_prestige = 300 }
+ scope:ven_incumbent = { add_opinion = { target = scope:ven_challenger modifier = ven_challenge_grudge } }
+ ven_install_law = yes
+ } }
+ven_clear_challenge = { scope:ven_incumbent ?= { remove_character_flag = ven_duel_pending } }
+ven_duel_result = { if = { limit = { ven_duel_valid = yes }
+ if = { limit = { scope:sc_victor = scope:ven_challenger } ven_transfer_crown = yes scope:ven_challenger = { trigger_event = ven.13 } scope:ven_incumbent = { trigger_event = ven.14 } }
+ else = { scope:ven_incumbent = { add_prestige = 200 add_character_modifier = { modifier = ven_ring_victor years = 5 } trigger_event = ven.13 } scope:ven_challenger = { add_prestige = -100 trigger_event = ven.14 } }
+ } else = { scope:ven_challenger ?= { trigger_event = ven.15 } }
+ ven_clear_challenge = yes }
+ven_initialize = { if = { limit = { exists = title:e_voltara_enderal.holder }
+ title:e_voltara_enderal.holder = { change_government = ven_lodge_government ven_join_lodge = yes
+ every_vassal_or_below = { limit = { ven_northerner = yes OR = { has_government = feudal_government has_government = tribal_government } } change_government = ven_lodge_government ven_join_lodge = yes }
+ trigger_event = { id = ven.5 days = 14 }
+ } ven_install_law = yes
+ }
+ character:9910265 = { if = { limit = { ven_subject = yes } add_trait = supernatural_werewolf ven_join_lodge = yes } }
+ character:9910272 = { if = { limit = { ven_subject = yes } add_trait = supernatural_werewolf ven_join_lodge = yes } }
+ character:9913874 = { if = { limit = { ven_subject = yes } add_trait = supernatural_werewolf ven_join_lodge = yes } }
+}

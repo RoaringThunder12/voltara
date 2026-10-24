@@ -1,0 +1,331 @@
+﻿lam_pd_goal_prepare_effect = {
+	set_variable = {
+		name = lam_pd_goal_lord
+		value = $LORD$
+	}
+	set_variable = {
+		name = lam_pd_goal_kind
+		value = var:lam_fac_goal
+	}
+	set_variable = {
+		name = lam_pd_goal_until
+		value = {
+			value = lam_now_m
+			add = 24
+		}
+	}
+	set_variable = {
+		name = lam_pd_goal_owner
+		value = this
+	}
+	save_scope_as = lam_pd_goal_beneficiary
+	if = {
+		limit = {
+			has_variable = lam_pd_goal_blocked
+		}
+		remove_variable = lam_pd_goal_blocked
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_goal_title
+		}
+		remove_variable = lam_pd_goal_title
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_goal_person
+		}
+		remove_variable = lam_pd_goal_person
+	}
+	if = {
+		limit = {
+			var:lam_fac_goal ?= 4
+		}
+		ordered_claim = {
+			limit = {
+				tier >= tier_county
+				exists = holder
+				NOT = {
+					holder = scope:lam_pd_goal_beneficiary
+				}
+			}
+			order_by = tier
+			max = 1
+			check_range_bounds = no
+			scope:lam_pd_goal_beneficiary = {
+				set_variable = {
+					name = lam_pd_goal_title
+					value = prev
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_pd_goal_title
+				}
+			}
+			set_variable = {
+				name = lam_pd_goal_blocked
+				value = yes
+			}
+		}
+	}
+	if = {
+		limit = {
+			var:lam_fac_goal ?= 5
+		}
+		set_variable = {
+			name = lam_pd_goal_person
+			value = this
+		}
+		ordered_in_list = {
+			variable = lam_fac_members
+			max = 1
+			check_range_bounds = no
+			limit = {
+				is_alive = yes
+				is_adult = yes
+				is_imprisoned = no
+				var:lam_bloc ?= scope:lam_pd_goal_beneficiary
+				liege ?= $LORD$
+				NOT = {
+					is_councillor_of = $LORD$
+				}
+				OR = {
+					can_be_marshal_trigger = {
+						COURT_OWNER = $LORD$
+					}
+					can_be_steward_trigger = {
+						COURT_OWNER = $LORD$
+					}
+					can_be_spymaster_trigger = {
+						COURT_OWNER = $LORD$
+					}
+					can_be_chancellor_trigger = {
+						COURT_OWNER = $LORD$
+					}
+				}
+			}
+			order_by = lam_cr_influence_value
+			scope:lam_pd_goal_beneficiary = {
+				set_variable = {
+					name = lam_pd_goal_person
+					value = prev
+				}
+			}
+		}
+		if = {
+			limit = {
+				var:lam_fac_seat_pick ?= {
+					is_alive = yes
+					is_adult = yes
+					is_imprisoned = no
+					var:lam_bloc ?= scope:lam_pd_goal_beneficiary
+					liege ?= $LORD$
+					NOT = {
+						is_councillor_of = $LORD$
+					}
+				}
+			}
+			set_variable = {
+				name = lam_pd_goal_person
+				value = var:lam_fac_seat_pick
+			}
+		}
+		set_variable = {
+			name = lam_pd_goal_seats
+			value = 1
+		}
+		if = {
+			limit = {
+				var:lam_cr_share >= 40
+			}
+			set_variable = {
+				name = lam_pd_goal_seats
+				value = 2
+			}
+		}
+		var:lam_pd_goal_person = {
+			save_scope_as = lam_pd_goal_candidate
+		}
+		if = {
+			limit = {
+				scope:lam_pd_goal_candidate = {
+					can_be_marshal_trigger = {
+						COURT_OWNER = $LORD$
+					}
+				}
+				OR = {
+					scope:lam_pd_goal_candidate = {
+						NOT = {
+							can_be_steward_trigger = {
+								COURT_OWNER = $LORD$
+							}
+						}
+					}
+					scope:lam_pd_goal_candidate.martial >= scope:lam_pd_goal_candidate.stewardship
+				}
+				OR = {
+					scope:lam_pd_goal_candidate = {
+						NOT = {
+							can_be_spymaster_trigger = {
+								COURT_OWNER = $LORD$
+							}
+						}
+					}
+					scope:lam_pd_goal_candidate.martial >= scope:lam_pd_goal_candidate.intrigue
+				}
+				OR = {
+					scope:lam_pd_goal_candidate = {
+						NOT = {
+							can_be_chancellor_trigger = {
+								COURT_OWNER = $LORD$
+							}
+						}
+					}
+					scope:lam_pd_goal_candidate.martial >= scope:lam_pd_goal_candidate.diplomacy
+				}
+			}
+			set_variable = {
+				name = lam_pd_goal_seat
+				value = flag:marshal
+			}
+		}
+		else_if = {
+			limit = {
+				scope:lam_pd_goal_candidate = {
+					can_be_steward_trigger = {
+						COURT_OWNER = $LORD$
+					}
+				}
+				OR = {
+					scope:lam_pd_goal_candidate = {
+						NOT = {
+							can_be_marshal_trigger = {
+								COURT_OWNER = $LORD$
+							}
+						}
+					}
+					scope:lam_pd_goal_candidate.stewardship >= scope:lam_pd_goal_candidate.martial
+				}
+				OR = {
+					scope:lam_pd_goal_candidate = {
+						NOT = {
+							can_be_spymaster_trigger = {
+								COURT_OWNER = $LORD$
+							}
+						}
+					}
+					scope:lam_pd_goal_candidate.stewardship >= scope:lam_pd_goal_candidate.intrigue
+				}
+				OR = {
+					scope:lam_pd_goal_candidate = {
+						NOT = {
+							can_be_chancellor_trigger = {
+								COURT_OWNER = $LORD$
+							}
+						}
+					}
+					scope:lam_pd_goal_candidate.stewardship >= scope:lam_pd_goal_candidate.diplomacy
+				}
+			}
+			set_variable = {
+				name = lam_pd_goal_seat
+				value = flag:steward
+			}
+		}
+		else_if = {
+			limit = {
+				scope:lam_pd_goal_candidate = {
+					can_be_spymaster_trigger = {
+						COURT_OWNER = $LORD$
+					}
+				}
+				OR = {
+					scope:lam_pd_goal_candidate = {
+						NOT = {
+							can_be_marshal_trigger = {
+								COURT_OWNER = $LORD$
+							}
+						}
+					}
+					scope:lam_pd_goal_candidate.intrigue >= scope:lam_pd_goal_candidate.martial
+				}
+				OR = {
+					scope:lam_pd_goal_candidate = {
+						NOT = {
+							can_be_steward_trigger = {
+								COURT_OWNER = $LORD$
+							}
+						}
+					}
+					scope:lam_pd_goal_candidate.intrigue >= scope:lam_pd_goal_candidate.stewardship
+				}
+				OR = {
+					scope:lam_pd_goal_candidate = {
+						NOT = {
+							can_be_chancellor_trigger = {
+								COURT_OWNER = $LORD$
+							}
+						}
+					}
+					scope:lam_pd_goal_candidate.intrigue >= scope:lam_pd_goal_candidate.diplomacy
+				}
+			}
+			set_variable = {
+				name = lam_pd_goal_seat
+				value = flag:spymaster
+			}
+		}
+		else_if = {
+			limit = {
+				scope:lam_pd_goal_candidate = {
+					can_be_chancellor_trigger = {
+						COURT_OWNER = $LORD$
+					}
+				}
+				OR = {
+					scope:lam_pd_goal_candidate = {
+						NOT = {
+							can_be_marshal_trigger = {
+								COURT_OWNER = $LORD$
+							}
+						}
+					}
+					scope:lam_pd_goal_candidate.diplomacy >= scope:lam_pd_goal_candidate.martial
+				}
+				OR = {
+					scope:lam_pd_goal_candidate = {
+						NOT = {
+							can_be_steward_trigger = {
+								COURT_OWNER = $LORD$
+							}
+						}
+					}
+					scope:lam_pd_goal_candidate.diplomacy >= scope:lam_pd_goal_candidate.stewardship
+				}
+				OR = {
+					scope:lam_pd_goal_candidate = {
+						NOT = {
+							can_be_spymaster_trigger = {
+								COURT_OWNER = $LORD$
+							}
+						}
+					}
+					scope:lam_pd_goal_candidate.diplomacy >= scope:lam_pd_goal_candidate.intrigue
+				}
+			}
+			set_variable = {
+				name = lam_pd_goal_seat
+				value = flag:chancellor
+			}
+		}
+		else = {
+			set_variable = {
+				name = lam_pd_goal_blocked
+				value = yes
+			}
+		}
+	}
+}

@@ -1,0 +1,1228 @@
+﻿# Living Factions (split from Love & Marriage).
+
+# Factions window: root = a faction leader (vars set by lam_faction_effects.txt).
+LamFacStance = {
+	type = character
+	text = {
+		trigger = { is_alive = yes var:lam_fac_agenda ?= flag:loyalist }
+		localization_key = lam_fac_stance_loyalist
+	}
+	text = {
+		trigger = { is_alive = yes var:lam_fac_agenda ?= flag:dynastic }
+		localization_key = lam_fac_stance_dynastic
+	}
+	text = {
+		trigger = { OR = { var:lam_fac_stance ?= flag:courtly var:lam_fac_agenda ?= flag:courtly } }
+		localization_key = lam_fac_stance_courtly
+	}
+	text = {
+		trigger = { OR = { var:lam_fac_stance ?= flag:glory_hound var:lam_fac_agenda ?= flag:glory_hound } }
+		localization_key = lam_fac_stance_glory_hound
+	}
+	text = {
+		trigger = { OR = { var:lam_fac_stance ?= flag:parochial var:lam_fac_agenda ?= flag:parochial } }
+		localization_key = lam_fac_stance_parochial
+	}
+	text = {
+		trigger = { OR = { var:lam_fac_stance ?= flag:zealot var:lam_fac_agenda ?= flag:zealot } }
+		localization_key = lam_fac_stance_zealot
+	}
+	text = {
+		trigger = { is_alive = yes var:lam_fac_stance ?= flag:minority }
+		localization_key = lam_fac_stance_minority
+	}
+	text = {
+		trigger = { is_alive = yes var:lam_fac_stance ?= flag:barons_and_minor_landholders }
+		localization_key = lam_fac_stance_barons_and_minor_landholders
+	}
+	text = {
+		trigger = { is_alive = yes var:lam_fac_stance ?= flag:belligerent }
+		localization_key = lam_fac_stance_belligerent
+	}
+	text = {
+		trigger = { is_alive = yes var:lam_fac_stance ?= flag:tradition }
+		localization_key = lam_fac_stance_tradition
+	}
+	text = {
+		trigger = { is_alive = yes var:lam_fac_stance ?= flag:favour }
+		localization_key = lam_fac_stance_favour
+	}
+	text = {
+		trigger = { is_alive = yes var:lam_fac_stance ?= flag:ambition }
+		localization_key = lam_fac_stance_ambition
+	}
+	text = {
+		localization_key = lam_fac_stance_none
+		fallback = yes
+	}
+}
+
+LamFacLoyalty = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_wc_side ?= 1
+		}
+		localization_key = lam_wc_rebel
+	}
+	text = {
+		trigger = {
+			var:lam_wc_side ?= 2
+		}
+		localization_key = lam_wc_defender
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			has_variable = lam_fac_plotters
+			var:lam_fac_plotters >= 1
+		}
+		localization_key = lam_fac_loyal_plot
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			has_variable = lam_fac_loyal
+			var:lam_fac_loyal >= 25
+		}
+		localization_key = lam_fac_loyal_pro
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			has_variable = lam_fac_loyal
+			var:lam_fac_loyal <= -10
+		}
+		localization_key = lam_fac_loyal_anti
+	}
+	text = {
+		localization_key = lam_fac_loyal_neutral
+		fallback = yes
+	}
+}
+
+# Root = a faction leader: heart toward the crown (lam_fac_att) and nerve (lam_fac_stage).
+LamFacCamp = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_wc_side ?= 1
+		}
+		localization_key = lam_wc_rebel
+	}
+	text = {
+		trigger = {
+			var:lam_wc_side ?= 2
+		}
+		localization_key = lam_wc_defender
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			has_variable = lam_fac_att
+			var:lam_fac_att >= 25
+		}
+		localization_key = lam_fac_camp_pro
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			has_variable = lam_fac_att
+			var:lam_fac_att <= -15
+		}
+		localization_key = lam_fac_camp_anti
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			has_variable = lam_fac_att
+		}
+		localization_key = lam_fac_camp_mid
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamFacStage = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_wc_phase ?= 2
+		}
+		localization_key = lam_wc_fighting
+	}
+	text = {
+		trigger = {
+			var:lam_wc_phase ?= 1
+		}
+		localization_key = lam_wc_preparing
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			liege ?= {
+				var:lam_fac_puppet_master ?= root
+			}
+		}
+		localization_key = lam_fac_stage_shadow
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_stage ?= 1
+		}
+		localization_key = lam_fac_stage_1
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_stage ?= 2
+		}
+		localization_key = lam_fac_stage_2
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_stage ?= 3
+		}
+		localization_key = lam_fac_stage_3
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_stage ?= 4
+		}
+		localization_key = lam_fac_stage_4
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_stage ?= 5
+		}
+		localization_key = lam_fac_stage_5
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_stage ?= 6
+		}
+		localization_key = lam_fac_stage_6
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_stage ?= 7
+		}
+		localization_key = lam_fac_stage_7
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_stage ?= 8
+		}
+		localization_key = lam_fac_stage_8
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_stage ?= 9
+		}
+		localization_key = lam_fac_stage_9
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+# Root = a lord: the crown's strength.
+LamCrown = {
+	type = character
+	text = {
+		trigger = { is_alive = yes has_variable = lam_crown var:lam_crown >= 65 }
+		localization_key = lam_crown_strong
+	}
+	text = {
+		trigger = { is_alive = yes has_variable = lam_crown var:lam_crown >= 35 }
+		localization_key = lam_crown_mid
+	}
+	text = {
+		trigger = { is_alive = yes has_variable = lam_crown }
+		localization_key = lam_crown_weak
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+# Root = a vassal: their heart toward the crown.
+LamAttitude = {
+	type = character
+	text = {
+		trigger = { is_alive = yes has_variable = lam_gui_att var:lam_gui_att >= 25 }
+		localization_key = lam_att_pro
+	}
+	text = {
+		trigger = { is_alive = yes has_variable = lam_gui_att var:lam_gui_att <= -15 }
+		localization_key = lam_att_anti
+	}
+	text = {
+		localization_key = lam_att_mid
+		fallback = yes
+	}
+}
+
+# Root = a faction member: how tightly bound.
+LamFacTier = {
+	type = character
+	text = { trigger = { is_alive = yes var:lam_fac_tier ?= 1 } localization_key = lam_fac_tier_1 }
+	text = { trigger = { is_alive = yes var:lam_fac_tier ?= 2 } localization_key = lam_fac_tier_2 }
+	text = { trigger = { is_alive = yes var:lam_fac_tier ?= 3 } localization_key = lam_fac_tier_3 }
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+
+# Root = a faction leader: what they want now, and whether they have it.
+LamFacGoal = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_wc_side ?= 2
+		}
+		localization_key = lam_wc_protect_lord
+	}
+	text = {
+		trigger = {
+			has_variable = lam_wc_phase
+			var:lam_wc_candidate ?= {
+				is_alive = yes
+			}
+		}
+		localization_key = lam_wc_crown_candidate
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_wc_war ?= {
+					using_cb = independence_faction_war
+				}
+				var:lam_wc_faction ?= {
+					faction_is_type = independence_faction
+				}
+			}
+		}
+		localization_key = lam_wc_independence
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_wc_war ?= {
+					using_cb = liberty_faction_war
+				}
+				var:lam_wc_faction ?= {
+					faction_is_type = liberty_faction
+				}
+			}
+		}
+		localization_key = lam_wc_liberty
+	}
+	text = {
+		trigger = {
+			var:lam_wc_phase ?= 2
+		}
+		localization_key = lam_wc_other_revolt
+	}
+	text = {
+		trigger = {
+			var:lam_wc_phase ?= 1
+		}
+		localization_key = lam_wc_other_preparation
+	}
+	text = {
+		trigger = {
+			has_variable = lam_pd_goal_blocked
+		}
+		localization_key = lam_pd_goal_blocked
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 1
+			has_variable = lam_fac_goal_met
+		}
+		localization_key = lam_fac_goal_1_met
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 1
+		}
+		localization_key = lam_fac_goal_1
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 2
+			has_variable = lam_fac_goal_met
+		}
+		localization_key = lam_fac_goal_2_met
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 2
+		}
+		localization_key = lam_fac_goal_2
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 3
+			has_variable = lam_fac_goal_met
+		}
+		localization_key = lam_fac_goal_3_met
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 3
+		}
+		localization_key = lam_fac_goal_3
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 4
+			has_variable = lam_fac_goal_met
+		}
+		localization_key = lam_fac_goal_4_met
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 4
+		}
+		localization_key = lam_fac_goal_4
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 5
+			has_variable = lam_fac_goal_met
+		}
+		localization_key = lam_fac_goal_5_met
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 5
+		}
+		localization_key = lam_fac_goal_5
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 6
+			has_variable = lam_fac_goal_met
+		}
+		localization_key = lam_fac_goal_6_met
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 6
+		}
+		localization_key = lam_fac_goal_6
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 7
+			has_variable = lam_fac_goal_met
+		}
+		localization_key = lam_fac_goal_7_met
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 7
+		}
+		localization_key = lam_fac_goal_7
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 8
+			has_variable = lam_fac_goal_met
+		}
+		localization_key = lam_fac_goal_8_met
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 8
+		}
+		localization_key = lam_fac_goal_8
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 9
+			has_variable = lam_fac_goal_met
+		}
+		localization_key = lam_fac_goal_9_met
+	}
+	text = {
+		trigger = {
+			is_alive = yes
+			var:lam_fac_goal ?= 9
+		}
+		localization_key = lam_fac_goal_9
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+
+# Root = a faction member: why they are on this side.
+LamFacWhy = {
+	type = character
+	text = { trigger = { is_alive = yes var:lam_fac_why ?= 1 } localization_key = lam_fac_why_1 }
+	text = { trigger = { is_alive = yes var:lam_fac_why ?= 2 } localization_key = lam_fac_why_2 }
+	text = { trigger = { is_alive = yes var:lam_fac_why ?= 3 } localization_key = lam_fac_why_3 }
+	text = { trigger = { is_alive = yes var:lam_fac_why ?= 4 } localization_key = lam_fac_why_4 }
+	text = { trigger = { is_alive = yes var:lam_fac_why ?= 5 } localization_key = lam_fac_why_5 }
+	text = { trigger = { is_alive = yes var:lam_fac_why ?= 6 } localization_key = lam_fac_why_6 }
+	text = { trigger = { is_alive = yes var:lam_fac_why ?= 7 } localization_key = lam_fac_why_7 }
+	text = { trigger = { is_alive = yes var:lam_fac_why ?= 8 } localization_key = lam_fac_why_8 }
+	text = { trigger = { is_alive = yes var:lam_fac_why ?= 9 } localization_key = lam_fac_why_9 }
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+
+# Root = anyone in a court: how drawn into politics they are (lam_fac_engage).
+LamEngage = {
+	type = character
+	text = { trigger = { is_alive = yes has_variable = lam_fac_engage var:lam_fac_engage >= 60 } localization_key = lam_engage_high }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_engage var:lam_fac_engage >= 40 } localization_key = lam_engage_mid }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_engage var:lam_fac_engage >= 25 } localization_key = lam_engage_low }
+	text = {
+		localization_key = lam_engage_none
+		fallback = yes
+	}
+}
+
+# Root = a lord: the edict against factions, if any.
+LamFacBan = {
+	type = character
+	text = { trigger = { is_alive = yes var:lam_fac_ban ?= flag:all } localization_key = lam_fac_ban_all }
+	text = { trigger = { is_alive = yes var:lam_fac_ban ?= flag:crown } localization_key = lam_fac_ban_crown }
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+# Root = a faction leader: how old the faction is.
+LamFacAgeTier = {
+	type = character
+	text = { trigger = { is_alive = yes var:lam_fac_age_tier ?= 3 } localization_key = lam_fac_age_3 }
+	text = { trigger = { is_alive = yes var:lam_fac_age_tier ?= 2 } localization_key = lam_fac_age_2 }
+	text = { trigger = { is_alive = yes var:lam_fac_age_tier ?= 1 } localization_key = lam_fac_age_1 }
+	text = {
+		localization_key = lam_fac_age_0
+		fallback = yes
+	}
+}
+# Root = a faction's head: the n-th latest line of its timeline.
+LamFacT1 = {
+	type = character
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:founded } localization_key = lam_fac_tl_founded }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:succ } localization_key = lam_fac_tl_succ }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:rise } localization_key = lam_fac_tl_rise }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:purge } localization_key = lam_fac_tl_purge }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:crown } localization_key = lam_fac_tl_crown }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:betray } localization_key = lam_fac_tl_betray }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:kept } localization_key = lam_fac_tl_kept }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:won } localization_key = lam_fac_tl_won }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:lost } localization_key = lam_fac_tl_lost }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:deals } localization_key = lam_fac_tl_deals }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:underground } localization_key = lam_fac_tl_underground }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:pardoned } localization_key = lam_fac_tl_pardoned }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:seized } localization_key = lam_fac_tl_seized }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:disgraced } localization_key = lam_fac_tl_disgraced }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:legacy } localization_key = lam_fac_tl_legacy }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:void } localization_key = lam_fac_tl_void }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:oath_void } localization_key = lam_fac_tl_oath_void }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:oath_broken } localization_key = lam_fac_tl_oath_broken }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:scheme } localization_key = lam_fac_tl_scheme }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:revived } localization_key = lam_fac_tl_revived }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:migrated } localization_key = lam_fac_tl_migrated }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:surfaced } localization_key = lam_fac_tl_surfaced }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:allied } localization_key = lam_fac_tl_allied }
+	text = { trigger = { is_alive = yes var:lam_fac_t1 ?= flag:challenge } localization_key = lam_fac_tl_challenge }
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamFacT2 = {
+	type = character
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:founded } localization_key = lam_fac_tl_founded }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:succ } localization_key = lam_fac_tl_succ }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:rise } localization_key = lam_fac_tl_rise }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:purge } localization_key = lam_fac_tl_purge }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:crown } localization_key = lam_fac_tl_crown }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:betray } localization_key = lam_fac_tl_betray }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:kept } localization_key = lam_fac_tl_kept }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:won } localization_key = lam_fac_tl_won }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:lost } localization_key = lam_fac_tl_lost }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:deals } localization_key = lam_fac_tl_deals }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:underground } localization_key = lam_fac_tl_underground }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:pardoned } localization_key = lam_fac_tl_pardoned }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:seized } localization_key = lam_fac_tl_seized }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:disgraced } localization_key = lam_fac_tl_disgraced }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:legacy } localization_key = lam_fac_tl_legacy }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:void } localization_key = lam_fac_tl_void }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:oath_void } localization_key = lam_fac_tl_oath_void }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:oath_broken } localization_key = lam_fac_tl_oath_broken }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:scheme } localization_key = lam_fac_tl_scheme }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:revived } localization_key = lam_fac_tl_revived }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:migrated } localization_key = lam_fac_tl_migrated }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:surfaced } localization_key = lam_fac_tl_surfaced }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:allied } localization_key = lam_fac_tl_allied }
+	text = { trigger = { is_alive = yes var:lam_fac_t2 ?= flag:challenge } localization_key = lam_fac_tl_challenge }
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamFacT3 = {
+	type = character
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:founded } localization_key = lam_fac_tl_founded }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:succ } localization_key = lam_fac_tl_succ }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:rise } localization_key = lam_fac_tl_rise }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:purge } localization_key = lam_fac_tl_purge }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:crown } localization_key = lam_fac_tl_crown }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:betray } localization_key = lam_fac_tl_betray }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:kept } localization_key = lam_fac_tl_kept }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:won } localization_key = lam_fac_tl_won }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:lost } localization_key = lam_fac_tl_lost }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:deals } localization_key = lam_fac_tl_deals }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:underground } localization_key = lam_fac_tl_underground }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:pardoned } localization_key = lam_fac_tl_pardoned }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:seized } localization_key = lam_fac_tl_seized }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:disgraced } localization_key = lam_fac_tl_disgraced }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:legacy } localization_key = lam_fac_tl_legacy }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:void } localization_key = lam_fac_tl_void }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:oath_void } localization_key = lam_fac_tl_oath_void }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:oath_broken } localization_key = lam_fac_tl_oath_broken }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:scheme } localization_key = lam_fac_tl_scheme }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:revived } localization_key = lam_fac_tl_revived }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:migrated } localization_key = lam_fac_tl_migrated }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:surfaced } localization_key = lam_fac_tl_surfaced }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:allied } localization_key = lam_fac_tl_allied }
+	text = { trigger = { is_alive = yes var:lam_fac_t3 ?= flag:challenge } localization_key = lam_fac_tl_challenge }
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamFacT4 = {
+	type = character
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:founded } localization_key = lam_fac_tl_founded }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:succ } localization_key = lam_fac_tl_succ }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:rise } localization_key = lam_fac_tl_rise }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:purge } localization_key = lam_fac_tl_purge }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:crown } localization_key = lam_fac_tl_crown }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:betray } localization_key = lam_fac_tl_betray }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:kept } localization_key = lam_fac_tl_kept }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:won } localization_key = lam_fac_tl_won }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:lost } localization_key = lam_fac_tl_lost }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:deals } localization_key = lam_fac_tl_deals }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:underground } localization_key = lam_fac_tl_underground }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:pardoned } localization_key = lam_fac_tl_pardoned }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:seized } localization_key = lam_fac_tl_seized }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:disgraced } localization_key = lam_fac_tl_disgraced }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:legacy } localization_key = lam_fac_tl_legacy }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:void } localization_key = lam_fac_tl_void }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:oath_void } localization_key = lam_fac_tl_oath_void }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:oath_broken } localization_key = lam_fac_tl_oath_broken }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:scheme } localization_key = lam_fac_tl_scheme }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:revived } localization_key = lam_fac_tl_revived }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:migrated } localization_key = lam_fac_tl_migrated }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:surfaced } localization_key = lam_fac_tl_surfaced }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:allied } localization_key = lam_fac_tl_allied }
+	text = { trigger = { is_alive = yes var:lam_fac_t4 ?= flag:challenge } localization_key = lam_fac_tl_challenge }
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamFacT5 = {
+	type = character
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:founded } localization_key = lam_fac_tl_founded }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:succ } localization_key = lam_fac_tl_succ }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:rise } localization_key = lam_fac_tl_rise }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:purge } localization_key = lam_fac_tl_purge }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:crown } localization_key = lam_fac_tl_crown }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:betray } localization_key = lam_fac_tl_betray }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:kept } localization_key = lam_fac_tl_kept }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:won } localization_key = lam_fac_tl_won }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:lost } localization_key = lam_fac_tl_lost }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:deals } localization_key = lam_fac_tl_deals }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:underground } localization_key = lam_fac_tl_underground }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:pardoned } localization_key = lam_fac_tl_pardoned }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:seized } localization_key = lam_fac_tl_seized }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:disgraced } localization_key = lam_fac_tl_disgraced }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:legacy } localization_key = lam_fac_tl_legacy }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:void } localization_key = lam_fac_tl_void }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:oath_void } localization_key = lam_fac_tl_oath_void }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:oath_broken } localization_key = lam_fac_tl_oath_broken }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:scheme } localization_key = lam_fac_tl_scheme }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:revived } localization_key = lam_fac_tl_revived }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:migrated } localization_key = lam_fac_tl_migrated }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:surfaced } localization_key = lam_fac_tl_surfaced }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:allied } localization_key = lam_fac_tl_allied }
+	text = { trigger = { is_alive = yes var:lam_fac_t5 ?= flag:challenge } localization_key = lam_fac_tl_challenge }
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+# Root = a faction's head, scope:second = another: how the two factions stand.
+LamFacRel = {
+	type = character
+	text = { trigger = { is_alive = yes is_target_in_variable_list = { name = lam_fac_allies target = scope:second } } localization_key = lam_fac_rel_allied }
+	text = {
+		trigger = {
+			is_alive = yes
+			is_target_in_variable_list = { name = lam_fac_foes target = scope:second }
+			OR = {
+				has_relation_rival = scope:second
+				has_relation_nemesis = scope:second
+				house ?= { any_house_relation = { any_relation_house = { this = scope:second.house } has_house_relation_level = feud } }
+			}
+		}
+		localization_key = lam_fac_rel_nemesis
+	}
+	text = { trigger = { is_alive = yes is_target_in_variable_list = { name = lam_fac_foes target = scope:second } } localization_key = lam_fac_rel_rival }
+	text = { trigger = { is_alive = yes is_target_in_variable_list = { name = lam_fac_friends target = scope:second } } localization_key = lam_fac_rel_friendly }
+	text = {
+		localization_key = lam_fac_rel_neutral
+		fallback = yes
+	}
+}
+
+# Root = a faction's head: the checklist toward holding the realm (lam_fac_control_trigger), one line each.
+LamFacCtrlShare = {
+	type = character
+	text = { trigger = { lam_fac_seize_share_value >= lam_tune_seize_share } localization_key = lam_fac_ctrl_yes_share }
+	text = { localization_key = lam_fac_ctrl_no_share fallback = yes }
+}
+LamFacCtrlAge = {
+	type = character
+	text = { trigger = { has_variable = lam_fac_age_tier var:lam_fac_age_tier >= 1 } localization_key = lam_fac_ctrl_yes_age }
+	text = { localization_key = lam_fac_ctrl_no_age fallback = yes }
+}
+LamFacCtrlCohesion = {
+	type = character
+	text = { trigger = { has_variable = lam_fac_cohesion var:lam_fac_cohesion >= lam_tune_seize_cohesion } localization_key = lam_fac_ctrl_yes_cohesion }
+	text = { localization_key = lam_fac_ctrl_no_cohesion fallback = yes }
+}
+LamFacCtrlStanding = {
+	type = character
+	text = { trigger = { lam_fac_standing_trigger = yes } localization_key = lam_fac_ctrl_yes_standing }
+	text = { localization_key = lam_fac_ctrl_no_standing fallback = yes }
+}
+LamFacCtrlCrown = {
+	type = character
+	text = { trigger = { liege ?= { has_variable = lam_crown var:lam_crown <= 30 } } localization_key = lam_fac_ctrl_yes_crown }
+	text = { localization_key = lam_fac_ctrl_no_crown fallback = yes }
+}
+LamFacCtrlPeace = {
+	type = character
+	text = { trigger = { liege ?= { is_at_war = no } } localization_key = lam_fac_ctrl_yes_peace }
+	text = { localization_key = lam_fac_ctrl_no_peace fallback = yes }
+}
+LamFacCtrlSeats = {
+	type = character
+	text = { trigger = { lam_fac_ctrl_seats_trigger = yes } localization_key = lam_fac_ctrl_yes_seats }
+	text = { localization_key = lam_fac_ctrl_no_seats fallback = yes }
+}
+LamFacCtrlOffices = {
+	type = character
+	text = { trigger = { lam_fac_ctrl_offices_trigger = yes } localization_key = lam_fac_ctrl_yes_offices }
+	text = { localization_key = lam_fac_ctrl_no_offices fallback = yes }
+}
+LamFacCtrlAlone = {
+	type = character
+	text = { trigger = { lam_fac_ctrl_alone_trigger = yes } localization_key = lam_fac_ctrl_yes_alone }
+	text = { localization_key = lam_fac_ctrl_no_alone fallback = yes }
+}
+LamFacCtrlSwords = {
+	type = character
+	text = { trigger = { has_variable = lam_fac_power liege ?= { save_temporary_scope_as = lam_cc_l } var:lam_fac_power > scope:lam_cc_l.max_military_strength } localization_key = lam_fac_ctrl_yes_swords }
+	text = { localization_key = lam_fac_ctrl_no_swords fallback = yes }
+}
+
+# Root = a faction head: the faction's name - the player's pick (lam_fac_nmv 1-6) or, by default, LamFacAuto.
+LamFacName = {
+ text = { trigger = { var:vip_imperial_bloc_head ?= 1 } localization_key = vip_opening_loyalist_name }
+ text = { trigger = { var:vip_imperial_bloc_head ?= 2 } localization_key = vip_opening_military_name }
+
+	type = character
+	text = { trigger = { is_alive = no } localization_key = lam_fac_nm_dead }
+	text = { trigger = { var:lam_fac_nmv ?= 1 } localization_key = lam_fac_nm_house }
+	text = { trigger = { var:lam_fac_nmv ?= 2 } localization_key = lam_fac_nm_black }
+	text = { trigger = { var:lam_fac_nmv ?= 3 } localization_key = lam_fac_nm_white }
+	text = { trigger = { var:lam_fac_nmv ?= 4 } localization_key = lam_fac_nm_blue }
+	text = { trigger = { var:lam_fac_nmv ?= 5 } localization_key = lam_fac_nm_red }
+	text = { trigger = { var:lam_fac_nmv ?= 6 } localization_key = lam_fac_nm_leader }
+	text = { localization_key = lam_fac_nm_auto fallback = yes }
+}
+# Root = a faction head: the name its cause and its land give it.
+LamFacAuto = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_bp_origin_topic
+			has_variable = lam_bp_origin_stem_person
+		}
+		localization_key = lam_bp_name
+	}
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_fac_nm_dead
+	}
+	text = {
+		trigger = {
+			has_variable = lam_fac_inlaw
+			exists = house
+		}
+		localization_key = lam_fac_nm_inlaw
+	}
+	text = {
+		trigger = {
+			var:lam_fac_agenda ?= flag:loyalist
+		}
+		localization_key = lam_fac_nm_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_fac_agenda ?= flag:courtly
+		}
+		localization_key = lam_fac_nm_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_fac_agenda ?= flag:glory_hound
+		}
+		localization_key = lam_fac_nm_glory
+	}
+	text = {
+		trigger = {
+			var:lam_fac_agenda ?= flag:belligerent
+		}
+		localization_key = lam_fac_nm_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_fac_agenda ?= flag:parochial
+		}
+		localization_key = lam_fac_nm_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_fac_agenda ?= flag:zealot
+		}
+		localization_key = lam_fac_nm_zealot
+	}
+	text = {
+		trigger = {
+			var:lam_fac_agenda ?= flag:minority
+		}
+		localization_key = lam_fac_nm_minority
+	}
+	text = {
+		trigger = {
+			var:lam_fac_agenda ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_fac_nm_barons
+	}
+	text = {
+		trigger = {
+			var:lam_fac_agenda ?= flag:dynastic
+		}
+		localization_key = lam_fac_nm_dynastic
+	}
+	text = {
+		localization_key = lam_fac_nm_leader
+		fallback = yes
+	}
+}
+# Root = a faction head: its birthplace, with a space after it - or nothing.
+LamFacRegion = {
+	type = character
+	text = { trigger = { has_variable = lam_fac_region } localization_key = lam_fac_region_name }
+	text = { localization_key = lam_fac_region_none fallback = yes }
+}
+
+# Root = a faction head: the two biggest reasons its nerve rose (gen29: lam_fac_nf1 / nf2).
+LamFacNerve1 = {
+	type = character
+	text = { trigger = { var:lam_fac_nf1 ?= flag:crown } localization_key = lam_fac_nf_crown }
+	text = { trigger = { var:lam_fac_nf1 ?= flag:share } localization_key = lam_fac_nf_share }
+	text = { trigger = { var:lam_fac_nf1 ?= flag:temper } localization_key = lam_fac_nf_temper }
+	text = { trigger = { var:lam_fac_nf1 ?= flag:grievance } localization_key = lam_fac_nf_grievance }
+	text = { trigger = { var:lam_fac_nf1 ?= flag:spurned } localization_key = lam_fac_nf_spurned }
+	text = { trigger = { var:lam_fac_nf1 ?= flag:betrayed } localization_key = lam_fac_nf_betrayed }
+	text = { trigger = { var:lam_fac_nf1 ?= flag:wary } localization_key = lam_fac_nf_wary }
+	text = { trigger = { var:lam_fac_nf1 ?= flag:heir } localization_key = lam_fac_nf_heir }
+	text = { localization_key = lam_fac_empty fallback = yes }
+}
+LamFacNerve2 = {
+	type = character
+	text = { trigger = { var:lam_fac_nf2 ?= flag:crown } localization_key = lam_fac_nf_crown }
+	text = { trigger = { var:lam_fac_nf2 ?= flag:share } localization_key = lam_fac_nf_share }
+	text = { trigger = { var:lam_fac_nf2 ?= flag:temper } localization_key = lam_fac_nf_temper }
+	text = { trigger = { var:lam_fac_nf2 ?= flag:grievance } localization_key = lam_fac_nf_grievance }
+	text = { trigger = { var:lam_fac_nf2 ?= flag:spurned } localization_key = lam_fac_nf_spurned }
+	text = { trigger = { var:lam_fac_nf2 ?= flag:betrayed } localization_key = lam_fac_nf_betrayed }
+	text = { trigger = { var:lam_fac_nf2 ?= flag:wary } localization_key = lam_fac_nf_wary }
+	text = { trigger = { var:lam_fac_nf2 ?= flag:heir } localization_key = lam_fac_nf_heir }
+	text = { localization_key = lam_fac_empty fallback = yes }
+}
+# Root = the player lord: the moves worth making now (lam_fac_tips_effect).
+LamFacTip1 = {
+	type = character
+	text = { trigger = { var:lam_tip1 ?= flag:deal } localization_key = lam_fac_tip1_deal }
+	text = { trigger = { var:lam_tip1 ?= flag:promise } localization_key = lam_fac_tip1_promise }
+	text = { trigger = { var:lam_tip1 ?= flag:strings } localization_key = lam_fac_tip1_strings }
+	text = { trigger = { var:lam_tip1 ?= flag:amends } localization_key = lam_fac_tip1_amends }
+	text = { trigger = { var:lam_tip1 ?= flag:make_cp } localization_key = lam_fac_tip1_make_cp }
+	text = { trigger = { var:lam_tip1 ?= flag:rally } localization_key = lam_fac_tip1_rally }
+	text = { trigger = { var:lam_tip1 ?= flag:press } localization_key = lam_fac_tip1_press }
+	text = { trigger = { var:lam_tip1 ?= flag:ban } localization_key = lam_fac_tip1_ban }
+	text = { localization_key = lam_fac_empty fallback = yes }
+}
+LamFacTip2 = {
+	type = character
+	text = { trigger = { var:lam_tip2 ?= flag:deal } localization_key = lam_fac_tip2_deal }
+	text = { trigger = { var:lam_tip2 ?= flag:promise } localization_key = lam_fac_tip2_promise }
+	text = { trigger = { var:lam_tip2 ?= flag:strings } localization_key = lam_fac_tip2_strings }
+	text = { trigger = { var:lam_tip2 ?= flag:amends } localization_key = lam_fac_tip2_amends }
+	text = { trigger = { var:lam_tip2 ?= flag:make_cp } localization_key = lam_fac_tip2_make_cp }
+	text = { trigger = { var:lam_tip2 ?= flag:rally } localization_key = lam_fac_tip2_rally }
+	text = { trigger = { var:lam_tip2 ?= flag:press } localization_key = lam_fac_tip2_press }
+	text = { trigger = { var:lam_tip2 ?= flag:ban } localization_key = lam_fac_tip2_ban }
+	text = { localization_key = lam_fac_empty fallback = yes }
+}
+LamFacNerve2Sep = {
+	type = character
+	text = { trigger = { has_variable = lam_fac_nf2 var:lam_fac_nf2v > 0 } localization_key = lam_fac_nerve2_sep }
+	text = { localization_key = lam_fac_empty fallback = yes }
+}
+
+# Root = a faction head: what the court says of the faction - one line, read from its state.
+LamFacRep = {
+	type = character
+	text = { trigger = { is_alive = yes has_character_modifier = lam_fac_puppeteer_modifier } localization_key = lam_fac_rep_puppeteer }
+	text = { trigger = { is_alive = yes var:lam_fac_stage ?= 4 } localization_key = lam_fac_rep_armed }
+	text = { trigger = { is_alive = yes var:lam_fac_stage ?= 9 } localization_key = lam_fac_rep_underground }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_courtparty has_variable = lam_fac_share var:lam_fac_share >= 40 liege ?= { highest_held_title_tier >= tier_empire } } localization_key = lam_fac_rep_core_empire }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_courtparty has_variable = lam_fac_share var:lam_fac_share >= 40 liege ?= { highest_held_title_tier >= tier_kingdom } } localization_key = lam_fac_rep_core_kingdom }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_courtparty has_variable = lam_fac_share var:lam_fac_share >= 40 } localization_key = lam_fac_rep_core_court }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_courtparty } localization_key = lam_fac_rep_courtparty }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_share var:lam_fac_share >= 40 has_variable = lam_fac_att var:lam_fac_att <= -15 } localization_key = lam_fac_rep_threat }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_share var:lam_fac_share >= 40 has_variable = lam_fac_att var:lam_fac_att >= 25 } localization_key = lam_fac_rep_pillar }
+	text = { trigger = { is_alive = yes var:lam_fac_stage ?= 3 } localization_key = lam_fac_rep_mobilising }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_spurned } localization_key = lam_fac_rep_spurned }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_betrayed } localization_key = lam_fac_rep_betrayed }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_appeased } localization_key = lam_fac_rep_appeased }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_inlaw } localization_key = lam_fac_rep_inlaw }
+	text = { trigger = { is_alive = yes var:lam_fac_age_tier ?= 3 } localization_key = lam_fac_rep_venerable }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_cohesion var:lam_fac_cohesion <= 25 has_variable = lam_fac_count var:lam_fac_count >= 3 } localization_key = lam_fac_rep_rabble }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_cohesion var:lam_fac_cohesion >= 75 has_variable = lam_fac_count var:lam_fac_count >= 3 } localization_key = lam_fac_rep_tight }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_count var:lam_fac_count <= 1 has_variable = lam_fac_att var:lam_fac_att <= -15 } localization_key = lam_fac_rep_lone_defiant }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_count var:lam_fac_count <= 1 } localization_key = lam_fac_rep_lone }
+	text = { trigger = { is_alive = yes var:lam_fac_stage ?= 2 } localization_key = lam_fac_rep_voiced }
+	text = { trigger = { is_alive = yes var:lam_fac_stage ?= 6 } localization_key = lam_fac_rep_rallying }
+	text = { trigger = { is_alive = yes var:lam_fac_stage ?= 5 } localization_key = lam_fac_rep_crowns_men }
+	text = { trigger = { is_alive = yes var:lam_fac_stage ?= 1 } localization_key = lam_fac_rep_latent }
+	text = { trigger = { is_alive = yes var:lam_fac_age_tier ?= 0 has_variable = lam_fac_share var:lam_fac_share < 10 } localization_key = lam_fac_rep_fledgling }
+	text = { localization_key = lam_fac_rep_plain fallback = yes }
+}
+
+# Root = an underground faction's head: how much of it the crown knows.
+LamFacIntel = {
+	type = character
+	text = { trigger = { var:lam_fac_intel ?= 0 } localization_key = lam_fac_intel_0 }
+	text = { trigger = { var:lam_fac_intel ?= 1 } localization_key = lam_fac_intel_1 }
+	text = { trigger = { var:lam_fac_intel ?= 2 } localization_key = lam_fac_intel_2 }
+	text = { trigger = { var:lam_fac_intel ?= 3 } localization_key = lam_fac_intel_3 }
+	text = {
+		localization_key = lam_fac_intel_4
+		fallback = yes
+	}
+}
+
+# Root = a faction head: a wing's mark before its cause (a split: hardline / new / reformed), or nothing.
+LamFacWing = {
+	type = character
+	text = { trigger = { var:lam_fac_wing ?= flag:hard var:lam_fac_agenda ?= flag:belligerent } localization_key = lam_fac_wing_hard_bel }
+	text = { trigger = { var:lam_fac_wing ?= flag:hard } localization_key = lam_fac_wing_hard }
+	text = { trigger = { var:lam_fac_wing ?= flag:new } localization_key = lam_fac_wing_new }
+	text = { trigger = { var:lam_fac_wing ?= flag:reform } localization_key = lam_fac_wing_reform }
+	text = { trigger = { var:lam_fac_wing ?= flag:moderate } localization_key = lam_fac_wing_moderate }
+	text = { localization_key = lam_fac_empty fallback = yes }
+}
+
+# Root = a faction head: their house, before a name another faction of the court already bears.
+LamFacTwin = {
+	type = character
+	text = { trigger = { is_alive = yes has_variable = lam_fac_twin has_variable = lam_fac_twin_fn } localization_key = lam_fac_twin_first }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_twin exists = house var:lam_fac_agenda ?= flag:minority } localization_key = lam_fac_twin_house_m }
+	text = { trigger = { is_alive = yes has_variable = lam_fac_twin exists = house } localization_key = lam_fac_twin_house }
+	text = { localization_key = lam_fac_region_none fallback = yes }
+}
+
+# A player head's menu: how the faction council would likely answer (lam_fac_player_preview_effect).
+LamPvRise = {
+	type = character
+	text = { trigger = { NOT = { has_variable = lam_pv_council } } localization_key = lam_pv_nocouncil }
+	text = { trigger = { var:lam_pv_rise_pct ?= 0 } localization_key = lam_pv_rise_all }
+	text = { trigger = { var:lam_pv_rise_pct >= 40 has_variable = lam_pv_cansplit } localization_key = lam_pv_rise_split }
+	text = { localization_key = lam_pv_rise_held fallback = yes }
+}
+LamPvCourt = {
+	type = character
+	text = { trigger = { NOT = { has_variable = lam_pv_council } } localization_key = lam_pv_nocouncil }
+	text = { trigger = { var:lam_pv_court_pct ?= 0 } localization_key = lam_pv_court_all }
+	text = { trigger = { var:lam_pv_court_pct >= 40 has_variable = lam_pv_cansplit } localization_key = lam_pv_court_split }
+	text = { localization_key = lam_pv_court_held fallback = yes }
+}
+LamPvConf = {
+	type = character
+	text = { trigger = { NOT = { has_variable = lam_pv_council } } localization_key = lam_pv_nocouncil }
+	text = { trigger = { var:lam_pv_conf_pct ?= 0 } localization_key = lam_pv_conf_all }
+	text = { trigger = { var:lam_pv_conf_pct >= 50 } localization_key = lam_pv_conf_lose }
+	text = { trigger = { var:lam_pv_conf_pct >= 40 } localization_key = lam_pv_conf_split }
+	text = { localization_key = lam_pv_conf_held fallback = yes }
+}
+LamPvHeir = {
+	type = character
+	text = { trigger = { has_variable = lam_pv_hnone } localization_key = lam_pv_h_none }
+	text = { trigger = { NOT = { has_variable = lam_pv_h_pct } } localization_key = lam_pv_h_unknown }
+	text = { trigger = { var:lam_pv_h_pct ?= 0 } localization_key = lam_pv_h_all }
+	text = { trigger = { var:lam_pv_h_pct >= 40 } localization_key = lam_pv_h_split }
+	text = { localization_key = lam_pv_h_held fallback = yes }
+}
+
+# Root = a faction's head with a promise: what it is and how it is kept (polish 021).
+LamFacPromiseWhat = {
+	type = character
+	text = { trigger = { var:lam_fac_promise ?= flag:council } localization_key = lam_fac_pr_council }
+	text = { trigger = { var:lam_fac_promise ?= flag:marriage } localization_key = lam_fac_pr_marriage }
+	text = { trigger = { var:lam_fac_promise ?= flag:campaign } localization_key = lam_fac_pr_campaign }
+	text = { trigger = { var:lam_fac_promise ?= flag:faith } localization_key = lam_fac_pr_faith }
+	text = { trigger = { var:lam_fac_promise ?= flag:tolerance } localization_key = lam_fac_pr_tolerance }
+	text = { trigger = { var:lam_fac_promise ?= flag:no_revoke } localization_key = lam_fac_pr_no_revoke }
+	text = { localization_key = lam_fac_empty fallback = yes }
+}
+
+# Root = a faction's head (the faction's face): the biggest cause of its mood toward the lord (polish 015).
+LamFacMoodWhy = {
+	type = character
+	text = { trigger = { liege ?= { lam_fac_awe_trigger = yes } } localization_key = lam_fac_why_awe }
+	text = { trigger = { liege ?= { save_temporary_scope_as = lam_mw_l } faith = { faith_hostility_level = { target = scope:lam_mw_l.faith value >= faith_hostile_level } } } localization_key = lam_fac_why_faith_hostile }
+	text = { trigger = { liege ?= { has_variable = lam_harem_sacrilege } liege ?= { save_temporary_scope_as = lam_mw_l } faith = scope:lam_mw_l.faith } localization_key = lam_fac_why_sacrilege }
+	text = { trigger = { var:lam_fac_stance ?= flag:zealot liege ?= { save_temporary_scope_as = lam_mw_l } NOT = { faith = scope:lam_mw_l.faith } } localization_key = lam_fac_why_zealot }
+	text = { trigger = { var:lam_fac_stance ?= flag:parochial liege ?= { OR = { has_realm_law = crown_authority_2 has_realm_law = crown_authority_3 } } } localization_key = lam_fac_why_parochial }
+	text = { trigger = { liege ?= { save_temporary_scope_as = lam_mw_l } house ?= scope:lam_mw_l.house } localization_key = lam_fac_why_kin }
+	text = { trigger = { var:lam_fac_stage ?= 1 has_variable = lam_fac_att var:lam_fac_att < 0 } localization_key = lam_fac_why_fear }
+	text = { trigger = { liege ?= { save_temporary_scope_as = lam_mw_l } is_councillor_of = scope:lam_mw_l } localization_key = lam_fac_why_council }
+	text = { trigger = { liege ?= { save_temporary_scope_as = lam_mw_l } opinion = { target = scope:lam_mw_l value >= 30 } } localization_key = lam_fac_why_like }
+	text = { trigger = { liege ?= { save_temporary_scope_as = lam_mw_l } opinion = { target = scope:lam_mw_l value <= -20 } } localization_key = lam_fac_why_dislike }
+	text = { localization_key = lam_fac_why_none fallback = yes }
+}
+# Root = a faction's head: its next move - only what is really set in motion (polish 076).
+LamFacNext = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_wc_phase ?= 2
+			var:lam_wc_side ?= 2
+		}
+		localization_key = lam_wc_defending
+	}
+	text = {
+		trigger = {
+			var:lam_wc_phase ?= 2
+		}
+		localization_key = lam_wc_fighting
+	}
+	text = {
+		trigger = {
+			var:lam_wc_phase ?= 1
+		}
+		localization_key = lam_wc_preparing
+	}
+	text = {
+		trigger = {
+			has_variable = lam_pd_pending
+		}
+		localization_key = lam_pd_next_reply
+	}
+	text = {
+		trigger = {
+			has_variable = lam_pd_active
+			OR = {
+				is_ai = no
+				any_in_list = {
+					variable = lam_fac_members
+					is_ai = no
+					var:lam_bloc ?= prev
+				}
+			}
+		}
+		localization_key = lam_pd_next_mandate
+	}
+	text = {
+		trigger = {
+			has_variable = lam_pd_recruit_target
+			OR = {
+				is_ai = no
+				any_in_list = {
+					variable = lam_fac_members
+					is_ai = no
+					var:lam_bloc ?= prev
+				}
+			}
+		}
+		localization_key = lam_pd_next_recruit
+	}
+	text = {
+		trigger = {
+			lam_pd_obstruct_current_trigger = yes
+		}
+		localization_key = lam_pd_next_obstruct
+	}
+	text = {
+		trigger = {
+			lam_pd_pact_current_trigger = yes
+		}
+		localization_key = lam_pd_next_pact
+	}
+	text = {
+		trigger = {
+			has_variable = lam_cr_active
+		}
+		localization_key = lam_pol_next_vote
+	}
+	text = {
+		trigger = {
+			has_variable = lam_cr_contract_pending
+		}
+		localization_key = lam_pol_next_contract
+	}
+	text = {
+		trigger = {
+			has_variable = lam_cr_alliance_offer
+		}
+		localization_key = lam_pol_next_alliance
+	}
+	text = {
+		trigger = {
+			has_variable = lam_cr_obstruct
+		}
+		localization_key = lam_pol_next_rival
+	}
+	text = {
+		trigger = {
+			lam_pol_office_excluded_trigger = yes
+			has_variable = lam_pol_excluded_since
+		}
+		localization_key = lam_pol_next_office
+	}
+	text = {
+		trigger = {
+			has_variable = lam_fac_promise
+		}
+		localization_key = lam_fac_next_promise
+	}
+	text = {
+		trigger = {
+			has_variable = lam_fac_armed
+		}
+		localization_key = lam_fac_next_armed
+	}
+	text = {
+		trigger = {
+			var:lam_fac_stage ?= 9
+		}
+		localization_key = lam_fac_next_hiding
+	}
+	text = {
+		trigger = {
+			has_variable = lam_fac_demand
+		}
+		localization_key = lam_fac_next_demand
+	}
+	text = {
+		trigger = {
+			var:lam_fac_stage ?= 3
+		}
+		localization_key = lam_fac_next_arming
+	}
+	text = {
+		trigger = {
+			has_variable = lam_fac_courtparty
+		}
+		localization_key = lam_fac_next_court
+	}
+	text = {
+		trigger = {
+			has_variable = lam_fac_oath
+		}
+		localization_key = lam_fac_next_oath
+	}
+	text = {
+		trigger = {
+			save_temporary_scope_as = lam_sulk_head
+			any_in_list = {
+				variable = lam_fac_members
+				is_alive = yes
+				lam_fac_sulking_trigger = {
+					HEAD = scope:lam_sulk_head
+				}
+			}
+		}
+		localization_key = lam_fac_next_sulk
+	}
+	text = {
+		localization_key = lam_fac_next_none
+		fallback = yes
+	}
+}
+
+# Root = a faction's head: who founded it with its founder (polish 001).
+LamFacCofLine = {
+	type = character
+	text = { trigger = { var:lam_fac_cof1 ?= { always = yes } var:lam_fac_cof2 ?= { always = yes } } localization_key = lam_fac_cof_two }
+	text = { trigger = { var:lam_fac_cof1 ?= { always = yes } } localization_key = lam_fac_cof_one }
+	text = { localization_key = lam_fac_empty fallback = yes }
+}
+LamFacCofWhy = {
+	type = character
+	text = { trigger = { var:lam_fac_cof_why ?= flag:kin } localization_key = lam_fac_cofwhy_kin }
+	text = { trigger = { var:lam_fac_cof_why ?= flag:friend } localization_key = lam_fac_cofwhy_friend }
+	text = { trigger = { var:lam_fac_cof_why ?= flag:liking } localization_key = lam_fac_cofwhy_liking }
+	text = { localization_key = lam_fac_empty fallback = yes }
+}

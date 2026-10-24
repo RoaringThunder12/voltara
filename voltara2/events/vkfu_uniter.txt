@@ -1,0 +1,63 @@
+﻿namespace = vkfu
+vkfu.1 = { type = character_event theme = realm title = vkfu.1.t desc = vkfu.1.desc trigger = { this = character:9999100 vkf_chief = yes }
+option = { name = vkfu.1.0 custom_tooltip = vkfu.1.0_tt hidden_effect = { if = { limit = { this = character:9999100 vkf_chief = yes  } add_character_flag = vkfu_intro_seen vkfu_heralds = yes } } ai_chance = { base = 90 } }
+option = { name = vkfu.1.1 custom_tooltip = vkfu.1.1_tt hidden_effect = { if = { limit = { this = character:9999100 vkf_chief = yes  } add_character_flag = vkfu_intro_seen } } ai_chance = { base = 10 } }
+}
+
+vkfu.2 = { type = character_event theme = realm title = vkfu.2.t desc = vkfu.2.desc trigger = { vkf_chief = yes has_variable = vkfu_inviter var:vkfu_inviter = { vkf_chief = yes } NOT = { has_variable = vkf_patron } }
+option = { name = vkfu.2.0 custom_tooltip = vkfu.2.0_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_inviter var:vkfu_inviter = { vkf_chief = yes } NOT = { has_variable = vkf_patron }  } vkfu_recognize = { OATH = 1 } } } ai_chance = { base = 55 } }
+option = { name = vkfu.2.1 custom_tooltip = vkfu.2.1_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_inviter var:vkfu_inviter = { vkf_chief = yes } NOT = { has_variable = vkf_patron }  } vkfu_recognize = { OATH = 2 } } } ai_chance = { base = 35 } }
+option = { name = vkfu.2.2 custom_tooltip = vkfu.2.2_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_inviter var:vkfu_inviter = { vkf_chief = yes } NOT = { has_variable = vkf_patron }  } add_character_flag = { flag = vkfu_herald_answered days = 730 } remove_variable = vkfu_inviter } } ai_chance = { base = 10 } }
+}
+
+vkfu.3 = { type = character_event theme = realm title = vkfu.3.t desc = vkfu.3.desc trigger = { this = character:9999100 vkf_chief = yes }
+immediate = { remove_character_flag = vkfu_riders_pending vkf_count_support = yes }
+option = { name = vkfu.3.0 trigger = { var:vkf_support >= 2 NOT = { has_character_flag = vkfu_renown_awarded } } custom_tooltip = vkfu.3.0_tt hidden_effect = { if = { limit = { this = character:9999100 vkf_chief = yes var:vkf_support >= 2 NOT = { has_character_flag = vkfu_renown_awarded } } add_character_flag = vkfu_renown_awarded add_trait = conqueror add_character_modifier = { modifier = vkfu_uniter_renown years = 20 } add_prestige = 1000 add_gold = 200 add_character_flag = vkf_council_concluded vkfu_authorize = yes } } ai_chance = { base = 90 } }
+option = { name = vkfu.3.1 custom_tooltip = vkfu.3.1_tt hidden_effect = { if = { limit = { this = character:9999100 vkf_chief = yes  }  } } ai_chance = { base = 10 } }
+}
+
+vkfu.10 = { type = character_event theme = realm title = vkfu.10.t desc = vkfu.10.desc trigger = { vkfu_foundation_ready = yes }
+option = { name = vkfu.10.0 custom_tooltip = vkfu.10.0_tt hidden_effect = { if = { limit = { vkfu_foundation_ready = yes  } vkfu_found_empire = { VOW = 1 } } } ai_chance = { base = 40 } }
+option = { name = vkfu.10.1 custom_tooltip = vkfu.10.1_tt hidden_effect = { if = { limit = { vkfu_foundation_ready = yes  } vkfu_found_empire = { VOW = 2 } } } ai_chance = { base = 35 } }
+option = { name = vkfu.10.2 custom_tooltip = vkfu.10.2_tt hidden_effect = { if = { limit = { vkfu_foundation_ready = yes  } vkfu_found_empire = { VOW = 3 } } } ai_chance = { base = 25 } }
+}
+
+vkfu.11 = { type = character_event theme = realm title = vkfu.11.t desc = vkfu.11.desc trigger = { vkf_available = yes }
+option = { name = vkfu.11.0 custom_tooltip = vkfu.11.0_tt hidden_effect = { if = { limit = { vkf_available = yes  }  } } ai_chance = { base = 100 } }
+}
+
+vkfu.12 = { type = character_event theme = realm title = vkfu.12.t desc = vkfu.12.desc trigger = { vkf_chief = yes has_variable = vkfu_submission_offer var:vkfu_submission_offer = { vkf_leader = yes is_independent_ruler = yes } }
+option = { name = vkfu.12.0 custom_tooltip = vkfu.12.0_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_submission_offer var:vkfu_submission_offer = { vkf_leader = yes is_independent_ruler = yes }  } vkfu_submit = yes } } ai_chance = { base = 65 } }
+option = { name = vkfu.12.1 custom_tooltip = vkfu.12.1_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_submission_offer var:vkfu_submission_offer = { vkf_leader = yes is_independent_ruler = yes }  } set_variable = { name = vkf_patron value = var:vkfu_submission_offer days = 1825 } set_variable = { name = vkf_oath value = 1 days = 1825 } add_character_flag = { flag = vkfu_submission_answered days = 1825 } remove_variable = vkfu_submission_offer } } ai_chance = { base = 25 } }
+option = { name = vkfu.12.2 custom_tooltip = vkfu.12.2_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_submission_offer var:vkfu_submission_offer = { vkf_leader = yes is_independent_ruler = yes }  } add_character_flag = { flag = vkfu_submission_answered days = 1825 } remove_variable = vkfu_submission_offer } } ai_chance = { base = 10 } }
+}
+
+vkfu.13 = { type = character_event theme = realm title = vkfu.13.t desc = vkfu.13.desc trigger = { vkf_leader = yes exists = scope:vkfu_subject }
+option = { name = vkfu.13.0 hidden_effect = { if = { limit = { vkf_leader = yes exists = scope:vkfu_subject  }  } } ai_chance = { base = 100 } }
+}
+
+vkfu.20 = { type = character_event theme = realm title = vkfu.20.t desc = { desc = vkfu.20.desc triggered_desc = { trigger = { global_var:vkfu_founding_promise = 1 } desc = vkfu_vow_1 } triggered_desc = { trigger = { global_var:vkfu_founding_promise = 2 } desc = vkfu_vow_2 } triggered_desc = { trigger = { global_var:vkfu_founding_promise = 3 } desc = vkfu_vow_3 } } trigger = { is_alive = yes }
+option = { name = vkfu.20.0 hidden_effect = { if = { limit = { is_alive = yes  }  } } ai_chance = { base = 100 } }
+}
+
+vkfu.21 = { type = character_event theme = realm title = vkfu.21.t desc = vkfu.21.desc trigger = { vkfu_vow_active = yes }
+option = { name = vkfu.21.0 custom_tooltip = vkfu.21.0_tt hidden_effect = { if = { limit = { vkfu_vow_active = yes  }  } } ai_chance = { base = 100 } }
+}
+
+vkfu.22 = { type = character_event theme = realm title = vkfu.22.t desc = vkfu.22.desc trigger = { has_character_flag = vkfu_promise_kept }
+option = { name = vkfu.22.0 custom_tooltip = vkfu.22.0_tt hidden_effect = { if = { limit = { has_character_flag = vkfu_promise_kept  }  } } ai_chance = { base = 100 } }
+}
+
+vkfu.23 = { type = character_event theme = realm title = vkfu.23.t desc = vkfu.23.desc trigger = { has_character_flag = vkfu_promise_resolved NOT = { has_character_flag = vkfu_promise_kept } }
+option = { name = vkfu.23.0 custom_tooltip = vkfu.23.0_tt hidden_effect = { if = { limit = { has_character_flag = vkfu_promise_resolved NOT = { has_character_flag = vkfu_promise_kept }  }  } } ai_chance = { base = 100 } }
+}
+
+vkfu.24 = { type = character_event theme = realm title = vkfu_oath_title
+ desc = { desc = vkfu_oath_desc triggered_desc = { trigger = { var:vkfu_promise = 1 } desc = vkfu_vow_1 } triggered_desc = { trigger = { var:vkfu_promise = 2 } desc = vkfu_vow_2 } triggered_desc = { trigger = { var:vkfu_promise = 3 } desc = vkfu_vow_3 } triggered_desc = { trigger = { has_character_flag = vkfu_promise_kept } desc = vkfu_oath_kept } triggered_desc = { trigger = { has_character_flag = vkfu_promise_resolved NOT = { has_character_flag = vkfu_promise_kept } } desc = vkfu_oath_failed } }
+ trigger = { vkf_leader = yes has_variable = vkfu_promise } option = { name = vkfu_oath_close }
+}
+
+vkfu.25 = { type = character_event theme = realm title = vkfu.25.t desc = vkfu.25.desc trigger = { vkf_available = yes vkfu_human_southron = yes has_variable = vkfu_settlement_offer var:vkfu_settlement_offer = { vkfu_vow_active = yes var:vkfu_promise = 3 } OR = { has_government = tribal_government has_government = nomad_government } }
+option = { name = vkfu.25.0 custom_tooltip = vkfu.25.0_tt hidden_effect = { if = { limit = { vkf_available = yes vkfu_human_southron = yes has_variable = vkfu_settlement_offer var:vkfu_settlement_offer = { vkfu_vow_active = yes var:vkfu_promise = 3 } OR = { has_government = tribal_government has_government = nomad_government }  } vkfu_settle_clan = yes add_character_flag = vkfu_settlement_answered remove_variable = vkfu_settlement_offer } } ai_chance = { base = 65 } }
+option = { name = vkfu.25.1 custom_tooltip = vkfu.25.1_tt hidden_effect = { if = { limit = { vkf_available = yes vkfu_human_southron = yes has_variable = vkfu_settlement_offer var:vkfu_settlement_offer = { vkfu_vow_active = yes var:vkfu_promise = 3 } OR = { has_government = tribal_government has_government = nomad_government }  } var:vkfu_settlement_offer = { add_gold = 200 } add_character_flag = { flag = vkfu_settlement_answered days = 1095 } remove_variable = vkfu_settlement_offer } } ai_chance = { base = 35 } }
+}

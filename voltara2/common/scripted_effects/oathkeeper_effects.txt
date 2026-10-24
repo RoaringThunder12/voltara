@@ -1,0 +1,41 @@
+﻿oathholder_assigned = {
+	set_variable = {
+		name = val_oathholder
+		value = $CHARACTER$
+	}
+}
+oathkeeper_assigned = {
+	set_variable = {
+		name = val_oathkeeper
+		value = $CHARACTER$
+	}
+}
+oathholder_heir_assigned = {
+	set_variable = {
+		name = val_oathholder_heir
+		value = $CHARACTER$
+	}
+}
+
+# --- REMOVAL EFFECTS ---
+
+oathholder_cleared = {
+    remove_variable = val_oathholder
+}
+
+oathkeeper_cleared = {
+    remove_variable = val_oathkeeper
+}
+
+oathholder_heir_cleared = {
+    remove_variable = val_oathholder_heir
+}
+
+
+# --- MASTER CLEANUP (Use this on death) ---
+
+clear_all_oath_variables = {
+    remove_variable = val_oathholder
+    remove_variable = val_oathkeeper
+    remove_variable = val_oathholder_heir
+}

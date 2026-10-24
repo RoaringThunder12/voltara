@@ -1,0 +1,162 @@
+﻿lam_ob_register_head_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+		}
+		if = {
+			limit = {
+				has_variable = lam_bloc_lead
+				NOT = {
+					has_variable = lam_fac_disband
+				}
+			}
+			save_scope_as = lam_ob_existing_head
+			clear_saved_scope = lam_ob_registry_home
+			if = {
+				limit = {
+					exists = var:lam_wc_war
+				}
+				var:lam_wc_home ?= {
+					if = {
+						limit = {
+							is_alive = yes
+						}
+						save_scope_as = lam_ob_registry_home
+					}
+				}
+			}
+			else = {
+				liege ?= {
+					if = {
+						limit = {
+							is_alive = yes
+						}
+						save_scope_as = lam_ob_registry_home
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:lam_ob_registry_home
+				}
+				if = {
+					limit = {
+						lam_pb_head_belongs_trigger = {
+							COURT = scope:lam_ob_registry_home
+						}
+					}
+					scope:lam_ob_registry_home = {
+						if = {
+							limit = {
+								NOT = {
+									is_target_in_variable_list = {
+										name = lam_bloc_leads
+										target = scope:lam_ob_existing_head
+									}
+								}
+							}
+							add_to_variable_list = {
+								name = lam_bloc_leads
+								target = scope:lam_ob_existing_head
+							}
+						}
+						remove_variable = lam_bloc_leads_none
+					}
+				}
+			}
+		}
+	}
+}
+lam_ob_person_membership_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+		}
+		var:lam_bloc ?= {
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				lam_wc_sync_effect = yes
+			}
+		}
+		lam_pb_validate_member_effect = yes
+		if = {
+			limit = {
+				has_variable = lam_bloc_lead
+			}
+			lam_fac_unseated_clean_effect = yes
+			lam_ob_register_head_effect = yes
+		}
+		else = {
+			var:lam_bloc ?= {
+				lam_ob_register_head_effect = yes
+			}
+		}
+	}
+}
+lam_ob_death_followup_effect = {
+	liege ?= {
+		if = {
+			limit = {
+				is_alive = yes
+			}
+			every_vassal = {
+				if = {
+					limit = {
+						is_alive = yes
+					}
+					if = {
+						limit = {
+							has_variable = lam_bloc
+						}
+						if = {
+							limit = {
+								NOT = {
+									has_variable = lam_pb_membership_pending
+								}
+							}
+							set_variable = {
+								name = lam_pb_membership_pending
+								value = yes
+								days = 3
+							}
+							trigger_event = {
+								id = lam_pb_repair.0001
+								days = 1
+							}
+						}
+					}
+				}
+			}
+			every_courtier = {
+				if = {
+					limit = {
+						is_alive = yes
+					}
+					if = {
+						limit = {
+							has_variable = lam_bloc
+						}
+						if = {
+							limit = {
+								NOT = {
+									has_variable = lam_pb_membership_pending
+								}
+							}
+							set_variable = {
+								name = lam_pb_membership_pending
+								value = yes
+								days = 3
+							}
+							trigger_event = {
+								id = lam_pb_repair.0001
+								days = 1
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

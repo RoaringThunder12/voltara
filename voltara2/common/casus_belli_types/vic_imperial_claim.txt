@@ -3,7 +3,9 @@
  war_name = vic_imperial_claim_name cb_name = vic_imperial_claim
  allowed_for_character = { has_character_flag = vic_claimant }
  allowed_against_character = { has_title = title:h_voltara_severos }
- valid_to_start = { scope:attacker = { has_character_flag = vic_claimant } scope:defender = { has_title = title:h_voltara_severos } }
+ valid_to_start = {
+ voltara_keeper_war_permitted = yes
+ scope:attacker = { has_character_flag = vic_claimant } scope:defender = { has_title = title:h_voltara_severos } }
  should_invalidate = { OR = { scope:attacker = { is_alive = no } NOT = { exists = title:h_voltara_severos.holder } scope:defender = { NOT = { has_title = title:h_voltara_severos } } } }
  on_primary_attacker_death = invalidate on_primary_defender_death = inherit
  attacker_capital_gives_war_score = yes max_attacker_score_from_battles = 100 max_defender_score_from_battles = 100

@@ -1,0 +1,108 @@
+﻿namespace = lam_pd
+lam_pd.0200 = {
+	type = character_event
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				var:lam_pd_recruit_id ?= scope:lam_pd_recruit_token
+				has_variable = lam_pd_recruit_from
+			}
+			lam_pd_recruit_restore_effect = yes
+			if = {
+				limit = {
+					lam_pd_recruit_current_trigger = yes
+				}
+				set_variable = {
+					name = lam_pd_recruit_ready
+					value = yes
+				}
+				if = {
+					limit = {
+						is_ai = no
+					}
+					trigger_event = lam_pd.0203
+				}
+				else_if = {
+					limit = {
+						lam_pd_recruit_interest_value >= 10
+					}
+					lam_pd_recruit_commit_effect = yes
+				}
+				else = {
+					lam_pd_recruit_clear_effect = yes
+				}
+			}
+			else = {
+				lam_pd_recruit_clear_effect = yes
+			}
+		}
+	}
+}
+lam_pd.0201 = {
+	type = character_event
+	title = lam_pd_retain_title
+	desc = lam_pd_retain_desc
+	theme = realm
+	option = {
+		name = lam_pd_retain_pay
+		trigger = {
+			scope:lam_pd_recruit_person ?= {
+				lam_pd_recruit_current_trigger = yes
+			}
+			gold >= scope:lam_pd_recruit_person.var:lam_pd_recruit_price
+		}
+		hidden_effect = {
+			lam_pd_recruit_retain_effect = yes
+		}
+	}
+	option = {
+		name = lam_pd_retain_leave
+	}
+}
+lam_pd.0202 = {
+	type = character_event
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				has_variable = lam_pd_recruit_from
+				var:lam_pd_recruit_id ?= scope:lam_pd_recruit_token
+			}
+			lam_pd_recruit_clear_effect = yes
+		}
+	}
+}
+lam_pd.0203 = {
+	type = character_event
+	title = lam_pd_recruit_title
+	desc = lam_pd_recruit_desc
+	theme = realm
+	left_portrait = {
+		character = scope:lam_rc_head
+	}
+	option = {
+		name = lam_pd_recruit_join
+		trigger = {
+			lam_pd_recruit_current_trigger = yes
+			has_variable = lam_pd_recruit_ready
+			scope:lam_rc_head = {
+				gold >= root.var:lam_pd_recruit_price
+			}
+		}
+		hidden_effect = {
+			lam_pd_recruit_commit_effect = yes
+		}
+	}
+	option = {
+		name = lam_pd_recruit_decline
+		hidden_effect = {
+			if = {
+				limit = {
+					var:lam_pd_recruit_id ?= scope:lam_pd_recruit_token
+				}
+				lam_pd_recruit_clear_effect = yes
+			}
+		}
+	}
+}

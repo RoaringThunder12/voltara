@@ -1,0 +1,6 @@
+﻿on_game_start = { on_actions = { vvr_start } }
+vvr_start = { effect = { character:9999401 = { vvr_pulse = yes } } }
+yearly_playable_pulse = { on_actions = { vvr_year } }
+vvr_year = { trigger = { this = character:9999401 } effect = { vvr_pulse = yes } }
+on_death = { on_actions = { vvr_death } }
+vvr_death = { trigger = { this = character:9999401 has_character_flag = vvr_ascended } effect = { every_independent_ruler = { limit = { vvr_human_target = yes } trigger_event = { id = vvr.22 days = 7 } } } }

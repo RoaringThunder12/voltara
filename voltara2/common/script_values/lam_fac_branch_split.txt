@@ -1,0 +1,47 @@
+﻿lam_bp_follow_value = {
+	value = "opinion(scope:lam_vt_lead)"
+	subtract = "opinion(scope:lam_cr_head)"
+	if = {
+		limit = {
+			has_relation_friend = scope:lam_vt_lead
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_relation_rival = scope:lam_vt_lead
+		}
+		add = -80
+	}
+	if = {
+		limit = {
+			house ?= scope:lam_vt_lead.house
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			has_relation_friend = scope:lam_cr_head
+		}
+		add = -25
+	}
+	if = {
+		limit = {
+			is_councillor_of = liege
+		}
+		add = -20
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_pinned
+		}
+		add = -15
+	}
+}
+lam_bp_caucus_weight_value = {
+	value = 0
+	every_in_list = {
+		variable = lam_lf_caucus_members
+		add = var:lam_cr_weight
+	}
+}

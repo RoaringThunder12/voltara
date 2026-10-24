@@ -33,6 +33,8 @@ allowed_against_character = {
 
 	ignore_effect = change_title_holder
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -430,13 +432,13 @@ allowed_against_character = {
 						any_in_list = {
 							list = target_titles
 							tier = tier_kingdom
-							this = title:k_anatolia
+							always = no
 							OR = {
 								scope:defender.culture = {
 									has_cultural_pillar = heritage_byzantine
 								}
 								scope:defender = {
-									primary_title = title:e_byzantium
+									always = no
 								}
 								NOT = {
 									any_de_jure_county = {
@@ -461,31 +463,31 @@ allowed_against_character = {
 							list = target_titles
 							tier = tier_kingdom
 							OR = {
-								this = title:k_anatolia
-								this = title:k_pontus
-								this = title:k_delhi
-								this = title:k_bulgaria
-								this = title:k_syria
-								this = title:k_nikaea
-								this = title:k_georgia
-								this = title:k_armenia
-								this = title:k_galicia-volhynia
-								this = title:k_goguryeo
-								this = title:k_ruthenia
+								always = no
+								always = no
+								always = no
+								always = no
+								always = no
+								always = no
+								always = no
+								always = no
+								always = no
+								always = no
+								always = no
 								empire = {
 									OR = {
-										this = title:e_persia
-										this = title:e_turan
-										this = title:e_yongliang
-										this = title:e_zhongyuan
-										this = title:e_carpathia
-										this = title:e_great_yuan
-										this = title:e_chagatai
-										this = title:e_ilkhanate
-										this = title:e_golden_horde
-										this = title:e_tartaria
-										this = title:e_andong
-										this = title:e_caspian-pontic_steppe
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
 									}
 								}
 							}
@@ -562,17 +564,17 @@ allowed_against_character = {
 							list = target_titles
 							tier = tier_duchy
 							OR = {
-								this = title:k_hitakami
-								this = title:k_aynumosir
-								this = title:k_sardinia
-								this = title:k_krete
-								this = title:k_cyprus
+								always = no
+								always = no
+								always = no
+								always = no
+								always = no
 								empire ?= {
 									OR = {
-										this = title:e_japan
-										this = title:e_britannia
-										this = title:e_nusantara
-										this = title:e_srivijaya
+										always = no
+										always = no
+										always = no
+										always = no
 									}
 								}
 							}
@@ -620,6 +622,8 @@ allowed_against_character = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -1760,31 +1764,53 @@ allowed_against_character = {
 							list = target_titles
 							tier = tier_duchy
 							OR = {
-								kingdom ?= title:k_anatolia
-								kingdom ?= title:k_pontus
-								kingdom ?= title:k_delhi
-								kingdom ?= title:k_bulgaria
-								kingdom ?= title:k_syria
-								kingdom ?= title:k_nikaea
-								kingdom ?= title:k_georgia
-								kingdom ?= title:k_armenia
-								kingdom ?= title:k_galicia-volhynia
-								kingdom ?= title:k_goguryeo
-								kingdom ?= title:k_ruthenia
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_anatolia
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_pontus
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_delhi
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_bulgaria
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_syria
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_nikaea
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_georgia
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_armenia
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_galicia-volhynia
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_goguryeo
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_ruthenia
+always = no
 								empire ?= {
 									OR = {
-										this = title:e_persia
-										this = title:e_turan
-										this = title:e_yongliang
-										this = title:e_zhongyuan
-										this = title:e_carpathia
-										this = title:e_great_yuan
-										this = title:e_chagatai
-										this = title:e_ilkhanate
-										this = title:e_golden_horde
-										this = title:e_tartaria
-										this = title:e_andong
-										this = title:e_caspian-pontic_steppe
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
+										always = no
 									}
 								}
 							}
@@ -1837,23 +1863,33 @@ allowed_against_character = {
 							list = target_titles
 							tier = tier_duchy
 							OR = {
-								this = title:d_iceland
-								this = title:d_mallorca
-								this = title:d_canarias
-								this = title:d_socotra
-								this = title:d_tamna
-								this = title:d_northern_isles
-								kingdom ?= title:k_hitakami
-								kingdom ?= title:k_aynumosir
-								kingdom ?= title:k_sardinia
-								kingdom ?= title:k_krete
-								kingdom ?= title:k_cyprus
+								always = no
+								always = no
+								always = no
+								always = no
+								always = no
+								always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_hitakami
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_aynumosir
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_sardinia
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_krete
+always = no
+								# Optional native title is absent on the Voltara map.
+# kingdom ?= title:k_cyprus
+always = no
 								empire ?= {
 									OR = {
-										this = title:e_japan
-										this = title:e_britannia
-										this = title:e_nusantara
-										this = title:e_srivijaya
+										always = no
+										always = no
+										always = no
+										always = no
 									}
 								}
 							}
@@ -1893,6 +1929,8 @@ allowed_against_character = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -2675,6 +2713,8 @@ allowed_against_character = {
 
 humiliation_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -2999,6 +3039,8 @@ valid_to_start = {
 
 retaliation_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -3381,6 +3423,8 @@ valid_to_start = {
 #################
 domination_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -3660,6 +3704,8 @@ de_jure_cb_nomadic = {
 	ai_only_against_neighbors = yes
 	
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -4073,6 +4119,8 @@ sovereignty_cb = {
 	ignore_effect = change_title_holder
 	
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -4366,6 +4414,8 @@ sovereignty_cb = {
 #THE WAR THAT FORGES THE GREATEST OF KHANS
 mpo_great_war_of_defiance_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -4943,6 +4993,8 @@ allowed_for_character = {
 #THE NEW WAR OF THE GREATEST OF KHANS
 mpo_gok_onslaught_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }

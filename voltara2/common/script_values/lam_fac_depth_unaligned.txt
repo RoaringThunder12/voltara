@@ -1,0 +1,234 @@
+﻿lam_pd_court_activity_value = {
+	value = 15
+	save_temporary_scope_as = lam_pd_activity_lord
+	if = {
+		limit = {
+			any_vassal = {
+				lam_pd_activity_peer_trigger = yes
+				count >= 4
+			}
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			any_vassal = {
+				lam_pd_activity_peer_trigger = yes
+				count >= 8
+			}
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			any_vassal = {
+				lam_pd_activity_peer_trigger = yes
+				count >= 15
+			}
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			any_vassal = {
+				lam_pd_activity_peer_trigger = yes
+				count >= 25
+			}
+		}
+		add = 5
+	}
+	if = {
+		limit = {
+			any_vassal = {
+				lam_pd_activity_peer_trigger = yes
+				opinion = {
+					target = scope:lam_pd_activity_lord
+					value < -20
+				}
+			}
+		}
+		add = 15
+	}
+	if = {
+		limit = {
+			any_vassal = {
+				lam_pd_activity_peer_trigger = yes
+				opinion = {
+					target = scope:lam_pd_activity_lord
+					value < -20
+				}
+				count >= 3
+			}
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			tyranny >= 10
+		}
+		add = 15
+	}
+	if = {
+		limit = {
+			tyranny >= 30
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_newreign
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			is_at_war = yes
+		}
+		add = 5
+	}
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				liege ?= scope:lam_pd_activity_lord
+				lam_pol_office_excluded_trigger = yes
+			}
+		}
+		add = 10
+	}
+	max = 100
+}
+lam_pd_local_activity_value = {
+	value = 30
+	if = {
+		limit = {
+			exists = liege
+		}
+		liege = {
+			if = {
+				limit = {
+					has_variable = lam_pd_activity
+					has_variable = lam_pd_activity_month
+					var:lam_pd_activity_month >= {
+						value = lam_now_m
+						subtract = 12
+					}
+				}
+				value = var:lam_pd_activity
+			}
+			else = {
+				value = lam_pd_court_activity_value
+			}
+		}
+	}
+}
+lam_pd_independent_value = {
+	value = 45
+	if = {
+		limit = {
+			lam_pd_local_activity_value < 30
+		}
+		add = 15
+	}
+	else_if = {
+		limit = {
+			lam_pd_local_activity_value >= 60
+		}
+		add = -15
+	}
+	if = {
+		limit = {
+			exists = liege
+			opinion = {
+				target = liege
+				value >= 40
+			}
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			exists = liege
+			opinion = {
+				target = liege
+				value < -20
+			}
+		}
+		add = -15
+	}
+	if = {
+		limit = {
+			exists = liege
+			is_councillor_of = liege
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			liege ?= {
+				tyranny >= 10
+			}
+		}
+		add = -10
+	}
+	if = {
+		limit = {
+			liege ?= {
+				tyranny >= 30
+			}
+		}
+		add = -10
+	}
+	if = {
+		limit = {
+			has_trait = content
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			has_trait = ambitious
+		}
+		add = -10
+	}
+	min = 15
+	max = 80
+}
+lam_pd_join_threshold_value = {
+	value = 20
+	if = {
+		limit = {
+			NOT = {
+				lam_pd_has_valid_allegiance_trigger = yes
+			}
+		}
+		value = lam_pd_independent_value
+		subtract = 15
+		min = 15
+	}
+}
+lam_pd_found_support_threshold_value = {
+	value = lam_pd_independent_value
+	subtract = 25
+	min = lam_tune_found_follow_opinion
+}
+lam_pd_absorb_threshold_value = {
+	value = lam_pd_join_threshold_value
+	subtract = 20
+	min = 0
+}
+lam_pd_independent_cost_value = {
+	value = 0
+	if = {
+		limit = {
+			NOT = {
+				lam_pd_has_valid_allegiance_trigger = yes
+			}
+		}
+		value = lam_pd_independent_value
+		subtract = 20
+		multiply = 0.8
+		min = 0
+	}
+}

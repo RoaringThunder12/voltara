@@ -1,0 +1,58 @@
+﻿# v0.8.1: saved participants only; no additional character searches.
+dhm_v081_school_current_trigger = {
+	dhm_v073_school_still_current_trigger = yes
+}
+dhm_v081_tutor_willing_trigger = {
+	dhm_v081_school_current_trigger = yes
+	scope:dhm_story_tutor = { NOT = { var:dhm081_refused_by ?= root } }
+}
+dhm_v081_officer_role_unchanged_trigger = {
+	OR = {
+		NOT = { exists = scope:dhm081_officer_role }
+		AND = { scope:dhm081_officer_role = flag:steward scope:dhm_story_officer = { has_character_flag = dhm_office_steward } }
+		AND = { scope:dhm081_officer_role = flag:matchmaker scope:dhm_story_officer = { has_character_flag = dhm_office_matchmaker } }
+		AND = { scope:dhm081_officer_role = flag:tutor scope:dhm_story_officer = { has_character_flag = dhm_office_tutor } }
+		AND = { scope:dhm081_officer_role = flag:chronicler scope:dhm_story_officer = { has_character_flag = dhm_office_chronicler } }
+	}
+}
+dhm_v081_learned_to_listen_trigger = {
+	dhm_v081_school_current_trigger = yes
+	scope:dhm_story_child = { var:dhm081_listened_by ?= root NOT = { has_character_flag = dhm081_used_lesson } }
+}
+dhm_v081_officer_self_reliant_trigger = {
+	exists = scope:dhm_story_officer
+	scope:dhm_story_officer = { var:dhm090_proven_to ?= root }
+	scope:dhm_story_officer = {
+		dhm_v080_story_officer_current_trigger = yes
+		var:dhm081_trusted_by ?= root
+		var:dhm_officer_loyalty >= 60
+		NOT = { has_character_flag = dhm_officer_feuding }
+		NOT = { has_relation_rival = root }
+		OR = {
+			AND = { has_character_flag = dhm_office_steward stewardship >= 12 }
+			AND = { has_character_flag = dhm_office_matchmaker diplomacy >= 12 }
+			AND = { has_character_flag = dhm_office_tutor learning >= 12 }
+			AND = { has_character_flag = dhm_office_chronicler learning >= 12 }
+		}
+	}
+}
+# Pair-specific evidence survives another spouse's settlement. Keep either old
+# one-sided reference until its existing expiry; never rewrite legacy dates.
+dhm_v081_marriage_may_reopen_trigger = {
+	OR = {
+		NOT = { OR = {
+			has_opinion_modifier = { modifier = dhm082_settled_marriage_opinion target = prev }
+			prev = { has_opinion_modifier = { modifier = dhm082_settled_marriage_opinion target = prev } }
+			var:dhm081_settled_spouse ?= prev
+			prev = { var:dhm081_settled_spouse ?= prev }
+		} }
+		opinion = { target = prev value < -20 }
+		stress_level >= 3
+		prev = { stress_level >= 3 }
+	}
+}
+dhm_v081_couple_self_reliant_trigger = {
+	dhm_v080_crisis_union_history_trigger = yes
+	scope:dhm_crisis_relative = { is_alive = yes is_spouse_of = scope:dhm_crisis_spouse is_in_the_same_court_as = root opinion = { target = scope:dhm_crisis_spouse value >= 20 } NOT = { has_trait = vengeful } }
+	scope:dhm_crisis_spouse = { is_alive = yes is_in_the_same_court_as = root opinion = { target = scope:dhm_crisis_relative value >= 20 } NOT = { has_trait = vengeful } }
+}

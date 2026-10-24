@@ -1,0 +1,223 @@
+﻿forge_oath = {
+    # Basic Setup
+    skill = intrigue
+    desc = forge_oath_desc
+    success_desc = "FORGE_OATH_SUCCESS_DESC"
+    icon = icon_scheme_fabricate_hook 
+    illustration = "gfx/interface/illustrations/event_scenes/study.dds"
+    target_type = character
+    is_secret = yes # basic schemes don't use the complex secrecy UI
+    is_basic = yes
+    category = hostile
+    
+    
+    # Parameters
+    speed_per_skill_point = 1.0
+    spymaster_speed_per_skill_point = 0 
+    uses_resistance = yes
+    base_progress_goal = 365 
+    base_maximum_success = 95
+    minimum_success = 5
+    
+    # Core Triggers
+    allow = {
+        is_ai = no
+        age >= 16
+        is_imprisoned = no
+        
+        # Hard Lock: Honorable rulers cannot even see this option
+        NOT = {
+            OR = {
+                has_trait = honest
+                has_trait = just
+                has_trait = compassionate
+            }
+        }
+    }
+    
+    valid = {
+        is_incapable = no
+        scope:target = {
+            is_alive = yes
+            is_landless_adventurer = yes
+            num_of_relation_oathholder = 0
+            OR = {
+                exists = location
+                in_diplomatic_range = scope:owner
+            }
+        }
+    }
+
+    
+
+    odds_prediction = {
+        add = base_odds_prediction_target_is_char_value
+        add = odds_skill_contribution_intrigue_value
+        min = 0
+    }
+
+    # Base Chances
+    base_success_chance = {
+        base = 30 # A fair starting baseline - 30
+
+        modifier = {
+            add = {
+                value = scope:owner.intrigue
+            }
+            desc = SCHEME_YOUR_INTRIGUE
+        }
+        modifier = {
+            add = {
+                value = scope:target.intrigue
+                multiply = -1
+            }
+            desc = SCHEME_TARGET_INTRIGUE
+        }
+
+        modifier = {
+            add = 20
+            scope:owner = {
+                has_trait = deceitful
+            }
+        }
+        modifier = {
+            add = 20
+            scope:owner = {
+                has_trait = ambitious
+            }
+        }
+
+        modifier = {
+            add = 10
+            scope:target = {
+                has_trait = trusting
+            }
+        }
+        modifier = {
+            add = 10
+            scope:target = {
+                has_trait = content
+            }
+        }
+        modifier = {
+            add = 10
+            scope:target = {
+                has_trait = craven
+            }
+        }
+        modifier = {
+            add = -10
+            scope:target = {
+                has_trait = stubborn
+            }
+        }
+        modifier = {
+            add = -20
+            scope:target = {
+                has_trait = ambitious
+            }
+        }
+
+        modifier = {
+            add = -25
+            scope:target = { prestige_level >= 3 } 
+            desc = "Target's prestige level is too high to quietly trap"
+        }
+    }
+
+    # On Actions
+    on_phase_completed = {
+        # Grab our scopes
+        save_scope_as = scheme
+        scheme_target_character = { save_scope_as = target }
+        scheme_owner = { save_scope_as = owner }
+        
+        # Roll our result
+        random = {
+            chance = scope:scheme.scheme_success_chance
+            save_scope_value_as = {
+                name = scheme_successful
+                value = yes
+            }
+        }
+        
+        # How'd we do?
+        scope:target = {
+            if = {
+                limit = { exists = scope:scheme_successful }
+                # The trap is set! Fire the ultimatum event for the Adventurer
+                trigger_event = oath_events.3001 
+            }
+            else = {
+                # The forgery failed
+                trigger_event = oath_events.3002 
+            }
+        }
+
+        scope:scheme = {
+            end_scheme = yes
+        }
+
+        scope:owner = {
+            add_character_flag = {
+                flag = forge_oath_cooldown_perp_flag
+                years = 5
+            }
+        }
+
+        scope:target = {
+            add_character_flag = {
+                flag = forge_oath_cooldown_victim_flag
+                years = 5
+            }
+        }
+
+        # Also add a flag to the recipient.
+    }
+
+    on_invalidated = {
+        scheme_target_character = { save_scope_as = target }
+        scheme_owner = { save_scope_as = owner }
+
+        if = { 
+            limit = { scope:target = { is_alive = no } }
+            scope:owner = {
+                send_interface_toast = {
+                    title = scheme_invalidated_title
+                    left_icon = scope:target
+                    custom_tooltip = scheme_target_is_now_dead
+                }
+            }
+        }
+        else_if = {
+            limit = { scope:target = { NOT = { num_of_relation_oathholder = 0 } } }
+            scope:owner = {
+                send_interface_toast = {
+                    title = scheme_invalidated_title
+                    left_icon = scope:target
+                    custom_tooltip = scheme_target_has_new_oathholder
+                }
+            }
+        }
+        else_if = {
+            limit = { scope:owner = { NOT = { num_of_relation_oathbound = 0 } } }
+            scope:owner = {
+                send_interface_toast = {
+                    title = scheme_invalidated_title
+                    left_icon = scope:target
+                    custom_tooltip = scheme_owner_has_new_oathbound
+                }
+            }
+        }
+        else_if = {
+            limit = { scope:target = { is_landless_adventurer = no } }
+            scope:owner = {
+                send_interface_toast = {
+                    title = scheme_invalidated_title
+                    left_icon = scope:target
+                    custom_tooltip = scheme_target_has_new_oathholder
+                }
+            }
+        }
+    }
+}

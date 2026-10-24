@@ -1,0 +1,9 @@
+﻿# Living Factions - the book of factions. Title scope: its tier, 1 (barony) .. 6 (hegemony).
+lam_gn_title_tier_value = {
+	value = 1
+	if = { limit = { tier >= tier_county } add = 1 }
+	if = { limit = { tier >= tier_duchy } add = 1 }
+	if = { limit = { tier >= tier_kingdom } add = 1 }
+	if = { limit = { tier >= tier_empire } add = 1 }
+	if = { limit = { tier >= tier_hegemony } add = 1 }
+}

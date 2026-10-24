@@ -1,0 +1,577 @@
+﻿lam_ux_cause_office_value = {
+	value = lam_pd_memory_office_value
+	if = {
+		limit = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			has_variable = lam_lf_mem1_month
+			exists = var:lam_lf_mem1_actor
+			exists = var:lam_lf_mem1_victim
+			var:lam_lf_mem1_kind ?= flag:dismissal
+			var:lam_lf_mem1_actor ?= liege
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem2_until
+			var:lam_lf_mem2_until > lam_now_m
+			has_variable = lam_lf_mem2_month
+			exists = var:lam_lf_mem2_actor
+			exists = var:lam_lf_mem2_victim
+			var:lam_lf_mem2_kind ?= flag:dismissal
+			var:lam_lf_mem2_actor ?= liege
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem3_until
+			var:lam_lf_mem3_until > lam_now_m
+			has_variable = lam_lf_mem3_month
+			exists = var:lam_lf_mem3_actor
+			exists = var:lam_lf_mem3_victim
+			var:lam_lf_mem3_kind ?= flag:dismissal
+			var:lam_lf_mem3_actor ?= liege
+		}
+		add = 4
+	}
+}
+lam_ux_cause_wealth_value = {
+	value = lam_pd_memory_wealth_value
+}
+lam_ux_cause_promise_value = {
+	value = lam_pd_memory_promise_value
+	if = {
+		limit = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			has_variable = lam_lf_mem1_month
+			exists = var:lam_lf_mem1_actor
+			exists = var:lam_lf_mem1_victim
+			var:lam_lf_mem1_kind ?= flag:betrayal
+			OR = {
+				var:lam_lf_mem1_actor ?= liege
+				var:lam_lf_mem1_actor = {
+					is_alive = yes
+					has_variable = lam_bloc_lead
+					liege ?= prev.liege
+				}
+			}
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem2_until
+			var:lam_lf_mem2_until > lam_now_m
+			has_variable = lam_lf_mem2_month
+			exists = var:lam_lf_mem2_actor
+			exists = var:lam_lf_mem2_victim
+			var:lam_lf_mem2_kind ?= flag:betrayal
+			OR = {
+				var:lam_lf_mem2_actor ?= liege
+				var:lam_lf_mem2_actor = {
+					is_alive = yes
+					has_variable = lam_bloc_lead
+					liege ?= prev.liege
+				}
+			}
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem3_until
+			var:lam_lf_mem3_until > lam_now_m
+			has_variable = lam_lf_mem3_month
+			exists = var:lam_lf_mem3_actor
+			exists = var:lam_lf_mem3_victim
+			var:lam_lf_mem3_kind ?= flag:betrayal
+			OR = {
+				var:lam_lf_mem3_actor ?= liege
+				var:lam_lf_mem3_actor = {
+					is_alive = yes
+					has_variable = lam_bloc_lead
+					liege ?= prev.liege
+				}
+			}
+		}
+		add = 4
+	}
+}
+lam_ux_cause_repression_value = {
+	value = lam_pd_memory_repression_value
+	if = {
+		limit = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			has_variable = lam_lf_mem1_month
+			exists = var:lam_lf_mem1_actor
+			exists = var:lam_lf_mem1_victim
+			var:lam_lf_mem1_kind ?= flag:arrest
+			var:lam_lf_mem1_actor ?= liege
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			has_variable = lam_lf_mem1_month
+			exists = var:lam_lf_mem1_actor
+			exists = var:lam_lf_mem1_victim
+			var:lam_lf_mem1_kind ?= flag:revocation
+			var:lam_lf_mem1_actor ?= liege
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem2_until
+			var:lam_lf_mem2_until > lam_now_m
+			has_variable = lam_lf_mem2_month
+			exists = var:lam_lf_mem2_actor
+			exists = var:lam_lf_mem2_victim
+			var:lam_lf_mem2_kind ?= flag:arrest
+			var:lam_lf_mem2_actor ?= liege
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem2_until
+			var:lam_lf_mem2_until > lam_now_m
+			has_variable = lam_lf_mem2_month
+			exists = var:lam_lf_mem2_actor
+			exists = var:lam_lf_mem2_victim
+			var:lam_lf_mem2_kind ?= flag:revocation
+			var:lam_lf_mem2_actor ?= liege
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem3_until
+			var:lam_lf_mem3_until > lam_now_m
+			has_variable = lam_lf_mem3_month
+			exists = var:lam_lf_mem3_actor
+			exists = var:lam_lf_mem3_victim
+			var:lam_lf_mem3_kind ?= flag:arrest
+			var:lam_lf_mem3_actor ?= liege
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem3_until
+			var:lam_lf_mem3_until > lam_now_m
+			has_variable = lam_lf_mem3_month
+			exists = var:lam_lf_mem3_actor
+			exists = var:lam_lf_mem3_victim
+			var:lam_lf_mem3_kind ?= flag:revocation
+			var:lam_lf_mem3_actor ?= liege
+		}
+		add = 4
+	}
+}
+lam_ux_cause_succession_value = {
+	value = lam_pd_memory_succession_value
+}
+lam_ux_cause_policy_value = {
+	value = lam_pd_memory_policy_value
+	if = {
+		limit = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			has_variable = lam_lf_mem1_month
+			exists = var:lam_lf_mem1_actor
+			exists = var:lam_lf_mem1_victim
+			var:lam_lf_mem1_kind ?= flag:refused
+			var:lam_lf_mem1_actor ?= liege
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem2_until
+			var:lam_lf_mem2_until > lam_now_m
+			has_variable = lam_lf_mem2_month
+			exists = var:lam_lf_mem2_actor
+			exists = var:lam_lf_mem2_victim
+			var:lam_lf_mem2_kind ?= flag:refused
+			var:lam_lf_mem2_actor ?= liege
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem3_until
+			var:lam_lf_mem3_until > lam_now_m
+			has_variable = lam_lf_mem3_month
+			exists = var:lam_lf_mem3_actor
+			exists = var:lam_lf_mem3_victim
+			var:lam_lf_mem3_kind ?= flag:refused
+			var:lam_lf_mem3_actor ?= liege
+		}
+		add = 4
+	}
+}
+lam_ux_cause_legacy_value = {
+	value = lam_pd_memory_legacy_value
+}
+lam_ux_cause_office_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_ux_cause_office_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_ux_cause_wealth_value > lam_ux_cause_office_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_promise_value > lam_ux_cause_office_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_repression_value > lam_ux_cause_office_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_succession_value > lam_ux_cause_office_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_policy_value > lam_ux_cause_office_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_legacy_value > lam_ux_cause_office_value
+			}
+			add = 1
+		}
+	}
+}
+lam_ux_cause_wealth_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_ux_cause_wealth_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_ux_cause_office_value >= lam_ux_cause_wealth_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_promise_value > lam_ux_cause_wealth_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_repression_value > lam_ux_cause_wealth_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_succession_value > lam_ux_cause_wealth_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_policy_value > lam_ux_cause_wealth_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_legacy_value > lam_ux_cause_wealth_value
+			}
+			add = 1
+		}
+	}
+}
+lam_ux_cause_promise_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_ux_cause_promise_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_ux_cause_office_value >= lam_ux_cause_promise_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_wealth_value >= lam_ux_cause_promise_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_repression_value > lam_ux_cause_promise_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_succession_value > lam_ux_cause_promise_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_policy_value > lam_ux_cause_promise_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_legacy_value > lam_ux_cause_promise_value
+			}
+			add = 1
+		}
+	}
+}
+lam_ux_cause_repression_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_ux_cause_repression_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_ux_cause_office_value >= lam_ux_cause_repression_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_wealth_value >= lam_ux_cause_repression_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_promise_value >= lam_ux_cause_repression_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_succession_value > lam_ux_cause_repression_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_policy_value > lam_ux_cause_repression_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_legacy_value > lam_ux_cause_repression_value
+			}
+			add = 1
+		}
+	}
+}
+lam_ux_cause_succession_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_ux_cause_succession_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_ux_cause_office_value >= lam_ux_cause_succession_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_wealth_value >= lam_ux_cause_succession_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_promise_value >= lam_ux_cause_succession_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_repression_value >= lam_ux_cause_succession_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_policy_value > lam_ux_cause_succession_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_legacy_value > lam_ux_cause_succession_value
+			}
+			add = 1
+		}
+	}
+}
+lam_ux_cause_policy_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_ux_cause_policy_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_ux_cause_office_value >= lam_ux_cause_policy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_wealth_value >= lam_ux_cause_policy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_promise_value >= lam_ux_cause_policy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_repression_value >= lam_ux_cause_policy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_succession_value >= lam_ux_cause_policy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_legacy_value > lam_ux_cause_policy_value
+			}
+			add = 1
+		}
+	}
+}
+lam_ux_cause_legacy_rank_value = {
+	value = 0
+	if = {
+		limit = {
+			lam_ux_cause_legacy_value > 0
+		}
+		value = 1
+		if = {
+			limit = {
+				lam_ux_cause_office_value >= lam_ux_cause_legacy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_wealth_value >= lam_ux_cause_legacy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_promise_value >= lam_ux_cause_legacy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_repression_value >= lam_ux_cause_legacy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_succession_value >= lam_ux_cause_legacy_value
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				lam_ux_cause_policy_value >= lam_ux_cause_legacy_value
+			}
+			add = 1
+		}
+	}
+}
+lam_ux_incident1_age_value = {
+	value = lam_now_m
+	if = {
+		limit = {
+			has_variable = lam_lf_mem1_month
+		}
+		subtract = var:lam_lf_mem1_month
+	}
+	min = 0
+}
+lam_ux_incident2_age_value = {
+	value = lam_now_m
+	if = {
+		limit = {
+			has_variable = lam_lf_mem2_month
+		}
+		subtract = var:lam_lf_mem2_month
+	}
+	min = 0
+}
+lam_ux_incident3_age_value = {
+	value = lam_now_m
+	if = {
+		limit = {
+			has_variable = lam_lf_mem3_month
+		}
+		subtract = var:lam_lf_mem3_month
+	}
+	min = 0
+}
+lam_ux_relief_age_value = {
+	value = lam_now_m
+	if = {
+		limit = {
+			has_variable = lam_ux_relief_month
+		}
+		subtract = var:lam_ux_relief_month
+	}
+	min = 0
+}

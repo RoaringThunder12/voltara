@@ -1,0 +1,41 @@
+﻿# Current scope = proposal subject; saved manager and candidate already exist.
+# Timed ownership expires alongside the old proposal-pending flag.
+dhm_v074_mark_proposal_effect = {
+ scope:dhm_manager = {
+  # Native previews do not commit variable writes. Never read a variable
+  # created earlier in the same branch when it was absent on entry.
+  if = {
+   limit = { has_variable = dhm074_next_proposal_id }
+   change_variable = { name = dhm074_next_proposal_id add = 1 }
+   save_scope_value_as = { name = dhm074_proposal_id value = var:dhm074_next_proposal_id }
+  }
+  else = {
+   set_variable = { name = dhm074_next_proposal_id value = 1 }
+   save_scope_value_as = { name = dhm074_proposal_id value = 1 }
+  }
+ }
+ set_variable = { name = dhm074_proposal_id value = scope:dhm074_proposal_id months = 3 }
+ set_variable = { name = dhm074_proposal_candidate value = scope:dhm_marriage_candidate months = 3 }
+ set_variable = { name = dhm074_proposal_manager value = scope:dhm_manager months = 3 }
+ add_character_flag = { flag = dhm_matchmaking_proposal_pending months = 3 }
+ scope:dhm_manager = {
+  add_character_flag = { flag = dhm_v080_auto_assisted_proposal_active months = 3 }
+  add_character_flag = dhm_v080_visible_story_scheduled_this_pass
+ }
+}
+
+# Safe from any current character scope. Never clear a newer window's pending state.
+dhm_v074_release_proposal_effect = {
+ if = {
+  limit = { dhm_v074_proposal_owned_trigger = yes }
+  scope:dhm_manager = {
+   remove_character_flag = dhm_v080_auto_assisted_proposal_active
+  }
+  scope:dhm_marriage_subject = {
+   remove_character_flag = dhm_matchmaking_proposal_pending
+   remove_variable = dhm074_proposal_id
+   remove_variable = dhm074_proposal_candidate
+   remove_variable = dhm074_proposal_manager
+  }
+ }
+}

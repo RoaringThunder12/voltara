@@ -1,0 +1,89 @@
+﻿kCAFG_complete_task_debug_interaction = {
+	category = interaction_debug_main
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+	icon = council
+
+	is_shown = {
+		debug_only = yes
+		scope:recipient = {
+			is_councillor = yes
+            OR = {
+				is_performing_council_task = task_conversion
+				is_performing_council_task = task_promote_culture
+
+				is_performing_council_task = task_integrate_title
+				is_performing_council_task = task_increase_control
+				is_performing_council_task = task_find_secrets
+				is_performing_council_task = task_develop_county
+				is_performing_council_task = task_convince_dejure
+            }
+		}
+	}
+
+	on_accept = {
+        scope:recipient = {
+            finish_council_task = yes
+        }
+	}
+
+	ai_accept = {
+		base = 100
+	}
+	
+	auto_accept = yes
+}
+
+kCAFG_mark_for_debug = {
+	category = interaction_debug_main
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+	interface_priority = 1000
+
+	is_shown = {
+		debug_only = yes
+		NAND = {
+			exists = global_var:kCAFG_debug_marked_char
+			global_var:kCAFG_debug_marked_char = scope:recipient
+		}
+	}
+
+	on_accept = {
+		custom_tooltip = {
+			text = kCAFG_mark_for_debug_desc
+			set_global_variable = {
+				name = kCAFG_debug_marked_char
+				value = scope:recipient
+			}
+		}
+	}
+
+	ai_accept = {
+		base = 100
+	}
+	
+	auto_accept = yes
+}
+
+kCAFG_unmark_for_debug = {
+	category = interaction_debug_main
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+	interface_priority = 1000
+
+	is_shown = {
+		debug_only = yes
+		exists = global_var:kCAFG_debug_marked_char
+		global_var:kCAFG_debug_marked_char = scope:recipient
+	}
+
+	on_accept = {
+        remove_global_variable = kCAFG_debug_marked_char
+	}
+
+	ai_accept = {
+		base = 100
+	}
+	
+	auto_accept = yes
+}

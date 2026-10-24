@@ -3,7 +3,9 @@
  war_name = voltara_slave_liberation_war_name cb_name = voltara_slave_liberation_war
  allowed_for_character = { has_character_flag = voltara_cassian_slave_rebel }
  allowed_against_character = { has_title = title:h_voltara_severos }
- valid_to_start = { scope:attacker = { has_character_flag = voltara_cassian_slave_rebel } scope:defender = { has_title = title:h_voltara_severos } }
+ valid_to_start = {
+ voltara_keeper_war_permitted = yes
+ scope:attacker = { has_character_flag = voltara_cassian_slave_rebel } scope:defender = { has_title = title:h_voltara_severos } }
  should_invalidate = { OR = { scope:attacker = { is_alive = no } scope:defender = { is_alive = no } } }
  on_primary_attacker_death = invalidate on_primary_defender_death = inherit
  attacker_capital_gives_war_score = no full_occupation_by_defender_gives_victory = no

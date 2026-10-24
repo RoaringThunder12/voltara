@@ -1,0 +1,123 @@
+﻿
+window = {
+ name = "lam_pb_window" parentanchor = center layer = top size = { 860 900 } movable = yes
+ visible = "[And( GetPlayer.IsValid, GetPlayer.MakeScope.Var('lam_pb_open').IsSet )]"
+ using = Window_Background using = Window_Decoration
+ vbox = {
+  using = Window_Margins spacing = 10
+  header_pattern = {
+   layoutpolicy_horizontal = expanding
+   blockoverride "header_text" { text = "lam_pb_fronts_title" }
+   blockoverride "button_close" { onclick = "[GetScriptedGui('lam_pb_gui_close').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+  }
+  text_multi = { text = "lam_pb_fronts_hint" max_width = 725 autoresize = yes }
+hbox = { spacing = 20
+hbox = { spacing = 8 visible = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('vip_crown_leader').IsSet]"
+ datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('vip_crown_leader').Char]"
+ portrait_button = { size = { 58 64 } using = portrait_base
+ portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+ mask = "gfx/portraits/portrait_mask_head_small.dds" effectname = "NoHighlight"
+ onclick = "[DefaultOnCharacterClick(Character.GetID)]" tooltip = "[Character.GetName]"
+ onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]" }
+ vbox = { text_single = { text = "vip_crown_support" } text_single = { text = "[Character.GetTitledFirstName]" max_width = 290 } }
+}
+hbox = { spacing = 8 visible = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('vip_challenger').IsSet]"
+ datacontext = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.Var('vip_challenger').Char]"
+ portrait_button = { size = { 58 64 } using = portrait_base
+ portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+ mask = "gfx/portraits/portrait_mask_head_small.dds" effectname = "NoHighlight"
+ onclick = "[DefaultOnCharacterClick(Character.GetID)]" tooltip = "[Character.GetName]"
+ onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]" }
+ vbox = { text_single = { text = "vip_octavian_support" } text_single = { text = "[Character.GetTitledFirstName]" max_width = 290 } }
+}
+}
+  text_multi = { text = "vip_public_support_hint" max_width = 760 autoresize = yes }
+  scrollbox = { size = { 780 390 } layoutpolicy_horizontal = expanding
+   blockoverride "scrollbox_content" { vbox = { spacing = 8 layoutpolicy_horizontal = expanding
+text_single = { text = "vip_crown_support" }
+text_single = { text = "vip_vip_crown_strength_label" }
+vbox = { spacing = 2 layoutpolicy_horizontal = expanding datamodel = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.GetList('vip_crown_supporters')]"
+ item = { widget = { size = { 750 44 } datacontext = "[Scope.Char]"
+ portrait_button = { size = { 34 40 } using = portrait_base
+ portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+ mask = "gfx/portraits/portrait_mask_head_small.dds" effectname = "NoHighlight"
+ onclick = "[DefaultOnCharacterClick(Character.GetID)]" tooltip = "[Character.GetName]"
+ onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]" }
+ text_single = { position = { 40 10 } size = { 690 24 } text = "[Character.GetTitledFirstName]" max_width = 690 fontsize = 15 fontsize_min = 11 align = left|nobaseline }
+ } } }
+text_single = { text = "vip_octavian_support" }
+text_single = { text = "vip_vip_octavian_strength_label" }
+vbox = { spacing = 2 layoutpolicy_horizontal = expanding datamodel = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.GetList('vip_octavian_supporters')]"
+ item = { widget = { size = { 750 44 } datacontext = "[Scope.Char]"
+ portrait_button = { size = { 34 40 } using = portrait_base
+ portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+ mask = "gfx/portraits/portrait_mask_head_small.dds" effectname = "NoHighlight"
+ onclick = "[DefaultOnCharacterClick(Character.GetID)]" tooltip = "[Character.GetName]"
+ onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]" }
+ text_single = { position = { 40 10 } size = { 690 24 } text = "[Character.GetTitledFirstName]" max_width = 690 fontsize = 15 fontsize_min = 11 align = left|nobaseline }
+ } } }
+text_single = { text = "vip_uncommitted_title" }
+vbox = { spacing = 2 layoutpolicy_horizontal = expanding datamodel = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.GetList('vip_uncommitted')]"
+ item = { widget = { size = { 750 44 } datacontext = "[Scope.Char]"
+ portrait_button = { size = { 34 40 } using = portrait_base
+ portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+ mask = "gfx/portraits/portrait_mask_head_small.dds" effectname = "NoHighlight"
+ onclick = "[DefaultOnCharacterClick(Character.GetID)]" tooltip = "[Character.GetName]"
+ onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]" }
+ text_single = { position = { 40 10 } size = { 690 24 } text = "[Character.GetTitledFirstName]" max_width = 690 fontsize = 15 fontsize_min = 11 align = left|nobaseline }
+ } } }
+} } }
+ hbox = { spacing = 6
+button_standard = { size = { 245 32 } text = "vip_pledge_1"
+ visible = "[GetScriptedGui('vip_pledge_1').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_pledge_1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_pledge_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 245 32 } text = "vip_pledge_2"
+ visible = "[GetScriptedGui('vip_pledge_2').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_pledge_2').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_pledge_2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+button_standard = { size = { 245 32 } text = "vip_pledge_0"
+ visible = "[GetScriptedGui('vip_pledge_0').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ enabled = "[GetScriptedGui('vip_pledge_0').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+ onclick = "[GetScriptedGui('vip_pledge_0').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]" }
+}
+  scrollbox = {
+   layoutpolicy_horizontal = expanding layoutpolicy_vertical = expanding
+   blockoverride "scrollbox_content" {
+    vbox = {
+     spacing = 12 layoutpolicy_horizontal = expanding
+     datamodel = "[GetPlayer.MakeScope.Var('lam_fac_view').Char.MakeScope.GetList('lam_pb_fronts')]"
+     item = {
+      vbox = {
+       datacontext = "[Scope.Char]" spacing = 5 layoutpolicy_horizontal = expanding margin = { 10 8 }
+       background = { using = Background_Area }
+       text_single = { text = "lam_pb_front_line" max_width = 680 fontsize = 20 }
+       text_single = { text = "lam_pb_front_status" max_width = 680 }
+       text_single = { text = "lam_pb_front_candidate" max_width = 680 visible = "[Character.MakeScope.Var('lam_pb_front_candidate').IsSet]" }
+       text_single = { text = "lam_pb_front_power" max_width = 680 visible = "[Character.MakeScope.Var('lam_pb_front').IsSet]" }
+       fixedgridbox = { addcolumn = 230 addrow = 28
+        datamodel = "[Character.MakeScope.GetList('lam_pb_front_members')]" datamodel_wrap = 3
+        item = { widget = { size = { 230 28 } datacontext = "[Scope.Char]" text_single = { size = { 215 26 } text = "[Character.GetTitledFirstName]" max_width = 215 fontsize = 15 fontsize_min = 11 align = left|nobaseline } } }
+       }
+       hbox = {
+        spacing = 10
+        button_standard = {
+         size = { 170 30 } text = "lam_pb_join_button" tooltip = "lam_pb_join_button_tt"
+         visible = "[GetScriptedGui('lam_pb_gui_join').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('target',Character.MakeScope).End )]"
+         enabled = "[GetScriptedGui('lam_pb_gui_join').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('target',Character.MakeScope).End )]"
+         onclick = "[GetScriptedGui('lam_pb_gui_join').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('target',Character.MakeScope).End )]"
+        }
+        button_standard = {
+         size = { 170 30 } text = "lam_pb_leave_button"
+         visible = "[GetScriptedGui('lam_pb_gui_leave').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('target',Character.MakeScope).End )]"
+         enabled = "[GetScriptedGui('lam_pb_gui_leave').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('target',Character.MakeScope).End )]"
+         onclick = "[GetScriptedGui('lam_pb_gui_leave').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope('target',Character.MakeScope).End )]"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

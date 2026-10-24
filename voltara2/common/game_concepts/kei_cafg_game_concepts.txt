@@ -1,0 +1,61 @@
+﻿majority_culture = {
+	parent = culture
+	alias = { majority_cultures }
+	texture = "gfx/interface/icons/icon_culture.dds"
+}
+
+minority_culture = {
+	parent = culture
+	alias = { minority_cultures }
+	texture = "gfx/interface/icons/icon_culture.dds"
+}
+
+culture_tension = {
+	parent = culture
+	texture = "gfx/interface/icons/portraits/faction_member.dds"
+}
+
+culture_tension_baseline = {
+	parent = culture_tension
+	texture = "gfx/interface/icons/portraits/faction_member.dds"
+}
+
+majority_rite = {
+	parent = rite
+	alias = { majority_rites }
+	texture = "gfx/interface/icons/icon_rite.dds"
+	#texture = "gfx/interface/icons/event_types/type_faith.dds"
+}
+
+minority_rite = {
+	parent = rite
+	alias = { minority_rites }
+	texture = "gfx/interface/icons/icon_rite.dds"
+}
+
+rite_tension = {
+	parent = rite
+	texture = "gfx/interface/icons/portraits/faction_member.dds"
+}
+
+rite_tension_baseline = {
+	parent = rite_tension
+	texture = "gfx/interface/icons/portraits/faction_member.dds"
+}
+
+## REMOVED: province is now an administrative concept
+# province = {
+# 	alias = { provinces }
+# }
+
+culture_tolerance_law = {
+	alias = { culture_tolerance_laws }
+	texture = "gfx/interface/icons/message_feed/law.dds"
+	parent = law
+}
+
+rite_tolerance_law = {
+	alias = { rite_tolerance_laws }
+	texture = "gfx/interface/icons/message_feed/law.dds"
+	parent = law
+}

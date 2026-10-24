@@ -1,0 +1,87 @@
+﻿lam_lf_head_pulse_effect = {
+	lam_lf_repair_incidents_effect = yes
+	lam_lf_caucus_pulse_effect = yes
+	lam_lf_caucus_challenge_effect = yes
+	lam_lf_government_pulse_effect = yes
+	lam_lf_succession_pulse_effect = yes
+	if = {
+		limit = {
+			var:lam_pd_pact_kind ?= flag:exchange
+			var:lam_lf_exchange_role ?= flag:supporter
+		}
+		var:lam_pd_pact_partner ?= {
+			lam_lf_exchange_pulse_effect = yes
+		}
+	}
+	else = {
+		lam_lf_exchange_pulse_effect = yes
+	}
+	lam_ux_observe_effect = yes
+	lam_ev_pulse_effect = yes
+}
+lam_lf_identity_clear_effect = {
+	lam_lf_caucus_clear_effect = yes
+	lam_lf_government_clear_effect = yes
+	lam_lf_incidents_clear_effect = yes
+	if = {
+		limit = {
+			var:lam_pd_pact_kind ?= flag:exchange
+		}
+		lam_pd_pact_clear_effect = yes
+	}
+	lam_lf_exchange_clear_local_effect = yes
+	remove_variable = lam_lf_preparations
+	remove_variable = lam_lf_setbacks
+	remove_variable = lam_lf_setback_lord
+	remove_variable = lam_lf_setback_until
+	remove_variable = lam_lf_succ_next
+	remove_variable = lam_lf_contested_from
+	remove_variable = lam_lf_contested_rival
+	remove_variable = lam_lf_gov_news_cd
+	remove_variable = lam_lf_caucus_cd
+	lam_ux_relief_clear_effect = yes
+	lam_ux_report_clear_effect = yes
+	lam_ev_clear_head_effect = yes
+}
+lam_lf_identity_pass_effect = {
+	lam_lf_incidents_pass_effect = {
+		FROM = $FROM$
+		TO = $TO$
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				var:lam_pd_pact_kind ?= flag:exchange
+			}
+			lam_pd_pact_clear_effect = yes
+		}
+		lam_lf_caucus_clear_effect = yes
+		lam_lf_government_clear_effect = yes
+		every_in_list = {
+			variable = lam_fac_members
+			limit = {
+				var:lam_lf_reward_head ?= $FROM$
+			}
+			set_variable = {
+				name = lam_lf_reward_head
+				value = $TO$
+			}
+		}
+	}
+	$TO$ = {
+		lam_lf_caucus_clear_effect = yes
+		lam_lf_government_clear_effect = yes
+	}
+	lam_lf_succession_result_effect = {
+		FROM = $FROM$
+		TO = $TO$
+	}
+	lam_ux_relief_pass_effect = {
+		FROM = $FROM$
+		TO = $TO$
+	}
+	lam_ux_report_transfer_clear_effect = {
+		FROM = $FROM$
+		TO = $TO$
+	}
+}

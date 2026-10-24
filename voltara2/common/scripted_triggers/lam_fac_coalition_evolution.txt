@@ -1,0 +1,491 @@
+﻿lam_cu_office_evaluable_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+		}
+		has_variable = lam_fac_count
+		has_variable = lam_cr_share
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_cu_accept_position_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+			exists = $OTHER$
+		}
+		trigger_if = {
+			limit = {
+				$OTHER$ = {
+					is_alive = yes
+				}
+			}
+			trigger_if = {
+				limit = {
+					$OTHER$ = {
+						var:lam_bp_position_topic ?= flag:heir
+					}
+				}
+				trigger_if = {
+					limit = {
+						exists = $OTHER$.var:lam_bp_position_alternative
+					}
+					trigger_if = {
+						limit = {
+							$OTHER$.var:lam_bp_position_alternative = {
+								is_alive = yes
+							}
+						}
+						opinion = {
+							target = $OTHER$.var:lam_bp_position_alternative
+							value >= 0
+						}
+						NOT = {
+							has_relation_rival = $OTHER$.var:lam_bp_position_alternative
+						}
+						trigger_if = {
+							limit = {
+								exists = $OTHER$.var:lam_bp_position_target
+							}
+							NOT = {
+								var:lam_er_accepted_heir ?= $OTHER$.var:lam_bp_position_target
+							}
+						}
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_cu_pair_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+			exists = $OTHER$
+		}
+		trigger_if = {
+			limit = {
+				$OTHER$ = {
+					is_alive = yes
+				}
+			}
+			trigger_if = {
+				limit = {
+					has_variable = lam_bp_position_head
+					has_variable = lam_bp_position_lord
+					has_variable = lam_bp_position_topic
+					has_variable = lam_bp_position_side
+					$OTHER$ = {
+						has_variable = lam_bp_position_head
+						has_variable = lam_bp_position_lord
+						has_variable = lam_bp_position_topic
+						has_variable = lam_bp_position_side
+					}
+				}
+				var:lam_bp_position_head = $OTHER$.var:lam_bp_position_head
+				var:lam_bp_position_lord = $OTHER$.var:lam_bp_position_lord
+				OR = {
+					lam_ev_same_wing_trigger = {
+						OTHER = $OTHER$
+					}
+					AND = {
+						NOT = {
+							var:lam_bp_position_topic = $OTHER$.var:lam_bp_position_topic
+						}
+						OR = {
+							var:lam_bp_position_topic ?= flag:heir
+							var:lam_bp_position_side ?= flag:fair
+							var:lam_bp_position_side ?= flag:pressure
+							var:lam_bp_position_side ?= flag:restraint
+						}
+						$OTHER$ = {
+							OR = {
+								var:lam_bp_position_topic ?= flag:heir
+								var:lam_bp_position_side ?= flag:fair
+								var:lam_bp_position_side ?= flag:pressure
+								var:lam_bp_position_side ?= flag:restraint
+							}
+						}
+						NOT = {
+							AND = {
+								var:lam_bp_position_side ?= flag:pressure
+								$OTHER$ = {
+									var:lam_bp_position_side ?= flag:restraint
+								}
+							}
+						}
+						NOT = {
+							AND = {
+								var:lam_bp_position_side ?= flag:restraint
+								$OTHER$ = {
+									var:lam_bp_position_side ?= flag:pressure
+								}
+							}
+						}
+						lam_cu_accept_position_trigger = {
+							OTHER = $OTHER$
+						}
+						$OTHER$ = {
+							lam_cu_accept_position_trigger = {
+								OTHER = prev
+							}
+						}
+					}
+				}
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_cu_group_trigger = {
+	trigger_if = {
+		limit = {
+			lam_ev_position_trigger = yes
+			exists = scope:lam_vt_lead
+		}
+		trigger_if = {
+			limit = {
+				scope:lam_vt_lead = {
+					lam_ev_position_trigger = yes
+				}
+			}
+			lam_cu_pair_trigger = {
+				OTHER = scope:lam_vt_lead
+			}
+			trigger_if = {
+				limit = {
+					NOT = {
+						lam_ev_same_wing_trigger = {
+							OTHER = scope:lam_vt_lead
+						}
+					}
+				}
+				opinion = {
+					target = scope:lam_ev_head
+					value <= 40
+				}
+				scope:lam_vt_lead = {
+					opinion = {
+						target = scope:lam_ev_head
+						value <= 40
+					}
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_cu_offer_alignment_trigger = {
+	trigger_if = {
+		limit = {
+			exists = scope:lam_cu_cause
+		}
+		lam_cu_pair_trigger = {
+			OTHER = scope:lam_cu_cause
+		}
+	}
+	trigger_else = {
+		lam_ev_same_wing_trigger = {
+			OTHER = $OTHER$
+		}
+	}
+}
+lam_cu_mature_party_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+		}
+		trigger_if = {
+			limit = {
+				has_variable = lam_fac_age
+				exists = liege
+			}
+			has_variable = lam_bloc_lead
+			NOT = {
+				has_variable = lam_fac_disband
+			}
+			NOT = {
+				has_variable = lam_fac_hide
+			}
+			var:lam_fac_age >= 5
+			trigger_if = {
+				limit = {
+					has_variable = lam_fac_count
+				}
+				var:lam_fac_count >= 4
+			}
+			trigger_else = {
+				any_in_list = {
+					variable = lam_fac_prev_members
+					count >= 3
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						var:lam_bloc ?= prev
+						NOT = {
+							this = prev
+						}
+						OR = {
+							liege ?= prev.liege
+							is_courtier_of = prev.liege
+						}
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_cu_independent_supporter_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+			exists = scope:lam_bloc_lord
+			exists = scope:lam_new_lead
+		}
+		is_ai = yes
+		is_adult = yes
+		is_imprisoned = no
+		NOT = {
+			this = scope:lam_new_lead
+		}
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		NOT = {
+			has_variable = lam_fac_unbound
+		}
+		OR = {
+			liege ?= scope:lam_bloc_lord
+			is_courtier_of = scope:lam_bloc_lord
+		}
+		lam_ev_not_affiliated_trigger = yes
+		trigger_if = {
+			limit = {
+				has_variable = lam_fac_engage
+			}
+			var:lam_fac_engage >= lam_tune_found_follow_engage
+		}
+		trigger_else = {
+			always = no
+		}
+		OR = {
+			opinion = {
+				target = scope:lam_new_lead
+				value >= lam_pd_found_support_threshold_value
+			}
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_new_lead.house
+					}
+					house ?= scope:lam_new_lead.house
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			has_relation_friend = scope:lam_new_lead
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_cu_root_open_trigger = {
+	trigger_if = {
+		limit = {
+			exists = scope:lam_bloc_lord
+			exists = scope:lam_new_lead
+		}
+		trigger_if = {
+			limit = {
+				scope:lam_bloc_lord = {
+					is_alive = yes
+				}
+				scope:lam_new_lead = {
+					is_alive = yes
+				}
+			}
+			trigger_if = {
+				limit = {
+					scope:lam_bloc_lord = {
+						lam_ev_established_court_trigger = yes
+					}
+				}
+				scope:lam_bloc_lord = {
+					any_in_list = {
+						variable = lam_fac_pool
+						count >= 3
+						lam_cu_independent_supporter_trigger = yes
+					}
+					NOT = {
+						any_in_list = {
+							variable = lam_bloc_leads
+							trigger_if = {
+								limit = {
+									lam_cu_mature_party_trigger = yes
+								}
+								lam_fac_cause_of_trigger = {
+									WHO = scope:lam_new_lead
+								}
+								scope:lam_new_lead = {
+									opinion = {
+										target = prev
+										value >= 0
+									}
+									NOT = {
+										has_relation_rival = prev
+									}
+								}
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+	lam_cs_root_ready_trigger = yes
+}
+lam_cu_internal_home_trigger = {
+	trigger_if = {
+		limit = {
+			lam_cu_mature_party_trigger = yes
+			exists = scope:lam_new_lead
+		}
+		trigger_if = {
+			limit = {
+				scope:lam_new_lead = {
+					is_alive = yes
+				}
+			}
+			lam_fac_cause_of_trigger = {
+				WHO = scope:lam_new_lead
+			}
+			scope:lam_new_lead = {
+				is_ai = yes
+				NOT = {
+					has_variable = lam_fac_unbound
+				}
+				opinion = {
+					target = prev
+					value > -20
+				}
+				NOT = {
+					has_relation_rival = prev
+				}
+			}
+			OR = {
+				any_in_list = {
+					variable = lam_fac_members
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						var:lam_bloc ?= prev
+						scope:lam_new_lead = {
+							OR = {
+								has_relation_friend = prev
+								has_relation_best_friend = prev
+								AND = {
+									trigger_if = {
+										limit = {
+											exists = prev.house
+										}
+										house ?= prev.house
+									}
+									trigger_else = {
+										always = no
+									}
+								}
+							}
+						}
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				any_in_list = {
+					variable = lam_fac_prev_members
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						var:lam_bloc ?= prev
+						scope:lam_new_lead = {
+							OR = {
+								has_relation_friend = prev
+								has_relation_best_friend = prev
+								AND = {
+									trigger_if = {
+										limit = {
+											exists = prev.house
+										}
+										house ?= prev.house
+									}
+									trigger_else = {
+										always = no
+									}
+								}
+							}
+						}
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}

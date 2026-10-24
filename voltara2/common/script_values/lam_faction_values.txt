@@ -1,0 +1,619 @@
+﻿# Love & Marriage - living factions: who a faction quietly wants on the throne next.
+# This = a candidate (one of the lord's children, or the primary heir).
+# scope:lam_fh_c = this, scope:lam_fh_lead = the faction's leader, scope:lam_fh_lord = the lord.
+lam_fac_heir_score_value = {
+	value = 0
+	# What the leader thinks of them.
+	add = {
+		value = { scope:lam_fh_lead = { value = "opinion(scope:lam_fh_c)" } }
+		multiply = 0.5
+	}
+	# The lawful heir carries the weight of the law - less so for those who want the crown humbled.
+	if = {
+		limit = { exists = scope:lam_fh_lord.primary_heir this = scope:lam_fh_lord.primary_heir }
+		if = {
+			limit = { scope:lam_fh_lead = { has_variable = lam_gui_att var:lam_gui_att <= -15 } }
+			add = 5
+		}
+		else = { add = 25 }
+		if = {
+			limit = {
+				OR = {
+					scope:lam_fh_lead.var:lam_fac_agenda ?= flag:loyalist
+					scope:lam_fh_lead.var:lam_fac_agenda ?= flag:dynastic
+				}
+			}
+			add = 15
+		}
+	}
+	# Blood: a child of their own house's daughter (or son) is their child too.
+	if = {
+		limit = {
+			any_parent = {
+				NOT = { this = scope:lam_fh_lord }
+				OR = {
+					this = scope:lam_fh_lead
+					is_close_family_of = scope:lam_fh_lead
+					AND = {
+						exists = house
+						exists = scope:lam_fh_lead.house
+						house = scope:lam_fh_lead.house
+					}
+				}
+			}
+		}
+		add = 35
+	}
+	# Married or betrothed into their house.
+	if = {
+		limit = {
+			exists = scope:lam_fh_lead.house
+			OR = {
+				any_spouse = { exists = house house = scope:lam_fh_lead.house }
+				betrothed ?= { exists = house house = scope:lam_fh_lead.house }
+			}
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			OR = {
+				has_relation_friend = scope:lam_fh_lead
+				has_relation_best_friend = scope:lam_fh_lead
+			}
+		}
+		add = 25
+	}
+	if = {
+		limit = {
+			OR = {
+				has_relation_rival = scope:lam_fh_lead
+				has_relation_nemesis = scope:lam_fh_lead
+			}
+		}
+		add = -50
+	}
+	if = {
+		limit = { faith = scope:lam_fh_lead.faith }
+		add = 10
+	}
+	else = { add = -10 }
+	if = {
+		limit = { culture = scope:lam_fh_lead.culture }
+		add = 5
+		if = {
+			limit = { scope:lam_fh_lead.var:lam_fac_agenda ?= flag:minority }
+			add = 15
+		}
+	}
+	if = {
+		limit = { age >= lam_tune_heir_adult_age }
+		add = 10
+	}
+	else_if = {
+		limit = { age < lam_tune_heir_child_age }
+		add = -10
+	}
+	if = {
+		limit = { has_trait = incapable }
+		add = -40
+	}
+	if = {
+		limit = { has_trait = ill }
+		add = -10
+	}
+	# What kind of ruler they would make, by the faction's own lights.
+	if = {
+		limit = {
+			OR = {
+				scope:lam_fh_lead.var:lam_fac_agenda ?= flag:glory_hound
+				scope:lam_fh_lead.var:lam_fac_agenda ?= flag:belligerent
+			}
+		}
+		add = {
+			value = martial
+			multiply = 1.5
+		}
+		if = { limit = { has_trait = brave } add = 10 }
+		if = { limit = { has_trait = craven } add = -15 }
+	}
+	else_if = {
+		limit = { scope:lam_fh_lead.var:lam_fac_agenda ?= flag:zealot }
+		add = learning
+		if = { limit = { has_trait = zealous } add = 15 }
+		if = { limit = { has_trait = cynical } add = -15 }
+	}
+	else_if = {
+		limit = { scope:lam_fh_lead.var:lam_fac_agenda ?= flag:courtly }
+		add = {
+			value = diplomacy
+			multiply = 1.5
+		}
+	}
+	else_if = {
+		limit = {
+			OR = {
+				scope:lam_fh_lead.var:lam_fac_agenda ?= flag:parochial
+				scope:lam_fh_lead.var:lam_fac_agenda ?= flag:barons_and_minor_landholders
+			}
+		}
+		if = { limit = { has_trait = just } add = 10 }
+		if = { limit = { has_trait = content } add = 5 }
+		if = { limit = { has_trait = arbitrary } add = -10 }
+	}
+}
+
+# This = someone asked to lead a new faction; scope:lam_ff_founder asks, scope:lam_ff_lord is the court.
+lam_ff_accept_value = {
+	value = 20
+	add = {
+		value = "opinion(scope:lam_ff_founder)"
+		multiply = 0.5
+	}
+	if = { limit = { has_trait = ambitious } add = 20 }
+	if = { limit = { has_trait = content } add = -20 }
+	if = { limit = { has_trait = craven } add = -10 }
+	if = { limit = { has_trait = brave } add = 5 }
+	if = {
+		limit = {
+			OR = {
+				has_relation_friend = scope:lam_ff_founder
+				has_relation_best_friend = scope:lam_ff_founder
+			}
+		}
+		add = 25
+	}
+	if = {
+		limit = {
+			OR = {
+				has_relation_rival = scope:lam_ff_founder
+				has_relation_nemesis = scope:lam_ff_founder
+			}
+		}
+		add = -80
+	}
+	if = {
+		limit = {
+			exists = house
+			exists = scope:lam_ff_founder.house
+			house = scope:lam_ff_founder.house
+		}
+		add = 15
+	}
+	# The sovereign's own party: only those who stand by the crown want to lead it.
+	if = {
+		limit = { scope:lam_ff_lord = scope:lam_ff_founder }
+		if = {
+			limit = { has_variable = lam_gui_att var:lam_gui_att >= 25 }
+			add = 20
+		}
+		else_if = {
+			limit = { has_variable = lam_gui_att var:lam_gui_att <= -15 }
+			add = -40
+		}
+	}
+	# Already bound to another faction's core.
+	if = {
+		limit = {
+			var:lam_fac_tier ?= 1
+			has_variable = lam_bloc
+		}
+		add = -25
+	}
+	min = 5
+	max = 95
+}
+# Who is worth asking: likely to say yes, and with weight behind them.
+lam_ff_order_value = {
+	value = lam_ff_accept_value
+	add = {
+		value = max_military_strength
+		divide = 100
+		max = 30
+	}
+}
+# Root = a lord: the combined strength of the factions that hold a grudge against the crown.
+lam_fac_hostile_power_value = {
+	value = 0
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			has_variable = lam_fac_att
+			var:lam_fac_att <= -15
+			has_variable = lam_fac_power
+		}
+		add = var:lam_fac_power
+	}
+}
+# Root = a faction leader: where its cohesion drifts. Age steadies a faction; fortune shakes it.
+lam_fac_cohesion_target_value = {
+	value = 40
+	if = {
+		limit = { has_variable = lam_fac_age_tier }
+		add = {
+			value = var:lam_fac_age_tier
+			multiply = 10
+		}
+	}
+	if = { limit = { has_variable = lam_fac_favour var:lam_fac_favour >= 30 } add = 5 }
+	# A shared grievance, or persecution, binds those who remain.
+	if = { limit = { has_variable = lam_fac_grievance } add = 5 }
+	if = { limit = { var:lam_fac_stage ?= 9 } add = 10 }
+	if = { limit = { has_variable = lam_fac_fear } add = -10 }
+	if = { limit = { has_variable = lam_fac_exposed } add = -15 }
+	if = { limit = { has_variable = lam_fac_hoarded } add = -15 }
+	# Legacy: organisation.
+	if = { limit = { has_variable = lam_fac_leg_org } add = { value = var:lam_fac_leg_org multiply = 5 } }
+	min = 0
+	max = 100
+}
+# This = a faction's head weighing a deal; scope:lam_deal_lord offers (var:lam_deal_give / var:lam_deal_ask).
+# What each thing is worth depends on the faction's cause; disbanding an old faction costs far more.
+lam_fac_deal_accept_value = {
+	value = 40
+	# What I am given.
+	if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_give ?= flag:seat } }
+		add = 25
+		if = { limit = { var:lam_fac_agenda ?= flag:courtly } add = 15 }
+	}
+	else_if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_give ?= flag:county } }
+		add = 35
+		if = { limit = { OR = { var:lam_fac_agenda ?= flag:parochial var:lam_fac_agenda ?= flag:barons_and_minor_landholders } } add = 15 }
+	}
+	else_if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_give ?= flag:gold } }
+		add = 20
+		if = { limit = { has_trait = greedy } add = 15 }
+	}
+	else_if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_give ?= flag:marriage } }
+		add = 20
+		if = { limit = { var:lam_fac_agenda ?= flag:dynastic } add = 10 }
+	}
+	else_if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_give ?= flag:law } }
+		add = 30
+		if = { limit = { OR = { var:lam_fac_agenda ?= flag:parochial var:lam_fac_agenda ?= flag:barons_and_minor_landholders } } add = 20 }
+		if = { limit = { var:lam_fac_agenda ?= flag:loyalist } add = -20 }
+	}
+	else_if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_give ?= flag:heir } }
+		add = 40
+	}
+	else_if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_give ?= flag:amnesty } }
+		add = 50
+	}
+	else_if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_give ?= flag:bribe } }
+		add = 20
+		if = { limit = { has_trait = greedy } add = 25 }
+		if = { limit = { OR = { has_trait = honest has_trait = just } } add = -30 }
+	}
+	# What I am asked.
+	if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_ask ?= flag:oath } }
+		add = -25
+		if = { limit = { has_variable = lam_fac_att var:lam_fac_att <= -15 } add = -25 }
+		else_if = { limit = { has_variable = lam_fac_att var:lam_fac_att >= 25 } add = 15 }
+	}
+	else_if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_ask ?= flag:heir } }
+		add = -30
+		if = { limit = { lam_fac_heir_mismatch_trigger = { LORD = scope:lam_deal_lord } } add = -15 }
+	}
+	else_if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_ask ?= flag:disband } }
+		add = -60
+		if = { limit = { has_variable = lam_fac_age_tier } add = { value = var:lam_fac_age_tier multiply = -20 } }
+	}
+	else_if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_ask ?= flag:counter } }
+		add = -20
+	}
+	else_if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_ask ?= flag:arms } }
+		add = -25
+		if = { limit = { OR = { var:lam_fac_agenda ?= flag:glory_hound var:lam_fac_agenda ?= flag:belligerent } } add = 15 }
+	}
+	else_if = {
+		limit = { scope:lam_deal_lord = { var:lam_deal_ask ?= flag:law_support } }
+		add = -30
+		if = { limit = { OR = { var:lam_fac_agenda ?= flag:parochial var:lam_fac_agenda ?= flag:barons_and_minor_landholders } } add = -20 }
+		if = { limit = { var:lam_fac_agenda ?= flag:loyalist } add = 20 }
+	}
+	# Standing between us.
+	if = {
+		limit = { has_variable = lam_fac_favour }
+		add = { value = var:lam_fac_favour multiply = 0.3 }
+	}
+	add = {
+		value = "opinion(scope:lam_deal_lord)"
+		multiply = 0.2
+	}
+	if = { limit = { has_variable = lam_fac_betrayed } add = -20 }
+	min = 5
+	max = 95
+}
+# Root = a puppet lord striking at the power behind the throne (var:lam_fac_puppet_master).
+lam_fac_coup_chance_value = {
+	value = 20
+	add = { value = intrigue multiply = 1.5 }
+	add = { value = martial multiply = 1 }
+	add = { value = dread multiply = 0.2 }
+	if = { limit = { has_trait = paranoid } add = 5 }
+	if = { limit = { var:lam_fac_puppet_master ?= { has_variable = lam_fac_cohesion var:lam_fac_cohesion >= 80 } } add = -15 }
+	min = 5
+	max = 80
+}
+# Root = a faction's head (player) asking their AI liege (scope:lam_hd_lord) in the faction's name.
+lam_fac_head_demand_value = {
+	value = lam_tune_demand_base
+	if = {
+		limit = {
+			has_variable = lam_hd_backed
+		}
+		add = 15
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_share
+		}
+		add = {
+			value = var:lam_cr_share
+			multiply = 0.8
+		}
+	}
+	add = {
+		value = lam_pd_political_ally_value
+		multiply = 0.5
+		max = 20
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_favour
+		}
+		add = {
+			value = var:lam_fac_favour
+			multiply = 0.3
+		}
+	}
+	if = {
+		limit = {
+			scope:lam_hd_lord = {
+				has_variable = lam_crown
+			}
+		}
+		add = {
+			value = scope:lam_hd_lord.var:lam_crown
+			multiply = -0.4
+		}
+	}
+	if = {
+		limit = {
+			var:lam_fac_stage ?= 3
+		}
+		add = 15
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_stage ?= 2
+		}
+		add = 5
+	}
+	if = {
+		limit = {
+			scope:lam_hd_lord = {
+				OR = {
+					has_trait = just
+					has_trait = generous
+				}
+			}
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			scope:lam_hd_lord = {
+				OR = {
+					has_trait = arrogant
+					has_trait = stubborn
+				}
+			}
+		}
+		add = -15
+	}
+	if = {
+		limit = {
+			var:lam_hd_ask ?= flag:heir
+		}
+		add = -10
+	}
+	if = {
+		limit = {
+			var:lam_hd_ask ?= flag:law
+		}
+		add = -10
+	}
+	if = {
+		limit = {
+			var:lam_hd_ask ?= flag:amnesty
+		}
+		add = -20
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_leg_cause
+		}
+		add = {
+			value = var:lam_fac_leg_cause
+			multiply = 5
+		}
+	}
+	min = 5
+	max = 90
+}
+# Root = a faction's head: traditions grow from what the faction has lived through.
+# A score of 2 / 4 / 7 gives the first / second / third level (see lam_fac_traditions_effect).
+# Organisation: successions survived, purges and defeats endured.
+lam_fac_tr_org_value = {
+	value = 0
+	if = { limit = { has_variable = lam_fac_gen } add = { value = var:lam_fac_gen subtract = 1 } }
+	if = { limit = { has_variable = lam_fac_h_purge } add = { value = var:lam_fac_h_purge multiply = 2 } }
+	if = { limit = { has_variable = lam_fac_h_lost } add = var:lam_fac_h_lost }
+}
+# Connections: years at court, and heirs it helped to the throne.
+lam_fac_tr_ties_value = {
+	value = 0
+	if = { limit = { has_variable = lam_fac_age_tier } add = { value = var:lam_fac_age_tier multiply = 2 } }
+	if = { limit = { has_variable = lam_fac_h_crown } add = { value = var:lam_fac_h_crown multiply = 2 } }
+}
+# The purse: deals struck with the lord.
+lam_fac_tr_purse_value = {
+	value = 0
+	if = { limit = { has_variable = lam_fac_h_deals } add = var:lam_fac_h_deals }
+}
+# Swords: risings, and clashes won.
+lam_fac_tr_arms_value = {
+	value = 0
+	if = { limit = { has_variable = lam_fac_h_won } add = { value = var:lam_fac_h_won multiply = 2 } }
+	if = { limit = { has_variable = lam_fac_h_rise } add = var:lam_fac_h_rise }
+}
+# A cause: promises won from the lord - and promises broken, which a faction does not forget.
+lam_fac_tr_cause_value = {
+	value = 0
+	if = { limit = { has_variable = lam_fac_h_kept } add = { value = var:lam_fac_h_kept multiply = 2 } }
+	if = { limit = { has_variable = lam_fac_h_betray } add = var:lam_fac_h_betray }
+}
+
+# Root = a puppet lord: what it costs to buy the strings back (three years of income, at least 150).
+lam_fac_buyout_cost_value = {
+	value = monthly_character_income
+	multiply = 36
+	min = 150
+}
+# Root = the power behind the throne, offered the price: will they let go?
+lam_fac_buyout_accept_value = {
+	value = 35
+	if = { limit = { has_trait = greedy } add = 25 }
+	if = { limit = { has_trait = content } add = 15 }
+	if = { limit = { has_trait = ambitious } add = -25 }
+	if = { limit = { has_trait = arrogant } add = -10 }
+	if = { limit = { has_variable = lam_fac_share var:lam_fac_share < 60 } add = 15 }
+	if = { limit = { has_variable = lam_fac_cohesion var:lam_fac_cohesion < 50 } add = 10 }
+	min = 5
+	max = 85
+}
+# Root = a faction's head: how many of the conditions for seizing the realm hold (out of 10).
+# (Seizing the realm, simply - then harder: three conditions.)
+lam_fac_ctrl_count_value = {
+value = lam_pol_ctrl_count_value
+}
+
+# scope:actor smears scope:recipient: intrigue against intrigue.
+lam_fac_smear_chance_value = {
+	value = 30
+	add = { value = scope:actor.intrigue multiply = 2 }
+	add = { value = scope:recipient.intrigue multiply = -1.5 }
+	min = 5
+	max = 85
+}
+# Root = a mediator between scope:lam_md_a and scope:lam_md_b.
+lam_fac_mediate_chance_value = {
+	value = 30
+	add = { value = diplomacy multiply = 2.5 }
+	if = { limit = { has_variable = lam_fac_mediator } add = 10 }
+	min = 10
+	max = 85
+}
+# Root = a faction's head bidding for an unaligned vassal: more weight, more gold.
+lam_fac_bid_gold_value = {
+	value = minor_gold_value
+	if = { limit = { has_variable = lam_fac_share var:lam_fac_share >= 25 } multiply = 2 }
+	if = { limit = { has_variable = lam_fac_leg_purse } add = { value = var:lam_fac_leg_purse multiply = 10 } }
+}
+# Root = a lord: the chance the spies turn up more of a faction in the dark (the spymaster's intrigue).
+lam_fac_dig_chance_value = {
+	value = 35
+	if = {
+		limit = { exists = cp:councillor_spymaster }
+		add = { value = cp:councillor_spymaster.intrigue multiply = 3 }
+	}
+	min = 20
+	max = 90
+}
+# Root = a would-be successor to scope:lam_ps_old: strength, weighted for the core and the house.
+lam_fac_succ_score_value = {
+value = lam_cr_influence_value
+add = { value = diplomacy multiply = 2 }
+if = { limit = { var:lam_bloc ?= scope:lam_ps_old var:lam_fac_tier ?= 1 } add = 25 }
+if = { limit = { house ?= scope:lam_ps_old.house } add = 20 }
+if = { limit = { has_variable = lam_fac_merit } add = 20 }
+if = { limit = { has_variable = lam_cr_service } add = { value = var:lam_cr_service max = 20 } }
+if = { limit = { has_trait = arbitrary } add = -15 }
+}
+
+# This = the hand, scope:lam_sh_new = the new ruler (or the ruler with a new hand): do the strings hold? (step_shadow_fragile)
+lam_sh_hold_chance_value = {
+	value = lam_tune_sh_hold_base
+	if = { limit = { scope:lam_sh_new = { is_adult = no } } add = 25 }
+	if = { limit = { scope:lam_sh_new = { has_trait = ambitious } } add = -15 }
+	if = { limit = { scope:lam_sh_new = { has_trait = arrogant } } add = -10 }
+	if = { limit = { scope:lam_sh_new = { has_trait = brave } } add = -5 }
+	if = { limit = { scope:lam_sh_new = { has_trait = craven } } add = 10 }
+	if = { limit = { scope:lam_sh_new = { has_trait = content } } add = 10 }
+	add = { value = intrigue subtract = scope:lam_sh_new.intrigue multiply = 2 }
+	if = { limit = { has_variable = lam_bloc_lead has_variable = lam_fac_share var:lam_fac_share >= 50 } add = 10 }
+	if = { limit = { is_adult = no } add = -25 }
+	if = { limit = { exists = scope:lam_sh_heirpass } add = -10 }
+	min = 5
+	max = 95
+}
+
+# Root = a faction's head: the share of the court their allies hold (step_rivalry).
+lam_fac_ally_share_value = {
+value = 0
+if = { limit = { lam_pd_pact_current_trigger = yes var:lam_pd_pact_kind ?= flag:defense }
+ add = var:lam_pd_pact_partner.var:lam_fac_share
+}
+}
+# Root = a faction's head: its share, with half its allies' (for seizing the realm).
+lam_fac_seize_share_value = {
+	value = 0
+	if = { limit = { has_variable = lam_fac_share } add = var:lam_fac_share }
+	add = { value = lam_fac_ally_share_value multiply = 0.5 }
+}
+
+# Root = an AI head in a blood feud: will they plot the other's death? (polish 043)
+lam_fac_feud_murder_chance_value = {
+	value = lam_tune_feud_murder_base
+	if = { limit = { has_trait = ambitious } add = 15 }
+	if = { limit = { has_trait = vengeful } add = 20 }
+	if = { limit = { has_trait = callous } add = 10 }
+	if = { limit = { has_trait = sadistic } add = 15 }
+	if = { limit = { has_trait = wrathful } add = 10 }
+	if = { limit = { has_trait = compassionate } add = -25 }
+	if = { limit = { has_trait = content } add = -15 }
+	if = { limit = { has_trait = just } add = -15 }
+	if = { limit = { has_trait = honest } add = -10 }
+	if = { limit = { has_trait = forgiving } add = -20 }
+	min = 0
+	max = 80
+}
+
+# Root = a faction's head with a promise: months until it runs out (polish 021).
+lam_fac_promise_left_value = {
+	value = 0
+	if = { limit = { has_variable = lam_fac_promise_time_m } add = var:lam_fac_promise_time_m subtract = lam_now_m }
+	min = 0
+}
+
+# Root = a faction's head under an oath: months left (polish 025).
+lam_fac_oath_left_value = {
+	value = 0
+	if = { limit = { has_variable = lam_fac_oath_m } add = var:lam_fac_oath_m subtract = lam_now_m }
+	min = 0
+}

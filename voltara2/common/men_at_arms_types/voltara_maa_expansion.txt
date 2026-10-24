@@ -1439,7 +1439,7 @@ vmaa_voltara_southorion_1 = {
  counters = { archers = 1 }
  terrain_bonus = { drylands = { damage = 4 toughness = 4 } }
  
- can_recruit = { culture = culture:voltara_southorion
+ can_recruit = { culture = { OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } }
  NOT = { has_government = voltara_ruins_government } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
@@ -1461,7 +1461,7 @@ vmaa_voltara_southorion_2 = {
  counters = { skirmishers = 1 }
  terrain_bonus = { drylands = { damage = 9 toughness = 4 } }
  
- can_recruit = { culture = culture:voltara_southorion
+ can_recruit = { culture = { OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } }
  culture = { has_innovation = innovation_men_at_arms }
  NOT = { has_government = voltara_ruins_government } }
  access_through_subject = { always = no }

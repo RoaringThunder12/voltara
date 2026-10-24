@@ -1,0 +1,58 @@
+﻿# v0.7.6: recover only an unambiguous old choice. Event-carried values always win.
+# Called on the participant who held the old flags; no persistent state is changed.
+
+dhm_v076_resolve_2_legacy_choices_effect = {
+	if = {
+		limit = { NOT = { exists = scope:$KEY$ } }
+		save_scope_value_as = { name = $KEY$ value = flag:unknown }
+		if = {
+			limit = { has_character_flag = $FLAG_1$ NOT = { has_character_flag = $FLAG_2$ } }
+			save_scope_value_as = { name = $KEY$ value = $VALUE_1$ }
+		}
+		else_if = {
+			limit = { has_character_flag = $FLAG_2$ NOT = { has_character_flag = $FLAG_1$ } }
+			save_scope_value_as = { name = $KEY$ value = $VALUE_2$ }
+		}
+	}
+}
+
+dhm_v076_resolve_3_legacy_choices_effect = {
+	if = {
+		limit = { NOT = { exists = scope:$KEY$ } }
+		save_scope_value_as = { name = $KEY$ value = flag:unknown }
+		if = {
+			limit = { has_character_flag = $FLAG_1$ NOT = { has_character_flag = $FLAG_2$ } NOT = { has_character_flag = $FLAG_3$ } }
+			save_scope_value_as = { name = $KEY$ value = $VALUE_1$ }
+		}
+		else_if = {
+			limit = { has_character_flag = $FLAG_2$ NOT = { has_character_flag = $FLAG_1$ } NOT = { has_character_flag = $FLAG_3$ } }
+			save_scope_value_as = { name = $KEY$ value = $VALUE_2$ }
+		}
+		else_if = {
+			limit = { has_character_flag = $FLAG_3$ NOT = { has_character_flag = $FLAG_1$ } NOT = { has_character_flag = $FLAG_2$ } }
+			save_scope_value_as = { name = $KEY$ value = $VALUE_3$ }
+		}
+	}
+}
+
+# Bookkeeping may run before a ruler's first scheduled setup or after succession.
+# Initialize only the requested missing total; never reset earned history.
+dhm_v076_increment_counter_effect = {
+	hidden_effect = {
+		if = {
+			limit = { has_variable = $COUNTER$ }
+			change_variable = { name = $COUNTER$ add = 1 }
+		}
+		else = { set_variable = { name = $COUNTER$ value = 1 } }
+	}
+}
+
+dhm_v076_increment_global_counter_effect = {
+	hidden_effect = {
+		if = {
+			limit = { has_global_variable = $COUNTER$ }
+			change_global_variable = { name = $COUNTER$ add = 1 }
+		}
+		else = { set_global_variable = { name = $COUNTER$ value = 1 } }
+	}
+}

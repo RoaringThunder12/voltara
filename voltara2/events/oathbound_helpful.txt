@@ -1,0 +1,36 @@
+﻿namespace = helpful_oathbound
+
+# Notification that you have been automatically called
+helpful_oathbound.0001 = {
+	type = character_event
+    title = helpful_oathbound.0001.t
+    desc = helpful_oathbound.0001.desc
+    theme = martial
+    left_portrait = root
+
+    immediate = {
+        if = {
+            limit = { has_variable = oathbound_patrolled_county_var }
+            var:oathbound_patrolled_county_var = {
+                save_scope_as = patrolled_county_scope
+            }
+        }
+    }
+
+    option = {
+        name = helpful_oathbound.0001.a
+
+        if = {
+            limit = { has_variable = oathbound_patrolled_county_var }
+            var:oathbound_patrolled_county_var = {
+                remove_county_modifier = oathbound_enforcing_order_weak
+                remove_county_modifier = oathbound_enforcing_order_normal
+                remove_county_modifier = oathbound_enforcing_order_strong
+            }
+        }
+
+        remove_variable = oathbound_patrolled_county_var
+
+        add_prestige = 50
+    }
+}

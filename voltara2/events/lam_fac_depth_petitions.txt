@@ -1,0 +1,172 @@
+﻿namespace = lam_pd
+lam_pd.0100 = {
+	type = character_event
+	title = lam_pd_petition_title
+	desc = {
+		desc = lam_pd_petition_desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_pd_head = {
+						var:lam_pd_kind ?= flag:council
+					}
+				}
+				desc = lam_pd_office_terms
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_pd_head = {
+						var:lam_pd_kind ?= flag:heir
+					}
+				}
+				desc = lam_pd_heir_terms
+			}
+			desc = lam_fac_empty
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_pd_head = {
+						var:lam_pd_kind ?= flag:council
+						has_variable = lam_pd_incumbent
+					}
+				}
+				desc = lam_pd_incumbent_terms
+			}
+			desc = lam_fac_empty
+		}
+	}
+	theme = realm
+	left_portrait = {
+		character = scope:lam_pd_head
+		animation = personality_rational
+	}
+	option = {
+		name = lam_pd_accept
+		trigger = {
+			lam_pd_window_current_trigger = yes
+			scope:lam_pd_head = {
+				lam_pd_petition_valid_trigger = yes
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_pd_window_current_trigger = yes
+				}
+				scope:lam_pd_head = {
+					lam_pd_commit_effect = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_pd_counter
+		trigger = {
+			lam_pd_window_current_trigger = yes
+			gold >= scope:lam_pd_head.var:lam_pd_gold
+			NOT = {
+				scope:lam_pd_head = {
+					var:lam_pd_kind ?= flag:gold
+				}
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_pd_window_current_trigger = yes
+				}
+				scope:lam_pd_head = {
+					lam_pd_counter_effect = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_pd_defer
+		trigger = {
+			lam_pd_window_current_trigger = yes
+			NOT = {
+				scope:lam_pd_head = {
+					has_variable = lam_pd_deferred
+				}
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_pd_window_current_trigger = yes
+				}
+				scope:lam_pd_head = {
+					set_variable = {
+						name = lam_pd_deferred
+						value = yes
+					}
+				}
+				trigger_event = {
+					id = lam_pd.0100
+					days = 30
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_pd_refuse
+		trigger = {
+			lam_pd_window_current_trigger = yes
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_pd_window_current_trigger = yes
+				}
+				scope:lam_pd_head = {
+					lam_pd_refuse_effect = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_cr_close
+		trigger = {
+			NOT = {
+				lam_pd_window_current_trigger = yes
+			}
+		}
+	}
+}
+lam_pd.0102 = {
+	type = character_event
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				has_variable = lam_pd_active
+				var:lam_pd_id ?= scope:lam_pd_token
+				has_variable = lam_pd_pending
+			}
+			lam_pd_cancel_effect = yes
+		}
+	}
+}
+lam_pd.0103 = {
+	type = character_event
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				lam_pd_proposal_current_trigger = yes
+				var:lam_pd_id ?= scope:lam_pd_token
+				has_variable = lam_pd_counter
+				NOT = {
+					has_variable = lam_cr_active
+				}
+			}
+			lam_cr_start_effect = {
+				ISSUE = petition
+				ACTION = petition
+				TARGET = liege
+			}
+		}
+	}
+}

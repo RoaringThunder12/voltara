@@ -1,0 +1,11 @@
+﻿vgd_recruited_mage_necromancy_effect = {
+ if = {
+  limit = { rite = { rite_has_parameter = necromancy_accepted } }
+  add_trait = necromancer
+  add_trait = vt_ek_necromancer
+ }
+ else = {
+  add_trait = vt_ek_experimentalist_necromancer
+  add_secret = { type = secret_necromancer }
+ }
+}

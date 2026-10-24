@@ -1,0 +1,28 @@
+﻿vip_information_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	liege ?= scope:recipient
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+	NOT = {
+		has_variable = lam_fac_inform_cd
+	}
+	var:lam_bloc ?= {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		liege ?= scope:recipient
+	}
+	OR = {
+		var:lam_bloc = {
+			any_secret = {
+				is_known_by = scope:vip_informant
+				NOT = {
+					is_known_by = scope:recipient
+				}
+			}
+		}
+		lam_pd_private_fact_trigger = yes
+	}
+}

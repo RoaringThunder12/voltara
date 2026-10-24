@@ -1,0 +1,323 @@
+﻿# Living Factions - court issues (tools/claude_fixes/issue.py)
+# A major issue is faction against faction: weight (share of the court's political weight) demanding it,
+# faction weight against it (the crown's stake does not count here), and the two together - the court split.
+lam_is_open_share_value = 15
+lam_is_oppose_share_value = 10
+lam_is_split_share_value = 25
+# This = the lord: open issues in the court.
+lam_is_open_count_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_is_heir_open
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_crown_open
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_council_open
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_faith_open
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_tax_open
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_war_open
+		}
+		add = 1
+	}
+}
+# This = the lord: the crown's stake on side X of each issue, in weight points.
+lam_is_heir_lw_value = {
+	value = 0
+	if = { limit = { has_variable = lam_crown } add = { value = var:lam_crown multiply = 0.1 } }
+}
+lam_is_crown_lw_value = {
+	value = 0
+	add = 3 if = { limit = { has_variable = lam_crown } add = { value = var:lam_crown multiply = 0.1 } }
+}
+lam_is_faith_lw_value = {
+	value = 0
+	if = { limit = { has_trait = zealous } add = 5 }
+}
+lam_is_war_lw_value = {
+	value = 0
+
+}
+lam_is_council_lw_value = {
+	value = 0
+
+}
+lam_is_tax_lw_value = {
+	value = 0
+	add = 5
+}
+# This = the lord: the cause of each issue (CAUSE in issue.py), > 0 for side Y.
+lam_is_heir_cause_value = {
+	value = 0
+	add = -5
+		if = { limit = { exists = scope:lam_is_ca scope:lam_is_ca = { is_adult = no } } add = 10 }
+		if = { limit = { exists = scope:lam_is_ca scope:lam_is_ca = { is_incapable = yes } } add = 15 }
+		if = { limit = { exists = scope:lam_is_ca scope:lam_is_ca = { has_trait = bastard } } add = 10 }
+		if = { limit = { exists = scope:lam_is_cb scope:lam_is_cb = { is_adult = no } } add = -10 }
+	min = -20
+	max = 20
+}
+lam_is_crown_cause_value = {
+	value = 0
+	if = { limit = { has_variable = lam_crown } add = { value = 50 subtract = var:lam_crown multiply = 0.2 } }
+		if = { limit = { tyranny >= 30 } add = 5 }
+	min = -20
+	max = 20
+}
+lam_is_council_cause_value = {
+	value = 0
+	if = { limit = { OR = { NOT = { exists = cp:councillor_chancellor } NOT = { exists = cp:councillor_marshal } NOT = { exists = cp:councillor_steward } NOT = { exists = cp:councillor_spymaster } NOT = { exists = cp:councillor_court_chaplain } } } add = 8 }
+	min = -20
+	max = 20
+}
+lam_is_faith_cause_value = {
+	value = 0
+	add = -4
+		every_vassal = { limit = { is_ruler = yes OR = { NOT = { faith = scope:lam_is_lord.faith } NOT = { culture = scope:lam_is_lord.culture } } } add = 2 }
+		max = 10
+	min = -20
+	max = 20
+}
+lam_is_tax_cause_value = {
+	value = 0
+	if = { limit = { any_character_war = { OR = { primary_attacker = scope:lam_is_lord primary_defender = scope:lam_is_lord } war_days >= 365 } } add = 8 }
+		if = { limit = { gold < 0 } add = -8 }
+		else_if = { limit = { gold >= 500 is_at_war = no } add = 5 }
+	min = -20
+	max = 20
+}
+lam_is_war_cause_value = {
+	value = 0
+	if = {
+			limit = {
+				var:lam_is_war_mode ?= flag:peace
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = { var:lam_is_war_side ?= flag:attacker var:lam_is_war_ref ?= { attacker_war_score >= 25 } }
+						AND = { var:lam_is_war_side ?= flag:defender var:lam_is_war_ref ?= { attacker_war_score <= -25 } }
+					}
+				}
+				add = -10
+			}
+			else_if = {
+				limit = {
+					OR = {
+						AND = { var:lam_is_war_side ?= flag:attacker var:lam_is_war_ref ?= { attacker_war_score <= -25 } }
+						AND = { var:lam_is_war_side ?= flag:defender var:lam_is_war_ref ?= { attacker_war_score >= 25 } }
+					}
+				}
+				add = 10
+			}
+			if = {
+				limit = {
+					var:lam_is_war_ref ?= { war_days >= 1095 }
+				}
+				add = 10
+			}
+		}
+		else_if = {
+			limit = {
+				has_variable = lam_fac_recent_war
+			}
+			add = -10
+		}
+	min = -20
+	max = 20
+}
+lam_is_beaten_left_value = {
+	value = 36
+	if = {
+		limit = {
+			has_variable = lam_is_beaten_until
+		}
+		value = var:lam_is_beaten_until
+		subtract = lam_now_m
+	}
+	min = 1
+}
+lam_is_victor_left_value = {
+	value = 36
+	if = {
+		limit = {
+			has_variable = lam_is_victor_until
+		}
+		value = var:lam_is_victor_until
+		subtract = lam_now_m
+	}
+	min = 1
+}
+# This = the lord: how much of the court's weight the two sides of an issue hold together.
+lam_is_heir_split_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_is_heir_sa
+		}
+		add = var:lam_is_heir_sa
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_heir_sb
+		}
+		add = var:lam_is_heir_sb
+	}
+}
+lam_is_crown_split_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_is_crown_sa
+		}
+		add = var:lam_is_crown_sa
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_crown_sb
+		}
+		add = var:lam_is_crown_sb
+	}
+}
+lam_is_council_split_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_is_council_sa
+		}
+		add = var:lam_is_council_sa
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_council_sb
+		}
+		add = var:lam_is_council_sb
+	}
+}
+lam_is_faith_split_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_is_faith_sa
+		}
+		add = var:lam_is_faith_sa
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_faith_sb
+		}
+		add = var:lam_is_faith_sb
+	}
+}
+lam_is_tax_split_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_is_tax_sa
+		}
+		add = var:lam_is_tax_sa
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_tax_sb
+		}
+		add = var:lam_is_tax_sb
+	}
+}
+lam_is_war_split_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_is_war_sa
+		}
+		add = var:lam_is_war_sa
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_war_sb
+		}
+		add = var:lam_is_war_sb
+	}
+}
+# This = the lord: how far the crown (or tribal) authority law stands, 0-3 (the crown issue settles when it moves).
+lam_is_law_level_value = {
+	value = 0
+	if = { limit = { OR = { has_realm_law = crown_authority_1 has_realm_law = tribal_authority_1 } } value = 1 }
+	else_if = { limit = { OR = { has_realm_law = crown_authority_2 has_realm_law = tribal_authority_2 } } value = 2 }
+	else_if = { limit = { OR = { has_realm_law = crown_authority_3 has_realm_law = tribal_authority_3 } } value = 3 }
+}
+# Root = the player, scope:target = the lord.
+lam_is_push_power_value = {
+	value = 8
+	if = {
+		limit = {
+			this = scope:target
+		}
+		value = 8
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_bloc_lead
+		}
+		value = 10
+		if = {
+			limit = {
+				has_variable = lam_fac_share
+			}
+			add = {
+				value = var:lam_fac_share
+				multiply = 0.1
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_bloc
+		}
+		value = 6
+	}
+}
+lam_is_push_cost_value = {
+	value = 75
+	if = {
+		limit = {
+			this = scope:target
+		}
+		value = 100
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_bloc_lead
+		}
+		value = 100
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_bloc
+		}
+		value = 50
+	}
+}

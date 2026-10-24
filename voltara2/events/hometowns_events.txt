@@ -1,0 +1,11 @@
+﻿namespace = hometowns
+hometowns.01 = {
+ scope = none hidden = yes
+ immediate = {
+  every_living_character = {
+   limit = { NOT = { has_variable = hometowns_birthplace } exists = location exists = location.county }
+   set_variable = { name = hometowns_birthplace value = location }
+   add_character_flag = voltara_hometown_recorded_residence
+  }
+ }
+}

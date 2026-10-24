@@ -1,0 +1,294 @@
+﻿lam_pd_cleanup_head_effect = {
+	lam_lf_head_pulse_effect = yes
+	if = {
+		limit = {
+			has_variable = lam_pd_pact_partner
+			NOT = {
+				lam_pd_pact_current_trigger = yes
+			}
+		}
+		lam_pd_pact_clear_effect = yes
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_obstruct
+			NOT = {
+				lam_pd_obstruct_current_trigger = yes
+			}
+		}
+		remove_variable = lam_cr_obstruct
+		if = {
+			limit = {
+				has_variable = lam_pd_obstruct_id
+			}
+			remove_variable = lam_pd_obstruct_id
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_recruit_target
+		}
+		save_scope_as = lam_pd_cleanup_owner
+		if = {
+			limit = {
+				NOT = {
+					var:lam_pd_recruit_target ?= {
+						trigger_if = {
+							limit = {
+								is_alive = yes
+							}
+							has_variable = lam_pd_recruit_from
+							var:lam_pd_recruit_from ?= scope:lam_pd_cleanup_owner
+							liege ?= scope:lam_pd_cleanup_owner.liege
+							AND = {
+								has_variable = lam_pd_recruit_until
+								var:lam_pd_recruit_until >= lam_now_m
+							}
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+			}
+			var:lam_pd_recruit_target ?= {
+				lam_pd_recruit_clear_effect = yes
+			}
+			if = {
+				limit = {
+					has_variable = lam_pd_recruit_target
+				}
+				remove_variable = lam_pd_recruit_target
+			}
+		}
+	}
+	if = {
+		limit = {
+			var:lam_fac_goal ?= 4
+			has_variable = lam_pd_goal_title
+			NOT = {
+				var:lam_pd_goal_title ?= {
+					exists = holder
+				}
+			}
+		}
+		set_variable = {
+			name = lam_pd_goal_blocked
+			value = yes
+		}
+	}
+	if = {
+		limit = {
+			var:lam_fac_goal ?= 5
+			has_variable = lam_pd_goal_person
+			NOT = {
+				var:lam_pd_goal_person ?= {
+					is_alive = yes
+					liege ?= prev.liege
+				}
+			}
+		}
+		set_variable = {
+			name = lam_pd_goal_blocked
+			value = yes
+		}
+	}
+}
+lam_pd_aid_member_effect = {
+	if = {
+		limit = {
+			gold >= minor_gold_value
+			NOT = {
+				has_variable = lam_pd_aid_cd
+			}
+		}
+		save_scope_as = lam_pd_aid_head
+		clear_saved_scope = lam_pd_aid_recipient
+		ordered_in_list = {
+			variable = lam_fac_members
+			max = 1
+			check_range_bounds = no
+			limit = {
+				is_alive = yes
+				var:lam_bloc ?= scope:lam_pd_aid_head
+				liege ?= scope:lam_pd_aid_head.liege
+				gold < 0
+			}
+			order_by = {
+				value = gold
+				multiply = -1
+			}
+			save_scope_as = lam_pd_aid_recipient
+		}
+		if = {
+			limit = {
+				exists = scope:lam_pd_aid_recipient
+			}
+			pay_short_term_gold = {
+				target = scope:lam_pd_aid_recipient
+				gold = minor_gold_value
+			}
+			set_variable = {
+				name = lam_pd_aid_cd
+				value = yes
+				months = 12
+			}
+			lam_fac_cohesion_add_effect = {
+				ADD = 3
+			}
+			set_variable = {
+				name = lam_pd_plan_result
+				value = flag:aid
+			}
+		}
+	}
+}
+lam_pd_plan_choose_effect = {
+lam_lf_campaign_plan_effect = yes
+}
+lam_pd_world_pulse_effect = {
+	if = {
+		lam_pd_refresh_activity_effect = yes
+		limit = {
+			NOT = {
+				has_variable = lam_fac_viewonly
+			}
+		}
+		save_scope_as = lam_pd_world_lord
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				liege ?= scope:lam_pd_world_lord
+			}
+			lam_pd_cleanup_head_effect = yes
+			if = {
+				limit = {
+					NOT = {
+						lam_wc_committed_trigger = yes
+					}
+					is_ai = yes
+					is_adult = yes
+					is_imprisoned = no
+					NOT = {
+						has_variable = lam_pd_active
+					}
+					NOT = {
+						has_variable = lam_cr_active
+					}
+					NOT = {
+						has_variable = lam_cr_contract_pending
+					}
+					NOT = {
+						has_variable = lam_pd_recruit_target
+					}
+					NOT = {
+						has_variable = lam_fac_disband
+					}
+					OR = {
+						NOT = {
+							has_variable = lam_pd_plan_next
+						}
+						AND = {
+							has_variable = lam_pd_plan_next
+							var:lam_pd_plan_next <= lam_now_m
+						}
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							liege = {
+								is_ai = no
+							}
+							liege = {
+								any_vassal = {
+									is_ai = no
+								}
+							}
+						}
+					}
+					set_variable = {
+						name = lam_pd_plan_next
+						value = {
+							value = lam_now_m
+							add = 3
+						}
+					}
+				}
+				else = {
+					set_variable = {
+						name = lam_pd_plan_next
+						value = {
+							value = lam_now_m
+							add = 12
+						}
+					}
+				}
+				lam_pd_plan_choose_effect = yes
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					NOT = {
+						has_variable = lam_pd_info_next
+					}
+					AND = {
+						has_variable = lam_pd_info_next
+						var:lam_pd_info_next <= lam_now_m
+					}
+				}
+			}
+			set_variable = {
+				name = lam_pd_info_next
+				value = {
+					value = lam_now_m
+					add = 12
+				}
+			}
+			clear_saved_scope = lam_pd_previous_actor
+			clear_saved_scope = lam_pd_previous_recipient
+			scope:actor ?= {
+				save_scope_as = lam_pd_previous_actor
+			}
+			scope:recipient ?= {
+				save_scope_as = lam_pd_previous_recipient
+			}
+			save_scope_as = recipient
+			ordered_vassal = {
+				max = 1
+				check_range_bounds = no
+				order_by = intrigue
+				limit = {
+					is_ai = yes
+					save_temporary_scope_as = vip_informant
+					vip_information_trigger = yes
+					OR = {
+						has_trait = deceitful
+						has_trait = vengeful
+					}
+					var:lam_bloc = {
+						scope:vip_informant = {
+							opinion = {
+								target = prev
+								value < -30
+							}
+						}
+					}
+				}
+				save_scope_as = actor
+				lam_fac_inform_effect = yes
+			}
+			clear_saved_scope = actor
+			clear_saved_scope = recipient
+			scope:lam_pd_previous_actor ?= {
+				save_scope_as = actor
+			}
+			scope:lam_pd_previous_recipient ?= {
+				save_scope_as = recipient
+			}
+		}
+	}
+}

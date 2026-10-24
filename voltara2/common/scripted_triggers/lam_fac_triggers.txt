@@ -1,0 +1,766 @@
+﻿lam_fac_peer_trigger = {
+	is_ruler = yes
+	highest_held_title_tier >= tier_county
+}
+lam_fac_standing_trigger = {
+	has_variable = lam_fac_count
+	var:lam_fac_count >= 3
+}
+lam_fac_realm_in_scope_trigger = {
+ vip_court = yes
+
+	NOT = {
+		has_game_rule = lam_faction_scope_off
+	}
+	trigger_if = {
+		limit = {
+			has_game_rule = lam_fac_special_govs_exclude
+		}
+		NOT = {
+			lam_fac_own_politics_trigger = yes
+		}
+	}
+	any_vassal = {
+		lam_fac_peer_trigger = yes
+	}
+	OR = {
+		is_ai = no
+		any_vassal_or_below = {
+			is_ai = no
+		}
+		AND = {
+			has_game_rule = lam_faction_scope_player_area
+			any_neighboring_top_liege_realm_owner = {
+				OR = {
+					is_ai = no
+					any_vassal_or_below = {
+						is_ai = no
+					}
+				}
+			}
+		}
+		AND = {
+			has_game_rule = lam_faction_scope_kings
+			highest_held_title_tier >= tier_kingdom
+		}
+		AND = {
+			has_game_rule = lam_faction_scope_dukes
+			highest_held_title_tier >= tier_duchy
+		}
+		has_game_rule = lam_faction_scope_all
+	}
+}
+lam_fac_would_petition_trigger = {
+	NOT = {
+		lam_wc_committed_trigger = yes
+	}
+	NOT = {
+		var:lam_fac_stage ?= 9
+	}
+	NOT = {
+		has_variable = lam_fac_content
+	}
+	NOT = {
+		has_variable = lam_fac_armed
+	}
+	NOT = {
+		exists = joined_faction
+	}
+	NOT = {
+		is_at_war_with = $LORD$
+	}
+	trigger_if = {
+		limit = {
+			$LORD$ = {
+				is_at_war = yes
+			}
+		}
+		var:lam_fac_demand ?= flag:reward
+	}
+	is_alive = yes
+	has_variable = lam_fac_demand
+	NOT = {
+		has_variable = lam_fac_petition_cd
+	}
+	NOT = {
+		has_variable = lam_fac_promise
+	}
+	NOT = {
+		var:lam_fac_stage ?= 4
+	}
+	OR = {
+		NOT = {
+			var:lam_fac_stage ?= 1
+		}
+		AND = {
+			has_variable = lam_fac_share
+			var:lam_fac_share >= 25
+		}
+	}
+}
+lam_fac_heir_mismatch_trigger = {
+	var:lam_fac_heir ?= {
+		is_alive = yes
+	}
+	$LORD$ = {
+		exists = primary_heir
+	}
+	NOT = {
+		var:lam_fac_heir = $LORD$.primary_heir
+	}
+}
+lam_fac_has_seat_trigger = {
+	OR = {
+		is_councillor_of = $LORD$
+		any_in_list = {
+			variable = lam_fac_members
+			is_alive = yes
+			is_councillor_of = $LORD$
+		}
+	}
+}
+lam_fac_promise_kept_trigger = {
+	OR = {
+		AND = {
+			var:lam_fac_promise ?= flag:marriage
+			OR = {
+				lam_fac_wed_to_lord_trigger = {
+					LORD = $LORD$
+				}
+				any_in_list = {
+					variable = lam_fac_members
+					is_alive = yes
+					lam_fac_wed_to_lord_trigger = {
+						LORD = $LORD$
+					}
+				}
+			}
+		}
+		AND = {
+			var:lam_fac_promise ?= flag:council
+			lam_fac_has_seat_trigger = {
+				LORD = $LORD$
+			}
+		}
+		AND = {
+			var:lam_fac_promise ?= flag:campaign
+			trigger_if = {
+				limit = {
+					has_variable = lam_pd_promised_title
+				}
+				var:lam_pd_promised_title ?= {
+					holder ?= prev.var:lam_pd_promised_owner
+				}
+			}
+			trigger_else = {
+				OR = {
+					has_variable = lam_fac_campaign_begun
+					$LORD$ = {
+						any_character_war = {
+							primary_attacker = $LORD$
+							primary_defender = {
+								NOT = {
+									top_liege = $LORD$.top_liege
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		AND = {
+			var:lam_fac_promise ?= flag:faith
+			$LORD$ = {
+				NOT = {
+					any_councillor = {
+						NOT = {
+							faith = $LORD$.faith
+						}
+					}
+				}
+			}
+		}
+		AND = {
+			var:lam_fac_promise ?= flag:tolerance
+			$LORD$ = {
+				any_councillor = {
+					OR = {
+						NOT = {
+							faith = $LORD$.faith
+						}
+						NOT = {
+							culture = $LORD$.culture
+						}
+					}
+				}
+			}
+		}
+		AND = {
+			var:lam_fac_promise ?= flag:no_revoke
+			NOT = {
+				has_variable = lam_fac_promise_time
+			}
+		}
+	}
+}
+lam_fac_clash_ready_trigger = {
+	NOT = {
+		var:lam_fac_stage ?= 9
+	}
+	is_alive = yes
+	has_variable = lam_fac_stage
+	NOT = {
+		var:lam_fac_stage ?= 1
+	}
+	NOT = {
+		var:lam_fac_stage ?= 4
+	}
+	any_in_list = {
+		variable = lam_fac_foes
+		lam_fac_clash_foe_trigger = {
+			LORD = $LORD$
+		}
+	}
+}
+lam_fac_clash_foe_trigger = {
+	NOT = {
+		var:lam_fac_stage ?= 9
+	}
+	NOT = {
+		lam_fac_has_truce_trigger = {
+			OTHER = prev
+		}
+	}
+	is_alive = yes
+	has_variable = lam_bloc_lead
+	$LORD$ = {
+		is_target_in_variable_list = {
+			name = lam_bloc_leads
+			target = prev
+		}
+	}
+	NOT = {
+		var:lam_fac_stage ?= 1
+	}
+	NOT = {
+		var:lam_fac_stage ?= 4
+	}
+}
+lam_fac_legal_trigger = {
+	OR = {
+		has_variable = lam_fac_pardoned
+		NOT = {
+			$LORD$ = {
+				has_variable = lam_fac_ban
+			}
+		}
+		AND = {
+			$LORD$ = {
+				var:lam_fac_ban ?= flag:crown
+			}
+			has_variable = lam_fac_courtparty
+		}
+	}
+}
+lam_ff_can_found_in_trigger = {
+	is_ai = no
+	lam_ff_not_head_trigger = yes
+	OR = {
+		NOT = {
+			$LORD$ = {
+				has_variable = lam_fac_ban
+			}
+		}
+		NOT = {
+			$LORD$ = root
+		}
+	}
+	$LORD$ = {
+		lam_fac_realm_in_scope_trigger = yes
+	}
+	$LORD$ = {
+		lam_ff_player_seat_open_trigger = yes
+	}
+}
+lam_ff_followers_trigger = {
+	$LORD$ = {
+		any_vassal = {
+			is_ruler = yes
+			is_alive = yes
+			NOT = {
+				this = root
+			}
+			NOT = {
+				has_variable = lam_bloc_lead
+			}
+			NOT = {
+				var:lam_fac_tier ?= 1
+			}
+			OR = {
+				opinion = {
+					target = root
+					value >= 20
+				}
+				house ?= root.house
+				has_relation_friend = root
+				has_relation_best_friend = root
+			}
+			trigger_if = {
+				limit = {
+					$LORD$ = root
+				}
+				AND = {
+					trigger_if = {
+						limit = {
+							has_variable = lam_gui_att
+						}
+						NOT = {
+							var:lam_gui_att < 0
+						}
+					}
+				}
+			}
+			count >= 2
+		}
+	}
+}
+lam_fac_wed_to_lord_trigger = {
+	OR = {
+		any_spouse = {
+			OR = {
+				this = $LORD$
+				is_close_family_of = $LORD$
+			}
+		}
+		betrothed ?= {
+			OR = {
+				this = $LORD$
+				is_close_family_of = $LORD$
+			}
+		}
+		any_close_family_member = {
+			OR = {
+				any_spouse = {
+					OR = {
+						this = $LORD$
+						is_close_family_of = $LORD$
+					}
+				}
+				betrothed ?= {
+					OR = {
+						this = $LORD$
+						is_close_family_of = $LORD$
+					}
+				}
+			}
+		}
+	}
+}
+lam_fac_control_trigger = {
+	liege ?= $LORD$
+	this = $LEAD$
+	lam_pol_control_trigger = yes
+}
+lam_fac_ctrl_seats_trigger = {
+	save_temporary_scope_as = lam_cc_h
+	liege ?= {
+		any_councillor = {
+			OR = {
+				this = scope:lam_cc_h
+				var:lam_bloc ?= scope:lam_cc_h
+			}
+			count >= 4
+		}
+	}
+}
+lam_fac_ctrl_offices_trigger = {
+	save_temporary_scope_as = lam_cc_h
+	liege ?= {
+		cp:councillor_chancellor ?= {
+			OR = {
+				this = scope:lam_cc_h
+				var:lam_bloc ?= scope:lam_cc_h
+			}
+		}
+		cp:councillor_marshal ?= {
+			OR = {
+				this = scope:lam_cc_h
+				var:lam_bloc ?= scope:lam_cc_h
+			}
+		}
+	}
+}
+lam_fac_ctrl_alone_trigger = {
+	save_temporary_scope_as = lam_cc_h
+	liege ?= {
+		NOT = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				NOT = {
+					this = scope:lam_cc_h
+				}
+				NOT = {
+					var:lam_fac_stage ?= 9
+				}
+				NOT = {
+					is_target_in_variable_list = {
+						name = lam_fac_allies
+						target = scope:lam_cc_h
+					}
+				}
+				has_variable = lam_fac_share
+				var:lam_fac_share > lam_tune_seize_rival_share
+			}
+		}
+	}
+}
+lam_fac_can_ban_trigger = {
+	NOT = {
+		has_variable = lam_fac_ban
+	}
+	any_in_list = {
+		variable = lam_bloc_leads
+		is_alive = yes
+		has_variable = lam_fac_att
+		var:lam_fac_att <= -15
+	}
+	max_military_strength > lam_fac_hostile_power_value
+	is_at_war = no
+	prestige >= major_prestige_value
+	gold >= medium_gold_value
+}
+lam_fac_own_politics_trigger = {
+	OR = {
+		government_has_flag = government_is_japan_administrative
+		government_has_flag = government_is_japan_feudal
+		has_government = celestial_government
+		has_government = meritocratic_government
+		top_liege ?= {
+			OR = {
+				government_has_flag = government_is_japan_administrative
+				government_has_flag = government_is_japan_feudal
+				has_government = celestial_government
+				has_government = meritocratic_government
+			}
+		}
+	}
+}
+lam_fac_vanilla_politics_trigger = {
+	OR = {
+		government_has_mechanic = administrative
+		top_liege ?= {
+			government_has_mechanic = administrative
+		}
+		lam_fac_own_politics_trigger = yes
+	}
+}
+lam_fac_cp_rift_trigger = {
+	NOT = {
+		this = $LORD$
+	}
+	NOT = {
+		$LORD$ = {
+			var:lam_fac_puppet_master ?= prev
+		}
+	}
+	OR = {
+		AND = {
+			has_variable = lam_fac_att
+			var:lam_fac_att <= -25
+		}
+		var:lam_fac_stage ?= 4
+		opinion = {
+			target = $LORD$
+			value <= -40
+		}
+		$LORD$ = {
+			opinion = {
+				target = prev
+				value <= -50
+			}
+		}
+		AND = {
+			has_variable = lam_fac_favour
+			var:lam_fac_favour <= -20
+		}
+		AND = {
+			var:lam_fac_lord_wrong ?= $LORD$
+			has_variable = lam_fac_lord_wrong_m
+			var:lam_fac_lord_wrong_m > lam_now_m
+		}
+		AND = {
+			var:lam_lf_gov_lord ?= $LORD$
+			var:lam_lf_gov_streak >= 2
+		}
+	}
+}
+lam_fac_just_arrest_trigger = {
+	OR = {
+		has_variable = lam_fac_outlaw
+		any_secret = {
+			is_known_by = $BY$
+			is_criminal_for = prev
+		}
+		$BY$ = {
+			has_imprisonment_reason = prev
+		}
+	}
+}
+lam_fac_hold_trigger = {
+	NOT = {
+		has_variable = lam_fac_spurned
+	}
+	OR = {
+		$LORD$ = {
+			has_variable = lam_fac_honeymoon
+		}
+		has_variable = lam_fac_settling
+	}
+}
+lam_fac_ug_founder_trigger = {
+	lam_ff_not_head_trigger = yes
+	is_ai = yes
+	is_ruler = yes
+	is_adult = yes
+	is_imprisoned = no
+	var:lam_fac_weighed ?= $LORD$
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+	NOT = {
+		var:lam_fac_tier ?= 1
+	}
+	has_variable = lam_gui_att
+	var:lam_gui_att <= -30
+	has_variable = lam_fac_engage
+	var:lam_fac_engage >= 60
+	NOT = {
+		has_trait = craven
+	}
+	OR = {
+		has_trait = ambitious
+		has_trait = vengeful
+		has_trait = zealous
+		has_trait = arrogant
+		var:lam_gui_att <= -50
+	}
+}
+lam_fac_ug_recruitable_trigger = {
+	is_ai = yes
+	is_alive = yes
+	is_ruler = yes
+	is_adult = yes
+	is_imprisoned = no
+	NOT = {
+		this = $HEAD$
+	}
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+	NOT = {
+		var:lam_bloc ?= $HEAD$
+	}
+	NOT = {
+		var:lam_fac_tier ?= 1
+	}
+	has_variable = lam_gui_att
+	var:lam_gui_att <= -15
+	opinion = {
+		target = $HEAD$
+		value >= 10
+	}
+	NOT = {
+		has_trait = craven
+	}
+}
+lam_fac_awe_trigger = {
+	OR = {
+		has_trait = conqueror
+		has_trait = greatest_of_khans
+		has_character_modifier = ai_extreme_conqueror_modifier
+	}
+}
+lam_fac_cause_of_trigger = {
+	OR = {
+		AND = {
+			var:lam_fac_agenda ?= flag:courtly
+			$WHO$ = {
+				is_ruler = yes
+				exists = liege
+				is_landless_ruler = no
+				is_vassal_of = liege
+				has_vassal_stance = courtly
+			}
+		}
+		AND = {
+			var:lam_fac_agenda ?= flag:glory_hound
+			$WHO$ = {
+				is_ruler = yes
+				exists = liege
+				is_landless_ruler = no
+				is_vassal_of = liege
+				has_vassal_stance = glory_hound
+			}
+		}
+		AND = {
+			var:lam_fac_agenda ?= flag:parochial
+			$WHO$ = {
+				is_ruler = yes
+				exists = liege
+				is_landless_ruler = no
+				is_vassal_of = liege
+				has_vassal_stance = parochial
+			}
+		}
+		AND = {
+			var:lam_fac_agenda ?= flag:zealot
+			$WHO$ = {
+				is_ruler = yes
+				exists = liege
+				is_landless_ruler = no
+				is_vassal_of = liege
+				has_vassal_stance = zealot
+			}
+		}
+		AND = {
+			var:lam_fac_agenda ?= flag:minority
+			$WHO$ = {
+				is_ruler = yes
+				exists = liege
+				is_landless_ruler = no
+				is_vassal_of = liege
+				has_vassal_stance = minority
+			}
+		}
+		AND = {
+			var:lam_fac_agenda ?= flag:barons_and_minor_landholders
+			$WHO$ = {
+				is_ruler = yes
+				exists = liege
+				is_landless_ruler = no
+				is_vassal_of = liege
+				has_vassal_stance = barons_and_minor_landholders
+			}
+		}
+		AND = {
+			var:lam_fac_agenda ?= flag:belligerent
+			$WHO$ = {
+				is_ruler = yes
+				exists = liege
+				is_landless_ruler = no
+				is_vassal_of = liege
+				has_vassal_stance = belligerent
+			}
+		}
+	}
+}
+lam_fac_succ_eligible_trigger = {
+	is_alive = yes
+	is_ruler = yes
+	is_adult = yes
+	is_imprisoned = no
+	liege ?= $LORD$
+	NOT = {
+		this = scope:lam_ps_old
+	}
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+}
+lam_ff_cofounder_trigger = {
+	is_alive = yes
+	is_ai = yes
+	is_ruler = yes
+	is_adult = yes
+	is_imprisoned = no
+	NOT = {
+		this = root
+	}
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+	NOT = {
+		var:lam_fac_tier ?= 1
+	}
+	NOT = {
+		has_relation_rival = root
+	}
+	NOT = {
+		has_relation_nemesis = root
+	}
+	OR = {
+		opinion = {
+			target = root
+			value >= 20
+		}
+		house ?= root.house
+		has_relation_friend = root
+		has_relation_best_friend = root
+	}
+}
+lam_fac_recruitable_trigger = {
+	is_alive = yes
+	is_ai = yes
+	is_ruler = yes
+	NOT = {
+		this = scope:lam_rc_head
+	}
+	highest_held_title_tier <= scope:lam_rc_head.highest_held_title_tier
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+	NOT = {
+		var:lam_bloc ?= scope:lam_rc_head
+	}
+}
+lam_fac_promise_impossible_trigger = {
+	OR = {
+		AND = {
+			var:lam_fac_promise ?= flag:tolerance
+			$LORD$ = {
+				NOT = {
+					government_allows = council
+				}
+			}
+		}
+		AND = {
+			var:lam_fac_promise ?= flag:council
+			$LORD$ = {
+				NOT = {
+					government_allows = council
+				}
+			}
+		}
+		AND = {
+			var:lam_fac_promise ?= flag:marriage
+			NOT = {
+				lam_fac_marriage_possible_trigger = {
+					LORD = $LORD$
+				}
+			}
+		}
+		AND = {
+			var:lam_fac_promise ?= flag:campaign
+			$LORD$ = {
+				is_at_war_as_defender = yes
+			}
+		}
+		AND = {
+			var:lam_fac_promise ?= flag:campaign
+			has_variable = lam_pd_promised_title
+			OR = {
+				NOT = {
+					var:lam_pd_promised_title ?= {
+						exists = holder
+					}
+				}
+				NOT = {
+					var:lam_pd_promised_owner ?= {
+						is_alive = yes
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,17 @@
+﻿vhr_region = { is_landed = yes capital_county = { de_jure_liege.de_jure_liege.de_jure_liege = title:e_voltara_halithor } }
+vhr_mine_owner = { any_held_title = { tier = tier_barony title_province = { OR = { has_building = vhr_ruby_219_1 has_building = vhr_ruby_219_2 has_building = vhr_ruby_219_3 has_building = vhr_ruby_224_1 has_building = vhr_ruby_224_2 has_building = vhr_ruby_224_3 has_building = vhr_ruby_3102_1 has_building = vhr_ruby_3102_2 has_building = vhr_ruby_3102_3 } } } }
+vhr_mine_realm = { OR = { vhr_mine_owner = yes any_vassal_or_below = { vhr_mine_owner = yes } } }
+vhr_valid_worker = {
+ has_trait = voltara_slave is_alive = yes is_adult = yes is_landed = no is_imprisoned = no is_incapable = no
+ NOT = { has_character_flag = voltara_slave_sale_pending }
+ exists = var:vhr_employer var:voltara_slave_owner ?= var:vhr_employer
+ is_courtier_of = var:vhr_employer
+ var:vhr_employer = { is_alive = yes voltara_slavery_is_legal = yes OR = { vhr_region = yes vhr_mine_owner = yes } }
+ trigger_if = { limit = { has_character_flag = vhr_mine_worker } var:vhr_employer = { vhr_mine_owner = yes } }
+}
+vhr_worker_available = {
+ has_trait = voltara_slave is_alive = yes is_adult = yes is_imprisoned = no is_incapable = no is_landed = no
+ is_courtier_of = scope:actor var:voltara_slave_owner ?= scope:actor
+ NOT = { has_character_flag = voltara_slave_sale_pending } NOT = { exists = var:vhr_employer }
+}
+vhr_labor_capacity = { NOT = { any_courtier = { count >= 3 var:vhr_employer ?= prev vhr_valid_worker = yes } } }

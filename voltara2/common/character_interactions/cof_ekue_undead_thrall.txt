@@ -28,13 +28,13 @@ is_valid = {
 			NOT = {
 				OR = {
 					is_pregnant = yes
-					has_trait = laid_egg
+					has_trait = pregnant
 					has_trait = vt_ek_undead_character
 					has_trait = vt_ek_lich_character
 					is_vampire = yes
 					has_character_modifier = secret_vampire_modifier
 					has_trait = supernatural_vampire
-					has_trait = lifespan_7
+					has_trait_flag = is_immortal
 					has_trait = briarheart
 					has_character_flag = race_daedra
 				}
@@ -52,7 +52,7 @@ is_valid = {
 	}
 
 	force_notification = yes
-	show_answer_notification = no
+
 	desc = cof_undead_thrall_interaction_desc
 
 	ai_potential = {
@@ -185,9 +185,9 @@ is_valid = {
 			}
 			if = {
 				limit = {
-					has_trait = lifespan_5
+					has_trait = lifespan_magic_5
 				}
-				remove_trait = lifespan_5
+				remove_trait = lifespan_magic_5
 				remove_character_flag = lifespan_5
 			}
 			if = {
@@ -308,7 +308,7 @@ is_valid = {
 	icon = icon_spellbook
 	desc = cof_ekue_harvest_soul_interaction_desc
 	force_notification = yes
-	show_answer_notification = no
+
 	ai_potential = {
 		always = no
 	}
@@ -332,7 +332,7 @@ is_valid = {
 			NOT = {
 				OR = {
 					is_pregnant = yes
-					has_trait = laid_egg
+					has_trait = pregnant
 					has_trait = vt_ek_undead_character
 					has_trait = vt_ek_lich_character
 				}
@@ -401,7 +401,7 @@ is_valid = {
 		}
 	}
 	force_notification = yes
-	show_answer_notification = no
+
 	desc = cof_ekue_call_thrall_interaction_desc
 	ai_potential = {
 		always = no

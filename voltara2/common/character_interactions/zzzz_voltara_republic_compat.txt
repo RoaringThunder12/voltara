@@ -227,7 +227,7 @@ scope:target = { is_merchant_family_title = no }
 				}
 			}
 			trigger_if = {
-				limit = { scope:target = title:k_fashion }
+				limit = { always = no }
 				NOT = { scope:target = title:k_fashion }
 			}
 			custom_tooltip = {
@@ -262,7 +262,7 @@ scope:target = { is_merchant_family_title = no }
 			trigger_if = {
 				limit = {
 					exists = situation:the_christian_church
-					this = title:k_papal_state
+					always = no
 				}
 				custom_tooltip = {
 					text = GRANT_TITLES_ITEM_CANT_HEAD_OF_FAITH
@@ -5149,7 +5149,7 @@ scope:actor = { NOT = { government_has_flag = government_is_active_republic } }
 
 scope:actor = { NOT = { government_has_flag = government_is_active_republic } }
 
- scope:actor = { trigger_if = { limit = { voltara_keeper_realm = yes } scope:recipient = { OR = { culture = culture:voltara_southorion culture = culture:voltara_desert_southron } } } }
+ scope:actor = { trigger_if = { limit = { voltara_keeper_realm = yes } scope:recipient = { OR = { culture = { OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } }  } } } }
  scope:recipient = { trigger_if = { limit = { voltara_keeper_realm = yes } scope:actor = { NOT = { voltara_in_hegemony = yes } } } }
 
  # Voltara: ruins are colonized through the county panel, not character diplomacy.

@@ -1523,8 +1523,10 @@ house_valor.2002 = {
 				scope:rejected_child = {
 					progress_towards_rival_effect = {
 						CHARACTER = scope:preferred_child
-						OPINION = no
-					}
+						OPINION = 0
+					
+ REASON = vgd_family_sibling_favoritism
+}
 					add_opinion = {
 						modifier = bitter_rivalry_opinion
 						opinion = -15
@@ -1569,8 +1571,10 @@ house_valor.2002 = {
 				scope:rejected_child = {
 					progress_towards_rival_effect = {
 						CHARACTER = scope:preferred_child
-						OPINION = no
-					}
+						OPINION = 0
+					
+ REASON = vgd_family_sibling_favoritism
+}
 					add_opinion = {
 						modifier = bitter_rivalry_opinion
 						opinion = -15
@@ -1599,11 +1603,13 @@ house_valor.2002 = {
 		# Otherwise, develops rivalry with parent
 		progress_towards_rival_effect = {
 			CHARACTER = scope:rejected_child
-			OPINION = no
+			OPINION = 0
 			# "no" is an option to not add opinion. "yes" means both receives opinion.
 			# See 00_relation_effects.txt scritped effect
 			# Selecting No because vanilla code uses "Hatred" descriptor for the opinion, which sounds too strong.
-		}
+		
+ REASON = vgd_family_denied_war
+}
 		hidden_effect = {
 			add_opinion = {
 				modifier = angry_opinion
@@ -1624,8 +1630,10 @@ house_valor.2002 = {
 				scope:rejected_child = {
 					progress_towards_rival_effect = {
 						CHARACTER = scope:preferred_child
-						OPINION = no
-					}
+						OPINION = 0
+					
+ REASON = vgd_family_sibling_favoritism
+}
 					add_opinion = {
 						modifier = bitter_rivalry_opinion
 						opinion = -15
@@ -1856,8 +1864,10 @@ house_valor.2003 = {
 		scope:twin1 = {
 			progress_towards_friend_effect = {
 				CHARACTER = scope:twin2
-				OPINION = no
-			}
+				OPINION = 0
+			
+ REASON = vgd_family_shared_training
+}
 		}
 	}
 	option = {
@@ -1931,8 +1941,10 @@ house_valor.2003 = {
 		scope:twin1 = {
 			progress_towards_friend_effect = {
 				CHARACTER = scope:twin2
-				OPINION = no
-			}
+				OPINION = 0
+			
+ REASON = vgd_family_shared_training
+}
 		}
 	}
 	option = {
@@ -2026,8 +2038,10 @@ house_valor.2003 = {
 		scope:twin1 = {
 			progress_towards_friend_effect = {
 				CHARACTER = scope:twin2
-				OPINION = no
-			}
+				OPINION = 0
+			
+ REASON = vgd_family_shared_training
+}
 		}
 	}
 	option = {
@@ -2036,11 +2050,13 @@ house_valor.2003 = {
 		add_character_flag = denied_child_from_war
 		progress_towards_rival_effect = {
 			CHARACTER = scope:twin1
-			OPINION = no
+			OPINION = 0
 			# "no" is an option to not add opinion. "yes" means both receives opinion.
 			# See 00_relation_effects.txt scritped effect
 			# Selecting No because vanilla code uses "Hatred" descriptor for the opinion, which sounds too strong.
-		}
+		
+ REASON = vgd_family_denied_war
+}
 		hidden_effect = {
 			add_opinion = {
 				modifier = angry_opinion
@@ -2055,11 +2071,13 @@ house_valor.2003 = {
 		}
 		progress_towards_rival_effect = {
 			CHARACTER = scope:twin2
-			OPINION = no
+			OPINION = 0
 			# "no" is an option to not add opinion. "yes" means both receives opinion.
 			# See 00_relation_effects.txt scritped effect
 			# Selecting No because vanilla code uses "Hatred" descriptor for the opinion, which sounds too strong.
-		}
+		
+ REASON = vgd_family_denied_war
+}
 		hidden_effect = {
 			add_opinion = {
 				modifier = angry_opinion

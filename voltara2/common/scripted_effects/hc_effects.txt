@@ -1,0 +1,434 @@
+﻿hc_create_random_mother_effect = {
+    if = {
+        limit = {
+            is_landed = yes
+        }
+
+        capital_province = {
+            save_scope_as = hc_parent_location
+        }
+    }
+
+    else = {
+        location = {
+            save_scope_as = hc_parent_location
+        }
+    }
+
+    if = {
+        limit = {
+            age < 16
+        }
+
+        create_character = {
+            dynasty = none
+            location = scope:hc_parent_location
+            culture = root.culture
+            faith = root.faith
+            age = 34
+            gender = female
+            save_scope_as = hc_random_mother
+        }
+    }
+
+    else_if = {
+        limit = {
+            age < 30
+        }
+
+        create_character = {
+            dynasty = none
+            location = scope:hc_parent_location
+            culture = root.culture
+            faith = root.faith
+            age = 50
+            gender = female
+            save_scope_as = hc_random_mother
+        }
+    }
+
+    else_if = {
+        limit = {
+            age < 45
+        }
+
+        create_character = {
+            dynasty = none
+            location = scope:hc_parent_location
+            culture = root.culture
+            faith = root.faith
+            age = 65
+            gender = female
+            save_scope_as = hc_random_mother
+        }
+    }
+
+    else = {
+        create_character = {
+            dynasty = none
+            location = scope:hc_parent_location
+            culture = root.culture
+            faith = root.faith
+            age = 80
+            gender = female
+            save_scope_as = hc_random_mother
+        }
+    }
+}
+
+
+hc_create_random_father_effect = {
+    if = {
+        limit = {
+            is_landed = yes
+        }
+
+        capital_province = {
+            save_scope_as = hc_parent_location
+        }
+    }
+
+    else = {
+        location = {
+            save_scope_as = hc_parent_location
+        }
+    }
+
+    if = {
+        limit = {
+            age < 16
+        }
+
+        create_character = {
+            dynasty = none
+            location = scope:hc_parent_location
+            culture = root.culture
+            faith = root.faith
+            age = 34
+            gender = male
+            save_scope_as = hc_random_father
+        }
+    }
+
+    else_if = {
+        limit = {
+            age < 30
+        }
+
+        create_character = {
+            dynasty = none
+            location = scope:hc_parent_location
+            culture = root.culture
+            faith = root.faith
+            age = 50
+            gender = male
+            save_scope_as = hc_random_father
+        }
+    }
+
+    else_if = {
+        limit = {
+            age < 45
+        }
+
+        create_character = {
+            dynasty = none
+            location = scope:hc_parent_location
+            culture = root.culture
+            faith = root.faith
+            age = 65
+            gender = male
+            save_scope_as = hc_random_father
+        }
+    }
+
+    else = {
+        create_character = {
+            dynasty = none
+            location = scope:hc_parent_location
+            culture = root.culture
+            faith = root.faith
+            age = 80
+            gender = male
+            save_scope_as = hc_random_father
+        }
+    }
+}
+
+
+hc_mark_as_twin_of_existing_child_effect = {
+    if = {
+        limit = {
+            scope:hc_target = {
+                any_child = {
+                    age = root.age
+
+                    NOT = {
+                        this = root
+                    }
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                NOT = {
+                    has_trait = twin
+                }
+            }
+
+            add_trait = twin
+        }
+
+        scope:hc_target = {
+            random_child = {
+                limit = {
+                    age = root.age
+
+                    NOT = {
+                        this = root
+                    }
+                }
+
+                if = {
+                    limit = {
+                        NOT = {
+                            has_trait = twin
+                        }
+                    }
+
+                    add_trait = twin
+                }
+            }
+        }
+    }
+}
+
+
+hc_mark_as_twin_of_target_effect = {
+    if = {
+        limit = {
+            scope:hc_target = {
+                age = root.age
+            }
+        }
+
+        if = {
+            limit = {
+                NOT = {
+                    has_trait = twin
+                }
+            }
+
+            add_trait = twin
+        }
+
+        scope:hc_target = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_trait = twin
+                    }
+                }
+
+                add_trait = twin
+            }
+        }
+    }
+}
+
+
+hc_become_distant_relative_effect = {
+    set_house = scope:hc_target.house
+
+    remove_trait = hc_house_customizer
+}
+
+
+hc_become_child_effect = {
+    set_house = scope:hc_target.house
+
+    if = {
+        limit = {
+            scope:hc_target = {
+                is_female = yes
+            }
+        }
+
+        set_mother = scope:hc_target
+
+        if = {
+            limit = {
+                exists = scope:hc_target_spouse_parent
+
+                scope:hc_target_spouse_parent = {
+                    is_female = no
+                }
+            }
+
+            set_father = scope:hc_target_spouse_parent
+            set_real_father = scope:hc_target_spouse_parent
+        }
+    }
+
+    else = {
+        set_father = scope:hc_target
+        set_real_father = scope:hc_target
+
+        if = {
+            limit = {
+                exists = scope:hc_target_spouse_parent
+
+                scope:hc_target_spouse_parent = {
+                    is_female = yes
+                }
+            }
+
+            set_mother = scope:hc_target_spouse_parent
+        }
+    }
+
+    hc_mark_as_twin_of_existing_child_effect = yes
+
+    remove_trait = hc_house_customizer
+}
+
+
+hc_become_sibling_effect = {
+    set_house = scope:hc_target.house
+
+    if = {
+        limit = {
+            exists = scope:hc_valid_sibling_father
+        }
+
+        set_father = scope:hc_valid_sibling_father
+        set_real_father = scope:hc_valid_sibling_father
+    }
+
+    if = {
+        limit = {
+            exists = scope:hc_valid_sibling_mother
+        }
+
+        set_mother = scope:hc_valid_sibling_mother
+    }
+
+    hc_mark_as_twin_of_target_effect = yes
+
+    remove_trait = hc_house_customizer
+}
+
+
+hc_become_known_bastard_effect = {
+    set_house = scope:hc_target.house
+
+    if = {
+        limit = {
+            scope:hc_target = {
+                is_female = yes
+            }
+        }
+
+        set_mother = scope:hc_target
+        set_father = scope:hc_generated_parent
+        set_real_father = scope:hc_generated_parent
+    }
+
+    else = {
+        set_father = scope:hc_target
+        set_real_father = scope:hc_target
+        set_mother = scope:hc_generated_parent
+    }
+
+    if = {
+        limit = {
+            NOT = {
+                has_trait = bastard
+            }
+
+            NOT = {
+                has_trait = legitimized_bastard
+            }
+        }
+
+        add_trait = bastard
+    }
+
+    hc_mark_as_twin_of_existing_child_effect = yes
+
+    remove_trait = hc_house_customizer
+}
+
+
+hc_become_legitimized_bastard_effect = {
+    set_house = scope:hc_target.house
+
+    if = {
+        limit = {
+            scope:hc_target = {
+                is_female = yes
+            }
+        }
+
+        set_mother = scope:hc_target
+        set_father = scope:hc_generated_parent
+        set_real_father = scope:hc_generated_parent
+    }
+
+    else = {
+        set_father = scope:hc_target
+        set_real_father = scope:hc_target
+        set_mother = scope:hc_generated_parent
+    }
+
+    if = {
+        limit = {
+            has_trait = bastard
+        }
+
+        remove_trait = bastard
+    }
+
+    if = {
+        limit = {
+            NOT = {
+                has_trait = legitimized_bastard
+            }
+        }
+
+        add_trait = legitimized_bastard
+    }
+
+    hc_mark_as_twin_of_existing_child_effect = yes
+
+    remove_trait = hc_house_customizer
+}
+
+hc_gain_pressed_claims_from_target_titles_effect = {
+    scope:hc_target = {
+        every_held_title = {
+            limit = {
+                tier >= tier_county
+            }
+
+            root = {
+                add_pressed_claim = prev
+            }
+        }
+    }
+}
+
+hc_gain_unpressed_claims_from_target_titles_effect = {
+    scope:hc_target = {
+        every_held_title = {
+            limit = {
+                tier >= tier_county
+            }
+
+            root = {
+                add_unpressed_claim = prev
+            }
+        }
+    }
+}

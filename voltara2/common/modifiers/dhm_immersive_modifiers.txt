@@ -1,0 +1,471 @@
+﻿# Dynasty & Household Manager v0.3.1 — modest, time-limited story rewards.
+# These modifiers reward household choices without replacing CK3's core systems.
+
+dhm_steady_lessons_modifier = {
+	icon = learning_positive
+	learning = 1
+}
+
+dhm_disrupted_lessons_modifier = {
+	icon = learning_negative
+	learning = -1
+}
+
+dhm_commended_scholar_modifier = {
+	icon = learning_positive
+	learning = 1
+	monthly_prestige = 0.05
+}
+
+dhm_honored_tutor_modifier = {
+	icon = prestige_positive
+	learning = 1
+	monthly_prestige = 0.05
+}
+
+dhm_household_settlement_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	monthly_prestige = 0.05
+}
+
+dhm_sworn_household_pledge_modifier = {
+	icon = prestige_positive
+	diplomacy = 1
+	general_opinion = 2
+}
+
+dhm_established_household_modifier = {
+	icon = stewardship_positive
+	stewardship = 1
+	spouse_opinion = 5
+	fertility = 0.05
+}
+
+dhm_household_left_unsupported_modifier = {
+	icon = diplomacy_negative
+	spouse_opinion = -5
+	stress_loss_mult = -0.05
+}
+
+dhm_anniversary_warmth_modifier = {
+	icon = fertility_positive
+	spouse_opinion = 5
+	fertility = 0.05
+	stress_loss_mult = 0.05
+}
+
+dhm_dynastic_celebration_modifier = {
+	icon = prestige_positive
+	general_opinion = 2
+	monthly_prestige = 0.05
+}
+
+dhm_family_shelter_modifier = {
+	icon = diplomacy_positive
+	stress_loss_mult = 0.15
+}
+
+dhm_council_succession_modifier = {
+	icon = fertility_positive
+	fertility = 0.10
+	spouse_opinion = 5
+	general_opinion = 1
+	monthly_prestige = 0.05
+}
+
+dhm_council_alliance_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	general_opinion = 2
+	monthly_prestige = 0.05
+}
+
+dhm_council_education_modifier = {
+	icon = learning_positive
+	learning = 1
+	stress_loss_mult = 0.05
+	monthly_prestige = 0.05
+}
+
+dhm_council_balanced_modifier = {
+	icon = stewardship_positive
+	stewardship = 1
+	general_opinion = 1
+	stress_loss_mult = 0.05
+}
+
+# v0.4.0 — earned household reputations and story consequences.
+dhm_reputation_generous_modifier = {
+	icon = diplomacy_positive
+	general_opinion = 2
+	monthly_prestige = 0.05
+}
+
+dhm_reputation_strict_modifier = {
+	icon = dread_positive
+	dread_gain_mult = 0.05
+	monthly_prestige = 0.05
+}
+
+dhm_reputation_guardian_modifier = {
+	icon = learning_positive
+	learning = 1
+	stress_loss_mult = 0.05
+}
+
+dhm_reputation_traditional_modifier = {
+	icon = piety_positive
+	monthly_piety = 0.05
+	same_faith_opinion = 2
+}
+
+dhm_letters_from_home_modifier = {
+	icon = diplomacy_positive
+	stress_loss_mult = 0.10
+}
+
+dhm_household_confidence_modifier = {
+	icon = prestige_positive
+	diplomacy = 1
+}
+
+dhm_schoolroom_breakthrough_modifier = {
+	icon = learning_positive
+	learning = 1
+}
+
+dhm_schoolroom_resentment_modifier = {
+	icon = learning_negative
+	stress_gain_mult = 0.10
+}
+
+
+# v0.7.2 schoolroom: diligence has a practical benefit even with reputation off.
+dhm_v072_school_discipline_modifier = {
+	icon = stewardship_positive
+	stewardship = 1
+}
+dhm_v072_tutor_excellence_modifier = {
+	icon = learning_positive
+	learning = 2
+}
+
+dhm_marital_self_reliance_modifier = {
+	icon = stewardship_positive
+	stewardship = 1
+	spouse_opinion = 5
+}
+
+dhm_unsettled_household_modifier = {
+	icon = diplomacy_negative
+	diplomacy = -1
+	spouse_opinion = -5
+}
+
+dhm_family_reconciled_modifier = {
+	icon = diplomacy_positive
+	stress_loss_mult = 0.10
+	general_opinion = 1
+}
+
+dhm_family_grievance_modifier = {
+	icon = diplomacy_negative
+	stress_gain_mult = 0.10
+	general_opinion = -1
+}
+
+# v0.4.0 RC5 — visible player rewards for completed household stories.
+# These are intentionally strong enough to notice, but remain temporary and
+# bounded by the existing story cooldowns.
+dhm_reward_household_patron_modifier = {
+	icon = stewardship_positive
+	diplomacy = 1
+	stewardship = 1
+	general_opinion = 2
+	monthly_prestige = 0.10
+}
+
+dhm_reward_trusted_counsel_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 2
+	stress_loss_mult = 0.15
+}
+
+dhm_reward_education_legacy_modifier = {
+	icon = learning_positive
+	learning = 2
+	monthly_prestige = 0.10
+}
+
+dhm_reward_household_peacemaker_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 2
+	general_opinion = 3
+	stress_loss_mult = 0.10
+}
+
+dhm_reward_dynastic_momentum_modifier = {
+	icon = prestige_positive
+	stewardship = 1
+	general_opinion = 2
+	monthly_prestige = 0.15
+}
+
+dhm_reward_cherished_customs_modifier = {
+	icon = piety_positive
+	diplomacy = 1
+	learning = 1
+	same_faith_opinion = 3
+	monthly_piety = 0.10
+}
+
+dhm_reward_proud_house_modifier = {
+	icon = prestige_positive
+	general_opinion = 2
+	monthly_prestige = 0.15
+	stress_loss_mult = 0.05
+}
+
+dhm_reward_family_regret_modifier = {
+	icon = diplomacy_negative
+	diplomacy = -1
+	general_opinion = -1
+	stress_gain_mult = 0.10
+}
+
+# v0.5.0 — every chosen advantage carries a readable cost or pressure.
+dhm_officer_shared_burden_modifier = {
+	icon = stewardship_positive
+	stewardship = 1
+	stress_gain_mult = 0.10
+}
+
+dhm_heir_bold_duty_modifier = {
+	icon = martial_positive
+	martial = 1
+	diplomacy = -1
+}
+
+dhm_heir_careful_duty_modifier = {
+	icon = stewardship_positive
+	stewardship = 1
+	monthly_prestige = -0.05
+}
+
+dhm_heir_listening_duty_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	intrigue = -1
+}
+
+dhm_household_open_hands_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	stress_gain_mult = 0.10
+}
+
+dhm_household_hard_order_modifier = {
+	icon = stewardship_positive
+	stewardship = 1
+	general_opinion = -2
+}
+
+dhm_household_recovery_modifier = {
+	icon = stewardship_positive
+	stewardship = 1
+	stress_gain_mult = 0.10
+}
+
+dhm_household_austerity_modifier = {
+	icon = stewardship_positive
+	stewardship = 1
+	diplomacy = -1
+}
+
+# Household mood. Even high cohesion has a burden: united families expect their
+# ruler to keep listening, while uneasy families become watchful but mistrustful.
+dhm_cohesion_fractured_modifier = {
+	icon = diplomacy_negative
+	diplomacy = -2
+	general_opinion = -3
+}
+
+dhm_cohesion_uneasy_modifier = {
+	icon = intrigue_positive
+	intrigue = 1
+	general_opinion = -2
+}
+
+dhm_cohesion_stable_modifier = {
+	icon = stewardship_positive
+	stewardship = 1
+	monthly_prestige = -0.05
+}
+
+dhm_cohesion_united_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	intrigue = -1
+}
+
+dhm_cohesion_devoted_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	general_opinion = 2
+	stress_gain_mult = 0.10
+}
+
+# House legacy identities are deliberately double-edged and inherited through
+# the v0.5 migration/initialization path rather than permanent character traits.
+dhm_legacy_scholarly_modifier = {
+	icon = learning_positive
+	learning = 2
+	martial = -1
+}
+
+dhm_legacy_honorable_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 2
+	intrigue = -1
+}
+
+dhm_legacy_protective_modifier = {
+	icon = martial_positive
+	martial = 1
+	stress_gain_mult = 0.10
+}
+
+dhm_legacy_ambitious_modifier = {
+	icon = prestige_positive
+	stewardship = 1
+	monthly_prestige = 0.15
+	stress_gain_mult = 0.10
+}
+
+dhm_legacy_traditional_modifier = {
+	icon = piety_positive
+	monthly_piety = 0.10
+	same_faith_opinion = 3
+	learning = -1
+}
+
+dhm_legacy_severe_modifier = {
+	icon = dread_positive
+	dread_gain_mult = 0.15
+	general_opinion = -5
+	diplomacy = -1
+}
+
+# v0.6.0 saga rewards are deliberately double-edged.
+dhm_officer_proven_service_modifier = {
+	icon = stewardship_positive
+	stewardship = 2
+	stress_gain_mult = 0.10
+}
+
+dhm_officer_feud_modifier = {
+	icon = diplomacy_negative
+	intrigue = 1
+	diplomacy = -1
+}
+
+dhm_heir_first_command_bold_modifier = {
+	icon = martial_positive
+	martial = 2
+	diplomacy = -1
+}
+
+dhm_heir_first_command_careful_modifier = {
+	icon = stewardship_positive
+	stewardship = 2
+	monthly_prestige = -0.10
+}
+
+dhm_heir_first_command_delegated_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 2
+	prowess = -1
+}
+
+dhm_heir_marriage_heart_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	general_opinion = 2
+	monthly_prestige = -0.05
+}
+
+dhm_heir_marriage_contract_modifier = {
+	icon = stewardship_positive
+	stewardship = 1
+	monthly_prestige = 0.10
+	stress_gain_mult = 0.10
+}
+
+dhm_heir_marriage_custom_modifier = {
+	icon = piety_positive
+	learning = 1
+	same_faith_opinion = 3
+	diplomacy = -1
+}
+
+dhm_heir_ready_modifier = {
+	icon = prestige_positive
+	diplomacy = 1
+	martial = 1
+	stress_gain_mult = 0.10
+}
+
+dhm_spouse_protective_front_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	stress_gain_mult = 0.10
+}
+
+dhm_household_policy_compromise_modifier = {
+	icon = stewardship_positive
+	stewardship = 1
+	monthly_prestige = -0.05
+}
+
+dhm_courtship_patience_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	stress_gain_mult = 0.10
+}
+
+dhm_marriage_saved_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 2
+	monthly_prestige = -0.05
+}
+
+dhm_scandal_repaired_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	stress_gain_mult = 0.10
+}
+
+dhm_shared_grief_modifier = {
+	icon = piety_positive
+	stress_loss_mult = 0.15
+	monthly_prestige = -0.05
+}
+
+dhm_second_chance_learning_modifier = {
+	icon = learning_positive
+	learning = 2
+	monthly_prestige = -0.05
+}
+
+dhm_fractured_truth_modifier = {
+	icon = intrigue_positive
+	intrigue = 1
+	general_opinion = -2
+}
+
+dhm_devoted_expectations_modifier = {
+	icon = diplomacy_positive
+	diplomacy = 1
+	stress_gain_mult = 0.10
+}

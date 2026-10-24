@@ -1,0 +1,699 @@
+﻿lam_pd_own_force_value = {
+	value = current_military_strength
+	save_temporary_scope_as = lam_pd_force_head
+	every_in_list = {
+		variable = lam_fac_members
+		limit = {
+			is_alive = yes
+			is_imprisoned = no
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_pd_force_head
+					}
+					var:lam_bloc ?= scope:lam_pd_force_head
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_pd_force_head.liege
+					}
+					liege ?= scope:lam_pd_force_head.liege
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			NOT = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_pd_force_head
+						}
+						this = scope:lam_pd_force_head
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			NOT = {
+				is_at_war = yes
+			}
+		}
+		add = current_military_strength
+	}
+}
+lam_pd_war_readiness_value = {
+	value = lam_pd_own_force_value
+	divide = {
+		value = liege.current_military_strength
+		min = 1
+	}
+	multiply = 40
+	max = 100
+	add = {
+		value = gold
+		divide = 20
+		min = 0
+		max = 20
+	}
+	if = {
+		limit = {
+			gold < 0
+		}
+		add = -35
+	}
+	if = {
+		limit = {
+			is_at_war = yes
+		}
+		add = -20
+	}
+	if = {
+		limit = {
+			liege = {
+				is_at_war_as_defender = yes
+			}
+		}
+		add = -25
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_cohesion
+		}
+		add = {
+			value = var:lam_fac_cohesion
+			subtract = 50
+			multiply = 0.4
+		}
+	}
+}
+lam_pd_vote_value = {
+	value = 0
+	if = {
+		limit = {
+			scope:lam_cr_head ?= {
+				var:lam_cr_issue ?= flag:goal
+			}
+		}
+		add = lam_cv_goal_new_pref_value
+		subtract = lam_cv_goal_cur_pref_value
+	}
+	add = {
+		value = "opinion(scope:lam_cr_head)"
+		multiply = 0.2
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_cr_head
+					}
+					this = scope:lam_cr_head
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				has_variable = lam_fac_hoarded
+			}
+		}
+		add = -15
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				has_variable = lam_fac_betrayed
+			}
+		}
+		add = -10
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_merit
+		}
+		add = 5
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				OR = {
+					var:lam_cr_issue ?= flag:rise
+					var:lam_cr_issue ?= flag:arm
+					var:lam_cr_issue ?= flag:oppose
+				}
+			}
+		}
+		add = {
+			value = scope:lam_cr_head.lam_pd_war_readiness_value
+			subtract = 45
+		}
+		add = {
+			value = "opinion(scope:lam_cr_lord)"
+			multiply = -0.25
+		}
+		if = {
+			limit = {
+				has_trait = craven
+			}
+			add = -18
+		}
+		if = {
+			limit = {
+				has_trait = brave
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				has_trait = content
+			}
+			add = -10
+		}
+		if = {
+			limit = {
+				has_trait = ambitious
+			}
+			add = 12
+		}
+		if = {
+			limit = {
+				gold < 0
+			}
+			add = -20
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				OR = {
+					var:lam_cr_issue ?= flag:heir
+					var:lam_cr_issue ?= flag:crown
+				}
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head.var:lam_cr_target ?= {
+					is_alive = yes
+				}
+			}
+			add = {
+				value = "opinion(scope:lam_cr_head.var:lam_cr_target)"
+				multiply = 0.25
+			}
+			if = {
+				limit = {
+					dynasty ?= scope:lam_cr_head.var:lam_cr_target.dynasty
+				}
+				add = 25
+			}
+			if = {
+				limit = {
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_cr_head.var:lam_cr_target.faith
+							}
+							faith = scope:lam_cr_head.var:lam_cr_target.faith
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+				add = 10
+			}
+			if = {
+				limit = {
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_cr_lord.primary_heir
+							}
+							scope:lam_cr_head.var:lam_cr_target ?= scope:lam_cr_lord.primary_heir
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+				add = 15
+			}
+			if = {
+				limit = {
+					scope:lam_cr_head.var:lam_cr_target = {
+						has_trait = disinherited
+					}
+				}
+				add = -35
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				var:lam_cr_issue ?= flag:stance
+			}
+		}
+		if = {
+			limit = {
+				lam_is_stance_lean_for_trigger = yes
+			}
+			add = 20
+		}
+		if = {
+			limit = {
+				lam_is_stance_lean_against_trigger = yes
+			}
+			add = -20
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				var:lam_cr_issue ?= flag:goal
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head.var:lam_cr_goal_person ?= this
+			}
+			add = 40
+		}
+		else_if = {
+			limit = {
+				scope:lam_cr_head.var:lam_cr_goal_person ?= {
+					is_alive = yes
+				}
+			}
+			add = {
+				value = "opinion(scope:lam_cr_head.var:lam_cr_goal_person)"
+				multiply = 0.25
+			}
+			if = {
+				limit = {
+					has_relation_rival = scope:lam_cr_head.var:lam_cr_goal_person
+				}
+				add = -30
+			}
+			if = {
+				limit = {
+					has_trait = ambitious
+					var:lam_fac_tier ?= 1
+				}
+				add = -10
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				var:lam_cr_issue ?= flag:petition
+			}
+		}
+		add = 15
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_pd_kind ?= flag:council
+				}
+				is_councillor_of = scope:lam_cr_lord
+			}
+			add = -20
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					has_variable = lam_pd_counter
+				}
+			}
+			if = {
+				limit = {
+					scope:lam_cr_head = {
+						OR = {
+							var:lam_pd_counter ?= flag:heir
+							var:lam_pd_counter ?= flag:faith
+							var:lam_pd_counter ?= flag:release
+						}
+					}
+				}
+				add = -30
+			}
+			if = {
+				limit = {
+					has_trait = greedy
+				}
+				add = 15
+			}
+			if = {
+				limit = {
+					has_trait = zealous
+					scope:lam_cr_head = {
+						var:lam_pd_counter ?= flag:faith
+					}
+				}
+				add = -20
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_pd_kind ?= flag:gold
+				}
+				gold < 100
+			}
+			add = 15
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				var:lam_cr_issue ?= flag:deal
+			}
+		}
+		add = 15
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_cr_give ?= flag:gold
+				}
+				gold < 100
+			}
+			add = 15
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_cr_ask ?= flag:disband
+				}
+			}
+			add = -25
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_cr_ask ?= flag:heir
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = {
+				has_trait = greedy
+			}
+			add = 10
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				var:lam_cr_issue ?= flag:merge
+			}
+		}
+		add = {
+			value = "opinion(scope:lam_cr_head.var:lam_cr_target)"
+			multiply = 0.35
+		}
+		if = {
+			limit = {
+				has_relation_rival = scope:lam_cr_head.var:lam_cr_target
+			}
+			add = -35
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_fac_cohesion < 35
+				}
+			}
+			add = 20
+		}
+		if = {
+			limit = {
+				has_trait = ambitious
+				var:lam_fac_tier ?= 1
+			}
+			add = -15
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				var:lam_cr_issue ?= flag:confidence
+			}
+		}
+		multiply = -1
+		add = {
+			value = "opinion(scope:lam_cr_head.var:lam_cr_target)"
+			multiply = 0.25
+		}
+		if = {
+			limit = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_cr_head.var:lam_cr_target
+						}
+						this = scope:lam_cr_head.var:lam_cr_target
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			add = 30
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					has_variable = lam_fac_hoarded
+				}
+			}
+			add = 35
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_fac_cohesion < 35
+				}
+			}
+			add = 25
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				OR = {
+					var:lam_cr_issue ?= flag:ban
+					var:lam_cr_issue ?= flag:dissolve
+				}
+			}
+		}
+		add = {
+			value = scope:lam_cr_head.lam_pd_war_readiness_value
+			subtract = 45
+		}
+		if = {
+			limit = {
+				has_trait = craven
+			}
+			add = -15
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_cr_issue ?= flag:dissolve
+				}
+			}
+			multiply = -1
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				OR = {
+					var:lam_cr_issue ?= flag:watch
+					var:lam_cr_issue ?= flag:quiet
+				}
+			}
+		}
+		add = 20
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					lam_pd_war_readiness_value < 40
+				}
+			}
+			add = 15
+		}
+		if = {
+			limit = {
+				has_trait = impatient
+			}
+			add = -15
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				var:lam_cr_issue ?= flag:people
+			}
+		}
+		add = 15
+		if = {
+			limit = {
+				has_trait = compassionate
+			}
+			add = 15
+		}
+		if = {
+			limit = {
+				has_trait = callous
+			}
+			add = -20
+		}
+	}
+	else = {
+		add = {
+			value = "opinion(scope:lam_cr_lord)"
+			multiply = 0.3
+		}
+		if = {
+			limit = {
+				is_councillor_of = scope:lam_cr_lord
+			}
+			add = 20
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					has_variable = lam_pd_gr_promise
+				}
+			}
+			add = -20
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_cr_issue ?= flag:withdraw
+				}
+			}
+			multiply = -1
+		}
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = var:lam_bloc
+					}
+					var:lam_st_reward_head ?= var:lam_bloc
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			has_variable = lam_st_overlooked
+		}
+		add = {
+			value = var:lam_st_overlooked
+			multiply = -4
+		}
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				lam_lf_caucus_current_trigger = yes
+				is_target_in_variable_list = {
+					name = lam_lf_caucus_members
+					target = prev
+				}
+				OR = {
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = var:lam_cr_issue
+							}
+							var:lam_lf_caucus_topic ?= var:lam_cr_issue
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					AND = {
+						var:lam_cr_issue ?= flag:petition
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = var:lam_pd_kind
+								}
+								var:lam_lf_caucus_topic ?= var:lam_pd_kind
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+				}
+				NOT = {
+					lam_lf_pledge_current_trigger = yes
+				}
+			}
+		}
+		add = -8
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				var:lam_cr_issue ?= flag:petition
+				var:lam_pd_kind ?= flag:council
+				var:lam_lf_beneficiary ?= prev
+			}
+		}
+		add = 30
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				OR = {
+					var:lam_cr_issue ?= flag:rise
+					var:lam_cr_issue ?= flag:oppose
+					var:lam_cr_issue ?= flag:withdraw
+				}
+			}
+		}
+		add = scope:lam_cr_head.lam_lf_personal_grievance_value
+	}
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				var:lam_lf_gov_lord ?= liege
+				has_variable = lam_lf_gov_rating
+				OR = {
+					var:lam_cr_issue ?= flag:loyal
+					var:lam_cr_issue ?= flag:court
+				}
+			}
+		}
+		add = {
+			value = scope:lam_cr_head.var:lam_lf_gov_rating
+			multiply = 3
+		}
+	}
+	add = lam_bp_line_vote_value
+	add = lam_wc_claimant_vote_value
+}

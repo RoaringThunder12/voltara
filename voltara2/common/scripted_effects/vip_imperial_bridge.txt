@@ -1,0 +1,104 @@
+﻿
+vip_choose_side = {
+ if = { limit = { vip_public_lord = yes vic_politics = yes }
+ remove_character_flag = vic_pledged_cassian
+ remove_character_flag = vic_pledged_octavian
+ remove_character_flag = vic_neutral_house
+ set_variable = { name = vip_alignment value = $SIDE$ }
+ if = { limit = { var:vip_alignment = 1 } add_character_flag = vic_pledged_cassian }
+ else_if = { limit = { var:vip_alignment = 2 } add_character_flag = vic_pledged_octavian }
+ else = { add_character_flag = vic_neutral_house }
+ }
+}
+vip_read_public_alignment = {
+ set_variable = { name = vip_alignment value = 0 }
+ if = { limit = { has_character_flag = vic_pledged_octavian } set_variable = { name = vip_alignment value = 2 } }
+ else_if = { limit = { has_character_flag = vic_pledged_cassian } set_variable = { name = vip_alignment value = 1 } }
+
+
+ if = { limit = { global_var:vic_stage ?= 5 }
+ if = { limit = { has_character_flag = vic_wartime_crown } set_variable = { name = vip_alignment value = 1 } }
+ else_if = { limit = { OR = { this = character:19060003 has_character_flag = vic_wartime_opposition } } set_variable = { name = vip_alignment value = 2 } }
+ else = { set_variable = { name = vip_alignment value = 0 } }
+ }
+
+
+
+ if = { limit = { global_var:vic_stage >= 6 character:19060003 = { has_title = title:h_voltara_severos } }
+ if = { limit = { var:vip_alignment = 2 } set_variable = { name = vip_alignment value = 1 } }
+ else_if = { limit = { var:vip_alignment = 1 } set_variable = { name = vip_alignment value = 0 } }
+ }
+
+}
+vip_lf_changed_membership = {
+ if = { limit = { vip_public_lord = yes vic_politics = yes has_variable = vip_previous_bloc exists = var:lam_bloc
+ NOT = { var:lam_bloc = var:vip_previous_bloc } }
+ if = { limit = { var:lam_bloc = { OR = { this = character:19060003 var:lam_fac_heir ?= character:19060003 } } }
+ vip_choose_side = { SIDE = 2 }
+ } else_if = { limit = { var:lam_bloc = { has_variable = lam_fac_att var:lam_fac_att >= 20 } }
+ vip_choose_side = { SIDE = 1 }
+ }
+ }
+ if = { limit = { exists = var:lam_bloc } set_variable = { name = vip_previous_bloc value = var:lam_bloc } }
+ else = { remove_variable = vip_previous_bloc }
+}
+vip_refresh_public = {
+ if = { limit = { exists = title:h_voltara_severos.holder }
+ title:h_voltara_severos.holder = {
+ save_scope_as = vip_crown
+ set_variable = { name = vip_crown_leader value = this }
+ if = { limit = { character:19060003 = { is_alive = yes NOT = { has_title = title:h_voltara_severos } } }
+ set_variable = { name = vip_challenger value = character:19060003 } }
+ else = { remove_variable = vip_challenger }
+
+ clear_variable_list = vip_crown_supporters
+ clear_variable_list = vip_octavian_supporters
+ clear_variable_list = vip_uncommitted
+ set_variable = { name = vip_crown_strength value = 0 }
+ set_variable = { name = vip_octavian_strength value = 0 }
+ every_ruler = { limit = { vip_public_lord = yes } vip_read_public_alignment = yes }
+ every_ruler = { limit = { vip_public_lord = yes NOT = { this = scope:vip_crown } }
+
+ save_scope_as = vip_member
+ vip_read_public_alignment = yes
+ if = { limit = { var:vip_alignment = 1 }
+ scope:vip_crown = { add_to_variable_list = { name = vip_crown_supporters target = scope:vip_member } }
+ if = { limit = { NOT = { any_liege_or_above = { var:vip_alignment ?= 1 NOT = { this = scope:vip_crown } } } }
+ scope:vip_crown = { change_variable = { name = vip_crown_strength add = scope:vip_member.max_military_strength } } }
+ } else_if = { limit = { var:vip_alignment = 2 }
+ scope:vip_crown = { add_to_variable_list = { name = vip_octavian_supporters target = scope:vip_member } }
+ if = { limit = { NOT = { any_liege_or_above = { var:vip_alignment ?= 2 NOT = { this = scope:vip_crown } } } }
+ scope:vip_crown = { change_variable = { name = vip_octavian_strength add = scope:vip_member.max_military_strength } } }
+ } else = { scope:vip_crown = { add_to_variable_list = { name = vip_uncommitted target = scope:vip_member } } }
+ }
+ }
+ }
+}
+vip_council_rebellion = {
+ if = { limit = { vip_public_lord = yes vic_politics = yes character:19060003 = { vic_octavian_viable = yes } }
+ vip_choose_side = { SIDE = 2 }
+ if = { limit = { NOT = { has_character_flag = vip_rebellion_vote_counted } }
+ add_character_flag = { flag = vip_rebellion_vote_counted days = 365 }
+ vic_change = { KEY = mobilization AMOUNT = 10 }
+ vic_change = { KEY = noble_opposition AMOUNT = 5 }
+ }
+ if = { limit = { global_var:vic_mobilization >= 60 }
+ set_global_variable = { name = vic_rebellion_required value = yes }
+ vic_start_rebellion = yes
+ }
+ }
+}
+vip_promise_kept = {
+ if = { limit = { vip_public_lord = yes vic_politics = yes scope:lam_pr_lord ?= { vip_court = yes } }
+ vic_change = { KEY = legitimacy AMOUNT = 3 }
+ vic_change = { KEY = noble_opposition AMOUNT = -3 }
+ }
+}
+vip_promise_broken = {
+ if = { limit = { vip_public_lord = yes vic_politics = yes scope:lam_pr_lord ?= { vip_court = yes } }
+ vic_change = { KEY = legitimacy AMOUNT = -3 }
+ vic_change = { KEY = noble_opposition AMOUNT = 5 }
+ # A breach releases a pledge; it does not secretly enroll a conspirator.
+ if = { limit = { has_character_flag = vic_pledged_cassian } vip_choose_side = { SIDE = 0 } }
+ }
+}

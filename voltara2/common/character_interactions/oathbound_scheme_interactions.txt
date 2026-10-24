@@ -1,0 +1,372 @@
+﻿oathbound_sway_vassals_interaction = {
+	icon = icon_scheme_sway
+	category = interaction_category_friendly
+	common_interaction = yes
+
+	send_name = START_SCHEME
+
+	interface_priority = 75
+
+	scheme = oathbound_sway_vassals
+	ignores_pending_interaction_block = yes
+
+	is_shown = {
+		scope:actor = {
+            is_adult = yes
+			num_of_relation_oathholder > 0
+            is_ai = no
+		}
+		NOT = { scope:actor = scope:recipient }
+		NOT = { scope:recipient = scope:actor.var:val_oathholder }
+		scope:recipient = {
+			liege = scope:actor.var:val_oathholder
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			can_start_scheme = {
+				type = oathbound_sway_vassals
+				target_character = scope:recipient
+			}
+		}
+		#limit range for landless adventurers
+		trigger_if = {
+			limit = {
+				scope:actor = {
+					is_landless_adventurer = yes
+				}
+			}
+			#Has to be used instead of diplo range checks in laamp to landed interactions
+			ep3_laamp_diplo_range_trigger = {
+				TARGET = scope:recipient
+				LAAMP = scope:actor
+			}
+		}
+	}
+
+	desc = oathbound_sway_vassals_interaction_tt_sway_approved
+
+	on_accept = {
+		scope:actor = {
+			send_interface_toast = {
+				type = event_toast_effect_neutral
+				title = sway_interaction_notification
+
+				left_icon = scope:actor					
+				right_icon = scope:recipient
+
+				begin_scheme_basic_effect = {
+					SCHEME_TYPE = oathbound_sway_vassals
+					TARGET_TYPE = target_character
+					TARGET_SCOPE = scope:recipient
+				}
+			}
+		}
+	}
+		
+	auto_accept = yes
+}
+
+
+start_forge_oath_interaction = {
+    icon = icon_scheme_fabricate_hook
+    category = interaction_category_hostile
+    common_interaction = yes
+    interface_priority = 90
+    
+    # THE MAGIC LINES WE MISSED:
+    scheme = forge_oath 
+    send_name = START_SCHEME
+    auto_accept = yes
+
+	cooldown = { years = 5 }
+
+    is_shown = {
+        scope:recipient != scope:actor
+
+		scope:actor = {
+            is_ai = no
+			is_landed = yes
+			is_landless_adventurer = no
+			is_adult = yes
+			num_of_relation_oathbound = 0
+            OR = {
+                is_ai = no
+                highest_held_title_tier >= tier_duchy
+            }
+		}
+        
+        scope:recipient = {
+            is_ai = yes
+            is_landless_adventurer = yes
+            num_of_relation_oathholder = 0
+            OR = {
+                scope:actor = {
+                    is_ai = no
+                }
+                
+                NOT = { has_character_flag = forge_oath_currently_targeted_by_player_flag }
+            }
+
+            OR = {
+                scope:actor = {
+                    is_ai = no
+                }
+                
+                NOT = { has_character_flag = forge_oath_currently_targeted_flag }
+            }
+        }
+
+        NOT = {
+            scope:actor = {
+                any_scheme = {
+                    scheme_type = forge_oath
+                    scheme_target_character = scope:recipient
+                }
+            }
+        }
+    }
+
+    is_valid_showing_failures_only = {
+        scope:actor = {
+            can_start_scheme = {
+                type = forge_oath
+                target_character = scope:recipient 
+            }
+        }
+        scope:recipient = {
+            NOT = { has_trait = oathbreaker } 
+        }
+		custom_tooltip = {
+            text = forge_oath_on_cooldown_perp_tt
+            OR = {
+                scope:actor = {
+                    is_ai = no
+                }
+                scope:actor = { 
+                    NOT = { has_character_flag = forge_oath_cooldown_perp_flag } 
+                }
+            }
+        }
+        custom_tooltip = {
+            text = forge_oath_on_cooldown_victim_tt
+            OR = {
+                scope:actor = {
+                    is_ai = no
+                }
+                
+                scope:recipient = { 
+                    NOT = { has_character_flag = forge_oath_cooldown_victim_flag } 
+                }
+            }
+        }
+    }
+
+    on_accept = {
+        scope:actor = {
+			begin_scheme_basic_effect = {
+                SCHEME_TYPE = forge_oath
+                TARGET_TYPE = target_character
+                TARGET_SCOPE = scope:recipient
+            }
+            
+            send_interface_toast = {
+                type = event_toast_effect_neutral
+                title = start_forge_oath_interaction_notification
+                left_icon = scope:actor
+                right_icon = scope:recipient
+            }
+
+            scope:recipient = {
+                if = {
+                    limit = {
+                        is_ai = no
+                    }
+                    add_character_flag = {
+                        flag = forge_oath_currently_targeted_flag
+                        years = 20
+                    }
+                }
+                else = {
+                    add_character_flag = {
+                        flag = forge_oath_currently_targeted_flag
+                        years = 5
+                    }
+                }
+
+                if = {
+                    limit = {
+                        scope:actor = {
+                            is_ai = no
+                        }
+                    }
+                    add_character_flag = {
+                        flag = forge_oath_currently_targeted_by_player_flag
+                        years = 5
+                    }
+                }
+            }
+
+			#scope:recipient = {
+            #    send_interface_toast = {
+            ##        type = event_toast_effect_bad
+            #        title = "DEBUG: [actor.GetTitledFirstName] IS PLOTTING AGAINST ME!"
+            #        left_icon = scope:actor
+            #        right_icon = scope:recipient
+            #    }
+            #}
+        }
+    }
+
+    ai_frequency = 36
+
+    ai_targets = { 
+        ai_recipients = realm_characters
+		ai_recipients = top_realm_domicile_owners
+    }
+
+    ai_will_do = {
+        base = -100
+
+        # Base Factors.
+        modifier = {
+            add = -25
+            scope:recipient = {
+                is_ai = no
+            }
+        }
+        opinion_modifier = {
+            who = scope:recipient
+            opinion_target = scope:actor
+            multiplier = -1.0
+        }
+
+        # Impossible.
+        modifier = {
+            add = -1000
+            scope:actor = {
+				has_trait = just
+			}
+        }
+
+        modifier = {
+            add = 20
+            scope:recipient = {
+                prestige_level = 0 
+            }
+        }
+        modifier = {
+            add = 10
+            scope:recipient = {
+                prestige_level = 1 
+            }
+        }
+        modifier = {
+            add = 0
+            scope:recipient = {
+                prestige_level = 2 
+            }
+        }
+        modifier = {
+            add = -50
+            scope:recipient = {
+                prestige_level = 3 
+            }
+        }
+        modifier = {
+            add = -100
+            scope:recipient = {
+                prestige_level = 4 
+            }
+        }
+        modifier = {
+            add = -250 
+            scope:recipient = {
+                prestige_level >= 5 
+            }
+        }
+
+        # GOOD TRAITS
+        modifier = {
+            add = -40
+            scope:actor = {
+                has_trait = content # The exact opposite of Ambitious. They have no desire to scheme for more power.
+            }
+        }
+        modifier = {
+            add = -40
+            scope:actor = {
+                has_trait = honest # Forging an oath is a literal lie. Honest characters will naturally despise this action.
+            }
+        }
+        modifier = {
+            add = -40
+            scope:actor = {
+                has_trait = compassionate # Trapping a wandering adventurer in forced servitude is cruel. Compassionate lords won't do it.
+            }
+        }
+        modifier = {
+            add = -30
+            scope:actor = {
+                has_trait = forgiving # Even if they have a negative opinion of the wanderer, they are likely to let the grudge go rather than plot revenge.
+            }
+        }
+        modifier = {
+            add = -20
+            scope:actor = {
+                has_trait = lazy # Forging documents, bribing guards, and running a scheme sounds like entirely too much paperwork.
+            }
+        }
+        modifier = {
+            add = -20
+            scope:actor = {
+                has_trait = craven # They are too terrified of the adventurer finding out and seeking violent retribution.
+            }
+        }
+        
+        # BAD TRAITS
+		modifier = {
+            add = 40
+            scope:actor = {
+				has_trait = ambitious # Ambitious rulers should be ruthless.
+			}
+        }
+		modifier = {
+            add = 30
+            scope:actor = {
+                OR = {
+                    has_trait = deceitful 
+                    has_trait = vengeful
+                }
+                
+                opinion = {
+                    target = scope:recipient
+                    value <= -10
+                }
+            }
+        }
+		modifier = {
+            add = 20
+            scope:actor = {
+				has_trait = callous
+
+                opinion = {
+                    target = scope:recipient
+                    value <= -10
+                }
+			}
+        }
+        modifier = {
+            add = 20
+            scope:actor = {
+				has_trait = greedy
+
+                opinion = {
+                    target = scope:recipient
+                    value <= -10
+                }
+			}
+        }
+    }
+}

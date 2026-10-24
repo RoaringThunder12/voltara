@@ -1,0 +1,12 @@
+﻿# County scope: ruins are not inhabited populations.
+voltara_kei_inhabited_county = {
+ exists = holder
+ holder = { voltara_is_ruins_placeholder = no }
+ exists = culture
+ exists = rite
+}
+# Province scope.
+voltara_kei_inhabited_province = {
+ exists = county
+ county = { voltara_kei_inhabited_county = yes }
+}

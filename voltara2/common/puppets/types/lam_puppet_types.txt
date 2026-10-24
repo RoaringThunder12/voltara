@@ -1,0 +1,109 @@
+﻿# Living Factions - the crown held on strings by a faction's head (step_puppet; set by lam_fac_seize_effect).
+lam_court_puppet = {
+	color = { 0.75 0.55 0.2 1 }
+	interaction = lam_cp_draw_blade_interaction
+	can_have = { can_have_puppets_trigger = yes }
+	# While the strings hold.
+	is_valid = { scope:puppet = { var:lam_fac_puppet_master ?= root } }
+	priority = { value = 30 }
+	actions = {
+		lam_pa_revoke_title
+		lam_pa_grant_titles
+		lam_pa_retract_vassal
+		lam_pa_grant_vassal
+		lam_pa_designate_heir
+		lam_pa_modify_contract
+		lam_pa_modify_contract_admin
+		lam_pa_modify_contract_nomad
+		lam_pa_grant_governorship
+		lam_pa_arrange_marriage
+		lam_pa_break_betrothal
+		lam_pa_execute
+		lam_pa_offer_ward
+		lam_pa_call_dynasty_war
+		lam_pa_gift_artifact
+		lam_pa_declare_war
+		lam_pa_imprison
+		lam_pa_release
+		lam_pa_pardon
+		lam_pa_directive
+		lam_pa_alliance
+		lam_pa_demand_payment
+		lam_pa_claim_throne
+		lam_pa_fabricate_hook
+		lam_pa_grant_independence
+		lam_pa_purchase_truce
+		lam_pa_invite_activity
+		lam_pa_gift
+		lam_pa_offer_peace
+		lam_pa_disinherit
+		lam_pa_disinherit_children
+		lam_pa_restore_inheritance
+		lam_pa_legitimize
+		lam_pa_denounce
+		lam_pa_forgive
+		lam_pa_marry_off
+		lam_pa_divorce
+		lam_pa_make_concubine
+		lam_pa_dismiss_concubine
+		lam_pa_offer_concubine
+		lam_pa_find_concubine
+		lam_pa_educate_child
+		lam_pa_offer_guardianship
+		lam_pa_remove_guardian
+		lam_pa_child_language
+		lam_pa_grant_new_ruler
+		lam_pa_gift_claim
+		lam_pa_dungeon
+		lam_pa_house_arrest
+		lam_pa_ransom
+		lam_pa_pay_ransom
+		lam_pa_torture
+		lam_pa_blind
+		lam_pa_castrate
+		lam_pa_maim
+		lam_pa_return_hostage
+		lam_pa_demand_artifact
+		lam_pa_steal_artifact
+		lam_pa_murder
+		lam_pa_abduct
+		lam_pa_befriend
+		lam_pa_seduce
+		lam_pa_court
+		lam_pa_sway
+		lam_pa_blackmail
+		lam_pa_expose_secret
+		lam_pa_share_secrets
+		lam_pa_learn_language
+		lam_pa_study_faith
+		lam_pa_trial_by_combat
+		lam_pa_host_guest
+		lam_pa_perk_alliance
+		lam_pa_buy_claim
+		lam_pa_sell_claim
+		lam_pa_strengthen_claim
+		lam_pa_dynast_claim
+		lam_pa_end_dynasty_wars
+		lam_pa_demand_tributary
+		lam_pa_release_tributary
+		lam_pa_cease_tribute
+		lam_pa_tributary_contract
+		lam_pa_hire_laamp
+		lam_pa_evict_adventurer
+		lam_pa_promote_legend
+		lam_pa_demand_conversion
+		lam_pa_demand_conversion_vassal
+		lam_pa_holy_order
+		lam_pa_varangian
+		lam_pa_request_white_peace
+		lam_pa_request_victory
+		lam_pa_request_legitimacy
+		lam_pa_request_unformed_title
+		lam_pa_enforce_succession
+	}
+	asset = {
+		icon = "gfx/interface/icons/external_ruler_puppet.dds"
+		background = "gfx/interface/illustrations/council/bg_council_chancellor.dds"
+	}
+	animation = { reference = "chancellor" }
+}

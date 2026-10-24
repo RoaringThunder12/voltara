@@ -1,0 +1,143 @@
+﻿call_oathbound_to_war_decision_ai = { # AI ONLY
+    picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = call_oathbound_to_war_decision_ai_desc
+	selection_tooltip = call_oathbound_to_war_decision_ai_tooltip
+
+	cooldown = { months = 3 }
+
+	is_shown = {
+		is_at_war = yes
+		is_ruler = yes
+		is_landless_adventurer = no
+		num_of_relation_oathbound > 0
+		is_ai = yes
+	}
+
+	is_valid = {
+		root.var:val_oathkeeper = {
+            has_relation_oathholder = root
+            #NOT = { is_allied_in_war = root }
+            is_imprisoned = no
+        }
+	}
+
+	ai_check_interval = 1
+	ai_potential = { num_of_relation_oathbound > 0 }
+	ai_will_do = {
+		base = 0
+
+		# War States
+		modifier = {
+            add = 50
+			any_character_war = {
+				primary_defender = root
+			}    
+		}
+		modifier = {
+            add = 100
+            any_character_war = {
+                primary_attacker = root
+				attacker_war_score <= -15
+            }
+        }
+		modifier = {
+            add = 100
+            any_character_war = {
+                primary_defender = root
+				defender_war_score <= -15
+            }
+        }
+		modifier = {
+			add = 75
+			any_character_war = {
+				primary_defender = root
+				root.current_military_strength < primary_attacker.current_military_strength
+			}
+		}
+		modifier = {
+			add = 75
+			any_character_war = {
+				primary_attacker = root
+				root.current_military_strength < primary_defender.current_military_strength
+			}
+		}
+
+		# Finance related
+		modifier = {
+            add = 30
+            short_term_gold <= 50
+        }
+		modifier = {
+            add = 100
+            short_term_gold <= 0
+        }
+
+		# Traits
+		modifier = {
+            add = 30
+            has_trait = craven
+        }
+		modifier = {
+            add = 30
+            has_trait = greedy
+        }
+		modifier = {
+            add = 30
+            has_trait = callous
+        }
+		modifier = {
+            add = 30
+            has_trait = sadistic
+        }
+		modifier = {
+            add = 30
+            has_trait = ambitious
+        }
+		modifier = {
+            add = -30
+            has_trait = arrogant
+        }
+		modifier = {
+            add = -30
+            has_trait = brave
+        }
+	}
+
+
+
+	effect = {
+		every_character_war = {
+			limit = {
+				NOT = {
+					is_attacker = root.var:val_oathkeeper
+				}
+				OR = {
+					#primary_attacker = root
+					is_attacker = root
+				}
+			}
+			add_attacker = root.var:val_oathkeeper
+			root.var:val_oathkeeper = {
+				trigger_event = call_oathbound.0001
+			}
+		}
+        
+		every_character_war = {
+			limit = {
+				NOT = {
+					is_defender = root.var:val_oathkeeper
+				}
+				OR = {
+					#primary_defender = root
+					is_defender = root
+				}
+			}
+			add_defender = root.var:val_oathkeeper
+			root.var:val_oathkeeper = {
+				trigger_event = call_oathbound.0001
+			}
+		}
+	}
+}

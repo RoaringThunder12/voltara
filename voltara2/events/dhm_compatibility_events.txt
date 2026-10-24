@@ -1,0 +1,15 @@
+﻿# Compatibility registration only, following vanilla error_suppression_events.txt.
+# These identifiers are read by OLD saved event chains. Never call this event.
+# No migration or pulse points here; even a direct call cannot change a character.
+namespace = dhm_compatibility
+
+dhm_compatibility.0001 = {
+ type = character_event
+ hidden = yes
+ orphan = yes
+ trigger = { always = no }
+ immediate = {
+  if = { limit = { always = no } # Redundant unreachable effects archived in error-batch/audit.json.
+}
+ }
+}

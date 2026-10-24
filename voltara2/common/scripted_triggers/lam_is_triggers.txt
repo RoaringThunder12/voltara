@@ -1,0 +1,631 @@
+﻿# This = the lord: a faction with a stand on issue T has gone over to a demand or a war against the crown - the issue
+# waits for that outcome (no drift, no clock, no settling meanwhile).
+lam_is_held_trigger = {
+	any_in_list = {
+		variable = lam_bloc_leads
+		is_alive = yes
+		lam_wc_committed_trigger = yes
+		OR = {
+			lam_is_side_$T$_x_trigger = yes
+			lam_is_side_$T$_y_trigger = yes
+		}
+	}
+}
+# Living Factions - court issues (tools/claude_fixes/issue.py).
+# Side triggers: this = a faction head, scope:lam_is_lord = the lord (heir also scope:lam_is_ca / lam_is_cb).
+lam_is_side_heir_x_trigger = {
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	exists = scope:lam_is_ca var:lam_fac_heir ?= scope:lam_is_ca
+}
+lam_is_side_heir_y_trigger = {
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	exists = scope:lam_is_cb var:lam_fac_heir ?= scope:lam_is_cb
+}
+lam_is_heir_lord_x_trigger = {
+	always = yes
+}
+lam_is_heir_open_trigger = {
+	primary_heir ?= {
+			is_alive = yes
+		}
+		any_in_list = {
+			variable = lam_bloc_leads
+			is_alive = yes
+			var:lam_fac_heir ?= {
+				is_alive = yes
+				NOT = {
+					this = scope:lam_is_lord.primary_heir
+				}
+			}
+		}
+}
+lam_is_heir_hot_trigger = {
+	OR = { age >= 45 is_incapable = yes primary_heir = { is_adult = no } }
+}
+lam_is_heir_can_concede_trigger = {
+	lam_nc_heir_trigger = { CANDIDATE = scope:lam_is_cb }
+}
+lam_is_heir_void_trigger = {
+	OR = {
+			NOT = { exists = scope:lam_is_ca }
+			NOT = { exists = scope:lam_is_cb }
+			scope:lam_is_ca = { is_alive = no }
+			scope:lam_is_cb = { is_alive = no }
+			NOT = { primary_heir ?= scope:lam_is_ca }
+		}
+}
+lam_is_heir_y_done_trigger = {
+	scope:lam_is_cb ?= { is_alive = yes } primary_heir ?= scope:lam_is_cb
+}
+lam_is_heir_x_done_trigger = {
+	always = no
+}
+lam_is_side_crown_x_trigger = {
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	trigger_if = {
+		limit = {
+			var:lam_is_lk_crown_lord ?= scope:lam_is_lord
+		}
+		var:lam_is_lk_crown ?= flag:x
+	}
+	trigger_else = {
+		OR = { var:lam_fac_goal ?= 8 var:lam_fac_stage ?= 5 var:lam_fac_stage ?= 6 var:lam_fac_stage ?= 8 }
+	}
+}
+lam_is_side_crown_y_trigger = {
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	trigger_if = {
+		limit = {
+			var:lam_is_lk_crown_lord ?= scope:lam_is_lord
+		}
+		var:lam_is_lk_crown ?= flag:y
+	}
+	trigger_else = {
+		var:lam_fac_goal ?= 1
+	}
+}
+lam_is_lean_crown_x_trigger = {
+	OR = { is_councillor_of = scope:lam_is_lord opinion = { target = scope:lam_is_lord value >= 40 } }
+}
+lam_is_lean_crown_y_trigger = {
+	NOT = { is_councillor_of = scope:lam_is_lord } opinion = { target = scope:lam_is_lord value <= -25 }
+}
+lam_is_crown_lord_x_trigger = {
+	always = yes
+}
+lam_is_crown_open_trigger = {
+	lam_nc_lower_law_trigger = yes
+}
+lam_is_crown_hot_trigger = {
+	has_variable = lam_crown var:lam_crown <= 60
+}
+lam_is_crown_can_concede_trigger = {
+	lam_nc_lower_law_trigger = yes
+}
+lam_is_crown_void_trigger = {
+	always = no
+}
+lam_is_crown_y_done_trigger = {
+	has_variable = lam_is_crown_lv lam_is_law_level_value < var:lam_is_crown_lv
+}
+lam_is_crown_x_done_trigger = {
+	has_variable = lam_is_crown_lv lam_is_law_level_value > var:lam_is_crown_lv
+}
+lam_is_side_faith_x_trigger = {
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	trigger_if = {
+		limit = {
+			var:lam_is_lk_faith_lord ?= scope:lam_is_lord
+		}
+		var:lam_is_lk_faith ?= flag:x
+	}
+	trigger_else = {
+		OR = { var:lam_fac_goal ?= 3 var:lam_fac_agenda ?= flag:zealot }
+	}
+}
+lam_is_side_faith_y_trigger = {
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	trigger_if = {
+		limit = {
+			var:lam_is_lk_faith_lord ?= scope:lam_is_lord
+		}
+		var:lam_is_lk_faith ?= flag:y
+	}
+	trigger_else = {
+		OR = { var:lam_fac_goal ?= 2 var:lam_fac_agenda ?= flag:minority }
+	}
+}
+lam_is_lean_faith_x_trigger = {
+	has_trait = zealous faith = scope:lam_is_lord.faith
+}
+lam_is_lean_faith_y_trigger = {
+	OR = { NOT = { faith = scope:lam_is_lord.faith } NOT = { culture = scope:lam_is_lord.culture } }
+}
+lam_is_faith_lord_x_trigger = {
+	always = no
+}
+lam_is_faith_open_trigger = {
+	any_in_list = {
+			variable = lam_bloc_leads
+			is_alive = yes
+			lam_is_side_faith_y_trigger = yes
+			OR = {
+				NOT = { faith = scope:lam_is_lord.faith }
+				NOT = { culture = scope:lam_is_lord.culture }
+			}
+		}
+}
+lam_is_faith_hot_trigger = {
+	always = no
+}
+lam_is_faith_can_concede_trigger = {
+	always = yes
+}
+lam_is_faith_void_trigger = {
+	always = no
+}
+lam_is_faith_y_done_trigger = {
+	always = no
+}
+lam_is_faith_x_done_trigger = {
+	always = no
+}
+lam_is_faith_can_promise_trigger = {
+	NOT = {
+		any_councillor = {
+			OR = {
+				NOT = {
+					faith = scope:lam_is_lord.faith
+				}
+				NOT = {
+					culture = scope:lam_is_lord.culture
+				}
+			}
+		}
+	}
+	any_in_list = {
+		variable = lam_bloc_leads
+		is_alive = yes
+		lam_is_side_faith_y_trigger = yes
+		NOT = {
+			has_variable = lam_fac_promise
+		}
+	}
+}
+lam_is_side_war_x_trigger = {
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	trigger_if = {
+		limit = {
+			var:lam_is_lk_war_lord ?= scope:lam_is_lord
+		}
+		var:lam_is_lk_war ?= flag:x
+	}
+	trigger_else = {
+		OR = { AND = { scope:lam_is_lord = { var:lam_is_war_mode ?= flag:campaign } NOT = { OR = { var:lam_fac_goal ?= 4 var:lam_fac_agenda ?= flag:glory_hound var:lam_fac_agenda ?= flag:belligerent has_trait = brave has_trait = ambitious has_trait = wrathful } } OR = { var:lam_fac_goal ?= 9 var:lam_fac_goal ?= 6 var:lam_fac_stage ?= 2 var:lam_fac_stage ?= 3 var:lam_fac_stage ?= 4 has_trait = craven has_trait = content has_trait = lazy } } AND = { scope:lam_is_lord = { var:lam_is_war_mode ?= flag:peace } OR = { var:lam_fac_goal ?= 4 var:lam_fac_agenda ?= flag:glory_hound var:lam_fac_agenda ?= flag:belligerent has_trait = brave has_trait = ambitious has_trait = wrathful } } }
+	}
+}
+lam_is_side_war_y_trigger = {
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	trigger_if = {
+		limit = {
+			var:lam_is_lk_war_lord ?= scope:lam_is_lord
+		}
+		var:lam_is_lk_war ?= flag:y
+	}
+	trigger_else = {
+		OR = { AND = { scope:lam_is_lord = { var:lam_is_war_mode ?= flag:campaign } OR = { var:lam_fac_goal ?= 4 var:lam_fac_agenda ?= flag:glory_hound var:lam_fac_agenda ?= flag:belligerent has_trait = brave has_trait = ambitious has_trait = wrathful } } AND = { scope:lam_is_lord = { var:lam_is_war_mode ?= flag:peace } NOT = { OR = { var:lam_fac_goal ?= 4 var:lam_fac_agenda ?= flag:glory_hound var:lam_fac_agenda ?= flag:belligerent has_trait = brave has_trait = ambitious has_trait = wrathful } } OR = { var:lam_fac_goal ?= 9 var:lam_fac_goal ?= 6 var:lam_fac_stage ?= 2 var:lam_fac_stage ?= 3 var:lam_fac_stage ?= 4 has_trait = craven has_trait = content has_trait = lazy } } }
+	}
+}
+lam_is_lean_war_x_trigger = {
+	OR = { AND = { scope:lam_is_lord = { var:lam_is_war_mode ?= flag:campaign } NOT = { OR = { has_trait = brave has_trait = ambitious has_trait = wrathful } } OR = { has_trait = craven has_trait = content has_trait = lazy } } AND = { scope:lam_is_lord = { var:lam_is_war_mode ?= flag:peace } OR = { has_trait = brave has_trait = ambitious has_trait = wrathful } } }
+}
+lam_is_lean_war_y_trigger = {
+	OR = { AND = { scope:lam_is_lord = { var:lam_is_war_mode ?= flag:campaign } OR = { has_trait = brave has_trait = ambitious has_trait = wrathful } } AND = { scope:lam_is_lord = { var:lam_is_war_mode ?= flag:peace } NOT = { OR = { has_trait = brave has_trait = ambitious has_trait = wrathful } } OR = { has_trait = craven has_trait = content has_trait = lazy } } }
+}
+lam_is_war_lord_x_trigger = {
+	always = no
+}
+lam_is_war_open_trigger = {
+	OR = { is_at_war = no any_character_war = { OR = { primary_attacker = scope:lam_is_lord primary_defender = scope:lam_is_lord } } }
+}
+lam_is_war_hot_trigger = {
+	OR = { AND = { is_at_war = no NOT = { has_variable = lam_fac_recent_war } } any_character_war = { OR = { primary_attacker = scope:lam_is_lord primary_defender = scope:lam_is_lord } OR = { war_days >= 180 attacker_war_score >= 25 attacker_war_score <= -25 } } }
+}
+lam_is_war_can_concede_trigger = {
+	OR = { var:lam_is_war_mode ?= flag:campaign exists = var:lam_is_war_ref }
+}
+lam_is_war_void_trigger = {
+	OR = { AND = { var:lam_is_war_mode ?= flag:peace NOT = { exists = var:lam_is_war_ref } } AND = { var:lam_is_war_mode ?= flag:campaign any_character_war = { primary_defender = scope:lam_is_lord } } }
+}
+lam_is_war_y_done_trigger = {
+	var:lam_is_war_mode ?= flag:campaign any_character_war = { primary_attacker = scope:lam_is_lord primary_defender = { NOT = { top_liege = scope:lam_is_lord.top_liege } } }
+}
+lam_is_war_x_done_trigger = {
+	always = no
+}
+lam_is_war_can_promise_trigger = {
+	any_in_list = {
+		variable = lam_bloc_leads
+		is_alive = yes
+		lam_is_side_war_y_trigger = yes
+		NOT = {
+			has_variable = lam_fac_promise
+		}
+	}
+}
+lam_is_side_council_x_trigger = {
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	trigger_if = {
+		limit = {
+			var:lam_is_lk_council_lord ?= scope:lam_is_lord
+		}
+		var:lam_is_lk_council ?= flag:x
+	}
+	trigger_else = {
+		lam_fac_has_seat_trigger = { LORD = scope:lam_is_lord }
+	}
+}
+lam_is_side_council_y_trigger = {
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	trigger_if = {
+		limit = {
+			var:lam_is_lk_council_lord ?= scope:lam_is_lord
+		}
+		var:lam_is_lk_council ?= flag:y
+	}
+	trigger_else = {
+		NOT = { lam_fac_has_seat_trigger = { LORD = scope:lam_is_lord } } OR = { var:lam_fac_goal ?= 5 var:lam_fac_agenda ?= flag:courtly AND = { has_variable = lam_fac_share var:lam_fac_share >= 25 } }
+	}
+}
+lam_is_lean_council_x_trigger = {
+	is_councillor_of = scope:lam_is_lord
+}
+lam_is_lean_council_y_trigger = {
+	has_trait = ambitious NOT = { is_councillor_of = scope:lam_is_lord }
+}
+lam_is_council_lord_x_trigger = {
+	always = no
+}
+lam_is_council_open_trigger = {
+	any_councillor = { count >= 1 }
+}
+lam_is_council_hot_trigger = {
+	OR = { NOT = { exists = cp:councillor_chancellor } NOT = { exists = cp:councillor_marshal } NOT = { exists = cp:councillor_steward } NOT = { exists = cp:councillor_spymaster } NOT = { exists = cp:councillor_court_chaplain } any_in_list = { variable = lam_bloc_leads is_alive = yes has_variable = lam_fac_share var:lam_fac_share >= 25 NOT = { lam_fac_has_seat_trigger = { LORD = scope:lam_is_lord } } } }
+}
+lam_is_council_can_concede_trigger = {
+	any_in_list = { variable = lam_bloc_leads is_alive = yes lam_is_side_council_y_trigger = yes }
+		any_in_list = { variable = lam_bloc_leads is_alive = yes lam_is_side_council_x_trigger = yes }
+}
+lam_is_council_void_trigger = {
+	always = no
+}
+lam_is_council_y_done_trigger = {
+	any_in_list = { variable = lam_is_council_ys is_alive = yes lam_fac_has_seat_trigger = { LORD = scope:lam_is_lord } }
+}
+lam_is_council_x_done_trigger = {
+	always = no
+}
+lam_is_council_can_promise_trigger = {
+	any_in_list = {
+		variable = lam_bloc_leads
+		is_alive = yes
+		lam_is_side_council_y_trigger = yes
+		NOT = {
+			has_variable = lam_fac_promise
+		}
+	}
+}
+lam_is_side_tax_x_trigger = {
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	trigger_if = {
+		limit = {
+			var:lam_is_lk_tax_lord ?= scope:lam_is_lord
+		}
+		var:lam_is_lk_tax ?= flag:x
+	}
+	trigger_else = {
+		OR = { var:lam_fac_goal ?= 8 var:lam_fac_stage ?= 8 }
+	}
+}
+lam_is_side_tax_y_trigger = {
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	trigger_if = {
+		limit = {
+			var:lam_is_lk_tax_lord ?= scope:lam_is_lord
+		}
+		var:lam_is_lk_tax ?= flag:y
+	}
+	trigger_else = {
+		OR = { var:lam_fac_goal ?= 6 AND = { NOT = { var:lam_fac_goal ?= 1 } OR = { var:lam_fac_stage ?= 2 var:lam_fac_stage ?= 3 var:lam_fac_stage ?= 4 } } }
+	}
+}
+lam_is_lean_tax_x_trigger = {
+	OR = { is_councillor_of = scope:lam_is_lord opinion = { target = scope:lam_is_lord value >= 50 } }
+}
+lam_is_lean_tax_y_trigger = {
+	NOT = { is_councillor_of = scope:lam_is_lord } OR = { opinion = { target = scope:lam_is_lord value <= -15 } has_trait = greedy }
+}
+lam_is_tax_lord_x_trigger = {
+	always = yes
+}
+lam_is_tax_open_trigger = {
+	any_vassal = { is_ruler = yes }
+}
+lam_is_tax_hot_trigger = {
+	OR = { gold < 0 any_character_war = { OR = { primary_attacker = scope:lam_is_lord primary_defender = scope:lam_is_lord } war_days >= 365 } }
+}
+lam_is_tax_can_concede_trigger = {
+	always = yes
+}
+lam_is_tax_void_trigger = {
+	NOT = { any_vassal = { is_ruler = yes } }
+}
+lam_is_tax_y_done_trigger = {
+	always = no
+}
+lam_is_tax_x_done_trigger = {
+	always = no
+}
+# This = a faction member with an issue dispute (lam_gg_source = flag:issue): it stays a live cause while the issue it
+# was about is still open in the court of HEAD's liege (used by lam_gg_current_cause_trigger and the split council).
+lam_is_dissent_live_trigger = {
+	exists = var:lam_is_dis_lord
+	var:lam_is_dis_lord ?= $HEAD$.liege
+	OR = {
+		AND = {
+			var:lam_is_dis ?= flag:crown
+			var:lam_is_dis_lord = {
+				has_variable = lam_is_crown_open
+			}
+		}
+		AND = {
+			var:lam_is_dis ?= flag:council
+			var:lam_is_dis_lord = {
+				has_variable = lam_is_council_open
+			}
+		}
+		AND = {
+			var:lam_is_dis ?= flag:faith
+			var:lam_is_dis_lord = {
+				has_variable = lam_is_faith_open
+			}
+		}
+		AND = {
+			var:lam_is_dis ?= flag:tax
+			var:lam_is_dis_lord = {
+				has_variable = lam_is_tax_open
+			}
+		}
+		AND = {
+			var:lam_is_dis ?= flag:war
+			var:lam_is_dis_lord = {
+				has_variable = lam_is_war_open
+			}
+		}
+	}
+}
+lam_is_stance_lean_for_trigger = {
+	OR = {
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:crown
+				var:lam_cr_st_side ?= flag:x
+			}
+			OR = { is_councillor_of = scope:lam_cr_lord opinion = { target = scope:lam_cr_lord value >= 40 } }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:crown
+				var:lam_cr_st_side ?= flag:y
+			}
+			NOT = { is_councillor_of = scope:lam_cr_lord } opinion = { target = scope:lam_cr_lord value <= -25 }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:council
+				var:lam_cr_st_side ?= flag:x
+			}
+			is_councillor_of = scope:lam_cr_lord
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:council
+				var:lam_cr_st_side ?= flag:y
+			}
+			has_trait = ambitious NOT = { is_councillor_of = scope:lam_cr_lord }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:faith
+				var:lam_cr_st_side ?= flag:x
+			}
+			has_trait = zealous faith = scope:lam_cr_lord.faith
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:faith
+				var:lam_cr_st_side ?= flag:y
+			}
+			OR = { NOT = { faith = scope:lam_cr_lord.faith } NOT = { culture = scope:lam_cr_lord.culture } }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:tax
+				var:lam_cr_st_side ?= flag:x
+			}
+			OR = { is_councillor_of = scope:lam_cr_lord opinion = { target = scope:lam_cr_lord value >= 50 } }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:tax
+				var:lam_cr_st_side ?= flag:y
+			}
+			NOT = { is_councillor_of = scope:lam_cr_lord } OR = { opinion = { target = scope:lam_cr_lord value <= -15 } has_trait = greedy }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:war
+				var:lam_cr_st_side ?= flag:x
+			}
+			OR = { AND = { scope:lam_cr_lord = { var:lam_is_war_mode ?= flag:campaign } NOT = { OR = { has_trait = brave has_trait = ambitious has_trait = wrathful } } OR = { has_trait = craven has_trait = content has_trait = lazy } } AND = { scope:lam_cr_lord = { var:lam_is_war_mode ?= flag:peace } OR = { has_trait = brave has_trait = ambitious has_trait = wrathful } } }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:war
+				var:lam_cr_st_side ?= flag:y
+			}
+			OR = { AND = { scope:lam_cr_lord = { var:lam_is_war_mode ?= flag:campaign } OR = { has_trait = brave has_trait = ambitious has_trait = wrathful } } AND = { scope:lam_cr_lord = { var:lam_is_war_mode ?= flag:peace } NOT = { OR = { has_trait = brave has_trait = ambitious has_trait = wrathful } } OR = { has_trait = craven has_trait = content has_trait = lazy } } }
+		}
+	}
+}
+lam_is_stance_lean_against_trigger = {
+	OR = {
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:crown
+				var:lam_cr_st_side ?= flag:x
+			}
+			NOT = { is_councillor_of = scope:lam_cr_lord } opinion = { target = scope:lam_cr_lord value <= -25 }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:crown
+				var:lam_cr_st_side ?= flag:y
+			}
+			OR = { is_councillor_of = scope:lam_cr_lord opinion = { target = scope:lam_cr_lord value >= 40 } }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:council
+				var:lam_cr_st_side ?= flag:x
+			}
+			has_trait = ambitious NOT = { is_councillor_of = scope:lam_cr_lord }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:council
+				var:lam_cr_st_side ?= flag:y
+			}
+			is_councillor_of = scope:lam_cr_lord
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:faith
+				var:lam_cr_st_side ?= flag:x
+			}
+			OR = { NOT = { faith = scope:lam_cr_lord.faith } NOT = { culture = scope:lam_cr_lord.culture } }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:faith
+				var:lam_cr_st_side ?= flag:y
+			}
+			has_trait = zealous faith = scope:lam_cr_lord.faith
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:tax
+				var:lam_cr_st_side ?= flag:x
+			}
+			NOT = { is_councillor_of = scope:lam_cr_lord } OR = { opinion = { target = scope:lam_cr_lord value <= -15 } has_trait = greedy }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:tax
+				var:lam_cr_st_side ?= flag:y
+			}
+			OR = { is_councillor_of = scope:lam_cr_lord opinion = { target = scope:lam_cr_lord value >= 50 } }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:war
+				var:lam_cr_st_side ?= flag:x
+			}
+			OR = { AND = { scope:lam_cr_lord = { var:lam_is_war_mode ?= flag:campaign } OR = { has_trait = brave has_trait = ambitious has_trait = wrathful } } AND = { scope:lam_cr_lord = { var:lam_is_war_mode ?= flag:peace } NOT = { OR = { has_trait = brave has_trait = ambitious has_trait = wrathful } } OR = { has_trait = craven has_trait = content has_trait = lazy } } }
+		}
+		AND = {
+			scope:lam_cr_head = {
+				var:lam_cr_st_t ?= flag:war
+				var:lam_cr_st_side ?= flag:y
+			}
+			OR = { AND = { scope:lam_cr_lord = { var:lam_is_war_mode ?= flag:campaign } NOT = { OR = { has_trait = brave has_trait = ambitious has_trait = wrathful } } OR = { has_trait = craven has_trait = content has_trait = lazy } } AND = { scope:lam_cr_lord = { var:lam_is_war_mode ?= flag:peace } OR = { has_trait = brave has_trait = ambitious has_trait = wrathful } } }
+		}
+	}
+}
+# This = a vassal of scope:lam_is_lord: still unaligned and backing side SIDE of issue T there.
+lam_is_backer_trigger = {
+	var:lam_is_bk_$T$_lord ?= scope:lam_is_lord
+	var:lam_is_bk_$T$ ?= flag:$SIDE$
+	NOT = {
+		has_variable = lam_bloc
+	}
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+}
+# This = a vassal of scope:lam_is_lord who could still be won over on issue T: a landed, free, unaligned adult who has
+# not taken a side on it.
+lam_is_free_unaligned_trigger = {
+	is_adult = yes
+	is_imprisoned = no
+	is_landless_ruler = no
+	is_ruler = yes
+	NOT = {
+		has_variable = lam_bloc
+	}
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+	NOT = {
+		var:lam_is_bk_$T$_lord ?= scope:lam_is_lord
+	}
+	scope:lam_is_lord = {
+		is_target_in_variable_list = {
+			name = lam_fac_pool
+			target = prev
+		}
+	}
+}
+# Root = a player, scope:target = the lord.
+lam_is_can_push_trigger = {
+	exists = scope:target
+	OR = {
+		this = scope:target
+		liege ?= scope:target
+	}
+}
+lam_is_push_ready_trigger = {
+	is_adult = yes
+	is_imprisoned = no
+	custom_description = {
+		text = lam_is_push_cd_tt
+		NOT = {
+			has_variable = lam_is_push_cd
+		}
+	}
+	prestige >= lam_is_push_cost_value
+}

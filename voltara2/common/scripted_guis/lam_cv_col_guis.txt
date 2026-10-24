@@ -1,0 +1,225 @@
+﻿# Living Factions - the faction council chamber columns (tools/claude_fixes/council_ui.py)
+lam_cv_col_yes = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		scope:target = {
+			var:lam_cr_choice ?= flag:yes
+		}
+	}
+}
+lam_cv_lcol_yes = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		scope:target = {
+			var:lam_cv_ch ?= flag:yes
+		}
+	}
+}
+lam_cv_fold_yes = {
+	scope = character
+	effect = {
+		if = {
+			limit = {
+				has_variable = lam_cv_fold_yes
+			}
+			remove_variable = lam_cv_fold_yes
+		}
+		else = {
+			set_variable = {
+				name = lam_cv_fold_yes
+				value = yes
+			}
+		}
+	}
+}
+lam_cv_lopen_yes = {
+	scope = character
+	effect = {
+		if = {
+			limit = {
+				has_variable = lam_cv_fold_last_yes
+			}
+			remove_variable = lam_cv_fold_last_yes
+		}
+		else = {
+			set_variable = {
+				name = lam_cv_fold_last_yes
+				value = yes
+			}
+		}
+	}
+}
+lam_cv_col_no = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		scope:target = {
+			var:lam_cr_choice ?= flag:no
+		}
+	}
+}
+lam_cv_lcol_no = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		scope:target = {
+			var:lam_cv_ch ?= flag:no
+		}
+	}
+}
+lam_cv_fold_no = {
+	scope = character
+	effect = {
+		if = {
+			limit = {
+				has_variable = lam_cv_fold_no
+			}
+			remove_variable = lam_cv_fold_no
+		}
+		else = {
+			set_variable = {
+				name = lam_cv_fold_no
+				value = yes
+			}
+		}
+	}
+}
+lam_cv_lopen_no = {
+	scope = character
+	effect = {
+		if = {
+			limit = {
+				has_variable = lam_cv_fold_last_no
+			}
+			remove_variable = lam_cv_fold_last_no
+		}
+		else = {
+			set_variable = {
+				name = lam_cv_fold_last_no
+				value = yes
+			}
+		}
+	}
+}
+lam_cv_col_abstain = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		scope:target = {
+			var:lam_cr_choice ?= flag:abstain
+		}
+	}
+}
+lam_cv_lcol_abstain = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		scope:target = {
+			var:lam_cv_ch ?= flag:abstain
+		}
+	}
+}
+lam_cv_fold_abstain = {
+	scope = character
+	effect = {
+		if = {
+			limit = {
+				has_variable = lam_cv_fold_abstain
+			}
+			remove_variable = lam_cv_fold_abstain
+		}
+		else = {
+			set_variable = {
+				name = lam_cv_fold_abstain
+				value = yes
+			}
+		}
+	}
+}
+lam_cv_lopen_abstain = {
+	scope = character
+	effect = {
+		if = {
+			limit = {
+				has_variable = lam_cv_fold_last_abstain
+			}
+			remove_variable = lam_cv_fold_last_abstain
+		}
+		else = {
+			set_variable = {
+				name = lam_cv_fold_last_abstain
+				value = yes
+			}
+		}
+	}
+}
+lam_cv_col_pending = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		scope:target = {
+			var:lam_cr_choice ?= flag:pending
+		}
+	}
+}
+lam_cv_lcol_pending = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		scope:target = {
+			var:lam_cv_ch ?= flag:pending
+		}
+	}
+}
+lam_cv_fold_pending = {
+	scope = character
+	effect = {
+		if = {
+			limit = {
+				has_variable = lam_cv_fold_pending
+			}
+			remove_variable = lam_cv_fold_pending
+		}
+		else = {
+			set_variable = {
+				name = lam_cv_fold_pending
+				value = yes
+			}
+		}
+	}
+}
+lam_cv_lopen_pending = {
+	scope = character
+	effect = {
+		if = {
+			limit = {
+				has_variable = lam_cv_fold_last_pending
+			}
+			remove_variable = lam_cv_fold_last_pending
+		}
+		else = {
+			set_variable = {
+				name = lam_cv_fold_last_pending
+				value = yes
+			}
+		}
+	}
+}

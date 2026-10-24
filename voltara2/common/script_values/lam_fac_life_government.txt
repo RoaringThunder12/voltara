@@ -1,0 +1,98 @@
+﻿lam_lf_governing_seats_value = {
+	value = 0
+	save_temporary_scope_as = lam_lf_govern_head
+	if = {
+		limit = {
+			is_councillor_of = liege
+		}
+		add = 1
+	}
+	every_in_list = {
+		variable = lam_fac_members
+		limit = {
+			is_alive = yes
+			var:lam_bloc ?= scope:lam_lf_govern_head
+			liege ?= scope:lam_lf_govern_head.liege
+			NOT = {
+				this = scope:lam_lf_govern_head
+			}
+			is_councillor_of = liege
+		}
+		add = 1
+	}
+}
+lam_lf_government_change_value = {
+	value = 0
+	if = {
+		limit = {
+			var:lam_lf_gov_gold < 0
+			liege = {
+				gold >= 0
+			}
+		}
+		add = 2
+	}
+	if = {
+		limit = {
+			var:lam_lf_gov_gold >= 0
+			liege = {
+				gold < 0
+			}
+		}
+		add = -2
+	}
+	if = {
+		limit = {
+			liege = {
+				realm_size >= {
+					value = prev.var:lam_lf_gov_size
+					add = 2
+				}
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			liege = {
+				realm_size <= {
+					value = prev.var:lam_lf_gov_size
+					subtract = 2
+				}
+			}
+		}
+		add = -2
+	}
+	if = {
+		limit = {
+			liege.capital_county = {
+				development_level > prev.var:lam_lf_gov_dev
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			liege.capital_county = {
+				county_control >= {
+					value = prev.var:lam_lf_gov_control
+					add = 10
+				}
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			liege.capital_county = {
+				county_control <= {
+					value = prev.var:lam_lf_gov_control
+					subtract = 15
+				}
+			}
+		}
+		add = -1
+	}
+	min = -3
+	max = 3
+}

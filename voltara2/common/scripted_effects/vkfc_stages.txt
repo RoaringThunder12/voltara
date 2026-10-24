@@ -1,0 +1,9 @@
+﻿vkfc_resume_stage = {
+if = { limit = { scope:activity = { has_current_phase = vkf_council_phase_1 NOT = { has_variable = vkfc_stage_1 } } } trigger_event = { id = vkfc.1 days = 1 } }
+if = { limit = { scope:activity = { has_current_phase = vkf_council_phase_2 NOT = { has_variable = vkfc_stage_2 } } } trigger_event = { id = vkfc.2 days = 1 } }
+if = { limit = { scope:activity = { has_current_phase = vkf_council_phase_3 NOT = { has_variable = vkfc_stage_3 } } } trigger_event = { id = vkfc.3 days = 1 } }
+if = { limit = { scope:activity = { has_current_phase = vkf_council_phase_4 NOT = { has_variable = vkfc_stage_4 } } } trigger_event = { id = vkfc.4 days = 1 } }
+if = { limit = { scope:activity = { has_current_phase = vkf_council_phase_5 NOT = { has_variable = vkfc_stage_5 } } } trigger_event = { id = vkfc.5 days = 1 } }
+if = { limit = { scope:activity = { has_current_phase = vkf_council_phase_6 NOT = { has_variable = vkfc_stage_6 } } } trigger_event = { id = vkfc.6 days = 1 } }
+if = { limit = { scope:activity = { has_current_phase = vkf_council_phase_7 NOT = { has_variable = vkfc_stage_7 } } } trigger_event = { id = vkfc.7 days = 1 } }
+}

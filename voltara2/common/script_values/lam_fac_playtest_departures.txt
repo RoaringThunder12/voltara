@@ -1,0 +1,14 @@
+﻿lam_pt_depart_share_value = {
+	value = 0
+	if = {
+		limit = {
+			var:lam_bloc ?= {
+				has_variable = lam_cr_power
+				var:lam_cr_power > 0
+			}
+		}
+		value = lam_cr_influence_value
+		multiply = 100
+		divide = var:lam_bloc.var:lam_cr_power
+	}
+}

@@ -1,0 +1,170 @@
+﻿lam_hi_update_memory_effect = {
+	if = {
+		limit = {
+			has_variable = lam_gg_source
+		}
+		if = {
+			limit = {
+				lam_hi_memory_trigger = yes
+			}
+			if = {
+				limit = {
+					lam_gg_current_cause_trigger = yes
+				}
+				if = {
+					limit = {
+						has_variable = lam_hi_paused
+					}
+					if = {
+						limit = {
+							var:lam_hi_paused > {
+								value = lam_now_m
+								subtract = 6
+							}
+							has_variable = lam_ev_since
+						}
+						change_variable = {
+							name = lam_ev_since
+							add = {
+								value = lam_now_m
+								subtract = var:lam_hi_paused
+							}
+						}
+						remove_variable = lam_hi_paused
+					}
+					else = {
+						lam_ev_clear_person_effect = yes
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					lam_hi_soft_pause_trigger = yes
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_variable = lam_hi_paused
+						}
+					}
+					set_variable = {
+						name = lam_hi_paused
+						value = lam_now_m
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_hi_paused <= {
+							value = lam_now_m
+							subtract = 6
+						}
+					}
+					lam_ev_clear_person_effect = yes
+				}
+			}
+			else = {
+				lam_ev_clear_person_effect = yes
+			}
+		}
+		else = {
+			lam_ev_clear_person_effect = yes
+		}
+	}
+}
+lam_hi_observe_effect = {
+	lam_hi_update_memory_effect = yes
+	if = {
+		limit = {
+			NOT = {
+				lam_hi_dormant_trigger = yes
+			}
+		}
+		lam_er_observe_member_effect = yes
+	}
+}
+lam_hi_shift_one_effect = {
+	if = {
+		limit = {
+			has_variable = $FIELD$
+		}
+		if = {
+			limit = {
+				var:$FIELD$ = scope:lam_hi_old_record
+			}
+			if = {
+				limit = {
+					scope:lam_hi_old_record = scope:lam_gn_cut
+				}
+				remove_variable = $FIELD$
+			}
+			else_if = {
+				limit = {
+					scope:lam_hi_old_record > scope:lam_gn_cut
+				}
+				change_variable = {
+					name = $FIELD$
+					add = -1
+				}
+			}
+		}
+	}
+}
+lam_hi_watch_offer_effect = {
+	set_variable = {
+		name = lam_hi_offer_old_head
+		value = scope:lam_cr_original_head
+	}
+	set_variable = {
+		name = lam_hi_offer_new_head
+		value = scope:lam_cr_split_head
+	}
+	scope:lam_cr_original_head = {
+		if = {
+			limit = {
+				NOT = {
+					is_target_in_variable_list = {
+						name = lam_hi_record_watchers
+						target = prev
+					}
+				}
+			}
+			add_to_variable_list = {
+				name = lam_hi_record_watchers
+				target = prev
+			}
+		}
+	}
+	scope:lam_cr_split_head = {
+		if = {
+			limit = {
+				NOT = {
+					is_target_in_variable_list = {
+						name = lam_hi_record_watchers
+						target = prev
+					}
+				}
+			}
+			add_to_variable_list = {
+				name = lam_hi_record_watchers
+				target = prev
+			}
+		}
+	}
+}
+
+lam_hi_shift_member_effect = { if = { limit = { var:lam_bp_position_head ?= scope:lam_hi_shift_head } lam_hi_shift_one_effect = { FIELD = lam_bp_position_record } }if = { limit = { var:lam_ss_home ?= scope:lam_hi_shift_head } lam_hi_shift_one_effect = { FIELD = lam_ss_record } }if = { limit = { var:lam_hi_offer_old_head ?= scope:lam_hi_shift_head } lam_hi_shift_one_effect = { FIELD = lam_bp_offer_old_record } }if = { limit = { var:lam_hi_offer_new_head ?= scope:lam_hi_shift_head } lam_hi_shift_one_effect = { FIELD = lam_bp_offer_new_record } } }
+lam_hi_shift_refs_effect = {
+ save_scope_as = lam_hi_shift_head
+ save_scope_value_as = { name = lam_hi_old_record value = var:lam_fac_rec }
+ lam_hi_shift_one_effect = { FIELD = lam_lf_caucus_record }lam_hi_shift_one_effect = { FIELD = lam_lf_exchange_record }lam_hi_shift_one_effect = { FIELD = lam_st_campaign_record }lam_hi_shift_one_effect = { FIELD = lam_pd_record }every_in_list = { variable = lam_fac_members limit = { is_alive = yes } lam_hi_shift_member_effect = yes }every_in_list = { variable = lam_fac_prev_members limit = { is_alive = yes } lam_hi_shift_member_effect = yes }every_in_list = { variable = lam_ss_founders limit = { is_alive = yes } lam_hi_shift_member_effect = yes }every_in_list = { variable = lam_lf_caucus_members limit = { is_alive = yes } lam_hi_shift_member_effect = yes }every_in_list = { variable = lam_hi_record_watchers limit = { is_alive = yes } lam_hi_shift_member_effect = yes }
+ # Do not keep expired human invitations forever.
+ clear_variable_list = lam_hi_watch_keep
+ every_in_list = { variable = lam_hi_record_watchers
+  limit = { trigger_if = { limit = { is_alive = yes } trigger_if = { limit = { has_variable = lam_bp_offer_until } var:lam_bp_offer_until > lam_now_m } trigger_else = { always = no } } trigger_else = { always = no } }
+  scope:lam_hi_shift_head = { add_to_variable_list = { name = lam_hi_watch_keep target = prev } }
+ }
+ clear_variable_list = lam_hi_record_watchers
+ every_in_list = { variable = lam_hi_watch_keep scope:lam_hi_shift_head = { add_to_variable_list = { name = lam_hi_record_watchers target = prev } } }
+ clear_variable_list = lam_hi_watch_keep
+ if = { limit = { var:lam_fac_rec = scope:lam_gn_cut } set_variable = { name = lam_hi_record_evicted value = yes } }
+}

@@ -1,0 +1,599 @@
+﻿LamUxCause1 = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_cause_office_rank_value = 1
+		}
+		localization_key = lam_ux_cause_office
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_wealth_rank_value = 1
+		}
+		localization_key = lam_ux_cause_wealth
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_promise_rank_value = 1
+		}
+		localization_key = lam_ux_cause_promise
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_repression_rank_value = 1
+		}
+		localization_key = lam_ux_cause_repression
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_succession_rank_value = 1
+		}
+		localization_key = lam_ux_cause_succession
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_policy_rank_value = 1
+		}
+		localization_key = lam_ux_cause_policy
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_legacy_rank_value = 1
+		}
+		localization_key = lam_ux_cause_legacy
+	}
+	text = {
+		localization_key = lam_ux_cause_none
+		fallback = yes
+	}
+}
+LamUxCause2 = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_cause_office_rank_value = 2
+		}
+		localization_key = lam_ux_cause_office
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_wealth_rank_value = 2
+		}
+		localization_key = lam_ux_cause_wealth
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_promise_rank_value = 2
+		}
+		localization_key = lam_ux_cause_promise
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_repression_rank_value = 2
+		}
+		localization_key = lam_ux_cause_repression
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_succession_rank_value = 2
+		}
+		localization_key = lam_ux_cause_succession
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_policy_rank_value = 2
+		}
+		localization_key = lam_ux_cause_policy
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_legacy_rank_value = 2
+		}
+		localization_key = lam_ux_cause_legacy
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamUxCause3 = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_cause_office_rank_value = 3
+		}
+		localization_key = lam_ux_cause_office
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_wealth_rank_value = 3
+		}
+		localization_key = lam_ux_cause_wealth
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_promise_rank_value = 3
+		}
+		localization_key = lam_ux_cause_promise
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_repression_rank_value = 3
+		}
+		localization_key = lam_ux_cause_repression
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_succession_rank_value = 3
+		}
+		localization_key = lam_ux_cause_succession
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_policy_rank_value = 3
+		}
+		localization_key = lam_ux_cause_policy
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_legacy_rank_value = 3
+		}
+		localization_key = lam_ux_cause_legacy
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamUxCauseShort = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_cause_office_rank_value = 1
+		}
+		localization_key = lam_ux_short_office
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_wealth_rank_value = 1
+		}
+		localization_key = lam_ux_short_wealth
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_promise_rank_value = 1
+		}
+		localization_key = lam_ux_short_promise
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_repression_rank_value = 1
+		}
+		localization_key = lam_ux_short_repression
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_succession_rank_value = 1
+		}
+		localization_key = lam_ux_short_succession
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_policy_rank_value = 1
+		}
+		localization_key = lam_ux_short_policy
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_legacy_rank_value = 1
+		}
+		localization_key = lam_ux_short_legacy
+	}
+	text = {
+		localization_key = lam_ux_short_none
+		fallback = yes
+	}
+}
+LamUxStrengthOffice = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_cause_office_value >= 20
+		}
+		localization_key = lam_ux_strong
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_office_value >= 10
+		}
+		localization_key = lam_ux_clear
+	}
+	text = {
+		localization_key = lam_ux_mild
+		fallback = yes
+	}
+}
+LamUxFactOffice = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			has_variable = lam_lf_mem1_month
+			exists = var:lam_lf_mem1_actor
+			exists = var:lam_lf_mem1_victim
+			var:lam_lf_mem1_kind ?= flag:dismissal
+		}
+		localization_key = lam_ux_fact1_dismissal
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem2_until
+			var:lam_lf_mem2_until > lam_now_m
+			has_variable = lam_lf_mem2_month
+			exists = var:lam_lf_mem2_actor
+			exists = var:lam_lf_mem2_victim
+			var:lam_lf_mem2_kind ?= flag:dismissal
+		}
+		localization_key = lam_ux_fact2_dismissal
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem3_until
+			var:lam_lf_mem3_until > lam_now_m
+			has_variable = lam_lf_mem3_month
+			exists = var:lam_lf_mem3_actor
+			exists = var:lam_lf_mem3_victim
+			var:lam_lf_mem3_kind ?= flag:dismissal
+		}
+		localization_key = lam_ux_fact3_dismissal
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamUxStrengthWealth = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_cause_wealth_value >= 20
+		}
+		localization_key = lam_ux_strong
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_wealth_value >= 10
+		}
+		localization_key = lam_ux_clear
+	}
+	text = {
+		localization_key = lam_ux_mild
+		fallback = yes
+	}
+}
+LamUxFactWealth = {
+	type = character
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamUxStrengthPromise = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_cause_promise_value >= 20
+		}
+		localization_key = lam_ux_strong
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_promise_value >= 10
+		}
+		localization_key = lam_ux_clear
+	}
+	text = {
+		localization_key = lam_ux_mild
+		fallback = yes
+	}
+}
+LamUxFactPromise = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			has_variable = lam_lf_mem1_month
+			exists = var:lam_lf_mem1_actor
+			exists = var:lam_lf_mem1_victim
+			var:lam_lf_mem1_kind ?= flag:betrayal
+		}
+		localization_key = lam_ux_fact1_betrayal
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem2_until
+			var:lam_lf_mem2_until > lam_now_m
+			has_variable = lam_lf_mem2_month
+			exists = var:lam_lf_mem2_actor
+			exists = var:lam_lf_mem2_victim
+			var:lam_lf_mem2_kind ?= flag:betrayal
+		}
+		localization_key = lam_ux_fact2_betrayal
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem3_until
+			var:lam_lf_mem3_until > lam_now_m
+			has_variable = lam_lf_mem3_month
+			exists = var:lam_lf_mem3_actor
+			exists = var:lam_lf_mem3_victim
+			var:lam_lf_mem3_kind ?= flag:betrayal
+		}
+		localization_key = lam_ux_fact3_betrayal
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamUxStrengthRepression = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_cause_repression_value >= 20
+		}
+		localization_key = lam_ux_strong
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_repression_value >= 10
+		}
+		localization_key = lam_ux_clear
+	}
+	text = {
+		localization_key = lam_ux_mild
+		fallback = yes
+	}
+}
+LamUxFactRepression = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			has_variable = lam_lf_mem1_month
+			exists = var:lam_lf_mem1_actor
+			exists = var:lam_lf_mem1_victim
+			var:lam_lf_mem1_kind ?= flag:arrest
+		}
+		localization_key = lam_ux_fact1_arrest
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			has_variable = lam_lf_mem1_month
+			exists = var:lam_lf_mem1_actor
+			exists = var:lam_lf_mem1_victim
+			var:lam_lf_mem1_kind ?= flag:revocation
+		}
+		localization_key = lam_ux_fact1_revocation
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem2_until
+			var:lam_lf_mem2_until > lam_now_m
+			has_variable = lam_lf_mem2_month
+			exists = var:lam_lf_mem2_actor
+			exists = var:lam_lf_mem2_victim
+			var:lam_lf_mem2_kind ?= flag:arrest
+		}
+		localization_key = lam_ux_fact2_arrest
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem2_until
+			var:lam_lf_mem2_until > lam_now_m
+			has_variable = lam_lf_mem2_month
+			exists = var:lam_lf_mem2_actor
+			exists = var:lam_lf_mem2_victim
+			var:lam_lf_mem2_kind ?= flag:revocation
+		}
+		localization_key = lam_ux_fact2_revocation
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem3_until
+			var:lam_lf_mem3_until > lam_now_m
+			has_variable = lam_lf_mem3_month
+			exists = var:lam_lf_mem3_actor
+			exists = var:lam_lf_mem3_victim
+			var:lam_lf_mem3_kind ?= flag:arrest
+		}
+		localization_key = lam_ux_fact3_arrest
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem3_until
+			var:lam_lf_mem3_until > lam_now_m
+			has_variable = lam_lf_mem3_month
+			exists = var:lam_lf_mem3_actor
+			exists = var:lam_lf_mem3_victim
+			var:lam_lf_mem3_kind ?= flag:revocation
+		}
+		localization_key = lam_ux_fact3_revocation
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamUxStrengthSuccession = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_cause_succession_value >= 20
+		}
+		localization_key = lam_ux_strong
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_succession_value >= 10
+		}
+		localization_key = lam_ux_clear
+	}
+	text = {
+		localization_key = lam_ux_mild
+		fallback = yes
+	}
+}
+LamUxFactSuccession = {
+	type = character
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamUxStrengthPolicy = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_cause_policy_value >= 20
+		}
+		localization_key = lam_ux_strong
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_policy_value >= 10
+		}
+		localization_key = lam_ux_clear
+	}
+	text = {
+		localization_key = lam_ux_mild
+		fallback = yes
+	}
+}
+LamUxFactPolicy = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			has_variable = lam_lf_mem1_month
+			exists = var:lam_lf_mem1_actor
+			exists = var:lam_lf_mem1_victim
+			var:lam_lf_mem1_kind ?= flag:refused
+		}
+		localization_key = lam_ux_fact1_refused
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem2_until
+			var:lam_lf_mem2_until > lam_now_m
+			has_variable = lam_lf_mem2_month
+			exists = var:lam_lf_mem2_actor
+			exists = var:lam_lf_mem2_victim
+			var:lam_lf_mem2_kind ?= flag:refused
+		}
+		localization_key = lam_ux_fact2_refused
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem3_until
+			var:lam_lf_mem3_until > lam_now_m
+			has_variable = lam_lf_mem3_month
+			exists = var:lam_lf_mem3_actor
+			exists = var:lam_lf_mem3_victim
+			var:lam_lf_mem3_kind ?= flag:refused
+		}
+		localization_key = lam_ux_fact3_refused
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamUxStrengthLegacy = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_cause_legacy_value >= 20
+		}
+		localization_key = lam_ux_strong
+	}
+	text = {
+		trigger = {
+			lam_ux_cause_legacy_value >= 10
+		}
+		localization_key = lam_ux_clear
+	}
+	text = {
+		localization_key = lam_ux_mild
+		fallback = yes
+	}
+}
+LamUxFactLegacy = {
+	type = character
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamUxRelief = {
+	type = character
+	text = {
+		trigger = {
+			lam_ux_relief_current_trigger = yes
+			var:lam_ux_relief_kind ?= flag:office
+		}
+		localization_key = lam_ux_relief_office
+	}
+	text = {
+		trigger = {
+			lam_ux_relief_current_trigger = yes
+			var:lam_ux_relief_kind ?= flag:wealth
+		}
+		localization_key = lam_ux_relief_wealth
+	}
+	text = {
+		trigger = {
+			lam_ux_relief_current_trigger = yes
+			var:lam_ux_relief_kind ?= flag:promise
+		}
+		localization_key = lam_ux_relief_promise
+	}
+	text = {
+		trigger = {
+			lam_ux_relief_current_trigger = yes
+			var:lam_ux_relief_kind ?= flag:repression
+		}
+		localization_key = lam_ux_relief_repression
+	}
+	text = {
+		trigger = {
+			lam_ux_relief_current_trigger = yes
+			var:lam_ux_relief_kind ?= flag:succession
+		}
+		localization_key = lam_ux_relief_succession
+	}
+	text = {
+		trigger = {
+			lam_ux_relief_current_trigger = yes
+			var:lam_ux_relief_kind ?= flag:policy
+		}
+		localization_key = lam_ux_relief_policy
+	}
+	text = {
+		trigger = {
+			lam_ux_relief_current_trigger = yes
+			var:lam_ux_relief_kind ?= flag:legacy
+		}
+		localization_key = lam_ux_relief_legacy
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}

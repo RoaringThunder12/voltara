@@ -219,7 +219,7 @@ types PortraitTypes
 						#default_format = "#low"
 						fontsize = 8
 						align = center
-						tooltip = "CHARACTER_VIEW_AGE_TT"
+						tooltip = "[SelectLocalization( Character.MakeScope.Var('hometowns_birthplace').IsSet, 'HOMETOWNS_BIRTHPLACE_TOOLTIP', 'CHARACTER_VIEW_AGE_TT' )]"
 					}
 					icon = {
 						visible = "[Not( Character.IsDeadAndValid )]"

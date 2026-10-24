@@ -211,7 +211,7 @@ voltara_southron_spears = {
  high_maintenance_cost = { gold = 2.1 }
  counters = { light_cavalry = 0.25 camel_cavalry = 1 heavy_cavalry = 2 elephant_cavalry = 1 }
  terrain_bonus = { oasis = { damage = 10  toughness = 10  pursuit = 10 screen = 10 } jungle = { damage = 10  toughness = 10  pursuit = 10 screen = 10 } floodplains = { damage = 10  toughness = 10  pursuit = 10 screen = 10 } desert_mountains = { damage = 5  toughness = 5  pursuit = 5 screen = 5 } drylands = { damage = 5  toughness = 5  pursuit = 5 screen = 5 } desert = { damage = 5  toughness = 5  pursuit = 5 screen = 5 } hills = { damage = 5  toughness = 5  pursuit = 5 screen = 5 } plains = { damage = -5  toughness = -5  pursuit = -5 screen = -5 } farmlands = { damage = -5  toughness = -5  pursuit = -5 screen = -5 } wetlands = { damage = -5  toughness = -5  pursuit = -5 screen = -5 } mountains = { damage = -10  toughness = -10  pursuit = -10 screen = -10 } forest = { damage = -10  toughness = -10  pursuit = -10 screen = -10 } taiga = { damage = -10  toughness = -10  pursuit = -10 screen = -10 } steppe = { damage = -10  toughness = -10  pursuit = -10 screen = -10 } }
- can_recruit = { OR = { culture = culture:voltara_desert_southron culture = culture:voltara_southorion } }
+ can_recruit = { OR = { culture = culture:voltara_desert_southron culture = { OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } } }
  access_through_subject = { always = no }
  icon = voltara_southron_spears
 }

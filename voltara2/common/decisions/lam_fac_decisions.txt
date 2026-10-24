@@ -1,0 +1,455 @@
+﻿
+# Found a faction: in my liege's court (I may lead it, or ask a peer to) or in my own court (I ask a
+# vassal to lead it - a sovereign does not lead a faction in their own court). They may say no.
+lam_found_faction_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/lam_decision_mypeople.dds"
+	}
+	desc = lam_found_faction_decision_desc
+	selection_tooltip = lam_found_faction_decision_tooltip
+	is_shown = {
+		is_ai = no
+		OR = {
+			any_vassal = {
+				lam_fac_peer_trigger = yes
+			}
+			AND = {
+				is_independent_ruler = no
+				is_ruler = yes
+				liege ?= {
+					any_vassal = {
+						lam_fac_peer_trigger = yes
+					}
+				}
+			}
+		}
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_ff_already_head_tt
+			lam_ff_not_head_trigger = yes
+		}
+		prestige >= medium_prestige_value
+		custom_description = {
+			text = lam_found_faction_cd_tt
+			NOT = {
+				has_variable = lam_found_cd
+			}
+		}
+		prestige_level >= 2
+		is_imprisoned = no
+		custom_description = {
+			text = lam_found_faction_no_war_tt
+			NOT = {
+				liege ?= {
+					is_at_war_with = root
+				}
+			}
+		}
+		custom_description = {
+			text = lam_found_faction_followers_tt
+			OR = {
+				AND = {
+					any_vassal = {
+						lam_fac_peer_trigger = yes
+					}
+					lam_ff_can_found_in_trigger = {
+						LORD = root
+					}
+					lam_ff_followers_trigger = {
+						LORD = root
+					}
+				}
+				AND = {
+					is_independent_ruler = no
+					liege ?= {
+						any_vassal = {
+							lam_fac_peer_trigger = yes
+						}
+					}
+					lam_ff_can_found_in_trigger = {
+						LORD = liege
+					}
+				}
+			}
+		}
+		custom_description = {
+			text = lam_ff_player_capacity_tt
+			lam_ff_has_player_capacity_trigger = yes
+		}
+	}
+	cost = {
+		prestige = medium_prestige_value
+	}
+	effect = {
+		if = {
+			limit = {
+				lam_ff_not_head_trigger = yes
+				lam_ff_has_player_capacity_trigger = yes
+			}
+			if = {
+				limit = {
+					lam_ff_not_head_trigger = yes
+				}
+				set_variable = {
+					name = lam_found_cd
+					value = yes
+					years = 2
+				}
+				custom_tooltip = lam_found_faction_decision_flow_tt
+				hidden_effect = {
+					if = {
+						limit = {
+							any_vassal = {
+								lam_fac_peer_trigger = yes
+							}
+							is_independent_ruler = no
+							liege ?= {
+								any_vassal = {
+									lam_fac_peer_trigger = yes
+								}
+							}
+						}
+						trigger_event = lam_faction.0290
+					}
+					else_if = {
+						limit = {
+							any_vassal = {
+								lam_fac_peer_trigger = yes
+							}
+							lam_ff_can_found_in_trigger = {
+								LORD = root
+							}
+						}
+						set_variable = {
+							name = lam_ff_lord
+							value = root
+						}
+						trigger_event = lam_faction.0300
+					}
+					else = {
+						set_variable = {
+							name = lam_ff_lord
+							value = liege
+						}
+						trigger_event = lam_faction.0300
+					}
+				}
+			}
+		}
+	}
+	ai_check_interval = 0
+	ai_potential = {
+		always = no
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Leave the faction I am in.
+lam_leave_faction_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/lam_decision_mypeople.dds"
+	}
+	desc = lam_leave_faction_decision_desc
+	selection_tooltip = lam_leave_faction_decision_tooltip
+
+	is_shown = {
+		is_ai = no
+		has_variable = lam_bloc
+		NOT = { has_variable = lam_bloc_lead }
+	}
+	effect = {
+		var:lam_bloc ?= { if = { limit = { is_alive = yes } add_opinion = { target = root modifier = lam_fac_left_opinion } } }
+		remove_variable = lam_bloc
+		if = { limit = { has_variable = lam_fac_pinned } remove_variable = lam_fac_pinned }
+		set_variable = { name = lam_fac_left_cd value = yes years = 1 }
+		hidden_effect = { lam_fac_quick_refresh_court_effect = yes }
+	}
+	ai_check_interval = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# Rule by fear: outlaw the factions (all of them, or all but the crown's own party).
+lam_fac_ban_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+	}
+	desc = lam_fac_ban_decision_desc
+	selection_tooltip = lam_fac_ban_decision_tooltip
+
+	is_shown = {
+		is_ai = no
+		any_vassal = { lam_fac_peer_trigger = yes }
+		NOT = { has_variable = lam_fac_ban }
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_fac_ban_need_foe_tt
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_att
+				var:lam_fac_att <= -15
+			}
+		}
+		custom_description = {
+			text = lam_fac_ban_power_tt
+			max_military_strength > lam_fac_hostile_power_value
+		}
+		is_at_war = no
+		# (The same terms bind an AI lord: lam_fac_can_ban_trigger.)
+	}
+	cost = {
+		prestige = major_prestige_value
+		gold = medium_gold_value
+	}
+	effect = {
+		custom_tooltip = lam_fac_ban_decision_effect_tt
+		hidden_effect = { trigger_event = lam_faction.0900 }
+	}
+	ai_check_interval = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# Lift the ban: the factions may show their faces again.
+lam_fac_unban_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/lam_decision_mypeople.dds"
+	}
+	desc = lam_fac_unban_decision_desc
+	selection_tooltip = lam_fac_unban_decision_tooltip
+
+	is_shown = {
+		is_ai = no
+		has_variable = lam_fac_ban
+	}
+	effect = {
+		add_prestige = minor_prestige_gain
+		lam_fac_unban_effect = yes
+	}
+	ai_check_interval = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# A crown on strings strikes back.
+lam_fac_coup_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+	}
+	desc = lam_fac_coup_decision_desc
+	selection_tooltip = lam_fac_coup_decision_tooltip
+	is_shown = {
+		is_ai = no
+		has_variable = lam_fac_puppet_master
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_fac_coup_cd_tt
+			NOT = { has_variable = lam_fac_coup_cd }
+		}
+		is_at_war = no
+	}
+	effect = {
+		custom_tooltip = lam_fac_coup_decision_tt
+		hidden_effect = { lam_fac_coup_effect = yes }
+	}
+	ai_check_interval = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+# A crown on strings buys them back.
+lam_fac_buyout_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+	}
+	desc = lam_fac_buyout_decision_desc
+	selection_tooltip = lam_fac_buyout_decision_tooltip
+	is_shown = {
+		is_ai = no
+		has_variable = lam_fac_puppet_master
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_fac_coup_cd_tt
+			NOT = { has_variable = lam_fac_coup_cd }
+		}
+		custom_description = {
+			text = lam_fac_buyout_gold_tt
+			gold >= lam_fac_buyout_cost_value
+		}
+		is_at_war = no
+	}
+	effect = {
+		custom_tooltip = lam_fac_buyout_decision_tt
+		hidden_effect = { lam_fac_buyout_effect = yes }
+	}
+	ai_check_interval = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# The unaligned: let the factions bid for me.
+lam_fac_bid_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/lam_decision_mypeople.dds"
+	}
+	desc = lam_fac_bid_decision_desc
+	selection_tooltip = lam_fac_bid_decision_tooltip
+	is_shown = {
+		is_ai = no
+		is_ruler = yes
+		NOT = { has_variable = lam_bloc }
+		NOT = { has_variable = lam_bloc_lead }
+		liege ?= { any_in_list = { variable = lam_bloc_leads is_alive = yes } }
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_fac_bid_cd_tt
+			NOT = { has_variable = lam_fac_bid_cd }
+		}
+		NOT = { has_variable = lam_fac_unbound }
+	}
+	effect = {
+		set_variable = { name = lam_fac_bid_cd value = yes years = 5 }
+		hidden_effect = { trigger_event = lam_faction.1500 }
+	}
+	ai_check_interval = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+# The unaligned: step between two factions at odds.
+lam_fac_mediate_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/lam_decision_mypeople.dds"
+	}
+	desc = lam_fac_mediate_decision_desc
+	selection_tooltip = lam_fac_mediate_decision_tooltip
+	is_shown = {
+		is_ai = no
+		NOT = { has_variable = lam_bloc }
+		NOT = { has_variable = lam_bloc_lead }
+		liege ?= {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				any_in_list = { variable = lam_fac_foes is_alive = yes has_variable = lam_bloc_lead }
+			}
+		}
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_fac_mediate_cd_tt
+			NOT = { has_variable = lam_fac_mediate_cd }
+		}
+	}
+	effect = {
+		hidden_effect = { trigger_event = lam_faction.1600 }
+	}
+	ai_check_interval = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# The crown digs into the factions in the dark.
+lam_fac_ug_dig_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+	}
+	desc = lam_fac_ug_dig_decision_desc
+	selection_tooltip = lam_fac_ug_dig_decision_tooltip
+	is_shown = {
+		is_ai = no
+		has_variable = lam_fac_ban
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_fac_ug_dig_cd_tt
+			NOT = { has_variable = lam_fac_dig_cd }
+		}
+	}
+	cost = {
+		gold = medium_gold_value
+	}
+	effect = {
+		custom_tooltip = lam_fac_ug_dig_decision_tt
+		hidden_effect = { lam_fac_dig_effect = yes }
+	}
+	ai_check_interval = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+# An underground head covers the faction's tracks.
+lam_fac_ug_cover_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/lam_decision_mypeople.dds"
+	}
+	desc = lam_fac_ug_cover_decision_desc
+	selection_tooltip = lam_fac_ug_cover_decision_tooltip
+	is_shown = {
+		is_ai = no
+		has_variable = lam_bloc_lead
+		has_variable = lam_fac_ug
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_fac_ug_cover_cd_tt
+			NOT = { has_variable = lam_fac_cover_cd }
+		}
+		custom_description = {
+			text = lam_fac_ug_cover_need_tt
+			has_variable = lam_fac_intel
+			var:lam_fac_intel >= 1
+			var:lam_fac_intel < 4
+		}
+	}
+	cost = {
+		gold = medium_gold_value
+	}
+	effect = {
+		custom_tooltip = lam_fac_ug_cover_decision_tt
+		hidden_effect = {
+			set_variable = { name = lam_fac_cover_cd value = yes years = 2 }
+			set_variable = { name = lam_fac_covered value = yes years = 2 }
+			change_variable = { name = lam_fac_intel add = -1 }
+			liege ?= { lam_fac_veil_refresh_effect = yes }
+		}
+	}
+	ai_check_interval = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# Debug mode only: become my liege's power behind the throne at once (for testing; step_shadow_more).
+lam_fac_debug_seize_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+	}
+	desc = lam_fac_debug_seize_decision_desc
+	selection_tooltip = lam_fac_debug_seize_decision_tooltip
+	is_shown = {
+		debug_only = yes
+		is_ai = no
+		exists = liege
+		NOT = { var:lam_fac_puppeteer_of ?= { is_alive = yes } }
+	}
+	is_valid = {
+		liege ?= { NOT = { has_variable = lam_fac_puppet_master } }
+	}
+	effect = {
+		custom_tooltip = lam_fac_debug_seize_tt
+		hidden_effect = {
+			liege = {
+				set_variable = { name = lam_fac_puppet_vanilla value = yes }
+				lam_fac_seize_effect = { LEAD = root }
+			}
+		}
+	}
+	ai_check_interval = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}

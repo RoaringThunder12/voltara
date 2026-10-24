@@ -1,0 +1,16 @@
+﻿# Same tutor filter in the existence check and the selection iterator.
+dhm_v082_story_tutor_eligible_trigger = {
+	is_alive = yes
+	is_imprisoned = no
+	is_hostage = no
+	NOT = { has_trait = incapable }
+	this != scope:dhm_manager
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_character_flag = dhm_relationship_arc_recent }
+}
+dhm_v082_marriage_repair_known_trigger = {
+	OR = {
+		dhm_v076_choice_known_trigger = { KEY = dhm071_marriage_repair_choice VALUE_1 = flag:mediate VALUE_2 = flag:distance VALUE_3 = flag:duty }
+		AND = { exists = scope:dhm071_marriage_repair_choice scope:dhm071_marriage_repair_choice = flag:agreement }
+	}
+}

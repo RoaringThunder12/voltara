@@ -1,0 +1,40 @@
+﻿lam_cr_withdraw_interaction = {
+    category = interaction_category_diplomacy
+    icon = lam_ic_terms
+    desc = lam_cr_withdraw_interaction_desc
+    auto_accept = yes
+    is_shown = {
+        scope:actor = { is_ai = no has_variable = lam_bloc_lead has_variable = lam_fac_courtparty }
+        scope:actor = scope:recipient
+    }
+    is_valid_showing_failures_only = {
+        scope:actor = { is_alive = yes is_imprisoned = no exists = liege NOT = { has_variable = lam_cr_active } NOT = { has_variable = lam_cr_retry_withdraw } }
+    }
+    on_accept = { hidden_effect = { scope:actor = { lam_cr_start_effect = { ISSUE = withdraw ACTION = withdraw TARGET = liege } } } }
+    ai_will_do = { base = 0 }
+}
+lam_cr_ballot_interaction = {
+    category = interaction_category_diplomacy
+    icon = lam_ic_terms
+    desc = lam_cr_ballot_interaction_desc
+    auto_accept = yes
+    is_shown = {
+        scope:actor = { is_ai = no has_variable = lam_cr_ballot_head var:lam_cr_choice ?= flag:pending }
+        scope:actor = scope:recipient
+    }
+    on_accept = {
+        hidden_effect = {
+            scope:actor = {
+                var:lam_cr_ballot_head ?= { save_scope_as = lam_cr_head var:lam_cr_lord ?= { save_scope_as = lam_cr_lord } }
+                if = { limit = { has_variable = lam_cr_ballot_id }
+                    save_scope_value_as = { name = lam_cr_token value = var:lam_cr_ballot_id }
+                    if = { limit = { lam_cr_ballot_valid_trigger = yes }
+                        scope:lam_cr_head = { lam_cr_restore_context_effect = yes }
+                        trigger_event = lam_cr.0001
+                    }
+                }
+            }
+        }
+    }
+    ai_will_do = { base = 0 }
+}

@@ -1,0 +1,23 @@
+﻿lam_pt_depart_same_trigger = {
+	var:lam_pt_depart_owner ?= scope:lam_bm_old
+	OR = {
+		AND = {
+			NOT = {
+				exists = scope:lam_bbest
+			}
+			NOT = {
+				has_variable = lam_pt_depart_to
+			}
+		}
+		AND = {
+			exists = scope:lam_bbest
+			var:lam_pt_depart_to ?= scope:lam_bbest
+		}
+	}
+}
+lam_pt_depart_important_trigger = {
+	OR = {
+		var:lam_fac_tier ?= 1
+		lam_pt_depart_share_value >= 10
+	}
+}

@@ -5,7 +5,7 @@
    becomes_independent = { change = scope:wizard_independence }
    resolve_title_and_vassal_change = scope:wizard_independence
   } if = { limit = { is_landed = yes } change_government = feudal_government } }
- character:19030067 ?= { if = { limit = { is_landed = yes } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }
+ character:19030067 ?= { if = { limit = { is_landed = yes NOT = { top_liege = { has_title = title:e_voltara_alutor } } } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }
  character:19067000 ?= { if = { limit = { is_landed = yes } change_government = tribal_government } }
  character:19067001 ?= { if = { limit = { is_landed = yes } change_government = tribal_government } }
  character:19067002 ?= { if = { limit = { is_landed = yes } change_government = tribal_government } }
@@ -93,10 +93,10 @@
  character:9910463 ?= { if = { limit = { is_landed = yes } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }
  character:9910464 ?= { if = { limit = { is_landed = yes } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }
  character:9910466 ?= { if = { limit = { is_landed = yes } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }
- character:9910467 ?= { if = { limit = { is_landed = yes } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }
- character:9910473 ?= { if = { limit = { is_landed = yes } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }
+ character:9910467 ?= { if = { limit = { is_landed = yes NOT = { top_liege = { has_title = title:e_voltara_alutor } } } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }
+ character:9910473 ?= { if = { limit = { is_landed = yes NOT = { top_liege = { has_title = title:e_voltara_alutor } } } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }
  character:9910474 ?= { if = { limit = { is_landed = yes NOT = { has_variable = republican_government_story } } change_government = voltara_colonial_government } }
- character:9910477 ?= { if = { limit = { is_landed = yes } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }
+ character:9910477 ?= { if = { limit = { is_landed = yes NOT = { top_liege = { has_title = title:e_voltara_alutor } } } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }
  character:9910479 ?= { if = { limit = { is_landed = yes NOT = { has_variable = republican_government_story } } change_government = voltara_colonial_government } }
  character:9910500 ?= { if = { limit = { is_landed = yes } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }
  character:9910501 ?= { if = { limit = { is_landed = yes } change_government = pirate_government every_held_title = { limit = { tier >= tier_duchy } add_title_law = pirate_succession_law } } }

@@ -1,0 +1,53 @@
+﻿# Dynasty & Household Manager v0.3.0
+# A lightweight right-click entry point for one relative's management profile.
+
+dhm_manage_relative_interaction = {
+	icon = icon_marriage
+	category = interaction_category_diplomacy
+	common_interaction = yes
+	interface_priority = 65
+	desc = dhm_manage_relative_interaction_desc
+
+	is_shown = {
+		scope:actor = { is_ai = no }
+		scope:actor != scope:recipient
+		scope:recipient = {
+			is_alive = yes
+			OR = {
+				is_close_family_of = scope:actor
+				AND = {
+					is_in_the_same_court_as = scope:actor
+					exists = dynasty
+					scope:actor = {
+						exists = dynasty
+						dynasty = scope:recipient.dynasty
+					}
+				}
+			}
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			is_adult = yes
+			is_imprisoned = no
+		}
+		scope:recipient = {
+			is_in_the_same_court_as = scope:actor
+		}
+	}
+
+	auto_accept = yes
+
+	on_accept = {
+		hidden_effect = {
+			scope:recipient = { save_scope_as = dhm_profile_target }
+			scope:actor = {
+				save_scope_as = dhm_manager
+				trigger_event = dhm_profile.0001
+			}
+		}
+	}
+
+	ai_will_do = { base = 0 }
+}

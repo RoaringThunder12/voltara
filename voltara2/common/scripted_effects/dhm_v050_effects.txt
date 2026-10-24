@@ -1,0 +1,517 @@
+﻿# =============================================================================
+# Dynasty & Household Manager v0.5.0 — Blood, Hearth & Legacy
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# HOUSEHOLD COHESION
+# The value is save-wide because this is a deliberately single-player mod and
+# the household's recent temper should survive succession.
+# -----------------------------------------------------------------------------
+dhm_v050_refresh_cohesion_modifier_effect = {
+	hidden_effect = {
+		remove_character_modifier = dhm_cohesion_fractured_modifier
+		remove_character_modifier = dhm_cohesion_uneasy_modifier
+		remove_character_modifier = dhm_cohesion_stable_modifier
+		remove_character_modifier = dhm_cohesion_united_modifier
+		remove_character_modifier = dhm_cohesion_devoted_modifier
+	}
+	if = {
+		limit = { NOT = { has_global_variable = dhm_household_cohesion } }
+		# A newly migrated global variable is not readable until the next tick.
+		# Show the neutral state during that first tick instead of evaluating an unset scope.
+		add_character_modifier = { modifier = dhm_cohesion_stable_modifier }
+	}
+	else_if = {
+		limit = { global_var:dhm_household_cohesion < 20 }
+		add_character_modifier = { modifier = dhm_cohesion_fractured_modifier }
+	}
+	else_if = {
+		limit = { global_var:dhm_household_cohesion < 40 }
+		add_character_modifier = { modifier = dhm_cohesion_uneasy_modifier }
+	}
+	else_if = {
+		limit = { global_var:dhm_household_cohesion < 60 }
+		add_character_modifier = { modifier = dhm_cohesion_stable_modifier }
+	}
+	else_if = {
+		limit = { global_var:dhm_household_cohesion < 80 }
+		add_character_modifier = { modifier = dhm_cohesion_united_modifier }
+	}
+	else = {
+		add_character_modifier = { modifier = dhm_cohesion_devoted_modifier }
+	}
+}
+
+dhm_v050_clamp_cohesion_effect = {
+	if = {
+		limit = { has_global_variable = dhm_household_cohesion }
+		if = {
+			limit = { global_var:dhm_household_cohesion > 100 }
+			set_global_variable = { name = dhm_household_cohesion value = 100 }
+		}
+		else_if = {
+			limit = { global_var:dhm_household_cohesion < 0 }
+			set_global_variable = { name = dhm_household_cohesion value = 0 }
+		}
+	}
+	else = {
+		# A console event or incomplete older save may precede normal setup.
+		set_global_variable = { name = dhm_household_cohesion value = 50 }
+	}
+	dhm_v050_refresh_cohesion_modifier_effect = yes
+}
+
+dhm_v050_cohesion_gain_small_effect = {
+	custom_tooltip = dhm_cohesion_gain_small_tt
+	hidden_effect = {
+		if = { limit = { has_global_variable = dhm_household_cohesion } change_global_variable = { name = dhm_household_cohesion add = 4 } }
+		else = { set_global_variable = { name = dhm_household_cohesion value = 54 } }
+		dhm_v050_clamp_cohesion_effect = yes
+	}
+}
+
+dhm_v050_cohesion_gain_large_effect = {
+	custom_tooltip = dhm_cohesion_gain_large_tt
+	hidden_effect = {
+		if = { limit = { has_global_variable = dhm_household_cohesion } change_global_variable = { name = dhm_household_cohesion add = 8 } }
+		else = { set_global_variable = { name = dhm_household_cohesion value = 58 } }
+		dhm_v050_clamp_cohesion_effect = yes
+	}
+}
+
+dhm_v050_cohesion_loss_small_effect = {
+	custom_tooltip = dhm_cohesion_loss_small_tt
+	hidden_effect = {
+		if = { limit = { has_global_variable = dhm_household_cohesion } change_global_variable = { name = dhm_household_cohesion subtract = 4 } }
+		else = { set_global_variable = { name = dhm_household_cohesion value = 46 } }
+		dhm_v050_clamp_cohesion_effect = yes
+	}
+}
+
+dhm_v050_cohesion_loss_large_effect = {
+	custom_tooltip = dhm_cohesion_loss_large_tt
+	hidden_effect = {
+		if = { limit = { has_global_variable = dhm_household_cohesion } change_global_variable = { name = dhm_household_cohesion subtract = 8 } }
+		else = { set_global_variable = { name = dhm_household_cohesion value = 42 } }
+		dhm_v050_clamp_cohesion_effect = yes
+	}
+}
+
+# -----------------------------------------------------------------------------
+# PERSONAL AMBITIONS
+# -----------------------------------------------------------------------------
+dhm_v050_clear_ambition_effect = {
+	remove_character_flag = dhm_ambition_love
+	remove_character_flag = dhm_ambition_status
+	remove_character_flag = dhm_ambition_learning
+	remove_character_flag = dhm_ambition_faith
+	remove_character_flag = dhm_ambition_security
+	remove_character_flag = dhm_ambition_freedom
+	remove_character_flag = dhm_ambition_children
+	remove_character_flag = dhm_ambition_reconciliation
+}
+
+dhm_v050_assign_ambition_effect = {
+	dhm_v050_clear_ambition_effect = yes
+	if = {
+		limit = { has_trait = ambitious }
+		add_character_flag = dhm_ambition_status
+	}
+	else_if = {
+		limit = { has_trait = zealous }
+		add_character_flag = dhm_ambition_faith
+	}
+	else_if = {
+		limit = { has_trait = diligent learning >= 10 }
+		add_character_flag = dhm_ambition_learning
+	}
+	else_if = {
+		limit = { has_trait = content }
+		add_character_flag = dhm_ambition_security
+	}
+	else_if = {
+		limit = { has_trait = forgiving }
+		add_character_flag = dhm_ambition_reconciliation
+	}
+	else_if = {
+		limit = { is_married = yes NOT = { any_child = { always = yes } } }
+		add_character_flag = dhm_ambition_children
+	}
+	else_if = {
+		limit = { has_trait = compassionate }
+		add_character_flag = dhm_ambition_love
+	}
+	else = {
+		random_list = {
+			20 = { add_character_flag = dhm_ambition_love }
+			18 = { add_character_flag = dhm_ambition_status }
+			18 = { add_character_flag = dhm_ambition_learning }
+			14 = { add_character_flag = dhm_ambition_faith }
+			16 = { add_character_flag = dhm_ambition_security }
+			12 = { add_character_flag = dhm_ambition_freedom }
+			12 = { add_character_flag = dhm_ambition_children }
+			10 = { add_character_flag = dhm_ambition_reconciliation }
+		}
+	}
+}
+
+# -----------------------------------------------------------------------------
+# LEGACY IDENTITY
+# -----------------------------------------------------------------------------
+dhm_v050_clear_legacy_modifier_effect = {
+	hidden_effect = {
+		remove_character_modifier = dhm_legacy_scholarly_modifier
+		remove_character_modifier = dhm_legacy_honorable_modifier
+		remove_character_modifier = dhm_legacy_protective_modifier
+		remove_character_modifier = dhm_legacy_ambitious_modifier
+		remove_character_modifier = dhm_legacy_traditional_modifier
+		remove_character_modifier = dhm_legacy_severe_modifier
+	}
+}
+
+dhm_v050_apply_legacy_modifier_effect = {
+	dhm_v050_clear_legacy_modifier_effect = yes
+	if = {
+		limit = { NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled } has_global_variable = dhm_legacy_identity_scholarly }
+		add_character_modifier = { modifier = dhm_legacy_scholarly_modifier }
+	}
+	else_if = {
+		limit = { NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled } has_global_variable = dhm_legacy_identity_honorable }
+		add_character_modifier = { modifier = dhm_legacy_honorable_modifier }
+	}
+	else_if = {
+		limit = { NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled } has_global_variable = dhm_legacy_identity_protective }
+		add_character_modifier = { modifier = dhm_legacy_protective_modifier }
+	}
+	else_if = {
+		limit = { NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled } has_global_variable = dhm_legacy_identity_ambitious }
+		add_character_modifier = { modifier = dhm_legacy_ambitious_modifier }
+	}
+	else_if = {
+		limit = { NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled } has_global_variable = dhm_legacy_identity_traditional }
+		add_character_modifier = { modifier = dhm_legacy_traditional_modifier }
+	}
+	else_if = {
+		limit = { NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled } has_global_variable = dhm_legacy_identity_severe }
+		add_character_modifier = { modifier = dhm_legacy_severe_modifier }
+	}
+}
+
+dhm_v050_clear_legacy_identity_effect = {
+	remove_global_variable = dhm_legacy_identity_scholarly
+	remove_global_variable = dhm_legacy_identity_honorable
+	remove_global_variable = dhm_legacy_identity_protective
+	remove_global_variable = dhm_legacy_identity_ambitious
+	remove_global_variable = dhm_legacy_identity_traditional
+	remove_global_variable = dhm_legacy_identity_severe
+}
+
+# -----------------------------------------------------------------------------
+# CHRONICLE AND LEGACY RECORDS
+# -----------------------------------------------------------------------------
+dhm_v050_record_ambition_effect = {
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_chapter_ambitions }
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_legacy_ambitious }
+	set_global_variable = { name = dhm_chapter_ambitions_opened value = yes }
+}
+
+dhm_v050_record_relationship_effect = {
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_chapter_relationships }
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_legacy_honorable }
+	set_global_variable = { name = dhm_chapter_relationships_opened value = yes }
+}
+
+dhm_v050_record_heir_effect = {
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_chapter_heir }
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_legacy_scholarly }
+	set_global_variable = { name = dhm_chapter_heir_opened value = yes }
+}
+
+dhm_v050_record_spouse_effect = {
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_chapter_partnership }
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_legacy_honorable }
+	set_global_variable = { name = dhm_chapter_partnership_opened value = yes }
+}
+
+dhm_v050_record_marriage_journey_effect = {
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_chapter_marriages }
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_legacy_traditional }
+	set_global_variable = { name = dhm_chapter_marriages_opened value = yes }
+}
+
+dhm_v050_record_crisis_effect = {
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_chapter_crises }
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_legacy_protective }
+	set_global_variable = { name = dhm_chapter_crises_opened value = yes }
+}
+
+dhm_v050_record_severe_choice_effect = {
+	dhm_v076_increment_global_counter_effect = { COUNTER = dhm_legacy_severe }
+}
+
+# -----------------------------------------------------------------------------
+# INITIALIZATION AND SAFE MAINTENANCE
+# -----------------------------------------------------------------------------
+dhm_v050_initialize_character_effect = {
+	if = { limit = { NOT = { has_variable = dhm_heir_journey_stage } } set_variable = { name = dhm_heir_journey_stage value = 0 } }
+	add_character_flag = dhm_v050_character_initialized
+	dhm_v050_refresh_cohesion_modifier_effect = yes
+	if = {
+		limit = { has_global_variable = dhm_setting_legacy_mechanics_disabled }
+		dhm_v050_clear_legacy_modifier_effect = yes
+	}
+	else = { dhm_v050_apply_legacy_modifier_effect = yes }
+}
+
+dhm_v050_migration_effect = {
+	if = { limit = { NOT = { has_global_variable = dhm_household_cohesion } } set_global_variable = { name = dhm_household_cohesion value = 50 } }
+	if = { limit = { NOT = { has_global_variable = dhm_legacy_scholarly } } set_global_variable = { name = dhm_legacy_scholarly value = 0 } }
+	if = { limit = { NOT = { has_global_variable = dhm_legacy_honorable } } set_global_variable = { name = dhm_legacy_honorable value = 0 } }
+	if = { limit = { NOT = { has_global_variable = dhm_legacy_protective } } set_global_variable = { name = dhm_legacy_protective value = 0 } }
+	if = { limit = { NOT = { has_global_variable = dhm_legacy_ambitious } } set_global_variable = { name = dhm_legacy_ambitious value = 0 } }
+	if = { limit = { NOT = { has_global_variable = dhm_legacy_traditional } } set_global_variable = { name = dhm_legacy_traditional value = 0 } }
+	if = { limit = { NOT = { has_global_variable = dhm_legacy_severe } } set_global_variable = { name = dhm_legacy_severe value = 0 } }
+	if = { limit = { NOT = { has_global_variable = dhm_chapter_ambitions } } set_global_variable = { name = dhm_chapter_ambitions value = 0 } }
+	if = { limit = { NOT = { has_global_variable = dhm_chapter_relationships } } set_global_variable = { name = dhm_chapter_relationships value = 0 } }
+	if = { limit = { NOT = { has_global_variable = dhm_chapter_heir } } set_global_variable = { name = dhm_chapter_heir value = 0 } }
+	if = { limit = { NOT = { has_global_variable = dhm_chapter_partnership } } set_global_variable = { name = dhm_chapter_partnership value = 0 } }
+	if = { limit = { NOT = { has_global_variable = dhm_chapter_marriages } } set_global_variable = { name = dhm_chapter_marriages value = 0 } }
+	if = { limit = { NOT = { has_global_variable = dhm_chapter_crises } } set_global_variable = { name = dhm_chapter_crises value = 0 } }
+	set_global_variable = { name = dhm_migration_0500 value = yes }
+	dhm_v050_initialize_character_effect = yes
+}
+
+dhm_v050_cleanup_officers_effect = {
+	save_scope_as = dhm_manager
+	# All work stays within the current court. Loyalty and past memories survive.
+	every_courtier = { remove_character_flag = dhm073_office_claimed remove_character_flag = dhm074_office_reserved }
+	# Reserve every valid appointment before recovering orphaned role flags.
+	# A vacant early-listed office must never take the holder of a later office.
+	if = { limit = { var:dhm_officer_steward ?= { dhm_v073_officer_available_trigger = yes } } var:dhm_officer_steward = { add_character_flag = dhm074_office_reserved } }
+	if = { limit = { var:dhm_officer_matchmaker ?= { dhm_v073_officer_available_trigger = yes } } var:dhm_officer_matchmaker = { add_character_flag = dhm074_office_reserved } }
+	if = { limit = { var:dhm_officer_tutor ?= { dhm_v073_officer_available_trigger = yes } } var:dhm_officer_tutor = { add_character_flag = dhm074_office_reserved } }
+	if = { limit = { var:dhm_officer_chronicler ?= { dhm_v073_officer_available_trigger = yes } } var:dhm_officer_chronicler = { add_character_flag = dhm074_office_reserved } }
+	dhm_v073_reconcile_office_effect = { REFERENCE = dhm_officer_steward ROLE = dhm_office_steward SKILL = stewardship }
+	dhm_v073_reconcile_office_effect = { REFERENCE = dhm_officer_matchmaker ROLE = dhm_office_matchmaker SKILL = diplomacy }
+	dhm_v073_reconcile_office_effect = { REFERENCE = dhm_officer_tutor ROLE = dhm_office_tutor SKILL = learning }
+	dhm_v073_reconcile_office_effect = { REFERENCE = dhm_officer_chronicler ROLE = dhm_office_chronicler SKILL = learning }
+	every_courtier = {
+		if = {
+			limit = { has_character_flag = dhm_office_steward scope:dhm_manager = { NOT = { var:dhm_officer_steward ?= prev } } }
+			remove_character_flag = dhm_office_steward
+		}
+		if = {
+			limit = { has_character_flag = dhm_office_matchmaker scope:dhm_manager = { NOT = { var:dhm_officer_matchmaker ?= prev } } }
+			remove_character_flag = dhm_office_matchmaker
+		}
+		if = {
+			limit = { has_character_flag = dhm_office_tutor scope:dhm_manager = { NOT = { var:dhm_officer_tutor ?= prev } } }
+			remove_character_flag = dhm_office_tutor
+		}
+		if = {
+			limit = { has_character_flag = dhm_office_chronicler scope:dhm_manager = { NOT = { var:dhm_officer_chronicler ?= prev } } }
+			remove_character_flag = dhm_office_chronicler
+		}
+		# Old duplicate/orphan flags may be cleaned without passing through an
+		# appointment. Only a character holding no real DHM office loses tenure.
+		if = {
+			limit = {
+				NOR = {
+					has_character_flag = dhm_office_steward
+					has_character_flag = dhm_office_matchmaker
+					has_character_flag = dhm_office_tutor
+					has_character_flag = dhm_office_chronicler
+				}
+			}
+			dhm_v080_close_officer_tenure_effect = yes
+		}
+		remove_character_flag = dhm073_office_claimed
+		remove_character_flag = dhm074_office_reserved
+	}
+}
+
+dhm_v050_maintain_household_effect = {
+	save_scope_as = dhm_manager
+	dhm_v050_cleanup_officers_effect = yes
+
+	# At most two new close relatives receive a persistent ambition per year.
+	ordered_close_family_member = {
+		limit = {
+			is_alive = yes
+			is_ai = yes
+			age >= 12
+			is_in_the_same_court_as = scope:dhm_manager
+			NOT = { dhm_v050_has_ambition_trigger = yes }
+		}
+		order_by = age
+		max = 2
+		check_range_bounds = no
+		dhm_v050_assign_ambition_effect = yes
+	}
+
+	dhm_v050_refresh_cohesion_modifier_effect = yes
+	if = {
+		limit = { has_global_variable = dhm_setting_legacy_mechanics_disabled }
+		dhm_v050_clear_legacy_modifier_effect = yes
+	}
+	else = { dhm_v050_apply_legacy_modifier_effect = yes }
+}
+
+# -----------------------------------------------------------------------------
+# STORY DIRECTOR
+# Every branch is family/court bounded and shares v0.4's configurable governor.
+# -----------------------------------------------------------------------------
+dhm_v050_story_pulse_effect = {
+	save_scope_as = dhm_manager
+	if = {
+		limit = {
+			is_alive = yes
+			is_ai = no
+			NOT = { has_character_flag = dhm_living_story_cooldown }
+			NOT = { has_character_flag = dhm081_aftermath_pause }
+			NOT = { has_global_variable = dhm_setting_stories_off }
+		}
+		random_list = {
+			16 = {
+				trigger = { any_close_family_member = { dhm_v050_ambition_target_trigger = yes } }
+				random_close_family_member = {
+					limit = { dhm_v050_ambition_target_trigger = yes }
+					save_scope_as = dhm_ambition_target
+					add_character_flag = { flag = dhm_ambition_story_recent years = 6 }
+				}
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_legacy.0200 days = { 4 12 } }
+			}
+			14 = {
+				trigger = {
+					any_close_family_member = {
+						dhm_v050_arc_relative_trigger = yes
+						any_sibling = { dhm_v050_arc_relative_trigger = yes }
+					}
+				}
+				random_close_family_member = {
+					limit = {
+						dhm_v050_arc_relative_trigger = yes
+						any_sibling = { dhm_v050_arc_relative_trigger = yes }
+					}
+					save_scope_as = dhm_arc_first
+					random_sibling = {
+						limit = { dhm_v050_arc_relative_trigger = yes }
+						save_scope_as = dhm_arc_second
+					}
+				}
+				save_scope_value_as = { name = dhm071_arc_kind value = flag:siblings }
+				scope:dhm_arc_first = { add_character_flag = { flag = dhm_relationship_arc_recent years = 5 } }
+				scope:dhm_arc_second = { add_character_flag = { flag = dhm_relationship_arc_recent years = 5 } }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_legacy.0300 days = { 4 12 } }
+			}
+			10 = {
+				trigger = { any_close_family_member = { dhm_v040_student_trigger = yes } }
+				random_close_family_member = {
+					limit = { dhm_v040_student_trigger = yes }
+					save_scope_as = dhm_arc_first
+					random_relation = { type = dhm_specialist_tutor limit = { dhm_v082_story_tutor_eligible_trigger = yes } save_scope_as = dhm_arc_second }
+				}
+				save_scope_value_as = { name = dhm071_arc_kind value = flag:tutor }
+				scope:dhm_arc_first = { add_character_flag = { flag = dhm_relationship_arc_recent years = 5 } }
+				scope:dhm_arc_second = { add_character_flag = { flag = dhm_relationship_arc_recent years = 5 } }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_legacy.0300 days = { 4 12 } }
+			}
+			8 = {
+				trigger = { any_close_family_member = { dhm_v050_marriage_journey_trigger = yes } }
+				random_close_family_member = {
+					limit = { dhm_v050_marriage_journey_trigger = yes }
+					save_scope_as = dhm_arc_first
+					random_spouse = {
+						limit = { is_alive = yes is_in_the_same_court_as = scope:dhm_manager NOT = { has_character_flag = dhm_marriage_matter_recent } NOT = { has_character_flag = dhm_marriage_recovery_recent } NOT = { has_character_flag = dhm_relationship_arc_recent } }
+						save_scope_as = dhm_arc_second
+					}
+				}
+				save_scope_value_as = { name = dhm071_arc_kind value = flag:inlaw }
+				scope:dhm_arc_first = { add_character_flag = { flag = dhm_relationship_arc_recent years = 5 } }
+				scope:dhm_arc_second = { add_character_flag = { flag = dhm_relationship_arc_recent years = 5 } }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_legacy.0300 days = { 4 12 } }
+			}
+			8 = {
+				trigger = {
+					any_close_family_member = { dhm_v040_letter_relative_trigger = yes }
+					any_close_family_member = { dhm_v050_arc_relative_trigger = yes }
+				}
+				random_close_family_member = {
+					limit = { dhm_v040_letter_relative_trigger = yes }
+					save_scope_as = dhm_arc_first
+				}
+				random_close_family_member = {
+					limit = { dhm_v050_arc_relative_trigger = yes this != scope:dhm_arc_first }
+					save_scope_as = dhm_arc_second
+				}
+				save_scope_value_as = { name = dhm071_arc_kind value = flag:estranged }
+				scope:dhm_arc_first = { add_character_flag = { flag = dhm_relationship_arc_recent years = 5 } }
+				scope:dhm_arc_second = { add_character_flag = { flag = dhm_relationship_arc_recent years = 5 } }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_legacy.0300 days = { 4 12 } }
+			}
+			12 = {
+				trigger = { exists = player_heir player_heir = { dhm_v050_heir_trigger = yes } }
+				player_heir = {
+					save_scope_as = dhm_heir
+					add_character_flag = { flag = dhm_heir_journey_recent years = 3 }
+				}
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_legacy.0400 days = { 4 12 } }
+			}
+			12 = {
+				trigger = { any_spouse = { dhm_v050_spouse_trigger = yes } }
+				random_spouse = {
+					limit = { dhm_v050_spouse_trigger = yes }
+					save_scope_as = dhm_partner_spouse
+					add_character_flag = { flag = dhm_spouse_partner_recent years = 4 }
+				}
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_legacy.0500 days = { 4 12 } }
+			}
+			9 = {
+				trigger = { any_close_family_member = { is_alive = yes is_adult = yes is_in_the_same_court_as = scope:dhm_manager NOT = { has_character_flag = dhm_crisis_recent } } }
+				random_close_family_member = {
+					limit = { is_alive = yes is_adult = yes is_in_the_same_court_as = scope:dhm_manager NOT = { has_character_flag = dhm_crisis_recent } }
+					save_scope_as = dhm_crisis_relative
+					add_character_flag = { flag = dhm_crisis_recent years = 5 }
+				}
+				if = {
+					limit = { exists = scope:dhm_crisis_relative }
+					dhm_apply_living_story_cooldown_effect = yes
+					trigger_event = { id = dhm_legacy.0700 days = { 4 12 } }
+				}
+			}
+			8 = {
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:officer }
+					OR = {
+						AND = { has_variable = dhm_officer_steward var:dhm_officer_steward = { dhm_v060_officer_trigger = yes dhm_v090_officer_review_due_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } }
+						AND = { has_variable = dhm_officer_matchmaker var:dhm_officer_matchmaker = { dhm_v060_officer_trigger = yes dhm_v090_officer_review_due_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } }
+						AND = { has_variable = dhm_officer_tutor var:dhm_officer_tutor = { dhm_v060_officer_trigger = yes dhm_v090_officer_review_due_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } }
+						AND = { has_variable = dhm_officer_chronicler var:dhm_officer_chronicler = { dhm_v060_officer_trigger = yes dhm_v090_officer_review_due_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } }
+					}
+				}
+				random_list = {
+					25 = { trigger = { has_variable = dhm_officer_steward var:dhm_officer_steward = { dhm_v060_officer_trigger = yes dhm_v090_officer_review_due_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } } var:dhm_officer_steward = { save_scope_as = dhm_story_officer add_character_flag = { flag = dhm_officer_story_recent years = 2 } } }
+					25 = { trigger = { has_variable = dhm_officer_matchmaker var:dhm_officer_matchmaker = { dhm_v060_officer_trigger = yes dhm_v090_officer_review_due_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } } var:dhm_officer_matchmaker = { save_scope_as = dhm_story_officer add_character_flag = { flag = dhm_officer_story_recent years = 2 } } }
+					25 = { trigger = { has_variable = dhm_officer_tutor var:dhm_officer_tutor = { dhm_v060_officer_trigger = yes dhm_v090_officer_review_due_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } } var:dhm_officer_tutor = { save_scope_as = dhm_story_officer add_character_flag = { flag = dhm_officer_story_recent years = 2 } } }
+					25 = { trigger = { has_variable = dhm_officer_chronicler var:dhm_officer_chronicler = { dhm_v060_officer_trigger = yes dhm_v090_officer_review_due_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } } var:dhm_officer_chronicler = { save_scope_as = dhm_story_officer add_character_flag = { flag = dhm_officer_story_recent years = 2 } } }
+				}
+				if = {
+					limit = { exists = scope:dhm_story_officer }
+					set_variable = { name = dhm081_last_story_family value = flag:officer years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+					dhm_v081_capture_officer_role_effect = yes
+				dhm_v090_begin_officer_review_effect = yes
+				if = { limit = { dhm_v081_officer_self_reliant_trigger = yes } trigger_event = { id = dhm_saga.0110 days = { 4 12 } } }
+				else = { trigger_event = { id = dhm_legacy.0150 days = { 4 12 } } }
+				}
+			}
+			20 = { dhm_living_family_pulse_effect = yes }
+		}
+	}
+}

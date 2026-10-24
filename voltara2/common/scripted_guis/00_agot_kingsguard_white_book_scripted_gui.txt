@@ -52,17 +52,15 @@ agot_kingsguard_white_book = {
 		var:selected_white_book_page ?= scope:selected_white_book_page
 	}
 	effect = {
-		if = { # removes selection --> no selection at all
-			limit = {
+		if = { limit = {
 				exists = var:selected_white_book_page
 				exists = scope:selected_white_book_page
 				var:selected_white_book_page ?= scope:selected_white_book_page
 
 				always = no # enable variable below once we have an instance where you should be allowed to unselect a character
 				#has_variable = is_allow_unselecting_character # set this variable on the character if you want to be allowed to unselect
-			}
-			root ?= { remove_variable = selected_white_book_page }
-		}
+			} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 		else_if = {
 			limit = { exists = scope:selected_white_book_page }
 			if = {

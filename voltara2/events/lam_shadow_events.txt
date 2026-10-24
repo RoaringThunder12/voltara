@@ -1,0 +1,589 @@
+﻿namespace = lam_shadow
+
+# Living Factions - life behind the throne (step_shadow_life). root = the player holding the strings;
+# scope:lam_sh_king = the ruler on them.
+
+lam_shadow.0001 = {
+	type = character_event
+	title = lam_shadow.0001.t
+	desc = lam_shadow.0001.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = { character = root animation = personality_cynical }
+	right_portrait = { character = scope:lam_sh_king animation = scheme }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	option = {
+		name = lam_shadow.0001.a
+		scope:lam_sh_king = { add_stress = medium_stress_gain add_opinion = { target = root modifier = scared_opinion opinion = -10 } }
+			add_dread = minor_dread_gain
+	}
+	option = {
+		name = lam_shadow.0001.b
+		scope:lam_sh_king = { add_stress = minor_stress_loss add_opinion = { target = root modifier = grateful_opinion opinion = 15 } }
+	}
+}
+
+lam_shadow.0002 = {
+	type = character_event
+	title = lam_shadow.0002.t
+	desc = lam_shadow.0002.desc
+	theme = intrigue
+	override_background = { reference = throne_room }
+	left_portrait = { character = root animation = happiness }
+	right_portrait = { character = scope:lam_sh_king animation = worry }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	option = {
+		name = lam_shadow.0002.a
+		add_gold = medium_gold_value
+			if = { limit = { government_has_flag = government_has_influence } change_influence = 50 }
+	}
+	option = {
+		name = lam_shadow.0002.b
+		add_prestige = medium_prestige_gain
+	}
+	option = {
+		name = lam_shadow.0002.c
+		add_prestige = minor_prestige_gain
+			scope:lam_sh_king = { add_gold = medium_gold_value add_opinion = { target = root modifier = grateful_opinion opinion = 10 } }
+	}
+}
+
+lam_shadow.0003 = {
+	type = character_event
+	title = lam_shadow.0003.t
+	desc = lam_shadow.0003.desc
+	theme = intrigue
+	override_background = {
+		reference = corridor_day
+	}
+	left_portrait = {
+		character = root
+		animation = paranoia
+	}
+	right_portrait = {
+		character = scope:lam_sh_rel
+		animation = disapproval
+	}
+	trigger = {
+		lam_nc_control_trigger = {
+			LORD = scope:lam_sh_king
+		}
+	}
+	immediate = {
+		scope:lam_sh_king = {
+			random_close_family_member = {
+				limit = {
+					is_adult = yes
+					is_imprisoned = no
+					NOT = {
+						this = root
+					}
+					lam_nc_arrest_target_trigger = {
+						LORD = scope:lam_sh_king
+						MASTER = root
+					}
+				}
+				save_scope_as = lam_sh_rel
+			}
+		}
+	}
+	option = {
+		name = lam_shadow.0003.a
+		trigger = {
+			lam_nc_control_trigger = {
+				LORD = scope:lam_sh_king
+			}
+			scope:lam_sh_rel ?= {
+				lam_nc_arrest_target_trigger = {
+					LORD = scope:lam_sh_king
+					MASTER = root
+				}
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_nc_control_trigger = {
+						LORD = scope:lam_sh_king
+					}
+					scope:lam_sh_rel ?= {
+						lam_nc_arrest_target_trigger = {
+							LORD = scope:lam_sh_king
+							MASTER = root
+						}
+					}
+				}
+				scope:lam_sh_king = {
+					lam_nc_arrest_effect = {
+						MASTER = root
+						TARGET = scope:lam_sh_rel
+						TYPE = house_arrest
+					}
+				}
+				scope:lam_sh_rel = {
+					add_opinion = {
+						target = root
+						modifier = angry_opinion
+						opinion = -30
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_shadow.0003.b
+		trigger = {
+			lam_nc_control_trigger = {
+				LORD = scope:lam_sh_king
+			}
+			scope:lam_sh_rel ?= {
+				lam_nc_arrest_target_trigger = {
+					LORD = scope:lam_sh_king
+					MASTER = root
+				}
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_nc_control_trigger = {
+						LORD = scope:lam_sh_king
+					}
+					scope:lam_sh_rel ?= {
+						lam_nc_arrest_target_trigger = {
+							LORD = scope:lam_sh_king
+							MASTER = root
+						}
+					}
+				}
+				pay_short_term_gold = {
+					target = scope:lam_sh_rel
+					gold = minor_gold_value
+				}
+				scope:lam_sh_rel = {
+					add_opinion = {
+						target = root
+						modifier = bribed_opinion
+						opinion = 25
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_shadow.0003.c
+		add_stress = minor_stress_gain
+	}
+}
+
+lam_shadow.0004 = {
+	type = character_event
+	title = lam_shadow.0004.t
+	desc = lam_shadow.0004.desc
+	theme = intrigue
+	override_background = { reference = throne_room }
+	left_portrait = { character = root animation = personality_bold }
+	right_portrait = { character = scope:lam_sh_king animation = shock }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	option = {
+		name = lam_shadow.0004.a
+		add_prestige = major_prestige_gain
+			scope:lam_sh_king = { add_prestige = minor_prestige_loss }
+	}
+	option = {
+		name = lam_shadow.0004.b
+		scope:lam_sh_king = { add_prestige = medium_prestige_gain add_opinion = { target = root modifier = grateful_opinion opinion = 15 } }
+	}
+}
+
+lam_shadow.0005 = {
+	type = character_event
+	title = lam_shadow.0005.t
+	desc = lam_shadow.0005.desc
+	theme = intrigue
+	override_background = { reference = study }
+	left_portrait = { character = root animation = scheme }
+	right_portrait = { character = scope:lam_sh_heir animation = admiration }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	immediate = { scope:lam_sh_king = { primary_heir ?= { save_scope_as = lam_sh_heir } } }
+	option = {
+		name = lam_shadow.0005.a
+		remove_short_term_gold = minor_gold_value
+			scope:lam_sh_heir = { add_opinion = { target = root modifier = respect_opinion opinion = 40 } }
+			add_hook = { type = favor_hook target = scope:lam_sh_heir years = 20 }
+	}
+	option = {
+		name = lam_shadow.0005.b
+		scope:lam_sh_king = { add_opinion = { target = root modifier = grateful_opinion opinion = 10 } }
+	}
+}
+
+lam_shadow.0006 = {
+	type = character_event
+	title = lam_shadow.0006.t
+	desc = lam_shadow.0006.desc
+	theme = intrigue
+	override_background = {
+		reference = council_chamber
+	}
+	left_portrait = {
+		character = root
+		animation = personality_callous
+	}
+	right_portrait = {
+		character = scope:lam_sh_critic
+		animation = anger
+	}
+	trigger = {
+		lam_nc_control_trigger = {
+			LORD = scope:lam_sh_king
+		}
+	}
+	immediate = {
+		scope:lam_sh_king = {
+			random_vassal = {
+				limit = {
+					is_ai = yes
+					NOT = {
+						this = root
+					}
+					is_imprisoned = no
+					opinion = {
+						target = root
+						value < 0
+					}
+					lam_nc_arrest_target_trigger = {
+						LORD = scope:lam_sh_king
+						MASTER = root
+					}
+				}
+				save_scope_as = lam_sh_critic
+			}
+		}
+	}
+	option = {
+		name = lam_shadow.0006.a
+		trigger = {
+			lam_nc_control_trigger = {
+				LORD = scope:lam_sh_king
+			}
+			scope:lam_sh_critic ?= {
+				lam_nc_arrest_target_trigger = {
+					LORD = scope:lam_sh_king
+					MASTER = root
+				}
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_nc_control_trigger = {
+						LORD = scope:lam_sh_king
+					}
+					scope:lam_sh_critic ?= {
+						lam_nc_arrest_target_trigger = {
+							LORD = scope:lam_sh_king
+							MASTER = root
+						}
+					}
+				}
+				scope:lam_sh_king = {
+					lam_nc_arrest_effect = {
+						MASTER = root
+						TARGET = scope:lam_sh_critic
+						TYPE = dungeon
+					}
+				}
+				add_dread = medium_dread_gain
+				scope:lam_sh_critic = {
+					add_opinion = {
+						target = root
+						modifier = angry_opinion
+						opinion = -40
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_shadow.0006.b
+		trigger = {
+			lam_nc_control_trigger = {
+				LORD = scope:lam_sh_king
+			}
+			scope:lam_sh_critic ?= {
+				lam_nc_arrest_target_trigger = {
+					LORD = scope:lam_sh_king
+					MASTER = root
+				}
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_nc_control_trigger = {
+						LORD = scope:lam_sh_king
+					}
+					scope:lam_sh_critic ?= {
+						lam_nc_arrest_target_trigger = {
+							LORD = scope:lam_sh_king
+							MASTER = root
+						}
+					}
+				}
+				pay_short_term_gold = {
+					target = scope:lam_sh_critic
+					gold = minor_gold_value
+				}
+				scope:lam_sh_critic = {
+					add_opinion = {
+						target = root
+						modifier = bribed_opinion
+						opinion = 30
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = lam_shadow.0006.c
+		add_prestige = minor_prestige_loss
+	}
+}
+
+lam_shadow.0007 = {
+	type = character_event
+	title = lam_shadow.0007.t
+	desc = lam_shadow.0007.desc
+	theme = intrigue
+	override_background = { reference = study }
+	left_portrait = { character = root animation = scheme }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	option = {
+		name = lam_shadow.0007.a
+		add_gold = major_gold_value
+			random = { chance = 25 add_prestige = medium_prestige_loss scope:lam_sh_king = { add_opinion = { target = root modifier = angry_opinion opinion = -20 } } }
+	}
+	option = {
+		name = lam_shadow.0007.b
+		add_prestige = minor_prestige_gain
+	}
+}
+
+lam_shadow.0008 = {
+	type = character_event
+	title = lam_shadow.0008.t
+	desc = lam_shadow.0008.desc
+	theme = intrigue
+	override_background = { reference = feast }
+	left_portrait = { character = root animation = happiness }
+	right_portrait = { character = scope:lam_sh_king animation = happiness }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	option = {
+		name = lam_shadow.0008.a
+		add_prestige = medium_prestige_gain
+			scope:lam_sh_king = { add_stress = minor_stress_gain }
+	}
+	option = {
+		name = lam_shadow.0008.b
+		scope:lam_sh_king = { add_opinion = { target = root modifier = grateful_opinion opinion = 10 } every_vassal = { limit = { NOT = { this = root } } add_opinion = { target = root modifier = respect_opinion opinion = 10 } } }
+	}
+}
+
+lam_shadow.0009 = {
+	type = character_event
+	title = lam_shadow.0009.t
+	desc = lam_shadow.0009.desc
+	theme = intrigue
+	override_background = { reference = market }
+	left_portrait = { character = root animation = schadenfreude }
+	right_portrait = { character = scope:lam_sh_king animation = sadness }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	option = {
+		name = lam_shadow.0009.a
+		add_prestige = major_prestige_gain
+			scope:lam_sh_king = { add_prestige = medium_prestige_loss add_stress = medium_stress_gain }
+	}
+	option = {
+		name = lam_shadow.0009.b
+		add_prestige = minor_prestige_gain
+			scope:lam_sh_king = { add_opinion = { target = root modifier = grateful_opinion opinion = 20 } }
+	}
+	option = {
+		name = lam_shadow.0009.c
+		trigger = { government_has_flag = government_has_influence }
+		change_influence = 150
+	}
+}
+
+lam_shadow.0010 = {
+	type = character_event
+	title = lam_shadow.0010.t
+	desc = lam_shadow.0010.desc
+	theme = intrigue
+	override_background = { reference = bedchamber }
+	left_portrait = { character = root animation = scheme }
+	right_portrait = { character = scope:lam_sh_king animation = sadness }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	option = {
+		name = lam_shadow.0010.a
+		custom_tooltip = lam_shadow.0010.a.tt
+			scope:lam_sh_king = { death = { death_reason = death_poison killer = root } }
+			add_dread = major_dread_gain
+			random = { chance = 30 add_prestige = major_prestige_loss }
+	}
+	option = {
+		name = lam_shadow.0010.b
+		add_stress = minor_stress_loss
+	}
+}
+
+lam_shadow.0011 = {
+	type = character_event
+	title = lam_shadow.0011.t
+	desc = lam_shadow.0011.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = { character = root animation = personality_cynical }
+	right_portrait = { character = scope:lam_sh_other animation = scheme }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	immediate = { scope:lam_sh_king = { random_in_list = { variable = lam_bloc_leads limit = { is_alive = yes NOT = { this = root } } save_scope_as = lam_sh_other } } }
+	option = {
+		name = lam_shadow.0011.a
+		scope:lam_sh_other = { add_opinion = { target = root modifier = respect_opinion opinion = 30 } }
+			add_opinion = { target = scope:lam_sh_other modifier = respect_opinion opinion = 30 }
+	}
+	option = {
+		name = lam_shadow.0011.b
+		add_dread = medium_dread_gain
+			scope:lam_sh_other = { add_opinion = { target = root modifier = scared_opinion opinion = -20 } if = { limit = { has_variable = lam_fac_cohesion } change_variable = { name = lam_fac_cohesion add = -10 } } }
+	}
+}
+
+lam_shadow.0012 = {
+	type = character_event
+	title = lam_shadow.0012.t
+	desc = lam_shadow.0012.desc
+	theme = intrigue
+	override_background = { reference = throne_room }
+	left_portrait = { character = root animation = disapproval }
+	right_portrait = { character = scope:lam_sh_king animation = anger }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	option = {
+		name = lam_shadow.0012.a
+		add_dread = minor_dread_gain
+			scope:lam_sh_king = { add_stress = medium_stress_gain add_opinion = { target = root modifier = scared_opinion opinion = -10 } }
+	}
+	option = {
+		name = lam_shadow.0012.b
+		add_prestige = minor_prestige_loss
+			scope:lam_sh_king = { add_stress = minor_stress_loss add_opinion = { target = root modifier = grateful_opinion opinion = 20 } }
+	}
+}
+
+lam_shadow.0013 = {
+	type = character_event
+	title = lam_shadow.0013.t
+	desc = lam_shadow.0013.desc
+	theme = intrigue
+	override_background = { reference = council_chamber }
+	left_portrait = { character = root animation = happiness }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	option = {
+		name = lam_shadow.0013.a
+		change_influence = 150
+	}
+	option = {
+		name = lam_shadow.0013.b
+		add_prestige = medium_prestige_gain
+	}
+}
+
+lam_shadow.0014 = {
+	type = character_event
+	title = lam_shadow.0014.t
+	desc = lam_shadow.0014.desc
+	theme = intrigue
+	override_background = { reference = feast }
+	left_portrait = { character = root animation = eyeroll }
+	right_portrait = { character = scope:lam_sh_king animation = sadness }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	option = {
+		name = lam_shadow.0014.a
+		scope:lam_sh_king = { add_trait = drunkard add_stress = major_stress_loss }
+	}
+	option = {
+		name = lam_shadow.0014.b
+		remove_short_term_gold = minor_gold_value
+			scope:lam_sh_king = { add_stress = minor_stress_loss add_opinion = { target = root modifier = grateful_opinion opinion = 15 } }
+	}
+}
+
+lam_shadow.0015 = {
+	type = character_event
+	title = lam_shadow.0015.t
+	desc = lam_shadow.0015.desc
+	theme = intrigue
+	override_background = { reference = council_chamber }
+	left_portrait = { character = root animation = personality_bold }
+	right_portrait = { character = scope:lam_sh_king animation = dismissal }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	option = {
+		name = lam_shadow.0015.a
+		add_prestige = minor_prestige_gain
+			scope:lam_sh_king = { every_councillor = { limit = { NOT = { this = root } } add_opinion = { target = root modifier = respect_opinion opinion = 15 } } }
+	}
+	option = {
+		name = lam_shadow.0015.b
+		scope:lam_sh_king = { add_opinion = { target = root modifier = grateful_opinion opinion = 15 } }
+	}
+}
+
+lam_shadow.0016 = {
+	type = character_event
+	title = lam_shadow.0016.t
+	desc = lam_shadow.0016.desc
+	theme = intrigue
+	override_background = { reference = throne_room }
+	left_portrait = { character = root animation = shock }
+	right_portrait = { character = scope:lam_sh_king animation = anger }
+	trigger = { exists = scope:lam_sh_king scope:lam_sh_king = { is_alive = yes } }
+	option = {
+		name = lam_shadow.0016.a
+		random = {
+			chance = { value = 50 add = { value = intrigue subtract = scope:lam_sh_king.intrigue multiply = 2 } if = { limit = { has_variable = lam_fac_share var:lam_fac_share >= 40 } add = 10 } min = 10 max = 90 }
+			save_scope_value_as = { name = lam_sh_cw value = yes }
+			custom_tooltip = lam_shadow.0016.win_tt
+			add_dread = medium_dread_gain
+			scope:lam_sh_king = { add_stress = major_stress_gain add_opinion = { target = root modifier = scared_opinion opinion = -20 } }
+		}
+		if = { limit = { NOT = { exists = scope:lam_sh_cw } } custom_tooltip = lam_shadow.0016.lose_tt hidden_effect = { lam_sh_counter_lost_effect = yes } }
+	}
+	option = {
+		name = lam_shadow.0016.b
+		add_prestige = medium_prestige_loss
+		set_variable = { name = lam_sd_law_cd value = yes years = 2 }
+		set_variable = { name = lam_sd_gold_cd value = yes years = 2 }
+		custom_tooltip = lam_shadow.0016.yield_tt
+		scope:lam_sh_king = { add_stress = medium_stress_loss add_opinion = { target = root modifier = grateful_opinion opinion = 20 } }
+	}
+	option = {
+		name = lam_shadow.0016.c
+		trigger = { gold >= major_gold_value }
+		remove_short_term_gold = major_gold_value
+		random = {
+			chance = 80
+			save_scope_value_as = { name = lam_sh_cw value = yes }
+			custom_tooltip = lam_shadow.0016.win_tt
+			add_dread = medium_dread_gain
+			scope:lam_sh_king = { add_stress = major_stress_gain add_opinion = { target = root modifier = scared_opinion opinion = -20 } }
+		}
+		if = { limit = { NOT = { exists = scope:lam_sh_cw } } custom_tooltip = lam_shadow.0016.lose_tt hidden_effect = { lam_sh_counter_lost_effect = yes } }
+	}
+	option = {
+		name = lam_shadow.0016.d
+		add_prestige = minor_prestige_gain
+		custom_tooltip = lam_shadow.0016.go_tt
+		scope:lam_sh_king = { add_opinion = { target = root modifier = grateful_opinion opinion = 20 } lam_fac_release_effect = yes }
+	}
+}

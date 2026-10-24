@@ -1455,7 +1455,7 @@ cl_improve_creator_congenital_effect = { #TBD: Test
 	# If trait bad, make better
 	if = {
 		limit = {
-			scope:clone = { has_trait = $TRAIT$_good }
+			scope:clone = { has_trait = $GROUP$_good }
 			has_trait = $TRAIT$_bad_3
 		}
 		random = {
@@ -1466,7 +1466,7 @@ cl_improve_creator_congenital_effect = { #TBD: Test
 	}
 	else_if = {
 		limit = {
-			scope:clone = { has_trait = $TRAIT$_good }
+			scope:clone = { has_trait = $GROUP$_good }
 			has_trait = $TRAIT$_bad_2
 		}
 		random = {
@@ -1477,7 +1477,7 @@ cl_improve_creator_congenital_effect = { #TBD: Test
 	}
 	else_if = {
 		limit = {
-			scope:clone = { has_trait = $TRAIT$_good }
+			scope:clone = { has_trait = $GROUP$_good }
 			has_trait = $TRAIT$_bad_1
 		}
 		random = {
@@ -1488,8 +1488,8 @@ cl_improve_creator_congenital_effect = { #TBD: Test
 	# If no trait, make good
 	else_if = {
 		limit = {
-			scope:clone = { has_trait = $TRAIT$_good }
-			NOT = { has_trait = $TRAIT$_good }
+			scope:clone = { has_trait = $GROUP$_good }
+			NOT = { has_trait = $GROUP$_good }
 		}
 		random = {
 			chance = 5

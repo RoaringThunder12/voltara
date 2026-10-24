@@ -1,0 +1,447 @@
+﻿lam_wc_civil_war_trigger = {
+	OR = {
+		using_civil_war_cb_trigger = yes
+		using_cb = replace_ceremonial_regent_faction_war
+		using_cb = restore_ceremonial_liege_faction_war
+		using_cb = ceremonial_claimant_faction_war
+		using_cb = imperial_policy_faction_war
+	}
+}
+lam_wc_court_war_trigger = {
+	lam_wc_civil_war_trigger = yes
+	OR = {
+		AND = {
+			trigger_if = {
+				limit = {
+					exists = $HEAD$.var:lam_wc_war
+				}
+				this ?= $HEAD$.var:lam_wc_war
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		AND = {
+			trigger_if = {
+				limit = {
+					exists = $HEAD$.liege
+				}
+				primary_defender ?= $HEAD$.liege
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		AND = {
+			trigger_if = {
+				limit = {
+					exists = $HEAD$.var:lam_wc_home
+				}
+				primary_defender ?= $HEAD$.var:lam_wc_home
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		AND = {
+			trigger_if = {
+				limit = {
+					exists = $HEAD$.var:lam_fac_weighed
+				}
+				primary_defender ?= $HEAD$.var:lam_fac_weighed
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		AND = {
+			trigger_if = {
+				limit = {
+					exists = $HEAD$.var:lam_fac_rose_vs
+				}
+				primary_defender ?= $HEAD$.var:lam_fac_rose_vs
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		primary_defender = {
+			is_target_in_variable_list = {
+				name = lam_bloc_leads
+				target = $HEAD$
+			}
+		}
+	}
+}
+lam_wc_relevant_war_trigger = {
+	custom_tooltip = {
+		text = lam_cu_war_participant_tt
+		is_participant = $HEAD$
+	}
+	lam_wc_court_war_trigger = {
+		HEAD = $HEAD$
+	}
+}
+lam_wc_committed_trigger = {
+	save_temporary_scope_as = lam_wc_commit_head
+	OR = {
+		any_character_war = {
+			lam_wc_relevant_war_trigger = {
+				HEAD = scope:lam_wc_commit_head
+			}
+		}
+		joined_faction ?= {
+			faction_target ?= scope:lam_wc_commit_head.liege
+		}
+	}
+}
+lam_wc_wartime_trigger = {
+	save_temporary_scope_as = lam_wc_check_head
+	any_character_war = {
+		lam_wc_relevant_war_trigger = {
+			HEAD = scope:lam_wc_check_head
+		}
+	}
+}
+lam_wc_court_at_war_trigger = {
+	save_temporary_scope_as = lam_wc_check_court
+	any_character_war = {
+		lam_wc_civil_war_trigger = yes
+		AND = {
+			trigger_if = {
+				limit = {
+					exists = scope:lam_wc_check_court
+				}
+				primary_defender = scope:lam_wc_check_court
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+	}
+}
+lam_wc_party_agrees_trigger = {
+	trigger_if = {
+		limit = {
+			exists = $HEAD$
+			exists = $COMMANDER$
+		}
+		trigger_if = {
+			limit = {
+				$HEAD$ = {
+					is_alive = yes
+				}
+				$COMMANDER$ = {
+					is_alive = yes
+				}
+			}
+			$HEAD$ = {
+				save_temporary_scope_as = lam_wc_policy_head
+			}
+			$COMMANDER$ = {
+				save_temporary_scope_as = lam_wc_policy_commander
+			}
+			scope:lam_wc_policy_head = {
+				NOT = {
+					has_variable = lam_fac_courtparty
+				}
+				NOT = {
+					has_variable = lam_fac_kings_own
+				}
+				NOT = {
+					has_relation_rival = scope:lam_wc_policy_commander
+				}
+				NOT = {
+					has_relation_nemesis = scope:lam_wc_policy_commander
+				}
+				NOT = {
+					is_target_in_variable_list = {
+						name = lam_fac_foes
+						target = scope:lam_wc_policy_commander
+					}
+				}
+				trigger_if = {
+					limit = {
+						exists = scope:lam_wc_policy_commander.var:lam_bloc
+					}
+					NOT = {
+						is_target_in_variable_list = {
+							name = lam_fac_foes
+							target = scope:lam_wc_policy_commander.var:lam_bloc
+						}
+					}
+				}
+				trigger_if = {
+					limit = {
+						exists = $CANDIDATE$
+					}
+					OR = {
+						var:lam_fac_heir ?= $CANDIDATE$
+						AND = {
+							lam_wc_committed_trigger = yes
+							var:lam_wc_candidate ?= $CANDIDATE$
+						}
+						NOT = {
+							var:lam_fac_heir ?= {
+								is_alive = yes
+							}
+						}
+					}
+				}
+			}
+			scope:lam_wc_policy_commander = {
+				NOT = {
+					has_relation_rival = scope:lam_wc_policy_head
+				}
+				NOT = {
+					has_relation_nemesis = scope:lam_wc_policy_head
+				}
+				NOT = {
+					is_target_in_variable_list = {
+						name = lam_fac_foes
+						target = scope:lam_wc_policy_head
+					}
+				}
+				NOT = {
+					var:lam_bloc ?= {
+						trigger_if = {
+							limit = {
+								is_alive = yes
+							}
+							is_target_in_variable_list = {
+								name = lam_fac_foes
+								target = scope:lam_wc_policy_head
+							}
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_wc_native_join_trigger = {
+	save_temporary_scope_as = lam_wc_joiner
+	trigger_if = {
+		limit = {
+			is_ai = yes
+			exists = scope:faction
+			liege ?= {
+				has_game_rule = lam_fac_absorb_on
+				NOT = {
+					has_game_rule = lam_faction_scope_off
+				}
+				lam_fac_realm_in_scope_trigger = yes
+			}
+			var:lam_bloc ?= {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				var:lam_bloc ?= this
+				NOT = {
+					has_variable = lam_fac_disband
+				}
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = prev.liege
+						}
+						liege ?= prev.liege
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			scope:faction = {
+				faction_target = scope:lam_wc_joiner.liege
+			}
+		}
+		var:lam_bloc = {
+			trigger_if = {
+				limit = {
+					NOT = {
+						joined_faction ?= scope:faction
+					}
+				}
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_wc_joiner
+						}
+						this = scope:lam_wc_joiner
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				trigger_if = {
+					limit = {
+						scope:faction = {
+							faction_is_type = claimant_faction
+						}
+					}
+					lam_wc_party_agrees_trigger = {
+						HEAD = scope:lam_wc_joiner
+						COMMANDER = scope:faction.faction_leader
+						CANDIDATE = scope:faction.special_character
+					}
+				}
+				trigger_else = {
+					lam_wc_party_agrees_trigger = {
+						HEAD = scope:lam_wc_joiner
+						COMMANDER = scope:faction.faction_leader
+						CANDIDATE = scope:lam_wc_unused_candidate
+					}
+				}
+			}
+		}
+	}
+}
+lam_wc_no_conflicting_war_trigger = {
+	save_temporary_scope_as = lam_wc_conflict_joiner
+	trigger_if = {
+		limit = {
+			exists = scope:lam_ca_war
+			exists = scope:lam_ca_lord
+		}
+		trigger_if = {
+			limit = {
+				scope:lam_ca_war = {
+					is_attacker = scope:lam_ca_lord
+				}
+			}
+			joiner_not_already_in_another_war_with_any_target_war_participants_trigger = {
+				WARRIOR = scope:lam_ca_war.primary_attacker
+				JOINER = scope:lam_wc_conflict_joiner
+			}
+		}
+		trigger_else_if = {
+			limit = {
+				scope:lam_ca_war = {
+					is_defender = scope:lam_ca_lord
+				}
+			}
+			joiner_not_already_in_another_war_with_any_target_war_participants_trigger = {
+				WARRIOR = scope:lam_ca_war.primary_defender
+				JOINER = scope:lam_wc_conflict_joiner
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_wc_join_war_trigger = {
+	save_temporary_scope_as = lam_wc_joiner
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	is_ruler = yes
+	is_ai = yes
+	exists = scope:lam_ca_lord
+	exists = scope:lam_ca_war
+	NOT = {
+		is_at_war_with = scope:lam_ca_lord
+	}
+	scope:lam_ca_war = {
+		is_participant = scope:lam_ca_lord
+		NOT = {
+			is_participant = prev
+		}
+	}
+	can_join_war_liege_vassal_check_trigger = {
+		WARRIOR = scope:lam_ca_lord
+		JOINER = scope:lam_wc_joiner
+	}
+	lam_wc_no_conflicting_war_trigger = yes
+	trigger_if = {
+		limit = {
+			scope:lam_ca_war = {
+				OR = {
+					using_cb = directed_great_holy_war
+					using_cb = undirected_great_holy_war
+				}
+			}
+		}
+		AND = {
+			trigger_if = {
+				limit = {
+					exists = scope:lam_ca_lord.faith
+				}
+				faith = scope:lam_ca_lord.faith
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+	}
+	save_temporary_scope_as = lam_wc_joiner
+	trigger_if = {
+		limit = {
+			var:lam_bloc ?= {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+			}
+			scope:lam_ca_war = {
+				lam_wc_court_war_trigger = {
+					HEAD = scope:lam_wc_joiner.var:lam_bloc
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				scope:lam_ca_war = {
+					is_attacker = scope:lam_ca_lord
+				}
+			}
+			NOT = {
+				scope:lam_ca_war = {
+					is_defender = scope:lam_wc_joiner.var:lam_bloc
+				}
+			}
+			lam_wc_party_agrees_trigger = {
+				HEAD = scope:lam_wc_joiner.var:lam_bloc
+				COMMANDER = scope:lam_ca_war.primary_attacker
+				CANDIDATE = scope:lam_ca_war.casus_belli.claimant
+			}
+		}
+		trigger_else = {
+			NOT = {
+				scope:lam_ca_war = {
+					is_attacker = scope:lam_wc_joiner.var:lam_bloc
+				}
+			}
+			NOT = {
+				var:lam_bloc.joined_faction ?= {
+					faction_target = scope:lam_ca_war.primary_defender
+				}
+			}
+		}
+	}
+	NOT = {
+		scope:lam_ca_war = {
+			lam_wc_civil_war_trigger = yes
+			primary_defender ?= {
+				lam_pb_managed_court_trigger = yes
+			}
+			is_attacker = scope:lam_ca_lord
+		}
+	}
+}
+lam_wc_join_named_faction_trigger = {
+	$FACTION$ = {
+		save_temporary_scope_as = faction
+	}
+	lam_wc_native_join_trigger = yes
+}

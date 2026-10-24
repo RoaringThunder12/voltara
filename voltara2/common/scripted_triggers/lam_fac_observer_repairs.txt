@@ -1,0 +1,147 @@
+﻿lam_ob_heir_pair_trigger = {
+	trigger_if = {
+		limit = {
+			exists = $A$
+			exists = $B$
+		}
+		trigger_if = {
+			limit = {
+				$A$ = {
+					is_alive = yes
+				}
+				$B$ = {
+					is_alive = yes
+				}
+			}
+			trigger_if = {
+				limit = {
+					$B$ = {
+						has_variable = lam_fac_heir
+					}
+				}
+				$A$.var:lam_fac_heir ?= $B$.var:lam_fac_heir
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_ob_bloc_faction_trigger = {
+	trigger_if = {
+		limit = {
+			exists = confederation.leading_house.house_head
+		}
+		trigger_if = {
+			limit = {
+				exists = scope:actor
+			}
+			trigger_if = {
+				limit = {
+					exists = scope:actor.joined_faction
+				}
+				confederation.leading_house.house_head.joined_faction ?= scope:actor.joined_faction
+				scope:actor.joined_faction.faction_leader ?= confederation.leading_house.house_head
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		trigger_else = {
+			trigger_if = {
+				limit = {
+					exists = scope:faction
+				}
+				trigger_if = {
+					limit = {
+						exists = confederation.leading_house.house_head
+					}
+					confederation.leading_house.house_head.joined_faction ?= scope:faction
+					scope:faction.faction_leader ?= confederation.leading_house.house_head
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_ob_ad_investment_valid_trigger = {
+	trigger_if = {
+		limit = {
+			exists = $INVESTOR$
+			exists = $CANDIDATE$
+			exists = $TITLE$
+		}
+		trigger_if = {
+			limit = {
+				$INVESTOR$ = {
+					is_alive = yes
+				}
+				$CANDIDATE$ = {
+					is_alive = yes
+				}
+				$TITLE$ = {
+					exists = holder
+				}
+			}
+			trigger_if = {
+				limit = {
+					$INVESTOR$ = {
+						government_has_mechanic = administrative
+						has_variable = lam_fac_inf
+					}
+					$CANDIDATE$ = {
+						government_has_mechanic = administrative
+						top_liege = $INVESTOR$.top_liege
+					}
+					$TITLE$ = {
+						holder.top_liege = $INVESTOR$.top_liege
+						is_noble_family_title = no
+						OR = {
+							has_title_law_flag = appointment_type_succession
+							holder = {
+								has_realm_law_flag = appointment_type_succession
+							}
+						}
+					}
+				}
+				$INVESTOR$ = {
+					var:lam_fac_inf >= lam_tune_adm_cost
+					main_administrative_tier <= $TITLE$.tier
+					succession_appointment_score_invested = {
+						title = $TITLE$
+						candidate = $CANDIDATE$
+						value < appointment_investment_cap
+					}
+				}
+				is_appointment_valid_trigger = {
+					TITLE = $TITLE$
+					CANDIDATE = $CANDIDATE$
+					TOP_LIEGE = $INVESTOR$.top_liege
+				}
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}

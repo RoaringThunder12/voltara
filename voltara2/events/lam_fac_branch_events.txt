@@ -1,0 +1,43 @@
+﻿namespace = lam_bp
+lam_bp.0012 = {
+	type = character_event
+	title = lam_bp_split_title
+	desc = lam_bp_split_desc
+	theme = realm
+	left_portrait = {
+		character = scope:lam_cr_original_head
+	}
+	right_portrait = {
+		character = scope:lam_cr_split_head
+	}
+	option = {
+		name = lam_bp_split_follow
+		trigger = {
+			lam_bp_offer_valid_trigger = yes
+		}
+		hidden_effect = {
+			lam_bp_choose_effect = {
+				CHOICE = flag:follow
+			}
+		}
+	}
+	option = {
+		name = lam_bp_split_stay
+		hidden_effect = {
+			lam_bp_choose_effect = {
+				CHOICE = flag:stay
+			}
+		}
+	}
+	option = {
+		name = lam_bp_split_unaligned
+		trigger = {
+			lam_bp_offer_valid_trigger = yes
+		}
+		hidden_effect = {
+			lam_bp_choose_effect = {
+				CHOICE = flag:unaligned
+			}
+		}
+	}
+}

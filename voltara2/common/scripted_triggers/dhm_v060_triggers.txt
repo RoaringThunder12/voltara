@@ -1,0 +1,108 @@
+﻿# =============================================================================
+# Dynasty & Household Manager v0.6.0 — Family Sagas & Promises Kept
+# All iterators using these triggers remain bounded to the player's court,
+# spouse, heir, close family, or already-saved story participants.
+# =============================================================================
+
+dhm_v060_officer_trigger = {
+	dhm_v073_officer_available_trigger = yes
+	OR = {
+		AND = { has_character_flag = dhm_office_steward scope:dhm_manager = { var:dhm_officer_steward ?= prev } }
+		AND = { has_character_flag = dhm_office_matchmaker scope:dhm_manager = { var:dhm_officer_matchmaker ?= prev } }
+		AND = { has_character_flag = dhm_office_tutor scope:dhm_manager = { var:dhm_officer_tutor ?= prev } }
+		AND = { has_character_flag = dhm_office_chronicler scope:dhm_manager = { var:dhm_officer_chronicler ?= prev } }
+	}
+}
+
+dhm_v060_child_protection_target_trigger = {
+	OR = { stress_level >= 1 has_character_modifier = dhm_schoolroom_resentment_modifier }
+	is_hostage = no
+	NOT = { has_trait = incapable }
+	is_alive = yes
+	is_ai = yes
+	is_adult = no
+	age >= 6
+	is_imprisoned = no
+	is_close_family_of = scope:dhm_manager
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_character_flag = dhm_child_protection_recent }
+}
+
+dhm_v060_damaged_marriage_target_trigger = {
+	is_alive = yes
+	is_ai = yes
+	is_adult = yes
+	is_married = yes
+	is_imprisoned = no
+	is_close_family_of = scope:dhm_manager
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_character_flag = dhm_marriage_recovery_recent }
+	NOT = { has_character_flag = dhm_marriage_matter_recent }
+	NOT = { has_character_flag = dhm_living_marriage_recent }
+	any_spouse = {
+		dhm_v081_marriage_may_reopen_trigger = yes
+		is_alive = yes
+		is_in_the_same_court_as = scope:dhm_manager
+		NOT = { has_character_flag = dhm_marriage_recovery_recent }
+		NOT = { has_character_flag = dhm_marriage_matter_recent }
+		NOT = { has_character_flag = dhm_living_marriage_recent }
+		OR = {
+			opinion = { target = prev value <= 0 }
+			stress_level >= 2
+			prev = { stress_level >= 2 }
+		}
+	}
+}
+
+dhm_v060_scandal_target_trigger = {
+	is_alive = yes
+	is_ai = yes
+	is_adult = yes
+	is_imprisoned = no
+	is_close_family_of = scope:dhm_manager
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_character_flag = dhm_scandal_recovery_recent }
+	OR = {
+  has_trait = murderer
+  AND = {
+   exists = scope:dhm_manager.faith
+   OR = {
+    AND = { has_trait = adulterer trait_is_shunned_or_criminal_in_faith_trigger = { TRAIT = trait:adulterer FAITH = scope:dhm_manager.faith GENDER_CHARACTER = this } }
+    AND = { has_trait = fornicator trait_is_shunned_or_criminal_in_faith_trigger = { TRAIT = trait:fornicator FAITH = scope:dhm_manager.faith GENDER_CHARACTER = this } }
+   }
+  }
+ }
+}
+
+dhm_v060_parent_heir_arc_trigger = {
+	OR = { stress_level >= 1 opinion = { target = scope:dhm_manager value < 20 } }
+	is_alive = yes
+	age >= 10
+	is_imprisoned = no
+	is_in_the_same_court_as = scope:dhm_manager
+	NOT = { has_character_flag = dhm_relationship_arc_recent }
+	OR = {
+		is_child_of = scope:dhm_manager
+		scope:dhm_manager = { is_child_of = root }
+	}
+}
+
+dhm_v060_failed_education_trigger = {
+	is_alive = yes
+	age >= 16
+	OR = {
+		has_trait = education_diplomacy_1
+		has_trait = education_martial_1
+		has_trait = education_stewardship_1
+		has_trait = education_intrigue_1
+		has_trait = education_learning_1
+	}
+}
+
+dhm_v060_courtship_eligible_trigger = {
+	is_alive = yes
+	is_ai = yes
+	is_close_family_of = scope:dhm_manager
+	NOT = { has_character_flag = dhm_courtship_recent }
+	NOT = { has_character_flag = dhm_matchmaking_proposal_pending }
+}

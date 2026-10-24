@@ -1,0 +1,46 @@
+﻿vip_story_public_consequences = {
+ if = { limit = { exists = title:h_voltara_severos.holder }
+ title:h_voltara_severos.holder = {
+ every_vassal_or_below = { limit = { vip_public_lord = yes }
+ if = { limit = { global_var:vic_settlement ?= 1 NOT = { has_character_flag = vip_peace_received } }
+ add_character_flag = vip_peace_received
+ lam_pd_grievance_relieve_effect = { KIND = policy AMOUNT = -10 }
+ }
+ if = { limit = { has_global_variable = vic_tharn_arrested NOT = { has_character_flag = vip_arrest_received } }
+ add_character_flag = vip_arrest_received
+ if = { limit = { global_var:vic_case_quality ?= 1 }
+ lam_pd_grievance_add_effect = { KIND = repression AMOUNT = 10 MONTHS = 36 }
+ } }
+ if = { limit = { global_var:vic_public_case ?= 1 global_var:vic_case_quality ?= 3 NOT = { has_character_flag = vip_public_case_received } }
+ add_character_flag = vip_public_case_received
+ lam_pd_grievance_relieve_effect = { KIND = repression AMOUNT = -10 }
+ }
+ if = { limit = { character:19060001 = { has_realm_law = voltara_slavery_banned has_character_modifier = vic_reform_legacy }
+ NOT = { has_character_flag = vip_abolition_received } }
+ add_character_flag = vip_abolition_received
+ if = { limit = { has_trait = voltara_slaver }
+ lam_pd_grievance_add_effect = { KIND = law AMOUNT = 20 MONTHS = 60 }
+ } else_if = { limit = { OR = { has_trait = compassionate has_trait = just has_trait = voltara_former_slave } }
+ lam_pd_grievance_relieve_effect = { KIND = law AMOUNT = -15 }
+ } }
+ if = { limit = { global_var:vic_regional_policy ?= 1 NOT = { has_character_flag = vip_concessions_received } }
+ add_character_flag = vip_concessions_received
+ lam_pd_grievance_relieve_effect = { KIND = policy AMOUNT = -10 }
+ }
+ }
+ }
+ }
+}
+vip_council_public_commitment = {
+ if = { limit = { vip_actor = yes vic_politics = yes var:lam_cr_action ?= flag:heir var:lam_cr_target ?= character:19060003 }
+ vip_choose_side = { SIDE = 2 }
+ every_in_list = { variable = lam_cr_voters limit = { vip_public_lord = yes var:lam_cr_choice ?= flag:yes }
+ vip_choose_side = { SIDE = 2 } }
+ }
+ if = { limit = { vip_actor = yes vic_politics = yes var:lam_cr_action ?= flag:posture_loyal }
+ vip_choose_side = { SIDE = 1 }
+ every_in_list = { variable = lam_cr_voters limit = { vip_public_lord = yes var:lam_cr_choice ?= flag:yes }
+ vip_choose_side = { SIDE = 1 } }
+ }
+ vip_refresh_public = yes
+}

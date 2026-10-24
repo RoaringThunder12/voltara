@@ -1,0 +1,24 @@
+﻿namespace = dhm_v080_plans
+
+# Hidden bridge only. One day lets vanilla finish assigning the education trait
+# before DHM records whether the childhood plan was achieved or redirected.
+dhm_v080_plans.0001 = {
+	type = character_event
+	hidden = yes
+	trigger = {
+		age = 16
+		dhm_has_child_development_plan_trigger = yes
+	}
+	immediate = { trigger_event = { id = dhm_v080_plans.0002 days = 1 } }
+}
+
+dhm_v080_plans.0002 = {
+	type = character_event
+	hidden = yes
+	trigger = {
+		is_alive = yes
+		age = 16
+		dhm_has_child_development_plan_trigger = yes
+	}
+	immediate = { dhm_v080_finalize_child_plan_effect = yes }
+}

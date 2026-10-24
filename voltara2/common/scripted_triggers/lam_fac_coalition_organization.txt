@@ -1,0 +1,59 @@
+﻿lam_co_organizer_trigger = {
+	trigger_if = {
+		limit = {
+			lam_ev_ready_trigger = yes
+		}
+		is_ai = yes
+		is_ruler = yes
+		NOT = {
+			has_variable = lam_fac_unbound
+		}
+		NOT = {
+			has_variable = lam_fac_let_go
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_co_supporter_trigger = {
+	trigger_if = {
+		limit = {
+			lam_cu_group_trigger = yes
+		}
+		is_ai = yes
+		NOT = {
+			has_variable = lam_fac_unbound
+		}
+		NOT = {
+			has_variable = lam_fac_let_go
+		}
+		NOT = {
+			has_relation_rival = scope:lam_vt_lead
+		}
+		lam_ev_follow_value >= -25
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_co_existing_party_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+			exists = scope:lam_bloc_lord
+		}
+		has_variable = lam_bloc_lead
+		liege ?= scope:lam_bloc_lord
+		var:lam_bloc ?= this
+		NOT = {
+			has_variable = lam_fac_disband
+		}
+		NOT = {
+			has_variable = lam_fac_hide
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}

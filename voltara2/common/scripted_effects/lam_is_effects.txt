@@ -1,0 +1,5505 @@
+﻿# Living Factions - court issues (tools/claude_fixes/issue.py). This = the lord unless noted.
+# Called from lam_fac_realm_pulse_effect right after lam_fac_heirs_effect.
+lam_is_pulse_effect = {
+	save_scope_as = lam_is_lord
+	lam_is_type_pulse_effect = {
+		T = heir
+	}
+	lam_is_type_pulse_effect = {
+		T = crown
+	}
+	lam_is_type_pulse_effect = {
+		T = council
+	}
+	lam_is_type_pulse_effect = {
+		T = faith
+	}
+	lam_is_type_pulse_effect = {
+		T = tax
+	}
+	lam_is_type_pulse_effect = {
+		T = war
+	}
+	if = {
+		limit = {
+			lam_is_open_count_value < 3
+		}
+		lam_is_pick_new_effect = yes
+	}
+	if = {
+		limit = {
+			lam_is_open_count_value > 0
+		}
+		set_variable = {
+			name = lam_is_any
+			value = yes
+		}
+	}
+	else = {
+		remove_variable = lam_is_any
+	}
+	# A player vassal of an AI court gets the yearly brief (a player lord sees the issues in the court digest).
+	if = {
+		limit = {
+			is_ai = yes
+			has_variable = lam_is_any
+		}
+		every_vassal = {
+			limit = {
+				is_ai = no
+				NOT = {
+					has_variable = lam_is_brief_cd
+				}
+			}
+			set_variable = {
+				name = lam_is_brief_cd
+				value = yes
+				months = 11
+			}
+			trigger_event = lam_is.0002
+		}
+	}
+}
+
+lam_is_type_pulse_effect = {
+	clear_saved_scope = lam_is_ca
+	clear_saved_scope = lam_is_cb
+	lam_is_$T$_scopes_effect = yes
+	if = {
+		limit = {
+			has_variable = lam_is_$T$_open
+		}
+		lam_is_check_effect = {
+			T = $T$
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_$T$_open
+		}
+		lam_is_$T$_lock_effect = yes
+		lam_is_sum_effect = {
+			T = $T$
+		}
+		if = {
+			limit = {
+				lam_is_held_trigger = {
+					T = $T$
+				}
+			}
+			change_variable = {
+				name = lam_is_$T$_since
+				add = {
+					value = 12
+					if = {
+						limit = {
+							has_variable = lam_fac_fast
+						}
+						value = 3
+					}
+				}
+			}
+		}
+		else = {
+			lam_is_drift_effect = {
+				T = $T$
+			}
+			lam_is_ai_effect = {
+				T = $T$
+			}
+			lam_is_resolve_effect = {
+				T = $T$
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_$T$_open
+		}
+		lam_is_$T$_dissent_effect = yes
+	}
+}
+
+# At most one new issue per court update: the hottest candidate - the weight on both sides plus the crown's stake.
+# A candidate is faction against faction (see lam_is_open/oppose/split_share_value); a flashpoint (lam_is_T_hot_trigger:
+# an ageing lord, a weak crown, an empty seat, a long war...) makes it the first to surface.
+lam_is_pick_new_effect = {
+	set_variable = {
+		name = lam_is_best
+		value = 0
+	}
+	lam_is_candidate_effect = {
+		T = heir
+	}
+	lam_is_candidate_effect = {
+		T = crown
+	}
+	lam_is_candidate_effect = {
+		T = council
+	}
+	lam_is_candidate_effect = {
+		T = faith
+	}
+	lam_is_candidate_effect = {
+		T = tax
+	}
+	lam_is_candidate_effect = {
+		T = war
+	}
+	if = {
+		limit = {
+			var:lam_is_best_t ?= flag:heir
+		}
+		lam_is_open_chosen_effect = {
+			T = heir
+		}
+	}
+	if = {
+		limit = {
+			var:lam_is_best_t ?= flag:crown
+		}
+		lam_is_open_chosen_effect = {
+			T = crown
+		}
+	}
+	if = {
+		limit = {
+			var:lam_is_best_t ?= flag:council
+		}
+		lam_is_open_chosen_effect = {
+			T = council
+		}
+	}
+	if = {
+		limit = {
+			var:lam_is_best_t ?= flag:faith
+		}
+		lam_is_open_chosen_effect = {
+			T = faith
+		}
+	}
+	if = {
+		limit = {
+			var:lam_is_best_t ?= flag:tax
+		}
+		lam_is_open_chosen_effect = {
+			T = tax
+		}
+	}
+	if = {
+		limit = {
+			var:lam_is_best_t ?= flag:war
+		}
+		lam_is_open_chosen_effect = {
+			T = war
+		}
+	}
+	remove_variable = lam_is_best
+	remove_variable = lam_is_best_t
+}
+lam_is_candidate_effect = {
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_is_$T$_open
+			}
+			NOT = {
+				has_variable = lam_is_$T$_cd
+			}
+			lam_is_$T$_open_trigger = yes
+		}
+		clear_saved_scope = lam_is_ca
+		clear_saved_scope = lam_is_cb
+		lam_is_$T$_prepare_effect = yes
+		lam_is_sum_effect = {
+			T = $T$
+		}
+		save_scope_value_as = {
+			name = lam_is_heat
+			value = {
+				value = var:lam_is_$T$_sa
+				add = var:lam_is_$T$_sb
+				add = lam_is_$T$_lw_value
+				if = {
+					limit = {
+						lam_is_$T$_hot_trigger = yes
+					}
+					add = 20
+				}
+				if = {
+					limit = {
+						has_variable = lam_is_$T$_mem
+					}
+					add = 10
+				}
+			}
+		}
+		if = {
+			limit = {
+				var:lam_is_$T$_sb >= lam_is_open_share_value
+				var:lam_is_$T$_sa >= lam_is_oppose_share_value
+				lam_is_$T$_split_value >= lam_is_split_share_value
+				scope:lam_is_heat > var:lam_is_best
+			}
+			set_variable = {
+				name = lam_is_best
+				value = scope:lam_is_heat
+			}
+			set_variable = {
+				name = lam_is_best_t
+				value = flag:$T$
+			}
+		}
+		remove_variable = lam_is_$T$_sa
+		remove_variable = lam_is_$T$_sb
+		remove_variable = lam_is_$T$_lw
+		remove_variable = lam_is_$T$_xp
+		remove_variable = lam_is_$T$_yp
+		remove_variable = lam_is_$T$_ua
+		remove_variable = lam_is_$T$_ub
+		remove_variable = lam_is_$T$_cz
+		remove_variable = lam_is_$T$_cza
+		every_in_list = {
+			variable = lam_bloc_leads
+			remove_variable = lam_is_st_$T$
+		}
+		lam_is_$T$_unprepare_effect = yes
+	}
+}
+lam_is_open_chosen_effect = {
+	clear_saved_scope = lam_is_ca
+	clear_saved_scope = lam_is_cb
+	lam_is_$T$_prepare_effect = yes
+	lam_is_sum_effect = {
+		T = $T$
+	}
+	lam_is_open_effect = {
+		T = $T$
+	}
+}
+
+# Validity: side Y already got its way (win), the issue lost its subject (void), side Y has no faction and no unaligned
+# backer left (side X wins if it held its ground, otherwise the debate fades), or ten years on (the side ahead takes it).
+lam_is_check_effect = {
+	if = {
+		limit = {
+			lam_is_$T$_y_done_trigger = yes
+		}
+		lam_fac_stat_add_effect = {
+			KEY = is_end_done_y
+		}
+		lam_is_win_y_effect = {
+			T = $T$
+		}
+	}
+	else_if = {
+		limit = {
+			lam_is_$T$_x_done_trigger = yes
+		}
+		lam_fac_stat_add_effect = {
+			KEY = is_end_done_x
+		}
+		lam_is_win_x_effect = {
+			T = $T$
+		}
+	}
+	else_if = {
+		limit = {
+			lam_is_$T$_void_trigger = yes
+		}
+		lam_fac_stat_add_effect = {
+			KEY = is_end_void
+		}
+		lam_is_close_effect = {
+			T = $T$
+			KEY = lam_is_msg_$T$_void
+		}
+	}
+	else_if = {
+		limit = {
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					is_alive = yes
+					lam_is_side_$T$_y_trigger = yes
+				}
+			}
+			NOT = {
+				any_vassal = {
+					lam_is_backer_trigger = {
+						T = $T$
+						SIDE = y
+					}
+				}
+			}
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					is_alive = yes
+					lam_wc_committed_trigger = yes
+				}
+			}
+		}
+		# side Y fell apart (its factions dissolved, merged, were banned or turned): side X carries the day
+		lam_fac_stat_add_effect = {
+			KEY = is_end_fall_y
+		}
+		lam_fac_stat_add_effect = {
+			KEY = is_end_fall_y_$T$
+		}
+		lam_is_win_x_key_effect = {
+			T = $T$
+			KEY = lam_is_msg_$T$_fall_y
+		}
+	}
+	else_if = {
+		limit = {
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					is_alive = yes
+					lam_is_side_$T$_x_trigger = yes
+				}
+			}
+			NOT = {
+				any_vassal = {
+					lam_is_backer_trigger = {
+						T = $T$
+						SIDE = x
+					}
+				}
+			}
+			lam_is_$T$_lw_value < 1
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					is_alive = yes
+					lam_wc_committed_trigger = yes
+				}
+			}
+		}
+		# side X fell apart and the crown has no stake: side Y has carried the court and the lord must decide
+		lam_fac_stat_add_effect = {
+			KEY = is_end_fall_x
+		}
+		set_variable = {
+			name = lam_is_$T$_bar
+			value = 100
+		}
+		set_variable = {
+			name = lam_is_$T$_disp
+			value = 0
+		}
+		set_variable = {
+			name = lam_is_$T$_abs
+			value = 100
+		}
+		lam_is_resolve_effect = {
+			T = $T$
+		}
+	}
+	# Ten years on, the side ahead takes it: clearly ahead for X settles for X, clearly ahead for Y goes to the lord
+	# as if the bar had reached the end; a dead heat fades. Not while a faction with a stand on it is off in a rising
+	# or a war: the issue waits for that outcome (its clock is moved on below; GPT review 2026-10-21).
+	else_if = {
+		limit = {
+			var:lam_is_$T$_since <= {
+				value = lam_now_m
+				subtract = 120
+			}
+			NOT = {
+				lam_is_held_trigger = {
+					T = $T$
+				}
+			}
+		}
+		if = {
+			limit = {
+				var:lam_is_$T$_bar <= -25
+			}
+			lam_fac_stat_add_effect = {
+				KEY = is_end_late_x
+			}
+			lam_is_win_x_effect = {
+				T = $T$
+			}
+		}
+		else_if = {
+			limit = {
+				var:lam_is_$T$_bar >= 25
+			}
+			lam_fac_stat_add_effect = {
+				KEY = is_end_late_y
+			}
+			set_variable = {
+				name = lam_is_$T$_bar
+				value = 100
+			}
+			set_variable = {
+				name = lam_is_$T$_disp
+				value = 0
+			}
+			set_variable = {
+				name = lam_is_$T$_abs
+				value = 100
+			}
+			lam_is_resolve_effect = {
+				T = $T$
+			}
+		}
+		else = {
+			lam_fac_stat_add_effect = {
+				KEY = is_end_stale
+			}
+			lam_is_close_effect = {
+				T = $T$
+				KEY = lam_is_msg_$T$_stale
+			}
+		}
+	}
+}
+
+lam_is_sum_effect = {
+	scope:lam_is_lord = {
+		set_variable = {
+			name = lam_is_$T$_sa
+			value = 0
+		}
+		set_variable = {
+			name = lam_is_$T$_sb
+			value = 0
+		}
+		set_variable = {
+			name = lam_is_$T$_lw
+			value = lam_is_$T$_lw_value
+		}
+		# the issue's cause, read from the realm (> 0 for Y), and its size for the card
+		set_variable = {
+			name = lam_is_$T$_cz
+			value = lam_is_$T$_cause_value
+		}
+		set_variable = {
+			name = lam_is_$T$_cza
+			value = {
+				value = var:lam_is_$T$_cz
+				abs = yes
+			}
+		}
+		lam_is_$T$_portraits_effect = yes
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+			}
+			remove_variable = lam_is_st_$T$
+			if = {
+				limit = {
+					lam_is_side_$T$_x_trigger = yes
+				}
+				set_variable = {
+					name = lam_is_st_$T$
+					value = flag:x
+				}
+				lam_is_st_mode_effect = yes
+			}
+			else_if = {
+				limit = {
+					lam_is_side_$T$_y_trigger = yes
+				}
+				set_variable = {
+					name = lam_is_st_$T$
+					value = flag:y
+				}
+				lam_is_st_mode_effect = yes
+			}
+		}
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_$T$_x_trigger = yes
+			}
+			save_scope_as = lam_is_backer
+			scope:lam_is_lord = {
+				change_variable = {
+					name = lam_is_$T$_sa
+					add = scope:lam_is_backer.var:lam_fac_share
+				}
+			}
+		}
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_$T$_y_trigger = yes
+			}
+			save_scope_as = lam_is_backer
+			scope:lam_is_lord = {
+				change_variable = {
+					name = lam_is_$T$_sb
+					add = scope:lam_is_backer.var:lam_fac_share
+				}
+			}
+		}
+		# Unaligned vassals who took a side add their own share of the court's power (lam_is_T_ua / _ub).
+		set_variable = {
+			name = lam_is_$T$_ua
+			value = 0
+		}
+		set_variable = {
+			name = lam_is_$T$_ub
+			value = 0
+		}
+		if = {
+			limit = {
+				has_variable = lam_bloc_total
+				var:lam_bloc_total > 0
+			}
+			every_vassal = {
+				limit = {
+					lam_is_backer_trigger = {
+						T = $T$
+						SIDE = x
+					}
+				OR = {
+					is_ai = no
+					scope:lam_is_lord = {
+						is_target_in_variable_list = {
+							name = lam_fac_pool
+							target = prev
+						}
+					}
+				}
+				}
+				save_scope_value_as = {
+					name = lam_is_uw
+					value = {
+						value = max_military_strength
+						multiply = 100
+						divide = scope:lam_is_lord.var:lam_bloc_total
+					}
+				}
+				scope:lam_is_lord = {
+					change_variable = {
+						name = lam_is_$T$_ua
+						add = scope:lam_is_uw
+					}
+				}
+			}
+			every_vassal = {
+				limit = {
+					lam_is_backer_trigger = {
+						T = $T$
+						SIDE = y
+					}
+				OR = {
+					is_ai = no
+					scope:lam_is_lord = {
+						is_target_in_variable_list = {
+							name = lam_fac_pool
+							target = prev
+						}
+					}
+				}
+				}
+				save_scope_value_as = {
+					name = lam_is_uw
+					value = {
+						value = max_military_strength
+						multiply = 100
+						divide = scope:lam_is_lord.var:lam_bloc_total
+					}
+				}
+				scope:lam_is_lord = {
+					change_variable = {
+						name = lam_is_$T$_ub
+						add = scope:lam_is_uw
+					}
+				}
+			}
+		}
+	}
+}
+
+lam_is_open_effect = {
+	set_variable = {
+		name = lam_is_$T$_open
+		value = yes
+	}
+	set_variable = {
+		name = lam_is_$T$_bar
+		value = 0
+	}
+	set_variable = {
+		name = lam_is_$T$_disp
+		value = 100
+	}
+	set_variable = {
+		name = lam_is_$T$_abs
+		value = 0
+	}
+	set_variable = {
+		name = lam_is_$T$_mark
+		value = 0
+	}
+	set_variable = {
+		name = lam_is_$T$_since
+		value = lam_now_m
+	}
+	lam_is_$T$_clear_moves_effect = yes
+	set_variable = {
+		name = lam_is_any
+		value = yes
+	}
+	# each faction's council decides its stand (lam_is_T_lock_effect); if none would stand for side Y after all, the
+	# matter never comes up
+	lam_is_$T$_lock_effect = yes
+	if = {
+		limit = {
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					is_alive = yes
+					lam_is_side_$T$_y_trigger = yes
+				}
+			}
+		}
+		lam_is_drop_effect = {
+			T = $T$
+		}
+		set_variable = {
+			name = lam_is_$T$_cd
+			value = yes
+			years = 1
+		}
+	}
+	# an old cause that was put down comes back with its memory: it starts a fifth of the way its own way
+	else_if = {
+		limit = {
+			has_variable = lam_is_$T$_mem
+		}
+		lam_fac_stat_add_effect = {
+			KEY = is_open
+		}
+		lam_fac_stat_add_effect = {
+			KEY = is_open_$T$
+		}
+		lam_fac_stat_add_effect = {
+			KEY = is_revived
+		}
+		set_variable = {
+			name = lam_is_$T$_bar
+			value = 20
+		}
+		set_variable = {
+			name = lam_is_$T$_disp
+			value = 80
+		}
+		set_variable = {
+			name = lam_is_$T$_abs
+			value = 20
+		}
+		lam_is_notify_effect = {
+			KEY = lam_is_msg_$T$_revived
+		}
+	}
+	else = {
+		lam_fac_stat_add_effect = {
+			KEY = is_open
+		}
+		lam_fac_stat_add_effect = {
+			KEY = is_open_$T$
+		}
+		lam_is_notify_effect = {
+			KEY = lam_is_msg_$T$_open
+		}
+	}
+}
+
+# This = the lord, in the win effects: did the winners lead on power and cause when it was settled? (diagnostics:
+# lam_stat_is_win_ahead / _upset). SIGN 1 = side Y won, -1 = side X won.
+lam_is_fair_stat_effect = {
+	if = {
+		limit = {
+			has_variable = lam_is_$T$_sa
+			has_variable = lam_is_$T$_sb
+			has_variable = lam_is_$T$_cz
+		}
+		save_scope_value_as = {
+			name = lam_is_sc
+			value = {
+				value = var:lam_is_$T$_sb
+				subtract = var:lam_is_$T$_sa
+				add = var:lam_is_$T$_cz
+				subtract = lam_is_$T$_lw_value
+				multiply = $SIGN$
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_is_$T$_ub
+				has_variable = lam_is_$T$_ua
+			}
+			save_scope_value_as = {
+				name = lam_is_sc
+				value = {
+					value = var:lam_is_$T$_ub
+					subtract = var:lam_is_$T$_ua
+					multiply = $SIGN$
+					add = scope:lam_is_sc
+				}
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_is_sc > 0
+			}
+			lam_fac_stat_add_effect = {
+				KEY = is_win_ahead
+			}
+		}
+		else = {
+			lam_fac_stat_add_effect = {
+				KEY = is_win_upset
+			}
+		}
+	}
+}
+
+# Yearly movement: power (factions and unaligned backers on Y minus those on X), the cause (CAUSE) and the crown's
+# stake, capped at 20 a year; a court updated every season moves a quarter of that each time.
+lam_is_drift_effect = {
+	save_scope_value_as = {
+		name = lam_is_d
+		value = {
+			value = var:lam_is_$T$_sb
+			add = var:lam_is_$T$_ub
+			subtract = var:lam_is_$T$_sa
+			subtract = var:lam_is_$T$_ua
+			subtract = lam_is_$T$_lw_value
+			add = var:lam_is_$T$_cz
+			multiply = 0.8
+			min = -20
+			max = 20
+			if = {
+				limit = {
+					has_variable = lam_fac_fast
+				}
+				multiply = 0.25
+			}
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				scope:lam_is_d >= 1
+				scope:lam_is_d <= -1
+			}
+		}
+		save_scope_as = lam_is_who
+		lam_is_move_effect = {
+			T = $T$
+			AMOUNT = scope:lam_is_d
+			KIND = drift
+			WHO = scope:lam_is_who
+		}
+	}
+	else = {
+		lam_is_nudge_effect = {
+			T = $T$
+			AMOUNT = scope:lam_is_d
+		}
+	}
+}
+# A move too small to list: the bar still takes it.
+lam_is_nudge_effect = {
+	scope:lam_is_lord = {
+		change_variable = {
+			name = lam_is_$T$_bar
+			add = $AMOUNT$
+		}
+		clamp_variable = {
+			name = lam_is_$T$_bar
+			min = -100
+			max = 100
+		}
+		set_variable = {
+			name = lam_is_$T$_disp
+			value = {
+				value = 100
+				subtract = var:lam_is_$T$_bar
+			}
+		}
+		set_variable = {
+			name = lam_is_$T$_abs
+			value = {
+				value = var:lam_is_$T$_bar
+				abs = yes
+			}
+		}
+		lam_is_mark_effect = {
+			T = $T$
+		}
+	}
+}
+
+# AI heads on either side work the court and court the unaligned; an AI lord with a stake leans in a little once side
+# Y is ahead (the issue is the factions' fight - the crown only lends a hand).
+lam_is_ai_effect = {
+	ordered_in_list = {
+		variable = lam_bloc_leads
+		max = 1
+		limit = {
+			is_ai = yes
+			is_alive = yes
+			has_variable = lam_fac_share
+			lam_is_side_$T$_x_trigger = yes
+			NOT = {
+				lam_wc_committed_trigger = yes
+			}
+		}
+		order_by = var:lam_fac_share
+		random = {
+			chance = {
+				value = 30
+				if = {
+					limit = {
+						scope:lam_is_lord = {
+							has_variable = lam_fac_fast
+						}
+					}
+					value = 8
+				}
+			}
+			save_scope_as = lam_is_who
+			lam_is_move_effect = {
+				T = $T$
+				AMOUNT = -5
+				KIND = head
+				WHO = scope:lam_is_who
+			}
+		}
+	}
+	ordered_in_list = {
+		variable = lam_bloc_leads
+		max = 1
+		limit = {
+			is_ai = yes
+			is_alive = yes
+			has_variable = lam_fac_share
+			lam_is_side_$T$_y_trigger = yes
+			NOT = {
+				lam_wc_committed_trigger = yes
+			}
+		}
+		order_by = var:lam_fac_share
+		random = {
+			chance = {
+				value = 30
+				if = {
+					limit = {
+						scope:lam_is_lord = {
+							has_variable = lam_fac_fast
+						}
+					}
+					value = 8
+				}
+			}
+			save_scope_as = lam_is_who
+			lam_is_move_effect = {
+				T = $T$
+				AMOUNT = 5
+				KIND = head
+				WHO = scope:lam_is_who
+			}
+		}
+	}
+	if = {
+		limit = {
+			is_ai = yes
+			lam_is_$T$_lord_x_trigger = yes
+			var:lam_is_$T$_bar >= 40
+			prestige >= 300
+		}
+		random = {
+			chance = {
+				value = 30
+				if = {
+					limit = {
+						has_variable = lam_fac_fast
+					}
+					value = 8
+				}
+			}
+			add_prestige = -100
+			save_scope_as = lam_is_who
+			lam_is_move_effect = {
+				T = $T$
+				AMOUNT = -5
+				KIND = lord
+				WHO = scope:lam_is_who
+			}
+		}
+	}
+	lam_is_ai_recruit_effect = {
+		T = $T$
+		SIDE = x
+		DIR = -1
+	}
+	lam_is_ai_recruit_effect = {
+		T = $T$
+		SIDE = y
+		DIR = 1
+	}
+}
+
+# This = the lord. The strongest AI head of one side tries to bring an unaligned vassal over (the one who likes them
+# best); the better they get on, the likelier it works.
+lam_is_ai_recruit_effect = {
+	clear_saved_scope = lam_is_rh
+	clear_saved_scope = lam_is_ru
+	ordered_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			is_ai = yes
+			has_variable = lam_fac_share
+			lam_is_side_$T$_$SIDE$_trigger = yes
+			NOT = {
+				lam_wc_committed_trigger = yes
+			}
+		}
+		order_by = var:lam_fac_share
+		save_scope_as = lam_is_rh
+	}
+	if = {
+		limit = {
+			exists = scope:lam_is_rh
+		}
+		random = {
+			chance = {
+				value = 30
+				if = {
+					limit = {
+						has_variable = lam_fac_fast
+					}
+					value = 8
+				}
+			}
+			ordered_vassal = {
+				limit = {
+					is_ai = yes
+					lam_is_free_unaligned_trigger = {
+						T = $T$
+					}
+					opinion = {
+						target = scope:lam_is_rh
+						value >= 0
+					}
+				}
+				order_by = {
+					value = "opinion(scope:lam_is_rh)"
+				}
+				save_scope_as = lam_is_ru
+			}
+			if = {
+				limit = {
+					exists = scope:lam_is_ru
+				}
+				scope:lam_is_ru = {
+					save_scope_value_as = {
+						name = lam_is_rc
+						value = {
+							value = "opinion(scope:lam_is_rh)"
+							multiply = 0.5
+							add = 40
+							min = 20
+							max = 80
+						}
+					}
+				}
+				random = {
+					chance = {
+						value = scope:lam_is_rc
+					}
+					lam_is_back_effect = {
+						T = $T$
+						SIDE = $SIDE$
+						DIR = $DIR$
+					}
+				}
+			}
+		}
+	}
+}
+
+# Root = a player head who weighed in: they also try to bring one unaligned vassal of the court over to side FOR.
+lam_is_player_recruit_effect = {
+	save_scope_as = lam_is_rh
+	clear_saved_scope = lam_is_ru
+	scope:lam_is_lord = {
+		ordered_vassal = {
+			limit = {
+				is_ai = yes
+				NOT = {
+					this = scope:lam_is_rh
+				}
+				lam_is_free_unaligned_trigger = {
+					T = $T$
+				}
+				opinion = {
+					target = scope:lam_is_rh
+					value >= -10
+				}
+			}
+			order_by = {
+				value = "opinion(scope:lam_is_rh)"
+			}
+			save_scope_as = lam_is_ru
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_is_ru
+		}
+		scope:lam_is_ru = {
+			save_scope_value_as = {
+				name = lam_is_rc
+				value = {
+					value = "opinion(scope:lam_is_rh)"
+					multiply = 0.5
+					add = 50
+					min = 20
+					max = 90
+				}
+			}
+		}
+		random = {
+			chance = {
+				value = scope:lam_is_rc
+			}
+			save_scope_value_as = {
+				name = lam_is_rok
+				value = yes
+			}
+			lam_is_back_effect = {
+				T = $T$
+				SIDE = $FOR$
+				DIR = $DIR$
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:lam_is_rok
+			}
+			send_interface_message = {
+				type = event_generic_good
+				title = lam_is_recruit_ok
+				right_icon = scope:lam_is_ru
+			}
+		}
+		else = {
+			send_interface_message = {
+				type = event_generic_neutral
+				title = lam_is_recruit_no
+				right_icon = scope:lam_is_ru
+			}
+		}
+	}
+}
+
+# Scope:lam_is_ru takes side SIDE on issue T of scope:lam_is_lord: the bar moves by half their share of the court's
+# power (2-8), and their weight counts for that side until the issue closes.
+lam_is_back_effect = {
+	lam_fac_stat_add_effect = {
+		KEY = is_recruit
+	}
+	scope:lam_is_ru = {
+		set_variable = {
+			name = lam_is_bk_$T$
+			value = flag:$SIDE$
+		}
+		set_variable = {
+			name = lam_is_bk_$T$_lord
+			value = scope:lam_is_lord
+		}
+		save_scope_value_as = {
+			name = lam_is_ba
+			value = {
+				value = 2
+				if = {
+					limit = {
+						scope:lam_is_lord = {
+							has_variable = lam_bloc_total
+							var:lam_bloc_total > 0
+						}
+					}
+					value = max_military_strength
+					multiply = 50
+					divide = scope:lam_is_lord.var:lam_bloc_total
+				}
+				min = 2
+				max = 8
+				multiply = $DIR$
+			}
+		}
+	}
+	lam_is_move_effect = {
+		T = $T$
+		AMOUNT = scope:lam_is_ba
+		KIND = unaligned
+		WHO = scope:lam_is_ru
+	}
+}
+
+# This = the lord, in the win effects: unaligned backers of the winning side get prestige and the winners' thanks.
+lam_is_pay_backers_effect = {
+	every_vassal = {
+		limit = {
+			lam_is_backer_trigger = {
+				T = $T$
+				SIDE = $SIDE$
+			}
+		}
+		add_prestige = 50
+		save_scope_as = lam_is_bkr
+		scope:lam_is_lord = {
+			every_in_list = {
+				variable = lam_bloc_leads
+				limit = {
+					is_alive = yes
+					lam_is_side_$T$_$SIDE$_trigger = yes
+				}
+				add_opinion = {
+					target = scope:lam_is_bkr
+					modifier = lam_fac_granted_opinion
+				}
+			}
+		}
+	}
+}
+
+# AMOUNT > 0 pushes toward side Y. Keeps the last three moves for the faction window.
+lam_is_move_effect = {
+	save_scope_value_as = {
+		name = lam_is_amt
+		value = $AMOUNT$
+	}
+	scope:lam_is_lord = {
+		change_variable = {
+			name = lam_is_$T$_bar
+			add = scope:lam_is_amt
+		}
+		clamp_variable = {
+			name = lam_is_$T$_bar
+			min = -100
+			max = 100
+		}
+		set_variable = {
+			name = lam_is_$T$_disp
+			value = {
+				value = 100
+				subtract = var:lam_is_$T$_bar
+			}
+		}
+		set_variable = {
+			name = lam_is_$T$_abs
+			value = {
+				value = var:lam_is_$T$_bar
+				abs = yes
+			}
+		}
+		lam_is_$T$_shift_effect = yes
+		set_variable = {
+			name = lam_is_$T$_mv1
+			value = {
+				value = scope:lam_is_amt
+				abs = yes
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_is_amt > 0
+			}
+			set_variable = {
+				name = lam_is_$T$_mv1_d
+				value = flag:y
+			}
+		}
+		else = {
+			set_variable = {
+				name = lam_is_$T$_mv1_d
+				value = flag:x
+			}
+		}
+		set_variable = {
+			name = lam_is_$T$_mv1_k
+			value = flag:$KIND$
+		}
+		set_variable = {
+			name = lam_is_$T$_mv1_w
+			value = $WHO$
+		}
+		lam_is_mark_effect = {
+			T = $T$
+		}
+	}
+}
+
+# A message when a bar first crosses 50 toward either side (again only after it came back under 25).
+lam_is_mark_effect = {
+	if = {
+		limit = {
+			var:lam_is_$T$_bar >= 50
+			NOT = {
+				var:lam_is_$T$_mark ?= 1
+			}
+		}
+		set_variable = {
+			name = lam_is_$T$_mark
+			value = 1
+		}
+		lam_is_notify_effect = {
+			KEY = lam_is_msg_$T$_lean_y
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_is_$T$_bar <= -50
+			NOT = {
+				var:lam_is_$T$_mark ?= -1
+			}
+		}
+		set_variable = {
+			name = lam_is_$T$_mark
+			value = -1
+		}
+		lam_is_notify_effect = {
+			KEY = lam_is_msg_$T$_lean_x
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_is_$T$_bar > -25
+			var:lam_is_$T$_bar < 25
+		}
+		set_variable = {
+			name = lam_is_$T$_mark
+			value = 0
+		}
+	}
+}
+
+lam_is_resolve_effect = {
+	if = {
+		limit = {
+			var:lam_is_$T$_bar >= 100
+		}
+		if = {
+			limit = {
+				is_ai = no
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_is_$T$_pending
+					}
+					NOT = {
+						has_variable = lam_is_evt_lock
+					}
+				}
+				set_variable = {
+					name = lam_is_$T$_pending
+					value = yes
+				}
+				set_variable = {
+					name = lam_is_evt_lock
+					value = yes
+				}
+				set_variable = {
+					name = lam_is_evt
+					value = flag:$T$
+				}
+				trigger_event = lam_is.0001
+			}
+		}
+		# An AI lord has the last word too: the stronger the crown, the likelier they refuse (crown 0: always gives
+		# way, crown 100: half the time).
+		else_if = {
+			limit = {
+				lam_is_$T$_can_concede_trigger = yes
+			}
+			random = {
+				chance = {
+					value = 100
+					if = {
+						limit = {
+							has_variable = lam_crown
+						}
+						subtract = {
+							value = var:lam_crown
+							multiply = 0.5
+						}
+					}
+				}
+				set_variable = {
+					name = lam_is_gave
+					value = yes
+				}
+				lam_fac_stat_add_effect = {
+					KEY = is_end_bar_y
+				}
+				lam_is_$T$_concede_effect = yes
+			}
+			if = {
+				limit = {
+					has_variable = lam_is_gave
+				}
+				remove_variable = lam_is_gave
+			}
+			else = {
+				lam_is_refused_effect = {
+					T = $T$
+				}
+			}
+		}
+		else = {
+			lam_fac_stat_add_effect = {
+				KEY = is_end_noconcede
+			}
+			lam_is_close_effect = {
+				T = $T$
+				KEY = lam_is_msg_$T$_void
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_is_$T$_bar <= -100
+		}
+		lam_fac_stat_add_effect = {
+			KEY = is_end_bar_x
+		}
+		lam_is_$T$_x_bonus_effect = yes
+		lam_is_win_x_effect = {
+			T = $T$
+		}
+	}
+}
+
+lam_is_win_x_effect = {
+	lam_is_win_x_key_effect = {
+		T = $T$
+		KEY = lam_is_msg_$T$_won_x
+	}
+}
+lam_is_win_x_key_effect = {
+	lam_fac_stat_add_effect = {
+		KEY = is_won_x
+	}
+	scope:lam_is_lord = {
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				lam_is_side_$T$_x_trigger = yes
+			}
+			lam_is_win_head_effect = yes
+		}
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				lam_is_side_$T$_y_trigger = yes
+			}
+			lam_is_$T$_lose_effect = yes
+		}
+		lam_is_pay_backers_effect = {
+			T = $T$
+			SIDE = x
+		}
+		lam_is_fair_stat_effect = {
+			T = $T$
+			SIGN = -1
+		}
+		# the defeated cause is not forgotten: if the matter comes up again it starts tilted its way
+		set_variable = {
+			name = lam_is_$T$_mem
+			value = yes
+			years = 20
+		}
+	}
+	lam_is_close_effect = {
+		T = $T$
+		KEY = $KEY$
+	}
+}
+lam_is_win_y_effect = {
+	lam_is_win_y_key_effect = {
+		T = $T$
+		KEY = lam_is_msg_$T$_won_y
+	}
+}
+lam_is_win_y_key_effect = {
+	lam_fac_stat_add_effect = {
+		KEY = is_won_y
+	}
+	scope:lam_is_lord = {
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				lam_is_side_$T$_y_trigger = yes
+			}
+			lam_is_win_head_effect = yes
+		}
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				lam_is_side_$T$_x_trigger = yes
+			}
+			lam_is_$T$_lose_effect = yes
+		}
+		lam_is_pay_backers_effect = {
+			T = $T$
+			SIDE = y
+		}
+		lam_is_fair_stat_effect = {
+			T = $T$
+			SIGN = 1
+		}
+		remove_variable = lam_is_$T$_mem
+	}
+	lam_is_close_effect = {
+		T = $T$
+		KEY = $KEY$
+	}
+}
+# This = a winning faction head: for three years people flock to the faction (lam_is_join_tilt_effect).
+lam_is_win_head_effect = {
+	lam_fac_hist_add_effect = {
+		KEY = won
+	}
+	lam_fac_cohesion_add_effect = {
+		ADD = 5
+	}
+	remove_variable = lam_is_beaten
+	set_variable = {
+		name = lam_is_victor
+		value = yes
+		years = 3
+	}
+	set_variable = {
+		name = lam_is_victor_until
+		value = {
+			value = lam_now_m
+			add = 36
+		}
+	}
+}
+# This = a losing faction head: cohesion falls, a grievance, and for three years its loose members drift away and
+# few join (lam_is_join_tilt_effect) - the faction's power wanes.
+lam_is_lose_effect = {
+	lam_fac_hist_add_effect = {
+		KEY = lost
+	}
+	lam_fac_cohesion_add_effect = {
+		ADD = -10
+	}
+	lam_pd_grievance_add_effect = {
+		KIND = $KIND$
+		AMOUNT = 10
+		MONTHS = 36
+	}
+	remove_variable = lam_is_victor
+	set_variable = {
+		name = lam_is_beaten
+		value = yes
+		years = 3
+	}
+	set_variable = {
+		name = lam_is_beaten_until
+		value = {
+			value = lam_now_m
+			add = 36
+		}
+	}
+}
+# This = a head whose side carried the court but whom the lord overruled: not weakened, but a deep grievance.
+lam_is_overruled_effect = {
+	lam_fac_hist_add_effect = {
+		KEY = lost
+	}
+	lam_pd_grievance_add_effect = {
+		KIND = $KIND$
+		AMOUNT = 25
+		MONTHS = 60
+	}
+}
+# Inside the faction choice (lam_faction_effects, slots lam_bl1..7 with scores lam_bs1..7): a faction that just won an
+# issue draws people (+10), one that just lost repels them (-15).
+lam_is_join_tilt_effect = {
+	if = {
+		limit = {
+			exists = scope:lam_bl1
+			scope:lam_bl1 = {
+				has_variable = lam_is_beaten
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs1
+			value = {
+				value = scope:lam_bs1
+				add = -15
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl1
+			scope:lam_bl1 = {
+				has_variable = lam_is_victor
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs1
+			value = {
+				value = scope:lam_bs1
+				add = 10
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl2
+			scope:lam_bl2 = {
+				has_variable = lam_is_beaten
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs2
+			value = {
+				value = scope:lam_bs2
+				add = -15
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl2
+			scope:lam_bl2 = {
+				has_variable = lam_is_victor
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs2
+			value = {
+				value = scope:lam_bs2
+				add = 10
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl3
+			scope:lam_bl3 = {
+				has_variable = lam_is_beaten
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs3
+			value = {
+				value = scope:lam_bs3
+				add = -15
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl3
+			scope:lam_bl3 = {
+				has_variable = lam_is_victor
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs3
+			value = {
+				value = scope:lam_bs3
+				add = 10
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl4
+			scope:lam_bl4 = {
+				has_variable = lam_is_beaten
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs4
+			value = {
+				value = scope:lam_bs4
+				add = -15
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl4
+			scope:lam_bl4 = {
+				has_variable = lam_is_victor
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs4
+			value = {
+				value = scope:lam_bs4
+				add = 10
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl5
+			scope:lam_bl5 = {
+				has_variable = lam_is_beaten
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs5
+			value = {
+				value = scope:lam_bs5
+				add = -15
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl5
+			scope:lam_bl5 = {
+				has_variable = lam_is_victor
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs5
+			value = {
+				value = scope:lam_bs5
+				add = 10
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl6
+			scope:lam_bl6 = {
+				has_variable = lam_is_beaten
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs6
+			value = {
+				value = scope:lam_bs6
+				add = -15
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl6
+			scope:lam_bl6 = {
+				has_variable = lam_is_victor
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs6
+			value = {
+				value = scope:lam_bs6
+				add = 10
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl7
+			scope:lam_bl7 = {
+				has_variable = lam_is_beaten
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs7
+			value = {
+				value = scope:lam_bs7
+				add = -15
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_bl7
+			scope:lam_bl7 = {
+				has_variable = lam_is_victor
+			}
+		}
+		save_scope_value_as = {
+			name = lam_bs7
+			value = {
+				value = scope:lam_bs7
+				add = 10
+			}
+		}
+	}
+}
+# Head succession (lam_faction_effects): the faction keeps its fresh win or loss and its recorded stands on
+# open issues (a new head can put them to the council again).
+lam_is_pass_effect = {
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_is_beaten
+			}
+		}
+		$TO$ = {
+			if = {
+				limit = {
+					$FROM$ = {
+						has_variable = lam_is_beaten_until
+					}
+				}
+				set_variable = {
+					name = lam_is_beaten_until
+					value = $FROM$.var:lam_is_beaten_until
+				}
+			}
+			set_variable = {
+				name = lam_is_beaten
+				value = yes
+				months = lam_is_beaten_left_value
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_is_victor
+			}
+		}
+		$TO$ = {
+			if = {
+				limit = {
+					$FROM$ = {
+						has_variable = lam_is_victor_until
+					}
+				}
+				set_variable = {
+					name = lam_is_victor_until
+					value = $FROM$.var:lam_is_victor_until
+				}
+			}
+			set_variable = {
+				name = lam_is_victor
+				value = yes
+				months = lam_is_victor_left_value
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_is_lk_crown
+				has_variable = lam_is_lk_crown_lord
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_is_lk_crown
+				value = $FROM$.var:lam_is_lk_crown
+			}
+			set_variable = {
+				name = lam_is_lk_crown_lord
+				value = $FROM$.var:lam_is_lk_crown_lord
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_is_lk_council
+				has_variable = lam_is_lk_council_lord
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_is_lk_council
+				value = $FROM$.var:lam_is_lk_council
+			}
+			set_variable = {
+				name = lam_is_lk_council_lord
+				value = $FROM$.var:lam_is_lk_council_lord
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_is_lk_faith
+				has_variable = lam_is_lk_faith_lord
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_is_lk_faith
+				value = $FROM$.var:lam_is_lk_faith
+			}
+			set_variable = {
+				name = lam_is_lk_faith_lord
+				value = $FROM$.var:lam_is_lk_faith_lord
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_is_lk_tax
+				has_variable = lam_is_lk_tax_lord
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_is_lk_tax
+				value = $FROM$.var:lam_is_lk_tax
+			}
+			set_variable = {
+				name = lam_is_lk_tax_lord
+				value = $FROM$.var:lam_is_lk_tax_lord
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_is_lk_war
+				has_variable = lam_is_lk_war_lord
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_is_lk_war
+				value = $FROM$.var:lam_is_lk_war
+			}
+			set_variable = {
+				name = lam_is_lk_war_lord
+				value = $FROM$.var:lam_is_lk_war_lord
+			}
+		}
+	}
+	$TO$.liege ?= {
+		if = {
+			limit = {
+				is_target_in_variable_list = {
+					name = lam_is_council_ys
+					target = $FROM$
+				}
+			}
+			remove_list_variable = {
+				name = lam_is_council_ys
+				target = $FROM$
+			}
+			add_to_variable_list = {
+				name = lam_is_council_ys
+				target = $TO$
+			}
+		}
+	}
+}
+# Side Y won the court, but the lord would not (or could not) give it: its factions turn away.
+lam_is_refused_effect = {
+	lam_fac_stat_add_effect = {
+		KEY = is_refused
+	}
+	scope:lam_is_lord = {
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				lam_is_side_$T$_y_trigger = yes
+			}
+			lam_is_$T$_overruled_effect = yes
+			change_variable = {
+				name = lam_fac_favour
+				add = -25
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+			add_opinion = {
+				target = scope:lam_is_lord
+				modifier = lam_fac_slighted_opinion
+			}
+			lam_is_$T$_refused_extra_effect = yes
+		}
+	}
+	scope:lam_is_lord = {
+		set_variable = {
+			name = lam_is_$T$_mem
+			value = yes
+			years = 20
+		}
+	}
+	lam_is_close_effect = {
+		T = $T$
+		KEY = lam_is_msg_$T$_refused
+	}
+}
+# The lord promises through the faction promise system (kept / broken there); the issue closes as promised.
+lam_is_promise_effect = {
+	scope:lam_is_lord = {
+		save_scope_as = lam_pet_lord
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				lam_is_side_$T$_y_trigger = yes
+				NOT = {
+					has_variable = lam_fac_promise
+				}
+			}
+			order_by = var:lam_fac_share
+			lam_fac_make_promise_effect = {
+				TYPE = $TYPE$
+				YEARS = $YEARS$
+			}
+		}
+	}
+	lam_is_close_effect = {
+		T = $T$
+		KEY = lam_is_msg_$T$_promised
+	}
+}
+
+lam_is_close_effect = {
+	lam_fac_stat_add_effect = {
+		KEY = is_close
+	}
+	scope:lam_is_lord = {
+		lam_is_notify_effect = {
+			KEY = $KEY$
+		}
+	}
+	lam_is_drop_effect = {
+		T = $T$
+	}
+}
+# Clears an issue without a word (also when it opened but no faction would stand for side Y).
+lam_is_drop_effect = {
+	scope:lam_is_lord = {
+		every_in_list = {
+			variable = lam_bloc_leads
+			remove_variable = lam_is_st_$T$
+			lam_is_$T$_council_clear_effect = yes
+		}
+		remove_variable = lam_is_$T$_open
+		remove_variable = lam_is_$T$_bar
+		remove_variable = lam_is_$T$_disp
+		remove_variable = lam_is_$T$_abs
+		remove_variable = lam_is_$T$_sa
+		remove_variable = lam_is_$T$_sb
+		remove_variable = lam_is_$T$_lw
+		remove_variable = lam_is_$T$_xp
+		remove_variable = lam_is_$T$_yp
+		remove_variable = lam_is_$T$_ua
+		remove_variable = lam_is_$T$_ub
+		remove_variable = lam_is_$T$_cz
+		remove_variable = lam_is_$T$_cza
+		every_vassal = {
+			limit = {
+				var:lam_is_bk_$T$_lord ?= scope:lam_is_lord
+			}
+			remove_variable = lam_is_bk_$T$
+			remove_variable = lam_is_bk_$T$_lord
+		}
+		remove_variable = lam_is_$T$_mark
+		remove_variable = lam_is_$T$_since
+		remove_variable = lam_is_$T$_pending
+		lam_is_$T$_clear_moves_effect = yes
+		lam_is_$T$_unprepare_effect = yes
+		set_variable = {
+			name = lam_is_$T$_cd
+			value = yes
+			years = 3
+		}
+		if = {
+			limit = {
+				var:lam_is_evt ?= flag:$T$
+			}
+			remove_variable = lam_is_evt
+			remove_variable = lam_is_evt_lock
+		}
+		if = {
+			limit = {
+				lam_is_open_count_value < 1
+			}
+			remove_variable = lam_is_any
+		}
+	}
+}
+
+# Messages go to the lord and to player vassals of the court.
+lam_is_notify_effect = {
+	scope:lam_is_lord = {
+		if = {
+			limit = {
+				is_ai = no
+			}
+			send_interface_message = {
+				type = event_generic_neutral
+				title = $KEY$
+			}
+		}
+		every_vassal = {
+			limit = {
+				is_ai = no
+			}
+			send_interface_message = {
+				type = event_generic_neutral
+				title = $KEY$
+			}
+		}
+	}
+}
+
+# Root = the player pushing, scope:target = the lord. DIR 1 = toward Y, -1 = toward X.
+lam_is_player_push_effect = {
+	scope:target = {
+		save_scope_as = lam_is_lord
+		lam_is_$T$_scopes_effect = yes
+	}
+	save_scope_as = lam_is_who
+	save_scope_value_as = {
+		name = lam_is_spw
+		value = {
+			value = lam_is_push_power_value
+			multiply = $DIR$
+		}
+	}
+	add_prestige = {
+		value = lam_is_push_cost_value
+		multiply = -1
+	}
+	set_variable = {
+		name = lam_is_push_cd
+		value = yes
+		years = 1
+	}
+	if = {
+		limit = {
+			this = scope:lam_is_lord
+		}
+		lam_is_move_effect = {
+			T = $T$
+			AMOUNT = scope:lam_is_spw
+			KIND = lord
+			WHO = scope:lam_is_who
+		}
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_bloc_lead
+		}
+		lam_is_move_effect = {
+			T = $T$
+			AMOUNT = scope:lam_is_spw
+			KIND = head
+			WHO = scope:lam_is_who
+		}
+		lam_is_player_recruit_effect = {
+			T = $T$
+			FOR = $FOR$
+			DIR = $DIR$
+		}
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_bloc
+		}
+		lam_is_move_effect = {
+			T = $T$
+			AMOUNT = scope:lam_is_spw
+			KIND = member
+			WHO = scope:lam_is_who
+		}
+	}
+	else = {
+		lam_is_move_effect = {
+			T = $T$
+			AMOUNT = scope:lam_is_spw
+			KIND = unaligned
+			WHO = scope:lam_is_who
+		}
+		# An unaligned lord who takes a side earns that side's thanks, and their power counts for it until the issue closes.
+		set_variable = {
+			name = lam_is_bk_$T$
+			value = flag:$FOR$
+		}
+		set_variable = {
+			name = lam_is_bk_$T$_lord
+			value = scope:lam_is_lord
+		}
+		scope:lam_is_lord = {
+			every_in_list = {
+				variable = lam_bloc_leads
+				limit = {
+					is_alive = yes
+					NOT = {
+						this = scope:lam_is_who
+					}
+					lam_is_side_$T$_$FOR$_trigger = yes
+				}
+				add_opinion = {
+					target = scope:lam_is_who
+					modifier = lam_fac_granted_opinion
+				}
+			}
+		}
+	}
+	# Whoever pushes, the other side remembers it.
+	scope:lam_is_lord = {
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				NOT = {
+					this = scope:lam_is_who
+				}
+				lam_is_side_$T$_$AGAINST$_trigger = yes
+			}
+			add_opinion = {
+				target = scope:lam_is_who
+				modifier = lam_fac_slighted_opinion
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					var:lam_is_$T$_bar >= 100
+					var:lam_is_$T$_bar <= -100
+				}
+			}
+			lam_is_resolve_effect = {
+				T = $T$
+			}
+		}
+	}
+}
+
+# --- The existing faction systems move the issues and can settle them ------------------------------------------------
+# A petition (lam_pd) on the matter of an open issue, from a faction on the demanding side: granted settles the issue for
+# that side; refused rallies it (+10). This = the petitioning head, var:lam_pd_lord = the lord.
+lam_is_petition_effect = {
+	save_scope_as = lam_is_pet_head
+	var:lam_pd_lord ?= {
+		save_scope_as = lam_is_lord
+	}
+	if = {
+		limit = {
+			exists = scope:lam_is_lord
+		}
+		if = {
+			limit = {
+				var:lam_pd_kind ?= flag:heir
+			}
+			lam_is_petition_hit_effect = {
+				T = heir
+				RESULT = $RESULT$
+			}
+		}
+		if = {
+			limit = {
+				var:lam_pd_kind ?= flag:law
+			}
+			lam_is_petition_hit_effect = {
+				T = crown
+				RESULT = $RESULT$
+			}
+		}
+		if = {
+			limit = {
+				var:lam_pd_kind ?= flag:council
+			}
+			lam_is_petition_hit_effect = {
+				T = council
+				RESULT = $RESULT$
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					var:lam_pd_kind ?= flag:faith
+					var:lam_pd_kind ?= flag:tolerance
+				}
+			}
+			lam_is_petition_hit_effect = {
+				T = faith
+				RESULT = $RESULT$
+			}
+		}
+		if = {
+			limit = {
+				var:lam_pd_kind ?= flag:campaign
+			}
+			lam_is_petition_hit_effect = {
+				T = war
+				RESULT = $RESULT$
+			}
+		}
+		if = {
+			limit = {
+				var:lam_pd_kind ?= flag:taxes
+			}
+			lam_is_petition_hit_effect = {
+				T = tax
+				RESULT = $RESULT$
+			}
+		}
+	}
+}
+lam_is_petition_hit_effect = {
+	if = {
+		limit = {
+			scope:lam_is_lord = {
+				has_variable = lam_is_$T$_open
+			}
+		}
+		scope:lam_is_lord = {
+			lam_is_$T$_scopes_effect = yes
+		}
+		if = {
+			limit = {
+				scope:lam_is_pet_head = {
+					lam_is_side_$T$_y_trigger = yes
+				}
+			}
+			lam_is_petition_$RESULT$_effect = {
+				T = $T$
+			}
+		}
+	}
+}
+lam_is_petition_granted_effect = {
+	lam_fac_stat_add_effect = {
+		KEY = is_end_pet
+	}
+	lam_is_win_y_key_effect = {
+		T = $T$
+		KEY = lam_is_msg_$T$_granted
+	}
+}
+lam_is_petition_refused_effect = {
+	lam_is_move_effect = {
+		T = $T$
+		AMOUNT = 10
+		KIND = petition
+		WHO = scope:lam_is_pet_head
+	}
+}
+# A clash between two factions (lam_fac_clash_side_effect) on opposite sides of an open issue: the winner pulls it 10.
+lam_is_clash_effect = {
+	scope:lam_cl_lord ?= {
+		save_scope_as = lam_is_lord
+	}
+	$WIN$ = {
+		save_scope_as = lam_is_cw
+	}
+	$LOSE$ = {
+		save_scope_as = lam_is_cl
+	}
+	if = {
+		limit = {
+			exists = scope:lam_is_lord
+		}
+		lam_is_clash_type_effect = {
+			T = heir
+		}
+		lam_is_clash_type_effect = {
+			T = crown
+		}
+		lam_is_clash_type_effect = {
+			T = council
+		}
+		lam_is_clash_type_effect = {
+			T = faith
+		}
+		lam_is_clash_type_effect = {
+			T = tax
+		}
+		lam_is_clash_type_effect = {
+			T = war
+		}
+	}
+}
+lam_is_clash_type_effect = {
+	if = {
+		limit = {
+			scope:lam_is_lord = {
+				has_variable = lam_is_$T$_open
+			}
+		}
+		scope:lam_is_lord = {
+			lam_is_$T$_scopes_effect = yes
+		}
+		if = {
+			limit = {
+				scope:lam_is_cw = {
+					lam_is_side_$T$_y_trigger = yes
+				}
+				scope:lam_is_cl = {
+					lam_is_side_$T$_x_trigger = yes
+				}
+			}
+			lam_is_move_effect = {
+				T = $T$
+				AMOUNT = 10
+				KIND = clash
+				WHO = scope:lam_is_cw
+			}
+		}
+		else_if = {
+			limit = {
+				scope:lam_is_cw = {
+					lam_is_side_$T$_x_trigger = yes
+				}
+				scope:lam_is_cl = {
+					lam_is_side_$T$_y_trigger = yes
+				}
+			}
+			lam_is_move_effect = {
+				T = $T$
+				AMOUNT = -10
+				KIND = clash
+				WHO = scope:lam_is_cw
+			}
+		}
+	}
+}
+# The liege favours (DIR 1) or slights (DIR -1) a faction (lam_sgui_fac_favour / _slight): its side gains or loses 5.
+# Root = the liege, scope:target = the faction head.
+lam_is_favour_effect = {
+	save_scope_as = lam_is_lord
+	scope:target = {
+		save_scope_as = lam_is_fav
+	}
+	lam_is_favour_type_effect = {
+		T = heir
+		DIR = $DIR$
+		KIND = $KIND$
+	}
+	lam_is_favour_type_effect = {
+		T = crown
+		DIR = $DIR$
+		KIND = $KIND$
+	}
+	lam_is_favour_type_effect = {
+		T = council
+		DIR = $DIR$
+		KIND = $KIND$
+	}
+	lam_is_favour_type_effect = {
+		T = faith
+		DIR = $DIR$
+		KIND = $KIND$
+	}
+	lam_is_favour_type_effect = {
+		T = tax
+		DIR = $DIR$
+		KIND = $KIND$
+	}
+	lam_is_favour_type_effect = {
+		T = war
+		DIR = $DIR$
+		KIND = $KIND$
+	}
+}
+lam_is_favour_type_effect = {
+	if = {
+		limit = {
+			has_variable = lam_is_$T$_open
+		}
+		lam_is_$T$_scopes_effect = yes
+		if = {
+			limit = {
+				scope:lam_is_fav = {
+					lam_is_side_$T$_y_trigger = yes
+				}
+			}
+			save_scope_value_as = {
+				name = lam_is_fv
+				value = {
+					value = 5
+					multiply = $DIR$
+				}
+			}
+			lam_is_move_effect = {
+				T = $T$
+				AMOUNT = scope:lam_is_fv
+				KIND = $KIND$
+				WHO = scope:lam_is_fav
+			}
+		}
+		else_if = {
+			limit = {
+				scope:lam_is_fav = {
+					lam_is_side_$T$_x_trigger = yes
+				}
+			}
+			save_scope_value_as = {
+				name = lam_is_fv
+				value = {
+					value = -5
+					multiply = $DIR$
+				}
+			}
+			lam_is_move_effect = {
+				T = $T$
+				AMOUNT = scope:lam_is_fv
+				KIND = $KIND$
+				WHO = scope:lam_is_fav
+			}
+		}
+	}
+}
+
+# This = a faction head being marked for the faction cards: keeps the court's war mode beside the war stance.
+lam_is_st_mode_effect = {
+	if = {
+		limit = {
+			scope:lam_is_lord = {
+				has_variable = lam_is_war_mode
+			}
+		}
+		set_variable = {
+			name = lam_is_st_wm
+			value = scope:lam_is_lord.var:lam_is_war_mode
+		}
+	}
+}
+
+# The heir issue's two people, saved for its side triggers.
+lam_is_heir_scopes_effect = {
+	var:lam_is_heir_a ?= {
+		save_scope_as = lam_is_ca
+	}
+	var:lam_is_heir_b ?= {
+		save_scope_as = lam_is_cb
+	}
+}
+# The challenger: the child (other than the primary heir) with the most faction weight behind them.
+lam_is_heir_prepare_effect = {
+	primary_heir ?= {
+		save_scope_as = lam_is_ca
+	}
+	every_child = {
+		limit = {
+			is_alive = yes
+			NOT = {
+				this = scope:lam_is_lord.primary_heir
+			}
+		}
+		save_scope_as = lam_is_kid
+		set_variable = {
+			name = lam_is_tally
+			value = 0
+		}
+		scope:lam_is_lord = {
+			every_in_list = {
+				variable = lam_bloc_leads
+				limit = {
+					is_alive = yes
+					has_variable = lam_fac_share
+					var:lam_fac_heir ?= scope:lam_is_kid
+				}
+				save_scope_as = lam_is_backer
+				scope:lam_is_kid = {
+					change_variable = {
+						name = lam_is_tally
+						add = scope:lam_is_backer.var:lam_fac_share
+					}
+				}
+			}
+		}
+	}
+	ordered_child = {
+		limit = {
+			is_alive = yes
+			has_variable = lam_is_tally
+			var:lam_is_tally > 0
+		}
+		order_by = var:lam_is_tally
+		save_scope_as = lam_is_cb
+	}
+	every_child = {
+		limit = {
+			has_variable = lam_is_tally
+		}
+		remove_variable = lam_is_tally
+	}
+	if = {
+		limit = {
+			exists = scope:lam_is_ca
+			exists = scope:lam_is_cb
+		}
+		set_variable = {
+			name = lam_is_heir_a
+			value = scope:lam_is_ca
+		}
+		set_variable = {
+			name = lam_is_heir_b
+			value = scope:lam_is_cb
+		}
+	}
+}
+lam_is_heir_unprepare_effect = {
+	remove_variable = lam_is_heir_a
+	remove_variable = lam_is_heir_b
+}
+lam_is_heir_refused_extra_effect = {
+	set_variable = {
+		name = lam_fac_spurned
+		value = yes
+		years = 5
+	}
+	lam_fac_timer_set_effect = {
+		NAME = lam_fac_spurned
+		YEARS = 5
+	}
+}
+
+lam_is_heir_portraits_effect = {
+	if = {
+		limit = {
+			exists = scope:lam_is_ca
+		}
+		set_variable = {
+			name = lam_is_heir_xp
+			value = scope:lam_is_ca
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_is_cb
+		}
+		set_variable = {
+			name = lam_is_heir_yp
+			value = scope:lam_is_cb
+		}
+	}
+}
+lam_is_heir_concede_effect = {
+	lam_nc_heir_commit_effect = { CANDIDATE = scope:lam_is_cb }
+		if = { limit = { primary_heir ?= scope:lam_is_cb } lam_is_win_y_effect = { T = heir } }
+		else = { lam_is_refused_effect = { T = heir } }
+}
+lam_is_heir_x_bonus_effect = {
+
+}
+lam_is_heir_lock_effect = {
+}
+lam_is_heir_dissent_effect = {
+}
+lam_is_heir_council_clear_effect = {
+}
+lam_is_heir_lose_effect = {
+	lam_is_lose_effect = {
+		KIND = succession
+	}
+}
+lam_is_heir_overruled_effect = {
+	lam_is_overruled_effect = {
+		KIND = succession
+	}
+}
+lam_is_heir_shift_effect = {
+	if = {
+		limit = {
+			has_variable = lam_is_heir_mv2
+		}
+		set_variable = {
+			name = lam_is_heir_mv3
+			value = var:lam_is_heir_mv2
+		}
+		set_variable = {
+			name = lam_is_heir_mv3_d
+			value = var:lam_is_heir_mv2_d
+		}
+		set_variable = {
+			name = lam_is_heir_mv3_k
+			value = var:lam_is_heir_mv2_k
+		}
+		set_variable = {
+			name = lam_is_heir_mv3_w
+			value = var:lam_is_heir_mv2_w
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_heir_mv1
+		}
+		set_variable = {
+			name = lam_is_heir_mv2
+			value = var:lam_is_heir_mv1
+		}
+		set_variable = {
+			name = lam_is_heir_mv2_d
+			value = var:lam_is_heir_mv1_d
+		}
+		set_variable = {
+			name = lam_is_heir_mv2_k
+			value = var:lam_is_heir_mv1_k
+		}
+		set_variable = {
+			name = lam_is_heir_mv2_w
+			value = var:lam_is_heir_mv1_w
+		}
+	}
+}
+lam_is_heir_clear_moves_effect = {
+	remove_variable = lam_is_heir_mv1
+	remove_variable = lam_is_heir_mv1_d
+	remove_variable = lam_is_heir_mv1_k
+	remove_variable = lam_is_heir_mv1_w
+	remove_variable = lam_is_heir_mv2
+	remove_variable = lam_is_heir_mv2_d
+	remove_variable = lam_is_heir_mv2_k
+	remove_variable = lam_is_heir_mv2_w
+	remove_variable = lam_is_heir_mv3
+	remove_variable = lam_is_heir_mv3_d
+	remove_variable = lam_is_heir_mv3_k
+	remove_variable = lam_is_heir_mv3_w
+}
+lam_is_crown_scopes_effect = {
+}
+lam_is_crown_prepare_effect = {
+	set_variable = { name = lam_is_crown_lv value = lam_is_law_level_value }
+}
+lam_is_crown_unprepare_effect = {
+	remove_variable = lam_is_crown_lv
+}
+lam_is_crown_refused_extra_effect = {
+}
+lam_is_crown_portraits_effect = {
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_crown_x_trigger = yes
+			}
+		}
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_crown_x_trigger = yes
+			}
+			order_by = var:lam_fac_share
+			save_scope_as = lam_is_top
+		}
+		set_variable = {
+			name = lam_is_crown_xp
+			value = scope:lam_is_top
+		}
+	}
+	else_if = {
+		limit = {
+			lam_is_crown_lw_value >= 1
+		}
+		set_variable = {
+			name = lam_is_crown_xp
+			value = scope:lam_is_lord
+		}
+	}
+	else = {
+		remove_variable = lam_is_crown_xp
+	}
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_crown_y_trigger = yes
+			}
+		}
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_crown_y_trigger = yes
+			}
+			order_by = var:lam_fac_share
+			save_scope_as = lam_is_top
+		}
+		set_variable = {
+			name = lam_is_crown_yp
+			value = scope:lam_is_top
+		}
+	}
+	else = {
+		remove_variable = lam_is_crown_yp
+	}
+}
+lam_is_crown_concede_effect = {
+	lam_nc_lower_law_effect = yes
+		lam_is_win_y_effect = { T = crown }
+}
+lam_is_crown_x_bonus_effect = {
+	if = {
+			limit = { is_ai = yes realm_law_use_crown_authority = yes }
+			if = { limit = { has_realm_law = crown_authority_0 } add_realm_law_skip_effects = crown_authority_1 }
+			else_if = { limit = { has_realm_law = crown_authority_1 } add_realm_law_skip_effects = crown_authority_2 }
+			else_if = { limit = { has_realm_law = crown_authority_2 } add_realm_law_skip_effects = crown_authority_3 }
+		}
+}
+# This = the lord: factions without a recorded stand on this issue take the side they are on now.
+lam_is_crown_lock_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			NOT = {
+				var:lam_is_lk_crown_lord ?= scope:lam_is_lord
+			}
+		}
+		if = {
+			limit = {
+				lam_is_side_crown_x_trigger = yes
+			}
+			set_variable = {
+				name = lam_is_lk_crown
+				value = flag:x
+			}
+			set_variable = {
+				name = lam_is_lk_crown_lord
+				value = scope:lam_is_lord
+			}
+		}
+		else_if = {
+			limit = {
+				lam_is_side_crown_y_trigger = yes
+			}
+			set_variable = {
+				name = lam_is_lk_crown
+				value = flag:y
+			}
+			set_variable = {
+				name = lam_is_lk_crown_lord
+				value = scope:lam_is_lord
+			}
+		}
+	}
+}
+# This = the lord: members who lean against their faction's stand (disputes; a change of stand put to the council).
+lam_is_crown_dissent_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			var:lam_is_lk_crown_lord ?= scope:lam_is_lord
+		}
+		save_scope_as = lam_ev_head
+		if = {
+			limit = {
+				var:lam_is_lk_crown ?= flag:x
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_ai = yes
+					lam_ev_member_trigger = yes
+					NOT = {
+						has_variable = lam_hi_paused
+					}
+					NOT = {
+						lam_ev_position_trigger = yes
+					}
+					lam_is_lean_crown_y_trigger = yes
+				}
+				random = {
+					chance = {
+						value = 10
+						if = {
+							limit = {
+								scope:lam_is_lord = {
+									has_variable = lam_fac_fast
+								}
+							}
+							value = 3
+						}
+					}
+					set_variable = {
+						name = lam_is_dis
+						value = flag:crown
+					}
+					set_variable = {
+						name = lam_is_dis_lord
+						value = scope:lam_is_lord
+					}
+					lam_gg_seed_effect = {
+						SOURCE = issue
+						TOPIC = settlement
+						SIDE = pressure
+					}
+				}
+			}
+			# most of the council by influence leans to side y: an AI head puts a change of stand to the council
+			set_variable = {
+				name = lam_is_lean_for
+				value = 0
+			}
+			set_variable = {
+				name = lam_is_lean_against
+				value = 0
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					var:lam_bloc ?= scope:lam_ev_head
+					OR = {
+						var:lam_fac_tier ?= 1
+						var:lam_fac_tier ?= 2
+					}
+				}
+				save_scope_value_as = {
+					name = lam_is_w
+					value = lam_cr_influence_value
+				}
+				if = {
+					limit = {
+						lam_is_lean_crown_y_trigger = yes
+						NOT = {
+							lam_is_lean_crown_x_trigger = yes
+						}
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_against
+							add = scope:lam_is_w
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						lam_is_lean_crown_x_trigger = yes
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_for
+							add = scope:lam_is_w
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					var:lam_is_lean_against > var:lam_is_lean_for
+					var:lam_is_lean_against >= 30
+					NOT = {
+						has_variable = lam_cr_active
+					}
+				}
+				set_variable = {
+					name = lam_cr_st_t
+					value = flag:crown
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:y
+				}
+				lam_fac_stat_add_effect = {
+					KEY = is_stance_call
+				}
+				lam_cr_start_effect = {
+					ISSUE = stance
+					ACTION = stance
+					TARGET = this
+				}
+			}
+			remove_variable = lam_is_lean_for
+			remove_variable = lam_is_lean_against
+		}
+		if = {
+			limit = {
+				var:lam_is_lk_crown ?= flag:y
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_ai = yes
+					lam_ev_member_trigger = yes
+					NOT = {
+						has_variable = lam_hi_paused
+					}
+					NOT = {
+						lam_ev_position_trigger = yes
+					}
+					lam_is_lean_crown_x_trigger = yes
+				}
+				random = {
+					chance = {
+						value = 10
+						if = {
+							limit = {
+								scope:lam_is_lord = {
+									has_variable = lam_fac_fast
+								}
+							}
+							value = 3
+						}
+					}
+					set_variable = {
+						name = lam_is_dis
+						value = flag:crown
+					}
+					set_variable = {
+						name = lam_is_dis_lord
+						value = scope:lam_is_lord
+					}
+					lam_gg_seed_effect = {
+						SOURCE = issue
+						TOPIC = force
+						SIDE = restraint
+					}
+				}
+			}
+			# most of the council by influence leans to side x: an AI head puts a change of stand to the council
+			set_variable = {
+				name = lam_is_lean_for
+				value = 0
+			}
+			set_variable = {
+				name = lam_is_lean_against
+				value = 0
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					var:lam_bloc ?= scope:lam_ev_head
+					OR = {
+						var:lam_fac_tier ?= 1
+						var:lam_fac_tier ?= 2
+					}
+				}
+				save_scope_value_as = {
+					name = lam_is_w
+					value = lam_cr_influence_value
+				}
+				if = {
+					limit = {
+						lam_is_lean_crown_x_trigger = yes
+						NOT = {
+							lam_is_lean_crown_y_trigger = yes
+						}
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_against
+							add = scope:lam_is_w
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						lam_is_lean_crown_y_trigger = yes
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_for
+							add = scope:lam_is_w
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					var:lam_is_lean_against > var:lam_is_lean_for
+					var:lam_is_lean_against >= 30
+					NOT = {
+						has_variable = lam_cr_active
+					}
+				}
+				set_variable = {
+					name = lam_cr_st_t
+					value = flag:crown
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:x
+				}
+				lam_fac_stat_add_effect = {
+					KEY = is_stance_call
+				}
+				lam_cr_start_effect = {
+					ISSUE = stance
+					ACTION = stance
+					TARGET = this
+				}
+			}
+			remove_variable = lam_is_lean_for
+			remove_variable = lam_is_lean_against
+		}
+	}
+}
+# This = a faction head whose council passed a change of stand on this issue.
+lam_is_crown_stance_commit_effect = {
+	if = {
+		limit = {
+			var:lam_cr_st_t ?= flag:crown
+			liege ?= {
+				has_variable = lam_is_crown_open
+			}
+		}
+		if = {
+			limit = {
+				var:lam_cr_st_side ?= flag:x
+			}
+			set_variable = {
+				name = lam_is_lk_crown
+				value = flag:x
+			}
+		}
+		else = {
+			set_variable = {
+				name = lam_is_lk_crown
+				value = flag:y
+			}
+		}
+		set_variable = {
+			name = lam_is_lk_crown_lord
+			value = liege
+		}
+	}
+}
+
+lam_is_crown_council_clear_effect = {
+	remove_variable = lam_is_lk_crown
+	remove_variable = lam_is_lk_crown_lord
+}
+lam_is_crown_lose_effect = {
+	lam_is_lose_effect = {
+		KIND = law
+	}
+}
+lam_is_crown_overruled_effect = {
+	lam_is_overruled_effect = {
+		KIND = law
+	}
+}
+lam_is_crown_shift_effect = {
+	if = {
+		limit = {
+			has_variable = lam_is_crown_mv2
+		}
+		set_variable = {
+			name = lam_is_crown_mv3
+			value = var:lam_is_crown_mv2
+		}
+		set_variable = {
+			name = lam_is_crown_mv3_d
+			value = var:lam_is_crown_mv2_d
+		}
+		set_variable = {
+			name = lam_is_crown_mv3_k
+			value = var:lam_is_crown_mv2_k
+		}
+		set_variable = {
+			name = lam_is_crown_mv3_w
+			value = var:lam_is_crown_mv2_w
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_crown_mv1
+		}
+		set_variable = {
+			name = lam_is_crown_mv2
+			value = var:lam_is_crown_mv1
+		}
+		set_variable = {
+			name = lam_is_crown_mv2_d
+			value = var:lam_is_crown_mv1_d
+		}
+		set_variable = {
+			name = lam_is_crown_mv2_k
+			value = var:lam_is_crown_mv1_k
+		}
+		set_variable = {
+			name = lam_is_crown_mv2_w
+			value = var:lam_is_crown_mv1_w
+		}
+	}
+}
+lam_is_crown_clear_moves_effect = {
+	remove_variable = lam_is_crown_mv1
+	remove_variable = lam_is_crown_mv1_d
+	remove_variable = lam_is_crown_mv1_k
+	remove_variable = lam_is_crown_mv1_w
+	remove_variable = lam_is_crown_mv2
+	remove_variable = lam_is_crown_mv2_d
+	remove_variable = lam_is_crown_mv2_k
+	remove_variable = lam_is_crown_mv2_w
+	remove_variable = lam_is_crown_mv3
+	remove_variable = lam_is_crown_mv3_d
+	remove_variable = lam_is_crown_mv3_k
+	remove_variable = lam_is_crown_mv3_w
+}
+lam_is_faith_scopes_effect = {
+}
+lam_is_faith_prepare_effect = {
+
+}
+lam_is_faith_unprepare_effect = {
+
+}
+lam_is_faith_refused_extra_effect = {
+}
+lam_is_faith_portraits_effect = {
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_faith_x_trigger = yes
+			}
+		}
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_faith_x_trigger = yes
+			}
+			order_by = var:lam_fac_share
+			save_scope_as = lam_is_top
+		}
+		set_variable = {
+			name = lam_is_faith_xp
+			value = scope:lam_is_top
+		}
+	}
+	else_if = {
+		limit = {
+			lam_is_faith_lw_value >= 1
+		}
+		set_variable = {
+			name = lam_is_faith_xp
+			value = scope:lam_is_lord
+		}
+	}
+	else = {
+		remove_variable = lam_is_faith_xp
+	}
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_faith_y_trigger = yes
+			}
+		}
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_faith_y_trigger = yes
+			}
+			order_by = var:lam_fac_share
+			save_scope_as = lam_is_top
+		}
+		set_variable = {
+			name = lam_is_faith_yp
+			value = scope:lam_is_top
+		}
+	}
+	else = {
+		remove_variable = lam_is_faith_yp
+	}
+}
+lam_is_faith_concede_effect = {
+	clear_variable_list = lam_is_acc_cults
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = { is_alive = yes lam_is_side_faith_y_trigger = yes NOT = { culture = scope:lam_is_lord.culture } }
+			save_scope_as = lam_is_minor
+			if = {
+				limit = { scope:lam_is_lord = { NOT = { is_target_in_variable_list = { name = lam_is_acc_cults target = scope:lam_is_minor.culture } } NOT = { is_target_in_variable_list = { name = lam_rv_acc_given target = scope:lam_is_minor.culture } } } }
+				scope:lam_is_lord = { add_to_variable_list = { name = lam_is_acc_cults target = scope:lam_is_minor.culture } add_to_variable_list = { name = lam_rv_acc_given target = scope:lam_is_minor.culture } }
+				scope:lam_is_lord.culture = {
+					change_cultural_acceptance = {
+						target = scope:lam_is_minor.culture
+						value = medium_cultural_acceptance_gain
+						desc = lam_is_faith_accept_desc
+					}
+				}
+			}
+		}
+		clear_variable_list = lam_is_acc_cults
+		add_character_modifier = { modifier = lam_is_tolerance_modifier years = 10 }
+		lam_is_win_y_effect = { T = faith }
+}
+lam_is_faith_x_bonus_effect = {
+	add_character_modifier = { modifier = lam_is_orthodoxy_modifier years = 5 }
+}
+# This = the lord: factions without a recorded stand on this issue take the side they are on now.
+lam_is_faith_lock_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			NOT = {
+				var:lam_is_lk_faith_lord ?= scope:lam_is_lord
+			}
+		}
+		if = {
+			limit = {
+				lam_is_side_faith_x_trigger = yes
+			}
+			set_variable = {
+				name = lam_is_lk_faith
+				value = flag:x
+			}
+			set_variable = {
+				name = lam_is_lk_faith_lord
+				value = scope:lam_is_lord
+			}
+		}
+		else_if = {
+			limit = {
+				lam_is_side_faith_y_trigger = yes
+			}
+			set_variable = {
+				name = lam_is_lk_faith
+				value = flag:y
+			}
+			set_variable = {
+				name = lam_is_lk_faith_lord
+				value = scope:lam_is_lord
+			}
+		}
+	}
+}
+# This = the lord: members who lean against their faction's stand (disputes; a change of stand put to the council).
+lam_is_faith_dissent_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			var:lam_is_lk_faith_lord ?= scope:lam_is_lord
+		}
+		save_scope_as = lam_ev_head
+		if = {
+			limit = {
+				var:lam_is_lk_faith ?= flag:x
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_ai = yes
+					lam_ev_member_trigger = yes
+					NOT = {
+						has_variable = lam_hi_paused
+					}
+					NOT = {
+						lam_ev_position_trigger = yes
+					}
+					lam_is_lean_faith_y_trigger = yes
+				}
+				random = {
+					chance = {
+						value = 10
+						if = {
+							limit = {
+								scope:lam_is_lord = {
+									has_variable = lam_fac_fast
+								}
+							}
+							value = 3
+						}
+					}
+					set_variable = {
+						name = lam_is_dis
+						value = flag:faith
+					}
+					set_variable = {
+						name = lam_is_dis_lord
+						value = scope:lam_is_lord
+					}
+					lam_gg_seed_effect = {
+						SOURCE = issue
+						TOPIC = settlement
+						SIDE = pressure
+					}
+				}
+			}
+			# most of the council by influence leans to side y: an AI head puts a change of stand to the council
+			set_variable = {
+				name = lam_is_lean_for
+				value = 0
+			}
+			set_variable = {
+				name = lam_is_lean_against
+				value = 0
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					var:lam_bloc ?= scope:lam_ev_head
+					OR = {
+						var:lam_fac_tier ?= 1
+						var:lam_fac_tier ?= 2
+					}
+				}
+				save_scope_value_as = {
+					name = lam_is_w
+					value = lam_cr_influence_value
+				}
+				if = {
+					limit = {
+						lam_is_lean_faith_y_trigger = yes
+						NOT = {
+							lam_is_lean_faith_x_trigger = yes
+						}
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_against
+							add = scope:lam_is_w
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						lam_is_lean_faith_x_trigger = yes
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_for
+							add = scope:lam_is_w
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					var:lam_is_lean_against > var:lam_is_lean_for
+					var:lam_is_lean_against >= 30
+					NOT = {
+						has_variable = lam_cr_active
+					}
+				}
+				set_variable = {
+					name = lam_cr_st_t
+					value = flag:faith
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:y
+				}
+				lam_fac_stat_add_effect = {
+					KEY = is_stance_call
+				}
+				lam_cr_start_effect = {
+					ISSUE = stance
+					ACTION = stance
+					TARGET = this
+				}
+			}
+			remove_variable = lam_is_lean_for
+			remove_variable = lam_is_lean_against
+		}
+		if = {
+			limit = {
+				var:lam_is_lk_faith ?= flag:y
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_ai = yes
+					lam_ev_member_trigger = yes
+					NOT = {
+						has_variable = lam_hi_paused
+					}
+					NOT = {
+						lam_ev_position_trigger = yes
+					}
+					lam_is_lean_faith_x_trigger = yes
+				}
+				random = {
+					chance = {
+						value = 10
+						if = {
+							limit = {
+								scope:lam_is_lord = {
+									has_variable = lam_fac_fast
+								}
+							}
+							value = 3
+						}
+					}
+					set_variable = {
+						name = lam_is_dis
+						value = flag:faith
+					}
+					set_variable = {
+						name = lam_is_dis_lord
+						value = scope:lam_is_lord
+					}
+					lam_gg_seed_effect = {
+						SOURCE = issue
+						TOPIC = force
+						SIDE = restraint
+					}
+				}
+			}
+			# most of the council by influence leans to side x: an AI head puts a change of stand to the council
+			set_variable = {
+				name = lam_is_lean_for
+				value = 0
+			}
+			set_variable = {
+				name = lam_is_lean_against
+				value = 0
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					var:lam_bloc ?= scope:lam_ev_head
+					OR = {
+						var:lam_fac_tier ?= 1
+						var:lam_fac_tier ?= 2
+					}
+				}
+				save_scope_value_as = {
+					name = lam_is_w
+					value = lam_cr_influence_value
+				}
+				if = {
+					limit = {
+						lam_is_lean_faith_x_trigger = yes
+						NOT = {
+							lam_is_lean_faith_y_trigger = yes
+						}
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_against
+							add = scope:lam_is_w
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						lam_is_lean_faith_y_trigger = yes
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_for
+							add = scope:lam_is_w
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					var:lam_is_lean_against > var:lam_is_lean_for
+					var:lam_is_lean_against >= 30
+					NOT = {
+						has_variable = lam_cr_active
+					}
+				}
+				set_variable = {
+					name = lam_cr_st_t
+					value = flag:faith
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:x
+				}
+				lam_fac_stat_add_effect = {
+					KEY = is_stance_call
+				}
+				lam_cr_start_effect = {
+					ISSUE = stance
+					ACTION = stance
+					TARGET = this
+				}
+			}
+			remove_variable = lam_is_lean_for
+			remove_variable = lam_is_lean_against
+		}
+	}
+}
+# This = a faction head whose council passed a change of stand on this issue.
+lam_is_faith_stance_commit_effect = {
+	if = {
+		limit = {
+			var:lam_cr_st_t ?= flag:faith
+			liege ?= {
+				has_variable = lam_is_faith_open
+			}
+		}
+		if = {
+			limit = {
+				var:lam_cr_st_side ?= flag:x
+			}
+			set_variable = {
+				name = lam_is_lk_faith
+				value = flag:x
+			}
+		}
+		else = {
+			set_variable = {
+				name = lam_is_lk_faith
+				value = flag:y
+			}
+		}
+		set_variable = {
+			name = lam_is_lk_faith_lord
+			value = liege
+		}
+	}
+}
+
+lam_is_faith_council_clear_effect = {
+	remove_variable = lam_is_lk_faith
+	remove_variable = lam_is_lk_faith_lord
+}
+lam_is_faith_lose_effect = {
+	lam_is_lose_effect = {
+		KIND = tolerance
+	}
+}
+lam_is_faith_overruled_effect = {
+	lam_is_overruled_effect = {
+		KIND = tolerance
+	}
+}
+lam_is_faith_shift_effect = {
+	if = {
+		limit = {
+			has_variable = lam_is_faith_mv2
+		}
+		set_variable = {
+			name = lam_is_faith_mv3
+			value = var:lam_is_faith_mv2
+		}
+		set_variable = {
+			name = lam_is_faith_mv3_d
+			value = var:lam_is_faith_mv2_d
+		}
+		set_variable = {
+			name = lam_is_faith_mv3_k
+			value = var:lam_is_faith_mv2_k
+		}
+		set_variable = {
+			name = lam_is_faith_mv3_w
+			value = var:lam_is_faith_mv2_w
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_faith_mv1
+		}
+		set_variable = {
+			name = lam_is_faith_mv2
+			value = var:lam_is_faith_mv1
+		}
+		set_variable = {
+			name = lam_is_faith_mv2_d
+			value = var:lam_is_faith_mv1_d
+		}
+		set_variable = {
+			name = lam_is_faith_mv2_k
+			value = var:lam_is_faith_mv1_k
+		}
+		set_variable = {
+			name = lam_is_faith_mv2_w
+			value = var:lam_is_faith_mv1_w
+		}
+	}
+}
+lam_is_faith_clear_moves_effect = {
+	remove_variable = lam_is_faith_mv1
+	remove_variable = lam_is_faith_mv1_d
+	remove_variable = lam_is_faith_mv1_k
+	remove_variable = lam_is_faith_mv1_w
+	remove_variable = lam_is_faith_mv2
+	remove_variable = lam_is_faith_mv2_d
+	remove_variable = lam_is_faith_mv2_k
+	remove_variable = lam_is_faith_mv2_w
+	remove_variable = lam_is_faith_mv3
+	remove_variable = lam_is_faith_mv3_d
+	remove_variable = lam_is_faith_mv3_k
+	remove_variable = lam_is_faith_mv3_w
+}
+lam_is_war_scopes_effect = {
+}
+lam_is_war_prepare_effect = {
+	if = {
+			limit = {
+				any_character_war = { OR = { primary_attacker = scope:lam_is_lord primary_defender = scope:lam_is_lord } }
+			}
+			set_variable = { name = lam_is_war_mode value = flag:peace }
+			random_character_war = {
+				limit = { OR = { primary_attacker = scope:lam_is_lord primary_defender = scope:lam_is_lord } OR = { war_days >= 180 attacker_war_score >= 25 attacker_war_score <= -25 } }
+				save_scope_as = lam_is_wr
+			}
+			if = {
+				limit = { NOT = { exists = scope:lam_is_wr } }
+				random_character_war = {
+					limit = { OR = { primary_attacker = scope:lam_is_lord primary_defender = scope:lam_is_lord } }
+					save_scope_as = lam_is_wr
+				}
+			}
+			set_variable = { name = lam_is_war_ref value = scope:lam_is_wr }
+			if = {
+				limit = { scope:lam_is_wr = { primary_attacker = scope:lam_is_lord } }
+				set_variable = { name = lam_is_war_side value = flag:attacker }
+				set_variable = { name = lam_is_war_foe value = scope:lam_is_wr.primary_defender }
+			}
+			else = {
+				set_variable = { name = lam_is_war_side value = flag:defender }
+				set_variable = { name = lam_is_war_foe value = scope:lam_is_wr.primary_attacker }
+			}
+		}
+		else = {
+			set_variable = { name = lam_is_war_mode value = flag:campaign }
+		}
+}
+lam_is_war_unprepare_effect = {
+	remove_variable = lam_is_war_mode
+		remove_variable = lam_is_war_ref
+		remove_variable = lam_is_war_side
+		remove_variable = lam_is_war_foe
+}
+lam_is_war_refused_extra_effect = {
+}
+lam_is_war_portraits_effect = {
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_war_x_trigger = yes
+			}
+		}
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_war_x_trigger = yes
+			}
+			order_by = var:lam_fac_share
+			save_scope_as = lam_is_top
+		}
+		set_variable = {
+			name = lam_is_war_xp
+			value = scope:lam_is_top
+		}
+	}
+	else_if = {
+		limit = {
+			lam_is_war_lw_value >= 1
+		}
+		set_variable = {
+			name = lam_is_war_xp
+			value = scope:lam_is_lord
+		}
+	}
+	else = {
+		remove_variable = lam_is_war_xp
+	}
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_war_y_trigger = yes
+			}
+		}
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_war_y_trigger = yes
+			}
+			order_by = var:lam_fac_share
+			save_scope_as = lam_is_top
+		}
+		set_variable = {
+			name = lam_is_war_yp
+			value = scope:lam_is_top
+		}
+	}
+	else = {
+		remove_variable = lam_is_war_yp
+	}
+}
+lam_is_war_concede_effect = {
+	if = {
+			limit = { var:lam_is_war_mode ?= flag:campaign lam_is_war_can_promise_trigger = yes }
+			lam_is_promise_effect = { T = war TYPE = campaign YEARS = 2 }
+		}
+		else_if = {
+			limit = { var:lam_is_war_mode ?= flag:campaign }
+			lam_is_win_y_effect = { T = war }
+		}
+		else = {
+			var:lam_is_war_ref ?= { end_war = white_peace }
+			lam_is_win_y_effect = { T = war }
+		}
+}
+lam_is_war_x_bonus_effect = {
+
+}
+# This = the lord: factions without a recorded stand on this issue take the side they are on now.
+lam_is_war_lock_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			NOT = {
+				var:lam_is_lk_war_lord ?= scope:lam_is_lord
+			}
+		}
+		if = {
+			limit = {
+				lam_is_side_war_x_trigger = yes
+			}
+			set_variable = {
+				name = lam_is_lk_war
+				value = flag:x
+			}
+			set_variable = {
+				name = lam_is_lk_war_lord
+				value = scope:lam_is_lord
+			}
+		}
+		else_if = {
+			limit = {
+				lam_is_side_war_y_trigger = yes
+			}
+			set_variable = {
+				name = lam_is_lk_war
+				value = flag:y
+			}
+			set_variable = {
+				name = lam_is_lk_war_lord
+				value = scope:lam_is_lord
+			}
+		}
+	}
+}
+# This = the lord: members who lean against their faction's stand (disputes; a change of stand put to the council).
+lam_is_war_dissent_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			var:lam_is_lk_war_lord ?= scope:lam_is_lord
+		}
+		save_scope_as = lam_ev_head
+		if = {
+			limit = {
+				var:lam_is_lk_war ?= flag:x
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_ai = yes
+					lam_ev_member_trigger = yes
+					NOT = {
+						has_variable = lam_hi_paused
+					}
+					NOT = {
+						lam_ev_position_trigger = yes
+					}
+					lam_is_lean_war_y_trigger = yes
+				}
+				random = {
+					chance = {
+						value = 10
+						if = {
+							limit = {
+								scope:lam_is_lord = {
+									has_variable = lam_fac_fast
+								}
+							}
+							value = 3
+						}
+					}
+					set_variable = {
+						name = lam_is_dis
+						value = flag:war
+					}
+					set_variable = {
+						name = lam_is_dis_lord
+						value = scope:lam_is_lord
+					}
+					lam_gg_seed_effect = {
+						SOURCE = issue
+						TOPIC = settlement
+						SIDE = pressure
+					}
+				}
+			}
+			# most of the council by influence leans to side y: an AI head puts a change of stand to the council
+			set_variable = {
+				name = lam_is_lean_for
+				value = 0
+			}
+			set_variable = {
+				name = lam_is_lean_against
+				value = 0
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					var:lam_bloc ?= scope:lam_ev_head
+					OR = {
+						var:lam_fac_tier ?= 1
+						var:lam_fac_tier ?= 2
+					}
+				}
+				save_scope_value_as = {
+					name = lam_is_w
+					value = lam_cr_influence_value
+				}
+				if = {
+					limit = {
+						lam_is_lean_war_y_trigger = yes
+						NOT = {
+							lam_is_lean_war_x_trigger = yes
+						}
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_against
+							add = scope:lam_is_w
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						lam_is_lean_war_x_trigger = yes
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_for
+							add = scope:lam_is_w
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					var:lam_is_lean_against > var:lam_is_lean_for
+					var:lam_is_lean_against >= 30
+					NOT = {
+						has_variable = lam_cr_active
+					}
+				}
+				set_variable = {
+					name = lam_cr_st_t
+					value = flag:war
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:y
+				}
+				lam_fac_stat_add_effect = {
+					KEY = is_stance_call
+				}
+				lam_cr_start_effect = {
+					ISSUE = stance
+					ACTION = stance
+					TARGET = this
+				}
+			}
+			remove_variable = lam_is_lean_for
+			remove_variable = lam_is_lean_against
+		}
+		if = {
+			limit = {
+				var:lam_is_lk_war ?= flag:y
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_ai = yes
+					lam_ev_member_trigger = yes
+					NOT = {
+						has_variable = lam_hi_paused
+					}
+					NOT = {
+						lam_ev_position_trigger = yes
+					}
+					lam_is_lean_war_x_trigger = yes
+				}
+				random = {
+					chance = {
+						value = 10
+						if = {
+							limit = {
+								scope:lam_is_lord = {
+									has_variable = lam_fac_fast
+								}
+							}
+							value = 3
+						}
+					}
+					set_variable = {
+						name = lam_is_dis
+						value = flag:war
+					}
+					set_variable = {
+						name = lam_is_dis_lord
+						value = scope:lam_is_lord
+					}
+					lam_gg_seed_effect = {
+						SOURCE = issue
+						TOPIC = force
+						SIDE = restraint
+					}
+				}
+			}
+			# most of the council by influence leans to side x: an AI head puts a change of stand to the council
+			set_variable = {
+				name = lam_is_lean_for
+				value = 0
+			}
+			set_variable = {
+				name = lam_is_lean_against
+				value = 0
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					var:lam_bloc ?= scope:lam_ev_head
+					OR = {
+						var:lam_fac_tier ?= 1
+						var:lam_fac_tier ?= 2
+					}
+				}
+				save_scope_value_as = {
+					name = lam_is_w
+					value = lam_cr_influence_value
+				}
+				if = {
+					limit = {
+						lam_is_lean_war_x_trigger = yes
+						NOT = {
+							lam_is_lean_war_y_trigger = yes
+						}
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_against
+							add = scope:lam_is_w
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						lam_is_lean_war_y_trigger = yes
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_for
+							add = scope:lam_is_w
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					var:lam_is_lean_against > var:lam_is_lean_for
+					var:lam_is_lean_against >= 30
+					NOT = {
+						has_variable = lam_cr_active
+					}
+				}
+				set_variable = {
+					name = lam_cr_st_t
+					value = flag:war
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:x
+				}
+				lam_fac_stat_add_effect = {
+					KEY = is_stance_call
+				}
+				lam_cr_start_effect = {
+					ISSUE = stance
+					ACTION = stance
+					TARGET = this
+				}
+			}
+			remove_variable = lam_is_lean_for
+			remove_variable = lam_is_lean_against
+		}
+	}
+}
+# This = a faction head whose council passed a change of stand on this issue.
+lam_is_war_stance_commit_effect = {
+	if = {
+		limit = {
+			var:lam_cr_st_t ?= flag:war
+			liege ?= {
+				has_variable = lam_is_war_open
+			}
+		}
+		if = {
+			limit = {
+				var:lam_cr_st_side ?= flag:x
+			}
+			set_variable = {
+				name = lam_is_lk_war
+				value = flag:x
+			}
+		}
+		else = {
+			set_variable = {
+				name = lam_is_lk_war
+				value = flag:y
+			}
+		}
+		set_variable = {
+			name = lam_is_lk_war_lord
+			value = liege
+		}
+	}
+}
+
+lam_is_war_council_clear_effect = {
+	remove_variable = lam_is_lk_war
+	remove_variable = lam_is_lk_war_lord
+}
+lam_is_war_lose_effect = {
+	lam_is_lose_effect = {
+		KIND = campaign
+	}
+}
+lam_is_war_overruled_effect = {
+	lam_is_overruled_effect = {
+		KIND = campaign
+	}
+}
+lam_is_war_shift_effect = {
+	if = {
+		limit = {
+			has_variable = lam_is_war_mv2
+		}
+		set_variable = {
+			name = lam_is_war_mv3
+			value = var:lam_is_war_mv2
+		}
+		set_variable = {
+			name = lam_is_war_mv3_d
+			value = var:lam_is_war_mv2_d
+		}
+		set_variable = {
+			name = lam_is_war_mv3_k
+			value = var:lam_is_war_mv2_k
+		}
+		set_variable = {
+			name = lam_is_war_mv3_w
+			value = var:lam_is_war_mv2_w
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_war_mv1
+		}
+		set_variable = {
+			name = lam_is_war_mv2
+			value = var:lam_is_war_mv1
+		}
+		set_variable = {
+			name = lam_is_war_mv2_d
+			value = var:lam_is_war_mv1_d
+		}
+		set_variable = {
+			name = lam_is_war_mv2_k
+			value = var:lam_is_war_mv1_k
+		}
+		set_variable = {
+			name = lam_is_war_mv2_w
+			value = var:lam_is_war_mv1_w
+		}
+	}
+}
+lam_is_war_clear_moves_effect = {
+	remove_variable = lam_is_war_mv1
+	remove_variable = lam_is_war_mv1_d
+	remove_variable = lam_is_war_mv1_k
+	remove_variable = lam_is_war_mv1_w
+	remove_variable = lam_is_war_mv2
+	remove_variable = lam_is_war_mv2_d
+	remove_variable = lam_is_war_mv2_k
+	remove_variable = lam_is_war_mv2_w
+	remove_variable = lam_is_war_mv3
+	remove_variable = lam_is_war_mv3_d
+	remove_variable = lam_is_war_mv3_k
+	remove_variable = lam_is_war_mv3_w
+}
+lam_is_council_scopes_effect = {
+}
+lam_is_council_prepare_effect = {
+	clear_variable_list = lam_is_council_ys
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = { is_alive = yes lam_is_side_council_y_trigger = yes }
+			scope:lam_is_lord = { add_to_variable_list = { name = lam_is_council_ys target = prev } }
+		}
+}
+lam_is_council_unprepare_effect = {
+	clear_variable_list = lam_is_council_ys
+}
+lam_is_council_refused_extra_effect = {
+}
+lam_is_council_portraits_effect = {
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_council_x_trigger = yes
+			}
+		}
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_council_x_trigger = yes
+			}
+			order_by = var:lam_fac_share
+			save_scope_as = lam_is_top
+		}
+		set_variable = {
+			name = lam_is_council_xp
+			value = scope:lam_is_top
+		}
+	}
+	else_if = {
+		limit = {
+			lam_is_council_lw_value >= 1
+		}
+		set_variable = {
+			name = lam_is_council_xp
+			value = scope:lam_is_lord
+		}
+	}
+	else = {
+		remove_variable = lam_is_council_xp
+	}
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_council_y_trigger = yes
+			}
+		}
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_council_y_trigger = yes
+			}
+			order_by = var:lam_fac_share
+			save_scope_as = lam_is_top
+		}
+		set_variable = {
+			name = lam_is_council_yp
+			value = scope:lam_is_top
+		}
+	}
+	else = {
+		remove_variable = lam_is_council_yp
+	}
+}
+lam_is_council_concede_effect = {
+	ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = { is_alive = yes lam_is_side_council_y_trigger = yes }
+			order_by = var:lam_fac_share
+			save_scope_as = lam_is_yhead
+		}
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = { is_alive = yes lam_is_side_council_x_trigger = yes }
+			order_by = { value = 0 subtract = var:lam_fac_share }
+			save_scope_as = lam_is_xhead
+		}
+		lam_is_council_appoint_effect = yes
+		if = {
+			limit = { exists = scope:lam_is_cseat }
+			lam_is_win_y_effect = { T = council }
+		}
+		else_if = {
+			limit = { lam_is_council_can_promise_trigger = yes }
+			lam_is_promise_effect = { T = council TYPE = council YEARS = 1 }
+		}
+		else = {
+			lam_fac_stat_add_effect = { KEY = is_end_void }
+			lam_is_close_effect = { T = council KEY = lam_is_msg_council_void }
+		}
+}
+lam_is_council_x_bonus_effect = {
+
+}
+# This = the lord: factions without a recorded stand on this issue take the side they are on now.
+lam_is_council_lock_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			NOT = {
+				var:lam_is_lk_council_lord ?= scope:lam_is_lord
+			}
+		}
+		if = {
+			limit = {
+				lam_is_side_council_x_trigger = yes
+			}
+			set_variable = {
+				name = lam_is_lk_council
+				value = flag:x
+			}
+			set_variable = {
+				name = lam_is_lk_council_lord
+				value = scope:lam_is_lord
+			}
+		}
+		else_if = {
+			limit = {
+				lam_is_side_council_y_trigger = yes
+			}
+			set_variable = {
+				name = lam_is_lk_council
+				value = flag:y
+			}
+			set_variable = {
+				name = lam_is_lk_council_lord
+				value = scope:lam_is_lord
+			}
+		}
+	}
+}
+# This = the lord: members who lean against their faction's stand (disputes; a change of stand put to the council).
+lam_is_council_dissent_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			var:lam_is_lk_council_lord ?= scope:lam_is_lord
+		}
+		save_scope_as = lam_ev_head
+		if = {
+			limit = {
+				var:lam_is_lk_council ?= flag:x
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_ai = yes
+					lam_ev_member_trigger = yes
+					NOT = {
+						has_variable = lam_hi_paused
+					}
+					NOT = {
+						lam_ev_position_trigger = yes
+					}
+					lam_is_lean_council_y_trigger = yes
+				}
+				random = {
+					chance = {
+						value = 10
+						if = {
+							limit = {
+								scope:lam_is_lord = {
+									has_variable = lam_fac_fast
+								}
+							}
+							value = 3
+						}
+					}
+					set_variable = {
+						name = lam_is_dis
+						value = flag:council
+					}
+					set_variable = {
+						name = lam_is_dis_lord
+						value = scope:lam_is_lord
+					}
+					lam_gg_seed_effect = {
+						SOURCE = issue
+						TOPIC = settlement
+						SIDE = pressure
+					}
+				}
+			}
+			# most of the council by influence leans to side y: an AI head puts a change of stand to the council
+			set_variable = {
+				name = lam_is_lean_for
+				value = 0
+			}
+			set_variable = {
+				name = lam_is_lean_against
+				value = 0
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					var:lam_bloc ?= scope:lam_ev_head
+					OR = {
+						var:lam_fac_tier ?= 1
+						var:lam_fac_tier ?= 2
+					}
+				}
+				save_scope_value_as = {
+					name = lam_is_w
+					value = lam_cr_influence_value
+				}
+				if = {
+					limit = {
+						lam_is_lean_council_y_trigger = yes
+						NOT = {
+							lam_is_lean_council_x_trigger = yes
+						}
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_against
+							add = scope:lam_is_w
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						lam_is_lean_council_x_trigger = yes
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_for
+							add = scope:lam_is_w
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					var:lam_is_lean_against > var:lam_is_lean_for
+					var:lam_is_lean_against >= 30
+					NOT = {
+						has_variable = lam_cr_active
+					}
+				}
+				set_variable = {
+					name = lam_cr_st_t
+					value = flag:council
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:y
+				}
+				lam_fac_stat_add_effect = {
+					KEY = is_stance_call
+				}
+				lam_cr_start_effect = {
+					ISSUE = stance
+					ACTION = stance
+					TARGET = this
+				}
+			}
+			remove_variable = lam_is_lean_for
+			remove_variable = lam_is_lean_against
+		}
+		if = {
+			limit = {
+				var:lam_is_lk_council ?= flag:y
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_ai = yes
+					lam_ev_member_trigger = yes
+					NOT = {
+						has_variable = lam_hi_paused
+					}
+					NOT = {
+						lam_ev_position_trigger = yes
+					}
+					lam_is_lean_council_x_trigger = yes
+				}
+				random = {
+					chance = {
+						value = 10
+						if = {
+							limit = {
+								scope:lam_is_lord = {
+									has_variable = lam_fac_fast
+								}
+							}
+							value = 3
+						}
+					}
+					set_variable = {
+						name = lam_is_dis
+						value = flag:council
+					}
+					set_variable = {
+						name = lam_is_dis_lord
+						value = scope:lam_is_lord
+					}
+					lam_gg_seed_effect = {
+						SOURCE = issue
+						TOPIC = force
+						SIDE = restraint
+					}
+				}
+			}
+			# most of the council by influence leans to side x: an AI head puts a change of stand to the council
+			set_variable = {
+				name = lam_is_lean_for
+				value = 0
+			}
+			set_variable = {
+				name = lam_is_lean_against
+				value = 0
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					var:lam_bloc ?= scope:lam_ev_head
+					OR = {
+						var:lam_fac_tier ?= 1
+						var:lam_fac_tier ?= 2
+					}
+				}
+				save_scope_value_as = {
+					name = lam_is_w
+					value = lam_cr_influence_value
+				}
+				if = {
+					limit = {
+						lam_is_lean_council_x_trigger = yes
+						NOT = {
+							lam_is_lean_council_y_trigger = yes
+						}
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_against
+							add = scope:lam_is_w
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						lam_is_lean_council_y_trigger = yes
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_for
+							add = scope:lam_is_w
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					var:lam_is_lean_against > var:lam_is_lean_for
+					var:lam_is_lean_against >= 30
+					NOT = {
+						has_variable = lam_cr_active
+					}
+				}
+				set_variable = {
+					name = lam_cr_st_t
+					value = flag:council
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:x
+				}
+				lam_fac_stat_add_effect = {
+					KEY = is_stance_call
+				}
+				lam_cr_start_effect = {
+					ISSUE = stance
+					ACTION = stance
+					TARGET = this
+				}
+			}
+			remove_variable = lam_is_lean_for
+			remove_variable = lam_is_lean_against
+		}
+	}
+}
+# This = a faction head whose council passed a change of stand on this issue.
+lam_is_council_stance_commit_effect = {
+	if = {
+		limit = {
+			var:lam_cr_st_t ?= flag:council
+			liege ?= {
+				has_variable = lam_is_council_open
+			}
+		}
+		if = {
+			limit = {
+				var:lam_cr_st_side ?= flag:x
+			}
+			set_variable = {
+				name = lam_is_lk_council
+				value = flag:x
+			}
+		}
+		else = {
+			set_variable = {
+				name = lam_is_lk_council
+				value = flag:y
+			}
+		}
+		set_variable = {
+			name = lam_is_lk_council_lord
+			value = liege
+		}
+		liege = {
+			if = {
+				limit = {
+					prev = {
+						var:lam_is_lk_council ?= flag:y
+						NOT = {
+							lam_fac_has_seat_trigger = {
+								LORD = liege
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							is_target_in_variable_list = {
+								name = lam_is_council_ys
+								target = prev
+							}
+						}
+					}
+					add_to_variable_list = {
+						name = lam_is_council_ys
+						target = prev
+					}
+				}
+			}
+			else = {
+				remove_list_variable = {
+					name = lam_is_council_ys
+					target = prev
+				}
+			}
+		}
+	}
+}
+
+lam_is_council_council_clear_effect = {
+	remove_variable = lam_is_lk_council
+	remove_variable = lam_is_lk_council_lord
+}
+lam_is_council_lose_effect = {
+	lam_is_lose_effect = {
+		KIND = council
+	}
+}
+lam_is_council_overruled_effect = {
+	lam_is_overruled_effect = {
+		KIND = council
+	}
+}
+lam_is_council_shift_effect = {
+	if = {
+		limit = {
+			has_variable = lam_is_council_mv2
+		}
+		set_variable = {
+			name = lam_is_council_mv3
+			value = var:lam_is_council_mv2
+		}
+		set_variable = {
+			name = lam_is_council_mv3_d
+			value = var:lam_is_council_mv2_d
+		}
+		set_variable = {
+			name = lam_is_council_mv3_k
+			value = var:lam_is_council_mv2_k
+		}
+		set_variable = {
+			name = lam_is_council_mv3_w
+			value = var:lam_is_council_mv2_w
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_council_mv1
+		}
+		set_variable = {
+			name = lam_is_council_mv2
+			value = var:lam_is_council_mv1
+		}
+		set_variable = {
+			name = lam_is_council_mv2_d
+			value = var:lam_is_council_mv1_d
+		}
+		set_variable = {
+			name = lam_is_council_mv2_k
+			value = var:lam_is_council_mv1_k
+		}
+		set_variable = {
+			name = lam_is_council_mv2_w
+			value = var:lam_is_council_mv1_w
+		}
+	}
+}
+lam_is_council_clear_moves_effect = {
+	remove_variable = lam_is_council_mv1
+	remove_variable = lam_is_council_mv1_d
+	remove_variable = lam_is_council_mv1_k
+	remove_variable = lam_is_council_mv1_w
+	remove_variable = lam_is_council_mv2
+	remove_variable = lam_is_council_mv2_d
+	remove_variable = lam_is_council_mv2_k
+	remove_variable = lam_is_council_mv2_w
+	remove_variable = lam_is_council_mv3
+	remove_variable = lam_is_council_mv3_d
+	remove_variable = lam_is_council_mv3_k
+	remove_variable = lam_is_council_mv3_w
+}
+lam_is_tax_scopes_effect = {
+}
+lam_is_tax_prepare_effect = {
+
+}
+lam_is_tax_unprepare_effect = {
+
+}
+lam_is_tax_refused_extra_effect = {
+}
+lam_is_tax_portraits_effect = {
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_tax_x_trigger = yes
+			}
+		}
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_tax_x_trigger = yes
+			}
+			order_by = var:lam_fac_share
+			save_scope_as = lam_is_top
+		}
+		set_variable = {
+			name = lam_is_tax_xp
+			value = scope:lam_is_top
+		}
+	}
+	else_if = {
+		limit = {
+			lam_is_tax_lw_value >= 1
+		}
+		set_variable = {
+			name = lam_is_tax_xp
+			value = scope:lam_is_lord
+		}
+	}
+	else = {
+		remove_variable = lam_is_tax_xp
+	}
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_tax_y_trigger = yes
+			}
+		}
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_share
+				lam_is_side_tax_y_trigger = yes
+			}
+			order_by = var:lam_fac_share
+			save_scope_as = lam_is_top
+		}
+		set_variable = {
+			name = lam_is_tax_yp
+			value = scope:lam_is_top
+		}
+	}
+	else = {
+		remove_variable = lam_is_tax_yp
+	}
+}
+lam_is_tax_concede_effect = {
+	add_character_modifier = { modifier = lam_is_tax_relief_modifier years = 5 }
+		lam_is_win_y_effect = { T = tax }
+}
+lam_is_tax_x_bonus_effect = {
+	add_character_modifier = { modifier = lam_is_tax_firm_modifier years = 3 }
+}
+# This = the lord: factions without a recorded stand on this issue take the side they are on now.
+lam_is_tax_lock_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			NOT = {
+				var:lam_is_lk_tax_lord ?= scope:lam_is_lord
+			}
+		}
+		if = {
+			limit = {
+				lam_is_side_tax_x_trigger = yes
+			}
+			set_variable = {
+				name = lam_is_lk_tax
+				value = flag:x
+			}
+			set_variable = {
+				name = lam_is_lk_tax_lord
+				value = scope:lam_is_lord
+			}
+		}
+		else_if = {
+			limit = {
+				lam_is_side_tax_y_trigger = yes
+			}
+			set_variable = {
+				name = lam_is_lk_tax
+				value = flag:y
+			}
+			set_variable = {
+				name = lam_is_lk_tax_lord
+				value = scope:lam_is_lord
+			}
+		}
+	}
+}
+# This = the lord: members who lean against their faction's stand (disputes; a change of stand put to the council).
+lam_is_tax_dissent_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			var:lam_is_lk_tax_lord ?= scope:lam_is_lord
+		}
+		save_scope_as = lam_ev_head
+		if = {
+			limit = {
+				var:lam_is_lk_tax ?= flag:x
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_ai = yes
+					lam_ev_member_trigger = yes
+					NOT = {
+						has_variable = lam_hi_paused
+					}
+					NOT = {
+						lam_ev_position_trigger = yes
+					}
+					lam_is_lean_tax_y_trigger = yes
+				}
+				random = {
+					chance = {
+						value = 10
+						if = {
+							limit = {
+								scope:lam_is_lord = {
+									has_variable = lam_fac_fast
+								}
+							}
+							value = 3
+						}
+					}
+					set_variable = {
+						name = lam_is_dis
+						value = flag:tax
+					}
+					set_variable = {
+						name = lam_is_dis_lord
+						value = scope:lam_is_lord
+					}
+					lam_gg_seed_effect = {
+						SOURCE = issue
+						TOPIC = settlement
+						SIDE = pressure
+					}
+				}
+			}
+			# most of the council by influence leans to side y: an AI head puts a change of stand to the council
+			set_variable = {
+				name = lam_is_lean_for
+				value = 0
+			}
+			set_variable = {
+				name = lam_is_lean_against
+				value = 0
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					var:lam_bloc ?= scope:lam_ev_head
+					OR = {
+						var:lam_fac_tier ?= 1
+						var:lam_fac_tier ?= 2
+					}
+				}
+				save_scope_value_as = {
+					name = lam_is_w
+					value = lam_cr_influence_value
+				}
+				if = {
+					limit = {
+						lam_is_lean_tax_y_trigger = yes
+						NOT = {
+							lam_is_lean_tax_x_trigger = yes
+						}
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_against
+							add = scope:lam_is_w
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						lam_is_lean_tax_x_trigger = yes
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_for
+							add = scope:lam_is_w
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					var:lam_is_lean_against > var:lam_is_lean_for
+					var:lam_is_lean_against >= 30
+					NOT = {
+						has_variable = lam_cr_active
+					}
+				}
+				set_variable = {
+					name = lam_cr_st_t
+					value = flag:tax
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:y
+				}
+				lam_fac_stat_add_effect = {
+					KEY = is_stance_call
+				}
+				lam_cr_start_effect = {
+					ISSUE = stance
+					ACTION = stance
+					TARGET = this
+				}
+			}
+			remove_variable = lam_is_lean_for
+			remove_variable = lam_is_lean_against
+		}
+		if = {
+			limit = {
+				var:lam_is_lk_tax ?= flag:y
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_ai = yes
+					lam_ev_member_trigger = yes
+					NOT = {
+						has_variable = lam_hi_paused
+					}
+					NOT = {
+						lam_ev_position_trigger = yes
+					}
+					lam_is_lean_tax_x_trigger = yes
+				}
+				random = {
+					chance = {
+						value = 10
+						if = {
+							limit = {
+								scope:lam_is_lord = {
+									has_variable = lam_fac_fast
+								}
+							}
+							value = 3
+						}
+					}
+					set_variable = {
+						name = lam_is_dis
+						value = flag:tax
+					}
+					set_variable = {
+						name = lam_is_dis_lord
+						value = scope:lam_is_lord
+					}
+					lam_gg_seed_effect = {
+						SOURCE = issue
+						TOPIC = force
+						SIDE = restraint
+					}
+				}
+			}
+			# most of the council by influence leans to side x: an AI head puts a change of stand to the council
+			set_variable = {
+				name = lam_is_lean_for
+				value = 0
+			}
+			set_variable = {
+				name = lam_is_lean_against
+				value = 0
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					var:lam_bloc ?= scope:lam_ev_head
+					OR = {
+						var:lam_fac_tier ?= 1
+						var:lam_fac_tier ?= 2
+					}
+				}
+				save_scope_value_as = {
+					name = lam_is_w
+					value = lam_cr_influence_value
+				}
+				if = {
+					limit = {
+						lam_is_lean_tax_x_trigger = yes
+						NOT = {
+							lam_is_lean_tax_y_trigger = yes
+						}
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_against
+							add = scope:lam_is_w
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						lam_is_lean_tax_y_trigger = yes
+					}
+					scope:lam_ev_head = {
+						change_variable = {
+							name = lam_is_lean_for
+							add = scope:lam_is_w
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					var:lam_is_lean_against > var:lam_is_lean_for
+					var:lam_is_lean_against >= 30
+					NOT = {
+						has_variable = lam_cr_active
+					}
+				}
+				set_variable = {
+					name = lam_cr_st_t
+					value = flag:tax
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:x
+				}
+				lam_fac_stat_add_effect = {
+					KEY = is_stance_call
+				}
+				lam_cr_start_effect = {
+					ISSUE = stance
+					ACTION = stance
+					TARGET = this
+				}
+			}
+			remove_variable = lam_is_lean_for
+			remove_variable = lam_is_lean_against
+		}
+	}
+}
+# This = a faction head whose council passed a change of stand on this issue.
+lam_is_tax_stance_commit_effect = {
+	if = {
+		limit = {
+			var:lam_cr_st_t ?= flag:tax
+			liege ?= {
+				has_variable = lam_is_tax_open
+			}
+		}
+		if = {
+			limit = {
+				var:lam_cr_st_side ?= flag:x
+			}
+			set_variable = {
+				name = lam_is_lk_tax
+				value = flag:x
+			}
+		}
+		else = {
+			set_variable = {
+				name = lam_is_lk_tax
+				value = flag:y
+			}
+		}
+		set_variable = {
+			name = lam_is_lk_tax_lord
+			value = liege
+		}
+	}
+}
+
+lam_is_tax_council_clear_effect = {
+	remove_variable = lam_is_lk_tax
+	remove_variable = lam_is_lk_tax_lord
+}
+lam_is_tax_lose_effect = {
+	lam_is_lose_effect = {
+		KIND = taxes
+	}
+}
+lam_is_tax_overruled_effect = {
+	lam_is_overruled_effect = {
+		KIND = taxes
+	}
+}
+lam_is_tax_shift_effect = {
+	if = {
+		limit = {
+			has_variable = lam_is_tax_mv2
+		}
+		set_variable = {
+			name = lam_is_tax_mv3
+			value = var:lam_is_tax_mv2
+		}
+		set_variable = {
+			name = lam_is_tax_mv3_d
+			value = var:lam_is_tax_mv2_d
+		}
+		set_variable = {
+			name = lam_is_tax_mv3_k
+			value = var:lam_is_tax_mv2_k
+		}
+		set_variable = {
+			name = lam_is_tax_mv3_w
+			value = var:lam_is_tax_mv2_w
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_is_tax_mv1
+		}
+		set_variable = {
+			name = lam_is_tax_mv2
+			value = var:lam_is_tax_mv1
+		}
+		set_variable = {
+			name = lam_is_tax_mv2_d
+			value = var:lam_is_tax_mv1_d
+		}
+		set_variable = {
+			name = lam_is_tax_mv2_k
+			value = var:lam_is_tax_mv1_k
+		}
+		set_variable = {
+			name = lam_is_tax_mv2_w
+			value = var:lam_is_tax_mv1_w
+		}
+	}
+}
+lam_is_tax_clear_moves_effect = {
+	remove_variable = lam_is_tax_mv1
+	remove_variable = lam_is_tax_mv1_d
+	remove_variable = lam_is_tax_mv1_k
+	remove_variable = lam_is_tax_mv1_w
+	remove_variable = lam_is_tax_mv2
+	remove_variable = lam_is_tax_mv2_d
+	remove_variable = lam_is_tax_mv2_k
+	remove_variable = lam_is_tax_mv2_w
+	remove_variable = lam_is_tax_mv3
+	remove_variable = lam_is_tax_mv3_d
+	remove_variable = lam_is_tax_mv3_k
+	remove_variable = lam_is_tax_mv3_w
+}
+# Faction council agenda "stance": the head's lam_cr_st_t / lam_cr_st_side name the issue and the proposed side.
+lam_is_stance_commit_effect = {
+	lam_fac_stat_add_effect = {
+		KEY = is_stance_pass
+	}
+	lam_is_crown_stance_commit_effect = yes
+	lam_is_council_stance_commit_effect = yes
+	lam_is_faith_stance_commit_effect = yes
+	lam_is_tax_stance_commit_effect = yes
+	lam_is_war_stance_commit_effect = yes
+}
+lam_cr_ai_vote_stance_effect = {
+	lam_pd_vote_effect = yes
+}
+# This = the lord, the council issue granted: the office-seekers' strongest faction puts up its man - its council pick if
+# that still stands, else its most influential member who can sit - and he is appointed to a vacant seat, else to one
+# held by the other side. scope:lam_is_cseat is set only if the appointment really happened.
+lam_is_council_appoint_effect = {
+	clear_saved_scope = lam_is_cseat
+	clear_saved_scope = lam_is_cperson
+	ordered_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			lam_is_side_council_y_trigger = yes
+		}
+		order_by = var:lam_fac_share
+		save_scope_as = lam_is_yhead
+	}
+	scope:lam_is_yhead ?= {
+		if = {
+			limit = {
+				var:lam_fac_seat_pick ?= {
+					is_alive = yes
+					is_adult = yes
+					is_imprisoned = no
+					var:lam_bloc ?= scope:lam_is_yhead
+					liege ?= scope:lam_is_lord
+					NOT = {
+						is_councillor_of = scope:lam_is_lord
+					}
+				}
+			}
+			var:lam_fac_seat_pick = {
+				save_scope_as = lam_is_cperson
+			}
+		}
+		else = {
+			ordered_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					is_imprisoned = no
+					var:lam_bloc ?= scope:lam_is_yhead
+					liege ?= scope:lam_is_lord
+					NOT = {
+						is_councillor_of = scope:lam_is_lord
+					}
+				}
+				order_by = lam_cr_influence_value
+				save_scope_as = lam_is_cperson
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_is_cperson
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = scope:lam_is_cseat
+				}
+				NOT = {
+					exists = cp:councillor_chancellor
+				}
+				lam_nc_appoint_trigger = {
+					SEAT = chancellor
+					CANDIDATE = scope:lam_is_cperson
+				}
+			}
+			lam_nc_appoint_effect = {
+				SEAT = chancellor
+				CANDIDATE = scope:lam_is_cperson
+			}
+			if = {
+				limit = {
+					exists = scope:lam_nc_appointed
+				}
+				save_scope_value_as = {
+					name = lam_is_cseat
+					value = flag:chancellor
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = scope:lam_is_cseat
+				}
+				NOT = {
+					exists = cp:councillor_marshal
+				}
+				lam_nc_appoint_trigger = {
+					SEAT = marshal
+					CANDIDATE = scope:lam_is_cperson
+				}
+			}
+			lam_nc_appoint_effect = {
+				SEAT = marshal
+				CANDIDATE = scope:lam_is_cperson
+			}
+			if = {
+				limit = {
+					exists = scope:lam_nc_appointed
+				}
+				save_scope_value_as = {
+					name = lam_is_cseat
+					value = flag:marshal
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = scope:lam_is_cseat
+				}
+				NOT = {
+					exists = cp:councillor_steward
+				}
+				lam_nc_appoint_trigger = {
+					SEAT = steward
+					CANDIDATE = scope:lam_is_cperson
+				}
+			}
+			lam_nc_appoint_effect = {
+				SEAT = steward
+				CANDIDATE = scope:lam_is_cperson
+			}
+			if = {
+				limit = {
+					exists = scope:lam_nc_appointed
+				}
+				save_scope_value_as = {
+					name = lam_is_cseat
+					value = flag:steward
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = scope:lam_is_cseat
+				}
+				NOT = {
+					exists = cp:councillor_spymaster
+				}
+				lam_nc_appoint_trigger = {
+					SEAT = spymaster
+					CANDIDATE = scope:lam_is_cperson
+				}
+			}
+			lam_nc_appoint_effect = {
+				SEAT = spymaster
+				CANDIDATE = scope:lam_is_cperson
+			}
+			if = {
+				limit = {
+					exists = scope:lam_nc_appointed
+				}
+				save_scope_value_as = {
+					name = lam_is_cseat
+					value = flag:spymaster
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = scope:lam_is_cseat
+				}
+				cp:councillor_chancellor ?= {
+					var:lam_bloc ?= {
+						lam_is_side_council_x_trigger = yes
+					}
+				}
+				lam_nc_appoint_trigger = {
+					SEAT = chancellor
+					CANDIDATE = scope:lam_is_cperson
+				}
+			}
+			lam_nc_appoint_effect = {
+				SEAT = chancellor
+				CANDIDATE = scope:lam_is_cperson
+			}
+			if = {
+				limit = {
+					exists = scope:lam_nc_appointed
+				}
+				save_scope_value_as = {
+					name = lam_is_cseat
+					value = flag:chancellor
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = scope:lam_is_cseat
+				}
+				cp:councillor_marshal ?= {
+					var:lam_bloc ?= {
+						lam_is_side_council_x_trigger = yes
+					}
+				}
+				lam_nc_appoint_trigger = {
+					SEAT = marshal
+					CANDIDATE = scope:lam_is_cperson
+				}
+			}
+			lam_nc_appoint_effect = {
+				SEAT = marshal
+				CANDIDATE = scope:lam_is_cperson
+			}
+			if = {
+				limit = {
+					exists = scope:lam_nc_appointed
+				}
+				save_scope_value_as = {
+					name = lam_is_cseat
+					value = flag:marshal
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = scope:lam_is_cseat
+				}
+				cp:councillor_steward ?= {
+					var:lam_bloc ?= {
+						lam_is_side_council_x_trigger = yes
+					}
+				}
+				lam_nc_appoint_trigger = {
+					SEAT = steward
+					CANDIDATE = scope:lam_is_cperson
+				}
+			}
+			lam_nc_appoint_effect = {
+				SEAT = steward
+				CANDIDATE = scope:lam_is_cperson
+			}
+			if = {
+				limit = {
+					exists = scope:lam_nc_appointed
+				}
+				save_scope_value_as = {
+					name = lam_is_cseat
+					value = flag:steward
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = scope:lam_is_cseat
+				}
+				cp:councillor_spymaster ?= {
+					var:lam_bloc ?= {
+						lam_is_side_council_x_trigger = yes
+					}
+				}
+				lam_nc_appoint_trigger = {
+					SEAT = spymaster
+					CANDIDATE = scope:lam_is_cperson
+				}
+			}
+			lam_nc_appoint_effect = {
+				SEAT = spymaster
+				CANDIDATE = scope:lam_is_cperson
+			}
+			if = {
+				limit = {
+					exists = scope:lam_nc_appointed
+				}
+				save_scope_value_as = {
+					name = lam_is_cseat
+					value = flag:spymaster
+				}
+			}
+		}
+	}
+}
+

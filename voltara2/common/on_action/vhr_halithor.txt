@@ -1,0 +1,8 @@
+﻿quarterly_playable_pulse = { on_actions = { vhr_quarter } }
+vhr_quarter = { effect = { vhr_pay_labor = yes } }
+yearly_playable_pulse = { on_actions = { vhr_year } }
+vhr_year = { trigger = { any_courtier = { vhr_valid_worker = yes } NOT = { has_character_flag = vhr_labor_event_cooldown } }
+ effect = { random = { chance = 35 add_character_flag = { flag = vhr_labor_event_cooldown years = 3 } trigger_event = vhr.2 } }
+}
+on_leave_court = { on_actions = { vhr_court_left } }
+vhr_court_left = { trigger = { exists = var:vhr_employer } effect = { vhr_clear_assignment = yes } }

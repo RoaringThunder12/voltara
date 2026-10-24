@@ -1,0 +1,8 @@
+﻿vsk_become_seaking = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds" }
+ desc = vsk_become_seaking_desc selection_tooltip = vsk_become_seaking_tooltip
+ is_shown = { is_landed = yes culture = culture:voltara_culture_48 NOT = { has_trait = vsk_sea_conqueror } }
+ is_valid = { vsk_eligible = yes is_imprisoned = no }
+ effect = { vsk_proclaim = yes }
+ ai_check_interval = 12 ai_potential = { always = yes } ai_will_do = { base = 100 }
+}

@@ -1,0 +1,21 @@
+﻿lam_pb_snapshot_backend_effect = {
+	set_variable = {
+		name = lam_pb_original_lord
+		value = faction_target
+	}
+	if = {
+		limit = {
+			faction_is_type = claimant_faction
+			exists = special_character
+			exists = special_title
+		}
+		set_variable = {
+			name = lam_pb_original_claimant
+			value = special_character
+		}
+		set_variable = {
+			name = lam_pb_original_title
+			value = special_title
+		}
+	}
+}

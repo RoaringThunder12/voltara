@@ -1,0 +1,71 @@
+﻿namespace = dhm_core
+
+# Quarterly bounded maintenance for the human player. The human ruler is the
+# household authority for this intentionally single-player build.
+dhm_core.0001 = {
+	type = character_event
+	hidden = yes
+
+	trigger = { is_ai = no }
+
+	immediate = {
+		dhm_v090_migration_effect = yes
+		dhm_v091_migration_effect = yes
+		# v0.7.0 runs first so a genuinely fresh install receives the recommended
+		# Living Household preset. Existing saves are only classified; their old
+		# settings and progression remain untouched.
+		if = {
+			limit = { NOT = { has_global_variable = dhm_migration_0700 } }
+			dhm_v070_migration_effect = yes
+		}
+		if = {
+			limit = { NOT = { has_global_variable = dhm_migration_0300 } }
+			dhm_v030_migration_effect = yes
+		}
+		if = {
+			limit = { NOT = { has_global_variable = dhm_migration_0400 } }
+			dhm_v040_migration_effect = yes
+		}
+		if = {
+			limit = { NOT = { has_character_flag = dhm_v040_character_initialized } }
+			dhm_v040_initialize_character_effect = yes
+		}
+		if = {
+			limit = { NOT = { has_global_variable = dhm_migration_0500 } }
+			dhm_v050_migration_effect = yes
+		}
+		if = {
+			limit = { NOT = { has_character_flag = dhm_v050_character_initialized } }
+			dhm_v050_initialize_character_effect = yes
+		}
+		if = {
+			limit = { NOT = { has_global_variable = dhm_migration_0600 } }
+			dhm_v060_migration_effect = yes
+		}
+		if = {
+			limit = { NOT = { has_character_flag = dhm_v060_character_initialized } }
+			dhm_v060_initialize_character_effect = yes
+		}
+		if = {
+			limit = { NOT = { has_global_variable = dhm_migration_0710 } }
+			dhm_v071_migration_effect = yes
+		}
+		else_if = {
+			limit = {
+				OR = {
+					NOT = { has_global_variable = dhm_migration_0800 }
+					AND = {
+						OR = { has_character_flag = dhm_v080_triumph_recent has_global_variable = dhm_v080_triumph_recent }
+						NOT = { has_global_variable = dhm_v080_triumph_until }
+					}
+				}
+			}
+			dhm_v080_triumph_migration_effect = yes
+		}
+		if = {
+			limit = { NOT = { has_character_flag = dhm_v040_arranged_relations_repaired } }
+			dhm_repair_arranged_union_relations_effect = yes
+		}
+		dhm_process_household_effect = yes
+	}
+}

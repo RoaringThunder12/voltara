@@ -1,0 +1,15 @@
+﻿vvr_conquest_county = { icon = minor_religious_war group = conquest cb_name = vvr_conquest_county war_name = vvr_conquest_county_name
+ target_titles = neighbor_land_or_water target_title_tier = county target_de_jure_regions_above = yes
+ allowed_for_character = { vvr_host_ready = yes  }
+ allowed_against_character = { vvr_human_target = yes scope:attacker = { NOT = { top_liege = scope:defender.top_liege } } }
+ valid_to_start = {
+ voltara_keeper_war_permitted = yes
+ scope:target = { tier = tier_county } scope:attacker = { vvr_host_ready = yes } scope:defender = { vvr_human_target = yes } }
+ should_invalidate = { OR = { scope:attacker = { NOT = { vvr_lich = yes } } scope:defender = { NOT = { vvr_human_target = yes } } } }
+ on_primary_attacker_death = invalidate on_primary_defender_death = inherit
+ defender_faith_can_join = yes attacker_capital_gives_war_score = yes max_attacker_score_from_battles = 100 max_defender_score_from_battles = 100
+ on_victory_desc = { desc = vvr_conquest_victory } on_defeat_desc = { desc = vvr_conquest_defeat } on_white_peace_desc = { desc = vvr_conquest_peace } on_invalidated_desc = { desc = vvr_conquest_invalid }
+ on_victory = { vvr_take_target = yes scope:attacker = { add_prestige = 300 if = { limit = { NOT = { has_character_flag = vvr_first_victory } } add_character_flag = vvr_first_victory trigger_event = { id = vvr.30 days = 2 } } } }
+ on_defeat = { scope:attacker = { add_prestige = -300 add_character_flag = { flag = vvr_defeated days = 1825 } trigger_event = { id = vvr.31 days = 2 } } }
+ on_white_peace = { scope:attacker = { add_prestige = -100 trigger_event = { id = vvr.32 days = 2 } } } on_invalidated = { }
+ }

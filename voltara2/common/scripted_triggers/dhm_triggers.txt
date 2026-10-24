@@ -1,0 +1,533 @@
+﻿# =============================================================================
+# Dynasty & Household Manager — Realism guardrails (v0.2.0)
+# Single-player design: the human player is the household authority.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# EDUCATION — Guardian / Specialist Tutor eligibility
+# -----------------------------------------------------------------------------
+
+# Current scope = proposed Guardian. Requires scope:dhm_child + scope:dhm_manager.
+dhm_valid_guardian_candidate_trigger = {
+    is_physically_able_adult = yes
+    is_imprisoned = no
+    is_hostage = no
+    NOT = { has_trait = incapable }
+    num_of_relation_ward < 2
+    NOR = {
+        has_relation_rival = scope:dhm_child
+        has_relation_nemesis = scope:dhm_child
+    }
+    opinion = {
+        target = scope:dhm_manager
+        value > -50
+    }
+}
+
+# Current scope = existing Guardian. Only genuinely invalid/unavailable Guardians
+# are replaced; DHM never swaps a stable Guardian for a tiny stat improvement.
+dhm_guardian_requires_replacement_trigger = {
+    OR = {
+        is_alive = no
+        is_imprisoned = yes
+        is_hostage = yes
+        has_trait = incapable
+        NOT = { is_in_the_same_court_as = scope:dhm_manager }
+        has_relation_nemesis = scope:dhm_child
+    }
+}
+
+# Current scope = proposed Specialist Tutor. Requires scope:dhm_child + manager.
+dhm_valid_tutor_candidate_trigger = {
+    is_physically_able_adult = yes
+    is_imprisoned = no
+    is_hostage = no
+    NOT = { has_trait = incapable }
+    num_of_relation_dhm_specialist_student < 4
+    NOT = { has_relation_ward = scope:dhm_child }
+    NOR = {
+        has_relation_rival = scope:dhm_child
+        has_relation_nemesis = scope:dhm_child
+    }
+    opinion = {
+        target = scope:dhm_manager
+        value > -50
+    }
+    # Prefer adults with some life experience, while still allowing an
+    # exceptional four-star educator below age 20.
+    OR = {
+        age >= 20
+        has_education_rank_4_trigger = yes
+    }
+}
+
+# -----------------------------------------------------------------------------
+# MARRIAGE — Purpose and dynasty protection
+# -----------------------------------------------------------------------------
+
+# Current scope = marriage subject; scope:dhm_manager required.
+dhm_marriage_purpose_succession_trigger = {
+    OR = {
+        is_primary_heir_of = scope:dhm_manager
+        is_heir_of = scope:dhm_manager
+        AND = {
+            is_ruler = yes
+            age < 45
+            NOT = { any_child = { is_alive = yes } }
+        }
+    }
+}
+
+# Current scope = marriage subject.
+dhm_marriage_purpose_companion_trigger = {
+    age >= 45
+    dhm_marriage_purpose_succession_trigger = no
+}
+
+# Current scope = marriage subject.
+dhm_marriage_purpose_bloodline_trigger = {
+    dhm_marriage_purpose_succession_trigger = no
+    dhm_marriage_purpose_companion_trigger = no
+    age <= 35
+    OR = {
+        has_trait = intellect_good_1
+        has_trait = intellect_good_2
+        has_trait = intellect_good_3
+        has_trait = physique_good_2
+        has_trait = physique_good_3
+        has_trait = beauty_good_2
+        has_trait = beauty_good_3
+        has_trait = fecund
+    }
+}
+
+# Current scope = marriage subject.
+dhm_marriage_purpose_expansion_trigger = {
+    dhm_marriage_purpose_succession_trigger = no
+    dhm_marriage_purpose_companion_trigger = no
+    dhm_marriage_purpose_bloodline_trigger = no
+    age >= 16
+    age < 40
+    OR = {
+        is_ruler = yes
+        is_claimant = yes
+    }
+}
+
+# Current scope = marriage subject. Alliance is the balanced fallback.
+dhm_marriage_purpose_alliance_trigger = {
+    dhm_marriage_purpose_succession_trigger = no
+    dhm_marriage_purpose_companion_trigger = no
+    dhm_marriage_purpose_bloodline_trigger = no
+    dhm_marriage_purpose_expansion_trigger = no
+}
+
+# Current scope = marriage subject. Protect female dynasts whose descendants can
+# matter to succession, without forcing every daughter into a matrilineal match.
+dhm_subject_should_use_matrilineal_trigger = {
+    is_female = yes
+    exists = dynasty
+    scope:dhm_manager = { exists = dynasty }
+    dynasty = scope:dhm_manager.dynasty
+    OR = {
+        is_primary_heir_of = scope:dhm_manager
+        is_heir_of = scope:dhm_manager
+        is_ruler = yes
+        faith = { has_doctrine = doctrine_gender_female_dominated }
+    }
+}
+
+# Current scope = family member being matched; scope:dhm_manager must exist.
+# Uses CK3 spouse capacity rather than hard-coding monogamy.
+dhm_valid_marriage_subject_trigger = {
+    is_alive = yes
+    NOT = { has_variable = dhm_courtship_reserved_for }
+    is_ai = yes
+    age >= 12
+    is_betrothed = no
+    is_imprisoned = no
+    is_hostage = no
+    NOT = { has_trait = incapable }
+    NOT = { has_been_promised_grand_wedding = yes }
+    is_in_the_same_court_as = scope:dhm_manager
+    bp2_valid_for_standard_interactions_trigger = yes
+    can_marry_trigger = yes
+    NOT = { has_character_flag = dhm_matchmaking_cooldown }
+    NOT = { has_character_flag = dhm_matchmaking_retry_cooldown }
+    NOT = { has_character_flag = dhm_matchmaking_proposal_pending }
+    dhm_subject_automation_enabled_trigger = yes
+
+    # Household authority: do not arrange marriages for a relative whose
+    # vanilla matchmaker belongs to another court/authority.
+    OR = {
+        AND = {
+            exists = matchmaker
+            matchmaker = scope:dhm_manager
+        }
+        is_child_of = scope:dhm_manager
+    }
+}
+
+# Current scope = candidate. Required scopes: dhm_marriage_subject + manager.
+# This is the safe fallback tier: CK3 legality, availability, range, authority,
+# a broad life-stage band and foreign-court willingness are all mandatory.
+dhm_valid_marriage_candidate_trigger = {
+    is_alive = yes
+	# A player-cancelled courtship cannot quietly return as a direct automatic
+	# marriage. The refusal is reciprocal, timed, and limited to this exact pair.
+	NOT = { any_relation = { type = dhm_refused_courtship this = scope:dhm_marriage_subject } }
+    OR = {
+        NOT = { has_variable = dhm_courtship_reserved_for }
+        var:dhm_courtship_reserved_for ?= scope:dhm_marriage_subject
+    }
+    is_ai = yes
+    this != scope:dhm_marriage_subject
+    is_betrothed = no
+    is_imprisoned = no
+    is_hostage = no
+    NOT = { has_trait = incapable }
+    NOT = { has_been_promised_grand_wedding = yes }
+    age >= 12
+    bp2_valid_for_standard_interactions_trigger = yes
+    can_marry_trigger = yes
+    exists = matchmaker
+
+    # Vanilla interaction authority must be alive/available and in diplomatic
+    # range. DHM never creates an impossible long-distance marriage.
+    matchmaker = {
+        is_alive = yes
+        is_imprisoned = no
+        is_hostage = no
+        NOT = { is_at_war_with = scope:dhm_manager }
+        OR = {
+            this = scope:dhm_manager
+            is_within_diplo_range = { CHARACTER = scope:dhm_manager }
+        }
+    }
+
+    # Current subject/candidate marriage capacity, gender, faith and legal
+    # consanguinity are delegated to the same vanilla trigger used by CK3.
+    can_marry_character_trigger = {
+        CHARACTER = scope:dhm_marriage_subject
+    }
+
+    # Never auto-create a marriage between enemies/nemeses. Rival marriages can
+    # still exist in CK3, but are too socially implausible for automatic choice.
+    NOT = { has_relation_nemesis = scope:dhm_marriage_subject }
+    dhm_profile_candidate_restrictions_trigger = yes
+
+    # Follow Faith is default; Avoid Close Kin adds a player-selected restriction.
+    trigger_if = {
+        limit = { has_global_variable = dhm_setting_kin_avoid }
+        NOT = { is_close_family_of = scope:dhm_marriage_subject }
+    }
+
+    # Broad fallback bands prevent extreme pairings while allowing the office to
+    # find a legal spouse when nobody meets the preferred realism tier.
+    trigger_if = {
+        limit = { scope:dhm_marriage_subject = { age < 16 } }
+        age >= 12
+        age <= 25
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 25 } }
+        is_adult = yes
+        age <= 40
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 40 } }
+        is_adult = yes
+        age >= 18
+        age <= 55
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 60 } }
+        is_adult = yes
+        age >= 25
+        age <= 75
+    }
+    trigger_else = {
+        is_adult = yes
+        age >= 40
+    }
+
+    dhm_matchmaker_acceptance_trigger = yes
+}
+
+# Preferred tier. These narrower age and succession safeguards receive a very
+# large score bonus, while the safe fallback above prevents permanent deadlocks.
+dhm_preferred_marriage_candidate_trigger = {
+    dhm_valid_marriage_candidate_trigger = yes
+
+    trigger_if = {
+        limit = { scope:dhm_marriage_subject = { age < 16 } }
+        age >= 12
+        age <= 21
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 25 } }
+        is_adult = yes
+        age <= 30
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 30 } }
+        is_adult = yes
+        age >= 18
+        age <= 40
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 35 } }
+        is_adult = yes
+        age >= 20
+        age <= 45
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 40 } }
+        is_adult = yes
+        age >= 22
+        age <= 50
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 50 } }
+        is_adult = yes
+        age >= 25
+        age <= 60
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 60 } }
+        is_adult = yes
+        age >= 30
+        age <= 70
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 70 } }
+        is_adult = yes
+        age >= 45
+        age <= 80
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 80 } }
+        is_adult = yes
+        age >= 55
+        age <= 90
+    }
+    trigger_else = {
+        is_adult = yes
+        age >= 65
+    }
+
+    # Secure-succession marriages prioritize partners who can realistically
+    # produce heirs. Other marriage purposes remain free to make legal matches.
+    trigger_if = {
+        limit = {
+            scope:dhm_marriage_subject = {
+                dhm_marriage_purpose_succession_trigger = yes
+            }
+        }
+        can_have_children_with = { CHARACTER = scope:dhm_marriage_subject }
+        NOT = { has_trait = celibate }
+        is_eunuch_trigger = no
+        trigger_if = {
+            limit = { is_female = yes }
+            age <= 40
+        }
+        trigger_else = {
+            age <= 55
+        }
+
+        # Important dynasts only marry a lowborn automatically when the lowborn
+        # is genuinely exceptional rather than merely a stat-optimized stranger.
+        trigger_if = {
+            limit = { NOT = { exists = dynasty } }
+            OR = {
+                has_trait = intellect_good_3
+                AND = {
+                    has_trait = fecund
+                    OR = {
+                        has_trait = physique_good_2
+                        has_trait = physique_good_3
+                        has_trait = beauty_good_2
+                        has_trait = beauty_good_3
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+# Current scope = candidate; required manager + subject scopes.
+dhm_matchmaker_acceptance_trigger = {
+    OR = {
+        matchmaker = scope:dhm_manager
+        dhm_marriage_acceptance_score_value >= 0
+    }
+}
+
+# -----------------------------------------------------------------------------
+# COURTIER MATCHMAKING — ordinary household members (v0.1.6)
+# -----------------------------------------------------------------------------
+
+# Current scope = courtier being matched. Requires scope:dhm_manager.
+# Close family is deliberately excluded here because the dynastic marriage loop
+# already handles them with succession/bloodline/political priorities.
+dhm_valid_courtier_marriage_subject_trigger = {
+    is_alive = yes
+    NOT = { has_variable = dhm_courtship_reserved_for }
+    is_ai = yes
+    is_adult = yes
+    is_ruler = no
+    is_courtier_of = scope:dhm_manager
+    NOT = { is_close_family_of = scope:dhm_manager }
+    NOR = {
+        AND = {
+            exists = dynasty
+            scope:dhm_manager = { exists = dynasty }
+            dynasty = scope:dhm_manager.dynasty
+        }
+    }
+    is_betrothed = no
+    is_imprisoned = no
+    is_hostage = no
+    NOT = { has_trait = incapable }
+    NOT = { has_been_promised_grand_wedding = yes }
+    bp2_valid_for_standard_interactions_trigger = yes
+    can_marry_trigger = yes
+    NOT = { has_character_flag = dhm_matchmaking_cooldown }
+    NOT = { has_character_flag = dhm_matchmaking_retry_cooldown }
+    NOT = { has_character_flag = dhm_matchmaking_proposal_pending }
+
+    # The player's court must actually hold vanilla matchmaking authority.
+    exists = matchmaker
+    matchmaker = scope:dhm_manager
+}
+
+# Current scope = non-close dynasty member living as a courtier. These characters
+# keep full dynastic marriage priorities rather than being downgraded to ordinary
+# household/staff matchmaking simply because CK3 does not label them close family.
+dhm_valid_dynasty_courtier_marriage_subject_trigger = {
+    dhm_valid_marriage_subject_trigger = yes
+    NOT = { is_close_family_of = scope:dhm_manager }
+    exists = dynasty
+    scope:dhm_manager = { exists = dynasty }
+    dynasty = scope:dhm_manager.dynasty
+}
+
+# Valuable household staff receive extra retention weight, but are still
+# eligible for marriage: councillors, knights, court-position holders and
+# exceptional specialists should get spouses without being exported.
+dhm_high_value_courtier_trigger = {
+    OR = {
+        is_councillor = yes
+        has_any_court_position = yes
+        is_knight = yes
+        diplomacy >= 20
+        martial >= 20
+        stewardship >= 20
+        intrigue >= 20
+        learning >= 20
+        prowess >= 20
+        has_character_flag = dhm_career_diplomat
+        has_character_flag = dhm_career_commander
+        has_character_flag = dhm_career_steward
+        has_character_flag = dhm_career_spymaster
+        has_character_flag = dhm_career_scholar
+        has_character_flag = dhm_career_physician
+        has_character_flag = dhm_career_court_officer
+    }
+}
+
+# Current scope = candidate; scopes dhm_marriage_subject + dhm_manager required.
+# Court-retention rule #21: candidates must be unlanded, and a foreign court's
+# key officials are not poached automatically even if raw stats look attractive.
+dhm_valid_courtier_marriage_candidate_trigger = {
+    is_alive = yes
+	NOT = { any_relation = { type = dhm_refused_courtship this = scope:dhm_marriage_subject } }
+    OR = {
+        NOT = { has_variable = dhm_courtship_reserved_for }
+        var:dhm_courtship_reserved_for ?= scope:dhm_marriage_subject
+    }
+    is_ai = yes
+    is_adult = yes
+    is_ruler = no
+    this != scope:dhm_marriage_subject
+    is_betrothed = no
+    is_imprisoned = no
+    is_hostage = no
+    NOT = { has_trait = incapable }
+    NOT = { has_been_promised_grand_wedding = yes }
+    bp2_valid_for_standard_interactions_trigger = yes
+    can_marry_trigger = yes
+    exists = matchmaker
+
+    matchmaker = {
+        is_alive = yes
+        is_imprisoned = no
+        is_hostage = no
+        NOT = { is_at_war_with = scope:dhm_manager }
+        OR = {
+            this = scope:dhm_manager
+            is_within_diplo_range = { CHARACTER = scope:dhm_manager }
+        }
+    }
+
+    can_marry_character_trigger = { CHARACTER = scope:dhm_marriage_subject }
+    NOT = { has_relation_nemesis = scope:dhm_marriage_subject }
+
+    trigger_if = {
+        limit = { has_global_variable = dhm_setting_kin_avoid }
+        NOT = { is_close_family_of = scope:dhm_marriage_subject }
+    }
+
+    # Adult courtier pairings use wider but still plausible life-stage bands.
+    trigger_if = {
+        limit = { scope:dhm_marriage_subject = { age < 25 } }
+        age >= 16
+        age <= 30
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 35 } }
+        age >= 18
+        age <= 45
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 50 } }
+        age >= 25
+        age <= 60
+    }
+    trigger_else_if = {
+        limit = { scope:dhm_marriage_subject = { age < 65 } }
+        age >= 35
+        age <= 75
+    }
+    trigger_else = {
+        age >= 45
+    }
+
+    # Do not automatically strip another ruler's council, knights or appointed
+    # household officers. Same-court matches are exempt because nobody is poached.
+    trigger_if = {
+        limit = { NOT = { matchmaker = scope:dhm_manager } }
+        is_councillor = no
+        has_any_court_position = no
+        is_knight = no
+    }
+
+    dhm_courtier_matchmaker_acceptance_trigger = yes
+}
+
+# Current scope = candidate. A small positive margin is required for foreign
+# courts because DHM uses a conservative proxy rather than forcing acceptance.
+dhm_courtier_matchmaker_acceptance_trigger = {
+    OR = {
+        matchmaker = scope:dhm_manager
+        dhm_courtier_marriage_acceptance_score_value >= 10
+    }
+}
+
+# Marriage direction for court retention: women managed by this court marry
+# matrilineally, men normally. With an unlanded candidate this keeps the managed
+# courtier as the major household partner instead of exporting valuable staff.
+dhm_courtier_should_use_matrilineal_trigger = {
+    is_female = yes
+}

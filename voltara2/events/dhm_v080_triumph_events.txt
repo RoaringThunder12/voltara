@@ -1,0 +1,66 @@
+﻿namespace = dhm_v080
+
+# A rare reward for three newly earned, named Chronicle chapters. This is not a
+# routine report: it is a milestone with three useful but imperfect legacies.
+dhm_v080.1000 = {
+	type = character_event
+	title = dhm_v080.1000.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { dhm_v090_school_triumph_trigger = yes } desc = dhm090_triumph_school_desc }
+			triggered_desc = { trigger = { dhm_v090_private_triumph_trigger = yes } desc = dhm090_triumph_private_desc }
+			desc = dhm_v080.1000.desc
+		}
+		first_valid = {
+			triggered_desc = { trigger = { global_var:dhm_v080_triumph_count >= 2 } desc = dhm_v080.1000.desc.veteran }
+			triggered_desc = { trigger = { global_var:dhm_v080_triumph_count >= 1 } desc = dhm_v080.1000.desc.again }
+			desc = dhm_v080.1000.desc.first
+		}
+	}
+	theme = diplomacy
+	override_background = { reference = dhm090_contextual_triumph }
+	trigger = {
+		is_ai = no
+		is_alive = yes
+		has_character_flag = dhm_v080_triumph_pending
+		NOT = { has_global_variable = dhm_setting_stories_off }
+		has_global_variable = dhm_v080_triumph_count
+	}
+
+	option = {
+		name = dhm_v080.1000.a
+		trigger = { short_term_gold >= minor_gold_value }
+		remove_short_term_gold = minor_gold_value
+		add_prestige = medium_prestige_gain
+		add_stress = miniscule_stress_gain
+		dhm_v050_cohesion_gain_small_effect = yes
+		dhm_v080_clear_triumph_rewards_effect = yes
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_v080_triumph_acclaimed_modifier YEARS = 5 RENEWAL_TT = dhm_v080_triumph_acclaimed_modifier_renewed_5_tt }
+		dhm_v080_finish_triumph_effect = yes
+	}
+
+	option = {
+		name = dhm_v080.1000.b
+		add_prestige = minor_prestige_loss
+		add_stress = minor_stress_gain
+		dhm_v050_cohesion_gain_large_effect = yes
+		every_close_family_member = {
+			limit = { is_alive = yes is_in_the_same_court_as = root this != root }
+			add_opinion = { target = root modifier = dhm_v080_shared_household_credit_opinion }
+		}
+		dhm_v080_clear_triumph_rewards_effect = yes
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_v080_triumph_shared_modifier YEARS = 5 RENEWAL_TT = dhm_v080_triumph_shared_modifier_renewed_5_tt }
+		dhm_v080_finish_triumph_effect = yes
+	}
+
+	option = {
+		name = dhm_v080.1000.c
+		add_prestige = minor_prestige_loss
+		add_piety = minor_piety_gain
+		dhm_v050_cohesion_loss_small_effect = yes
+		dhm_v080_clear_triumph_rewards_effect = yes
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_v080_triumph_recorded_modifier YEARS = 5 RENEWAL_TT = dhm_v080_triumph_recorded_modifier_renewed_5_tt }
+		dhm_v090_create_keepsake_effect = yes
+		dhm_v080_finish_triumph_effect = yes
+	}
+}

@@ -2,7 +2,7 @@
  desc = vic_review_crisis_desc selection_tooltip = vic_review_crisis_tooltip confirm_text = vic_review_crisis_confirm
  decision_group_type = major ai_check_interval = 0
  is_shown = { has_global_variable = vic_initialized vic_principal = yes } is_valid = { is_imprisoned = no }
- cooldown = { days = 7 } effect = { if = { limit = { this = character:19060001 } trigger_event = vic_story.60 } if = { limit = { this = character:19060029 } trigger_event = vic_story.61 } if = { limit = { this = character:19060033 } trigger_event = vic_story.62 } if = { limit = { this = character:19060003 } trigger_event = vic_story.63 } if = { limit = { this = character:19060031 } trigger_event = vic_story.64 }  } ai_potential = { always = no } ai_will_do = { base = 0 }
+ cooldown = { days = 7 } effect = { custom_tooltip = vip_open_politics_tooltip hidden_effect = {  lam_fac_default_view_effect = yes lam_factions_refresh_effect = yes set_variable = { name = lam_factions_open value = yes }  } } ai_potential = { always = no } ai_will_do = { base = 0 }
  }
 vic_present_accounts = { picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" }
  desc = vic_present_accounts_desc selection_tooltip = vic_present_accounts_tooltip confirm_text = vic_present_accounts_confirm

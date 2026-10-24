@@ -3,7 +3,9 @@
  war_name = voltara_alutor_puppet_war_name cb_name = voltara_alutor_puppet_war
  allowed_for_character = { voltara_alutor_war_attacker = yes }
  allowed_against_character = { scope:defender = { voltara_southorion_war_target = yes } scope:defender = { is_independent_ruler = yes is_tributary = no } }
- valid_to_start = { scope:attacker = { voltara_alutor_war_attacker = yes } scope:defender = { voltara_southorion_war_target = yes } scope:defender = { is_independent_ruler = yes is_tributary = no } }
+ valid_to_start = {
+ voltara_keeper_war_permitted = yes
+ scope:attacker = { voltara_alutor_war_attacker = yes } scope:defender = { voltara_southorion_war_target = yes } scope:defender = { is_independent_ruler = yes is_tributary = no } }
  cost = { prestige = 750 }
  on_primary_attacker_death = inherit on_primary_defender_death = inherit
  on_victory_desc = { desc = voltara_alutor_puppet_war_victory }

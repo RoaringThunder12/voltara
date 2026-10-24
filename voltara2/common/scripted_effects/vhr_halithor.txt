@@ -1,0 +1,28 @@
+﻿vhr_clear_assignment = { remove_variable = vhr_employer remove_character_flag = vhr_mine_worker remove_character_flag = vhr_workshop_worker }
+vhr_pay_labor = {
+ every_courtier = {
+  limit = { exists = var:vhr_employer }
+  if = { limit = { vhr_valid_worker = yes }
+   if = { limit = { has_character_flag = vhr_mine_worker } var:vhr_employer = { add_gold = 4 } }
+   else = { var:vhr_employer = { add_gold = 2 } }
+  }
+  else = { vhr_clear_assignment = yes }
+ }
+}
+vhr_free_workers = {
+ save_scope_as = voltara_liberator
+ every_courtier = { limit = { var:vhr_employer ?= prev } voltara_free_character = yes }
+}
+vhr_labor_flight = {
+ random_courtier = { limit = { vhr_valid_worker = yes }
+  save_scope_as = vt_fugitive var:voltara_slave_owner = { save_scope_as = vt_escape_owner }
+  vt_slave_escape_success = yes
+ }
+}
+vhr_quota = { add_gold = 25 capital_county = { add_county_modifier = { modifier = vhr_labor_unrest years = 3 } } random = { chance = 40 vhr_labor_flight = yes } }
+vhr_paid_crews = {
+ remove_short_term_gold = 50 add_character_flag = { flag = vhr_paid_crews years = 5 }
+ every_held_title = { limit = { tier = tier_barony title_province = { OR = { has_building = vhr_ruby_219_1 has_building = vhr_ruby_219_2 has_building = vhr_ruby_219_3 has_building = vhr_ruby_224_1 has_building = vhr_ruby_224_2 has_building = vhr_ruby_224_3 has_building = vhr_ruby_3102_1 has_building = vhr_ruby_3102_2 has_building = vhr_ruby_3102_3 } } }
+  title_province = { add_province_modifier = { modifier = vhr_skilled_crews years = 5 } }
+ }
+}

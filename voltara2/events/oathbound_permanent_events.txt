@@ -1,0 +1,153 @@
+﻿namespace = oathbound_permanent_events
+
+
+oathbound_permanent_events.0001 = { # An Oath Sworn - from landless perspective
+	type = character_event
+	title = oathbound_permanent_events.0001.t
+	desc = oathbound_permanent_events.0001.desc
+	theme = crown
+
+	override_background = {
+		reference = throne_room
+	}
+
+	left_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+
+	immediate = {
+		var:val_oathholder = {
+			save_scope_as = scope_oathholder
+		}
+	}
+
+	option = { # "So my Oath begins."
+		name = oathbound_permanent_events.0001.a
+        custom_tooltip = {
+			text = oathbound_permanent_events.0001.a.desc
+		}
+
+		add_character_modifier = {
+			modifier = permanent_oath
+		}
+	}
+}
+
+oathbound_permanent_events.0002 = { # Reminder of the oath once we die.
+	type = character_event
+	title = oathbound_permanent_events.0002.t
+	desc = oathbound_permanent_events.0002.desc
+	theme = crown
+
+	override_background = {
+		reference = throne_room
+	}
+
+	left_portrait = {
+		character = root
+		animation = reading
+	}
+
+	right_portrait = {
+		character = var:val_oathholder
+		animation = idle
+	}
+
+	immediate = {
+		var:val_oathholder = {
+			save_scope_as = scope_oathholder
+		}
+		root = {
+			save_scope_as = scope_myself
+		}
+	}
+
+	option = { 
+		name = oathbound_permanent_events.0002.a
+        custom_tooltip = {
+			text = oathbound_permanent_events.0002.a.desc
+		}
+
+		add_character_modifier = {
+			modifier = permanent_oath
+		}
+	}
+}
+
+oathbound_permanent_events.0003 = { # Reminder of the oath once oathholder dies.
+	type = character_event
+	title = oathbound_permanent_events.0003.t
+	desc = oathbound_permanent_events.0003.desc
+	theme = crown
+
+	override_background = {
+		reference = throne_room
+	}
+
+	left_portrait = {
+		character = root
+		animation = reading
+	}
+
+	right_portrait = {
+		character = var:val_oathholder
+		animation = idle
+	}
+
+	immediate = {
+		var:val_oathholder = {
+			save_scope_as = scope_oathholder
+		}
+		root= {
+			save_scope_as = scope_myself
+		}
+	}
+
+	option = { 
+		name = oathbound_permanent_events.0003.a
+        custom_tooltip = {
+			text = oathbound_permanent_events.0003.a.desc
+		}
+
+		add_character_modifier = {
+			modifier = permanent_oath
+		}
+	}
+}
+
+oathbound_permanent_events.0004 = { # Oathholder dies without legitimate (valid) heir
+	type = character_event
+	title = oathbound_permanent_events.0004.t
+	desc = oathbound_permanent_events.0004.desc
+	theme = crown
+
+	override_background = {
+		reference = throne_room
+	}
+
+	left_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+
+	immediate = {
+		var:val_oathholder = {
+			save_scope_as = scope_oathholder
+		}
+		root= {
+			save_scope_as = scope_myself
+		}
+	}
+
+	option = { 
+		name = oathbound_permanent_events.0004.a
+        custom_tooltip = {
+			text = oathbound_permanent_events.0004.a.desc
+		}
+
+		remove_character_modifier = permanent_oath
+		remove_trait = oathkeeper
+		
+	}
+}

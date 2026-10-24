@@ -1,0 +1,78 @@
+﻿# Living Factions - factions that carry on (2026-10-10): splits as wings of their parent. (Counters: lam_fac_stat_add_effect, lam_faction_power.txt.)
+
+# Root = the head of a wing breaking away (lam_gn_sr set): the wing it becomes - named before its record is written.
+lam_fac_split_wing_effect = {
+	if = { limit = { OR = { var:lam_gn_sr ?= flag:rival var:lam_gn_sr ?= flag:feud var:lam_gn_sr ?= flag:ambition var:lam_gn_sr ?= flag:deal var:lam_gn_sr ?= flag:merge var:lam_gn_sr ?= flag:court } } set_variable = { name = lam_fac_wing value = flag:hard } }
+	else_if = { limit = { OR = { var:lam_gn_sr ?= flag:rise var:lam_gn_sr ?= flag:crown var:lam_gn_sr ?= flag:ban } } set_variable = { name = lam_fac_wing value = flag:moderate } }
+	else_if = { limit = { var:lam_gn_sr ?= flag:heir } set_variable = { name = lam_fac_wing value = flag:new } }
+	else_if = { limit = { var:lam_gn_sr ?= flag:line } set_variable = { name = lam_fac_wing value = flag:new } }
+	else = { set_variable = { name = lam_fac_wing value = flag:reform } }
+}
+
+# Root = the new wing's head, PARENT = the faction it broke from: what it carries away.
+lam_fac_split_inherit_effect = {
+	# The same cause - unless it left over the course.
+	if = { limit = { NOT = { var:lam_fac_wing ?= flag:new } $PARENT$ = { has_variable = lam_fac_agenda } } set_variable = { name = lam_fac_agenda value = $PARENT$.var:lam_fac_agenda } }
+	# Half the name it made; every tradition a step lower.
+	if = { limit = { $PARENT$ = { has_variable = lam_fac_renown } } set_variable = { name = lam_fac_renown value = { value = $PARENT$.var:lam_fac_renown multiply = 0.5 } } }
+	if = { limit = { $PARENT$ = { has_variable = lam_fac_leg_org var:lam_fac_leg_org >= 2 } } set_variable = { name = lam_fac_leg_org value = { value = $PARENT$.var:lam_fac_leg_org subtract = 1 } } }
+	if = { limit = { $PARENT$ = { has_variable = lam_fac_leg_ties var:lam_fac_leg_ties >= 2 } } set_variable = { name = lam_fac_leg_ties value = { value = $PARENT$.var:lam_fac_leg_ties subtract = 1 } } }
+	if = { limit = { $PARENT$ = { has_variable = lam_fac_leg_purse var:lam_fac_leg_purse >= 2 } } set_variable = { name = lam_fac_leg_purse value = { value = $PARENT$.var:lam_fac_leg_purse subtract = 1 } } }
+	if = { limit = { $PARENT$ = { has_variable = lam_fac_leg_arms var:lam_fac_leg_arms >= 2 } } set_variable = { name = lam_fac_leg_arms value = { value = $PARENT$.var:lam_fac_leg_arms subtract = 1 } } }
+	if = { limit = { $PARENT$ = { has_variable = lam_fac_leg_cause var:lam_fac_leg_cause >= 2 } } set_variable = { name = lam_fac_leg_cause value = { value = $PARENT$.var:lam_fac_leg_cause subtract = 1 } } }
+	if = { limit = { $PARENT$ = { has_variable = lam_fac_leg_will var:lam_fac_leg_will >= 2 } } set_variable = { name = lam_fac_leg_will value = { value = $PARENT$.var:lam_fac_leg_will subtract = 1 } } }
+	# Those who walked out together hold together, for now.
+	set_variable = { name = lam_fac_cohesion value = 60 }
+	# The book takes the cause and the wing.
+	lam_gn_refresh_effect = yes
+}
+
+# Root = a lord, each count: a younger faction whose auto name comes out the same as another's (land, wing and
+# cause; faith; culture) is told apart by its head's house. (A chosen name - house, colour, leader - is its own.)
+lam_fac_wing_names_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = { is_alive = yes }
+		save_scope_as = lam_wn_a
+		if = {
+			limit = {
+				exists = house
+				OR = { NOT = { has_variable = lam_fac_nmv } var:lam_fac_nmv ?= 0 } NOT = { has_variable = lam_fac_inlaw }
+				prev = {
+					any_in_list = {
+						variable = lam_bloc_leads
+						is_alive = yes
+						NOT = { this = scope:lam_wn_a }
+						OR = { NOT = { has_variable = lam_fac_nmv } var:lam_fac_nmv ?= 0 } NOT = { has_variable = lam_fac_inlaw }
+						has_variable = lam_fac_founded
+						scope:lam_wn_a = { has_variable = lam_fac_founded }
+						OR = { var:lam_fac_founded < scope:lam_wn_a.var:lam_fac_founded AND = { var:lam_fac_founded = scope:lam_wn_a.var:lam_fac_founded max_military_strength > scope:lam_wn_a.max_military_strength } }
+						OR = { AND = { OR = { AND = { var:lam_fac_agenda ?= flag:loyalist scope:lam_wn_a = { var:lam_fac_agenda ?= flag:loyalist } } AND = { var:lam_fac_agenda ?= flag:courtly scope:lam_wn_a = { var:lam_fac_agenda ?= flag:courtly } } AND = { var:lam_fac_agenda ?= flag:glory_hound scope:lam_wn_a = { var:lam_fac_agenda ?= flag:glory_hound } } AND = { var:lam_fac_agenda ?= flag:belligerent scope:lam_wn_a = { var:lam_fac_agenda ?= flag:belligerent } } AND = { var:lam_fac_agenda ?= flag:parochial scope:lam_wn_a = { var:lam_fac_agenda ?= flag:parochial } } AND = { var:lam_fac_agenda ?= flag:barons_and_minor_landholders scope:lam_wn_a = { var:lam_fac_agenda ?= flag:barons_and_minor_landholders } } AND = { var:lam_fac_agenda ?= flag:dynastic scope:lam_wn_a = { var:lam_fac_agenda ?= flag:dynastic } } } OR = { AND = { NOT = { has_variable = lam_fac_wing } scope:lam_wn_a = { NOT = { has_variable = lam_fac_wing } } } AND = { var:lam_fac_wing ?= flag:hard scope:lam_wn_a = { var:lam_fac_wing ?= flag:hard } } AND = { var:lam_fac_wing ?= flag:new scope:lam_wn_a = { var:lam_fac_wing ?= flag:new } } AND = { var:lam_fac_wing ?= flag:reform scope:lam_wn_a = { var:lam_fac_wing ?= flag:reform } } AND = { var:lam_fac_wing ?= flag:moderate scope:lam_wn_a = { var:lam_fac_wing ?= flag:moderate } } } OR = { AND = { NOT = { has_variable = lam_fac_region } scope:lam_wn_a = { NOT = { has_variable = lam_fac_region } } } AND = { has_variable = lam_fac_region scope:lam_wn_a = { has_variable = lam_fac_region } var:lam_fac_region = scope:lam_wn_a.var:lam_fac_region } } } AND = { var:lam_fac_agenda ?= flag:zealot scope:lam_wn_a = { var:lam_fac_agenda ?= flag:zealot } faith = scope:lam_wn_a.faith } AND = { var:lam_fac_agenda ?= flag:minority scope:lam_wn_a = { var:lam_fac_agenda ?= flag:minority } culture = scope:lam_wn_a.culture } }
+					}
+				}
+			}
+			set_variable = { name = lam_fac_twin value = yes }
+			# (The older one is of the same house: told apart by the head's own name.)
+			if = {
+				limit = {
+				prev = {
+						any_in_list = {
+							variable = lam_bloc_leads
+							is_alive = yes
+							house ?= scope:lam_wn_a.house
+							NOT = { this = scope:lam_wn_a }
+							OR = { NOT = { has_variable = lam_fac_nmv } var:lam_fac_nmv ?= 0 } NOT = { has_variable = lam_fac_inlaw }
+							has_variable = lam_fac_founded
+							scope:lam_wn_a = { has_variable = lam_fac_founded }
+							OR = { var:lam_fac_founded < scope:lam_wn_a.var:lam_fac_founded AND = { var:lam_fac_founded = scope:lam_wn_a.var:lam_fac_founded max_military_strength > scope:lam_wn_a.max_military_strength } }
+							OR = { AND = { OR = { AND = { var:lam_fac_agenda ?= flag:loyalist scope:lam_wn_a = { var:lam_fac_agenda ?= flag:loyalist } } AND = { var:lam_fac_agenda ?= flag:courtly scope:lam_wn_a = { var:lam_fac_agenda ?= flag:courtly } } AND = { var:lam_fac_agenda ?= flag:glory_hound scope:lam_wn_a = { var:lam_fac_agenda ?= flag:glory_hound } } AND = { var:lam_fac_agenda ?= flag:belligerent scope:lam_wn_a = { var:lam_fac_agenda ?= flag:belligerent } } AND = { var:lam_fac_agenda ?= flag:parochial scope:lam_wn_a = { var:lam_fac_agenda ?= flag:parochial } } AND = { var:lam_fac_agenda ?= flag:barons_and_minor_landholders scope:lam_wn_a = { var:lam_fac_agenda ?= flag:barons_and_minor_landholders } } AND = { var:lam_fac_agenda ?= flag:dynastic scope:lam_wn_a = { var:lam_fac_agenda ?= flag:dynastic } } } OR = { AND = { NOT = { has_variable = lam_fac_wing } scope:lam_wn_a = { NOT = { has_variable = lam_fac_wing } } } AND = { var:lam_fac_wing ?= flag:hard scope:lam_wn_a = { var:lam_fac_wing ?= flag:hard } } AND = { var:lam_fac_wing ?= flag:new scope:lam_wn_a = { var:lam_fac_wing ?= flag:new } } AND = { var:lam_fac_wing ?= flag:reform scope:lam_wn_a = { var:lam_fac_wing ?= flag:reform } } AND = { var:lam_fac_wing ?= flag:moderate scope:lam_wn_a = { var:lam_fac_wing ?= flag:moderate } } } OR = { AND = { NOT = { has_variable = lam_fac_region } scope:lam_wn_a = { NOT = { has_variable = lam_fac_region } } } AND = { has_variable = lam_fac_region scope:lam_wn_a = { has_variable = lam_fac_region } var:lam_fac_region = scope:lam_wn_a.var:lam_fac_region } } } AND = { var:lam_fac_agenda ?= flag:zealot scope:lam_wn_a = { var:lam_fac_agenda ?= flag:zealot } faith = scope:lam_wn_a.faith } AND = { var:lam_fac_agenda ?= flag:minority scope:lam_wn_a = { var:lam_fac_agenda ?= flag:minority } culture = scope:lam_wn_a.culture } }
+						}
+					}
+				}
+				set_variable = { name = lam_fac_twin_fn value = yes }
+			}
+			else_if = { limit = { has_variable = lam_fac_twin_fn } remove_variable = lam_fac_twin_fn }
+		}
+		else_if = { limit = { has_variable = lam_fac_twin } remove_variable = lam_fac_twin if = { limit = { has_variable = lam_fac_twin_fn } remove_variable = lam_fac_twin_fn } }
+	}
+}

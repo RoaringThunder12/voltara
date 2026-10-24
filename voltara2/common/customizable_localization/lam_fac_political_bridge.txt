@@ -1,0 +1,62 @@
+﻿LamPbRequest = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_pb_kind ?= flag:liberty_faction
+		}
+		localization_key = lam_pb_goal_liberty_faction
+	}
+	text = {
+		trigger = {
+			var:lam_pb_kind ?= flag:independence_faction
+		}
+		localization_key = lam_pb_goal_independence_faction
+	}
+	text = {
+		trigger = {
+			var:lam_pb_kind ?= flag:claimant_faction
+		}
+		localization_key = lam_pb_goal_claimant_faction
+	}
+	text = {
+		trigger = {
+			var:lam_pb_kind ?= flag:nation_fracturing_faction
+		}
+		localization_key = lam_pb_goal_nation_fracturing_faction
+	}
+	text = {
+		fallback = yes
+		localization_key = lam_fac_empty
+	}
+}
+LamPbFront = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_pb_front_kind ?= flag:liberty_faction
+		}
+		localization_key = lam_pb_front_liberty_faction
+	}
+	text = {
+		trigger = {
+			var:lam_pb_front_kind ?= flag:independence_faction
+		}
+		localization_key = lam_pb_front_independence_faction
+	}
+	text = {
+		trigger = {
+			var:lam_pb_front_kind ?= flag:claimant_faction
+		}
+		localization_key = lam_pb_front_claimant_faction
+	}
+	text = {
+		trigger = {
+			var:lam_pb_front_kind ?= flag:nation_fracturing_faction
+		}
+		localization_key = lam_pb_front_nation_fracturing_faction
+	}
+	text = {
+		fallback = yes
+		localization_key = lam_fac_empty
+	}
+}

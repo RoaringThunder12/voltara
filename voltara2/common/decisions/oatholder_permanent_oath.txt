@@ -1,0 +1,46 @@
+﻿oathbound_permanent_oath = { 
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = oathbound_permanent_oath_desc
+	selection_tooltip = oathbound_permanent_oath_tooltip
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_landless_adventurer = yes
+		exists = primary_heir
+		primary_heir = { is_child_of = root }
+		num_of_relation_oathholder > 0
+	}
+
+	is_valid = {
+		has_trait = oathkeeper
+		NOT = { 
+			is_imprisoned = yes
+			has_trait = incapable 
+			has_character_modifier = permanent_oath
+		}
+		OR = {
+			primary_heir.dynasty = root.dynasty # Perhaps change this to house instead.
+		}
+		OR = {
+			root.var:val_oathholder.primary_heir.dynasty = root.var:val_oathholder.dynasty
+		}	
+	}
+
+	effect = {
+		add_character_modifier = {
+			modifier = permanent_oath
+		}
+		trigger_event = oathbound_permanent_events.0001
+	}
+	
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}

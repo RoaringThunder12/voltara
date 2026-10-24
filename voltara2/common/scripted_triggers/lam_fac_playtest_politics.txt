@@ -1,0 +1,11 @@
+﻿lam_pt_membership_trigger = {
+	var:lam_bloc ?= {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		var:lam_bloc ?= this
+		NOT = {
+			has_variable = lam_fac_disband
+		}
+		liege ?= prev.liege
+	}
+}

@@ -1,0 +1,104 @@
+﻿template Knight_Permissions_Mod
+{
+	vbox = {
+		layoutpolicy_horizontal = expanding
+		spacing = 5
+		
+		widget_permission_header = {
+			blockoverride "text" {
+				text = "kmc"
+			}
+		}		
+	
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			spacing = 10
+			
+			button_checkbox_label = {
+				layoutpolicy_horizontal = expanding
+				datacontext = "[GetScriptedGui('kmc_toggle_lover_cannot_be_knight')]"
+				onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+				tooltip = "kmc_toggle_my_lovers_cannot_be_knight_tt"
+
+				blockoverride "checkbox" {
+					checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				}
+				blockoverride "text" {
+					text = "kmc_toggle_my_lovers_cannot_be_knight"
+				}
+			}
+			
+			button_checkbox_label = {
+				layoutpolicy_horizontal = expanding
+				datacontext = "[GetScriptedGui('kmc_toggle_unlanded_cannot_be_knight')]"
+				onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+				tooltip = "kmc_toggle_unlanded_cannot_be_knight_tt"
+
+				blockoverride "checkbox"
+				{
+					checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				}
+
+				blockoverride "text"
+				{
+					text = "kmc_toggle_unlanded_cannot_be_knight"
+				}
+			}
+			
+			divider_light = {
+				layoutpolicy_vertical = expanding
+			}
+			
+			button_checkbox_label = {
+				layoutpolicy_horizontal = expanding
+				datacontext = "[GetScriptedGui('kmc_toggle_mp_active')]"
+				onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+				tooltip = "kmc_toggle_mp_active_tt"
+
+				blockoverride "checkbox"
+				{
+					checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				}
+
+				blockoverride "text"
+				{
+					#text = "MULTI_PLAYER"
+					text = "kmc_toggle_mp_active"
+				}
+			}
+			expand = {}
+		}
+		
+		divider_light = {
+			layoutpolicy_horizontal = expanding
+		}
+		
+		hbox = {
+			layoutpolicy_horizontal = expanding
+			spacing = 10
+			
+			button_checkbox_label = {
+				layoutpolicy_horizontal = expanding
+				datacontext = "[GetScriptedGui('kmc_toggle_player_can_be_knight')]"
+				visible = "[GetScriptedGui('kmc_toggle_player_can_be_knight_is_shown').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+				tooltip = "kmc_toggle_player_can_be_knight_tt"
+
+				blockoverride "checkbox"
+				{
+					checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+				}
+
+					blockoverride "text"
+				{
+					text = "kmc_toggle_player_can_be_knight"
+				}
+			}
+			expand = {}
+		}
+	}
+}

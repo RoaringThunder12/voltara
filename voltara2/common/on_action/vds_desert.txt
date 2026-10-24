@@ -1,0 +1,2 @@
+﻿on_game_start = { on_actions = { vds_start } }
+vds_start = { effect = { if = { limit = { NOT = { has_global_variable = vds_initialized } } set_global_variable = { name = vds_initialized value = yes } vds_initialize = yes } } }

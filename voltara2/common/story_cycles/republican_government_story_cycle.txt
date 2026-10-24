@@ -9,10 +9,10 @@
 				value = scope:story
 			}
 			change_government = voltara_colonial_government
- add_realm_law = republican_seniority
- add_realm_law = republican_4_year_term_law
- add_realm_law = republican_elective_law
- add_realm_law = republican_authority_0
+ if = { limit = { NOT = { has_realm_law = republican_seniority } } add_realm_law_skip_effects = republican_seniority }
+ if = { limit = { NOT = { has_realm_law = republican_4_year_term_law } } add_realm_law_skip_effects = republican_4_year_term_law }
+ if = { limit = { NOT = { has_realm_law = republican_elective_law } } add_realm_law_skip_effects = republican_elective_law }
+ if = { limit = { NOT = { has_realm_law = republican_authority_0 } } add_realm_law_skip_effects = republican_authority_0 }
 			republican_government_elect_magistrates_effect = yes
 			republican_government_set_diarch_as_heir = yes
 			republican_trigger_election_after_term = yes

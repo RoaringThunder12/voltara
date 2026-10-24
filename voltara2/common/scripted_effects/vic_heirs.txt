@@ -1,0 +1,15 @@
+﻿vic_resolve_heirs = {
+ if = { limit = { this = character:19060003 has_title = title:h_voltara_severos has_character_flag = vic_heirs_pending NOT = { has_character_flag = vic_heirs_resolved } }
+ save_scope_as = vic_heirs_ruler remove_character_flag = vic_heirs_pending add_character_flag = vic_heirs_resolved set_variable = { name = vic_heirs_policy value = $POLICY$ }
+ every_in_list = { list = vic_cassian_heirs
+ limit = { is_alive = yes }
+ if = { limit = { scope:vic_heirs_ruler.var:vic_heirs_policy = 1 } add_opinion = { target = scope:vic_heirs_ruler modifier = grateful_opinion opinion = 30 } }
+ else_if = { limit = { scope:vic_heirs_ruler.var:vic_heirs_policy = 2 is_imprisoned = no OR = { is_courtier_of = scope:vic_heirs_ruler is_vassal_or_below_of = scope:vic_heirs_ruler court_owner = character:19060001 } }
+ scope:vic_heirs_ruler = { imprison = { target = prev type = house_arrest } }
+ }
+ else_if = { limit = { scope:vic_heirs_ruler.var:vic_heirs_policy = 3 is_landed = no is_imprisoned = no OR = { is_courtier_of = scope:vic_heirs_ruler court_owner = character:19060001 } exists = title:e_voltara_bryndale.holder }
+ save_scope_as = vic_exiled_heir title:e_voltara_bryndale.holder = { add_courtier = scope:vic_exiled_heir }
+ }
+ }
+ }
+}

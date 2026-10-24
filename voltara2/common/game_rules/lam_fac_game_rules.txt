@@ -1,0 +1,44 @@
+﻿# Living Factions (split from Love & Marriage).
+
+# Living factions (court blocs): where they live. Players' realms and their lieges always; by default
+# every court with a landed vassal (AI courts update once a year). Narrower ranges spare performance.
+lam_faction_scope = {
+	categories = { flavor }
+
+	default = lam_faction_scope_all
+
+	lam_faction_scope_player_area = {
+	}
+	lam_faction_scope_kings = {
+	}
+	lam_faction_scope_dukes = {
+	}
+	lam_faction_scope_all = {
+	}
+	lam_faction_scope_off = {
+	}
+}
+
+# Vanilla factions (independence, liberty) arise only from a living faction that has the nerve.
+lam_fac_absorb = {
+	categories = { flavor }
+
+	default = lam_fac_absorb_on
+
+	lam_fac_absorb_on = {
+	}
+	lam_fac_absorb_off = {
+	}
+}
+
+# Japan's court and shogunate, the Chinese celestial and meritocratic states: vanilla runs their court politics.
+lam_fac_special_govs = {
+	categories = { flavor }
+
+	default = lam_fac_special_govs_compatible
+
+	lam_fac_special_govs_compatible = {
+	}
+	lam_fac_special_govs_exclude = {
+	}
+}

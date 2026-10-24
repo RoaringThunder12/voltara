@@ -1,0 +1,78 @@
+﻿LamLfPublic = {
+	type = character
+	text = {
+		trigger = {
+			lam_ev_public_trigger = yes
+		}
+		localization_key = lam_ev_public_wing
+	}
+	text = {
+		trigger = {
+			has_variable = lam_fac_courtparty
+			var:lam_lf_gov_rating <= -2
+		}
+		localization_key = lam_lf_public_bad
+	}
+	text = {
+		trigger = {
+			has_variable = lam_fac_courtparty
+			var:lam_lf_gov_rating >= 2
+		}
+		localization_key = lam_lf_public_good
+	}
+	text = {
+		trigger = {
+			lam_lf_caucus_current_trigger = yes
+		}
+		localization_key = lam_lf_public_caucus
+	}
+	text = {
+		trigger = {
+			lam_lf_exchange_current_trigger = yes
+		}
+		localization_key = lam_lf_public_exchange
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamLfMemory = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			var:lam_lf_mem1_kind ?= flag:arrest
+		}
+		localization_key = lam_lf_memory_arrest
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			var:lam_lf_mem1_kind ?= flag:revocation
+		}
+		localization_key = lam_lf_memory_revocation
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			var:lam_lf_mem1_kind ?= flag:dismissal
+		}
+		localization_key = lam_lf_memory_dismissal
+	}
+	text = {
+		trigger = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			var:lam_lf_mem1_kind ?= flag:betrayal
+		}
+		localization_key = lam_lf_memory_betrayal
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}

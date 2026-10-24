@@ -1,0 +1,853 @@
+﻿namespace = dhm_manager
+
+# Main household hub. Settings are save-wide global variables so they survive
+# succession. This remains a lightweight event UI for performance.
+dhm_manager.0001 = {
+    type = character_event
+    title = dhm_manager.0001.t
+    desc = {
+        desc = dhm_manager.0001.desc_intro
+        first_valid = {
+            triggered_desc = { trigger = { has_global_variable = dhm_setting_preset_quiet } desc = dhm_manager.dashboard.preset_quiet }
+            triggered_desc = { trigger = { has_global_variable = dhm_setting_preset_chronicle } desc = dhm_manager.dashboard.preset_chronicle }
+            triggered_desc = { trigger = { has_global_variable = dhm_setting_preset_custom } desc = dhm_manager.dashboard.preset_custom }
+            desc = dhm_manager.dashboard.preset_living
+        }
+
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_education_disabled }
+                desc = dhm_manager.dashboard.education_disabled
+            }
+            desc = dhm_manager.dashboard.education_enabled
+        }
+
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_marriage_manual }
+                desc = dhm_manager.dashboard.marriage_manual
+            }
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_marriage_full_auto }
+                desc = dhm_manager.dashboard.marriage_full_auto
+            }
+            desc = dhm_manager.dashboard.marriage_assisted
+        }
+
+        first_valid = {
+            triggered_desc = { trigger = { global_var:dhm_household_cohesion < 20 } desc = dhm_cohesion.fractured }
+            triggered_desc = { trigger = { global_var:dhm_household_cohesion < 40 } desc = dhm_cohesion.uneasy }
+            triggered_desc = { trigger = { global_var:dhm_household_cohesion < 60 } desc = dhm_cohesion.stable }
+            triggered_desc = { trigger = { global_var:dhm_household_cohesion < 80 } desc = dhm_cohesion.united }
+            desc = dhm_cohesion.devoted
+        }
+    }
+    theme = stewardship
+    override_background = { reference = dhm_living_council }
+    immediate = {
+      hidden_effect = {
+        if = {
+            limit = { NOT = { has_global_variable = dhm_migration_0700 } }
+            dhm_v070_migration_effect = yes
+        }
+        if = {
+            limit = { NOT = { has_global_variable = dhm_migration_0400 } }
+            dhm_v040_migration_effect = yes
+        }
+        if = {
+            limit = { NOT = { has_character_flag = dhm_v040_character_initialized } }
+            dhm_v040_initialize_character_effect = yes
+        }
+        if = {
+            limit = { NOT = { has_character_flag = dhm_v040_arranged_relations_repaired } }
+            dhm_repair_arranged_union_relations_effect = yes
+        }
+        if = {
+            limit = { NOT = { has_global_variable = dhm_migration_0500 } }
+            dhm_v050_migration_effect = yes
+        }
+        if = {
+            limit = { NOT = { has_character_flag = dhm_v050_character_initialized } }
+            dhm_v050_initialize_character_effect = yes
+        }
+		if = {
+			limit = { NOT = { has_global_variable = dhm_migration_0600 } }
+			dhm_v060_migration_effect = yes
+		}
+		if = {
+			limit = { NOT = { has_character_flag = dhm_v060_character_initialized } }
+			dhm_v060_initialize_character_effect = yes
+		}
+		if = {
+			limit = { NOT = { has_global_variable = dhm_migration_0710 } }
+			dhm_v071_migration_effect = yes
+		}
+		else_if = {
+			limit = {
+				OR = {
+					NOT = { has_global_variable = dhm_migration_0800 }
+					AND = {
+						OR = { has_character_flag = dhm_v080_triumph_recent has_global_variable = dhm_v080_triumph_recent }
+						NOT = { has_global_variable = dhm_v080_triumph_until }
+					}
+				}
+			}
+			dhm_v080_triumph_migration_effect = yes
+		}
+      }
+    }
+
+    option = {
+        name = dhm_manager.0001.play_style
+        custom_tooltip = dhm_manager.0001.play_style_tt
+        trigger_event = dhm_manager.0090
+    }
+
+    option = {
+        name = dhm_manager.0001.marriage_desk
+        custom_tooltip = dhm_manager.0001.marriage_desk_tt
+        trigger_event = dhm_manager.0006
+    }
+
+    option = {
+        name = dhm_manager.0001.education_desk
+        custom_tooltip = dhm_manager.0001.education_desk_tt
+        trigger_event = dhm_manager.0005
+    }
+
+    option = {
+        name = dhm_manager.0001.chronicle_desk
+        custom_tooltip = dhm_manager.0001.chronicle_desk_tt
+        trigger_event = dhm_manager.0008
+    }
+
+    option = {
+        name = dhm_manager.0001.advanced
+        custom_tooltip = dhm_manager.0001.advanced_tt
+        trigger_event = dhm_manager.0091
+    }
+
+    option = {
+        name = dhm_manager.0001.close
+        is_cancel_option = yes
+    }
+}
+
+# Four compact desks keep the main household dashboard readable. Each desk
+# exposes only related actions and uses artwork that matches its purpose.
+dhm_manager.0005 = {
+    type = character_event
+    title = dhm_manager.0005.t
+    desc = {
+        desc = dhm_manager.0005.desc
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_education_disabled }
+                desc = dhm_manager.status.education_disabled
+            }
+            desc = dhm_manager.status.education_enabled
+        }
+    }
+    theme = learning
+    override_background = { reference = dhm_living_schoolroom }
+
+    option = { name = dhm_manager.0001.education_menu trigger_event = dhm_manager.0010 }
+    option = {
+        name = dhm_manager.0005.heir_journey
+        trigger = { exists = player_heir has_global_variable = dhm_setting_extended_sagas }
+        trigger_event = dhm_legacy.0410
+    }
+    option = { name = dhm_manager.dashboard.back trigger_event = dhm_manager.0001 is_cancel_option = yes }
+}
+
+dhm_manager.0006 = {
+    type = character_event
+    title = dhm_manager.0006.t
+    desc = {
+        desc = dhm_manager.0006.desc
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_marriage_manual }
+                desc = dhm_manager.status.marriage_manual
+            }
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_marriage_full_auto }
+                desc = dhm_manager.status.marriage_full_auto
+            }
+            desc = dhm_manager.status.marriage_assisted
+        }
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_kin_avoid }
+                desc = dhm_manager.status.kin_avoid
+            }
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_kin_prefer }
+                desc = dhm_manager.status.kin_prefer
+            }
+            desc = dhm_manager.status.kin_follow_faith
+        }
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_courtier_marriage_off }
+                desc = dhm_manager.status.courtier_off
+            }
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_courtier_marriage_assisted }
+                desc = dhm_manager.status.courtier_assisted
+            }
+            desc = dhm_manager.status.courtier_automatic
+        }
+    }
+    theme = diplomacy
+    override_background = { reference = dhm_living_hearth }
+
+    option = { name = dhm_manager.0001.marriage_menu trigger_event = dhm_manager.0020 }
+    option = {
+        name = dhm_manager.0001.report
+        show_as_tooltip = { custom_tooltip = dhm_manager.0001.report_tt }
+        hidden_effect = { dhm_refresh_matchmaking_report_effect = yes }
+        trigger_event = dhm_manager.0004
+    }
+    option = { name = dhm_manager.dashboard.back trigger_event = dhm_manager.0001 is_cancel_option = yes }
+}
+
+dhm_manager.0007 = {
+	orphan = yes # Compatibility-only: allow old queued saves, never reschedule.
+    type = character_event
+    title = dhm_manager.0007.t
+    desc = dhm_manager.0007.desc
+    theme = stewardship
+    override_background = { reference = dhm_living_council }
+
+    option = {
+        name = dhm_manager.0001.scan
+        show_as_tooltip = { custom_tooltip = dhm_manager.0001.scan_tt }
+        trigger_event = dhm_manager.0096
+    }
+    option = { name = dhm_manager.0001.settings trigger_event = dhm_council.0020 }
+    option = { name = dhm_manager.0007.institutions trigger_event = dhm_legacy.0001 }
+	option = { name = dhm_manager.0007.loyalty_ledger trigger_event = dhm_saga.0100 }
+    option = { name = dhm_manager.dashboard.back trigger_event = dhm_manager.0001 is_cancel_option = yes }
+}
+
+dhm_manager.0008 = {
+    type = character_event
+    title = dhm_manager.0008.t
+    desc = dhm_manager.0008.desc
+    theme = diplomacy
+    override_background = { reference = dhm_living_letter }
+
+    option = { name = dhm_manager.0001.chronicle trigger_event = dhm_living_family.0800 }
+    option = { name = dhm_manager.0008.chapters trigger_event = dhm_saga.8000 }
+    option = { name = dhm_v075_digest_open trigger_event = dhm_manager.0095 }
+    option = { name = dhm_manager.dashboard.back trigger_event = dhm_manager.0001 is_cancel_option = yes }
+}
+
+# One clear choice controls how much presentation the player receives. The
+# automation policies themselves are deliberately left alone.
+dhm_manager.0090 = {
+    type = character_event
+    title = dhm_manager.0090.t
+    desc = {
+        desc = dhm_manager.0090.desc
+        first_valid = {
+            triggered_desc = { trigger = { has_global_variable = dhm_setting_preset_quiet } desc = dhm_manager.0090.status.quiet }
+            triggered_desc = { trigger = { has_global_variable = dhm_setting_preset_chronicle } desc = dhm_manager.0090.status.chronicle }
+            triggered_desc = { trigger = { has_global_variable = dhm_setting_preset_custom } desc = dhm_manager.0090.status.custom }
+            desc = dhm_manager.0090.status.living
+        }
+    }
+    theme = stewardship
+    override_background = { reference = dhm_living_council }
+
+    option = {
+        name = dhm_manager.0090.quiet
+        custom_tooltip = dhm_manager.0090.quiet_tt
+        hidden_effect = { dhm_v070_apply_quiet_preset_effect = yes dhm_v070_refresh_optional_modifiers_effect = yes }
+        trigger_event = dhm_manager.0090
+    }
+    option = {
+        name = dhm_manager.0090.living
+        custom_tooltip = dhm_manager.0090.living_tt
+        hidden_effect = { dhm_v070_apply_living_preset_effect = yes dhm_v070_refresh_optional_modifiers_effect = yes }
+        trigger_event = dhm_manager.0090
+    }
+    option = {
+        name = dhm_manager.0090.chronicle
+        custom_tooltip = dhm_manager.0090.chronicle_tt
+        hidden_effect = { dhm_v070_apply_chronicle_preset_effect = yes dhm_v070_refresh_optional_modifiers_effect = yes }
+        trigger_event = dhm_manager.0090
+    }
+    option = { name = dhm_manager.dashboard.back trigger_event = dhm_manager.0001 is_cancel_option = yes }
+}
+
+# Advanced tools remain available without crowding the normal household loop.
+dhm_manager.0091 = {
+    type = character_event
+    title = dhm_manager.0091.t
+    desc = dhm_manager.0091.desc
+    theme = stewardship
+    override_background = { reference = dhm_v050_officers }
+
+    option = {
+        name = dhm_manager.0091.scan
+        show_as_tooltip = { custom_tooltip = dhm_manager.0001.scan_tt }
+        trigger_event = dhm_manager.0096
+    }
+    option = {
+        name = dhm_manager.0091.council_now
+        custom_tooltip = dhm_manager.0091.council_now_tt
+        trigger_event = dhm_council.0001
+    }
+    option = { name = dhm_manager.0091.officers trigger_event = dhm_legacy.0001 }
+    option = { name = dhm_manager.0091.careers trigger_event = dhm_council.0010 }
+    option = { name = dhm_manager.0091.preferences trigger_event = dhm_manager.0092 }
+    option = { name = dhm_manager.dashboard.back trigger_event = dhm_manager.0001 is_cancel_option = yes }
+}
+
+dhm_manager.0092 = {
+    type = character_event
+    title = dhm_manager.0092.t
+    desc = dhm_manager.0092.desc
+    theme = stewardship
+    override_background = { reference = dhm_living_letter }
+
+    option = { name = dhm090_instructions_open trigger_event = dhm_v090.0001 }
+
+    option = { name = dhm_manager.0091.settings trigger_event = dhm_council.0020 }
+    option = { name = dhm_v075_story_settings trigger_event = dhm_manager.0093 }
+    option = { name = dhm_manager.0091.legacy trigger_event = dhm_legacy.0900 }
+    option = { name = dhm081_back_advanced trigger_event = dhm_manager.0091 is_cancel_option = yes }
+}
+
+# Feedback after a manual scan.
+dhm_manager.0003 = {
+    type = character_event
+    title = dhm_manager.0003.t
+    desc = {
+        first_valid = {
+            triggered_desc = {
+                trigger = { var:dhm_v080_auto_manual_scan_result ?= flag:proposal_pending }
+                desc = dhm_v080_auto_scan_pending_window
+            }
+            triggered_desc = {
+                trigger = { var:dhm_v080_auto_manual_scan_result ?= flag:cooldown }
+                desc = dhm_v080_auto_scan_wait_window
+            }
+            triggered_desc = {
+                trigger = { var:dhm_v080_auto_manual_scan_result ?= flag:story_pending }
+                desc = dhm_v080_auto_scan_story_window
+            }
+            desc = dhm_manager.0003.desc
+        }
+    }
+    theme = stewardship
+    override_background = { reference = dhm_living_letter }
+
+    option = {
+        name = dhm_manager.0003.back
+        trigger_event = dhm_manager.0091
+    }
+    option = {
+        name = dhm_manager.0003.close
+        is_cancel_option = yes
+    }
+}
+
+# User-facing matchmaking diagnostics. Counts mirror CK3's adult unmarried
+# close-family alert population and explain why DHM may intentionally defer them.
+dhm_manager.0004 = {
+    type = character_event
+    title = dhm_manager.0004.t
+    desc = {
+        desc = dhm_v075_report_summary
+        first_valid = {
+            triggered_desc = { trigger = { has_variable = dhm075_last_scan_date } desc = dhm_v075_last_scan }
+            desc = dhm_v075_last_scan_unknown
+        }
+        first_valid = {
+            triggered_desc = { trigger = { has_character_flag = dhm_marriage_maintenance_cooldown } desc = dhm_v075_next_scan }
+            desc = dhm_v075_next_scan_ready
+        }
+        desc = dhm_v075_scan_budget
+        desc = dhm_v075_scan_result
+        triggered_desc = {
+            trigger = { var:dhm_v080_auto_manual_scan_result ?= flag:proposal_pending }
+            desc = dhm_v080_auto_scan_pending_report
+        }
+        triggered_desc = {
+            trigger = { var:dhm_v080_auto_manual_scan_result ?= flag:cooldown }
+            desc = dhm_v080_auto_scan_wait_report
+        }
+        triggered_desc = {
+            trigger = { var:dhm_v080_auto_manual_scan_result ?= flag:story_pending }
+            desc = dhm_v080_auto_scan_story_report
+        }
+    }
+    theme = diplomacy
+    override_background = { reference = study }
+
+    option = { name = dhm_v075_waiting trigger_event = dhm_manager.0094 }
+    option = {
+        name = dhm_manager.0004.scan
+        show_as_tooltip = { custom_tooltip = dhm_manager.0004.scan_tt }
+        trigger_event = dhm_manager.0097
+    }
+    option = {
+        name = dhm_manager.0004.back
+        trigger_event = dhm_manager.0006
+    }
+    option = {
+        name = dhm_manager.0004.close
+        is_cancel_option = yes
+    }
+}
+
+# Education submenu.
+dhm_manager.0010 = {
+    type = character_event
+    title = dhm_manager.0010.t
+    desc = {
+        desc = dhm_manager.0010.desc_intro
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_education_disabled }
+                desc = dhm_manager.0010.status_disabled
+            }
+            desc = dhm_manager.0010.status_enabled
+        }
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_development_reports_disabled }
+                desc = dhm_manager.0010.reports_off
+            }
+            desc = dhm_manager.0010.reports_on
+        }
+        desc = dhm_manager.0010.desc_footer
+        first_valid = {
+            triggered_desc = { trigger = { has_global_variable = dhm091_personality_disabled } desc = dhm091_guidance_off }
+            triggered_desc = { trigger = { has_global_variable = dhm_setting_education_disabled } desc = dhm091_guidance_wait_education }
+            desc = dhm091_guidance_on
+        }
+    }
+    theme = learning
+    override_background = { reference = study }
+
+    option = {
+        name = dhm_manager.0010.education_disable
+        trigger = { NOT = { has_global_variable = dhm_setting_education_disabled } }
+        set_global_variable = { name = dhm_setting_education_disabled value = yes }
+        trigger_event = dhm_manager.0010
+    }
+
+    option = {
+        name = dhm_manager.0010.education_enable
+        trigger = { has_global_variable = dhm_setting_education_disabled }
+        remove_global_variable = dhm_setting_education_disabled
+        trigger_event = dhm_manager.0010
+    }
+
+    option = {
+        name = dhm_manager.0010.reports_disable
+        trigger = { NOT = { has_global_variable = dhm_setting_development_reports_disabled } }
+        set_global_variable = { name = dhm_setting_development_reports_disabled value = yes }
+        dhm_v070_mark_custom_preset_effect = yes
+        trigger_event = dhm_manager.0010
+    }
+
+    option = {
+        name = dhm_manager.0010.reports_enable
+        trigger = { has_global_variable = dhm_setting_development_reports_disabled }
+        remove_global_variable = dhm_setting_development_reports_disabled
+        dhm_v070_mark_custom_preset_effect = yes
+        trigger_event = dhm_manager.0010
+    }
+
+    option = {
+        name = dhm091_guidance_pause
+        trigger = { NOT = { has_global_variable = dhm091_personality_disabled } }
+        custom_tooltip = dhm091_guidance_toggle_tt
+        hidden_effect = { set_global_variable = { name = dhm091_personality_disabled value = yes } }
+        trigger_event = dhm_manager.0010
+    }
+    option = {
+        name = dhm091_guidance_resume
+        trigger = { has_global_variable = dhm091_personality_disabled }
+        custom_tooltip = dhm091_guidance_toggle_tt
+        hidden_effect = { remove_global_variable = dhm091_personality_disabled }
+        trigger_event = dhm_manager.0010
+    }
+    option = {
+        name = dhm_manager.0010.back
+        trigger_event = dhm_manager.0005
+        is_cancel_option = yes
+    }
+}
+
+# Marriage submenu.
+dhm_manager.0020 = {
+    type = character_event
+    title = dhm_manager.0020.t
+    desc = {
+        desc = dhm_manager.0020.desc_intro
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_marriage_manual }
+                desc = dhm_manager.0020.status_manual
+            }
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_marriage_full_auto }
+                desc = dhm_manager.0020.status_full_auto
+            }
+            desc = dhm_manager.0020.status_assisted
+        }
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_courtier_marriage_off }
+                desc = dhm_manager.0020.courtier_off
+            }
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_courtier_marriage_assisted }
+                desc = dhm_manager.0020.courtier_assisted
+            }
+            desc = dhm_manager.0020.courtier_automatic
+        }
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_marriage_stories_off }
+                desc = dhm_manager.0020.story_status_off
+            }
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_marriage_stories_all }
+                desc = dhm_manager.0020.story_status_all
+            }
+            desc = dhm_manager.0020.story_status_important
+        }
+        desc = dhm_manager.0020.desc_footer
+        triggered_desc = {
+            trigger = { var:dhm_v080_auto_manual_scan_result ?= flag:proposal_pending }
+            desc = dhm_v080_auto_scan_pending_menu
+        }
+        triggered_desc = {
+            trigger = { var:dhm_v080_auto_manual_scan_result ?= flag:cooldown }
+            desc = dhm_v080_auto_scan_wait_menu
+        }
+        triggered_desc = {
+            trigger = { var:dhm_v080_auto_manual_scan_result ?= flag:story_pending }
+            desc = dhm_v080_auto_scan_story_menu
+        }
+    }
+    theme = diplomacy
+    override_background = { reference = dhm_living_letter }
+
+    option = {
+        name = dhm_manager.0020.marriage_manual
+        trigger = { NOT = { has_global_variable = dhm_setting_marriage_manual } }
+        set_global_variable = { name = dhm_setting_marriage_manual value = yes }
+        remove_global_variable = dhm_setting_marriage_full_auto
+        trigger_event = dhm_manager.0020
+    }
+
+    option = {
+        name = dhm_manager.0020.marriage_assisted
+        trigger = {
+            OR = {
+                has_global_variable = dhm_setting_marriage_manual
+                has_global_variable = dhm_setting_marriage_full_auto
+            }
+        }
+        remove_global_variable = dhm_setting_marriage_manual
+        remove_global_variable = dhm_setting_marriage_full_auto
+        trigger_event = dhm_manager.0020
+    }
+
+    option = {
+        name = dhm_manager.0020.marriage_full_auto
+        trigger = { NOT = { has_global_variable = dhm_setting_marriage_full_auto } }
+        remove_global_variable = dhm_setting_marriage_manual
+        set_global_variable = { name = dhm_setting_marriage_full_auto value = yes }
+        show_as_tooltip = { custom_tooltip = dhm_manager.0020.marriage_full_auto_tt }
+        trigger_event = dhm_manager.0098
+    }
+
+    option = {
+        name = dhm_manager.0020.courtier_policy
+        trigger_event = dhm_manager.0021
+    }
+
+    option = {
+        name = dhm_manager.0020.kin_policy
+        trigger_event = dhm_manager.0002
+    }
+
+    option = {
+        name = dhm_manager.0020.marriage_stories
+        trigger_event = dhm_manager.0022
+    }
+
+    option = {
+        name = dhm_manager.0020.back
+        trigger_event = dhm_manager.0006
+        is_cancel_option = yes
+    }
+}
+
+
+# Courtier matchmaking is independent from dynastic-family marriage mode.
+# Default is Automatic (no global flag). Assisted asks before each match; Off
+# excludes ordinary courtiers while close-family matchmaking remains unchanged.
+dhm_manager.0021 = {
+    type = character_event
+    title = dhm_manager.0021.t
+    desc = {
+        desc = dhm_manager.0021.desc_intro
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_courtier_marriage_off }
+                desc = dhm_manager.0021.status_off
+            }
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_courtier_marriage_assisted }
+                desc = dhm_manager.0021.status_assisted
+            }
+            desc = dhm_manager.0021.status_automatic
+        }
+        desc = dhm_manager.0021.desc_footer
+    }
+    theme = diplomacy
+    override_background = { reference = dhm_living_letter }
+
+    option = {
+        name = dhm_manager.0021.automatic
+        remove_global_variable = dhm_setting_courtier_marriage_off
+        remove_global_variable = dhm_setting_courtier_marriage_assisted
+        trigger_event = dhm_manager.0021
+    }
+
+    option = {
+        name = dhm_manager.0021.assisted
+        remove_global_variable = dhm_setting_courtier_marriage_off
+        set_global_variable = { name = dhm_setting_courtier_marriage_assisted value = yes }
+        trigger_event = dhm_manager.0021
+    }
+
+    option = {
+        name = dhm_manager.0021.off
+        remove_global_variable = dhm_setting_courtier_marriage_assisted
+        set_global_variable = { name = dhm_setting_courtier_marriage_off value = yes }
+        trigger_event = dhm_manager.0021
+    }
+
+    option = {
+        name = dhm_manager.0021.back
+        trigger_event = dhm_manager.0020
+        is_cancel_option = yes
+    }
+}
+
+# Visible arranged-marriage follow-ups are independently configurable. Important
+# Only is the default and therefore needs no save variable.
+dhm_manager.0022 = {
+    type = character_event
+    title = dhm_manager.0022.t
+    desc = {
+        desc = dhm_manager.0022.desc_intro
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_marriage_stories_off }
+                desc = dhm_manager.0022.status_off
+            }
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_marriage_stories_all }
+                desc = dhm_manager.0022.status_all
+            }
+            desc = dhm_manager.0022.status_important
+        }
+        desc = dhm_manager.0022.desc_footer
+    }
+    theme = diplomacy
+    override_background = { reference = dhm_living_hearth }
+
+    option = {
+        name = dhm_manager.0022.important
+        remove_global_variable = dhm_setting_marriage_stories_all
+        remove_global_variable = dhm_setting_marriage_stories_off
+        dhm_v070_mark_custom_preset_effect = yes
+        trigger_event = dhm_manager.0022
+    }
+
+    option = {
+        name = dhm_manager.0022.all
+        remove_global_variable = dhm_setting_marriage_stories_off
+        set_global_variable = { name = dhm_setting_marriage_stories_all value = yes }
+        dhm_v070_mark_custom_preset_effect = yes
+        trigger_event = dhm_manager.0022
+    }
+
+    option = {
+        name = dhm_manager.0022.off
+        remove_global_variable = dhm_setting_marriage_stories_all
+        set_global_variable = { name = dhm_setting_marriage_stories_off value = yes }
+        dhm_v070_mark_custom_preset_effect = yes
+        trigger_event = dhm_manager.0022
+    }
+
+    option = {
+        name = dhm_manager.0022.back
+        trigger_event = dhm_manager.0020
+        is_cancel_option = yes
+    }
+}
+
+# Faith-aware kin marriage policy. Vanilla can_marry_character_trigger remains
+# the legal authority; these settings only rank already-legal relatives.
+dhm_manager.0002 = {
+    type = character_event
+    title = dhm_manager.0002.t
+    desc = {
+        desc = dhm_manager.0002.desc_intro
+        first_valid = {
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_kin_avoid }
+                desc = dhm_manager.0002.status_avoid
+            }
+            triggered_desc = {
+                trigger = { has_global_variable = dhm_setting_kin_prefer }
+                desc = dhm_manager.0002.status_prefer
+            }
+            desc = dhm_manager.0002.status_follow_faith
+        }
+        desc = dhm_manager.0002.desc_footer
+    }
+    theme = faith
+    override_background = { reference = study }
+
+    option = {
+        name = dhm_manager.0002.follow_faith
+        remove_global_variable = dhm_setting_kin_avoid
+        remove_global_variable = dhm_setting_kin_prefer
+        trigger_event = dhm_manager.0002
+    }
+
+    option = {
+        name = dhm_manager.0002.avoid_close_kin
+        remove_global_variable = dhm_setting_kin_prefer
+        set_global_variable = { name = dhm_setting_kin_avoid value = yes }
+        trigger_event = dhm_manager.0002
+    }
+
+    option = {
+        name = dhm_manager.0002.prefer_legal_kin
+        remove_global_variable = dhm_setting_kin_avoid
+        set_global_variable = { name = dhm_setting_kin_prefer value = yes }
+        trigger_event = dhm_manager.0002
+    }
+
+    option = {
+        name = dhm_manager.0002.back
+        trigger_event = dhm_manager.0020
+        is_cancel_option = yes
+    }
+}
+
+# v0.7.5 — separate small pages; opening these never runs a spouse search.
+dhm_manager.0093 = {
+    type = character_event
+    title = dhm_v075_preferences_stories
+    desc = dhm_v075_preferences_stories_desc
+    theme = diplomacy
+    override_background = { reference = dhm_living_letter }
+    option = { name = dhm_manager.0091.story_frequency trigger_event = dhm_living_family.0900 }
+    option = {
+        name = dhm_manager.0092.enable_sagas
+        trigger = { NOT = { has_global_variable = dhm_setting_extended_sagas } }
+        hidden_effect = { set_global_variable = { name = dhm_setting_extended_sagas value = yes } dhm_v070_mark_custom_preset_effect = yes }
+        trigger_event = dhm_manager.0093
+    }
+    option = {
+        name = dhm_manager.0092.disable_sagas
+        trigger = { has_global_variable = dhm_setting_extended_sagas }
+        hidden_effect = { remove_global_variable = dhm_setting_extended_sagas dhm_v070_mark_custom_preset_effect = yes }
+        trigger_event = dhm_manager.0093
+    }
+    option = { name = dhm_v075_digest_open trigger_event = dhm_manager.0095 }
+    option = { name = dhm081_back_stories trigger_event = dhm_manager.0092 is_cancel_option = yes }
+}
+
+dhm_manager.0094 = {
+    type = character_event
+    title = dhm_v075_waiting_title
+    desc = { desc = dhm_manager.0004.desc_summary desc = dhm_v075_waiting_help }
+    theme = diplomacy
+    override_background = { reference = dhm_living_letter }
+    option = { name = dhm081_back_report trigger_event = dhm_manager.0004 is_cancel_option = yes }
+}
+
+dhm_manager.0095 = {
+    type = character_event
+    title = dhm_v075_digest_title
+    desc = {
+        desc = dhm_v075_digest_intro
+        desc = dhm_v075_digest_current
+        first_valid = {
+            triggered_desc = { trigger = { has_variable = dhm075_digest_last_date has_variable = dhm075_digest_last_matches has_variable = dhm075_digest_last_letters has_variable = dhm075_digest_last_education has_variable = dhm075_digest_last_marriage_stories has_variable = dhm075_digest_last_disputes has_variable = dhm075_digest_last_wishes has_variable = dhm075_digest_last_ceremonies has_variable = dhm075_digest_last_reconciliations } desc = dhm_v075_digest_previous }
+            desc = dhm_v075_digest_no_previous
+        }
+        first_valid = {
+            triggered_desc = { trigger = { has_global_variable = dhm_setting_digest_enabled } desc = dhm_v075_digest_enabled }
+            desc = dhm_v075_digest_disabled
+        }
+    }
+    theme = stewardship
+    override_background = { reference = dhm_living_letter }
+    immediate = { dhm_v075_initialize_digest_effect = yes }
+    option = {
+        name = dhm_v075_digest_on
+        trigger = { NOT = { has_global_variable = dhm_setting_digest_enabled } }
+        custom_tooltip = dhm_v075_digest_tt
+        hidden_effect = { set_global_variable = { name = dhm_setting_digest_enabled value = yes } dhm_v075_start_digest_effect = yes }
+        trigger_event = dhm_manager.0095
+    }
+    option = {
+        name = dhm_v075_digest_off
+        trigger = { has_global_variable = dhm_setting_digest_enabled }
+        hidden_effect = { remove_global_variable = dhm_setting_digest_enabled }
+        trigger_event = dhm_manager.0095
+    }
+    option = { name = dhm081_back_chronicle trigger_event = dhm_manager.0008 is_cancel_option = yes }
+}
+
+# Click-only job. Never inline household scans into an option preview.
+dhm_manager.0096 = {
+    type = character_event
+    hidden = yes
+    trigger = { is_alive = yes is_ai = no }
+    immediate = {
+        dhm_v070_manual_household_scan_effect = yes
+        trigger_event = dhm_manager.0003
+    }
+}
+
+# Click-only job. Never inline household scans into an option preview.
+dhm_manager.0097 = {
+    type = character_event
+    hidden = yes
+    trigger = { is_alive = yes is_ai = no }
+    immediate = {
+        dhm_v070_manual_household_scan_effect = yes
+        dhm_refresh_matchmaking_report_effect = yes
+        trigger_event = dhm_manager.0004
+    }
+}
+
+# Click-only job. Never inline household scans into an option preview.
+dhm_manager.0098 = {
+    type = character_event
+    hidden = yes
+    trigger = { is_alive = yes is_ai = no }
+    immediate = {
+        dhm_v070_manual_household_scan_effect = yes
+        trigger_event = dhm_manager.0020
+    }
+}

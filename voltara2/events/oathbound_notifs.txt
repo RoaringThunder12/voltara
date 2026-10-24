@@ -1,0 +1,13 @@
+﻿namespace = oathbound_notif
+
+oathbound_notif.0001 = { #Oathholder dies.
+	hidden = yes
+	immediate = {
+		save_scope_as = this_player
+		send_interface_toast = {
+			type = event_gold_neutral
+			title = oathbound_notif.0001.t
+			custom_tooltip = oathbound_notif.0001.desc
+		}
+	}
+}

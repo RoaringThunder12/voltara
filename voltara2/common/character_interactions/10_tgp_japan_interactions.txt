@@ -438,7 +438,7 @@ is_valid = {
 		# More likely to accept an invite from the e_japan holder
 		modifier = {
 			add = 50
-			scope:actor = { has_title = title:e_japan }
+			scope:actor = { always = no }
 			desc = TIER_REASON_EMPEROR
 		}
 
@@ -999,7 +999,7 @@ is_valid = {
 			desc = AI_DIFFERENT_GOVERNMENT_REASON
 		}
 		modifier = { # Ai wants to have the Kampaku in their bloc
-			scope:actor = { has_title = title:e_japan }
+			scope:actor = { always = no }
 			add = 200
 			desc = TIER_REASON_EMPEROR
 		}
@@ -1093,7 +1093,7 @@ is_valid = {
 		}
 		modifier = { # Kampaku should always want to join a block
 			scope:actor = {
-				has_title = title:e_japan
+				always = no
 				is_confederation_member = no
 				has_same_government = scope:recipient
 			}
@@ -1572,7 +1572,7 @@ assume_house_bloc_leadership_interaction = {
 						is_ai = yes
 						OR = {
 							is_landed = yes
-							has_title = title:k_chrysanthemum_throne
+							always = no
 						}
 					}
 				}
@@ -1588,7 +1588,7 @@ assume_house_bloc_leadership_interaction = {
 						is_ai = yes
 						OR = {
 							is_landed = yes
-							has_title = title:k_chrysanthemum_throne
+							always = no
 						}
 					}
 				}
@@ -1775,13 +1775,13 @@ assume_house_bloc_leadership_interaction = {
 				scope:recipient = {
 					is_ai = yes
 					is_landed = no
-					NOT = { has_title = title:k_chrysanthemum_throne }
+					NOT = { always = no }
 				}
 			}
 			scope:recipient = {
 				is_ai = yes
 				is_landed = no
-				NOT = { has_title = title:k_chrysanthemum_throne }
+				NOT = { always = no }
 			}
 		}
 		trigger_if = {
@@ -1871,7 +1871,7 @@ assume_house_bloc_leadership_interaction = {
  		}
 		modifier = { # Don't leadership away from regent
 			scope:recipient = {
-				has_title = title:e_japan
+				always = no
 			}
 			factor = 0
 		}
@@ -1887,7 +1887,7 @@ assume_house_bloc_leadership_interaction = {
 			}
 			scope:recipient = {
 				is_landed = no
-				NOT = { has_title = title:k_chrysanthemum_throne }
+				NOT = { always = no }
 			}
 			factor = 0 # First zero it out
 		}
@@ -1897,7 +1897,7 @@ assume_house_bloc_leadership_interaction = {
 			}
 			scope:recipient = {
 				is_landed = no
-				NOT = { has_title = title:k_chrysanthemum_throne }
+				NOT = { always = no }
 			}
 
 			add = 500 # Then make it guaranteed
@@ -2208,7 +2208,7 @@ is_valid = {
  		}
 		modifier = { # Regent never grants bloc leadership
 			scope:actor = {
-				has_title = title:e_japan
+				always = no
 			}
 			factor = 0
 		}

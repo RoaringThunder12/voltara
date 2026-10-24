@@ -81,6 +81,8 @@
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -453,6 +455,8 @@ duchy_expansion_cb = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -905,6 +909,8 @@ naval_expansion_cb = {
 
 	# Target county has to be coastal and not border you.
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -1287,6 +1293,8 @@ naval_duchy_expansion_cb = {
 
 	# Target duchy must have counties that are coastal and doesn't border you.
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -1705,6 +1713,8 @@ influence_war_cb = {
 
 	# Only started from character interaction via script
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }

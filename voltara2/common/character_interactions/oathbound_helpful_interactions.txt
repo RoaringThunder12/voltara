@@ -1,0 +1,111 @@
+﻿oathbound_absorb_stress_interaction = {
+    category = interaction_category_friendly
+    common_interaction = yes
+    desc = oathbound_absorb_stress_interaction_desc
+    
+
+    is_shown = {
+        scope:actor = {
+            is_landless_adventurer = yes
+            has_relation_oathholder = scope:recipient 
+        }
+    }
+
+    is_valid = {
+        scope:recipient = {
+            custom_description = {
+                text = oathbound_recipient_needs_stress_req
+
+                # The actual math the game checks in the background
+                stress >= 30
+            }
+        }
+        scope:actor = {
+            custom_description = {
+                text = oathbound_actor_stress_limit_req
+                stress_level < 3
+            }
+        }
+    }
+
+    auto_accept = yes 
+
+    on_accept = {
+        custom_tooltip = oathbound_absorb_stress_flavor_ui
+        scope:actor = {
+            save_scope_value_as = {
+                name = base_stress_amount
+                value = {
+                    value = 20
+                    add = {
+                        value = diplomacy
+                        multiply = 2
+                    }
+                }
+            }
+
+            save_scope_value_as = {
+                name = boss_stress_loss
+                value = {
+                    value = scope:base_stress_amount
+                    
+                    if = {
+                        limit = { has_relation_friend = scope:recipient }
+                        multiply = 1.5
+                    }
+                    # Or lovers!
+                    if = {
+                        limit = { has_relation_lover = scope:recipient }
+                        multiply = 1.5
+                    }
+                }
+            }
+
+            save_scope_value_as = {
+                name = actor_stress_gain
+                value = {
+                    value = scope:base_stress_amount
+                    
+                    if = {
+                        limit = { has_trait = compassionate }
+                        multiply = 1.5
+                    }
+                    else_if = {
+                        limit = { has_trait = callous }
+                        multiply = 0.5
+                    }
+
+                    subtract = learning 
+
+                    min = 5 
+                }
+            }
+        }
+        
+        scope:recipient = {
+            add_stress = {
+                value = scope:boss_stress_loss
+                multiply = -1 
+            }
+            
+            add_opinion = {
+                target = scope:actor
+                modifier = oathbound_relieved_boss_stress_opinion
+            }
+        }
+        
+        scope:actor = {
+            add_stress = scope:actor_stress_gain
+            
+            send_interface_toast = {
+                type = event_toast_effect_good
+                title = oathbound_absorb_stress_toast
+                left_icon = scope:actor
+                right_icon = scope:recipient
+                custom_tooltip = oathbound_absorb_stress_toast_desc
+            }
+        }
+    }
+
+    cooldown = { years = 2 }
+}

@@ -1,0 +1,65 @@
+﻿# Living Factions - review fixes (tools/claude_fixes/review_1020.py)
+# This = a faction head of a court: a great lord turned against the crown (a powerful vassal whose faction is
+# mobilising or in arms).
+lam_rv_great_rebel_trigger = {
+	is_alive = yes
+	has_variable = lam_bloc_lead
+	is_powerful_vassal = yes
+	OR = {
+		var:lam_fac_stage ?= 3
+		var:lam_fac_stage ?= 4
+	}
+	NOT = {
+		exists = joined_faction
+	}
+}
+# This = a faction head: a cause to rise against the lord - the faction's grievance, the lord's disfavour, or a ban on
+# factions (the same for an AI head and for a player's chamber agenda)
+lam_rv_rise_cause_trigger = {
+	OR = {
+		has_variable = lam_fac_grievance
+		AND = {
+			has_variable = lam_fac_favour
+			var:lam_fac_favour <= -20
+		}
+		liege ?= {
+			has_variable = lam_fac_ban
+		}
+	}
+}
+# This = a faction head whose council voted to rise: the cause of breaking the realm apart - great lords with a local
+# or minority cause standing together (another powerful vassal beside the head) against a king or an emperor. (A lone
+# great lord with a local cause asks for independence.)
+lam_rv_fracture_cause_trigger = {
+	OR = {
+		var:lam_fac_agenda ?= flag:parochial
+		var:lam_fac_agenda ?= flag:minority
+	}
+	liege ?= {
+		highest_held_title_tier >= tier_kingdom
+	}
+	any_in_list = {
+		variable = lam_fac_members
+		is_alive = yes
+		NOT = {
+			this = prev
+		}
+		var:lam_bloc ?= prev
+		is_powerful_vassal = yes
+	}
+}
+# This = a player: leads a gathered coalition whose ultimatum has not gone out yet.
+lam_rv_can_send_trigger = {
+	is_ai = no
+	joined_faction ?= {
+		has_variable = lam_pb_managed
+		has_variable = lam_pb_approved
+		NOT = {
+			has_variable = lam_pb_sent
+		}
+		faction_is_at_war = no
+		faction_leader ?= {
+			this = root
+		}
+	}
+}

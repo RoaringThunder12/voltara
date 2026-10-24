@@ -228,7 +228,7 @@ is_valid = {
 				}
 			}
 			trigger_if = {
-				limit = { scope:target = title:k_fashion }
+				limit = { always = no }
 				NOT = { scope:target = title:k_fashion }
 			}
 			custom_tooltip = {
@@ -263,7 +263,7 @@ is_valid = {
 			trigger_if = {
 				limit = {
 					exists = situation:the_christian_church
-					this = title:k_papal_state
+					always = no
 				}
 				custom_tooltip = {
 					text = GRANT_TITLES_ITEM_CANT_HEAD_OF_FAITH
@@ -1832,7 +1832,7 @@ is_valid = {
 			}
 
 			trigger_if = {
-				limit = { scope:target = title:k_fashion }
+				limit = { always = no }
 				NOT = { scope:target = title:k_fashion }
 			}
 		}
@@ -2461,9 +2461,10 @@ is_valid = {
 			}
 		}
 		# TGP Catalyst - triggered in on_title_gain
-		if = {
-			limit = {
-				title:h_china.holder ?= scope:puppet_or_actor
+		if = { limit = {
+				# Optional native title is absent on the Voltara map.
+# title:h_china.holder ?= scope:puppet_or_actor
+always = no
 				any_in_list = {
 					list = target_titles
 					OR = {
@@ -2485,22 +2486,21 @@ is_valid = {
 						}
 					}
 				}
-			}
-			show_as_tooltip = {
-				situation:dynastic_cycle ?= {
-					if = {
-						limit = {
-							situation_top_has_catalyst = catalyst_hegemon_appointing_low_merit_governor
-							title:h_china.holder = scope:puppet_or_actor
-						}
-						trigger_situation_catalyst = {
-							catalyst = catalyst_hegemon_appointing_low_merit_governor
-							character =  scope:recipient
-						}
-					}
-				}
-			}
-		}
+			} # Proven unreachable; original effects retained below.
+# show_as_tooltip = {
+# 				situation:dynastic_cycle ?= {
+# 					if = { limit = {
+# 							situation_top_has_catalyst = catalyst_hegemon_appointing_low_merit_governor
+# 							always = no
+# 						} # Proven unreachable; original effects retained below.
+# # trigger_situation_catalyst = {
+# # 							catalyst = catalyst_hegemon_appointing_low_merit_governor
+# # 							character =  scope:recipient
+# # 						}
+# }
+# 				}
+# 			}
+}
 		#Opinion loss with underlings who think they should get the title you're granting
 		if = {
 			limit = {

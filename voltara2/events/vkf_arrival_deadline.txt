@@ -1,0 +1,12 @@
+﻿namespace = vkf_arrivals
+# Saved activity scope belongs to this council, never a later replacement council.
+vkf_arrivals.1 = {
+ hidden = yes
+ trigger = {
+  exists = scope:activity exists = scope:host
+  this = scope:host
+  is_participant_in_activity = scope:activity
+  scope:activity = { has_activity_type = activity_vkf_war_council }
+ }
+ immediate = { vkf_close_council_arrivals = yes vkf_release_summons_gate = yes }
+}

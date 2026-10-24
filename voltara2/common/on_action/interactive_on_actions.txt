@@ -154,7 +154,7 @@ interactive_game_start_after_lobby = {
 		}
 		if = {
 			limit = {
-				NOT = { exists = title:e_hre }
+				NOT = { always = no }
 			}
 			set_global_variable = miv_no_hre
 		}
@@ -209,18 +209,20 @@ interactive_game_start_after_lobby = {
 					trigger_event = conqueror.0001
 				}
 			}
-			character:163101 ?= {
-				if = {
-					limit = {
-						highest_held_title_tier = tier_kingdom
-						OR = {
-							is_ai = yes
-							has_game_rule = miv_starting_conquerors_miv_players
-						}
-					}
-					trigger_event = conqueror.0001
-				}
-			}
+			# Native historical character does not exist in Voltara; original follows.
+# character:163101 ?= {
+# 				if = {
+# 					limit = {
+# 						highest_held_title_tier = tier_kingdom
+# 						OR = {
+# 							is_ai = yes
+# 							has_game_rule = miv_starting_conquerors_miv_players
+# 						}
+# 					}
+# 					trigger_event = conqueror.0001
+# 				}
+# 			}
+
 		}
 		if = {
 			limit = {
@@ -272,31 +274,10 @@ interactive_game_start = {
 				value = yes
 			}
 		}
-		if = {
-			limit = {
+		if = { limit = {
 				always = no
-			}
-			set_global_variable = {
-				name = AGOT_is_loaded
-				value = yes
-			}
-			random_living_character = {
-				set_variable = {
-					name = current_rider
-					value = yes
-				}
-				set_variable = {
-					name = agot_pwl_direct
-					value = yes
-				}
-				add_character_flag = owned_dragon
-				add_to_variable_list = {
-					name = kingsguard_members
-					target = this
-				}
-				save_temporary_scope_as = miv_enemy
-			}
-		}
+			} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 		if = {
 			limit = {
 				has_game_rule = scourge_of_the_gods_miv_enabled_100
@@ -391,41 +372,25 @@ interactive_game_start = {
 				add_to_list = miv_map_generation_placeholders
 			}
 		}
-		if = {
-			limit = {
+		if = { limit = {
 				OR = {
 					has_game_rule = shattered_world_miv_enabled
 					has_game_rule = divided_china_miv_enabled
 				}
 				exists = situation:dynastic_cycle
-				exists = title:h_china
-				exists = title:h_china.holder
-			}
-			situation:dynastic_cycle = {
-				situation_top_sub_region = {
-					change_phase = {
-						phase = situation_dynastic_cycle_phase_chaos
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_game_rule = divided_china_miv_enabled
-				}
-				interactive_divided_china_effect = yes
-			}
-		}
-		if = {
-			limit = {
+				always = no
+				always = no
+			} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
+		if = { limit = {
 				OR = {
 					has_game_rule = divided_japan_miv_enabled
 					has_game_rule = shattered_world_miv_enabled
 				}
-				exists = title:e_japan
-				exists = title:e_japan.holder
-			}
-			interactive_divided_japan_effect = yes
-		}
+				always = no
+				always = no
+			} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 		if = {
 			limit = {
 				has_game_rule = shattered_world_miv_enabled
@@ -1305,8 +1270,7 @@ interactive_war_started = {
 				}
 			}
 		}
-		if = {
-			limit = {
+		if = { limit = {
 				always = no
 				NOT = {
 					has_game_rule = bannermen_mode_enabled
@@ -1331,194 +1295,8 @@ interactive_war_started = {
 						is_vassal_or_below_of = scope:defender
 					}
 				}
-			}
-			scope:defender = {
-				every_vassal_or_below = {
-					if = {
-						limit = {
-							NOT = {
-								scope:defender = {
-									has_character_flag = dont_call_vassals
-								}
-							}
-							highest_held_title_tier > tier_barony
-							max_military_strength > interactive_minimum_vassal_strength
-							interactive_vassal_government_eligibility_trigger = yes
-							any_sub_realm_county = {
-								any_neighboring_county = {
-									holder = {
-										OR = {
-											is_vassal_or_below_of = scope:attacker
-											this = scope:attacker
-										}
-									}
-								}
-							}
-							OR = {
-								opinion = {
-									target = liege
-									value > 5
-								}
-								has_game_rule = defiant_vassals_disabled
-							}
-							NOT = {
-								is_at_war_with = scope:attacker
-							}
-							NOT = {
-								is_at_war_with = scope:defender
-							}
-							NOT = {
-								is_at_war_with = liege
-							}
-							liege = {
-								NOT = {
-									is_at_war_with = scope:defender
-								}
-							}
-							OR = {
-								interactive_bannermen_is_rebel_trigger = {
-									LIEGE = scope:defender
-								}
-								has_game_rule = defiant_vassals_disabled
-								AND = {
-									NOT = {
-										interactive_bannermen_is_rebel_trigger = {
-											LIEGE = scope:defender
-										}
-									}
-									liege = {
-										OR = {
-											AND = {
-												is_at_war_with = scope:attacker
-												opinion = {
-													target = liege
-													value > -5
-												}
-											}
-											AND = {
-												NOT = {
-													is_at_war_with = scope:attacker
-												}
-												opinion = {
-													target = liege
-													value > 5
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-						scope:war = {
-							add_defender = prev
-						}
-						if = {
-							limit = {
-								NOT = {
-									has_game_rule = war_exhaustion_miv_disabled
-								}
-							}
-							add_opinion = {
-								target = liege
-								modifier = war_exhaustion_vassal_opinion
-								opinion = -10
-							}
-						}
-					}
-				}
-			}
-			scope:attacker = {
-				every_vassal_or_below = {
-					if = {
-						limit = {
-							NOT = {
-								scope:attacker = {
-									has_character_flag = dont_call_vassals
-								}
-							}
-							highest_held_title_tier > tier_barony
-							max_military_strength > interactive_minimum_vassal_strength
-							interactive_vassal_government_eligibility_trigger = yes
-							any_sub_realm_county = {
-								any_neighboring_county = {
-									holder = {
-										OR = {
-											is_vassal_or_below_of = scope:defender
-											this = scope:defender
-										}
-									}
-								}
-							}
-							OR = {
-								opinion = {
-									target = liege
-									value > 10
-								}
-								has_game_rule = defiant_vassals_disabled
-							}
-							NOT = {
-								is_at_war_with = scope:defender
-							}
-							NOT = {
-								is_at_war_with = scope:attacker
-							}
-							NOT = {
-								is_at_war_with = liege
-							}
-							liege = {
-								NOT = {
-									is_at_war_with = scope:attacker
-								}
-							}
-							OR = {
-								is_vassal_of = scope:attacker
-								has_game_rule = defiant_vassals_disabled
-								AND = {
-									NOT = {
-										is_vassal_of = scope:attacker
-									}
-									liege = {
-										OR = {
-											AND = {
-												is_at_war_with = scope:defender
-												opinion = {
-													target = liege
-													value > -5
-												}
-											}
-											AND = {
-												NOT = {
-													is_at_war_with = scope:defender
-												}
-												opinion = {
-													target = liege
-													value > 10
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-						scope:war = {
-							add_attacker = prev
-						}
-						if = {
-							limit = {
-								NOT = {
-									has_game_rule = war_exhaustion_miv_disabled
-								}
-							}
-							add_opinion = {
-								target = liege
-								modifier = war_exhaustion_vassal_opinion
-								opinion = -10
-							}
-						}
-					}
-				}
-			}
-		}
+			} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 		if = {
 			limit = {
 				has_game_rule = miv_oathbreakers_enabled
@@ -1705,8 +1483,7 @@ interactive_war_started = {
 
 interactive_bannermen = {
 	effect = {
-		if = {
-			limit = {
+		if = { limit = {
 				always = no
 				NOT = {
 					has_game_rule = bannermen_mode_enabled
@@ -1731,133 +1508,14 @@ interactive_bannermen = {
 						is_vassal_or_below_of = scope:defender
 					}
 				}
-			}
-			scope:defender = {
-				every_vassal = {
-					limit = {
-						NOT = {
-							scope:defender = {
-								has_character_flag = dont_call_vassals
-							}
-						}
-						OR = {
-							AND = {
-								scope:defender = {
-									highest_held_title_tier < tier_empire
-								}
-								NOT = {
-									scope:defender = {
-										any_held_title = {
-											count >= 2
-											tier = tier_kingdom
-										}
-									}
-								}
-								highest_held_title_tier > tier_barony
-							}
-							highest_held_title_tier > tier_county
-						}
-						max_military_strength > interactive_minimum_vassal_strength
-						is_landed = yes
-					}
-					if = {
-						limit = {
-							opinion = {
-								target = scope:defender
-								value > 15
-							}
-							NOT = {
-								is_at_war_with = scope:attacker
-							}
-							NOT = {
-								is_at_war_with = scope:defender
-							}
-						}
-						scope:war = {
-							add_defender = prev
-						}
-						if = {
-							limit = {
-								NOT = {
-									has_game_rule = war_exhaustion_miv_disabled
-								}
-							}
-							add_opinion = {
-								target = scope:defender
-								modifier = war_exhaustion_vassal_opinion
-								opinion = -10
-							}
-						}
-					}
-				}
-			}
-			scope:attacker = {
-				every_vassal = {
-					limit = {
-						NOT = {
-							scope:attacker = {
-								has_character_flag = dont_call_vassals
-							}
-						}
-						OR = {
-							AND = {
-								scope:attacker = {
-									highest_held_title_tier < tier_empire
-								}
-								NOT = {
-									scope:attacker = {
-										any_held_title = {
-											count >= 2
-											tier = tier_kingdom
-										}
-									}
-								}
-								highest_held_title_tier > tier_barony
-							}
-							highest_held_title_tier > tier_county
-						}
-						max_military_strength > interactive_minimum_vassal_strength
-						is_landed = yes
-					}
-					if = {
-						limit = {
-							opinion = {
-								target = scope:attacker
-								value > 20
-							}
-							NOT = {
-								is_at_war_with = scope:defender
-							}
-							NOT = {
-								is_at_war_with = scope:attacker
-							}
-						}
-						scope:war = {
-							add_attacker = prev
-						}
-						if = {
-							limit = {
-								NOT = {
-									has_game_rule = war_exhaustion_miv_disabled
-								}
-							}
-							add_opinion = {
-								target = scope:attacker
-								modifier = war_exhaustion_vassal_opinion
-								opinion = -10
-							}
-						}
-					}
-				}
-			}
-		}
+			} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 	}
 }
 
 interactive_war_participants = {
 	effect = {
-		if = {
-			limit = {
+		if = { limit = {
 				always = no
 				OR = {
 					has_game_rule = bannermen_mode_enabled
@@ -1880,106 +1538,8 @@ interactive_war_participants = {
 				NOT = {
 					interactive_start_date = current_date
 				}
-			}
-			scope:war = {
-				every_war_participant = {
-					limit = {
-						OR = {
-							is_vassal_of = scope:war.primary_attacker
-							interactive_bannermen_is_rebel_trigger = {
-								LIEGE = scope:war.primary_defender
-							}
-						}
-					}
-					save_scope_as = participant
-					scope:participant = {
-						every_ally = {
-							limit = {
-								is_vassal_of = scope:participant
-								NOT = {
-									scope:participant = {
-										has_character_flag = dont_call_vassals
-									}
-								}
-								highest_held_title_tier > tier_barony
-								max_military_strength > interactive_minimum_vassal_strength
-								is_landed = yes
-								opinion = {
-									target = scope:participant
-									value >= 80
-								}
-							}
-							if = {
-								limit = {
-									NOT = {
-										is_at_war_with = scope:war.primary_attacker
-									}
-									NOT = {
-										is_at_war_with = scope:war.primary_defender
-									}
-								}
-								if = {
-									limit = {
-										scope:war = {
-											any_war_defender = {
-												this = scope:participant
-											}
-										}
-									}
-									add_to_list = miv_join_defender
-									if = {
-										limit = {
-											NOT = {
-												has_game_rule = war_exhaustion_miv_disabled
-											}
-										}
-										add_opinion = {
-											target = scope:participant
-											modifier = war_exhaustion_vassal_opinion
-											opinion = -5
-										}
-									}
-								}
-								else_if = {
-									limit = {
-										scope:war = {
-											any_war_attacker = {
-												this = scope:participant
-											}
-										}
-									}
-									add_to_list = miv_join_attacker
-									if = {
-										limit = {
-											NOT = {
-												has_game_rule = war_exhaustion_miv_disabled
-											}
-										}
-										add_opinion = {
-											target = scope:participant
-											modifier = war_exhaustion_vassal_opinion
-											opinion = -5
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			every_in_list = {
-				list = miv_join_defender
-				scope:war = {
-					add_defender = prev
-				}
-			}
-			every_in_list = {
-				list = miv_join_attacker
-				scope:war = {
-					add_attacker = prev
-				}
-			}
-		}
+			} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 	}
 }
 
@@ -2162,19 +1722,10 @@ miv_accolade_artifact_watch = {
 
 miv_accolade_artifact_register_gui_scopes = {
 	effect = {
-		if = {
-			limit = {
+		if = { limit = {
 				always = no
-			}
-			random_living_character = {
-				random_character_artifact = {
-					save_scope_as = miv_accolade_artifact_artifact
-				}
-				random_accolade = {
-					save_scope_as = miv_accolade_artifact_accolade
-				}
-			}
-		}
+			} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 	}
 }
 

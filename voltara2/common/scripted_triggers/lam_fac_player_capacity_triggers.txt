@@ -1,0 +1,68 @@
+﻿lam_ff_normal_seat_open_trigger = {
+	OR = {
+		NOT = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				count >= 2
+			}
+		}
+		AND = {
+			any_vassal = {
+				lam_fac_peer_trigger = yes
+				count >= 8
+			}
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					count >= 3
+				}
+			}
+		}
+		AND = {
+			any_vassal = {
+				lam_fac_peer_trigger = yes
+				count >= 15
+			}
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					count >= 4
+				}
+			}
+		}
+		AND = {
+			any_vassal = {
+				lam_fac_peer_trigger = yes
+				count >= 25
+			}
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					count >= 5
+				}
+			}
+		}
+	}
+}
+lam_ff_player_seat_open_trigger = {
+	lam_ev_player_seat_trigger = yes
+}
+lam_ff_has_player_capacity_trigger = {
+	is_ai = no
+	OR = {
+		AND = {
+			any_vassal = {
+				lam_fac_peer_trigger = yes
+			}
+			lam_fac_realm_in_scope_trigger = yes
+			lam_ff_player_seat_open_trigger = yes
+		}
+		liege ?= {
+			lam_fac_realm_in_scope_trigger = yes
+			lam_ff_player_seat_open_trigger = yes
+			any_vassal = {
+				lam_fac_peer_trigger = yes
+			}
+		}
+	}
+}

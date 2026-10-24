@@ -1,0 +1,12 @@
+﻿vkj_in_jungle = { location = { geographical_region = world_vkj_kedith terrain = jungle } }
+vkj_traveller = { is_alive = yes is_adult = yes is_available_travelling = yes vkj_in_jungle = yes NOT = { has_trait = dragon } NOT = { has_character_flag = vkj_encounter_cooldown } }
+vkw_kedith = { is_landed = yes NOT = { voltara_is_ruins_placeholder = yes } OR = { has_title = title:e_voltara_kedith any_liege_or_above = { has_title = title:e_voltara_kedith } capital_county = { de_jure_liege.de_jure_liege.de_jure_liege = title:e_voltara_kedith } } }
+vkw_halithor = { is_landed = yes NOT = { voltara_is_ruins_placeholder = yes } OR = { has_title = title:e_voltara_halithor any_liege_or_above = { has_title = title:e_voltara_halithor } capital_county = { de_jure_liege.de_jure_liege.de_jure_liege = title:e_voltara_halithor } } NOT = { vkw_kedith = yes } }
+vkw_actor = { OR = { vkw_kedith = yes vkw_halithor = yes } }
+vkw_frontier_county = { tier = tier_county title_province = { geographical_region = world_vkw_frontier } }
+vkw_colony = { vkw_frontier_county = yes NOT = { has_variable = voltara_ruin_state } holder = { NOT = { voltara_is_ruins_placeholder = yes } } }
+vkw_colonial_ruler = { vkw_actor = yes any_held_title = { vkw_colony = yes } }
+vkw_primacy_ready = { vkw_actor = yes NOT = { has_global_variable = vkw_primacy } global_var:vkw_grievance < 60
+ OR = { AND = { vkw_kedith = yes global_var:vkw_kedith_score >= 100 any_county = { count >= 3 vkw_colony = yes holder = { vkw_kedith = yes } } }
+ AND = { vkw_halithor = yes global_var:vkw_halithor_score >= 100 any_county = { count >= 3 vkw_colony = yes holder = { vkw_halithor = yes } } } }
+ }

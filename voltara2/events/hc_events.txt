@@ -1,0 +1,628 @@
+﻿namespace = hc_house_customizer
+
+
+hc_house_customizer.0001 = {
+    type = character_event
+    title = hc_house_customizer.0001.t
+    desc = hc_house_customizer.0001.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    immediate = {
+        save_scope_value_as = {
+            name = hc_actor_age
+            value = age
+        }
+
+        save_scope_value_as = {
+            name = hc_actor_age_plus_12
+            value = {
+                value = age
+                add = 12
+            }
+        }
+
+        if = {
+            limit = {
+                scope:hc_target = {
+                    is_female = yes
+                }
+            }
+
+            scope:hc_target = {
+                random_spouse = {
+                    limit = {
+                        is_female = no
+                        age >= scope:hc_actor_age_plus_12
+                    }
+
+                    save_scope_as = hc_target_spouse_parent
+                }
+            }
+        }
+
+        else = {
+            scope:hc_target = {
+                random_spouse = {
+                    limit = {
+                        is_female = yes
+                        age >= scope:hc_actor_age_plus_12
+                    }
+
+                    save_scope_as = hc_target_spouse_parent
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                scope:hc_target = {
+                    exists = father
+                }
+            }
+
+            scope:hc_target = {
+                father = {
+                    save_scope_as = hc_candidate_sibling_father
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                exists = scope:hc_candidate_sibling_father
+
+                scope:hc_candidate_sibling_father = {
+                    hc_parent_alive_when_root_was_born_trigger = yes
+                }
+            }
+
+            scope:hc_candidate_sibling_father = {
+                save_scope_as = hc_valid_sibling_father
+            }
+        }
+
+        if = {
+            limit = {
+                scope:hc_target = {
+                    exists = mother
+                }
+            }
+
+            scope:hc_target = {
+                mother = {
+                    save_scope_as = hc_candidate_sibling_mother
+                }
+            }
+        }
+
+        if = {
+            limit = {
+                exists = scope:hc_candidate_sibling_mother
+                can_be_child_of = scope:hc_candidate_sibling_mother
+
+                scope:hc_candidate_sibling_mother = {
+                    hc_parent_alive_when_root_was_born_trigger = yes
+                }
+            }
+
+            scope:hc_candidate_sibling_mother = {
+                save_scope_as = hc_valid_sibling_mother
+            }
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0001.become_child
+
+        trigger = {
+            scope:hc_target = {
+                age >= scope:hc_actor_age_plus_12
+            }
+        }
+
+        custom_tooltip = hc_house_customizer.tt.become_child
+
+        if = {
+            limit = {
+                exists = scope:hc_target_spouse_parent
+            }
+
+            custom_tooltip = hc_house_customizer.tt.second_parent
+        }
+
+        hc_become_child_effect = yes
+
+        trigger_event = {
+            id = hc_house_customizer.0201
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0001.become_sibling
+
+        trigger = {
+            OR = {
+                exists = scope:hc_valid_sibling_father
+                exists = scope:hc_valid_sibling_mother
+            }
+        }
+
+        custom_tooltip = hc_house_customizer.tt.become_sibling
+
+        if = {
+            limit = {
+                exists = scope:hc_valid_sibling_father
+            }
+
+            custom_tooltip = hc_house_customizer.tt.shared_father
+        }
+
+        if = {
+            limit = {
+                exists = scope:hc_valid_sibling_mother
+            }
+
+            custom_tooltip = hc_house_customizer.tt.shared_mother
+        }
+
+        hc_become_sibling_effect = yes
+
+        trigger_event = {
+            id = hc_house_customizer.0202
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0001.open_bastard_options
+
+        trigger = {
+            scope:hc_target = {
+                age >= scope:hc_actor_age_plus_12
+            }
+        }
+
+        custom_tooltip = hc_house_customizer.0001.open_bastard_options_tt
+
+        trigger_event = {
+            id = hc_house_customizer.0002
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0001.become_distant_relative
+
+        custom_tooltip = hc_house_customizer.tt.become_distant_relative
+
+        hc_become_distant_relative_effect = yes
+
+        trigger_event = {
+            id = hc_house_customizer.0206
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0001.cancel
+    }
+}
+
+
+hc_house_customizer.0002 = {
+    type = character_event
+    title = hc_house_customizer.0002.t
+    desc = hc_house_customizer.0002.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.0001.become_bastard
+
+        custom_tooltip = hc_house_customizer.tt.become_bastard
+        custom_tooltip = hc_house_customizer.tt.gain_bastard
+
+        if = {
+            limit = {
+                scope:hc_target = {
+                    is_female = yes
+                }
+            }
+
+            hc_create_random_father_effect = yes
+
+            scope:hc_random_father = {
+                save_scope_as = hc_generated_parent
+            }
+        }
+
+        else = {
+            hc_create_random_mother_effect = yes
+
+            scope:hc_random_mother = {
+                save_scope_as = hc_generated_parent
+            }
+        }
+
+        hc_become_known_bastard_effect = yes
+
+        trigger_event = {
+            id = hc_house_customizer.0203
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0001.become_legitimized_bastard
+
+        custom_tooltip = hc_house_customizer.tt.become_legitimized_bastard
+        custom_tooltip = hc_house_customizer.tt.gain_legitimized_bastard
+
+        if = {
+            limit = {
+                scope:hc_target = {
+                    is_female = yes
+                }
+            }
+
+            hc_create_random_father_effect = yes
+
+            scope:hc_random_father = {
+                save_scope_as = hc_generated_parent
+            }
+        }
+
+        else = {
+            hc_create_random_mother_effect = yes
+
+            scope:hc_random_mother = {
+                save_scope_as = hc_generated_parent
+            }
+        }
+
+        hc_become_legitimized_bastard_effect = yes
+
+        trigger_event = {
+            id = hc_house_customizer.0204
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0002.back
+
+        trigger_event = {
+            id = hc_house_customizer.0001
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0002.cancel
+    }
+}
+
+
+hc_house_customizer.0201 = {
+    type = character_event
+    title = hc_house_customizer.0200.t
+    desc = hc_house_customizer.0200.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.0200.adopt
+        custom_tooltip = hc_house_customizer.0200.adopt_tt
+
+        copy_inheritable_appearance_from = scope:hc_target
+
+        trigger_event = {
+            id = hc_house_customizer.0301
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0200.keep
+
+        trigger_event = {
+            id = hc_house_customizer.0301
+        }
+    }
+}
+
+
+hc_house_customizer.0202 = {
+    type = character_event
+    title = hc_house_customizer.0200.t
+    desc = hc_house_customizer.0200.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.0200.adopt
+        custom_tooltip = hc_house_customizer.0200.adopt_tt
+
+        copy_inheritable_appearance_from = scope:hc_target
+
+        trigger_event = {
+            id = hc_house_customizer.0302
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0200.keep
+
+        trigger_event = {
+            id = hc_house_customizer.0302
+        }
+    }
+}
+
+
+hc_house_customizer.0203 = {
+    type = character_event
+    title = hc_house_customizer.0200.t
+    desc = hc_house_customizer.0200.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.0200.adopt
+        custom_tooltip = hc_house_customizer.0200.adopt_tt
+
+        copy_inheritable_appearance_from = scope:hc_target
+
+        trigger_event = {
+            id = hc_house_customizer.0103
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0200.keep
+
+        trigger_event = {
+            id = hc_house_customizer.0103
+        }
+    }
+}
+
+
+hc_house_customizer.0204 = {
+    type = character_event
+    title = hc_house_customizer.0200.t
+    desc = hc_house_customizer.0200.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.0200.adopt
+        custom_tooltip = hc_house_customizer.0200.adopt_tt
+
+        copy_inheritable_appearance_from = scope:hc_target
+
+        trigger_event = {
+            id = hc_house_customizer.0304
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0200.keep
+
+        trigger_event = {
+            id = hc_house_customizer.0304
+        }
+    }
+}
+
+
+hc_house_customizer.0206 = {
+    type = character_event
+    title = hc_house_customizer.0200.t
+    desc = hc_house_customizer.0200.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.0200.adopt
+        custom_tooltip = hc_house_customizer.0200.adopt_tt
+
+        copy_inheritable_appearance_from = scope:hc_target
+
+        trigger_event = {
+            id = hc_house_customizer.0306
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0200.keep
+
+        trigger_event = {
+            id = hc_house_customizer.0306
+        }
+    }
+}
+
+
+
+hc_house_customizer.0301 = {
+    type = character_event
+    title = hc_house_customizer.0300.t
+    desc = hc_house_customizer.0301.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.0300.claim_pressed
+        custom_tooltip = hc_house_customizer.0300.claim_pressed_tt
+
+        hc_gain_pressed_claims_from_target_titles_effect = yes
+
+        trigger_event = {
+            id = hc_house_customizer.0101
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0300.no_claims
+
+        trigger_event = {
+            id = hc_house_customizer.0101
+        }
+    }
+}
+
+hc_house_customizer.0302 = {
+    type = character_event
+    title = hc_house_customizer.0300.t
+    desc = hc_house_customizer.0302.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.0300.claim_unpressed
+        custom_tooltip = hc_house_customizer.0300.claim_unpressed_tt
+
+        hc_gain_unpressed_claims_from_target_titles_effect = yes
+
+        trigger_event = {
+            id = hc_house_customizer.0102
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0300.no_claims
+
+        trigger_event = {
+            id = hc_house_customizer.0102
+        }
+    }
+}
+
+hc_house_customizer.0304 = {
+    type = character_event
+    title = hc_house_customizer.0300.t
+    desc = hc_house_customizer.0304.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.0300.claim_unpressed
+        custom_tooltip = hc_house_customizer.0300.claim_unpressed_tt
+
+        hc_gain_unpressed_claims_from_target_titles_effect = yes
+
+        trigger_event = {
+            id = hc_house_customizer.0104
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0300.no_claims
+
+        trigger_event = {
+            id = hc_house_customizer.0104
+        }
+    }
+}
+
+hc_house_customizer.0306 = {
+    type = character_event
+    title = hc_house_customizer.0300.t
+    desc = hc_house_customizer.0306.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.0300.claim_unpressed
+        custom_tooltip = hc_house_customizer.0300.claim_distant_tt
+
+        hc_gain_unpressed_claims_from_target_titles_effect = yes
+
+        trigger_event = {
+            id = hc_house_customizer.0106
+        }
+    }
+
+    option = {
+        name = hc_house_customizer.0300.no_claims
+
+        trigger_event = {
+            id = hc_house_customizer.0106
+        }
+    }
+}
+
+hc_house_customizer.0101 = {
+    type = character_event
+    title = hc_house_customizer.0101.t
+    desc = hc_house_customizer.0101.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.ok
+    }
+}
+
+
+hc_house_customizer.0102 = {
+    type = character_event
+    title = hc_house_customizer.0102.t
+    desc = hc_house_customizer.0102.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.ok
+    }
+}
+
+
+hc_house_customizer.0103 = {
+    type = character_event
+    title = hc_house_customizer.0103.t
+    desc = hc_house_customizer.0103.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.ok
+    }
+}
+
+
+hc_house_customizer.0104 = {
+    type = character_event
+    title = hc_house_customizer.0104.t
+    desc = hc_house_customizer.0104.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.ok
+    }
+}
+
+
+hc_house_customizer.0106 = {
+    type = character_event
+    title = hc_house_customizer.0106.t
+    desc = hc_house_customizer.0106.desc
+    theme = diplomacy
+    left_portrait = root
+    right_portrait = scope:hc_target
+
+    option = {
+        name = hc_house_customizer.ok
+    }
+}

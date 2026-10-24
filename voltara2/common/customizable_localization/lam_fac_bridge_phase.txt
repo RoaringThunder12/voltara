@@ -1,0 +1,25 @@
+﻿LamPbPhase = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_pb_front_phase ?= 1
+		}
+		localization_key = lam_pb_phase_gathering
+	}
+	text = {
+		trigger = {
+			var:lam_pb_front_phase ?= 3
+		}
+		localization_key = lam_pb_phase_sent
+	}
+	text = {
+		trigger = {
+			var:lam_pb_front_phase ?= 4
+		}
+		localization_key = lam_pb_phase_war
+	}
+	text = {
+		fallback = yes
+		localization_key = lam_pb_phase_ready
+	}
+}

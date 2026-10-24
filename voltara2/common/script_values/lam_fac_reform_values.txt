@@ -1,0 +1,519 @@
+﻿lam_cr_military_value = {
+	value = max_military_strength
+	min = 0
+	multiply = 20
+	divide = {
+		value = max_military_strength
+		min = 0
+		add = 4000
+	}
+	max = 20
+}
+lam_cr_economy_value = {
+	value = monthly_character_income
+	min = 0
+	multiply = 15
+	divide = {
+		value = monthly_character_income
+		min = 0
+		add = 10
+	}
+	max = 15
+}
+lam_cr_standing_value = {
+	value = prestige_level
+	min = 0
+	multiply = 1.5
+	if = {
+		limit = {
+			highest_held_title_tier >= tier_empire
+		}
+		add = 7.5
+	}
+	else_if = {
+		limit = {
+			highest_held_title_tier >= tier_kingdom
+		}
+		add = 6
+	}
+	else_if = {
+		limit = {
+			highest_held_title_tier >= tier_duchy
+		}
+		add = 4
+	}
+	else_if = {
+		limit = {
+			highest_held_title_tier >= tier_county
+		}
+		add = 2
+	}
+	max = 15
+}
+lam_cr_court_value = {
+	value = 0
+	if = {
+		limit = {
+			is_alive = yes
+		}
+		value = 0
+		if = {
+			limit = {
+				exists = liege
+				is_councillor_of = liege
+			}
+			add = 10
+		}
+		add = {
+			value = diplomacy
+			divide = 10
+			max = 2.5
+			min = 0
+		}
+		if = {
+			limit = {
+				OR = {
+					has_variable = lam_cr_access
+					var:lam_bloc ?= {
+						trigger_if = {
+							limit = {
+								is_alive = yes
+							}
+							has_variable = lam_cr_access
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				OR = {
+					has_variable = lam_cr_excluded
+					var:lam_bloc ?= {
+						trigger_if = {
+							limit = {
+								is_alive = yes
+							}
+							has_variable = lam_cr_excluded
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+			}
+			subtract = 3
+		}
+		max = 15
+		min = 0
+	}
+}
+lam_cr_network_value = {
+	value = 0
+	if = {
+		limit = {
+			is_alive = yes
+		}
+		value = 0
+		if = {
+			limit = {
+				exists = house
+				house.house_head = this
+			}
+			add = 3
+		}
+		if = {
+			limit = {
+				exists = dynasty
+			}
+			add = {
+				value = dynasty.dynasty_prestige_level
+				multiply = 0.5
+				max = 3
+				min = 0
+			}
+		}
+		if = {
+			limit = {
+				var:lam_bloc ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						is_alive = yes
+						has_variable = lam_bloc_lead
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						var:lam_bloc = this
+					}
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = var:lam_bloc.house
+							}
+							house ?= var:lam_bloc.house
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+				add = 2
+			}
+			if = {
+				limit = {
+					NOT = {
+						var:lam_bloc = this
+					}
+					is_close_family_of = var:lam_bloc
+				}
+				add = 2
+			}
+			if = {
+				limit = {
+					NOT = {
+						var:lam_bloc = this
+					}
+					OR = {
+						has_relation_friend = var:lam_bloc
+						has_relation_best_friend = var:lam_bloc
+					}
+				}
+				add = 2
+			}
+		}
+		max = 10
+	}
+}
+lam_cr_service_value = {
+	value = 0
+	if = {
+		limit = {
+			is_alive = yes
+		}
+		value = 0
+		if = {
+			limit = {
+				has_variable = lam_bloc_lead
+			}
+			add = 3
+		}
+		else_if = {
+			limit = {
+				var:lam_fac_tier ?= 1
+			}
+			add = 2
+		}
+		else_if = {
+			limit = {
+				var:lam_fac_tier ?= 2
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_cr_since_m
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = var:lam_bloc
+						}
+						var:lam_cr_service_head ?= var:lam_bloc
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			add = {
+				value = lam_now_m
+				subtract = var:lam_cr_since_m
+				divide = 12
+				max = 6
+				min = 0
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_merit
+			}
+			add = 3
+		}
+		if = {
+			limit = {
+				has_variable = lam_cr_recognized
+			}
+			add = 3
+		}
+		if = {
+			limit = {
+				has_variable = lam_cr_service
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = var:lam_bloc
+						}
+						var:lam_cr_service_head ?= var:lam_bloc
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			add = var:lam_cr_service
+		}
+		max = 15
+		min = 0
+	}
+}
+lam_cr_influence_value = {
+	value = 0
+	if = {
+		limit = {
+			is_alive = yes
+		}
+		value = 10
+		add = lam_cr_military_value
+		add = lam_cr_economy_value
+		add = lam_cr_standing_value
+		add = lam_cr_court_value
+		add = lam_cr_network_value
+		add = lam_cr_service_value
+		max = 100
+		min = 10
+	}
+}
+lam_cr_vote_weight_value = {
+	value = lam_cr_influence_value
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				var:lam_cr_issue ?= flag:rise
+			}
+		}
+		add = {
+			value = lam_cr_military_value
+			multiply = 0.5
+		}
+		add = {
+			value = martial
+			divide = 4
+			max = 5
+			min = 0
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				OR = {
+					var:lam_cr_issue ?= flag:court
+					var:lam_cr_issue ?= flag:withdraw
+				}
+			}
+		}
+		add = {
+			value = lam_cr_court_value
+			multiply = 0.5
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				OR = {
+					var:lam_cr_issue ?= flag:heir
+					var:lam_cr_issue ?= flag:crown
+				}
+			}
+		}
+		add = {
+			value = lam_cr_standing_value
+			multiply = 0.5
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head = {
+				var:lam_cr_issue ?= flag:confidence
+			}
+		}
+		add = {
+			value = lam_cr_service_value
+			multiply = 0.5
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_bloc_lead
+		}
+		multiply = 1.5
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_tier ?= 1
+		}
+		multiply = 1.25
+	}
+	min = 10
+	max = 175
+}
+lam_cr_ballot_share_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_cr_weight
+			var:lam_cr_ballot_head ?= {
+				has_variable = lam_cr_total
+				var:lam_cr_total > 0
+			}
+		}
+		value = var:lam_cr_weight
+		multiply = 100
+		divide = var:lam_cr_ballot_head.var:lam_cr_total
+	}
+}
+lam_cr_yes_pct_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_cr_total
+			var:lam_cr_total > 0
+		}
+		value = var:lam_cr_yes
+		multiply = 100
+		divide = var:lam_cr_total
+	}
+}
+lam_cr_no_pct_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_cr_total
+			var:lam_cr_total > 0
+		}
+		value = var:lam_cr_no
+		multiply = 100
+		divide = var:lam_cr_total
+	}
+}
+lam_cr_preview_rise_value = {
+	value = lam_cr_influence_value
+	add = {
+		value = lam_cr_military_value
+		multiply = 0.5
+	}
+	add = {
+		value = martial
+		divide = 4
+		min = 0
+		max = 5
+	}
+	if = {
+		limit = {
+			has_variable = lam_bloc_lead
+		}
+		multiply = 1.5
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_tier ?= 1
+		}
+		multiply = 1.25
+	}
+	min = 10
+	max = 175
+}
+lam_cr_preview_court_value = {
+	value = lam_cr_influence_value
+	add = {
+		value = lam_cr_court_value
+		multiply = 0.5
+	}
+	if = {
+		limit = {
+			has_variable = lam_bloc_lead
+		}
+		multiply = 1.5
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_tier ?= 1
+		}
+		multiply = 1.25
+	}
+	min = 10
+	max = 175
+}
+lam_cr_preview_heir_value = {
+	value = lam_cr_influence_value
+	add = {
+		value = lam_cr_standing_value
+		multiply = 0.5
+	}
+	if = {
+		limit = {
+			has_variable = lam_bloc_lead
+		}
+		multiply = 1.5
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_tier ?= 1
+		}
+		multiply = 1.25
+	}
+	min = 10
+	max = 175
+}
+lam_cr_preview_crown_value = {
+	value = lam_cr_influence_value
+	add = {
+		value = lam_cr_standing_value
+		multiply = 0.5
+	}
+	if = {
+		limit = {
+			has_variable = lam_bloc_lead
+		}
+		multiply = 1.5
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_tier ?= 1
+		}
+		multiply = 1.25
+	}
+	min = 10
+	max = 175
+}
+lam_cr_preview_confidence_value = {
+	value = lam_cr_influence_value
+	add = {
+		value = lam_cr_service_value
+		multiply = 0.5
+	}
+	if = {
+		limit = {
+			has_variable = lam_bloc_lead
+		}
+		multiply = 1.5
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_tier ?= 1
+		}
+		multiply = 1.25
+	}
+	min = 10
+	max = 175
+}

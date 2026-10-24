@@ -1,0 +1,269 @@
+﻿lam_pb_legal_independence_faction_trigger = {
+	trigger_if = {
+		limit = {
+			exists = liege
+		}
+		save_temporary_scope_as = lam_pb_eligibility_actor
+		liege = {
+			save_temporary_scope_as = target
+		}
+		lam_pb_native_create_eligibility_trigger = {
+			FACTION_TARGET = scope:target
+		}
+		japan_faction_cohesion_trigger = yes
+		liege = {
+			top_liege = this
+		}
+		custom_description = {
+			text = character_blocked_from_joining
+			OR = {
+				is_ai = no
+				culture != scope:target.culture
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:target.faith
+						}
+						faith != scope:target.faith
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				NOT = {
+					scope:target = {
+						is_rightful_liege_of = scope:lam_pb_eligibility_actor
+					}
+				}
+				any_sub_realm_county = {
+					percent <= 0.5
+					save_temporary_scope_as = current_county
+					scope:target.primary_title = {
+						any_in_de_jure_hierarchy = {
+							AND = {
+								trigger_if = {
+									limit = {
+										exists = scope:current_county
+									}
+									this = scope:current_county
+								}
+								trigger_else = {
+									always = no
+								}
+							}
+						}
+					}
+				}
+				government_has_flag = government_is_nomadic
+			}
+		}
+		trigger_if = {
+			limit = {
+				faith.religion = religion:islam_religion
+				liege = {
+					# Original-world predicate is false on Voltara.
+# has_title = title:d_sunni
+always = no
+				}
+				# Original-world predicate is false on Voltara.
+# title:d_sunni = {
+# 					has_variable = dar_al_islam
+# 				}
+always = no
+			}
+			liege = {
+				NOT = {
+					# Original-world predicate is false on Voltara.
+# has_title = title:d_sunni
+always = no
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				government_has_mechanic = administrative
+			}
+			custom_tooltip = {
+				text = admin_high_tier_vassal_create_faction
+				highest_held_title_tier >= tier_kingdom
+			}
+		}
+		trigger_if = {
+			limit = {
+				liege = {
+					is_confederation_member = yes
+				}
+			}
+			custom_tooltip = {
+				text = confederaton_blocks_faction
+				NOR = {
+					government_has_flag = government_is_nomadic
+					government_has_flag = government_is_tribal
+				}
+			}
+		}
+		tgp_is_ceremonial_liege_trigger = no
+		custom_description = {
+			text = target_is_a_minister_desc
+			subject = this
+			tgp_is_any_minister = no
+		}
+		lam_pb_native_join_eligibility_trigger = {
+			FACTION_TARGET = scope:target
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_pb_legal_liberty_faction_trigger = {
+	trigger_if = {
+		limit = {
+			exists = liege
+		}
+		save_temporary_scope_as = lam_pb_eligibility_actor
+		liege = {
+			save_temporary_scope_as = target
+		}
+		lam_pb_native_create_eligibility_trigger = {
+			FACTION_TARGET = scope:target
+		}
+		japan_faction_cohesion_trigger = yes
+		has_valid_realm_laws_for_liberty_faction_trigger = {
+			TARGET = scope:target
+		}
+		trigger_if = {
+			limit = {
+				scope:target = {
+					government_has_mechanic = administrative
+				}
+			}
+			is_vassal_of = scope:target.top_liege
+		}
+		lam_pb_native_join_eligibility_trigger = {
+			FACTION_TARGET = scope:target
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_pb_legal_claimant_faction_trigger = {
+	trigger_if = {
+		limit = {
+			exists = liege
+		}
+		save_temporary_scope_as = lam_pb_eligibility_actor
+		liege = {
+			save_temporary_scope_as = target
+		}
+		lam_pb_native_create_eligibility_trigger = {
+			FACTION_TARGET = scope:target
+		}
+		var:lam_pb_claimant ?= {
+			is_alive = yes
+			has_claim_on = scope:target.primary_title
+		}
+		lam_pb_native_join_eligibility_trigger = {
+			FACTION_TARGET = scope:target
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_pb_legal_nation_fracturing_faction_trigger = {
+	trigger_if = {
+		limit = {
+			exists = liege
+		}
+		save_temporary_scope_as = lam_pb_eligibility_actor
+		liege = {
+			save_temporary_scope_as = target
+		}
+		lam_pb_native_create_eligibility_trigger = {
+			FACTION_TARGET = scope:target
+		}
+		japan_faction_cohesion_trigger = yes
+		tgp_realm_has_ceremonial_liege_trigger = no
+		liege = {
+			top_liege = this
+			NOT = {
+				government_has_flag = government_is_theocracy
+			}
+			custom_tooltip = {
+				text = nation_fracturing_faction.can_character_create_ui.blocked_by_struggle
+				NOT = {
+					any_held_title = {
+						has_variable = struggle_block_dissolution_faction
+					}
+				}
+			}
+		}
+		OR = {
+			is_powerful_vassal = yes
+			is_ai = no
+		}
+		trigger_if = {
+			limit = {
+				faith.religion = religion:islam_religion
+				liege = {
+					# Original-world predicate is false on Voltara.
+# has_title = title:d_sunni
+always = no
+				}
+				# Original-world predicate is false on Voltara.
+# title:d_sunni = {
+# 					has_variable = dar_al_islam
+# 				}
+always = no
+			}
+			liege = {
+				NOT = {
+					# Original-world predicate is false on Voltara.
+# has_title = title:d_sunni
+always = no
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				scope:target = {
+					government_has_mechanic = administrative
+				}
+			}
+			scope:target = {
+				save_temporary_scope_as = recipient
+			}
+			custom_tooltip = {
+				text = has_admin_gov
+				NOT = {
+					scope:target = {
+						government_has_mechanic = administrative
+					}
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				scope:target = {
+					# Original-world predicate is false on Voltara.
+# has_title = title:h_dar_al_islam
+always = no
+				}
+			}
+			custom_tooltip = {
+				text = dar_al_islam_faction_block_desc
+				NOT = {
+					faith.religion = religion:islam_religion
+				}
+			}
+		}
+		lam_pb_native_join_eligibility_trigger = {
+			FACTION_TARGET = scope:target
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}

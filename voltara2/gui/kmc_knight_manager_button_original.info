@@ -1,0 +1,97 @@
+﻿template kmc_knight_manager_button
+{
+	button_checkbox_label = {
+		layoutpolicy_horizontal = expanding
+		datacontext = "[GetScriptedGui('kmc_toggle_manually_allowed')]"
+		onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( Character.MakeScope ).End)]"
+		onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+		tooltip = "kmc_toggle_exclude_label_tt"
+
+		blockoverride "checkbox"
+		{
+			checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( Character.MakeScope ).End)]"
+		}
+
+			blockoverride "text"
+		{
+			text = "kmc_toggle_exclude_label"
+		}
+	}
+}
+
+template kmc_knight_manager_button_permissions
+{		
+	
+	hbox = {
+		spacing = 5
+		
+		background = {
+			using = Background_Area_Dark
+			alpha = 0.6
+			margin_left = 5
+			margin_right = 40
+			
+			modify_texture = {
+				texture = "gfx/interface/component_masks/mask_fade_horizontal_extended.dds"
+				blend_mode = alphamultiply
+			}
+		}
+	
+		button = {
+			shortcut = "knight_permissions"
+			onclick = "[GetVariableSystem.Toggle('knight_permissions')]"
+			enabled = "[GetPlayer.IsValid]"
+			tooltip = "KNIGHT_PERMISSIONS_TT"
+			
+			flowcontainer = {
+				spacing = 5
+				resizeparent = yes
+				parentanchor = bottom
+				ignoreinvisible = yes
+				
+				button_icon = {
+					texture = "gfx/interface/icons/flat_icons/knight.dds"
+					down = "[And(GetVariableSystem.Exists('knight_permissions'), GetPlayer.IsValid)]"
+					alwaystransparent = yes
+				}
+				
+				text_single = {
+					visible = "[Not( KnightsView.GetKnightPermissions.IsDefault )]"
+					raw_text = "@warning_icon!"
+					margin_left = -4
+					margin_top = 2
+				}
+				
+				text_single = {
+					default_format = "#clickable"
+					text = "KNIGHT_PERMISSIONS_SHORT"
+					min_height = 25
+					max_width = 180
+					margin_top = 5
+					align = nobaseline
+				}						
+			}
+		}
+		
+		button_checkbox_label = {
+			#max_width = 175
+			#layoutpolicy_horizontal = expanding
+			datacontext = "[GetScriptedGui('kmc_toggle_mp_active')]"
+			onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+			onclick = "[MilitaryView.SetKnightDefault( GetPlayer.Self )]"
+			tooltip = "kmc_toggle_mp_active_tt"
+
+			blockoverride "checkbox"
+			{
+				checked = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End)]"
+			}
+
+			blockoverride "text"
+			{
+				#text = "MULTI_PLAYER"
+				text = "kmc_toggle_mp_active"
+				default_format = "#P"
+			}
+		}
+	}
+}

@@ -1,0 +1,459 @@
+﻿lam_pol_refresh_engagement_effect = {
+	lam_pd_refresh_activity_effect = yes
+	every_in_list = {
+		variable = lam_fac_pool
+		limit = {
+			is_alive = yes
+			liege ?= scope:lam_bloc_lord
+		}
+		save_scope_value_as = {
+			name = lam_att
+			value = 0
+		}
+		if = {
+			limit = {
+				has_variable = lam_gui_att
+			}
+			save_scope_value_as = {
+				name = lam_att
+				value = var:lam_gui_att
+			}
+		}
+		lam_fac_engage_effect = yes
+	}
+}
+lam_pol_control_progress_effect = {
+	save_scope_as = lam_pw_lord
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+			liege ?= scope:lam_pw_lord
+		}
+		set_variable = {
+			name = lam_fac_ctrl_n
+			value = lam_pol_ctrl_count_value
+		}
+		if = {
+			limit = {
+				lam_pol_control_trigger = yes
+			}
+			if = {
+				limit = {
+					NOT = {
+						var:lam_pol_control_lord ?= liege
+					}
+				}
+				set_variable = {
+					name = lam_pol_control_lord
+					value = liege
+				}
+				set_variable = {
+					name = lam_pol_control_since
+					value = lam_now_m
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_pol_control_since
+					}
+				}
+				set_variable = {
+					name = lam_pol_control_since
+					value = lam_now_m
+				}
+			}
+			set_variable = {
+				name = lam_fac_control_q
+				value = {
+					value = lam_now_m
+					subtract = var:lam_pol_control_since
+					divide = 3
+					min = 0
+				}
+			}
+			if = {
+				limit = {
+					lam_pol_ready_trigger = yes
+					NOT = {
+						has_variable = lam_pol_offer_cd
+					}
+				}
+				set_variable = {
+					name = lam_pol_offer_cd
+					value = yes
+					years = 1
+				}
+				save_scope_as = lam_pm_lead
+				if = {
+					limit = {
+						is_ai = no
+					}
+					trigger_event = lam_faction.1400
+				}
+				else = {
+					random = {
+						chance = {
+							value = 25
+							if = {
+								limit = {
+									has_trait = ambitious
+								}
+								add = 35
+							}
+							if = {
+								limit = {
+									has_trait = arrogant
+								}
+								add = 15
+							}
+							if = {
+								limit = {
+									has_trait = content
+								}
+								add = -20
+							}
+							min = 0
+							max = 90
+						}
+						scope:lam_pw_lord = {
+							lam_fac_seize_effect = {
+								LEAD = scope:lam_pm_lead
+							}
+						}
+					}
+				}
+			}
+		}
+		else = {
+			lam_pol_clear_progress_effect = yes
+		}
+	}
+}
+lam_pol_release_cleanup_effect = {
+	if = {
+		limit = {
+			has_variable = lam_pol_weak_since
+		}
+		remove_variable = lam_pol_weak_since
+	}
+	var:lam_fac_puppet_master ?= {
+		if = {
+			limit = {
+				is_alive = yes
+			}
+			lam_pol_clear_progress_effect = yes
+		}
+	}
+}
+lam_pol_drop_state_effect = {
+	lam_pol_clear_progress_effect = yes
+	if = {
+		limit = {
+			has_variable = lam_pol_excluded_since
+		}
+		remove_variable = lam_pol_excluded_since
+	}
+	if = {
+		limit = {
+			has_variable = lam_pol_office_grudge
+		}
+		remove_variable = lam_pol_office_grudge
+	}
+	if = {
+		limit = {
+			has_variable = lam_pol_office_grudge_cd
+		}
+		remove_variable = lam_pol_office_grudge_cd
+	}
+	if = {
+		limit = {
+			has_variable = lam_pol_office_grudge_m
+		}
+		remove_variable = lam_pol_office_grudge_m
+	}
+	if = {
+		limit = {
+			has_variable = lam_pol_offer_cd
+		}
+		remove_variable = lam_pol_offer_cd
+	}
+}
+lam_pol_pass_state_effect = {
+	$TO$ = {
+		lam_pol_clear_progress_effect = yes
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pol_excluded_since
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pol_excluded_since
+				value = $FROM$.var:lam_pol_excluded_since
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pol_office_grudge_m
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pol_office_grudge_m
+				value = $FROM$.var:lam_pol_office_grudge_m
+			}
+		}
+	}
+}
+lam_pol_clear_progress_effect = {
+	if = {
+		limit = {
+			has_variable = lam_pol_control_since
+		}
+		remove_variable = lam_pol_control_since
+	}
+	if = {
+		limit = {
+			has_variable = lam_pol_control_lord
+		}
+		remove_variable = lam_pol_control_lord
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_control_q
+		}
+		remove_variable = lam_fac_control_q
+	}
+}
+lam_pol_try_seize_effect = {
+	save_scope_as = lam_pol_take_lord
+	$LEAD$ = {
+		save_scope_as = lam_pol_take_head
+	}
+	lam_fac_quick_refresh_effect = yes
+	if = {
+		limit = {
+			is_alive = yes
+			is_ruler = yes
+			NOT = {
+				has_variable = lam_fac_puppet_master
+			}
+			scope:lam_pol_take_head ?= {
+				is_alive = yes
+				is_adult = yes
+				is_imprisoned = no
+				NOT = {
+					this = scope:lam_pol_take_lord
+				}
+			}
+			OR = {
+				has_variable = lam_fac_puppet_vanilla
+				AND = {
+					exists = scope:lam_sh_inherit
+					scope:lam_pol_take_head = {
+						liege ?= scope:lam_pol_take_lord
+						lam_pol_keep_base_trigger = yes
+					}
+				}
+				scope:lam_pol_take_head = {
+					liege ?= scope:lam_pol_take_lord
+					lam_pol_ready_trigger = yes
+				}
+			}
+		}
+		lam_pol_grant_power_effect = {
+			LEAD = scope:lam_pol_take_head
+		}
+	}
+	else = {
+		scope:lam_pol_take_head ?= {
+			if = {
+				limit = {
+					is_ai = no
+				}
+				send_interface_message = {
+					type = event_generic_neutral
+					title = lam_pol_take_invalid
+				}
+			}
+		}
+	}
+}
+lam_pol_maintenance_effect = {
+	save_scope_as = lam_pol_held_lord
+	if = {
+		limit = {
+			has_variable = lam_fac_puppet_master
+			NOT = {
+				has_variable = lam_fac_puppet_vanilla
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					var:lam_fac_puppet_master ?= {
+						is_alive = yes
+						has_variable = lam_bloc_lead
+						liege ?= scope:lam_pol_held_lord
+					}
+				}
+			}
+			lam_fac_release_effect = yes
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					var:lam_fac_puppet_master = {
+						lam_pol_keep_base_trigger = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_pol_weak_since
+					}
+				}
+				set_variable = {
+					name = lam_pol_weak_since
+					value = lam_now_m
+				}
+			}
+			else_if = {
+				limit = {
+					var:lam_pol_weak_since <= {
+						value = lam_now_m
+						subtract = 6
+					}
+				}
+				lam_fac_release_effect = yes
+				remove_variable = lam_pol_weak_since
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					has_variable = lam_pol_weak_since
+				}
+				remove_variable = lam_pol_weak_since
+			}
+		}
+	}
+}
+lam_pol_office_balance_effect = {
+	save_scope_as = lam_pol_office_lord
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_fac_viewonly
+			}
+		}
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				liege ?= scope:lam_pol_office_lord
+			}
+			if = {
+				limit = {
+					lam_pol_office_excluded_trigger = yes
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_variable = lam_pol_excluded_since
+						}
+					}
+					set_variable = {
+						name = lam_pol_excluded_since
+						value = lam_now_m
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_pol_excluded_since <= {
+							value = lam_now_m
+							subtract = 12
+						}
+						OR = {
+							NOT = {
+								has_variable = lam_pol_office_grudge_m
+							}
+							var:lam_pol_office_grudge_m <= {
+								value = lam_now_m
+								subtract = 12
+							}
+						}
+					}
+					set_variable = {
+						name = lam_pol_office_grudge_m
+						value = lam_now_m
+					}
+					lam_pd_grievance_add_effect = {
+						KIND = office
+						AMOUNT = 10
+						MONTHS = 24
+					}
+					set_variable = {
+						name = lam_pol_office_grudge
+						value = yes
+						years = 2
+					}
+					change_variable = {
+						name = lam_fac_favour
+						add = -5
+					}
+					clamp_variable = {
+						name = lam_fac_favour
+						min = -100
+						max = 100
+					}
+					lam_fac_cohesion_add_effect = {
+						ADD = 2
+					}
+					save_scope_as = lam_pol_aggrieved
+					if = {
+						limit = {
+							is_ai = no
+						}
+						send_interface_message = {
+							type = event_generic_neutral
+							title = lam_pol_office_grudge_title
+							desc = lam_pol_office_grudge_desc
+						}
+					}
+					scope:lam_pol_office_lord = {
+						if = {
+							limit = {
+								is_ai = no
+							}
+							send_interface_message = {
+								type = event_generic_neutral
+								title = lam_pol_office_grudge_title
+								desc = lam_pol_office_grudge_desc
+								right_icon = scope:lam_pol_aggrieved
+							}
+						}
+					}
+				}
+			}
+			else = {
+				if = {
+					limit = {
+						has_variable = lam_pol_excluded_since
+					}
+					remove_variable = lam_pol_excluded_since
+				}
+			}
+		}
+	}
+	lam_pd_office_relief_effect = yes
+}

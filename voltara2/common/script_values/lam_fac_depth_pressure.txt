@@ -1,0 +1,21 @@
+﻿lam_pd_petition_pressure_value = {
+	value = 0
+	save_temporary_scope_as = lam_pd_pressure_head
+	liege = {
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				liege ?= scope:lam_pd_pressure_head.liege
+				var:lam_cr_rival ?= scope:lam_pd_pressure_head
+				lam_pd_obstruct_current_trigger = yes
+			}
+			add = {
+				value = var:lam_cr_share
+				multiply = 0.3
+			}
+		}
+	}
+	max = 20
+}

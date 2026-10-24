@@ -1571,7 +1571,7 @@ accou_quick_marriage_ai_accept_modifier_value = {
 			# if the recipient is the Chinese Emperor and the actor is their tributary, check for investiture_marriage_yes
 			trigger_if = { 
 				limit = { 
-					scope:always = no
+					always = no
 					scope:actor.overlord = scope:recipient
 				}
 				NOT = { scope:actor = { subject_contract_has_flag = celestial_investiture_marriage } }
@@ -1622,7 +1622,7 @@ accou_quick_marriage_ai_accept_modifier_value = {
 			# if the recipient is the Chinese Emperor and the actor is their tributary, check for investiture_marriage_yes
 			trigger_if = { 
 				limit = { 
-					scope:always = no
+					always = no
 					scope:actor.overlord = scope:recipient
 				}
 				NOT = { scope:actor = { subject_contract_has_flag = celestial_investiture_marriage } }
@@ -1658,19 +1658,18 @@ accou_quick_marriage_ai_accept_modifier_value = {
 		}
 	}
 
-	if = {
-		limit = {
-			scope:always = no
+	if = { limit = {
+			always = no
 			scope:actor = { 
 				overlord = scope:recipient
 				subject_contract_has_flag = celestial_investiture_marriage
 			}
-		}
-		add = {
-			add = scope:actor.subject_standing
-			divide = 4
-		}
-	}
+		} # Proven unreachable; original effects retained below.
+# add = {
+# 			add = scope:actor.subject_standing
+# 			divide = 4
+# 		}
+}
 
 	# Reversed willingness blockers for AI using certain interactions (e.g. arrange_marriage_interaction)
 	if = {

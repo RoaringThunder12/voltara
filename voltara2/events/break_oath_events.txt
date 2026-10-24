@@ -1,0 +1,66 @@
+﻿namespace = break_oath_events
+
+
+break_oath_events.0001 = { # An Oath Sworn - from landless perspective
+	type = character_event
+	title = break_oath_events.0001.t
+	desc = break_oath_events.0001.desc
+	theme = crown
+
+	override_background = {
+		reference = throne_room
+	}
+
+	left_portrait = {
+		character = root
+		animation = spymaster
+	}
+
+	right_portrait = {
+		character = var:val_oathholder
+		animation = shock
+	}
+
+
+	immediate = {
+		var:val_oathholder = {
+			save_scope_as = scope_oathholder
+		}
+	}
+
+	option = { # "Break the Oath"
+		name = break_oath_events.0001.a
+        custom_tooltip = {
+			text = break_oath_events.0001.a.desc
+		}
+
+        remove_trait = oathkeeper
+		remove_trait = loyal
+		add_trait = oathbreaker
+		add_trait = disloyal
+
+		remove_relation_oathholder = var:val_oathholder
+
+		break_alliance = var:val_oathholder
+
+		remove_character_modifier = permanent_oath
+		
+		var:val_oathholder = {
+			remove_character_modifier = oathholder_life 
+			if = {
+				limit = { is_female = yes }
+				remove_trait = oathholder_female
+			}
+			else = {
+				remove_trait = oathholder_male
+			}
+        }
+	}
+
+    option = { # "I have reconsidered."
+		name = oath_events.0001.b
+        custom_tooltip = {
+			text = oath_events.0001.b.desc
+		}
+	}
+}

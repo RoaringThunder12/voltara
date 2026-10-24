@@ -1,0 +1,120 @@
+﻿oathbound_call_ally_interaction = {
+	category = interaction_category_diplomacy
+	desc = oathbound_call_ally_interaction_desc
+	interface_priority = 60
+	interface = call_ally
+	common_interaction = yes
+	special_interaction = call_ally_interaction
+	popup_on_receive = yes
+	pause_on_receive = yes
+
+	greeting = positive
+	notification_text = CALL_ALLY_NOTIFICATION
+
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			is_at_war = yes
+			has_relation_oathbound = scope:recipient
+		}
+		scope:recipient = {
+			has_relation_oathholder = scope:actor
+		}
+	}
+
+	has_valid_target = {
+		exists = scope:target
+	}
+
+	has_valid_target_showing_failures_only = {
+		OR = { # MY ADDITION - Can call oathbound as their oathholder
+			scope:target = {
+				is_war_leader = scope:actor
+			}
+			scope:actor = {
+				has_relation_oathbound = scope:recipient
+			}
+		}
+		joiner_not_already_in_another_war_with_any_target_war_participants_trigger = {
+			WARRIOR = scope:actor
+			JOINER = scope:recipient
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:recipient = {
+			is_ruler = yes
+		}
+		scope:actor = {
+			custom_description = {
+				text = can_invite_oathbound_to_allies_war
+				has_relation_oathbound = scope:recipient
+			}
+		}
+	}
+
+	can_be_picked = {
+		# Oath Keeper Rule: Prevent the interaction if actor is Sworn Oath and recipient is Oath Keeper
+		custom_tooltip = {
+			text = cannot_call_oath_keeper_reason
+			NOT = {
+				AND = {
+					scope:actor = {
+						has_relation_oathholder = scope:recipient
+					}
+					scope:recipient = {
+						has_relation_oathbound = scope:actor
+					}
+				}
+			}
+		}
+		scope:actor = {
+			has_relation_oathbound = scope:recipient
+		}
+	}
+
+	 # Conditional auto_accept below is authoritative.
+
+	on_auto_accept = {
+		scope:recipient = {
+			trigger_event = call_ally.0001
+		}
+	}
+
+	on_accept = {
+		scope:target ?= {
+			hidden_effect = {
+				set_called_to = scope:actor
+			}
+			if = {
+				limit = { is_attacker = scope:actor }
+				add_attacker = scope:recipient
+			}
+			else = {
+				add_defender = scope:recipient
+			}
+		}
+	}
+
+	auto_accept = {
+		custom_description = { # MY ADDITION
+			text = "oathholder_is_calling_oathbound"
+			subject = scope:actor
+			object = scope:recipient
+			scope:actor = {
+				has_relation_oathbound = scope:recipient
+			}
+			scope:recipient = {
+				has_relation_oathholder = scope:actor
+			}
+		}
+	}
+
+	ai_accept = {
+		base = 1000
+	}
+
+	ai_will_do = {
+		base = -1000
+	}
+}

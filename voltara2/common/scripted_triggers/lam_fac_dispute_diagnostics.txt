@@ -1,0 +1,156 @@
+﻿lam_dr_had_dispute_trigger = {
+	has_variable = lam_ev_since
+	OR = {
+		has_variable = lam_dr_had_dispute
+		has_variable = lam_gg_source
+		has_variable = lam_er_observed_heir
+		AND = {
+			trigger_if = {
+				limit = {
+					has_variable = lam_cr_unrest
+				}
+				var:lam_cr_unrest > 0
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+	}
+}
+lam_dr_detached_trigger = {
+	trigger_if = {
+		limit = {
+			exists = var:lam_bp_position_head
+		}
+		trigger_if = {
+			limit = {
+				var:lam_bp_position_head = {
+					is_alive = yes
+				}
+			}
+			trigger_if = {
+				limit = {
+					exists = var:lam_bp_position_head.liege
+				}
+				OR = {
+					NOT = {
+						var:lam_bloc ?= var:lam_bp_position_head
+					}
+					NOT = {
+						var:lam_bp_position_lord ?= var:lam_bp_position_head.liege
+					}
+					NOT = {
+						OR = {
+							liege ?= var:lam_bp_position_head.liege
+							is_courtier_of = var:lam_bp_position_head.liege
+						}
+					}
+				}
+			}
+			trigger_else = {
+				always = yes
+			}
+		}
+		trigger_else = {
+			always = yes
+		}
+	}
+	trigger_else = {
+		always = yes
+	}
+}
+lam_dr_head_changed_trigger = {
+	trigger_if = {
+		limit = {
+			exists = scope:lam_ev_head
+		}
+		trigger_if = {
+			limit = {
+				scope:lam_ev_head = {
+					is_alive = yes
+				}
+			}
+			NOT = {
+				var:lam_bp_position_head ?= scope:lam_ev_head
+			}
+		}
+		trigger_else = {
+			always = yes
+		}
+	}
+	trigger_else = {
+		always = yes
+	}
+}
+lam_dr_court_changed_trigger = {
+	trigger_if = {
+		limit = {
+			exists = scope:lam_ev_head
+		}
+		trigger_if = {
+			limit = {
+				scope:lam_ev_head = {
+					is_alive = yes
+				}
+			}
+			trigger_if = {
+				limit = {
+					exists = scope:lam_ev_head.liege
+				}
+				OR = {
+					NOT = {
+						var:lam_bp_position_lord ?= scope:lam_ev_head.liege
+					}
+					NOT = {
+						OR = {
+							liege ?= scope:lam_ev_head.liege
+							is_courtier_of = scope:lam_ev_head.liege
+						}
+					}
+				}
+			}
+			trigger_else = {
+				always = yes
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_dr_record_changed_trigger = {
+	trigger_if = {
+		limit = {
+			exists = scope:lam_ev_head
+		}
+		trigger_if = {
+			limit = {
+				scope:lam_ev_head = {
+					is_alive = yes
+				}
+			}
+			trigger_if = {
+				limit = {
+					scope:lam_ev_head = {
+						has_variable = lam_fac_rec
+					}
+				}
+				NOT = {
+					var:lam_bp_position_record ?= scope:lam_ev_head.var:lam_fac_rec
+				}
+			}
+			trigger_else = {
+				has_variable = lam_bp_position_record
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}

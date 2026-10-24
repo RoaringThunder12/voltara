@@ -1,0 +1,8 @@
+﻿on_game_start = { on_actions = { vtf_init } }
+on_game_start_after_lobby = { on_actions = { vtf_init } }
+yearly_global_pulse = { on_actions = { vtf_init } }
+vtf_init = { effect = { vtf_enforce = yes } }
+on_travel_plan_movement = { on_actions = { vtf_move } }
+vtf_move = { effect = { vtf_travel = yes } }
+yearly_playable_pulse = { on_actions = { vtf_year } }
+vtf_year = { trigger = { vtf_actor = yes NOT = { has_character_flag = vtf_bandit_cooldown } any_held_title = { vtf_county = yes NOT = { has_county_modifier = vtf_watch } } } effect = { random = { chance = 25 add_character_flag = { flag = vtf_bandit_cooldown years = 2 } random_held_title = { limit = { vtf_county = yes NOT = { has_county_modifier = vtf_watch } } save_scope_as = vtf_site } trigger_event = vtf.3 } } }

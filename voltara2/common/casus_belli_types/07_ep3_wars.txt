@@ -48,6 +48,8 @@
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -589,6 +591,8 @@ ep3_laamp_adventurer_duchy_invasion = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -1186,6 +1190,8 @@ ep3_laamp_adventurer_kingdom_invasion = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -1781,6 +1787,8 @@ ep3_laamp_adventurer_empire_invasion = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -2325,6 +2333,8 @@ ep3_laamp_adventurer_empire_invasion = {
 
 ep3_laamp_raid_contract_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -2908,6 +2918,8 @@ valid_to_start = {
 
 crusading_claim_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -3296,8 +3308,8 @@ allowed_for_character = {
 							geographical_region = world_africa_north
 							county = {
 								OR = {
-									empire = title:e_caspian-pontic_steppe
-									empire = title:e_byzantium
+									always = no
+									always = no
 								}
 							}
 						}
@@ -3465,8 +3477,8 @@ allowed_for_character = {
 							geographical_region = world_africa_north
 							county = {
 								OR = {
-									empire = title:e_caspian-pontic_steppe
-									empire = title:e_byzantium
+									always = no
+									always = no
 								}
 							}
 						}
@@ -3543,6 +3555,8 @@ allowed_against_character = {
  NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins }
 }
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -3838,6 +3852,8 @@ imperial_expedition_cb = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -4301,6 +4317,8 @@ ep3_pillaging_foray = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -4738,6 +4756,8 @@ ep3_roman_empire_border_war = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -5085,6 +5105,8 @@ ep3_laamp_apprehend_adventurer_cb = {
 }
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -5290,7 +5312,7 @@ greek_anarchy_cb = {
 		#Either the character is under the Latin Emperor or the Byzantine Emperor doesn't exist
 		OR = {
 			NOT = {
-				exists = title:e_byzantium.holder
+				always = no
 			}
 			top_liege = {
 				this = title:e_latin_empire.holder
@@ -5309,10 +5331,10 @@ greek_anarchy_cb = {
 		any_held_title = {
 			tier <= tier_empire
 			OR = {
-				this = title:e_byzantium
-				this = title:e_latin_empire
-				empire = title:e_byzantium
-				empire = title:e_latin_empire
+				always = no
+				always = no
+				always = no
+				always = no
 			}
 		}
 		#Byzantium must still have de jure land
@@ -5337,8 +5359,8 @@ greek_anarchy_cb = {
 		scope:defender = {
 			any_realm_county = {
 				OR = {
-					empire = title:e_byzantium
-					empire = title:e_latin_empire
+					always = no
+					always = no
 				}
 			}
 		}
@@ -5349,7 +5371,7 @@ greek_anarchy_cb = {
 			}
 			scope:defender = {
 				any_realm_county = {
-					empire = title:e_latin_empire
+					always = no
 				}
 			}
 		}
@@ -5367,7 +5389,7 @@ greek_anarchy_cb = {
 		if = {
 			limit = {
 				scope:attacker.top_liege.primary_title = {
-					this = title:e_latin_empire
+					always = no
 				}
 			}
 			multiply = 5
@@ -5380,7 +5402,7 @@ greek_anarchy_cb = {
 				scope:attacker = {
 					OR = {
 						top_liege.primary_title = {
-							this = title:e_byzantium
+							always = no
 						}
 						culture = culture:greek
 						culture = {
@@ -5405,6 +5427,8 @@ greek_anarchy_cb = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -5412,8 +5436,8 @@ greek_anarchy_cb = {
 		#Needs to be a de jure duchy of byzlatinium
 		scope:target = {
 			OR = {
-				empire = title:e_byzantium
-				empire = title:e_latin_empire
+				always = no
+				always = no
 			}
 		}
 		#Only players and the extra-motivated should be attacking over water
@@ -5435,8 +5459,8 @@ greek_anarchy_cb = {
 					scope:attacker.top_liege = {
 						primary_title = {
 							OR = {
-								this = title:e_byzantium
-								this = title:e_latin_empire
+								always = no
+								always = no
 							}
 						}
 					}
@@ -5504,8 +5528,8 @@ greek_anarchy_cb = {
 						NOR = {
 							top_liege.primary_title = {
 								OR = {
-									this = title:e_latin_empire
-									this = title:e_byzantium
+									always = no
+									always = no
 								}
 							}
 							culture = culture:greek
@@ -5586,8 +5610,8 @@ greek_anarchy_cb = {
 						NOR = {
 							top_liege.primary_title = {
 								OR = {
-									this = title:e_latin_empire
-									this = title:e_byzantium
+									always = no
+									always = no
 								}
 							}
 							ep3_orthodox_faith_trigger = yes
@@ -5713,7 +5737,7 @@ greek_anarchy_cb = {
 			else_if = {
 				limit = {
 					top_liege = {
-						primary_title = title:e_latin_empire
+						always = no
 					}
 					NOR = {
 						ep3_orthodox_faith_trigger = yes
@@ -5726,7 +5750,7 @@ greek_anarchy_cb = {
 						}
 						top_liege = {
 							any_held_title = {
-								this = title:e_byzantium
+								always = no
 							}
 						}
 					}
@@ -5940,6 +5964,8 @@ greek_anarchy_cb = {
 
 ep3_laamp_peasant_war = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -6544,6 +6570,8 @@ admin_barbarian_conquest_cb = {
 	}
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }

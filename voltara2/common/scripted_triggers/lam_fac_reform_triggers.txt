@@ -1,0 +1,94 @@
+﻿lam_cr_member_trigger = {
+    is_alive = yes
+    is_adult = yes
+    is_imprisoned = no
+    liege ?= scope:lam_cr_lord
+    OR = {
+        this = scope:lam_cr_head
+        AND = { var:lam_bloc ?= scope:lam_cr_head OR = { var:lam_fac_tier ?= 1 var:lam_fac_tier ?= 2 } }
+    }
+    NOT = { AND = { this = scope:lam_cr_head scope:lam_cr_head = { var:lam_cr_issue ?= flag:confidence } } }
+}
+lam_cr_owner_valid_trigger = {
+    is_alive = yes
+    is_adult = yes
+    is_imprisoned = no
+    has_variable = lam_bloc_lead
+    has_variable = lam_cr_active
+    NOT = { has_variable = lam_fac_disband }
+    var:lam_bloc ?= this
+    var:lam_cr_lord ?= { is_alive = yes }
+    liege ?= var:lam_cr_lord
+    OR = {
+        AND = { NOT = { has_variable = lam_cr_record } NOT = { has_variable = lam_fac_rec } }
+        AND = { has_variable = lam_cr_record has_variable = lam_fac_rec var:lam_cr_record = var:lam_fac_rec }
+    }
+}
+# Event-scoped token prevents an old window from voting in a later council.
+lam_cr_ballot_valid_trigger = {
+    exists = scope:lam_cr_head
+    exists = scope:lam_cr_token
+    scope:lam_cr_head = { lam_cr_owner_valid_trigger = yes var:lam_cr_id = scope:lam_cr_token }
+    var:lam_cr_ballot_head ?= scope:lam_cr_head
+    var:lam_cr_ballot_id ?= scope:lam_cr_token
+    var:lam_cr_choice ?= flag:pending
+    lam_cr_member_trigger = yes
+}
+lam_cr_saved_voter_trigger = {
+    var:lam_cr_ballot_head ?= scope:lam_cr_head
+    has_variable = lam_cr_ballot_id
+    var:lam_cr_ballot_id = scope:lam_cr_head.var:lam_cr_id
+    has_variable = lam_cr_weight
+    lam_cr_member_trigger = yes
+}
+lam_cr_target_head_trigger = {
+    is_alive = yes
+    has_variable = lam_bloc_lead
+    NOT = { has_variable = lam_fac_disband }
+    liege ?= scope:lam_cr_lord
+    NOT = { this = scope:lam_cr_head }
+}
+lam_cr_patronage_valid_trigger = {
+    is_alive = yes
+    has_variable = lam_bloc_lead
+    NOT = { has_variable = lam_fac_disband }
+    exists = liege
+    var:lam_cr_patron_lord ?= liege
+}
+lam_cr_reaction_valid_trigger = {
+    lam_cr_patronage_valid_trigger = yes
+    this = scope:lam_pr_reactor
+    liege ?= scope:lam_pr_lord
+    has_variable = lam_cr_reaction_open
+    var:lam_cr_reaction_id ?= scope:lam_pr_token
+}
+lam_cr_alliance_valid_trigger = {
+	is_alive = yes
+	has_variable = lam_bloc_lead
+	NOT = {
+		has_variable = lam_fac_disband
+	}
+	this = scope:lam_pr_partner
+	liege ?= scope:lam_pr_lord
+	scope:lam_pr_reactor ?= {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		NOT = {
+			has_variable = lam_fac_disband
+		}
+		liege ?= scope:lam_pr_lord
+		var:lam_cr_alliance_offer ?= scope:lam_pr_partner
+		var:lam_cr_reaction_id ?= scope:lam_pr_token
+	}
+	NOT = {
+		is_target_in_variable_list = {
+			name = lam_fac_allies
+			target = scope:lam_pr_reactor
+		}
+	}
+	save_temporary_scope_as = lam_pd_pact_test_a
+	lam_pd_pact_pair_trigger = {
+		A = scope:lam_pd_pact_test_a
+		B = scope:lam_pr_reactor
+	}
+}

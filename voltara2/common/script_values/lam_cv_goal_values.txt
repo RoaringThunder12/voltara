@@ -1,0 +1,396 @@
+﻿# Living Factions - the faction council chamber (tools/claude_fixes/council_ui.py)
+# This = an elector, scope:lam_cr_head / scope:lam_cr_lord: how much they want the proposed (new) / current goal.
+lam_cv_goal_new_pref_value = {
+	value = 0
+	if = {
+		limit = {
+			scope:lam_cr_head.var:lam_cr_goal_n ?= 1
+		}
+		if = {
+			limit = {
+				opinion = {
+					target = scope:lam_cr_lord
+					value <= -10
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				has_trait = ambitious
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				is_councillor_of = scope:lam_cr_lord
+			}
+			add = -10
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_cr_goal_n ?= 2
+		}
+		if = {
+			limit = {
+				OR = {
+					NOT = {
+						faith = scope:lam_cr_lord.faith
+					}
+					NOT = {
+						culture = scope:lam_cr_lord.culture
+					}
+				}
+			}
+			add = 15
+		}
+		if = {
+			limit = {
+				has_trait = zealous
+				faith = scope:lam_cr_lord.faith
+			}
+			add = -15
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_cr_goal_n ?= 3
+		}
+		if = {
+			limit = {
+				has_trait = zealous
+				faith = scope:lam_cr_lord.faith
+			}
+			add = 15
+		}
+		if = {
+			limit = {
+				NOT = {
+					faith = scope:lam_cr_lord.faith
+				}
+			}
+			add = -15
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_cr_goal_n ?= 4
+		}
+		if = {
+			limit = {
+				OR = {
+					has_trait = brave
+					has_trait = ambitious
+				}
+			}
+			add = 8
+		}
+		if = {
+			limit = {
+				OR = {
+					has_trait = craven
+					has_trait = content
+				}
+			}
+			add = -8
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_cr_goal_n ?= 5
+		}
+		if = {
+			limit = {
+				has_trait = ambitious
+				NOT = {
+					is_councillor_of = scope:lam_cr_lord
+				}
+			}
+			add = 8
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_cr_goal_n ?= 6
+		}
+		if = {
+			limit = {
+				opinion = {
+					target = scope:lam_cr_lord
+					value < 0
+				}
+			}
+			add = 8
+		}
+		if = {
+			limit = {
+				has_trait = greedy
+			}
+			add = 5
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_cr_goal_n ?= 7
+		}
+		if = {
+			limit = {
+				opinion = {
+					target = scope:lam_cr_lord
+					value >= 20
+				}
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				has_trait = content
+			}
+			add = 5
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_cr_goal_n ?= 8
+		}
+		if = {
+			limit = {
+				opinion = {
+					target = scope:lam_cr_lord
+					value >= 30
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				is_councillor_of = scope:lam_cr_lord
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				opinion = {
+					target = scope:lam_cr_lord
+					value <= -10
+				}
+			}
+			add = -10
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_cr_goal_n ?= 9
+		}
+		if = {
+			limit = {
+				has_trait = content
+			}
+			add = 8
+		}
+		if = {
+			limit = {
+				has_trait = ambitious
+			}
+			add = -5
+		}
+	}
+}
+lam_cv_goal_cur_pref_value = {
+	value = 0
+	if = {
+		limit = {
+			scope:lam_cr_head.var:lam_fac_goal ?= 1
+		}
+		if = {
+			limit = {
+				opinion = {
+					target = scope:lam_cr_lord
+					value <= -10
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				has_trait = ambitious
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				is_councillor_of = scope:lam_cr_lord
+			}
+			add = -10
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_fac_goal ?= 2
+		}
+		if = {
+			limit = {
+				OR = {
+					NOT = {
+						faith = scope:lam_cr_lord.faith
+					}
+					NOT = {
+						culture = scope:lam_cr_lord.culture
+					}
+				}
+			}
+			add = 15
+		}
+		if = {
+			limit = {
+				has_trait = zealous
+				faith = scope:lam_cr_lord.faith
+			}
+			add = -15
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_fac_goal ?= 3
+		}
+		if = {
+			limit = {
+				has_trait = zealous
+				faith = scope:lam_cr_lord.faith
+			}
+			add = 15
+		}
+		if = {
+			limit = {
+				NOT = {
+					faith = scope:lam_cr_lord.faith
+				}
+			}
+			add = -15
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_fac_goal ?= 4
+		}
+		if = {
+			limit = {
+				OR = {
+					has_trait = brave
+					has_trait = ambitious
+				}
+			}
+			add = 8
+		}
+		if = {
+			limit = {
+				OR = {
+					has_trait = craven
+					has_trait = content
+				}
+			}
+			add = -8
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_fac_goal ?= 5
+		}
+		if = {
+			limit = {
+				has_trait = ambitious
+				NOT = {
+					is_councillor_of = scope:lam_cr_lord
+				}
+			}
+			add = 8
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_fac_goal ?= 6
+		}
+		if = {
+			limit = {
+				opinion = {
+					target = scope:lam_cr_lord
+					value < 0
+				}
+			}
+			add = 8
+		}
+		if = {
+			limit = {
+				has_trait = greedy
+			}
+			add = 5
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_fac_goal ?= 7
+		}
+		if = {
+			limit = {
+				opinion = {
+					target = scope:lam_cr_lord
+					value >= 20
+				}
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				has_trait = content
+			}
+			add = 5
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_fac_goal ?= 8
+		}
+		if = {
+			limit = {
+				opinion = {
+					target = scope:lam_cr_lord
+					value >= 30
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				is_councillor_of = scope:lam_cr_lord
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				opinion = {
+					target = scope:lam_cr_lord
+					value <= -10
+				}
+			}
+			add = -10
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_head.var:lam_fac_goal ?= 9
+		}
+		if = {
+			limit = {
+				has_trait = content
+			}
+			add = 8
+		}
+		if = {
+			limit = {
+				has_trait = ambitious
+			}
+			add = -5
+		}
+	}
+}

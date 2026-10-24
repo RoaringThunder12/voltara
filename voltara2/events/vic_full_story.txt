@@ -112,7 +112,7 @@ ai_chance = { base = 35 modifier = { factor = 0 has_character_flag = vic_free_la
 }
 option = { name = vic_story.12.2
 custom_tooltip = vic_story.12.2.tt
-hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  } add_character_flag = vic_pledged_cassian  remove_character_flag = vic_pledged_octavian vic_change = { KEY = legitimacy AMOUNT = 10 } vic_change = { KEY = noble_opposition AMOUNT = -10 }  } }
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  } vip_choose_side = { SIDE = 1 }  remove_character_flag = vic_pledged_octavian vic_change = { KEY = legitimacy AMOUNT = 10 } vic_change = { KEY = noble_opposition AMOUNT = -10 }  } }
 ai_chance = { base = 15 modifier = { factor = 3 global_var:vic_legitimacy >= 75 } }
 }
 option = { name = vic_story.12.3
@@ -129,7 +129,7 @@ ai_chance = { base = 10  }
 }
 option = { name = vic_story.12.5
 custom_tooltip = vic_story.12.5.tt
-hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  } add_character_flag = vic_neutral_house  remove_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian } }
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete  } vip_choose_side = { SIDE = 0 }  remove_character_flag = vic_pledged_cassian remove_character_flag = vic_pledged_octavian } }
 ai_chance = { base = 10  }
 }
 option = { name = vic_story.12.6
@@ -557,17 +557,17 @@ vic_story.30 = { type = character_event title = vic_story.30.t desc = vic_story.
  trigger = { is_alive = yes is_landed = yes exists = var:vic_house_petitioner vic_politics = yes NOT = { has_character_flag = vic_house_answered } }
 option = { name = vic_story.30.0
 custom_tooltip = vic_story.30.0.tt
-hidden_effect = { if = { limit = { is_alive = yes is_landed = yes exists = var:vic_house_petitioner vic_politics = yes NOT = { has_character_flag = vic_house_answered }  } add_character_flag = vic_pledged_cassian  remove_character_flag = vic_pledged_octavian vic_change = { KEY = military_loyalty AMOUNT = 5 }  add_character_flag = vic_house_answered set_variable = { name = vic_house_answer value = 1 } save_scope_as = vic_reply_house save_scope_value_as = { name = vic_reply_answer value = var:vic_house_answer } var:vic_house_petitioner = { trigger_event = { id = vic_story.89 days = 3 } } } }
+hidden_effect = { if = { limit = { is_alive = yes is_landed = yes exists = var:vic_house_petitioner vic_politics = yes NOT = { has_character_flag = vic_house_answered }  } vip_choose_side = { SIDE = 1 }  remove_character_flag = vic_pledged_octavian vic_change = { KEY = military_loyalty AMOUNT = 5 }  add_character_flag = vic_house_answered set_variable = { name = vic_house_answer value = 1 } save_scope_as = vic_reply_house save_scope_value_as = { name = vic_reply_answer value = var:vic_house_answer } var:vic_house_petitioner = { trigger_event = { id = vic_story.89 days = 3 } } } }
 ai_chance = { base = 45 modifier = { factor = 2 has_trait = loyal } }
 }
 option = { name = vic_story.30.1
 custom_tooltip = vic_story.30.1.tt
-hidden_effect = { if = { limit = { is_alive = yes is_landed = yes exists = var:vic_house_petitioner vic_politics = yes NOT = { has_character_flag = vic_house_answered }  } add_character_flag = vic_pledged_octavian  remove_character_flag = vic_pledged_cassian vic_change = { KEY = mobilization AMOUNT = 5 } vic_change = { KEY = groundwork AMOUNT = 5 }  add_character_flag = vic_house_answered set_variable = { name = vic_house_answer value = 2 } save_scope_as = vic_reply_house save_scope_value_as = { name = vic_reply_answer value = var:vic_house_answer } var:vic_house_petitioner = { trigger_event = { id = vic_story.89 days = 3 } } } }
+hidden_effect = { if = { limit = { is_alive = yes is_landed = yes exists = var:vic_house_petitioner vic_politics = yes NOT = { has_character_flag = vic_house_answered }  } vip_choose_side = { SIDE = 2 }  remove_character_flag = vic_pledged_cassian vic_change = { KEY = mobilization AMOUNT = 5 } vic_change = { KEY = groundwork AMOUNT = 5 }  add_character_flag = vic_house_answered set_variable = { name = vic_house_answer value = 2 } save_scope_as = vic_reply_house save_scope_value_as = { name = vic_reply_answer value = var:vic_house_answer } var:vic_house_petitioner = { trigger_event = { id = vic_story.89 days = 3 } } } }
 ai_chance = { base = 35 modifier = { factor = 2 has_trait = ambitious } }
 }
 option = { name = vic_story.30.2
 custom_tooltip = vic_story.30.2.tt
-hidden_effect = { if = { limit = { is_alive = yes is_landed = yes exists = var:vic_house_petitioner vic_politics = yes NOT = { has_character_flag = vic_house_answered }  } add_character_flag = vic_neutral_house  add_character_flag = vic_house_answered set_variable = { name = vic_house_answer value = 3 } save_scope_as = vic_reply_house save_scope_value_as = { name = vic_reply_answer value = var:vic_house_answer } var:vic_house_petitioner = { trigger_event = { id = vic_story.89 days = 3 } } } }
+hidden_effect = { if = { limit = { is_alive = yes is_landed = yes exists = var:vic_house_petitioner vic_politics = yes NOT = { has_character_flag = vic_house_answered }  } vip_choose_side = { SIDE = 0 }  add_character_flag = vic_house_answered set_variable = { name = vic_house_answer value = 3 } save_scope_as = vic_reply_house save_scope_value_as = { name = vic_reply_answer value = var:vic_house_answer } var:vic_house_petitioner = { trigger_event = { id = vic_story.89 days = 3 } } } }
 ai_chance = { base = 20  }
 }
 }
@@ -1015,7 +1015,7 @@ vic_story.87 = { type = character_event title = vic_story.87.t desc = vic_story.
  trigger = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_estate_followup_done } }
 option = { name = vic_story.87.0
 custom_tooltip = vic_story.87.0.tt
-hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_estate_followup_done }  } add_character_flag = vic_estate_followup_done add_character_flag = vic_pledged_cassian vic_change = { KEY = legitimacy AMOUNT = 5 }  } }
+hidden_effect = { if = { limit = { this = character:19060031 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete NOT = { has_character_flag = vic_estate_followup_done }  } add_character_flag = vic_estate_followup_done vip_choose_side = { SIDE = 1 } vic_change = { KEY = legitimacy AMOUNT = 5 }  } }
 ai_chance = { base = 65  }
 }
 option = { name = vic_story.87.1

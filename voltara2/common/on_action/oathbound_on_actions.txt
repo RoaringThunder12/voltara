@@ -1,0 +1,1444 @@
+﻿# On become landless + no more merc company, end Oath.
+
+quarterly_playable_pulse = {
+	on_actions = {
+		oathbound_monthly_control_andtask_check_action
+        oathbound_monthly_sway_task_check_action
+        oathbound_monthly_kill_task_check_action
+        oathbound_monthly_duel_task_check_action # Here
+        oathbound_quarterly_control_modifier_tier_check_action
+        oathbound_quarterly_control_patrol_event_action
+	}
+}
+
+random_yearly_playable_pulse = {
+	on_actions = {
+		oathbound_yearly_provisions_action
+	}
+}
+
+on_scheme_discovered = {
+    on_actions = { oathbound_on_scheme_discovered_check }
+}
+
+oathbound_on_scheme_discovered_check = {
+    effect = {
+        if = {
+            limit = {
+                scheme_type = murder
+                scheme_owner = { has_character_flag = oathbound_kill_job }
+            }
+            scheme_owner = {
+                add_character_flag = {
+                    flag = oathbound_kill_scheme_discovered
+                    days = 35  # Outlasts the quarterly pulse gap so the check always sees it
+                }
+            }
+        }
+    }
+}
+
+
+
+
+oathbound_yearly_provisions_action = {
+    effect = {
+        if = {
+            limit = {
+                is_landless_adventurer = yes
+                
+                num_of_relation_oathholder > 0
+            }
+            
+            var:val_oathholder = {
+                save_scope_as = my_boss
+            }
+
+            # 4. Calculate exactly how much food fits in the camp
+            domicile = {
+                save_scope_value_as = {
+                    name = provs_before
+                    value = provisions
+                }
+                
+                change_provisions = 1000
+                
+                save_scope_value_as = {
+                    name = provs_after
+                    value = provisions
+                }
+            }
+
+            # 5. Save the final math as a scope value
+            save_scope_value_as = {
+                name = final_provs_gained
+                value = {
+                    value = scope:provs_after
+                    subtract = scope:provs_before
+                }
+            }
+
+            # 6. Trigger the popup ONLY if we actually gained food
+            if = {
+                limit = {
+                    # Check the math we just saved!
+                    scope:final_provs_gained > 0
+                }
+                
+                send_interface_toast = {
+                    title = oathbound_provisions_toast_title
+                    left_icon = scope:my_boss
+                    custom_tooltip = oathbound_provisions_toast_desc
+                }
+            }
+        }
+    }
+}
+
+
+
+oathbound_monthly_control_andtask_check_action = {
+    effect = {
+        # ------------ JOBS DONE ----------- # ----- Player initiated OR Task assigned by Oathholder
+        if = {
+            limit = {
+                exists = var:oathbound_patrolled_county_var
+                
+                var:oathbound_patrolled_county_var = {
+                    county_control >= 100
+                }
+            }
+
+            if = {
+                limit = { has_character_flag = oathbound_on_travel_job }
+                send_interface_toast = {
+                    type = event_toast_effect_good
+                    title = oathbound_task_complete_toast
+                    left_icon = root
+                    right_icon = location.county.holder
+
+                    add_prestige = 150
+
+                    custom_tooltip = oathbound_task_complete_toast_desc
+                }
+
+                trigger_event = helpful_oathbound.0001
+
+                remove_character_flag = oathbound_on_travel_job
+                remove_character_flag = oathbound_control_job
+                remove_variable = oathbound_control_task_county_var
+                remove_variable = oathbound_patrolled_county_var
+
+                var:val_oathholder = {
+                    remove_character_flag = oathholder_travel_job_set
+                    reverse_add_opinion = {
+                        target = root
+                        modifier = oathbound_completed_task_opinion
+                    }
+                }
+            }
+        }
+        # ------- County Reaches 100 But we were never there --------- #
+        else_if = {
+            limit = { 
+                has_character_flag = oathbound_on_travel_job 
+                has_character_flag = oathbound_control_job 
+
+                var:oathbound_control_task_county_var = {
+                    county_control >= 100
+
+                    NOT = {
+                        OR = {
+                            has_county_modifier = oathbound_enforcing_order_weak
+                            has_county_modifier = oathbound_enforcing_order_normal
+                            has_county_modifier = oathbound_enforcing_order_strong
+                        }
+                    }
+                }
+            }
+            
+            var:oathbound_control_task_county_var = {
+                remove_county_modifier = oathbound_enforcing_order_weak
+                remove_county_modifier = oathbound_enforcing_order_normal
+                remove_county_modifier = oathbound_enforcing_order_strong
+            }
+
+            remove_character_flag = oathbound_on_travel_job
+            remove_character_flag = oathbound_control_job
+            remove_variable = oathbound_control_task_county_var
+            remove_variable = oathbound_patrolled_county_var
+
+            var:val_oathholder = {
+                remove_character_flag = oathholder_travel_job_set
+            }
+
+            # ----- Some kind of punishment? -------#
+            send_interface_toast = {
+                type = event_toast_effect_neutral
+                title = oathbound_task_cancelled_naturally_toast
+                custom_tooltip = oathbound_task_cancelled_naturally_desc
+            }
+        }
+        # --------- EPIDEMIC IN COUNTY --------#
+        if = {
+            limit = {
+                has_character_flag = oathbound_control_job
+                exists = var:oathbound_control_task_county_var
+                var:oathbound_control_task_county_var = {
+                    has_province_with_epidemic = { intensity <= apocalyptic }
+                }
+            }
+
+            send_interface_toast = {
+                type = event_toast_effect_bad
+                title = oathbound_task_cancelled_epidemic_toast
+                left_icon = root
+                right_icon = var:oathbound_control_task_county_var.holder
+
+                custom_tooltip = oathbound_task_cancelled_epidemic_desc
+            }
+
+            var:oathbound_control_task_county_var = {
+                remove_county_modifier = oathbound_enforcing_order_weak
+                remove_county_modifier = oathbound_enforcing_order_normal
+                remove_county_modifier = oathbound_enforcing_order_strong
+            }
+
+            remove_character_flag = oathbound_on_travel_job
+            remove_character_flag = oathbound_control_job
+            remove_variable = oathbound_control_task_county_var
+            remove_variable = oathbound_patrolled_county_var
+
+            var:val_oathholder = {
+                remove_character_flag = oathholder_travel_job_set
+            }
+        }
+        # --------- OATHHOLDER LOSES COUNTY --------#
+        if = {
+            limit = {
+                has_character_flag = oathbound_on_travel_job 
+                has_character_flag = oathbound_control_job 
+                has_variable = oathbound_control_task_county_var
+
+                # The Sub-Realm Check:
+                NOT = {
+                    var:oathbound_control_task_county_var.holder = {
+                        OR = {
+                            # 1. The Oathholder personally holds it
+                            this = root.var:val_oathholder 
+                            
+                            # 2. The Oathholder is their direct liege, or top liege
+                            target_is_liege_or_above = root.var:val_oathholder
+                        }
+                    }
+                }
+            }
+            
+            # --- EFFECTS BLOCK --- #
+            # (Notice how this is OUTSIDE the limit block now!)
+
+            send_interface_toast = {
+                type = event_toast_effect_bad # (Changed to bad, since you lost the contract!)
+                title = oathholder_no_longer_capital_toast
+                left_icon = root
+                right_icon = var:oathbound_control_task_county_var.holder
+
+                custom_tooltip = oathholder_no_longer_capital_toast_desc
+            }
+
+            var:oathbound_control_task_county_var = {
+                remove_county_modifier = oathbound_enforcing_order_weak
+                remove_county_modifier = oathbound_enforcing_order_normal
+                remove_county_modifier = oathbound_enforcing_order_strong
+            }
+
+            remove_character_flag = oathbound_on_travel_job
+            remove_character_flag = oathbound_control_job
+            remove_variable = oathbound_control_task_county_var
+            remove_variable = oathbound_patrolled_county_var
+
+            var:val_oathholder = {
+                remove_character_flag = oathholder_travel_job_set
+            }
+        }
+
+        # --------------- If the county holder goes to war with the Oathholder ---------------#
+        if = {
+            limit = {
+                has_character_flag = oathbound_on_travel_job
+                has_character_flag = oathbound_control_job
+                has_variable = oathbound_control_task_county_var
+
+                var:oathbound_control_task_county_var = {
+                    holder = { is_at_war_with = root.var:val_oathholder }
+                }
+            }
+
+            send_interface_toast = {
+                type = event_toast_effect_bad
+                title = oathholder_no_longer_capital_toast
+                left_icon = root
+                right_icon = var:oathbound_control_task_county_var.holder
+
+                custom_tooltip = oathholder_no_longer_capital_toast_desc
+            }
+
+            var:oathbound_control_task_county_var = {
+                remove_county_modifier = oathbound_enforcing_order_weak
+                remove_county_modifier = oathbound_enforcing_order_normal
+                remove_county_modifier = oathbound_enforcing_order_strong
+            }
+
+            remove_character_flag = oathbound_on_travel_job
+            remove_character_flag = oathbound_control_job
+            remove_variable = oathbound_control_task_county_var
+            remove_variable = oathbound_patrolled_county_var
+
+            var:val_oathholder = {
+                remove_character_flag = oathholder_travel_job_set
+            }
+        }
+
+        # --------------- If the player gets imprisoned or incapable ---------------#
+        if = {
+            limit = {
+                # 1. Are we on the job?
+                has_character_flag = oathbound_on_travel_job
+                has_character_flag = oathbound_control_job
+                has_variable = oathbound_control_task_county_var
+
+                # 2. Did something terrible happen to us?
+                OR = {
+                    is_imprisoned = yes
+                    has_trait = incapable
+                }
+            }
+            
+            send_interface_toast = {
+                type = event_toast_effect_bad 
+                title = oathbound_imprisoned_on_task_toast
+                left_icon = root
+                custom_tooltip = oathbound_imprisoned_on_task_toast_desc
+            }
+
+            var:oathbound_control_task_county_var = {
+                remove_county_modifier = oathbound_enforcing_order_weak
+                remove_county_modifier = oathbound_enforcing_order_normal
+                remove_county_modifier = oathbound_enforcing_order_strong
+            }
+
+            remove_character_flag = oathbound_on_travel_job
+            remove_character_flag = oathbound_control_job
+            remove_variable = oathbound_control_task_county_var
+            remove_variable = oathbound_patrolled_county_var
+
+            # Free up the Boss so they aren't waiting on a dead end
+            var:val_oathholder = {
+                remove_character_flag = oathholder_travel_job_set
+            }
+        }
+
+        # --------------- If Oathbound / Oathholder dies ---------------# -> This is resolved in their death on_actions (Not required in this example).
+
+        # --------------- If Oathbound / Oathholder relationship gets broken ---------------# 
+        # (Logically, this can only happen on death (already in relevant on action) or through becoming oathbreaker. so just check for trait)
+        if = {
+            limit = {
+                # 1. Are we currently on the Enforce Order job?
+                has_character_flag = oathbound_on_travel_job
+                has_character_flag = oathbound_control_job
+                has_variable = oathbound_control_task_county_var
+
+                # 2. Has the relationship been severed?
+                OR = {
+                    NOT = { has_trait = oathkeeper }
+                    has_trait = oathbreaker
+                }
+            }
+            
+            # --- EFFECTS BLOCK (Safely outside the limit!) --- #
+            
+            send_interface_toast = {
+                type = event_toast_effect_bad 
+                title = oathbound_broken_relation_on_task_toast
+                left_icon = root
+                custom_tooltip = oathbound_broken_relation_on_task_toast_desc
+            }
+
+            var:oathbound_control_task_county_var = {
+                remove_county_modifier = oathbound_enforcing_order_weak
+                remove_county_modifier = oathbound_enforcing_order_normal
+                remove_county_modifier = oathbound_enforcing_order_strong
+            }
+
+            remove_character_flag = oathbound_on_travel_job
+            remove_character_flag = oathbound_control_job
+            remove_variable = oathbound_control_task_county_var
+            remove_variable = oathbound_patrolled_county_var
+
+            # Free up the Boss so they can hire a loyal mercenary next time
+            var:val_oathholder = {
+                remove_character_flag = oathholder_travel_job_set
+            }
+        }
+
+        # --------------- If Oathbound never arrives ---------------#
+        # Either a punishment or it's just "Oathbound never arrived so... nvm lol". Needs to be considered more before adding.
+        # Ideally this section here isn't needed, and can be triggered when the on_job flag ends.
+
+        
+        
+    }
+}
+
+
+oathbound_quarterly_control_modifier_tier_check_action = {
+    effect = {
+        if = {
+            limit = {
+                has_character_flag = oathbound_on_travel_job
+                has_character_flag = oathbound_control_job
+                has_variable = oathbound_control_task_county_var
+                location.county = var:oathbound_control_task_county_var
+            }
+
+            # The outer if/else_if/else determines the DESIRED tier based on current stats.
+            # It does NOT check the current modifier. That check is nested inside each branch.
+            # This prevents a subtle downgrade bug: if you qualify for Strong and already have
+            # it, the outer if would fail, falling into Normal's else_if and downgrading you.
+
+            # -------- Tier 3: Legendary Enforcer --------
+            if = {
+                limit = {
+                    martial >= 16
+                    prestige_level >= 4
+                }
+                # Only act if not already at this tier
+                if = {
+                    limit = {
+                        NOT = {
+                            var:oathbound_control_task_county_var = {
+                                has_county_modifier = oathbound_enforcing_order_strong
+                            }
+                        }
+                    }
+                    var:oathbound_control_task_county_var = {
+                        remove_county_modifier = oathbound_enforcing_order_weak
+                        remove_county_modifier = oathbound_enforcing_order_normal
+                        add_county_modifier = {
+                            modifier = oathbound_enforcing_order_strong
+                            years = 100
+                        }
+                    }
+                    # Notify the player — this is always an upgrade
+                    send_interface_toast = {
+                        type = event_toast_effect_good
+                        title = oathbound_control_modifier_upgraded_toast
+                        left_icon = root
+                        right_icon = var:oathbound_control_task_county_var.holder
+                        custom_tooltip = oathbound_control_modifier_upgraded_strong_desc
+                    }
+                }
+            }
+
+            # -------- Tier 2: Standard Enforcer --------
+            else_if = {
+                limit = {
+                    martial >= 12
+                    prestige_level >= 2
+                }
+                # Upgrade path: coming from weak — notify the player
+                if = {
+                    limit = {
+                        var:oathbound_control_task_county_var = {
+                            has_county_modifier = oathbound_enforcing_order_weak
+                        }
+                    }
+                    var:oathbound_control_task_county_var = {
+                        remove_county_modifier = oathbound_enforcing_order_weak
+                        add_county_modifier = {
+                            modifier = oathbound_enforcing_order_normal
+                            years = 100
+                        }
+                    }
+                    send_interface_toast = {
+                        type = event_toast_effect_good
+                        title = oathbound_control_modifier_upgraded_toast
+                        left_icon = root
+                        right_icon = var:oathbound_control_task_county_var.holder
+                        custom_tooltip = oathbound_control_modifier_upgraded_normal_desc
+                    }
+                }
+                # Downgrade path: prestige/martial dropped below Tier 3 — no toast
+                else_if = {
+                    limit = {
+                        var:oathbound_control_task_county_var = {
+                            has_county_modifier = oathbound_enforcing_order_strong
+                        }
+                    }
+                    var:oathbound_control_task_county_var = {
+                        remove_county_modifier = oathbound_enforcing_order_strong
+                        add_county_modifier = {
+                            modifier = oathbound_enforcing_order_normal
+                            years = 100
+                        }
+                    }
+                }
+                # else: already at normal — no action needed
+            }
+
+            # -------- Tier 1: Weak Enforcer (fallback) --------
+            else = {
+                # Only act if not already at weak
+                if = {
+                    limit = {
+                        NOT = {
+                            var:oathbound_control_task_county_var = {
+                                has_county_modifier = oathbound_enforcing_order_weak
+                            }
+                        }
+                    }
+                    var:oathbound_control_task_county_var = {
+                        remove_county_modifier = oathbound_enforcing_order_normal
+                        remove_county_modifier = oathbound_enforcing_order_strong
+                        add_county_modifier = {
+                            modifier = oathbound_enforcing_order_weak
+                            years = 100
+                        }
+                    }
+                    # No toast — the player already knows their prestige dropped
+                }
+            }
+        }
+    }
+}
+
+
+oathbound_quarterly_control_patrol_event_action = {
+    effect = {
+        if = {
+            limit = {
+                # Must be actively on the control job AND physically at the county
+                # (oathbound_patrolled_county_var is set in event 0002 on arrival)
+                has_character_flag = oathbound_on_travel_job
+                has_character_flag = oathbound_control_job
+                has_variable = oathbound_control_task_county_var
+                has_variable = oathbound_patrolled_county_var
+            }
+
+            random = {
+                chance = 10  # 20% each quarter — roughly every 5 quarters on average
+                trigger_event = oathbound_task_events.0003
+            }
+        }
+    }
+}
+
+
+oathbound_monthly_sway_task_check_action = {
+    effect = {
+        if = {
+            limit = {
+                has_character_flag = oathbound_on_stationary_job
+            }
+
+            # ----- If vassal swayed to above 50, job succeeded. ----- #
+            if = {
+                # First, verify we are actually running the Sway job
+                limit = {
+                    has_character_flag = oathbound_on_stationary_job 
+                    has_character_flag = oathbound_sway_job 
+                    has_variable = oathbound_sway_task_target_var
+                }
+
+                # Now, check if the job is done
+                if = {
+                    limit = {
+                        # Does the target's opinion of our Boss equal or exceed 50?
+                        var:oathbound_sway_task_target_var = {
+                            opinion = {
+                                target = root.var:val_oathholder
+                                value >= 50
+                            }
+                        }
+                    }
+
+                    every_scheme = {
+                        limit = {
+                            scheme_type = oathbound_sway_vassals
+                            
+                            # Open the door to the target character scope
+                            scheme_target_character = {
+                                # Ask: Are you the person saved in our variable?
+                                this = root.var:oathbound_sway_task_target_var
+                            }
+                        }
+                        
+                        # The kill command
+                        end_scheme = yes
+                    }
+                    
+                    # 1. Trigger the Grand Success Event (Replacement for the Toast)
+                    trigger_event = oathbound_task_events.1002
+
+                    # 2. Reward the Player (Add prestige, gold, or boss opinion here!)
+                    var:val_oathholder = {
+                        reverse_add_opinion = {
+                            target = root
+                            modifier = oathbound_completed_task_opinion
+                        }
+                    }
+
+                    # 3. Clean up the Player's Flags
+                    remove_character_flag = oathbound_on_stationary_job
+                    remove_character_flag = oathbound_sway_job
+                    
+                    # 4. Clean up the Boss's Flag (Crucial so they can give a new desk job!)
+                    var:val_oathholder = {
+                        remove_character_flag = oathholder_stationary_job_set
+                        remove_character_flag = oathholder_sway_job_set
+                    }
+
+                    # 5. Remove the Target Variable
+                    remove_variable = oathbound_sway_task_target_var
+                }
+            }
+
+            # ----- If target is no longer Oathholder's vassal ----- #
+            if = {
+                # 1. Verify we are running the Sway job
+                limit = {
+                    has_character_flag = oathbound_on_stationary_job 
+                    has_character_flag = oathbound_sway_job 
+                    has_variable = oathbound_sway_task_target_var
+                }
+
+                # 2. The Check: Are they still our boss's vassal?
+                if = {
+                    limit = {
+                        NOT = {
+                            var:oathbound_sway_task_target_var = {
+                                # This trigger dynamically checks if our Boss is their direct or top liege
+                                target_is_liege_or_above = root.var:val_oathholder
+                            }
+                        }
+                    }
+                    
+                    # --- The Abort Sequence --- #
+
+                    # 1. Kill the Scheme first (so it doesn't accidentally pop while we clean up)
+                    every_scheme = {
+                        limit = {
+                            scheme_type = oathbound_sway_vassals
+                            
+                            # Open the door to the target character scope
+                            scheme_target_character = {
+                                # Ask: Are you the person saved in our variable?
+                                this = root.var:oathbound_sway_task_target_var
+                            }
+                        }
+                        
+                        # The kill command
+                        end_scheme = yes
+                    }
+
+                    # 2. Send the Fail Toast
+                    send_interface_toast = {
+                        type = event_toast_effect_bad
+                        title = oathbound_sway_job_invalid_toast
+                        left_icon = root
+                        right_icon = var:oathbound_sway_task_target_var
+                        custom_tooltip = oathbound_sway_job_invalid_toast_desc
+                    }
+
+                    # 3. Clean up the Player's Flags
+                    remove_character_flag = oathbound_on_stationary_job
+                    remove_character_flag = oathbound_sway_job
+                    
+                    # 4. Clean up the Boss's Flag (They need to be able to give a new job)
+                    var:val_oathholder = {
+                        remove_character_flag = oathholder_stationary_job_set
+                        remove_character_flag = oathholder_sway_job_set
+                    }
+
+                    # 5. Remove the Target Variable
+                    remove_variable = oathbound_sway_task_target_var
+                }
+            }
+
+            # ----- If Oathholder goes to war with the target ----- #
+            if = {
+                # 1. Verify we are running the Sway job
+                limit = {
+                    has_character_flag = oathbound_on_stationary_job
+                    has_character_flag = oathbound_sway_job
+                    has_variable = oathbound_sway_task_target_var
+                }
+
+                if = {
+                    limit = {
+                        var:oathbound_sway_task_target_var = {
+                            is_at_war_with = root.var:val_oathholder
+                        }
+                    }
+
+                    # --- The Abort Sequence --- #
+
+                    # 1. Kill the Scheme
+                    every_scheme = {
+                        limit = {
+                            scheme_type = oathbound_sway_vassals
+                            scheme_target_character = {
+                                this = root.var:oathbound_sway_task_target_var
+                            }
+                        }
+                        end_scheme = yes
+                    }
+
+                    # 2. Send the Fail Toast
+                    send_interface_toast = {
+                        type = event_toast_effect_bad
+                        title = oathbound_sway_job_invalid_toast
+                        left_icon = root
+                        right_icon = var:oathbound_sway_task_target_var
+                        custom_tooltip = oathbound_sway_job_invalid_toast_desc
+                    }
+
+                    # 3. Clean up the Player's Flags
+                    remove_character_flag = oathbound_on_stationary_job
+                    remove_character_flag = oathbound_sway_job
+
+                    # 4. Clean up the Boss's Flags
+                    var:val_oathholder = {
+                        remove_character_flag = oathholder_stationary_job_set
+                        remove_character_flag = oathholder_sway_job_set
+                    }
+
+                    # 5. Remove the Target Variable
+                    remove_variable = oathbound_sway_task_target_var
+                }
+            }
+
+            # ----- If sway scheme cancelled manually ----- #
+            if = {
+                # 1. Verify we are supposed to be on the job
+                limit = {
+                    has_character_flag = oathbound_on_stationary_job
+                    has_character_flag = oathbound_sway_job
+                    has_variable = oathbound_sway_task_target_var
+                }
+
+                # 2. The Check: Are they alive, but the scheme is missing?
+                if = {
+                    limit = {
+                        # Make sure this isn't firing just because the target died
+                        var:oathbound_sway_task_target_var = { 
+                            is_alive = yes 
+                        }
+                        
+                        # Check if the player is missing the scheme
+                        NOT = {
+                            any_scheme = {
+                                scheme_type = oathbound_sway_vassals
+                                scheme_target_character = root.var:oathbound_sway_task_target_var
+                            }
+                        }
+                    }
+                    
+                    # --- The Cleanup Sequence --- #
+
+                    # 1. Send the Cancelled Toast
+                    send_interface_toast = {
+                        type = event_toast_effect_bad
+                        title = oathbound_sway_job_cancelled_toast
+                        left_icon = root
+                        right_icon = var:val_oathholder # The boss is disappointed!
+                        custom_tooltip = oathbound_sway_job_cancelled_toast_desc
+                    }
+
+                    # 2. The Consequence: The boss remembers you quit! (Optional but recommended)
+                    var:val_oathholder = {
+                        reverse_add_opinion = {
+                            target = root
+                            modifier = oathbound_abandoned_task_opinion
+                        }
+                    }
+
+                    # 3. Clean up the Player's Flags
+                    remove_character_flag = oathbound_on_stationary_job
+                    remove_character_flag = oathbound_sway_job
+                    
+                    # 4. Clean up the Boss's Flag
+                    var:val_oathholder = {
+                        remove_character_flag = oathholder_stationary_job_set
+                        remove_character_flag = oathholder_sway_job_set
+                    }
+
+                    # 5. Remove the Target Variable
+                    remove_variable = oathbound_sway_task_target_var
+                }
+            }
+
+            # ----- If Oathbound / Oathholder dies ----- -> This is resolved in their death on_actions. (Not required in this example.)
+
+            # ----- If Oathbound gets imprisoned or becomes incapable ----- #
+            if = {
+                # 1. Verify we are running the Sway job
+                limit = {
+                    has_character_flag = oathbound_on_stationary_job
+                    has_character_flag = oathbound_sway_job
+                    has_variable = oathbound_sway_task_target_var
+
+                    # 2. Did something terrible happen to us?
+                    OR = {
+                        is_imprisoned = yes
+                        has_trait = incapable
+                    }
+                }
+
+                # --- The Abort Sequence --- #
+
+                # 1. Kill the active Sway scheme
+                every_scheme = {
+                    limit = {
+                        scheme_type = oathbound_sway_vassals
+                        scheme_target_character = {
+                            this = root.var:oathbound_sway_task_target_var
+                        }
+                    }
+                    end_scheme = yes
+                }
+
+                # 2. Send the Fail Toast
+                send_interface_toast = {
+                    type = event_toast_effect_bad
+                    title = oathbound_imprisoned_on_task_toast
+                    left_icon = root
+                    custom_tooltip = oathbound_imprisoned_on_task_toast_desc
+                }
+
+                # 3. Clean up the Player's Flags
+                remove_character_flag = oathbound_on_stationary_job
+                remove_character_flag = oathbound_sway_job
+
+                # 4. Clean up the Boss's Flag
+                var:val_oathholder = {
+                    remove_character_flag = oathholder_stationary_job_set
+                    remove_character_flag = oathholder_sway_job_set
+                }
+
+                # 5. Remove the Target Variable
+                remove_variable = oathbound_sway_task_target_var
+            }
+
+            # ----- If Oathbound / Oathholder relationship gets broken ----- #
+            # (Logically, this can only happen on death or through becoming oathbreaker. so just check for trait)
+            if = {
+                # 1. Verify we are running the Sway job
+                limit = {
+                    has_character_flag = oathbound_on_stationary_job 
+                    has_character_flag = oathbound_sway_job 
+                    has_variable = oathbound_sway_task_target_var
+                }
+
+                # 2. The Check: Has the relationship been severed?
+                if = {
+                    limit = {
+                        OR = {
+                            NOT = { has_trait = oathkeeper }
+                            has_trait = oathbreaker
+                        }
+                    }
+                    
+                    # --- The Abort Sequence --- #
+
+                    # 1. Kill the active Sway scheme
+                    every_scheme = {
+                        limit = {
+                            scheme_type = oathbound_sway_vassals
+                            
+                            # Open the door to the target character scope
+                            scheme_target_character = {
+                                # Ask: Are you the person saved in our variable?
+                                this = root.var:oathbound_sway_task_target_var
+                            }
+                        }
+                        
+                        # The kill command
+                        end_scheme = yes
+                    }
+
+                    # 2. Send the Broken Relation Toast
+                    send_interface_toast = {
+                        type = event_toast_effect_bad 
+                        title = oathbound_broken_relation_on_task_toast
+                        left_icon = root
+                        custom_tooltip = oathbound_broken_relation_on_task_toast_desc
+                    }
+
+                    # 3. Clean up the Player's Flags
+                    remove_character_flag = oathbound_on_stationary_job
+                    remove_character_flag = oathbound_sway_job
+                    
+                    # 4. Clean up the Boss's Flag (So they can hire a new, loyal mercenary)
+                    var:val_oathholder = {
+                        remove_character_flag = oathholder_stationary_job_set
+                        remove_character_flag = oathholder_sway_job_set
+                    }
+
+                    # 5. Remove the Target Variable
+                    remove_variable = oathbound_sway_task_target_var
+                }
+            }
+
+            # ----- Catch-all: sway job flags set but no sway scheme running ----- #
+            # Covers any edge case where the scheme ended without triggering a specific abort above.
+            if = {
+                limit = {
+                    has_character_flag = oathbound_sway_job
+                    has_variable = oathbound_sway_task_target_var
+                    NOT = {
+                        any_scheme = {
+                            scheme_type = oathbound_sway_vassals
+                            scheme_target_character = root.var:oathbound_sway_task_target_var
+                        }
+                    }
+                }
+
+                remove_character_flag = oathbound_on_stationary_job
+                remove_character_flag = oathbound_sway_job
+                var:val_oathholder = {
+                    remove_character_flag = oathholder_stationary_job_set
+                    remove_character_flag = oathholder_sway_job_set
+                }
+                remove_variable = oathbound_sway_task_target_var
+            }
+        }
+    }
+}
+
+
+oathbound_monthly_kill_task_check_action = {
+    effect = {
+        if = {
+            limit = {
+                has_character_flag = oathbound_on_stationary_job
+                has_character_flag = oathbound_kill_job
+                has_variable = oathbound_kill_task_target_var
+            }
+
+            # ----- If target is dead, job succeeded. ----- #
+            if = {
+                limit = {
+                    var:oathbound_kill_task_target_var = { is_alive = no }
+                }
+
+                # NOTE: No end_scheme needed — dead characters drop schemes automatically.
+
+                # 1. Trigger the Grand Success Event
+                trigger_event = oathbound_task_events.1004
+
+                # 2. Reward the Player
+                add_prestige = 250
+                var:val_oathholder = {
+                    reverse_add_opinion = {
+                        target = root
+                        modifier = oathbound_completed_kill_task_opinion
+                    }
+                }
+
+                # 3. Clean up the Player's Flags
+                remove_character_flag = oathbound_on_stationary_job
+                remove_character_flag = oathbound_kill_job
+
+                # 4. Clean up the Boss's Flag
+                var:val_oathholder = {
+                    remove_character_flag = oathholder_stationary_job_set
+                    remove_character_flag = oathholder_kill_job_set
+                }
+
+                # 5. Remove the Target Variable
+                remove_variable = oathbound_kill_task_target_var
+            }
+
+            # ----- If target is alive but no longer oathholder's rival or nemesis ----- #
+            if = {
+                limit = {
+                    has_character_flag = oathbound_kill_job
+                    has_variable = oathbound_kill_task_target_var
+                }
+
+                if = {
+                    limit = {
+                        # Target must still be alive (death is handled above)
+                        var:oathbound_kill_task_target_var = { is_alive = yes }
+
+                        # The Check: Are they no longer a rival or nemesis of our boss?
+                        NOT = {
+                            var:val_oathholder = {
+                                OR = {
+                                    has_relation_rival = root.var:oathbound_kill_task_target_var
+                                    has_relation_nemesis = root.var:oathbound_kill_task_target_var
+                                }
+                            }
+                        }
+                    }
+
+                    # --- The Abort Sequence --- #
+
+                    # 1. End the murder scheme
+                    every_scheme = {
+                        limit = {
+                            scheme_type = murder
+                            scheme_target_character = {
+                                this = root.var:oathbound_kill_task_target_var
+                            }
+                        }
+                        end_scheme = yes
+                    }
+
+                    # 2. Send the Fail Toast
+                    send_interface_toast = {
+                        type = event_toast_effect_bad
+                        title = oathbound_kill_job_invalid_toast
+                        left_icon = root
+                        right_icon = var:oathbound_kill_task_target_var
+                        custom_tooltip = oathbound_kill_job_invalid_toast_desc
+                    }
+
+                    # 3. Clean up the Player's Flags
+                    remove_character_flag = oathbound_on_stationary_job
+                    remove_character_flag = oathbound_kill_job
+
+                    # 4. Clean up the Boss's Flag
+                    var:val_oathholder = {
+                        remove_character_flag = oathholder_stationary_job_set
+                        remove_character_flag = oathholder_kill_job_set
+                    }
+
+                    # 5. Remove the Target Variable
+                    remove_variable = oathbound_kill_task_target_var
+                }
+            }
+
+            # ----- If murder scheme was discovered by the target ----- #
+            # on_scheme_discovered sets oathbound_kill_scheme_discovered for 35 days.
+            # This check runs before the manual-cancel check so we can distinguish the two cases.
+            if = {
+                limit = {
+                    has_character_flag = oathbound_kill_job
+                    has_variable = oathbound_kill_task_target_var
+                    has_character_flag = oathbound_kill_scheme_discovered
+                }
+
+                if = {
+                    limit = {
+                        var:oathbound_kill_task_target_var = { is_alive = yes }
+                        NOT = {
+                            any_scheme = {
+                                scheme_type = murder
+                                scheme_target_character = root.var:oathbound_kill_task_target_var
+                            }
+                        }
+                    }
+
+                    # 1. Sympathetic toast — the player was caught out, not a quitter
+                    send_interface_toast = {
+                        type = event_toast_effect_bad
+                        title = oathbound_kill_scheme_discovered_toast
+                        left_icon = root
+                        right_icon = var:oathbound_kill_task_target_var
+                        custom_tooltip = oathbound_kill_scheme_discovered_toast_desc
+                    }
+
+                    # 2. No opinion penalty — this was not the player's fault
+
+                    # 3. Clear the discovery flag
+                    remove_character_flag = oathbound_kill_scheme_discovered
+
+                    # 4. Clean up the Player's Flags
+                    remove_character_flag = oathbound_on_stationary_job
+                    remove_character_flag = oathbound_kill_job
+
+                    # 5. Clean up the Boss's Flag
+                    var:val_oathholder = {
+                        remove_character_flag = oathholder_stationary_job_set
+                        remove_character_flag = oathholder_kill_job_set
+                    }
+
+                    # 6. Remove the Target Variable
+                    remove_variable = oathbound_kill_task_target_var
+                }
+            }
+
+            # ----- If murder scheme cancelled manually ----- #
+            if = {
+                limit = {
+                    has_character_flag = oathbound_kill_job
+                    has_variable = oathbound_kill_task_target_var
+                }
+
+                if = {
+                    limit = {
+                        # Make sure this isn't firing just because the target died
+                        var:oathbound_kill_task_target_var = { is_alive = yes }
+
+                        # Check if the player is missing the scheme
+                        NOT = {
+                            any_scheme = {
+                                scheme_type = murder
+                                scheme_target_character = root.var:oathbound_kill_task_target_var
+                            }
+                        }
+                    }
+
+                    # --- The Cleanup Sequence --- #
+
+                    # 1. Send the Cancelled Toast
+                    send_interface_toast = {
+                        type = event_toast_effect_bad
+                        title = oathbound_kill_job_cancelled_toast
+                        left_icon = root
+                        right_icon = var:val_oathholder  # The boss is disappointed!
+                        custom_tooltip = oathbound_kill_job_cancelled_toast_desc
+                    }
+
+                    # 2. The Consequence: The boss remembers you quit!
+                    var:val_oathholder = {
+                        reverse_add_opinion = {
+                            target = root
+                            modifier = oathbound_abandoned_kill_task_opinion
+                        }
+                    }
+
+                    # 3. Clean up the Player's Flags
+                    remove_character_flag = oathbound_on_stationary_job
+                    remove_character_flag = oathbound_kill_job
+
+                    # 4. Clean up the Boss's Flag
+                    var:val_oathholder = {
+                        remove_character_flag = oathholder_stationary_job_set
+                        remove_character_flag = oathholder_kill_job_set
+                    }
+
+                    # 5. Remove the Target Variable
+                    remove_variable = oathbound_kill_task_target_var
+                }
+            }
+
+            # ----- If Oathbound gets imprisoned or becomes incapable ----- #
+            if = {
+                limit = {
+                    has_character_flag = oathbound_kill_job
+                    has_variable = oathbound_kill_task_target_var
+
+                    OR = {
+                        is_imprisoned = yes
+                        has_trait = incapable
+                    }
+                }
+
+                # --- The Abort Sequence --- #
+
+                # 1. End the active murder scheme
+                every_scheme = {
+                    limit = {
+                        scheme_type = murder
+                        scheme_target_character = {
+                            this = root.var:oathbound_kill_task_target_var
+                        }
+                    }
+                    end_scheme = yes
+                }
+
+                # 2. Send the Fail Toast
+                send_interface_toast = {
+                    type = event_toast_effect_bad
+                    title = oathbound_imprisoned_on_task_toast
+                    left_icon = root
+                    custom_tooltip = oathbound_imprisoned_on_task_toast_desc
+                }
+
+                # 3. Clean up the Player's Flags
+                remove_character_flag = oathbound_on_stationary_job
+                remove_character_flag = oathbound_kill_job
+
+                # 4. Clean up the Boss's Flag
+                var:val_oathholder = {
+                    remove_character_flag = oathholder_stationary_job_set
+                    remove_character_flag = oathholder_kill_job_set
+                }
+
+                # 5. Remove the Target Variable
+                remove_variable = oathbound_kill_task_target_var
+            }
+
+            # ----- If Oathbound / Oathholder relationship gets broken ----- #
+            # (Logically, this can only happen on death or through becoming oathbreaker. so just check for trait)
+            if = {
+                limit = {
+                    has_character_flag = oathbound_kill_job
+                    has_variable = oathbound_kill_task_target_var
+                }
+
+                if = {
+                    limit = {
+                        OR = {
+                            NOT = { has_trait = oathkeeper }
+                            has_trait = oathbreaker
+                        }
+                    }
+
+                    # --- The Abort Sequence --- #
+
+                    # 1. End the active murder scheme
+                    every_scheme = {
+                        limit = {
+                            scheme_type = murder
+                            scheme_target_character = {
+                                this = root.var:oathbound_kill_task_target_var
+                            }
+                        }
+                        end_scheme = yes
+                    }
+
+                    # 2. Send the Broken Relation Toast
+                    send_interface_toast = {
+                        type = event_toast_effect_bad
+                        title = oathbound_broken_relation_on_task_toast
+                        left_icon = root
+                        custom_tooltip = oathbound_broken_relation_on_task_toast_desc
+                    }
+
+                    # 3. Clean up the Player's Flags
+                    remove_character_flag = oathbound_on_stationary_job
+                    remove_character_flag = oathbound_kill_job
+
+                    # 4. Clean up the Boss's Flag
+                    var:val_oathholder = {
+                        remove_character_flag = oathholder_stationary_job_set
+                        remove_character_flag = oathholder_kill_job_set
+                    }
+
+                    # 5. Remove the Target Variable
+                    remove_variable = oathbound_kill_task_target_var
+                }
+            }
+
+            # ----- If Oathbound / Oathholder dies ----- -> This is resolved in their death on_actions.
+
+            # ----- Catch-all: kill job flags set but no murder scheme running ----- #
+            # Covers any edge case where the scheme ended without triggering a specific abort above.
+            if = {
+                limit = {
+                    has_character_flag = oathbound_kill_job
+                    has_variable = oathbound_kill_task_target_var
+                    NOT = {
+                        any_scheme = {
+                            scheme_type = murder
+                            scheme_target_character = root.var:oathbound_kill_task_target_var
+                        }
+                    }
+                }
+
+                remove_character_flag = oathbound_on_stationary_job
+                remove_character_flag = oathbound_kill_job
+                var:val_oathholder = {
+                    remove_character_flag = oathholder_stationary_job_set
+                    remove_character_flag = oathholder_kill_job_set
+                }
+                remove_variable = oathbound_kill_task_target_var
+            }
+        }
+        # ----- Orphan catch-all: oathholder flag stuck after oathbound flags already removed ----- #
+        # The outer gate above requires oathbound_kill_job to still exist. If it was already cleaned
+        # by another path, the gate fails and oathholder_kill_job_set can be left behind permanently.
+        # This runs unconditionally: if we have no kill job but the oathholder still has the flag, wipe it.
+        if = {
+            limit = {
+                NOT = { has_character_flag = oathbound_kill_job }
+                has_variable = val_oathholder
+                var:val_oathholder = {
+                    has_character_flag = oathholder_kill_job_set
+                }
+            }
+            var:val_oathholder = {
+                remove_character_flag = oathholder_stationary_job_set
+                remove_character_flag = oathholder_kill_job_set
+            }
+        }
+        if = {
+            limit = {
+                OR = {
+                    has_character_flag = oathbound_kill_job
+                    has_variable = oathbound_kill_task_target_var
+                    AND = {
+                        has_variable = val_oathholder
+                        var:val_oathholder = {
+                            has_character_flag = oathholder_kill_job_set
+                        }
+                    }
+                }
+                NOT = {
+                    any_scheme = {
+                        scheme_type = murder
+                        scheme_target_character = root.var:oathbound_kill_task_target_var
+                    }
+                }
+            }
+
+            remove_character_flag = oathbound_on_stationary_job
+            remove_character_flag = oathbound_kill_job
+            if = {
+                limit = { has_variable = val_oathholder }
+                var:val_oathholder = {
+                    remove_character_flag = oathholder_stationary_job_set
+                    remove_character_flag = oathholder_kill_job_set
+                }
+            }
+            remove_variable = oathbound_kill_task_target_var
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+oathbound_monthly_duel_task_check_action = {
+    effect = {
+        if = {
+            limit = {
+                has_character_flag = oathbound_on_travel_job
+                has_character_flag = oathbound_duel_job
+                has_variable = oathbound_duel_task_target_var
+            }
+
+            # ----- If target is dead, task ends without a duel ----- #
+            if = {
+                limit = {
+                    var:oathbound_duel_task_target_var = { is_alive = no }
+                }
+
+                send_interface_toast = {
+                    type = event_toast_effect_neutral
+                    title = oathbound_duel_target_dead_toast
+                    left_icon = root
+                    custom_tooltip = oathbound_duel_target_dead_toast_desc
+                }
+
+                remove_character_flag = oathbound_on_travel_job
+                remove_character_flag = oathbound_duel_job
+                remove_variable = oathbound_duel_task_target_var
+                var:val_oathholder = {
+                    remove_character_flag = oathholder_travel_job_set
+                    remove_character_flag = oathholder_duel_job_set
+                }
+            }
+
+            # ----- If target is alive but no longer oathholder's rival or nemesis ----- #
+            if = {
+                limit = {
+                    has_character_flag = oathbound_duel_job
+                    has_variable = oathbound_duel_task_target_var
+                }
+
+                if = {
+                    limit = {
+                        var:oathbound_duel_task_target_var = { is_alive = yes }
+                        NOT = {
+                            var:val_oathholder = {
+                                OR = {
+                                    has_relation_rival = root.var:oathbound_duel_task_target_var
+                                    has_relation_nemesis = root.var:oathbound_duel_task_target_var
+                                }
+                            }
+                        }
+                    }
+
+                    send_interface_toast = {
+                        type = event_toast_effect_bad
+                        title = oathbound_duel_target_invalid_toast
+                        left_icon = root
+                        right_icon = var:oathbound_duel_task_target_var
+                        custom_tooltip = oathbound_duel_target_invalid_toast_desc
+                    }
+
+                    remove_character_flag = oathbound_on_travel_job
+                    remove_character_flag = oathbound_duel_job
+                    remove_variable = oathbound_duel_task_target_var
+                    var:val_oathholder = {
+                        remove_character_flag = oathholder_travel_job_set
+                        remove_character_flag = oathholder_duel_job_set
+                    }
+                }
+            }
+
+            # ----- If Oathbound gets imprisoned or becomes incapable ----- #
+            if = {
+                limit = {
+                    has_character_flag = oathbound_duel_job
+                    has_variable = oathbound_duel_task_target_var
+                    OR = {
+                        is_imprisoned = yes
+                        has_trait = incapable
+                    }
+                }
+
+                send_interface_toast = {
+                    type = event_toast_effect_bad
+                    title = oathbound_imprisoned_on_task_toast
+                    left_icon = root
+                    custom_tooltip = oathbound_imprisoned_on_task_toast_desc
+                }
+
+                remove_character_flag = oathbound_on_travel_job
+                remove_character_flag = oathbound_duel_job
+                remove_variable = oathbound_duel_task_target_var
+                var:val_oathholder = {
+                    remove_character_flag = oathholder_travel_job_set
+                    remove_character_flag = oathholder_duel_job_set
+                }
+            }
+
+            # ----- If Oathbound / Oathholder relationship gets broken ----- #
+            if = {
+                limit = {
+                    has_character_flag = oathbound_duel_job
+                    has_variable = oathbound_duel_task_target_var
+                }
+
+                if = {
+                    limit = {
+                        OR = {
+                            NOT = { has_trait = oathkeeper }
+                            has_trait = oathbreaker
+                        }
+                    }
+
+                    send_interface_toast = {
+                        type = event_toast_effect_bad
+                        title = oathbound_broken_relation_on_task_toast
+                        left_icon = root
+                        custom_tooltip = oathbound_broken_relation_on_task_toast_desc
+                    }
+
+                    remove_character_flag = oathbound_on_travel_job
+                    remove_character_flag = oathbound_duel_job
+                    remove_variable = oathbound_duel_task_target_var
+                    var:val_oathholder = {
+                        remove_character_flag = oathholder_travel_job_set
+                        remove_character_flag = oathholder_duel_job_set
+                    }
+                }
+            }
+
+            # ----- If Oathbound / Oathholder dies ----- -> This is resolved in their death on_actions.
+        }
+    }
+}
+

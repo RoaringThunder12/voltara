@@ -7,7 +7,7 @@ voltara_training.3 = { type = character_event title = voltara_training.3.t desc 
  left_portrait = root option = { name = voltara_training.3.a add_trait = voltara_oathwarden add_stress = 15 } }
 voltara_training.4 = {
  type = character_event title = voltara_training.4.t desc = voltara_training.4.desc theme = learning left_portrait = root
- option = { name = voltara_training.4.a add_stress = -15
+ option = { name = voltara_training.4.a add_stress = -15 if = { limit = { ven_northerner = yes } ven_join_lodge = yes }
   if = { limit = { has_trait = supernatural_werewolf } add_trait_xp = { trait = supernatural_werewolf track = lycanthropy value = 5 } }
  }
 }

@@ -1,0 +1,269 @@
+﻿oathbound_sway_vassals = {
+    # Basic Setup
+    skill = diplomacy
+    desc = oathbound_sway_vassals_desc_general
+    success_desc = "OATHBOUND_SWAY_VASSALS_SUCCESS_DESC"
+    icon = icon_scheme_sway
+    illustration = "gfx/interface/illustrations/event_scenes/study.dds"
+    target_type = character
+    is_secret = no
+    is_basic = yes
+    
+    # Parameters
+    speed_per_skill_point = -2.5
+    spymaster_speed_per_skill_point = 0 
+    uses_resistance = no
+    base_progress_goal = 365
+    base_maximum_success = 95
+    minimum_success = 20
+    
+    # Core Triggers
+    allow = {
+        is_adult = yes
+        is_imprisoned = no
+        
+        # Oathholder Checks
+        scope:owner.var:val_oathholder = {
+            is_alive = yes
+        }
+        
+        # Target Checks
+        scope:target = {
+            is_adult = yes
+            is_imprisoned = no
+            # Dynamic check to ensure Oathholder is their top/direct liege
+            target_is_liege_or_above = scope:owner.var:val_oathholder 
+        }
+        
+        # Custom Blocker Override logic
+        custom_description = { #Permanent
+            text = sway_blocked
+            object = scope:target
+            OR = {
+                NOT = {
+                    scope:target = {
+                        has_opinion_modifier = {
+                            modifier = sway_blocker_opinion
+                            target = scope:owner
+                        }
+                    }
+                }
+                scope:owner = {
+                    has_character_flag = oathbound_sway_job
+                }
+            }
+        }
+
+        # AI Bloat Protection (Simplified)
+        trigger_if = {
+            limit = { is_ai = yes }
+            scope:target = {
+                opinion = {
+                    target = scope:owner.var:val_oathholder
+                    value <= 50 # AI only sways if they are below the job threshold
+                }
+                trigger_if = { 
+                    limit = { is_ai = no }
+                    NOT = {
+                        any_targeting_scheme = {
+                            scheme_type = oathbound_sway_vassals
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    valid = {
+        scope:owner = { 
+            NOT = { has_trait = oathbreaker } 
+        }
+        scope:owner.var:val_oathholder = { 
+            is_alive = yes 
+        }
+        scope:target = { 
+            target_is_liege_or_above = scope:owner.var:val_oathholder 
+        }
+    }
+
+    odds_prediction = {
+        add = base_odds_prediction_target_is_char_value
+        add = odds_skill_contribution_diplomacy_value
+        add = odds_sway_scheme_misc_value
+        min = 0
+    }
+
+    # --- BASE CHANCES & MODIFIERS --- #
+    base_success_chance = {
+        base = 30
+        
+        # Core Skill Modifier
+        modifier = {
+            add = {
+                value = scope:owner.diplomacy
+                multiply = 2
+                floor = yes
+            }
+            desc = SCHEME_YOUR_DIPLOMACY
+        }
+        
+        # Shared Language
+        modifier = {
+            add = 10 # Buffed from 5 since this is your primary job
+            desc = YOU_SPEAK_THE_LANGUAGE
+            scope:owner = { knows_language_of_culture = scope:target.culture }
+        }
+        
+        # Diplomat Trait
+        modifier = {
+            add = 15 # Buffed from 8 to reward diplomatic mercenaries
+            scope:owner = { has_trait = diplomat }
+            desc = SCHEME_BEFRIEND_MY_LIFESTYLE
+        }
+        
+        # Rival Penalty
+        modifier = {
+            add = -30
+            desc = sway_my_rival
+            scope:owner = { has_relation_rival = scope:target }
+        }
+
+        # The Target Despises the Boss (Makes the job harder!)
+        modifier = {
+            add = -20
+            desc = target_hates_oathholder_desc
+            scope:target = {
+                opinion = {
+                    target = scope:owner.var:val_oathholder
+                    value <= -25
+                }
+            }
+        }
+        
+        # Representing the Liege (Offsets being a low-rank mercenary)
+        modifier = {
+            add = 25
+            desc = representing_liege_desc
+
+			# The engine needs a condition here to calculate the math!
+            scope:owner = { 
+                has_character_flag = oathbound_sway_job 
+            }
+            # Applies automatically because you are legally on their behalf
+        }
+
+		# --- IMMERSIVE OPINION MODIFIERS --- #
+
+        # The Target likes the Envoy (They are willing to listen to you)
+        modifier = {
+            add = 15
+            desc = target_likes_envoy_desc
+            scope:target = {
+                opinion = {
+                    target = scope:owner
+                    value >= 40
+                }
+            }
+        }
+        
+        # The Target dislikes the Envoy (Don't shoot the messenger!)
+        modifier = {
+            add = -15
+            desc = target_dislikes_envoy_desc
+            scope:target = {
+                opinion = {
+                    target = scope:owner
+                    value <= -20
+                }
+            }
+        }
+
+		# The Envoy is terrifying (High Dread makes people listen)
+        modifier = {
+            add = 15
+            desc = envoy_is_dreaded_desc
+            scope:owner = { dread >= 50 }
+        }
+
+        # The Target is Arrogant (They look down on hired swords!)
+        modifier = {
+            add = -15
+            desc = target_arrogant_mercenary_desc
+            scope:target = { has_trait = arrogant }
+        }
+
+        # The Target is Craven (Easily pressured by a mercenary)
+        modifier = {
+            add = 15
+            desc = target_craven_envoy_desc
+            scope:target = { has_trait = craven }
+        }
+    }
+
+    # On Actions
+    on_phase_completed = {
+        # Grab our scopes.
+        save_scope_as = scheme
+        scheme_target_character = { save_scope_as = target }
+        scheme_owner = { save_scope_as = owner }
+        
+        # Roll our result.
+        random = {
+            chance = scope:scheme.scheme_success_chance
+            save_scope_value_as = {
+                name = scheme_successful
+                value = yes
+            }
+        }
+        
+        # How'd we do?
+        scope:owner = {
+            if = {
+                limit = { exists = scope:scheme_successful }
+                trigger_event = { on_action = oathbound_sway_vassals_success }
+            }
+            else = {
+                trigger_event = { on_action = oathbound_sway_vassals_failure }
+            }
+        }
+    }
+
+    on_invalidated = {
+        scheme_target_character = { save_scope_as = target }
+        scheme_owner = { save_scope_as = owner }
+        
+        if = {
+            limit = { scope:target = { is_alive = no } }
+            scope:owner = {
+                send_interface_toast = {
+                    title = sway_invalidated_title
+                    left_icon = scope:target
+                    custom_tooltip = sway_invalidated_dead
+                }
+            }
+        }
+        else_if = { 
+            limit = { scope:owner = { is_at_war_with = scope:target } }
+            scope:owner = {
+                send_interface_toast = {
+                    title = sway_invalidated_title
+                    left_icon = scope:target
+                    custom_tooltip = sway_invalidated_war
+                }
+            }
+        }
+        if = {
+            limit = { scope:target = { NOT = { in_diplomatic_range = scope:owner } } }
+            scope:owner = {
+                send_interface_toast = {
+                    title = sway_invalidated_title
+                    left_icon = scope:target
+                    custom_description_no_bullet = {
+                        object = scope:target
+                        text = scheme_target_not_in_diplomatic_range
+                    }
+                }
+            }
+        }
+    }
+}

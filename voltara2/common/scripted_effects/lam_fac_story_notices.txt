@@ -1,0 +1,85 @@
+﻿lam_st_ballot_notice_effect = {
+	if = {
+		limit = {
+			scope:lam_cr_result = flag:passed
+		}
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_cr_result_title
+			desc = lam_st_vote_passed
+			right_icon = scope:lam_cr_head
+		}
+	}
+	else_if = {
+		limit = {
+			scope:lam_cr_result = flag:rejected
+		}
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_cr_result_title
+			desc = lam_st_vote_rejected
+			right_icon = scope:lam_cr_head
+		}
+	}
+	else = {
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_cr_result_title
+			desc = lam_st_vote_cancelled
+			right_icon = scope:lam_cr_head
+		}
+	}
+}
+lam_st_public_turn_notice_effect = {
+	if = {
+		limit = {
+			is_ai = no
+			is_alive = yes
+			scope:lam_cr_result = flag:passed
+		}
+		if = {
+			limit = {
+				scope:lam_cr_result_issue = flag:rise
+			}
+			send_interface_message = {
+				type = event_generic_neutral
+				title = lam_st_public_turn
+				desc = lam_st_public_rise
+				right_icon = scope:lam_cr_head
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_cr_result_issue = flag:loyal
+			}
+			send_interface_message = {
+				type = event_generic_neutral
+				title = lam_st_public_turn
+				desc = lam_st_public_loyal
+				right_icon = scope:lam_cr_head
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_cr_result_issue = flag:withdraw
+			}
+			send_interface_message = {
+				type = event_generic_neutral
+				title = lam_st_public_turn
+				desc = lam_st_public_withdraw
+				right_icon = scope:lam_cr_head
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_cr_result_issue = flag:dissolve
+			}
+			send_interface_message = {
+				type = event_generic_neutral
+				title = lam_st_public_turn
+				desc = lam_st_public_dissolve
+				right_icon = scope:lam_cr_head
+			}
+		}
+	}
+}

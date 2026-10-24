@@ -17,7 +17,7 @@ on_raid_action_completion = { on_actions = { voltara_keeper_raid } }
 voltara_keeper_raid = {
  trigger = {
   scope:raider = { voltara_keeper_realm = yes }
-  scope:county = { OR = { culture = culture:voltara_southorion culture = culture:voltara_desert_southron } }
+  scope:county = { OR = { culture = { OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } }  } }
  }
  effect = {
   army_commander ?= { if = { limit = { has_trait = voltara_oathkeeper } add_trait_xp = { trait = voltara_oathkeeper value = 3 } } }

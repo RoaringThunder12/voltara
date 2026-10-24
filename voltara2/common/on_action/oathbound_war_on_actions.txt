@@ -1,0 +1,156 @@
+﻿# No Longer Required. Useful to keep as future reference. AI now does this via decision.
+
+on_war_started = {
+	on_actions = {
+		#bring_in_oathbound_on_war_start_attacker
+		#bring_in_oathbound_on_war_start_defender
+	}
+}
+
+on_join_war_as_secondary = {
+	on_actions = {
+		#bring_in_oathbound_as_secondary
+	}
+}
+
+quarterly_playable_pulse = {
+	on_actions = {
+		#join_all_attacker_wars
+		#join_all_defender_wars
+	}
+}
+
+
+bring_in_oathbound_as_secondary = {
+	effect = {
+		root = {
+			if = {
+				limit = {
+					num_of_relation_oathbound > 0
+					is_ai = yes
+					var:val_oathkeeper = {
+						is_alive = yes
+					}
+				}
+				scope:war = {
+					if = {
+						limit = {
+							is_attacker = root
+						}
+						add_attacker = root.var:val_oathkeeper
+						root.var:val_oathkeeper = {
+							trigger_event = call_oathbound.0001
+						}
+					}
+					else = {
+						add_defender = root.var:val_oathkeeper
+						root.var:val_oathkeeper = {
+							trigger_event = call_oathbound.0001
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+bring_in_oathbound_on_war_start_defender = {
+	effect = {
+		scope:defender = {
+			if = {
+				limit = {
+					num_of_relation_oathbound > 0
+					is_ai = yes
+					var:val_oathkeeper = {
+						is_alive = yes
+					}
+				}
+				scope:war = {
+					add_defender = scope:defender.var:val_oathkeeper
+				}
+				var:val_oathkeeper = {
+					trigger_event = call_oathbound.0001
+				}
+			}
+		}
+	}
+}
+
+bring_in_oathbound_on_war_start_attacker = {
+	effect = {
+		scope:attacker = {
+			if = {
+				limit = {
+					num_of_relation_oathbound > 0
+					is_ai = yes
+					var:val_oathkeeper = {
+						is_alive = yes
+					}
+				}
+				scope:war = {
+					add_attacker = scope:attacker.var:val_oathkeeper
+				}
+				var:val_oathkeeper = {
+					trigger_event = call_oathbound.0001
+				}
+			}
+		}
+	}
+}
+
+
+join_all_attacker_wars = {
+	trigger = {
+		num_of_relation_oathbound > 0
+		is_ai = yes
+		is_at_war = yes
+		var:val_oathkeeper = {
+			is_alive = yes
+		}
+	}
+	effect = {
+		every_character_war = {
+			limit = {
+				NOT = {
+					is_attacker = root.var:val_oathkeeper
+				}
+				OR = {
+					primary_attacker = root
+					is_attacker = root
+				}
+			}
+			add_attacker = root.var:val_oathkeeper
+			root.var:val_oathkeeper = {
+				trigger_event = call_oathbound.0001
+			}
+		}
+	}
+}
+
+join_all_defender_wars = {
+	trigger = {
+		num_of_relation_oathbound > 0
+		is_ai = yes
+		is_at_war = yes
+		var:val_oathkeeper = {
+			is_alive = yes
+		}
+	}
+	effect = {
+		every_character_war = {
+			limit = {
+				NOT = {
+					is_defender = root.var:val_oathkeeper
+				}
+				OR = {
+					primary_defender = root
+					is_defender = root
+				}
+			}
+			add_defender = root.var:val_oathkeeper
+			root.var:val_oathkeeper = {
+				trigger_event = call_oathbound.0001
+			}
+		}
+	}
+}

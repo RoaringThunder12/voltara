@@ -1,0 +1,14 @@
+﻿# Living Factions - review fixes (tools/claude_fixes/review_1020.py)
+# Once a year, an independent king or emperor's court: are its great lords breaking it apart?
+yearly_playable_pulse = {
+	on_actions = { lam_rv_fracture_pulse }
+}
+lam_rv_fracture_pulse = {
+	trigger = {
+		is_independent_ruler = yes
+		highest_held_title_tier >= tier_kingdom
+	}
+	effect = {
+		lam_rv_fracture_check_effect = yes
+	}
+}

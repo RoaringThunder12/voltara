@@ -2535,7 +2535,7 @@ marriage_ai_accept_modifier = { ###MARRIAGE SCRIPTED MODIFIERS###
 		# if the recipient is the Chinese Emperor and the puppet_or_actor is their tributary, check for investiture_marriage_yes
 		trigger_if = {
 			limit = {
-				scope:always = no
+				always = no
 				scope:puppet_or_actor.overlord = scope:recipient
 			}
 			NOT = { scope:puppet_or_actor = { subject_contract_has_flag = celestial_investiture_marriage } }
@@ -2575,7 +2575,7 @@ marriage_ai_accept_modifier = { ###MARRIAGE SCRIPTED MODIFIERS###
 		# if the recipient is the Chinese Emperor and the puppet_or_actor is their tributary, check for investiture_marriage_yes
 		trigger_if = {
 			limit = {
-				scope:always = no
+				always = no
 				scope:puppet_or_actor.overlord = scope:recipient
 			}
 			NOT = { scope:puppet_or_actor = { subject_contract_has_flag = celestial_investiture_marriage } }
@@ -2600,7 +2600,7 @@ marriage_ai_accept_modifier = { ###MARRIAGE SCRIPTED MODIFIERS###
 		desc = REDUCED_MARRIAGE_ACCEPTANCE_DISTANT_REALMS_INVERTED_REASON
 	}
 	modifier = {
-		scope:always = no
+		always = no
 		scope:puppet_or_actor = {
 			overlord = scope:recipient
 			subject_contract_has_flag = celestial_investiture_marriage

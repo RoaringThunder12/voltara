@@ -1,0 +1,13 @@
+﻿l_english:
+ dhm091_lesson_success_title:0 "A Lesson Taken to Heart"
+ dhm091_lesson_success_desc:0 "[scope:dhm_v091_mentor.GetShortUIName] has been teaching [scope:dhm_v091_pupil.GetShortUIName] by example. The lesson has taken root: [scope:dhm_v091_pupil.GetFirstName] is now #P [scope:dhm_v091_pupil.MakeScope.Var('dhm091_lesson_trait').Trait.GetNameNoTooltip( GetNullCharacter )]#!.\n\nThe effort has tired [scope:dhm_v091_mentor.GetFirstName], who gains #N Stress#!."
+ dhm091_guidance_on:0 "\n\n#bold Teaching by Example:#! #P Automatic#!\nTutors try to pass on constructive traits they possess. A guardian can step in. Each child receives at most one attempt every three years; success is not assured."
+ dhm091_guidance_off:0 "\n\n#bold Teaching by Example:#! #high Paused#!\nGuardians and specialist lessons keep their current settings. DHM will not make new personality-influence attempts."
+ dhm091_guidance_wait_education:0 "\n\n#bold Teaching by Example:#! #high Waiting for Automatic Education#!\nGuidance is enabled, but no attempts run while education automation is off."
+ dhm091_guidance_pause:0 "Leave Their Character to Ordinary Upbringing"
+ dhm091_guidance_resume:0 "Have the Teachers Set a Good Example"
+ dhm091_guidance_toggle_tt:0 "Only DHM's extra personality guidance changes. Vanilla childhood events and existing traits are untouched. Education must be automatic for new attempts to run."
+ dhm091_profile_success:0 "\n\n#bold A Lesson That Stayed#!\nAt age [scope:dhm_profile_target.MakeScope.Var('dhm091_lesson_age').GetValue|0], this pupil learned #P [scope:dhm_profile_target.MakeScope.Var('dhm091_lesson_trait').Trait.GetNameNoTooltip( GetNullCharacter )]#!. The chance at the time was #V [scope:dhm_profile_target.MakeScope.Var('dhm091_lesson_chance').GetValue|1]%#!. This records a past result, not another reward."
+ dhm091_profile_failure:0 "\n\n#bold The Lesson Did Not Take#!\nAt age [scope:dhm_profile_target.MakeScope.Var('dhm091_lesson_age').GetValue|0], the teacher urged this pupil to be [scope:dhm_profile_target.MakeScope.Var('dhm091_lesson_trait').Trait.GetNameNoTooltip( GetNullCharacter )], but #N no trait was gained#!. The chance was #V [scope:dhm_profile_target.MakeScope.Var('dhm091_lesson_chance').GetValue|1]%#!. The teacher took on #N Stress#!, and the pupil felt briefly misunderstood."
+ dhm091_profile_teacher:0 "\nTeacher: [scope:dhm_profile_target.MakeScope.Var('dhm091_lesson_mentor').Char.GetShortUIName]."
+ dhm091_profile_wait:0 "\n#weak Another DHM attempt must wait until the three-year interval ends and the pupil is still eligible. Changing teachers does not shorten it.#!"

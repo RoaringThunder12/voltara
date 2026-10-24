@@ -1,0 +1,674 @@
+﻿lam_ss_commitment_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+		}
+		trigger_if = {
+			limit = {
+				is_ai = yes
+				exists = var:lam_ss_home
+				exists = var:lam_bloc
+				has_variable = lam_ss_until
+			}
+			trigger_if = {
+				limit = {
+					var:lam_ss_home = {
+						is_alive = yes
+						exists = liege
+					}
+				}
+				var:lam_bloc = var:lam_ss_home
+				var:lam_ss_until > lam_now_m
+				var:lam_ss_lord ?= var:lam_ss_home.liege
+				OR = {
+					liege ?= var:lam_ss_home.liege
+					is_courtier_of = var:lam_ss_home.liege
+				}
+				var:lam_ss_home = {
+					has_variable = lam_bloc_lead
+					NOT = {
+						has_variable = lam_fac_disband
+					}
+				}
+				NOT = {
+					has_variable = lam_fac_unbound
+				}
+				NOT = {
+					has_variable = lam_fac_let_go
+				}
+				NOT = {
+					has_relation_rival = var:lam_ss_home
+				}
+				opinion = {
+					target = var:lam_ss_home
+					value > -40
+				}
+				AND = {
+					trigger_if = {
+						limit = {
+							var:lam_ss_home = {
+								has_variable = lam_fac_rec
+							}
+						}
+						var:lam_ss_record ?= var:lam_ss_home.var:lam_fac_rec
+					}
+					trigger_else = {
+						var:lam_ss_home = {
+							has_variable = lam_hi_record_evicted
+						}
+						NOT = {
+							has_variable = lam_ss_record
+						}
+					}
+				}
+				trigger_if = {
+					limit = {
+						var:lam_ss_topic ?= flag:heir
+					}
+					trigger_if = {
+						limit = {
+							exists = var:lam_ss_alternative
+						}
+						var:lam_ss_alternative = {
+							is_alive = yes
+						}
+						var:lam_ss_home = {
+							var:lam_fac_heir ?= prev.var:lam_ss_alternative
+						}
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				trigger_else_if = {
+					limit = {
+						var:lam_ss_side ?= flag:fair
+					}
+					var:lam_ss_home = {
+						NOT = {
+							has_variable = lam_fac_hoarded
+						}
+					}
+					NOT = {
+						AND = {
+							trigger_if = {
+								limit = {
+									has_variable = lam_st_overlooked
+								}
+								var:lam_st_overlooked >= 2
+								var:lam_st_reward_head ?= var:lam_ss_home
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+				}
+				trigger_else_if = {
+					limit = {
+						var:lam_ss_side ?= flag:pressure
+					}
+					var:lam_ss_home = {
+						NOR = {
+							var:lam_fac_stage ?= 5
+							var:lam_fac_stage ?= 6
+						}
+					}
+				}
+				trigger_else_if = {
+					limit = {
+						var:lam_ss_side ?= flag:restraint
+					}
+					var:lam_ss_home = {
+						NOR = {
+							var:lam_fac_stage ?= 3
+							var:lam_fac_stage ?= 4
+						}
+					}
+				}
+				trigger_else = {
+					always = yes
+				}
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_ss_establishing_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+		}
+		trigger_if = {
+			limit = {
+				has_variable = lam_ss_birth_m
+				has_variable = lam_fac_count
+				exists = liege
+			}
+			var:lam_ss_birth_m > {
+				value = lam_now_m
+				subtract = 24
+			}
+			var:lam_fac_count >= 2
+			any_in_list = {
+				variable = lam_fac_members
+				trigger_if = {
+					limit = {
+						is_alive = yes
+					}
+					var:lam_bloc ?= prev
+					NOT = {
+						this = prev
+					}
+					OR = {
+						liege ?= prev.liege
+						is_courtier_of = prev.liege
+					}
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_ss_council_position_trigger = {
+	trigger_if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						is_alive = yes
+						exists = scope:lam_cr_head
+					}
+					trigger_if = {
+						limit = {
+							scope:lam_cr_head = {
+								is_alive = yes
+								exists = liege
+							}
+						}
+						var:lam_bloc ?= scope:lam_cr_head
+						OR = {
+							liege ?= scope:lam_cr_head.liege
+							is_courtier_of = scope:lam_cr_head.liege
+						}
+						is_adult = yes
+						is_imprisoned = no
+						NOT = {
+							this = scope:lam_cr_head
+						}
+						NOT = {
+							has_variable = lam_bloc_lead
+						}
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				has_variable = lam_bp_position_until
+				has_variable = lam_cr_unrest
+			}
+			var:lam_bp_position_head ?= scope:lam_cr_head
+			var:lam_cr_unrest_head ?= scope:lam_cr_head
+			var:lam_bp_position_lord ?= scope:lam_cr_head.liege
+			var:lam_bp_position_until > lam_now_m
+			var:lam_cr_unrest >= 1
+			has_variable = lam_bp_position_topic
+			has_variable = lam_bp_position_side
+			AND = {
+				trigger_if = {
+					limit = {
+						scope:lam_cr_head = {
+							has_variable = lam_fac_rec
+						}
+					}
+					var:lam_bp_position_record ?= scope:lam_cr_head.var:lam_fac_rec
+				}
+				trigger_else = {
+					NOT = {
+						has_variable = lam_bp_position_record
+					}
+				}
+			}
+			AND = {
+				trigger_if = {
+					limit = {
+						has_variable = lam_gg_source
+					}
+					AND = {
+						trigger_if = {
+							limit = {
+								var:lam_gg_source ?= flag:pressure
+							}
+							AND = {
+								trigger_if = {
+									limit = {
+										AND = {
+											trigger_if = {
+												limit = {
+													is_alive = yes
+													exists = scope:lam_cr_head
+												}
+												trigger_if = {
+													limit = {
+														scope:lam_cr_head = {
+															is_alive = yes
+															exists = liege
+														}
+													}
+													var:lam_bloc ?= scope:lam_cr_head
+													OR = {
+														liege ?= scope:lam_cr_head.liege
+														is_courtier_of = scope:lam_cr_head.liege
+													}
+													is_adult = yes
+													is_imprisoned = no
+													NOT = {
+														this = scope:lam_cr_head
+													}
+													NOT = {
+														has_variable = lam_bloc_lead
+													}
+												}
+												trigger_else = {
+													always = no
+												}
+											}
+											trigger_else = {
+												always = no
+											}
+										}
+										is_ai = yes
+									}
+									trigger_if = {
+										limit = {
+											scope:lam_cr_head.liege = {
+												is_alive = yes
+											}
+										}
+										OR = {
+											scope:lam_cr_head = {
+												OR = {
+													var:lam_fac_stage ?= 5
+													var:lam_fac_stage ?= 6
+													var:lam_fac_stage ?= 8
+												}
+											}
+											AND = {
+												scope:lam_cr_head = {
+													var:lam_fac_stage ?= 7
+												}
+												lam_ss_council_alignment_gap_value <= -30
+											}
+										}
+										lam_ss_council_alignment_value <= -10
+										NOT = {
+											is_councillor_of = scope:lam_cr_head.liege
+										}
+									}
+									trigger_else = {
+										always = no
+									}
+								}
+								trigger_else = {
+									always = no
+								}
+							}
+						}
+						trigger_else_if = {
+							limit = {
+								var:lam_gg_source ?= flag:restraint
+							}
+							AND = {
+								trigger_if = {
+									limit = {
+										AND = {
+											trigger_if = {
+												limit = {
+													is_alive = yes
+													exists = scope:lam_cr_head
+												}
+												trigger_if = {
+													limit = {
+														scope:lam_cr_head = {
+															is_alive = yes
+															exists = liege
+														}
+													}
+													var:lam_bloc ?= scope:lam_cr_head
+													OR = {
+														liege ?= scope:lam_cr_head.liege
+														is_courtier_of = scope:lam_cr_head.liege
+													}
+													is_adult = yes
+													is_imprisoned = no
+													NOT = {
+														this = scope:lam_cr_head
+													}
+													NOT = {
+														has_variable = lam_bloc_lead
+													}
+												}
+												trigger_else = {
+													always = no
+												}
+											}
+											trigger_else = {
+												always = no
+											}
+										}
+										is_ai = yes
+									}
+									trigger_if = {
+										limit = {
+											scope:lam_cr_head.liege = {
+												is_alive = yes
+											}
+										}
+										OR = {
+											scope:lam_cr_head = {
+												OR = {
+													var:lam_fac_stage ?= 2
+													var:lam_fac_stage ?= 3
+												}
+											}
+											AND = {
+												scope:lam_cr_head = {
+													var:lam_fac_stage ?= 7
+												}
+												lam_ss_council_alignment_gap_value >= 30
+											}
+										}
+										lam_ss_council_alignment_value >= 20
+									}
+									trigger_else = {
+										always = no
+									}
+								}
+								trigger_else = {
+									always = no
+								}
+							}
+						}
+						trigger_else_if = {
+							limit = {
+								var:lam_gg_source ?= flag:service
+							}
+							AND = {
+								trigger_if = {
+									limit = {
+										AND = {
+											trigger_if = {
+												limit = {
+													is_alive = yes
+													exists = scope:lam_cr_head
+												}
+												trigger_if = {
+													limit = {
+														scope:lam_cr_head = {
+															is_alive = yes
+															exists = liege
+														}
+													}
+													var:lam_bloc ?= scope:lam_cr_head
+													OR = {
+														liege ?= scope:lam_cr_head.liege
+														is_courtier_of = scope:lam_cr_head.liege
+													}
+													is_adult = yes
+													is_imprisoned = no
+													NOT = {
+														this = scope:lam_cr_head
+													}
+													NOT = {
+														has_variable = lam_bloc_lead
+													}
+												}
+												trigger_else = {
+													always = no
+												}
+											}
+											trigger_else = {
+												always = no
+											}
+										}
+										is_ai = yes
+									}
+									trigger_if = {
+										limit = {
+											scope:lam_cr_head.liege = {
+												is_alive = yes
+											}
+										}
+										trigger_if = {
+											limit = {
+												has_variable = lam_cr_service
+											}
+											var:lam_cr_service_head ?= scope:lam_cr_head
+											var:lam_cr_service >= 6
+											OR = {
+												var:lam_fac_tier ?= 1
+												var:lam_fac_tier ?= 2
+											}
+											OR = {
+												has_trait = ambitious
+												has_trait = greedy
+												has_trait = just
+											}
+											NOT = {
+												is_councillor_of = scope:lam_cr_head.liege
+											}
+											NOT = {
+												AND = {
+													trigger_if = {
+														limit = {
+															has_variable = lam_lf_reward_until
+														}
+														var:lam_lf_reward_until > lam_now_m
+														var:lam_lf_reward_head ?= scope:lam_cr_head
+													}
+													trigger_else = {
+														always = no
+													}
+												}
+											}
+											scope:lam_cr_head = {
+												is_councillor_of = liege
+											}
+										}
+										trigger_else = {
+											always = no
+										}
+									}
+									trigger_else = {
+										always = no
+									}
+								}
+								trigger_else = {
+									always = no
+								}
+							}
+						}
+						trigger_else_if = {
+							limit = {
+								var:lam_gg_source ?= flag:exclusion
+							}
+							AND = {
+								trigger_if = {
+									limit = {
+										AND = {
+											trigger_if = {
+												limit = {
+													is_alive = yes
+													exists = scope:lam_cr_head
+												}
+												trigger_if = {
+													limit = {
+														scope:lam_cr_head = {
+															is_alive = yes
+															exists = liege
+														}
+													}
+													var:lam_bloc ?= scope:lam_cr_head
+													OR = {
+														liege ?= scope:lam_cr_head.liege
+														is_courtier_of = scope:lam_cr_head.liege
+													}
+													is_adult = yes
+													is_imprisoned = no
+													NOT = {
+														this = scope:lam_cr_head
+													}
+													NOT = {
+														has_variable = lam_bloc_lead
+													}
+												}
+												trigger_else = {
+													always = no
+												}
+											}
+											trigger_else = {
+												always = no
+											}
+										}
+										is_ai = yes
+									}
+									trigger_if = {
+										limit = {
+											has_variable = lam_st_overlooked
+										}
+										var:lam_st_overlooked >= 1
+										var:lam_st_reward_head ?= scope:lam_cr_head
+										NOT = {
+											is_councillor_of = scope:lam_cr_head.liege
+										}
+										NOT = {
+											AND = {
+												trigger_if = {
+													limit = {
+														has_variable = lam_lf_reward_until
+													}
+													var:lam_lf_reward_until > lam_now_m
+													var:lam_lf_reward_head ?= scope:lam_cr_head
+												}
+												trigger_else = {
+													always = no
+												}
+											}
+										}
+									}
+									trigger_else = {
+										always = no
+									}
+								}
+								trigger_else = {
+									always = no
+								}
+							}
+						}
+						trigger_else_if = {
+							limit = {
+								var:lam_gg_source ?= flag:issue
+							}
+							lam_is_dissent_live_trigger = {
+								HEAD = scope:lam_cr_head
+							}
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+				trigger_else = {
+					trigger_if = {
+						limit = {
+							var:lam_bp_position_topic ?= flag:heir
+						}
+						trigger_if = {
+							limit = {
+								exists = var:lam_bp_position_target
+							}
+							var:lam_bp_position_target = {
+								is_alive = yes
+							}
+							scope:lam_cr_head = {
+								var:lam_fac_heir ?= prev.var:lam_bp_position_target
+							}
+							trigger_if = {
+								limit = {
+									var:lam_bp_position_side ?= flag:retain
+								}
+								trigger_if = {
+									limit = {
+										exists = var:lam_bp_position_alternative
+									}
+									var:lam_bp_position_alternative = {
+										is_alive = yes
+									}
+									NOT = {
+										var:lam_bp_position_alternative = scope:lam_cr_head.liege
+									}
+								}
+								trigger_else = {
+									always = no
+								}
+							}
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					trigger_else_if = {
+						limit = {
+							var:lam_bp_position_side ?= flag:fair
+						}
+						trigger_if = {
+							limit = {
+								has_variable = lam_st_overlooked
+							}
+							var:lam_st_overlooked >= 1
+							var:lam_st_reward_head ?= scope:lam_cr_head
+							NOT = {
+								is_councillor_of = scope:lam_cr_head.liege
+							}
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					trigger_else = {
+						always = yes
+					}
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}

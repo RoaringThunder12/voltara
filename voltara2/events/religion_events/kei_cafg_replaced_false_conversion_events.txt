@@ -1,0 +1,606 @@
+﻿namespace = false_conversion
+
+##################################################
+# Revoke False Conversion Decision Events
+# by Ewan Cowhig Croft
+# 0020-0021
+##################################################
+
+#	Crypto-Faithism
+#		by Ewan Cowhig Croft
+false_conversion.0020 = {
+	type = character_event
+	title = false_conversion.0020.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { has_government = landless_adventurer_government }
+				desc = false_conversion.0020.desc_landless
+			}
+			desc = false_conversion.0020.desc
+		}
+	}
+	theme = faith
+	left_portrait =	root
+	weight_multiplier = {
+		base = 1
+	}
+
+	# kCAFG override : low priority, it's okay if this event is replaced
+	id_override_priority = 1
+
+	immediate = {
+		secret_faith = { save_scope_as = old_faith }	# For loc.
+		faith = { save_scope_as = current_faith }		# For loc.
+	}
+	# You return to your original faith. Huzzah for secret cults!
+	option = {	
+		name = false_conversion.0020.a
+		trigger = { is_landed_or_landless_administrative = yes }
+		set_character_faith_with_conversion = secret_faith
+		remove_character_secret_faith = yes
+		if = {	#If independent, also grab any counties in your realm that still have crypto-religious communities.
+			limit = {
+				top_liege = this
+				any_sub_realm_county = {
+					has_variable = false_convert
+					var:false_convert = root.faith
+					faith != root.faith	#Discount them if they've already been switched by the conversion action.
+				}
+			}
+			set_variable = {	#Log how many counties switch.
+				name = num_false_converts_counties
+				value = 0
+			}
+			every_sub_realm_county = {
+				limit = {
+					has_variable = false_convert
+					var:false_convert = root.faith
+					faith != root.faith	#Discount them if they've already been switched by the conversion action.
+				}
+				save_temporary_scope_as = kCAFG_converted_county # Kei : save to get the variable from the right scope
+				E_kCAFG_convert_rite_in_all_county_provinces = {
+					FACTOR = 0.5
+					VARIANCE = 0.25
+					RITE = scope:kCAFG_converted_county.var:false_convert.main_rite
+					MAX = 0.85
+				}	#Everyone likes practicing their faith in the open!
+				remove_county_modifier = false_convert_modifier
+				add_county_modifier = {
+					modifier = relieved_cryptos_modifier
+					years = 25
+				}
+				root = {	#Adjust logging for each valid county.
+					change_variable = {
+						name = num_false_converts_counties
+						add = 1
+					}
+				}
+				remove_variable = false_convert	#Cleanup the variable when we're done.
+			}
+			send_interface_message = {	#Alert the user if any counties have switched.
+				type = event_religious_neutral_text
+				title = event_false_converts.t
+				desc = event_false_converts_counties_only.desc
+			}
+		}
+		# Deduct piety, but only if faith doesn't sanction false conversions
+		if = {
+			limit = {
+				rite = {
+					NOT = { rite_has_parameter = sanctioned_false_conversion }
+				}
+			}
+			add_piety = major_piety_loss
+		}
+		if = {
+			limit = { top_liege != this }
+			liege = {
+				send_interface_message = {
+					type = event_religious_neutral_text
+					title = event_false_convert_my_vassal.t
+					desc = event_false_convert_interface.desc
+					right_icon = root
+				}
+			}
+		}
+		every_vassal = {
+			send_interface_message = {
+				type = event_religious_neutral_text
+				title = event_false_convert_my_liege.t
+				desc = event_false_convert_interface.desc
+				right_icon = root
+			}
+		}
+		# Fp3 Struggle Catalyst
+		if = {
+			limit = {
+				highest_held_title_tier >= tier_county
+				faith.religion = religion:islam_religion
+				any_character_struggle = {
+					involvement = involved
+					phase_has_catalyst = catalyst_revealed_secret_faith_islam
+				}
+			}
+			every_character_struggle = {
+				involvement = involved
+				limit = {
+					phase_has_catalyst = catalyst_revealed_secret_faith_islam
+				}
+				activate_struggle_catalyst = {
+					catalyst = catalyst_revealed_secret_faith_islam
+					character = root
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				highest_held_title_tier >= tier_county
+				NOT = { faith.religion = religion:islam_religion }
+				any_character_struggle = {
+					involvement = involved
+					phase_has_catalyst = catalyst_revealed_secret_faith_non_islam
+				}
+			}
+			every_character_struggle = {
+				involvement = involved
+				limit = {
+					phase_has_catalyst = catalyst_revealed_secret_faith_non_islam
+				}
+				activate_struggle_catalyst = {
+					catalyst = catalyst_revealed_secret_faith_non_islam
+					character = root
+				}
+			}
+		}
+
+		stress_and_fulfillment_impact = {
+			zealous = medium_stress_impact_gain	#Damn it, I was passionate about my openly-practiced faith!
+			cynical	= medium_stress_impact_gain	#Damn it, they're all basically the same! Probably!
+		}
+		change_spiritual_fulfillment = major_spiritual_fulfillment_value	#Openly living your true faith again.
+		ai_chance = {
+			base = 60
+			ai_value_modifier = {
+				ai_zeal = 0.5
+				ai_boldness = 0.25
+			}
+			modifier = {
+				has_trait = zealous	#Must not stress self.
+				factor = 0
+			}
+			modifier = {
+				has_trait = cynical	#Must. Not. Stress. Self
+				factor = 0
+			}
+		}
+	}
+	#Landless convertee
+	option = {
+		name = false_conversion.0020.c
+		trigger = { has_government = landless_adventurer_government }
+		set_character_faith_with_conversion = secret_faith
+		remove_character_secret_faith = yes
+		# Deduct piety, but only if faith doesn't sanction false conversions
+		if = {
+			limit = {
+				rite = {
+					NOT = { rite_has_parameter = sanctioned_false_conversion }
+				}
+			}
+			add_piety = major_piety_loss
+		}
+		stress_and_fulfillment_impact = {
+			zealous = medium_stress_impact_gain	#Damn it, I was passionate about my openly-practiced faith!
+			cynical	= medium_stress_impact_gain	#Damn it, they're all basically the same! Probably!
+		}
+		change_spiritual_fulfillment = major_spiritual_fulfillment_value	#Openly living your true faith again.
+		ai_chance = {
+			base = 60
+			ai_value_modifier = {
+				ai_zeal = 0.5
+				ai_boldness = 0.25
+			}
+			modifier = {
+				has_trait = zealous	#Must not stress self.
+				factor = 0
+			}
+			modifier = {
+				has_trait = cynical	#Must. Not. Stress. Self
+				factor = 0
+			}
+		}
+	}
+	# On seconds thoughts...
+	option = {	
+		name = false_conversion.0020.b
+
+		if = { # Return cost when backing out
+			limit = { scope:decision_piety_cost > 0 }
+			add_piety = scope:decision_piety_cost
+		}
+
+		ai_chance = {
+			base = 40
+			ai_value_modifier = {
+				ai_zeal = -0.25
+				ai_boldness = -0.25
+			}
+			modifier = {
+				add = 20
+				has_trait = lazy #Efffforrrtttt.
+			}
+		}
+	}
+}
+
+##################################################
+# Encourage False Conversion Admittance Decision Events
+# by Ewan Cowhig Croft
+# 0030-0031
+##################################################
+
+#	You encourage crypto-religionists in your realm to return to openly practicing their faiths.
+#		by Ewan Cowhig Croft
+false_conversion.0030 = {
+	type = character_event
+	title = false_conversion.0030.t
+	desc = {
+		desc = false_conversion.0030.desc_start
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = false_convert
+				}
+				desc = false_conversion.0030.desc_has_secret_faith
+			}
+			triggered_desc = {
+				trigger = {
+					rite = {
+						rite_has_doctrine = doctrine_pluralism_pluralistic
+					}
+				}
+				desc = false_conversion.0030.desc_no_secret_faith
+			}
+			desc = false_conversion.0030.desc_no_secret_faith_not_pluralist
+		}
+		desc = false_conversion.0030.desc_end
+	}
+	
+	theme = faith
+	left_portrait =	root
+
+	weight_multiplier = {
+		base = 1
+	}
+
+	# kCAFG override : low priority, it's okay if this event is replaced
+	id_override_priority = 1
+
+	immediate = {
+		if = {
+			limit = {
+				exists = secret_faith
+			}
+			secret_faith = { save_scope_as = old_faith } # For loc.
+		}
+		set_variable = {	#Initialise counting for the number of landed converts.
+			name = num_false_converts_vassal
+			value = 0
+		}
+		set_variable = {	#Initialise counting for the number of landless converts.
+			name = num_false_converts_landless
+			value = 0
+		}
+		set_variable = {	#Log how many counties switch.
+			name = num_false_converts_counties
+			value = 0
+		}
+		if = {	#If pluralistic, look at any hidden faiths.
+			limit = {
+				rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
+			}
+			every_vassal = {
+				limit = {	#Providing they are equal-to-or-less in hostility.
+					is_ai = yes
+					exists = secret_faith
+					NOR = {	#And not super-committed to their public religion.
+						has_trait = zealous
+						this = faith.religious_head
+					}
+					save_temporary_scope_as = current_character
+					root.faith = {	#Public conversion must be advantageous, or at least not harmful.
+						faith_hostility_level_comparison = {
+							scope:current_character.secret_faith <= scope:current_character.faith
+						}
+					}
+					OR = {	#The vassals should either be trusting, or else have an iron-clad reason to believe the amnesty.
+						NOR = {
+							has_trait = deceitful
+							has_trait = paranoid
+						}
+						secret_faith = root.faith
+					}
+				}
+				add_to_list = converting_vassals_list
+				root = {
+					change_variable = {
+						name = num_false_converts_vassal
+						add = 1
+					}
+				}
+			}
+			every_courtier_or_guest = {	#Grab courtiers and such too.
+				limit = {
+					is_ai = yes
+					exists = secret_faith
+					NOT = { has_trait = zealous }
+					save_temporary_scope_as = current_character
+					root.faith = {
+						faith_hostility_level_comparison = {
+							scope:current_character.secret_faith <= scope:current_character.faith
+						}
+					}
+					OR = {
+						NOR = {
+							has_trait = deceitful
+							has_trait = paranoid
+						}
+						secret_faith = root.faith
+					}
+				}
+				add_to_list = converting_landless_list
+				root = {
+					change_variable = {
+						name = num_false_converts_landless
+						add = 1
+					}
+				}
+			}
+			if = {	#If independent, also grab any counties in your realm that still have crypto-religious communities.
+				limit = {
+					top_liege = this
+					any_sub_realm_county = {
+						has_variable = false_convert
+					}
+				}
+				every_sub_realm_county = {
+					limit = {
+						has_variable = false_convert
+						save_temporary_scope_as = current_county
+						root.faith = {
+							faith_hostility_level_comparison = {
+								scope:current_county.var:false_convert <= scope:current_county.faith
+							}
+						}
+					}
+					add_to_list = converting_counties_list
+					root = {	#Adjust logging for each valid county.
+						change_variable = {
+							name = num_false_converts_counties
+							add = 1
+						}
+					}
+				}
+			}
+		}
+		else = {	#Otherwise, only check for within your own faith. Crypto-religionists don't want to come out of hiding for just anybody.
+			every_vassal = {
+				if = {
+					limit = {
+						any_secret = { type = secret_crypto_religionist }
+					}
+					random_secret = {
+						type = secret_crypto_religionist
+						save_scope_as = convert_crypto_secret
+					}
+				}
+				limit = {
+					is_ai = yes
+					exists = secret_faith
+					NOR = {
+						has_trait = zealous
+						this = faith.religious_head
+					}
+					secret_faith = root.faith
+				}
+				add_to_list = converting_vassals_list
+				root = {
+					change_variable = {
+						name = num_false_converts_vassal
+						add = 1
+					}
+				}
+			}
+			every_courtier_or_guest = {	#And any courtiers or hangers-on.
+				if = {
+					limit = {
+						any_secret = { type = secret_crypto_religionist }
+					}
+					random_secret = {
+						type = secret_crypto_religionist
+						save_scope_as = convert_crypto_secret
+					}
+				}
+				limit = {
+					is_ai = yes
+					exists =secret_faith
+					NOT = { has_trait = zealous }
+					secret_faith = root.faith
+				}
+				add_to_list = converting_landless_list
+				root = {
+					change_variable = {
+						name = num_false_converts_landless
+						add = 1
+					}
+				}
+			}
+			every_sub_realm_county = {
+				limit = {
+					has_variable = false_convert
+					var:false_convert = root.faith
+					faith != root.faith	#Discount them if they've already been switched by the conversion action.
+				}
+				save_temporary_scope_as = kCAFG_converted_county # Kei : save to get the variable from the right scope
+				E_kCAFG_convert_rite_in_all_county_provinces = {
+					FACTOR = 0.5
+					VARIANCE = 0.25
+					RITE = scope:kCAFG_converted_county.var:false_convert.main_rite
+					MAX = 0.85
+				}
+				remove_county_modifier = false_convert_modifier
+				add_county_modifier = {
+					modifier = relieved_cryptos_modifier
+					years = 25
+				}
+				root = {	#Adjust logging for each valid county.
+					change_variable = {
+						name = num_false_converts_counties
+						add = 1
+					}
+				}
+				remove_variable = false_convert	#Cleanup the variable when we're done.
+			}
+		}
+	}
+
+	option = {	#Tell everyone to just be honest about their faith.
+		name = false_conversion.0030.a
+		custom_tooltip = false_conversion.0030.a.tt
+		hidden_effect = {
+			every_in_list = {	#Convert the vassals.
+				list = converting_vassals_list
+				set_character_faith_with_conversion = secret_faith
+				remove_character_secret_faith = yes
+				save_temporary_scope_as = reconverter
+				every_vassal = {	#Notify your vassals' vassals of the change.
+					send_interface_message = {
+						type = event_religious_neutral_text
+						title = event_false_convert_my_vassal.t
+						desc = event_false_convert_interface.desc
+						right_icon = scope:reconverter
+					}
+				}
+				add_opinion = {	#Huzzah! I can go to church!
+					modifier = religious_freedom_opinion
+					target = root
+				}
+			}
+			every_in_list = {	#And the dregs.
+				list = converting_landless_list
+				set_character_faith_with_conversion = secret_faith
+				remove_character_secret_faith = yes
+				add_opinion = {	#Huzzah! I can go to church! Shame I don't own any!
+					modifier = religious_freedom_opinion
+					target = root
+				}
+			}
+			if = {	#If independent, also grab any counties in your realm that still have crypto-religious communities.
+				limit = { top_liege = this }
+				every_in_list = {
+					list = converting_counties_list
+					save_temporary_scope_as = kCAFG_converted_county # Kei : save to get the variable from the right scope
+					E_kCAFG_convert_rite_in_all_county_provinces = {
+						FACTOR = 0.5
+						VARIANCE = 0.25
+						RITE = scope:kCAFG_converted_county.var:false_convert.main_rite
+						MAX = 0.85
+					}
+					add_county_modifier = {	#Everyone likes practicing their faith in the open!
+						modifier = relieved_cryptos_modifier
+						years = 25
+					}
+					remove_variable = false_convert	#Cleanup the variable when we're done.
+				}
+			}
+			if = {	#Include counties in the message if there are any.
+				limit = { var:num_false_converts_counties >= 1 }
+				send_interface_message = {
+					type = event_religious_neutral_text
+					title = event_false_converts.t
+					desc = event_false_converts_plus_counties.desc
+				}
+			}
+			if = {	#Else, just talk about vassals and landless characters.
+				limit = { var:num_false_converts_counties <= 0 }
+				send_interface_message = {
+					type = event_religious_neutral_text
+					title = event_false_converts.t
+					desc = event_false_converts_without_counties.desc
+				}
+			}
+			if = {	#Under pluralist lieges, tell suitable players that their liege is offering amnesty.
+				limit = {
+					rite = { rite_has_doctrine = doctrine_pluralism_pluralistic }
+				}
+				every_vassal = {
+					limit = {
+						is_ai = no
+						any_secret = { type = secret_crypto_religionist }
+					}
+					trigger_event = false_conversion.0031
+				}
+			}
+			else = {	#Under non-pluralist lieges, tell suitable players that their liege is offering amnesty.
+				every_vassal = {
+					limit = {
+						is_ai = no
+						secret_faith ?= root.faith
+					}
+					trigger_event = false_conversion.0031
+				}
+			}
+		}
+		# Piety loss, but not if has false conversion sanction tenet
+		if = {
+			limit = {
+				rite = {
+					NOT = { rite_has_tenet = tenet_false_conversion_sanction }
+				}
+			}
+			add_piety = major_piety_loss
+		}
+		stress_and_fulfillment_impact = {
+			honest = minor_stress_impact_loss
+			trusting = minor_stress_impact_loss
+		}
+		ai_chance = {
+			base = 40
+			ai_value_modifier = {
+				ai_compassion = 0.5	#Everyone should be open with each other.
+			}
+			modifier = {
+				add = 20
+				has_trait = honest	#Honesty is the best policy.
+			}
+			modifier = {
+				add = 20
+				has_trait = trusting	#Trust people to trust your word.
+			}
+		}
+	}
+	option = {	#Let's let sleeping sectarian conflicts lie.
+		name = {
+			text = false_conversion.0030.b_no_secret_faith
+			trigger = {
+				NOT = {
+					any_secret = { type = secret_crypto_religionist }
+				 }
+			}
+		}
+		name = {
+			text = false_conversion.0030.b_has_secret_faith
+			trigger = {
+				any_secret = { type = secret_crypto_religionist }
+			}
+		}
+		ai_chance = {
+			base = 60
+			ai_value_modifier = {
+				ai_boldness = -0.25
+			}
+		}
+	}
+
+}

@@ -1,0 +1,327 @@
+﻿lam_lf_exchange_clear_local_effect = {
+	remove_variable = lam_lf_exchange_role
+	remove_variable = lam_lf_exchange_heir
+	remove_variable = lam_lf_exchange_person
+	remove_variable = lam_lf_exchange_stage
+	remove_variable = lam_lf_exchange_lord
+	remove_variable = lam_lf_exchange_record
+	remove_variable = lam_lf_exchange_until
+}
+lam_lf_exchange_create_effect = {
+	$A$ = {
+		save_scope_as = lam_lf_sponsor
+	}
+	$B$ = {
+		save_scope_as = lam_lf_supporter
+	}
+	if = {
+		limit = {
+			lam_lf_exchange_pair_trigger = {
+				A = scope:lam_lf_sponsor
+				B = scope:lam_lf_supporter
+			}
+		}
+		scope:lam_lf_sponsor = {
+			save_scope_as = lam_lf_sponsor
+		}
+		scope:lam_lf_supporter = {
+			save_scope_as = lam_lf_supporter
+		}
+		clear_saved_scope = lam_pd_pact_target
+		save_scope_value_as = {
+			name = lam_pd_pact_kind
+			value = flag:exchange
+		}
+		scope:lam_lf_sponsor = {
+			lam_pd_pact_install_effect = {
+				PARTNER = scope:lam_lf_supporter
+			}
+			set_variable = {
+				name = lam_lf_exchange_role
+				value = flag:sponsor
+			}
+		}
+		scope:lam_lf_supporter = {
+			lam_pd_pact_install_effect = {
+				PARTNER = scope:lam_lf_sponsor
+			}
+			set_variable = {
+				name = lam_lf_exchange_role
+				value = flag:supporter
+			}
+		}
+		scope:lam_lf_sponsor = {
+			set_variable = {
+				name = lam_lf_exchange_heir
+				value = scope:lam_lf_sponsor.var:lam_fac_heir
+			}
+			set_variable = {
+				name = lam_lf_exchange_person
+				value = scope:lam_lf_supporter
+			}
+			set_variable = {
+				name = lam_lf_exchange_stage
+				value = 1
+			}
+			set_variable = {
+				name = lam_lf_exchange_lord
+				value = liege
+			}
+			set_variable = {
+				name = lam_lf_exchange_record
+				value = var:lam_fac_rec
+			}
+			set_variable = {
+				name = lam_lf_exchange_until
+				value = {
+					value = lam_now_m
+					add = 36
+				}
+			}
+			set_variable = {
+				name = lam_pd_pact_until
+				value = {
+					value = lam_now_m
+					add = 36
+				}
+			}
+			set_variable = {
+				name = lam_lf_exchange_cd
+				value = yes
+				years = 5
+			}
+			lam_st_record_effect = {
+				KEY = exchange_agreed
+			}
+			lam_st_campaign_clear_effect = yes
+		}
+		scope:lam_lf_supporter = {
+			set_variable = {
+				name = lam_lf_exchange_heir
+				value = scope:lam_lf_sponsor.var:lam_fac_heir
+			}
+			set_variable = {
+				name = lam_lf_exchange_person
+				value = scope:lam_lf_supporter
+			}
+			set_variable = {
+				name = lam_lf_exchange_stage
+				value = 1
+			}
+			set_variable = {
+				name = lam_lf_exchange_lord
+				value = liege
+			}
+			set_variable = {
+				name = lam_lf_exchange_record
+				value = var:lam_fac_rec
+			}
+			set_variable = {
+				name = lam_lf_exchange_until
+				value = {
+					value = lam_now_m
+					add = 36
+				}
+			}
+			set_variable = {
+				name = lam_pd_pact_until
+				value = {
+					value = lam_now_m
+					add = 36
+				}
+			}
+			set_variable = {
+				name = lam_lf_exchange_cd
+				value = yes
+				years = 5
+			}
+			lam_st_record_effect = {
+				KEY = exchange_agreed
+			}
+			lam_st_campaign_clear_effect = yes
+		}
+	}
+}
+lam_lf_exchange_search_effect = {
+	if = {
+		limit = {
+			is_ai = yes
+			NOT = {
+				has_variable = lam_pd_pact_partner
+			}
+			has_variable = lam_fac_heir
+			NOT = {
+				has_variable = lam_lf_exchange_cd
+			}
+			NOT = {
+				has_variable = lam_lf_pledged_member
+			}
+		}
+		save_scope_as = lam_lf_sponsor
+		liege = {
+			ordered_in_list = {
+				variable = lam_bloc_leads
+				max = 1
+				check_range_bounds = no
+				order_by = lam_cr_influence_value
+				limit = {
+					is_ai = yes
+					save_temporary_scope_as = lam_lf_cand
+					lam_lf_exchange_pair_trigger = {
+						A = scope:lam_lf_sponsor
+						B = scope:lam_lf_cand
+					}
+				}
+				lam_lf_exchange_create_effect = {
+					A = scope:lam_lf_sponsor
+					B = this
+				}
+			}
+		}
+	}
+}
+lam_lf_exchange_fulfilled_effect = {
+	if = {
+		limit = {
+			var:lam_pd_pact_kind ?= flag:exchange
+			var:lam_lf_exchange_stage ?= 2
+			var:lam_lf_exchange_person ?= {
+				is_councillor_of = liege
+			}
+		}
+		save_scope_as = lam_lf_sponsor
+		var:lam_pd_pact_partner ?= {
+			lam_st_record_effect = {
+				KEY = exchange_kept
+			}
+			add_opinion = {
+				target = scope:lam_lf_sponsor
+				modifier = lam_fac_fair_share_opinion
+			}
+		}
+		lam_st_record_effect = {
+			KEY = exchange_kept
+		}
+		lam_pd_pact_clear_effect = yes
+	}
+}
+lam_lf_exchange_pulse_effect = {
+	if = {
+		limit = {
+			var:lam_pd_pact_kind ?= flag:exchange
+			var:lam_lf_exchange_role ?= flag:sponsor
+		}
+		if = {
+			limit = {
+				lam_lf_exchange_current_trigger = yes
+			}
+			if = {
+				limit = {
+					var:lam_lf_exchange_stage ?= 1
+					liege.designated_heir ?= var:lam_lf_exchange_heir
+				}
+				set_variable = {
+					name = lam_lf_exchange_stage
+					value = 2
+				}
+				set_variable = {
+					name = lam_lf_exchange_until
+					value = {
+						value = lam_now_m
+						add = 24
+					}
+				}
+				set_variable = {
+					name = lam_pd_pact_until
+					value = {
+						value = lam_now_m
+						add = 24
+					}
+				}
+				var:lam_pd_pact_partner = {
+					set_variable = {
+						name = lam_lf_exchange_stage
+						value = 2
+					}
+					set_variable = {
+						name = lam_lf_exchange_until
+						value = {
+							value = lam_now_m
+							add = 24
+						}
+					}
+					set_variable = {
+						name = lam_pd_pact_until
+						value = {
+							value = lam_now_m
+							add = 24
+						}
+					}
+				}
+				lam_st_campaign_clear_effect = yes
+			}
+			lam_lf_exchange_fulfilled_effect = yes
+		}
+		else = {
+			if = {
+				limit = {
+					var:lam_lf_exchange_stage ?= 2
+					var:lam_lf_exchange_until <= lam_now_m
+					is_alive = yes
+					is_adult = yes
+					is_imprisoned = no
+					has_variable = lam_bloc_lead
+					NOT = {
+						has_variable = lam_fac_disband
+					}
+					var:lam_lf_exchange_lord ?= liege
+					var:lam_lf_exchange_record ?= var:lam_fac_rec
+					var:lam_pd_pact_partner ?= {
+						is_alive = yes
+						is_imprisoned = no
+						has_variable = lam_bloc_lead
+						var:lam_pd_pact_partner ?= prev
+						liege ?= prev.liege
+						NOT = {
+							has_variable = lam_fac_disband
+						}
+						var:lam_lf_exchange_record ?= var:lam_fac_rec
+					}
+					var:lam_lf_exchange_person ?= {
+						is_alive = yes
+						is_adult = yes
+						is_imprisoned = no
+						liege ?= prev.liege
+						NOT = {
+							is_councillor_of = liege
+						}
+						lam_st_office_available_trigger = yes
+					}
+				}
+				save_scope_as = lam_lf_sponsor
+				var:lam_pd_pact_partner = {
+					lam_lf_incident_effect = {
+						KIND = betrayal
+						ACTOR = scope:lam_lf_sponsor
+						VICTIM = this
+						MONTHS = 60
+					}
+					add_opinion = {
+						target = scope:lam_lf_sponsor
+						modifier = lam_lf_broken_word_opinion
+					}
+					lam_st_record_effect = {
+						KEY = exchange_broken
+					}
+				}
+				lam_st_record_effect = {
+					KEY = exchange_broken
+				}
+				lam_lf_public_notice_effect = {
+					KEY = exchange_broken
+				}
+			}
+			lam_pd_pact_clear_effect = yes
+		}
+	}
+}

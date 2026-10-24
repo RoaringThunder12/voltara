@@ -1,0 +1,138 @@
+﻿lam_lf_legacy_successor_effect = {
+	save_scope_as = lam_ps_old
+	clear_saved_scope = lam_ps_named
+	clear_saved_scope = lam_succ
+	clear_saved_scope = lam_ps_m
+	clear_saved_scope = lam_ps_h
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_fac_members
+			}
+		}
+		ordered_in_list = {
+			variable = lam_fac_members
+			limit = {
+				lam_fac_succ_eligible_trigger = {
+					LORD = $LORD$
+				}
+			}
+			order_by = lam_fac_succ_score_value
+			save_scope_as = lam_ps_m
+			max = 1
+			check_range_bounds = no
+		}
+	}
+	else = {
+		ordered_in_list = {
+			variable = lam_fac_prev_members
+			limit = {
+				lam_fac_succ_eligible_trigger = {
+					LORD = $LORD$
+				}
+			}
+			order_by = lam_fac_succ_score_value
+			save_scope_as = lam_ps_m
+			max = 1
+			check_range_bounds = no
+		}
+	}
+	$LORD$ = {
+		ordered_vassal = {
+			limit = {
+				house ?= scope:lam_ps_old.house
+				lam_fac_succ_eligible_trigger = {
+					LORD = $LORD$
+				}
+			}
+			order_by = lam_fac_succ_score_value
+			save_scope_as = lam_ps_h
+			max = 1
+			check_range_bounds = no
+		}
+	}
+	scope:lam_ps_h ?= {
+		save_scope_value_as = {
+			name = lam_ps_hs
+			value = lam_fac_succ_score_value
+		}
+	}
+	scope:lam_ps_m ?= {
+		save_scope_value_as = {
+			name = lam_ps_ms
+			value = lam_fac_succ_score_value
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_ps_h
+			OR = {
+				NOT = {
+					exists = scope:lam_ps_m
+				}
+				scope:lam_ps_hs >= scope:lam_ps_ms
+			}
+		}
+		scope:lam_ps_h = {
+			save_scope_as = lam_succ
+		}
+	}
+	else_if = {
+		limit = {
+			exists = scope:lam_ps_m
+		}
+		scope:lam_ps_m = {
+			save_scope_as = lam_succ
+		}
+	}
+	var:lam_fac_succ_pick ?= {
+		if = {
+			limit = {
+				lam_fac_succ_eligible_trigger = {
+					LORD = $LORD$
+				}
+			}
+			save_scope_as = lam_succ
+			save_scope_as = lam_ps_named
+		}
+	}
+	primary_heir ?= {
+		if = {
+			limit = {
+				NOT = {
+					exists = scope:lam_ps_named
+				}
+				is_alive = yes
+				is_adult = yes
+				is_imprisoned = no
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+				OR = {
+					lam_fac_succ_eligible_trigger = {
+						LORD = $LORD$
+					}
+					AND = {
+						exists = scope:lam_ps_dying
+						OR = {
+							is_ruler = no
+							liege ?= $LORD$
+						}
+					}
+				}
+				OR = {
+					NOT = {
+						exists = scope:lam_succ
+					}
+					scope:lam_ps_old = {
+						max_military_strength >= {
+							value = scope:lam_succ.max_military_strength
+							multiply = 0.7
+						}
+					}
+				}
+			}
+			save_scope_as = lam_succ
+		}
+	}
+}

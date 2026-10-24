@@ -1,0 +1,234 @@
+﻿# Source for review fixes. Keep these effects after historical generators.
+lam_fac_newcomer_join_effect = {
+	if = {
+		limit = { lam_fac_newcomer_valid_trigger = { HEAD = $HEAD$ } }
+		set_variable = { name = lam_bloc value = $HEAD$ }
+		set_variable = { name = lam_fac_tier value = $TIER$ }
+		if = { limit = { has_variable = lam_fac_tier_fixed } remove_variable = lam_fac_tier_fixed }
+		if = { limit = { var:lam_fac_tier ?= 1 } set_variable = { name = lam_fac_tier_fixed value = yes } }
+		set_variable = { name = lam_fac_pinned value = yes years = $YEARS$ }
+		lam_fac_quick_refresh_court_effect = yes
+	}
+}
+lam_fac_waver_clear_effect = {
+	if = {
+		limit = {
+			has_variable = lam_fac_wavering
+		}
+		remove_variable = lam_fac_wavering
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_waver_why
+		}
+		remove_variable = lam_fac_waver_why
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_waver_owner
+		}
+		remove_variable = lam_fac_waver_owner
+	}
+	lam_pt_depart_clear_effect = yes
+}
+lam_fac_sulk_wing_effect = {
+	every_in_list = {
+		variable = lam_vt_voters
+		limit = { is_alive = yes var:lam_bloc ?= scope:lam_vt_head has_variable = lam_vt_against }
+		set_variable = { name = lam_fac_sulk value = scope:lam_vt_head years = 1 }
+		lam_fac_timer_set_effect = { NAME = lam_fac_sulk YEARS = 1 }
+	}
+}
+# Copy a faction-owned value with its original expiry, and consume the old copy.
+# Old saves did not record expiry for these states: use one season, never a fresh
+# multi-year term. Native timed flags still expire normally before a succession.
+lam_fac_review_timed_pass_effect = {
+	if = {
+		limit = { $FROM$ = { has_variable = $NAME$ } }
+		$TO$ = {
+			set_variable = { name = $NAME$ value = $FROM$.var:$NAME$ }
+			if = { limit = { $FROM$ = { has_variable = $NAME$_m } } set_variable = { name = $NAME$_m value = $FROM$.var:$NAME$_m } }
+			else = { set_variable = { name = $NAME$_m value = { value = lam_now_m add = $LEGACY_MONTHS$ } } }
+			lam_fac_timer_expire_effect = { NAME = $NAME$ }
+		}
+		$FROM$ = { lam_fac_timer_drop_effect = { NAME = $NAME$ } }
+	}
+}
+lam_fac_review_state_pass_effect = {
+	if = {
+		limit = { NOT = { $FROM$ = $TO$ } }
+		if = {
+			limit = { $FROM$ = { has_variable = lam_fac_inf } }
+			$TO$ = { set_variable = { name = lam_fac_inf value = $FROM$.var:lam_fac_inf } }
+			$FROM$ = { remove_variable = lam_fac_inf }
+		}
+		lam_fac_review_timed_pass_effect = { NAME = lam_fac_content FROM = $FROM$ TO = $TO$ LEGACY_MONTHS = 3 }
+		lam_fac_review_timed_pass_effect = { NAME = lam_fac_conceded FROM = $FROM$ TO = $TO$ LEGACY_MONTHS = 3 }
+		lam_fac_review_timed_pass_effect = { NAME = lam_fac_rallied_war FROM = $FROM$ TO = $TO$ LEGACY_MONTHS = 120 }
+		# Includes legacy candidates that were only recorded on members.
+		$FROM$ = {
+			every_in_list = { variable = lam_fac_members limit = { var:lam_fac_backed_by ?= $FROM$ } $TO$ = { add_to_variable_list = { name = lam_fac_backed_candidates target = prev } } }
+			every_in_list = { variable = lam_fac_backed_candidates limit = { var:lam_fac_backed_by ?= $FROM$ } $TO$ = { add_to_variable_list = { name = lam_fac_backed_candidates target = prev } } }
+			clear_variable_list = lam_fac_backed_candidates
+		}
+		$TO$ = {
+			every_in_list = {
+				variable = lam_fac_backed_candidates
+				limit = { var:lam_fac_backed_by ?= $FROM$ }
+				set_variable = { name = lam_fac_backed_by value = $TO$ }
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = { var:lam_fac_sulk ?= $FROM$ }
+				set_variable = { name = lam_fac_sulk value = $TO$ }
+			}
+		}
+		lam_fac_truce_pass_effect = { FROM = $FROM$ TO = $TO$ }
+	}
+}
+lam_fac_review_state_drop_effect = {
+	save_scope_as = lam_review_drop_head
+	every_in_list = {
+		variable = lam_fac_backed_candidates
+		limit = { var:lam_fac_backed_by ?= scope:lam_review_drop_head }
+		remove_variable = lam_fac_backed_by
+		if = { limit = { has_variable = lam_fac_backed_for } remove_variable = lam_fac_backed_for }
+	}
+	if = { limit = { has_variable = lam_fac_inf } remove_variable = lam_fac_inf }
+	lam_fac_timer_drop_effect = { NAME = lam_fac_content }
+	lam_fac_timer_drop_effect = { NAME = lam_fac_conceded }
+	lam_fac_timer_drop_effect = { NAME = lam_fac_rallied_war }
+	clear_variable_list = lam_fac_backed_candidates
+	lam_fac_truce_drop_effect = yes
+}
+lam_fac_review_state_expire_effect = {
+	lam_fac_timer_expire_effect = { NAME = lam_fac_content }
+	lam_fac_timer_expire_effect = { NAME = lam_fac_conceded }
+	lam_fac_timer_expire_effect = { NAME = lam_fac_rallied_war }
+	every_in_list = { variable = lam_fac_members lam_fac_timer_expire_effect = { NAME = lam_fac_sulk } }
+	lam_fac_truce_clean_effect = yes
+}
+
+lam_fac_truce_clean_effect = {
+	save_scope_as = lam_tr_owner
+	if = {
+		limit = { has_variable = lam_fac_truce_1 OR = { var:lam_fac_truce_1_m <= lam_now_m NOT = { var:lam_fac_truce_1 ?= { is_alive = yes has_variable = lam_bloc_lead liege ?= scope:lam_tr_owner.liege } } } }
+		remove_variable = lam_fac_truce_1
+		if = { limit = { has_variable = lam_fac_truce_1_m } remove_variable = lam_fac_truce_1_m }
+	}
+	if = {
+		limit = { has_variable = lam_fac_truce_2 OR = { var:lam_fac_truce_2_m <= lam_now_m NOT = { var:lam_fac_truce_2 ?= { is_alive = yes has_variable = lam_bloc_lead liege ?= scope:lam_tr_owner.liege } } } }
+		remove_variable = lam_fac_truce_2
+		if = { limit = { has_variable = lam_fac_truce_2_m } remove_variable = lam_fac_truce_2_m }
+	}
+	if = {
+		limit = { has_variable = lam_fac_truce_3 OR = { var:lam_fac_truce_3_m <= lam_now_m NOT = { var:lam_fac_truce_3 ?= { is_alive = yes has_variable = lam_bloc_lead liege ?= scope:lam_tr_owner.liege } } } }
+		remove_variable = lam_fac_truce_3
+		if = { limit = { has_variable = lam_fac_truce_3_m } remove_variable = lam_fac_truce_3_m }
+	}
+	if = {
+		limit = { has_variable = lam_fac_truce_4 OR = { var:lam_fac_truce_4_m <= lam_now_m NOT = { var:lam_fac_truce_4 ?= { is_alive = yes has_variable = lam_bloc_lead liege ?= scope:lam_tr_owner.liege } } } }
+		remove_variable = lam_fac_truce_4
+		if = { limit = { has_variable = lam_fac_truce_4_m } remove_variable = lam_fac_truce_4_m }
+	}
+	if = {
+		limit = { has_variable = lam_fac_truce_5 OR = { var:lam_fac_truce_5_m <= lam_now_m NOT = { var:lam_fac_truce_5 ?= { is_alive = yes has_variable = lam_bloc_lead liege ?= scope:lam_tr_owner.liege } } } }
+		remove_variable = lam_fac_truce_5
+		if = { limit = { has_variable = lam_fac_truce_5_m } remove_variable = lam_fac_truce_5_m }
+	}
+}
+lam_fac_truce_set_effect = {
+	lam_fac_truce_clean_effect = yes
+	clear_saved_scope = lam_tr_done
+	if = { limit = { var:lam_fac_truce_1 ?= $OTHER$ } set_variable = { name = lam_fac_truce_1_m value = { value = lam_now_m add = 60 } } save_scope_value_as = { name = lam_tr_done value = yes } }
+	if = { limit = { var:lam_fac_truce_2 ?= $OTHER$ } set_variable = { name = lam_fac_truce_2_m value = { value = lam_now_m add = 60 } } save_scope_value_as = { name = lam_tr_done value = yes } }
+	if = { limit = { var:lam_fac_truce_3 ?= $OTHER$ } set_variable = { name = lam_fac_truce_3_m value = { value = lam_now_m add = 60 } } save_scope_value_as = { name = lam_tr_done value = yes } }
+	if = { limit = { var:lam_fac_truce_4 ?= $OTHER$ } set_variable = { name = lam_fac_truce_4_m value = { value = lam_now_m add = 60 } } save_scope_value_as = { name = lam_tr_done value = yes } }
+	if = { limit = { var:lam_fac_truce_5 ?= $OTHER$ } set_variable = { name = lam_fac_truce_5_m value = { value = lam_now_m add = 60 } } save_scope_value_as = { name = lam_tr_done value = yes } }
+	if = { limit = { NOT = { exists = scope:lam_tr_done } NOT = { has_variable = lam_fac_truce_1 } } set_variable = { name = lam_fac_truce_1 value = $OTHER$ } set_variable = { name = lam_fac_truce_1_m value = { value = lam_now_m add = 60 } } save_scope_value_as = { name = lam_tr_done value = yes } }
+	if = { limit = { NOT = { exists = scope:lam_tr_done } NOT = { has_variable = lam_fac_truce_2 } } set_variable = { name = lam_fac_truce_2 value = $OTHER$ } set_variable = { name = lam_fac_truce_2_m value = { value = lam_now_m add = 60 } } save_scope_value_as = { name = lam_tr_done value = yes } }
+	if = { limit = { NOT = { exists = scope:lam_tr_done } NOT = { has_variable = lam_fac_truce_3 } } set_variable = { name = lam_fac_truce_3 value = $OTHER$ } set_variable = { name = lam_fac_truce_3_m value = { value = lam_now_m add = 60 } } save_scope_value_as = { name = lam_tr_done value = yes } }
+	if = { limit = { NOT = { exists = scope:lam_tr_done } NOT = { has_variable = lam_fac_truce_4 } } set_variable = { name = lam_fac_truce_4 value = $OTHER$ } set_variable = { name = lam_fac_truce_4_m value = { value = lam_now_m add = 60 } } save_scope_value_as = { name = lam_tr_done value = yes } }
+	if = { limit = { NOT = { exists = scope:lam_tr_done } NOT = { has_variable = lam_fac_truce_5 } } set_variable = { name = lam_fac_truce_5 value = $OTHER$ } set_variable = { name = lam_fac_truce_5_m value = { value = lam_now_m add = 60 } } save_scope_value_as = { name = lam_tr_done value = yes } }
+}
+lam_fac_truce_pass_effect = {
+	if = {
+		limit = { $FROM$ = { var:lam_fac_legacy_truce_owner ?= { has_variable = lam_fac_truce } } }
+		$TO$ = { set_variable = { name = lam_fac_legacy_truce_owner value = $FROM$.var:lam_fac_legacy_truce_owner } }
+	}
+	else_if = {
+		limit = { $FROM$ = { has_variable = lam_fac_truce NOT = { has_variable = lam_fac_legacy_truce_suppressed } } }
+		$TO$ = { set_variable = { name = lam_fac_legacy_truce_owner value = $FROM$ } }
+	}
+	$TO$ = { set_variable = { name = lam_fac_legacy_truce_suppressed value = yes } }
+	if = {
+		limit = { $FROM$ = { has_variable = lam_fac_truce_1 has_variable = lam_fac_truce_1_m var:lam_fac_truce_1_m > lam_now_m } }
+		$TO$ = { set_variable = { name = lam_fac_truce_1 value = $FROM$.var:lam_fac_truce_1 } set_variable = { name = lam_fac_truce_1_m value = $FROM$.var:lam_fac_truce_1_m } }
+		$FROM$.var:lam_fac_truce_1 ?= {
+			if = { limit = { var:lam_fac_truce_1 ?= $FROM$ } set_variable = { name = lam_fac_truce_1 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_2 ?= $FROM$ } set_variable = { name = lam_fac_truce_2 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_3 ?= $FROM$ } set_variable = { name = lam_fac_truce_3 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_4 ?= $FROM$ } set_variable = { name = lam_fac_truce_4 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_5 ?= $FROM$ } set_variable = { name = lam_fac_truce_5 value = $TO$ } }
+		}
+	}
+	if = {
+		limit = { $FROM$ = { has_variable = lam_fac_truce_2 has_variable = lam_fac_truce_2_m var:lam_fac_truce_2_m > lam_now_m } }
+		$TO$ = { set_variable = { name = lam_fac_truce_2 value = $FROM$.var:lam_fac_truce_2 } set_variable = { name = lam_fac_truce_2_m value = $FROM$.var:lam_fac_truce_2_m } }
+		$FROM$.var:lam_fac_truce_2 ?= {
+			if = { limit = { var:lam_fac_truce_1 ?= $FROM$ } set_variable = { name = lam_fac_truce_1 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_2 ?= $FROM$ } set_variable = { name = lam_fac_truce_2 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_3 ?= $FROM$ } set_variable = { name = lam_fac_truce_3 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_4 ?= $FROM$ } set_variable = { name = lam_fac_truce_4 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_5 ?= $FROM$ } set_variable = { name = lam_fac_truce_5 value = $TO$ } }
+		}
+	}
+	if = {
+		limit = { $FROM$ = { has_variable = lam_fac_truce_3 has_variable = lam_fac_truce_3_m var:lam_fac_truce_3_m > lam_now_m } }
+		$TO$ = { set_variable = { name = lam_fac_truce_3 value = $FROM$.var:lam_fac_truce_3 } set_variable = { name = lam_fac_truce_3_m value = $FROM$.var:lam_fac_truce_3_m } }
+		$FROM$.var:lam_fac_truce_3 ?= {
+			if = { limit = { var:lam_fac_truce_1 ?= $FROM$ } set_variable = { name = lam_fac_truce_1 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_2 ?= $FROM$ } set_variable = { name = lam_fac_truce_2 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_3 ?= $FROM$ } set_variable = { name = lam_fac_truce_3 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_4 ?= $FROM$ } set_variable = { name = lam_fac_truce_4 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_5 ?= $FROM$ } set_variable = { name = lam_fac_truce_5 value = $TO$ } }
+		}
+	}
+	if = {
+		limit = { $FROM$ = { has_variable = lam_fac_truce_4 has_variable = lam_fac_truce_4_m var:lam_fac_truce_4_m > lam_now_m } }
+		$TO$ = { set_variable = { name = lam_fac_truce_4 value = $FROM$.var:lam_fac_truce_4 } set_variable = { name = lam_fac_truce_4_m value = $FROM$.var:lam_fac_truce_4_m } }
+		$FROM$.var:lam_fac_truce_4 ?= {
+			if = { limit = { var:lam_fac_truce_1 ?= $FROM$ } set_variable = { name = lam_fac_truce_1 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_2 ?= $FROM$ } set_variable = { name = lam_fac_truce_2 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_3 ?= $FROM$ } set_variable = { name = lam_fac_truce_3 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_4 ?= $FROM$ } set_variable = { name = lam_fac_truce_4 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_5 ?= $FROM$ } set_variable = { name = lam_fac_truce_5 value = $TO$ } }
+		}
+	}
+	if = {
+		limit = { $FROM$ = { has_variable = lam_fac_truce_5 has_variable = lam_fac_truce_5_m var:lam_fac_truce_5_m > lam_now_m } }
+		$TO$ = { set_variable = { name = lam_fac_truce_5 value = $FROM$.var:lam_fac_truce_5 } set_variable = { name = lam_fac_truce_5_m value = $FROM$.var:lam_fac_truce_5_m } }
+		$FROM$.var:lam_fac_truce_5 ?= {
+			if = { limit = { var:lam_fac_truce_1 ?= $FROM$ } set_variable = { name = lam_fac_truce_1 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_2 ?= $FROM$ } set_variable = { name = lam_fac_truce_2 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_3 ?= $FROM$ } set_variable = { name = lam_fac_truce_3 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_4 ?= $FROM$ } set_variable = { name = lam_fac_truce_4 value = $TO$ } }
+			if = { limit = { var:lam_fac_truce_5 ?= $FROM$ } set_variable = { name = lam_fac_truce_5 value = $TO$ } }
+		}
+	}
+	$FROM$ = { lam_fac_truce_drop_effect = yes }
+}
+lam_fac_truce_drop_effect = {
+	set_variable = { name = lam_fac_legacy_truce_suppressed value = yes }
+	if = { limit = { has_variable = lam_fac_legacy_truce_owner } remove_variable = lam_fac_legacy_truce_owner }
+	if = { limit = { has_variable = lam_fac_truce_1 } remove_variable = lam_fac_truce_1 }
+	if = { limit = { has_variable = lam_fac_truce_1_m } remove_variable = lam_fac_truce_1_m }
+	if = { limit = { has_variable = lam_fac_truce_2 } remove_variable = lam_fac_truce_2 }
+	if = { limit = { has_variable = lam_fac_truce_2_m } remove_variable = lam_fac_truce_2_m }
+	if = { limit = { has_variable = lam_fac_truce_3 } remove_variable = lam_fac_truce_3 }
+	if = { limit = { has_variable = lam_fac_truce_3_m } remove_variable = lam_fac_truce_3_m }
+	if = { limit = { has_variable = lam_fac_truce_4 } remove_variable = lam_fac_truce_4 }
+	if = { limit = { has_variable = lam_fac_truce_4_m } remove_variable = lam_fac_truce_4_m }
+	if = { limit = { has_variable = lam_fac_truce_5 } remove_variable = lam_fac_truce_5 }
+	if = { limit = { has_variable = lam_fac_truce_5_m } remove_variable = lam_fac_truce_5_m }
+}

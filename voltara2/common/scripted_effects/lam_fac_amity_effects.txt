@@ -1,0 +1,96 @@
+﻿# Living Factions - sworn amity between factions (tools/claude_fixes/amity.py)
+# This = a faction head pledging amity with $OTHER$ (both sides run it).
+lam_fac_amity_install_effect = {
+	if = {
+		limit = {
+			NOT = {
+				is_target_in_variable_list = {
+					name = lam_fac_allies
+					target = $OTHER$
+				}
+			}
+		}
+		add_to_variable_list = {
+			name = lam_fac_allies
+			target = $OTHER$
+		}
+		lam_fac_timeline_add_effect = {
+			KEY = allied
+		}
+		if = {
+			limit = {
+				is_ai = no
+			}
+			send_interface_message = {
+				type = event_generic_good
+				title = lam_fac_amity_title
+				right_icon = $OTHER$
+			}
+		}
+	}
+	remove_list_variable = {
+		name = lam_fac_foes
+		target = $OTHER$
+	}
+	if = {
+		limit = {
+			NOT = {
+				is_target_in_variable_list = {
+					name = lam_fac_friends
+					target = $OTHER$
+				}
+			}
+		}
+		add_to_variable_list = {
+			name = lam_fac_friends
+			target = $OTHER$
+		}
+	}
+	add_opinion = {
+		target = $OTHER$
+		modifier = lam_fac_amity_opinion
+	}
+}
+# This = a faction head (each relations pulse): sworn amity lapses quietly when the two fall out.
+lam_fac_amity_lapse_effect = {
+	save_scope_as = lam_am_self
+	every_in_list = {
+		variable = lam_fac_allies
+		limit = {
+			is_alive = yes
+			OR = {
+				has_relation_rival = scope:lam_am_self
+				has_relation_nemesis = scope:lam_am_self
+				opinion = {
+					target = scope:lam_am_self
+					value < 0
+				}
+				scope:lam_am_self = {
+					opinion = {
+						target = prev
+						value < 0
+					}
+				}
+			}
+		}
+		save_scope_as = lam_am_other
+		remove_list_variable = {
+			name = lam_fac_allies
+			target = scope:lam_am_self
+		}
+		remove_opinion = {
+			target = scope:lam_am_self
+			modifier = lam_fac_amity_opinion
+		}
+		scope:lam_am_self = {
+			remove_list_variable = {
+				name = lam_fac_allies
+				target = scope:lam_am_other
+			}
+			remove_opinion = {
+				target = scope:lam_am_other
+				modifier = lam_fac_amity_opinion
+			}
+		}
+	}
+}

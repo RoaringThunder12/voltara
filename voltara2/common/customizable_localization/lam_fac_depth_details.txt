@@ -1,0 +1,96 @@
+﻿LamPdPact = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_pd_pact_kind ?= flag:exchange
+		}
+		localization_key = lam_lf_public_exchange
+	}
+	text = {
+		trigger = {
+			var:lam_pd_pact_kind ?= flag:heir
+		}
+		localization_key = lam_pd_pact_heir
+	}
+	text = {
+		trigger = {
+			var:lam_pd_pact_kind ?= flag:office
+		}
+		localization_key = lam_pd_pact_office
+	}
+	text = {
+		trigger = {
+			var:lam_pd_pact_kind ?= flag:law
+		}
+		localization_key = lam_pd_pact_law
+	}
+	text = {
+		trigger = {
+			var:lam_pd_pact_kind ?= flag:defense
+		}
+		localization_key = lam_pd_pact_defense
+	}
+	text = {
+		localization_key = lam_fac_empty
+	}
+}
+LamPdOffice = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_pd_seat ?= flag:marshal
+		}
+		localization_key = lam_pd_office_marshal
+	}
+	text = {
+		trigger = {
+			var:lam_pd_seat ?= flag:steward
+		}
+		localization_key = lam_pd_office_steward
+	}
+	text = {
+		trigger = {
+			var:lam_pd_seat ?= flag:spymaster
+		}
+		localization_key = lam_pd_office_spymaster
+	}
+	text = {
+		trigger = {
+			var:lam_pd_seat ?= flag:chancellor
+		}
+		localization_key = lam_pd_office_chancellor
+	}
+	text = {
+		localization_key = lam_fac_empty
+	}
+}
+LamPdGoalOffice = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_pd_goal_seat ?= flag:marshal
+		}
+		localization_key = lam_pd_goaloffice_marshal
+	}
+	text = {
+		trigger = {
+			var:lam_pd_goal_seat ?= flag:steward
+		}
+		localization_key = lam_pd_goaloffice_steward
+	}
+	text = {
+		trigger = {
+			var:lam_pd_goal_seat ?= flag:spymaster
+		}
+		localization_key = lam_pd_goaloffice_spymaster
+	}
+	text = {
+		trigger = {
+			var:lam_pd_goal_seat ?= flag:chancellor
+		}
+		localization_key = lam_pd_goaloffice_chancellor
+	}
+	text = {
+		localization_key = lam_fac_empty
+	}
+}

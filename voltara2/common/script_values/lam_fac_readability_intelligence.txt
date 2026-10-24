@@ -1,0 +1,31 @@
+﻿lam_ux_contact_level_value = {
+	value = 1
+	if = {
+		limit = {
+			var:lam_fac_tier ?= 1
+			exists = scope:lam_ux_spy
+			scope:lam_ux_spy = {
+				intrigue >= 12
+			}
+		}
+		value = 2
+	}
+	if = {
+		limit = {
+			var:lam_fac_tier ?= 1
+			this ?= scope:lam_ux_spy
+			intrigue >= 12
+		}
+		value = 3
+	}
+}
+lam_ux_report_age_value = {
+	value = lam_now_m
+	if = {
+		limit = {
+			has_variable = lam_ux_report_month
+		}
+		subtract = var:lam_ux_report_month
+	}
+	min = 0
+}

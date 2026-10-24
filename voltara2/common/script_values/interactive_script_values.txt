@@ -490,28 +490,8 @@ miv_peasant_strength_value = {
 	}
 }
 
-county_levies_to_raise = {
-	value = total_county_levies
-	multiply = {
-		value = county_opinion
-		multiply = -0.01
-		add = 0.5
-	}
-	if = {
-		limit = {
-			culture != holder.culture
-			culture = {
-				has_cultural_parameter = county_peasant_and_populist_factions_more_common
-			}
-		}
-		multiply = 1.5
-	}
-	min = {
-		value = building_max_garrison
-		multiply = 1.2
-	}
-	multiply = miv_peasant_strength_value
-}
+# county_levies_to_raise is supplied by the integrated feature file.
+
 
 miv_knight_minimum_age = {
 	value = 0

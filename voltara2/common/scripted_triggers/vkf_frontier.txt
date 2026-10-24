@@ -8,8 +8,9 @@ vkf_leader = { vkf_available = yes has_title = title:e_voltara_sixth_southron_in
 vkf_regional_actor = { OR = { vkf_southron = yes vkf_leader = yes vkf_keeper = yes has_title = title:h_voltara_severos } }
 vkf_war_ready = { vkf_leader = yes is_at_war = no var:vkf_supplies >= 60 var:vkf_intelligence >= 30 var:vkf_cohesion >= 40 var:vkf_strength >= 2 NOT = { has_global_variable = vkf_treaty } NOT = { has_global_variable = vkf_war } }
 
-vkf_council_guest = { vkf_southron = yes NOT = { this = scope:host } is_available = yes }
-vkf_delegate_pending = { vkf_southron = yes has_variable = vkf_council_host var:vkf_council_host = { vkf_leader = yes has_character_flag = vkf_war_council_active } NOT = { has_character_flag = vkf_council_pledged } OR = { NOT = { has_variable = vkf_patron } var:vkf_patron ?= var:vkf_council_host } }
+# Base activity rules handle availability and travel to this council.
+vkf_council_guest = { vkf_southron = yes NOT = { this = scope:host } }
+vkf_delegate_pending = { vkf_southron = yes has_variable = vkf_council_host var:vkf_council_host = { vkfu_council_host = yes has_character_flag = vkf_war_council_active } NOT = { has_character_flag = vkf_council_pledged } OR = { NOT = { has_variable = vkf_patron } var:vkf_patron ?= var:vkf_council_host } }
 
-vkf_southron_culture = { culture = { OR = { this = culture:voltara_southorion any_parent_culture_or_above = { this = culture:voltara_southorion } } } }
-vkf_local_culture = { OR = { vkf_southron_culture = yes culture = { has_cultural_pillar = heritage_voltara_goblin } culture = { has_cultural_pillar = heritage_voltara_gorilla } } }
+vkf_southron_culture = { culture = { NOR = { this = culture:voltara_desert_southron has_cultural_pillar = heritage_vds_desert_southron } OR = { has_cultural_pillar = heritage_voltara_southron this = culture:voltara_southorion any_parent_culture_or_above = { this = culture:voltara_southorion } } } }
+vkf_local_culture = { OR = { AND = { capital_province = { geographical_region = world_vds_mountain_clans } culture = { OR = { has_cultural_pillar = heritage_voltara_stoneborn has_cultural_pillar = heritage_voltara_naga } } }  vkf_southron_culture = yes culture = { has_cultural_pillar = heritage_voltara_goblin } culture = { has_cultural_pillar = heritage_voltara_gorilla } } }

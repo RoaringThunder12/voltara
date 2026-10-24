@@ -1,0 +1,1299 @@
+﻿namespace = dhm_legacy
+
+# =============================================================================
+# HOUSEHOLD INSTITUTIONS: OFFICERS AND MOOD
+# =============================================================================
+
+dhm_legacy.0001 = {
+	type = character_event
+	title = dhm_legacy.0001.t
+	desc = {
+		desc = dhm_legacy.0001.desc
+		first_valid = {
+			triggered_desc = { trigger = { global_var:dhm_household_cohesion < 20 } desc = dhm_cohesion.fractured }
+			triggered_desc = { trigger = { global_var:dhm_household_cohesion < 40 } desc = dhm_cohesion.uneasy }
+			triggered_desc = { trigger = { global_var:dhm_household_cohesion < 60 } desc = dhm_cohesion.stable }
+			triggered_desc = { trigger = { global_var:dhm_household_cohesion < 80 } desc = dhm_cohesion.united }
+			desc = dhm_cohesion.devoted
+		}
+	}
+	theme = stewardship
+	override_background = { reference = dhm_v050_officers }
+
+	option = { name = dhm_legacy.0001.officers trigger_event = dhm_legacy.0010 }
+	option = { name = dhm_legacy.0001.mood trigger_event = dhm_legacy.0100 }
+	option = { name = dhm_manager.0007.loyalty_ledger trigger_event = dhm_saga.0100 }
+	option = { name = dhm081_back_advanced trigger_event = dhm_manager.0091 is_cancel_option = yes }
+}
+
+dhm_legacy.0010 = {
+	type = character_event
+	title = dhm_legacy.0010.t
+	desc = {
+		desc = dhm_legacy.0010.desc
+		first_valid = {
+			triggered_desc = { trigger = { has_variable = dhm_officer_steward } desc = dhm_legacy.0010.steward.filled }
+			desc = dhm_legacy.0010.steward.empty
+		}
+		first_valid = {
+			triggered_desc = { trigger = { has_variable = dhm_officer_matchmaker } desc = dhm_legacy.0010.matchmaker.filled }
+			desc = dhm_legacy.0010.matchmaker.empty
+		}
+		first_valid = {
+			triggered_desc = { trigger = { has_variable = dhm_officer_tutor } desc = dhm_legacy.0010.tutor.filled }
+			desc = dhm_legacy.0010.tutor.empty
+		}
+		first_valid = {
+			triggered_desc = { trigger = { has_variable = dhm_officer_chronicler } desc = dhm_legacy.0010.chronicler.filled }
+			desc = dhm_legacy.0010.chronicler.empty
+		}
+	}
+	theme = stewardship
+	override_background = { reference = dhm_v050_officers }
+	immediate = { save_scope_as = dhm_manager clear_saved_scope = dhm074_appointment_role dhm_v050_cleanup_officers_effect = yes }
+
+	option = {
+		name = dhm_manager.0091.appoint_best
+		trigger = {
+			any_courtier = { dhm_v050_officer_candidate_trigger = yes }
+			OR = {
+				NOT = { has_variable = dhm_officer_steward }
+				NOT = { has_variable = dhm_officer_matchmaker }
+				NOT = { has_variable = dhm_officer_tutor }
+				NOT = { has_variable = dhm_officer_chronicler }
+			}
+		}
+		custom_tooltip = dhm_v070_appoint_best_officers_tt
+		hidden_effect = { dhm_v070_appoint_best_officers_effect = yes }
+		trigger_event = dhm_legacy.0010
+	}
+
+	option = {
+		name = dhm_legacy.0010.steward
+		trigger = { any_courtier = { dhm_v050_officer_candidate_trigger = yes } }
+		save_scope_value_as = { name = dhm074_appointment_role value = flag:steward }
+		trigger_event = dhm_legacy.0011
+	}
+	option = {
+		name = dhm_legacy.0010.matchmaker
+		trigger = { any_courtier = { dhm_v050_officer_candidate_trigger = yes } }
+		save_scope_value_as = { name = dhm074_appointment_role value = flag:matchmaker }
+		trigger_event = dhm_legacy.0011
+	}
+	option = {
+		name = dhm_legacy.0010.tutor
+		trigger = { any_courtier = { dhm_v050_officer_candidate_trigger = yes } }
+		save_scope_value_as = { name = dhm074_appointment_role value = flag:tutor }
+		trigger_event = dhm_legacy.0011
+	}
+	option = {
+		name = dhm_legacy.0010.chronicler
+		trigger = { any_courtier = { dhm_v050_officer_candidate_trigger = yes } }
+		save_scope_value_as = { name = dhm074_appointment_role value = flag:chronicler }
+		trigger_event = dhm_legacy.0011
+	}
+	option = { name = dhm081_back_household trigger_event = dhm_legacy.0001 is_cancel_option = yes }
+}
+
+dhm_legacy.0011 = {
+	type = character_event
+	title = {
+		first_valid = {
+			triggered_desc = { trigger = { dhm_v074_appoint_steward_trigger = yes } desc = dhm_legacy.0011.steward.t }
+			triggered_desc = { trigger = { dhm_v074_appoint_matchmaker_trigger = yes } desc = dhm_legacy.0011.matchmaker.t }
+			triggered_desc = { trigger = { dhm_v074_appoint_tutor_trigger = yes } desc = dhm_legacy.0011.tutor.t }
+			triggered_desc = { trigger = { dhm_v074_appoint_chronicler_trigger = yes } desc = dhm_legacy.0011.chronicler.t }
+			desc = dhm_v074_appointment_unknown_t
+		}
+	}
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { NOT = { dhm_v074_appointment_role_valid_trigger = yes } } desc = dhm_v074_appointment_unknown_desc }
+			triggered_desc = { trigger = { NOT = { exists = scope:dhm_office_candidate } } desc = dhm_v074_appointment_empty_desc }
+			triggered_desc = { trigger = { dhm_v074_appoint_steward_trigger = yes } desc = dhm_legacy.0011.steward.desc }
+			triggered_desc = { trigger = { dhm_v074_appoint_matchmaker_trigger = yes } desc = dhm_legacy.0011.matchmaker.desc }
+			triggered_desc = { trigger = { dhm_v074_appoint_tutor_trigger = yes } desc = dhm_legacy.0011.tutor.desc }
+			desc = dhm_legacy.0011.chronicler.desc
+		}
+		triggered_desc = { trigger = { exists = scope:dhm_office_incumbent } desc = dhm_v080_officer_replacement_desc }
+		triggered_desc = { trigger = { NOT = { exists = scope:dhm_office_incumbent } exists = scope:dhm_office_candidate } desc = dhm_v080_officer_vacancy_desc }
+		triggered_desc = { trigger = { dhm_v074_appointment_role_valid_trigger = yes exists = scope:dhm_office_candidate } desc = dhm_v080_officer_reason_skill_desc }
+		first_valid = {
+			triggered_desc = { trigger = { dhm_v074_appointment_role_valid_trigger = yes dhm_v080_officer_candidate_rival_trigger = yes } desc = dhm_v080_officer_warning_rival_desc }
+			triggered_desc = { trigger = { dhm_v074_appointment_role_valid_trigger = yes dhm_v080_officer_candidate_weak_trigger = yes } desc = dhm_v080_officer_warning_weak_desc }
+			triggered_desc = { trigger = { dhm_v074_appointment_role_valid_trigger = yes exists = scope:dhm_office_candidate } desc = dhm_v080_officer_warning_none_desc }
+		}
+	}
+	theme = stewardship
+	override_background = { reference = dhm_v050_officers }
+	left_portrait = scope:dhm_office_incumbent
+	right_portrait = scope:dhm_office_candidate
+	immediate = {
+		save_scope_as = dhm_manager
+		dhm_v050_cleanup_officers_effect = yes
+		clear_saved_scope = dhm_office_incumbent
+		clear_saved_scope = dhm_office_candidate
+		if = {
+			limit = { dhm_v074_appoint_steward_trigger = yes }
+			ordered_courtier = { limit = { dhm_v050_officer_candidate_trigger = yes } order_by = stewardship position = 0 check_range_bounds = no save_scope_as = dhm_office_candidate }
+		}
+		else_if = {
+			limit = { dhm_v074_appoint_matchmaker_trigger = yes }
+			ordered_courtier = { limit = { dhm_v050_officer_candidate_trigger = yes } order_by = diplomacy position = 0 check_range_bounds = no save_scope_as = dhm_office_candidate }
+		}
+		else_if = {
+			limit = { dhm_v074_appoint_tutor_trigger = yes }
+			ordered_courtier = { limit = { dhm_v050_officer_candidate_trigger = yes } order_by = learning position = 0 check_range_bounds = no save_scope_as = dhm_office_candidate }
+		}
+		else_if = {
+			limit = { dhm_v074_appoint_chronicler_trigger = yes }
+			ordered_courtier = { limit = { dhm_v050_officer_candidate_trigger = yes } order_by = learning position = 0 check_range_bounds = no save_scope_as = dhm_office_candidate }
+		}
+		if = {
+			limit = { dhm_v074_appoint_steward_trigger = yes has_variable = dhm_officer_steward }
+			var:dhm_officer_steward = { save_scope_as = dhm_office_incumbent }
+		}
+		else_if = {
+			limit = { dhm_v074_appoint_matchmaker_trigger = yes has_variable = dhm_officer_matchmaker }
+			var:dhm_officer_matchmaker = { save_scope_as = dhm_office_incumbent }
+		}
+		else_if = {
+			limit = { dhm_v074_appoint_tutor_trigger = yes has_variable = dhm_officer_tutor }
+			var:dhm_officer_tutor = { save_scope_as = dhm_office_incumbent }
+		}
+		else_if = {
+			limit = { dhm_v074_appoint_chronicler_trigger = yes has_variable = dhm_officer_chronicler }
+			var:dhm_officer_chronicler = { save_scope_as = dhm_office_incumbent }
+		}
+	}
+
+	option = {
+		name = dhm_legacy.0011.appoint
+		trigger = { dhm_v080_officer_appointment_confirmed_trigger = yes }
+		show_as_tooltip = {
+			if = {
+				limit = {
+					exists = scope:dhm_office_incumbent
+					scope:dhm_office_incumbent = { has_variable = dhm_v080_officer_service_years var:dhm_v080_officer_service_years >= 3 }
+				}
+				custom_tooltip = dhm_v080_replace_established_officer_tt
+			}
+			else_if = {
+				limit = { exists = scope:dhm_office_incumbent }
+				custom_tooltip = dhm_v080_replace_new_officer_tt
+			}
+			else = { custom_tooltip = dhm_v080_fill_vacant_office_tt }
+		}
+		if = {
+			limit = { dhm_v080_officer_appointment_confirmed_trigger = yes }
+			hidden_effect = {
+				clear_saved_scope = dhm_v080_replaced_officer
+				if = {
+					limit = { dhm_v074_appoint_steward_trigger = yes has_variable = dhm_officer_steward var:dhm_officer_steward = { is_alive = yes } }
+					var:dhm_officer_steward = { save_scope_as = dhm_v080_replaced_officer }
+				}
+				else_if = {
+					limit = { dhm_v074_appoint_matchmaker_trigger = yes has_variable = dhm_officer_matchmaker var:dhm_officer_matchmaker = { is_alive = yes } }
+					var:dhm_officer_matchmaker = { save_scope_as = dhm_v080_replaced_officer }
+				}
+				else_if = {
+					limit = { dhm_v074_appoint_tutor_trigger = yes has_variable = dhm_officer_tutor var:dhm_officer_tutor = { is_alive = yes } }
+					var:dhm_officer_tutor = { save_scope_as = dhm_v080_replaced_officer }
+				}
+				else_if = {
+					limit = { dhm_v074_appoint_chronicler_trigger = yes has_variable = dhm_officer_chronicler var:dhm_officer_chronicler = { is_alive = yes } }
+					var:dhm_officer_chronicler = { save_scope_as = dhm_v080_replaced_officer }
+				}
+				if = {
+					limit = { exists = scope:dhm_v080_replaced_officer }
+					if = {
+						limit = { scope:dhm_v080_replaced_officer = { has_variable = dhm_v080_officer_service_years var:dhm_v080_officer_service_years >= 3 } }
+						dhm_v050_cohesion_loss_small_effect = yes
+					}
+					scope:dhm_v080_replaced_officer = { dhm_v080_end_officer_tenure_effect = yes }
+				}
+			}
+			if = {
+				limit = { dhm_v074_appoint_steward_trigger = yes }
+				if = { limit = { has_variable = dhm_officer_steward var:dhm_officer_steward = { is_alive = yes } } var:dhm_officer_steward = { remove_character_flag = dhm_office_steward } }
+				set_variable = { name = dhm_officer_steward value = scope:dhm_office_candidate }
+				scope:dhm_office_candidate = { add_character_flag = dhm_office_steward }
+			}
+			else_if = {
+				limit = { dhm_v074_appoint_matchmaker_trigger = yes }
+				if = { limit = { has_variable = dhm_officer_matchmaker var:dhm_officer_matchmaker = { is_alive = yes } } var:dhm_officer_matchmaker = { remove_character_flag = dhm_office_matchmaker } }
+				set_variable = { name = dhm_officer_matchmaker value = scope:dhm_office_candidate }
+				scope:dhm_office_candidate = { add_character_flag = dhm_office_matchmaker }
+			}
+			else_if = {
+				limit = { dhm_v074_appoint_tutor_trigger = yes }
+				if = { limit = { has_variable = dhm_officer_tutor var:dhm_officer_tutor = { is_alive = yes } } var:dhm_officer_tutor = { remove_character_flag = dhm_office_tutor } }
+				set_variable = { name = dhm_officer_tutor value = scope:dhm_office_candidate }
+				scope:dhm_office_candidate = { add_character_flag = dhm_office_tutor }
+			}
+			else_if = {
+				limit = { dhm_v074_appoint_chronicler_trigger = yes }
+				if = { limit = { has_variable = dhm_officer_chronicler var:dhm_officer_chronicler = { is_alive = yes } } var:dhm_officer_chronicler = { remove_character_flag = dhm_office_chronicler } }
+				set_variable = { name = dhm_officer_chronicler value = scope:dhm_office_candidate }
+				scope:dhm_office_candidate = { add_character_flag = dhm_office_chronicler }
+			}
+			scope:dhm_office_candidate = {
+				dhm_v071_initialize_officer_loyalty_effect = yes
+				dhm_v080_begin_officer_tenure_effect = yes
+			}
+			trigger_event = dhm_legacy.0010
+		}
+		else = { custom_tooltip = dhm_v080_appointment_changed_tt }
+	}
+	option = { name = dhm_legacy.0011.not_yet trigger_event = dhm_legacy.0010 is_cancel_option = yes }
+	after = {
+		remove_character_flag = dhm_appoint_steward_context
+		remove_character_flag = dhm_appoint_matchmaker_context
+		remove_character_flag = dhm_appoint_tutor_context
+		remove_character_flag = dhm_appoint_chronicler_context
+	}
+}
+
+dhm_legacy.0100 = {
+	type = character_event
+	title = dhm_legacy.0100.t
+	desc = {
+		desc = dhm_legacy.0100.desc
+		first_valid = {
+			triggered_desc = { trigger = { global_var:dhm_household_cohesion < 20 } desc = dhm_cohesion.fractured.long }
+			triggered_desc = { trigger = { global_var:dhm_household_cohesion < 40 } desc = dhm_cohesion.uneasy.long }
+			triggered_desc = { trigger = { global_var:dhm_household_cohesion < 60 } desc = dhm_cohesion.stable.long }
+			triggered_desc = { trigger = { global_var:dhm_household_cohesion < 80 } desc = dhm_cohesion.united.long }
+			desc = dhm_cohesion.devoted.long
+		}
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_v050_family }
+
+	option = {
+		name = dhm_legacy.0100.supper
+		trigger = { short_term_gold >= minor_gold_value NOT = { has_character_flag = dhm_mood_action_recent } }
+		remove_short_term_gold = minor_gold_value
+		add_stress = miniscule_stress_gain
+		dhm_v050_cohesion_gain_large_effect = yes
+		add_character_flag = { flag = dhm_mood_action_recent years = 2 }
+		trigger_event = dhm_legacy.0100
+	}
+	option = {
+		name = dhm_legacy.0100.order
+		trigger = { NOT = { has_character_flag = dhm_mood_action_recent } }
+		add_prestige = minor_prestige_gain
+		add_stress = miniscule_stress_loss
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_household_hard_order_modifier YEARS = 2 RENEWAL_TT = dhm_household_hard_order_modifier_renewed_2_tt }
+		dhm_v050_cohesion_loss_small_effect = yes
+		dhm_v050_record_severe_choice_effect = yes
+		add_character_flag = { flag = dhm_mood_action_recent years = 2 }
+		trigger_event = dhm_legacy.0100
+	}
+	option = { name = dhm081_back_household trigger_event = dhm_legacy.0001 is_cancel_option = yes }
+}
+
+# =============================================================================
+# OFFICER STORY — responsibility, trust, and credit
+# =============================================================================
+
+dhm_legacy.0150 = {
+	type = character_event
+	title = dhm_legacy.0150.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_story_officer = { has_character_flag = dhm_office_steward } } desc = dhm_legacy.0150.steward }
+			triggered_desc = { trigger = { scope:dhm_story_officer = { has_character_flag = dhm_office_matchmaker } } desc = dhm_legacy.0150.matchmaker }
+			triggered_desc = { trigger = { scope:dhm_story_officer = { has_character_flag = dhm_office_tutor } } desc = dhm_legacy.0150.tutor }
+			triggered_desc = { trigger = { scope:dhm_story_officer = { has_character_flag = dhm_office_chronicler } } desc = dhm_legacy.0150.chronicler }
+			desc = dhm_v071_officer_generic_desc
+		}
+		desc = dhm_legacy.0150.question
+		triggered_desc = { trigger = { scope:dhm_story_officer = { is_alive = yes has_trait = diligent } } desc = dhm_legacy_0150_voice_1 }
+		triggered_desc = { trigger = { scope:dhm_story_officer = { is_alive = yes has_trait = lazy NOT = { has_trait = diligent } } } desc = dhm_legacy_0150_voice_2 }
+	}
+	theme = stewardship
+	override_background = { reference = dhm_v050_officers }
+	right_portrait = scope:dhm_story_officer
+	trigger = { dhm_v081_officer_role_unchanged_trigger = yes is_ai = no exists = scope:dhm_story_officer scope:dhm_story_officer = { dhm_v080_story_officer_current_trigger = yes } }
+
+	option = {
+		name = dhm_legacy.0150.trust
+		scope:dhm_story_officer = { set_variable = { name = dhm081_trusted_by value = root years = 6 } }
+		hidden_effect = { save_scope_value_as = { name = dhm071_officer_choice value = flag:trust } }
+		scope:dhm_story_officer = {
+			add_opinion = { target = root modifier = dhm_officer_trusted_opinion }
+			add_stress = miniscule_stress_gain
+
+			change_variable = { name = dhm_officer_loyalty add = 12 }
+			dhm_v080_clamp_officer_loyalty_effect = yes
+		}
+		add_stress = miniscule_stress_gain
+		dhm_v050_cohesion_gain_small_effect = yes
+		trigger_event = { id = dhm_legacy.0151 months = 8 }
+		trigger_event = { id = dhm_saga.0110 months = 18 }
+	}
+	option = {
+		name = dhm_legacy.0150.audit
+		scope:dhm_story_officer = { remove_variable = dhm081_trusted_by }
+		hidden_effect = { save_scope_value_as = { name = dhm071_officer_choice value = flag:audit } }
+		add_prestige = minor_prestige_gain
+		add_stress = miniscule_stress_loss
+		scope:dhm_story_officer = {
+			add_opinion = { target = root modifier = dhm_spouse_overruled_opinion }
+
+			change_variable = { name = dhm_officer_loyalty subtract = 10 }
+			dhm_v080_clamp_officer_loyalty_effect = yes
+		}
+		dhm_v050_cohesion_loss_small_effect = yes
+		trigger_event = { id = dhm_legacy.0151 months = 8 }
+		trigger_event = { id = dhm_saga.0110 months = 18 }
+	}
+	option = {
+		name = dhm_legacy.0150.credit
+		scope:dhm_story_officer = { if = { limit = { has_trait = ambitious } add_stress = miniscule_stress_loss } if = { limit = { has_trait = shy } add_stress = miniscule_stress_gain } }
+		hidden_effect = { save_scope_value_as = { name = dhm071_officer_choice value = flag:credit } }
+		add_prestige = minor_prestige_loss
+		scope:dhm_story_officer = {
+			add_opinion = { target = root modifier = dhm_officer_trusted_opinion }
+			add_prestige = minor_prestige_gain
+
+			change_variable = { name = dhm_officer_loyalty add = 18 }
+			dhm_v080_clamp_officer_loyalty_effect = yes
+		}
+		dhm_v050_cohesion_gain_large_effect = yes
+		trigger_event = { id = dhm_legacy.0151 months = 8 }
+		trigger_event = { id = dhm_saga.0110 months = 18 }
+	}
+}
+
+dhm_legacy.0151 = {
+	type = character_event
+	hidden = yes
+	# Preserve the queued event ID and original consequences, without an
+	# acknowledgement-only popup. Missing old-save history stays neutral.
+	trigger = { dhm_v081_officer_role_unchanged_trigger = yes is_ai = no exists = scope:dhm_story_officer scope:dhm_story_officer = { dhm_v080_story_officer_current_trigger = yes } }
+	immediate = {
+		scope:dhm_story_officer = { dhm_v076_resolve_3_legacy_choices_effect = { KEY = dhm071_officer_choice FLAG_1 = dhm_officer_trusted_outcome VALUE_1 = flag:trust FLAG_2 = dhm_officer_audited_outcome VALUE_2 = flag:audit FLAG_3 = dhm_officer_credited_outcome VALUE_3 = flag:credit } }
+		dhm_v080_resolve_officer_progress_effect = yes
+	}
+}
+
+# =============================================================================
+# PERSONAL AMBITIONS
+# =============================================================================
+
+dhm_legacy.0200 = {
+	type = character_event
+	title = dhm_legacy.0200.t
+	desc = {
+		desc = dhm_legacy.0200.opening
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_ambition_target = { has_character_flag = dhm_ambition_love } } desc = dhm_legacy.0200.love }
+			triggered_desc = { trigger = { scope:dhm_ambition_target = { has_character_flag = dhm_ambition_status } } desc = dhm_legacy.0200.status }
+			triggered_desc = { trigger = { scope:dhm_ambition_target = { has_character_flag = dhm_ambition_learning } } desc = dhm_legacy.0200.learning }
+			triggered_desc = { trigger = { scope:dhm_ambition_target = { has_character_flag = dhm_ambition_faith } } desc = dhm_legacy.0200.faith }
+			triggered_desc = { trigger = { scope:dhm_ambition_target = { has_character_flag = dhm_ambition_security } } desc = dhm_legacy.0200.security }
+			triggered_desc = { trigger = { scope:dhm_ambition_target = { has_character_flag = dhm_ambition_children } } desc = dhm_legacy.0200.children }
+			triggered_desc = { trigger = { scope:dhm_ambition_target = { has_character_flag = dhm_ambition_reconciliation } } desc = dhm_legacy.0200.reconciliation }
+			desc = dhm_legacy.0200.freedom
+		}
+		desc = dhm_legacy.0200.question
+		triggered_desc = { trigger = { scope:dhm_ambition_target = { is_alive = yes has_trait = ambitious } } desc = dhm_legacy_0200_voice_1 }
+		triggered_desc = { trigger = { scope:dhm_ambition_target = { is_alive = yes has_trait = content NOT = { has_trait = ambitious } } } desc = dhm_legacy_0200_voice_2 }
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_v050_family }
+	right_portrait = scope:dhm_ambition_target
+	trigger = { is_ai = no exists = scope:dhm_ambition_target scope:dhm_ambition_target = { is_alive = yes } }
+	immediate = { dhm_v050_record_ambition_effect = yes }
+
+	option = {
+		name = dhm_legacy.0200.support
+		hidden_effect = { save_scope_value_as = { name = dhm071_ambition_choice value = flag:support } }
+		trigger = { short_term_gold >= minor_gold_value }
+		remove_short_term_gold = minor_gold_value
+		add_stress = miniscule_stress_gain
+		scope:dhm_ambition_target = {
+			add_opinion = { target = root modifier = dhm_ambition_was_heard_opinion }
+			add_stress = miniscule_stress_loss
+
+			create_character_memory = { type = dhm_ambition_heard_memory participants = { listener = root } }
+			dhm_v090_remember_help_effect = yes
+		}
+		dhm_v050_cohesion_gain_large_effect = yes
+		trigger_event = { id = dhm_legacy.0201 months = 18 }
+	}
+	option = {
+		name = dhm_legacy.0200.duty
+		hidden_effect = { save_scope_value_as = { name = dhm071_ambition_choice value = flag:duty } }
+		add_prestige = minor_prestige_gain
+		add_stress = miniscule_stress_loss
+		scope:dhm_ambition_target = {
+			add_opinion = { target = root modifier = dhm_duty_before_desire_opinion }
+			add_stress = minor_stress_gain
+
+		}
+		dhm_v050_cohesion_loss_large_effect = yes
+		dhm_v050_record_severe_choice_effect = yes
+		trigger_event = { id = dhm_legacy.0201 months = 18 }
+	}
+	option = {
+		name = dhm_legacy.0200.compromise
+		hidden_effect = { save_scope_value_as = { name = dhm071_ambition_choice value = flag:compromise } }
+		add_prestige = minor_prestige_loss
+		add_stress = miniscule_stress_gain
+		scope:dhm_ambition_target = {
+			add_opinion = { target = root modifier = dhm_shared_family_burden_opinion }
+
+		}
+		dhm_v050_cohesion_gain_small_effect = yes
+		trigger_event = { id = dhm_legacy.0201 months = 18 }
+	}
+}
+
+dhm_legacy.0201 = {
+	type = character_event
+	title = dhm_legacy.0201.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_ambition_target = { dhm_v071_choice_is_trigger = { KEY = dhm071_ambition_choice VALUE = flag:support LEGACY = dhm_ambition_supported_outcome } } } desc = dhm_legacy.0201.support }
+			triggered_desc = { trigger = { scope:dhm_ambition_target = { dhm_v071_choice_is_trigger = { KEY = dhm071_ambition_choice VALUE = flag:duty LEGACY = dhm_ambition_duty_outcome } } } desc = dhm_legacy.0201.duty }
+			triggered_desc = { trigger = { scope:dhm_ambition_target = { dhm_v071_choice_is_trigger = { KEY = dhm071_ambition_choice VALUE = flag:compromise LEGACY = dhm_ambition_compromise_outcome } } } desc = dhm_legacy.0201.compromise }
+			desc = dhm_v076_dhm_legacy_0201_unknown_desc
+		}
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_v050_family }
+	right_portrait = scope:dhm_ambition_target
+	trigger = { is_ai = no exists = scope:dhm_ambition_target scope:dhm_ambition_target = { is_alive = yes } }
+	immediate = { scope:dhm_ambition_target = { dhm_v076_resolve_3_legacy_choices_effect = { KEY = dhm071_ambition_choice FLAG_1 = dhm_ambition_supported_outcome VALUE_1 = flag:support FLAG_2 = dhm_ambition_duty_outcome VALUE_2 = flag:duty FLAG_3 = dhm_ambition_compromise_outcome VALUE_3 = flag:compromise } } }
+	option = {
+		name = dhm_legacy.0201.a
+		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_ambition_choice VALUE_1 = flag:support VALUE_2 = flag:duty VALUE_3 = flag:compromise } }
+		if = {
+			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_ambition_choice VALUE_1 = flag:support VALUE_2 = flag:duty VALUE_3 = flag:compromise } }
+			if = {
+				limit = { scope:dhm_ambition_target = { dhm_v071_choice_is_trigger = { KEY = dhm071_ambition_choice VALUE = flag:support LEGACY = dhm_ambition_supported_outcome } } }
+				dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_household_open_hands_modifier YEARS = 3 RENEWAL_TT = dhm_household_open_hands_modifier_renewed_3_tt }
+				add_stress = miniscule_stress_gain
+			}
+			else_if = {
+				limit = { scope:dhm_ambition_target = { dhm_v071_choice_is_trigger = { KEY = dhm071_ambition_choice VALUE = flag:duty LEGACY = dhm_ambition_duty_outcome } } }
+				add_prestige = minor_prestige_gain
+				dhm_v050_cohesion_loss_small_effect = yes
+			}
+			else_if = {
+				limit = { scope:dhm_ambition_target = { dhm_v071_choice_is_trigger = { KEY = dhm071_ambition_choice VALUE = flag:compromise LEGACY = dhm_ambition_compromise_outcome } } }
+				add_stress = miniscule_stress_loss
+				dhm_v050_cohesion_gain_small_effect = yes
+			}
+			trigger_event = { id = dhm_saga.2000 years = 3 }
+		}
+		else = { custom_tooltip = dhm_v076_unknown_outcome_tt }
+	}
+	option = {
+		name = dhm_v076_outcome_ack
+		trigger = { NOT = { dhm_v076_choice_known_trigger = { KEY = dhm071_ambition_choice VALUE_1 = flag:support VALUE_2 = flag:duty VALUE_3 = flag:compromise } } }
+		is_cancel_option = yes
+		custom_tooltip = dhm_v076_unknown_outcome_tt
+	}
+}
+
+# =============================================================================
+# MULTI-YEAR RELATIONSHIP ARCS
+# =============================================================================
+
+dhm_legacy.0300 = {
+	type = character_event
+	title = {
+		first_valid = {
+			triggered_desc = { trigger = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:siblings LEGACY = dhm_arc_siblings_context } } desc = dhm_legacy.0300.siblings.t }
+			triggered_desc = { trigger = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:tutor LEGACY = dhm_arc_tutor_context } } desc = dhm_legacy.0300.tutor.t }
+			triggered_desc = { trigger = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:inlaw LEGACY = dhm_arc_inlaw_context } } desc = dhm_legacy.0300.inlaw.t }
+			triggered_desc = { trigger = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:estranged LEGACY = dhm_arc_estranged_context } } desc = dhm_legacy.0300.estranged.t }
+			desc = dhm_legacy.0300.kin.t
+		}
+	}
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:siblings LEGACY = dhm_arc_siblings_context } } desc = dhm_legacy.0300.siblings.desc }
+			triggered_desc = { trigger = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:tutor LEGACY = dhm_arc_tutor_context } } desc = dhm_legacy.0300.tutor.desc }
+			triggered_desc = { trigger = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:inlaw LEGACY = dhm_arc_inlaw_context } } desc = dhm_legacy.0300.inlaw.desc }
+			triggered_desc = { trigger = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:estranged LEGACY = dhm_arc_estranged_context } } desc = dhm_legacy.0300.estranged.desc }
+			desc = dhm_legacy.0300.kin.desc
+		}
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_v050_family }
+	left_portrait = scope:dhm_arc_first
+	right_portrait = scope:dhm_arc_second
+	trigger = { is_ai = no exists = scope:dhm_arc_first exists = scope:dhm_arc_second scope:dhm_arc_first = { is_alive = yes } scope:dhm_arc_second = { is_alive = yes } }
+	immediate = { dhm_v050_record_relationship_effect = yes }
+
+	option = {
+		name = dhm_legacy.0300.listen
+		hidden_effect = { save_scope_value_as = { name = dhm071_arc_choice value = flag:listen } }
+		add_stress = miniscule_stress_gain
+		scope:dhm_arc_first = { add_opinion = { target = root modifier = dhm_shared_family_burden_opinion }  }
+		scope:dhm_arc_second = { add_opinion = { target = root modifier = dhm_shared_family_burden_opinion } }
+		dhm_v050_cohesion_gain_large_effect = yes
+		trigger_event = { id = dhm_legacy.0301 years = 2 }
+	}
+	option = {
+		name = dhm_legacy.0300.rule
+		hidden_effect = { save_scope_value_as = { name = dhm071_arc_choice value = flag:rule } }
+		add_prestige = minor_prestige_gain
+		scope:dhm_arc_first = { add_opinion = { target = root modifier = dhm_mediated_family_dispute_opinion }  }
+		scope:dhm_arc_second = { add_opinion = { target = root modifier = dhm_sided_against_me_opinion } add_stress = minor_stress_gain }
+		dhm_v050_cohesion_loss_small_effect = yes
+		trigger_event = { id = dhm_legacy.0301 years = 2 }
+	}
+	option = {
+		name = dhm_legacy.0300.leave
+		hidden_effect = { save_scope_value_as = { name = dhm071_arc_choice value = flag:leave } }
+		add_stress = minor_stress_loss
+		scope:dhm_arc_first = { add_opinion = { target = root modifier = dhm_refused_family_dispute_opinion }  }
+		scope:dhm_arc_second = { add_opinion = { target = root modifier = dhm_refused_family_dispute_opinion } }
+		dhm_v050_cohesion_loss_large_effect = yes
+		trigger_event = { id = dhm_legacy.0301 years = 2 }
+	}
+}
+
+dhm_legacy.0301 = {
+	type = character_event
+	title = dhm_legacy.0301.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_choice VALUE = flag:listen LEGACY = dhm_arc_listened_outcome } } } desc = dhm_legacy.0301.listen }
+			triggered_desc = { trigger = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_choice VALUE = flag:rule LEGACY = dhm_arc_ruled_outcome } } } desc = dhm_legacy.0301.rule }
+			triggered_desc = { trigger = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_choice VALUE = flag:leave LEGACY = dhm_arc_ignored_outcome } } } desc = dhm_legacy.0301.leave }
+			desc = dhm_v076_dhm_legacy_0301_unknown_desc
+		}
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_v050_family }
+	left_portrait = scope:dhm_arc_first
+	right_portrait = scope:dhm_arc_second
+	trigger = { is_ai = no dhm_v080_relationship_arc_context_valid_trigger = yes }
+	immediate = { scope:dhm_arc_first = { dhm_v076_resolve_3_legacy_choices_effect = { KEY = dhm071_arc_choice FLAG_1 = dhm_arc_listened_outcome VALUE_1 = flag:listen FLAG_2 = dhm_arc_ruled_outcome VALUE_2 = flag:rule FLAG_3 = dhm_arc_ignored_outcome VALUE_3 = flag:leave } } }
+	option = {
+		name = dhm_legacy.0301.a
+		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_arc_choice VALUE_1 = flag:listen VALUE_2 = flag:rule VALUE_3 = flag:leave } }
+		if = {
+			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_arc_choice VALUE_1 = flag:listen VALUE_2 = flag:rule VALUE_3 = flag:leave } }
+			if = {
+				limit = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_choice VALUE = flag:listen LEGACY = dhm_arc_listened_outcome } } }
+				dhm_record_reconciliation_effect = yes
+				scope:dhm_arc_first = { create_character_memory = { type = dhm_family_reconciliation_memory participants = { reconciled_relative = scope:dhm_arc_second } } }
+				scope:dhm_arc_second = { create_character_memory = { type = dhm_family_reconciliation_memory participants = { reconciled_relative = scope:dhm_arc_first } } }
+				dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_peacemaker_modifier YEARS = 3 RENEWAL_TT = dhm_reward_household_peacemaker_renewed_3_tt }
+				add_stress = miniscule_stress_gain
+			}
+			else_if = {
+				limit = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_choice VALUE = flag:rule LEGACY = dhm_arc_ruled_outcome } } }
+				add_prestige = minor_prestige_gain
+				dhm_v050_cohesion_loss_small_effect = yes
+			}
+			else_if = {
+				limit = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_choice VALUE = flag:leave LEGACY = dhm_arc_ignored_outcome } } }
+				dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_family_regret_modifier YEARS = 3 RENEWAL_TT = dhm_reward_family_regret_renewed_3_tt }
+				add_stress = miniscule_stress_loss
+			}
+			if = { limit = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:siblings LEGACY = dhm_arc_siblings_context } } trigger_event = { id = dhm_saga.3000 years = 2 } }
+			else_if = { limit = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:tutor LEGACY = dhm_arc_tutor_context } } trigger_event = { id = dhm_saga.3010 years = 2 } }
+			else_if = { limit = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:inlaw LEGACY = dhm_arc_inlaw_context } } trigger_event = { id = dhm_saga.3020 years = 2 } }
+			else_if = { limit = { dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:estranged LEGACY = dhm_arc_estranged_context } } trigger_event = { id = dhm_saga.3030 years = 2 } }
+		}
+		else = { custom_tooltip = dhm_v076_unknown_outcome_tt }
+	}
+	option = {
+		name = dhm_v076_outcome_ack
+		trigger = { NOT = { dhm_v076_choice_known_trigger = { KEY = dhm071_arc_choice VALUE_1 = flag:listen VALUE_2 = flag:rule VALUE_3 = flag:leave } } }
+		is_cancel_option = yes
+		custom_tooltip = dhm_v076_unknown_outcome_tt
+	}
+}
+
+# =============================================================================
+# THE HEIR'S JOURNEY
+# =============================================================================
+
+dhm_legacy.0400 = {
+	type = character_event
+	title = {
+		first_valid = {
+			triggered_desc = { trigger = { var:dhm_heir_journey_stage < 1 } desc = dhm_legacy.0400.council.t }
+			triggered_desc = { trigger = { var:dhm_heir_journey_stage < 2 } desc = dhm_legacy.0400.hall.t }
+			triggered_desc = { trigger = { var:dhm_heir_journey_stage < 3 } desc = dhm_legacy.0400.duty.t }
+			desc = dhm_legacy.0400.ready.t
+		}
+	}
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { var:dhm_heir_journey_stage < 1 } desc = dhm_legacy.0400.council.desc }
+			triggered_desc = { trigger = { var:dhm_heir_journey_stage < 2 } desc = dhm_legacy.0400.hall.desc }
+			triggered_desc = { trigger = { var:dhm_heir_journey_stage < 3 } desc = dhm_legacy.0400.duty.desc }
+			desc = dhm_legacy.0400.ready.desc
+		}
+	}
+	theme = stewardship
+	override_background = { reference = dhm_v050_heir }
+	right_portrait = scope:dhm_heir
+	trigger = { is_ai = no var:dhm_heir_journey_stage < 3 exists = scope:dhm_heir scope:dhm_heir = { dhm_v072_heir_lesson_available_trigger = yes } }
+	immediate = {
+		if = {
+			limit = { has_variable = dhm_heir_journey_subject NOT = { var:dhm_heir_journey_subject ?= scope:dhm_heir } }
+			set_variable = { name = dhm_heir_journey_stage value = 0 }
+		}
+		set_variable = { name = dhm_heir_journey_subject value = scope:dhm_heir }
+		dhm_v050_record_heir_effect = yes
+	}
+
+	option = {
+		name = dhm_legacy.0400.bold
+		if = {
+			limit = { exists = scope:dhm_heir scope:dhm_heir = { dhm_v072_heir_lesson_available_trigger = yes } var:dhm_heir_journey_stage < 3  }
+			hidden_effect = { save_scope_value_as = { name = dhm071_heir_lesson_choice value = flag:bold } }
+			add_prestige = minor_prestige_gain
+			scope:dhm_heir = {
+				add_opinion = { target = root modifier = dhm_shared_family_burden_opinion }
+				dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_heir_bold_duty_modifier YEARS = 3 RENEWAL_TT = dhm_heir_bold_duty_modifier_renewed_3_tt }
+				add_stress = miniscule_stress_gain
+	
+				create_character_memory = { type = dhm_shared_duty_memory participants = { mentor = root } }
+			}
+			dhm_v050_cohesion_gain_small_effect = yes
+			change_variable = { name = dhm_heir_journey_stage add = 1 }
+			trigger_event = { id = dhm_legacy.0401 months = 18 }
+		}
+		else = { custom_tooltip = dhm_v072_heir_unavailable_tt }
+	}
+	option = {
+		name = dhm_legacy.0400.careful
+		if = {
+			limit = { exists = scope:dhm_heir scope:dhm_heir = { dhm_v072_heir_lesson_available_trigger = yes } var:dhm_heir_journey_stage < 3  }
+			hidden_effect = { save_scope_value_as = { name = dhm071_heir_lesson_choice value = flag:careful } }
+			add_prestige = minor_prestige_loss
+			scope:dhm_heir = {
+				add_opinion = { target = root modifier = dhm_guided_education_opinion }
+				dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_heir_careful_duty_modifier YEARS = 3 RENEWAL_TT = dhm_heir_careful_duty_modifier_renewed_3_tt }
+				add_stress = miniscule_stress_loss
+	
+				create_character_memory = { type = dhm_shared_duty_memory participants = { mentor = root } }
+			}
+			dhm_v050_cohesion_gain_small_effect = yes
+			change_variable = { name = dhm_heir_journey_stage add = 1 }
+			trigger_event = { id = dhm_legacy.0401 months = 18 }
+		}
+		else = { custom_tooltip = dhm_v072_heir_unavailable_tt }
+	}
+	option = {
+		name = dhm_legacy.0400.listen
+		if = {
+			limit = { exists = scope:dhm_heir scope:dhm_heir = { dhm_v072_heir_lesson_available_trigger = yes } var:dhm_heir_journey_stage < 3  }
+			hidden_effect = { save_scope_value_as = { name = dhm071_heir_lesson_choice value = flag:listen } }
+			add_stress = miniscule_stress_gain
+			scope:dhm_heir = {
+				add_opinion = { target = root modifier = dhm_ambition_was_heard_opinion }
+				dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_heir_listening_duty_modifier YEARS = 3 RENEWAL_TT = dhm_heir_listening_duty_modifier_renewed_3_tt }
+	
+				create_character_memory = { type = dhm_shared_duty_memory participants = { mentor = root } }
+			}
+			dhm_v050_cohesion_gain_large_effect = yes
+			change_variable = { name = dhm_heir_journey_stage add = 1 }
+			trigger_event = { id = dhm_legacy.0401 months = 18 }
+		}
+		else = { custom_tooltip = dhm_v072_heir_unavailable_tt }
+	}
+}
+
+dhm_legacy.0401 = {
+	type = character_event
+	title = dhm_legacy.0401.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_heir = { dhm_v071_choice_is_trigger = { KEY = dhm071_heir_lesson_choice VALUE = flag:bold LEGACY = dhm_heir_bold_outcome } } } desc = dhm_legacy.0401.bold }
+			triggered_desc = { trigger = { scope:dhm_heir = { dhm_v071_choice_is_trigger = { KEY = dhm071_heir_lesson_choice VALUE = flag:careful LEGACY = dhm_heir_careful_outcome } } } desc = dhm_legacy.0401.careful }
+			triggered_desc = { trigger = { scope:dhm_heir = { dhm_v071_choice_is_trigger = { KEY = dhm071_heir_lesson_choice VALUE = flag:listen LEGACY = dhm_heir_listened_outcome } } } desc = dhm_legacy.0401.listen }
+			desc = dhm_v076_dhm_legacy_0401_unknown_desc
+		}
+	}
+	theme = stewardship
+	override_background = { reference = dhm_v050_heir }
+	right_portrait = scope:dhm_heir
+	trigger = { is_ai = no exists = scope:dhm_heir scope:dhm_heir = { dhm_v072_heir_lesson_available_trigger = yes } }
+	immediate = { scope:dhm_heir = { dhm_v076_resolve_3_legacy_choices_effect = { KEY = dhm071_heir_lesson_choice FLAG_1 = dhm_heir_bold_outcome VALUE_1 = flag:bold FLAG_2 = dhm_heir_careful_outcome VALUE_2 = flag:careful FLAG_3 = dhm_heir_listened_outcome VALUE_3 = flag:listen } } }
+	option = {
+		name = dhm_legacy.0401.a
+		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_heir_lesson_choice VALUE_1 = flag:bold VALUE_2 = flag:careful VALUE_3 = flag:listen } }
+		if = {
+			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_heir_lesson_choice VALUE_1 = flag:bold VALUE_2 = flag:careful VALUE_3 = flag:listen } }
+			if = {
+				limit = { exists = scope:dhm_heir scope:dhm_heir = { dhm_v072_heir_lesson_available_trigger = yes }   }
+				if = {
+					limit = { scope:dhm_heir = { dhm_v071_choice_is_trigger = { KEY = dhm071_heir_lesson_choice VALUE = flag:bold LEGACY = dhm_heir_bold_outcome } } }
+					add_prestige = minor_prestige_gain
+					scope:dhm_heir = { add_stress = miniscule_stress_gain }
+				}
+				else_if = {
+					limit = { scope:dhm_heir = { dhm_v071_choice_is_trigger = { KEY = dhm071_heir_lesson_choice VALUE = flag:careful LEGACY = dhm_heir_careful_outcome } } }
+					add_stress = miniscule_stress_loss
+					add_prestige = minor_prestige_loss
+				}
+				else_if = {
+					limit = { scope:dhm_heir = { dhm_v071_choice_is_trigger = { KEY = dhm071_heir_lesson_choice VALUE = flag:listen LEGACY = dhm_heir_listened_outcome } } }
+					dhm_v050_cohesion_gain_small_effect = yes
+					add_stress = miniscule_stress_gain
+				}
+			}
+			else = { custom_tooltip = dhm_v072_heir_unavailable_tt }
+		}
+		else = { custom_tooltip = dhm_v076_unknown_outcome_tt }
+	}
+	option = {
+		name = dhm_v076_outcome_ack
+		trigger = { NOT = { dhm_v076_choice_known_trigger = { KEY = dhm071_heir_lesson_choice VALUE_1 = flag:bold VALUE_2 = flag:careful VALUE_3 = flag:listen } } }
+		is_cancel_option = yes
+		custom_tooltip = dhm_v076_unknown_outcome_tt
+	}
+}
+
+dhm_legacy.0410 = {
+	type = character_event
+	title = dhm_legacy.0410.t
+	desc = {
+		desc = dhm_legacy.0410.desc
+		first_valid = {
+			triggered_desc = { trigger = { var:dhm_heir_journey_stage < 1 } desc = dhm_legacy.0410.council }
+			triggered_desc = { trigger = { var:dhm_heir_journey_stage < 2 } desc = dhm_legacy.0410.hall }
+			triggered_desc = { trigger = { var:dhm_heir_journey_stage < 3 } desc = dhm_legacy.0410.duty }
+			triggered_desc = { trigger = { var:dhm_heir_journey_stage < 4 } desc = dhm_saga.heir_status.command }
+			triggered_desc = { trigger = { var:dhm_heir_journey_stage < 5 } desc = dhm_saga.heir_status.marriage }
+			triggered_desc = { trigger = { NOT = { has_character_flag = dhm_heir_journey_completed } } desc = dhm_saga.heir_status.assessment }
+			desc = dhm_saga.heir_status.complete
+		}
+	}
+	theme = stewardship
+	override_background = { reference = dhm_v050_heir }
+	right_portrait = root.player_heir
+	trigger = { is_ai = no exists = player_heir }
+	option = {
+		name = dhm_v071_heir_reopen
+		trigger = { has_character_flag = dhm_heir_journey_completed var:dhm_heir_journey_stage >= 5 player_heir = { is_alive = yes has_character_modifier = dhm_second_chance_learning_modifier NOT = { has_character_flag = dhm_heir_extra_tuition_used } } }
+		custom_tooltip = dhm_v071_heir_reopen_tt
+		hidden_effect = { player_heir = { save_scope_as = dhm_heir } dhm_v071_defer_heir_assessment_effect = yes }
+	}
+	option = { name = dhm081_back_education trigger_event = dhm_manager.0005 is_cancel_option = yes }
+}
+
+# =============================================================================
+# SPOUSE AS A REAL PARTNER
+# =============================================================================
+
+dhm_legacy.0500 = {
+	type = character_event
+	title = dhm_legacy.0500.t
+	desc = {
+		desc = dhm_legacy.0500.opening
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_partner_spouse = { has_trait = ambitious } } desc = dhm_legacy.0500.ambitious }
+			triggered_desc = { trigger = { scope:dhm_partner_spouse = { has_trait = content } } desc = dhm_legacy.0500.content }
+			triggered_desc = { trigger = { scope:dhm_partner_spouse = { has_trait = stubborn } } desc = dhm_legacy.0500.stubborn }
+			desc = dhm_legacy.0500.default
+		}
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_v050_family }
+	right_portrait = scope:dhm_partner_spouse
+	trigger = { is_ai = no exists = scope:dhm_partner_spouse scope:dhm_partner_spouse = { is_alive = yes is_spouse_of = root } }
+	immediate = { dhm_v050_record_spouse_effect = yes }
+
+	option = {
+		name = dhm_legacy.0500.share
+		hidden_effect = { save_scope_value_as = { name = dhm071_spouse_choice value = flag:share } }
+		add_stress = miniscule_stress_gain
+		scope:dhm_partner_spouse = {
+			add_opinion = { target = root modifier = dhm_spouse_consulted_opinion }
+			add_stress = miniscule_stress_gain
+
+			create_character_memory = { type = dhm_household_promise_memory participants = { promise_keeper = root } }
+		}
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_household_open_hands_modifier YEARS = 3 RENEWAL_TT = dhm_household_open_hands_modifier_renewed_3_tt }
+		dhm_v050_cohesion_gain_large_effect = yes
+		trigger_event = { id = dhm_legacy.0501 months = 18 }
+	}
+	option = {
+		name = dhm_legacy.0500.yield
+		hidden_effect = { save_scope_value_as = { name = dhm071_spouse_choice value = flag:yield } }
+		add_prestige = minor_prestige_loss
+		add_stress = miniscule_stress_loss
+		scope:dhm_partner_spouse = {
+			add_opinion = { target = root modifier = dhm_spouse_consulted_opinion }
+			add_stress = miniscule_stress_loss
+
+		}
+		dhm_v050_cohesion_gain_small_effect = yes
+		trigger_event = { id = dhm_legacy.0501 months = 18 }
+	}
+	option = {
+		name = dhm_legacy.0500.overrule
+		hidden_effect = { save_scope_value_as = { name = dhm071_spouse_choice value = flag:overrule } }
+		add_prestige = minor_prestige_gain
+		add_stress = miniscule_stress_loss
+		scope:dhm_partner_spouse = {
+			add_opinion = { target = root modifier = dhm_spouse_overruled_opinion }
+			add_stress = minor_stress_gain
+
+		}
+		dhm_v050_cohesion_loss_large_effect = yes
+		dhm_v050_record_severe_choice_effect = yes
+		trigger_event = { id = dhm_legacy.0501 months = 18 }
+	}
+}
+
+dhm_legacy.0501 = {
+	type = character_event
+	title = dhm_legacy.0501.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { NOT = { dhm_v073_partner_continuing_trigger = yes } } desc = dhm_v073_partner_changed_desc }
+			triggered_desc = { trigger = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_spouse_choice VALUE = flag:share LEGACY = dhm_spouse_shared_outcome } } } desc = dhm_legacy.0501.share }
+			triggered_desc = { trigger = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_spouse_choice VALUE = flag:yield LEGACY = dhm_spouse_yielded_outcome } } } desc = dhm_legacy.0501.yield }
+			triggered_desc = { trigger = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_spouse_choice VALUE = flag:overrule LEGACY = dhm_spouse_overruled_outcome } } } desc = dhm_legacy.0501.overrule }
+			desc = dhm_v076_dhm_legacy_0501_unknown_desc
+		}
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_v050_family }
+	right_portrait = scope:dhm_partner_spouse
+	trigger = { is_ai = no exists = scope:dhm_partner_spouse scope:dhm_partner_spouse = { is_alive = yes } }
+	immediate = { scope:dhm_partner_spouse = { dhm_v076_resolve_3_legacy_choices_effect = { KEY = dhm071_spouse_choice FLAG_1 = dhm_spouse_shared_outcome VALUE_1 = flag:share FLAG_2 = dhm_spouse_yielded_outcome VALUE_2 = flag:yield FLAG_3 = dhm_spouse_overruled_outcome VALUE_3 = flag:overrule } } }
+	option = {
+		name = dhm_legacy.0501.a
+		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_spouse_choice VALUE_1 = flag:share VALUE_2 = flag:yield VALUE_3 = flag:overrule } dhm_v073_partner_continuing_trigger = yes }
+		if = {
+			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_spouse_choice VALUE_1 = flag:share VALUE_2 = flag:yield VALUE_3 = flag:overrule } }
+			if = {
+				limit = { dhm_v073_partner_continuing_trigger = yes }
+				if = {
+					limit = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_spouse_choice VALUE = flag:share LEGACY = dhm_spouse_shared_outcome } } }
+					add_prestige = minor_prestige_gain
+					add_stress = miniscule_stress_gain
+				}
+				else_if = {
+					limit = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_spouse_choice VALUE = flag:yield LEGACY = dhm_spouse_yielded_outcome } } }
+					dhm_v050_cohesion_gain_small_effect = yes
+					add_prestige = minor_prestige_loss
+				}
+				else_if = {
+					limit = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_spouse_choice VALUE = flag:overrule LEGACY = dhm_spouse_overruled_outcome } } }
+					add_prestige = minor_prestige_gain
+					dhm_v050_cohesion_loss_small_effect = yes
+				}
+			}
+			else = { custom_tooltip = dhm_v073_circumstances_changed_tt }
+		}
+		else = { custom_tooltip = dhm_v076_unknown_outcome_tt }
+	}
+	option = {
+		name = dhm_v073_changed_ack
+		trigger = { NOT = { dhm_v073_partner_continuing_trigger = yes } }
+		is_cancel_option = yes
+	}
+	option = {
+		name = dhm_v076_outcome_ack
+		trigger = { dhm_v073_partner_continuing_trigger = yes NOT = { dhm_v076_choice_known_trigger = { KEY = dhm071_spouse_choice VALUE_1 = flag:share VALUE_2 = flag:yield VALUE_3 = flag:overrule } } }
+		is_cancel_option = yes
+		custom_tooltip = dhm_v076_unknown_outcome_tt
+	}
+}
+
+# =============================================================================
+# COMPLETE MARRIAGE JOURNEY
+# =============================================================================
+
+dhm_legacy.0600 = {
+	orphan = yes # Compatibility-only: allow old queued saves, never reschedule.
+	type = character_event
+	title = dhm_legacy.0600.t
+	desc = {
+		desc = dhm_legacy.0600.opening
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:dhm_journey_relative = { has_character_flag = dhm_arranged_union_active } }
+				desc = dhm_legacy.0600.arranged
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_journey_relative = { NOT = { faith = scope:dhm_journey_spouse.faith } } }
+				desc = dhm_legacy.0600.faith
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_journey_relative = { NOT = { culture = scope:dhm_journey_spouse.culture } } }
+				desc = dhm_legacy.0600.culture
+			}
+			desc = dhm_legacy.0600.ordinary
+		}
+	}
+	theme = marriage
+	override_background = { reference = dhm_v050_family }
+	left_portrait = scope:dhm_journey_relative
+	right_portrait = scope:dhm_journey_spouse
+	trigger = {
+		is_ai = no
+		exists = scope:dhm_journey_relative
+		exists = scope:dhm_journey_spouse
+		scope:dhm_journey_relative = { is_alive = yes is_spouse_of = scope:dhm_journey_spouse }
+		scope:dhm_journey_spouse = { is_alive = yes }
+	}
+	immediate = { dhm_v050_record_marriage_journey_effect = yes }
+
+	option = {
+		name = dhm_legacy.0600.furnish
+		hidden_effect = { save_scope_value_as = { name = dhm071_journey_choice value = flag:furnish } }
+		trigger = { short_term_gold >= minor_gold_value }
+		remove_short_term_gold = minor_gold_value
+		add_stress = miniscule_stress_gain
+		scope:dhm_journey_relative = { add_opinion = { target = root modifier = dhm_supported_newlyweds_opinion }  }
+		scope:dhm_journey_spouse = { add_opinion = { target = root modifier = dhm_supported_newlyweds_opinion } }
+		dhm_v050_cohesion_gain_large_effect = yes
+		trigger_event = { id = dhm_legacy.0601 years = 2 }
+	}
+	option = {
+		name = dhm_legacy.0600.freedom
+		hidden_effect = { save_scope_value_as = { name = dhm071_journey_choice value = flag:freedom } }
+		add_prestige = minor_prestige_loss
+		add_stress = miniscule_stress_loss
+		scope:dhm_journey_relative = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_marital_self_reliance_modifier YEARS = 3 RENEWAL_TT = dhm_marital_self_reliance_modifier_renewed_3_tt }  }
+		scope:dhm_journey_spouse = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_marital_self_reliance_modifier YEARS = 3 RENEWAL_TT = dhm_marital_self_reliance_modifier_renewed_3_tt } }
+		dhm_v050_cohesion_loss_small_effect = yes
+		trigger_event = { id = dhm_legacy.0601 years = 2 }
+	}
+	option = {
+		name = dhm_legacy.0600.custom
+		hidden_effect = { save_scope_value_as = { name = dhm071_journey_choice value = flag:custom } }
+		add_piety = minor_piety_gain
+		scope:dhm_journey_relative = { add_opinion = { target = root modifier = dhm_respected_my_custom_opinion }  add_stress = miniscule_stress_gain }
+		scope:dhm_journey_spouse = {
+			if = { limit = { OR = { NOT = { faith = root.faith } NOT = { culture = root.culture } } } add_opinion = { target = root modifier = dhm_household_marriage_friction_opinion } }
+			else = { add_opinion = { target = root modifier = dhm_welcomed_my_custom_opinion } }
+		}
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_household_hard_order_modifier YEARS = 3 RENEWAL_TT = dhm_household_hard_order_modifier_renewed_3_tt }
+		dhm_v050_record_severe_choice_effect = yes
+		trigger_event = { id = dhm_legacy.0601 years = 2 }
+	}
+}
+
+dhm_legacy.0601 = {
+	type = character_event
+	title = dhm_legacy.0601.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { NOT = { dhm_v073_couple_continuing_trigger = yes } } desc = dhm_v073_couple_changed_desc }
+			triggered_desc = { trigger = { scope:dhm_journey_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_journey_choice VALUE = flag:furnish LEGACY = dhm_journey_furnished_outcome } } } desc = dhm_legacy.0601.furnish }
+			triggered_desc = { trigger = { scope:dhm_journey_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_journey_choice VALUE = flag:freedom LEGACY = dhm_journey_freedom_outcome } } } desc = dhm_legacy.0601.freedom }
+			triggered_desc = { trigger = { scope:dhm_journey_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_journey_choice VALUE = flag:custom LEGACY = dhm_journey_custom_outcome } } } desc = dhm_legacy.0601.custom }
+			desc = dhm_v076_dhm_legacy_0601_unknown_desc
+		}
+	}
+	theme = marriage
+	override_background = { reference = dhm_v050_family }
+	left_portrait = scope:dhm_journey_relative
+	right_portrait = scope:dhm_journey_spouse
+	trigger = { is_ai = no exists = scope:dhm_journey_relative exists = scope:dhm_journey_spouse scope:dhm_journey_relative = { is_alive = yes } scope:dhm_journey_spouse = { is_alive = yes } }
+	immediate = { scope:dhm_journey_relative = { dhm_v076_resolve_3_legacy_choices_effect = { KEY = dhm071_journey_choice FLAG_1 = dhm_journey_furnished_outcome VALUE_1 = flag:furnish FLAG_2 = dhm_journey_freedom_outcome VALUE_2 = flag:freedom FLAG_3 = dhm_journey_custom_outcome VALUE_3 = flag:custom } } }
+	option = {
+		name = dhm_legacy.0601.a
+		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_journey_choice VALUE_1 = flag:furnish VALUE_2 = flag:freedom VALUE_3 = flag:custom } dhm_v073_couple_continuing_trigger = yes }
+		if = {
+			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_journey_choice VALUE_1 = flag:furnish VALUE_2 = flag:freedom VALUE_3 = flag:custom } }
+			if = {
+				limit = { dhm_v073_couple_continuing_trigger = yes }
+				if = {
+					limit = { scope:dhm_journey_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_journey_choice VALUE = flag:furnish LEGACY = dhm_journey_furnished_outcome } } }
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_dynastic_momentum_modifier YEARS = 3 RENEWAL_TT = dhm_reward_dynastic_momentum_renewed_3_tt }
+					add_stress = miniscule_stress_gain
+				}
+				else_if = {
+					limit = { scope:dhm_journey_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_journey_choice VALUE = flag:freedom LEGACY = dhm_journey_freedom_outcome } } }
+					scope:dhm_journey_relative = { add_stress = miniscule_stress_loss }
+					scope:dhm_journey_spouse = { add_stress = miniscule_stress_loss }
+					add_prestige = minor_prestige_loss
+				}
+				else_if = {
+					limit = { scope:dhm_journey_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_journey_choice VALUE = flag:custom LEGACY = dhm_journey_custom_outcome } } }
+					add_piety = minor_piety_gain
+					dhm_v050_cohesion_loss_small_effect = yes
+				}
+			}
+			else = { custom_tooltip = dhm_v073_circumstances_changed_tt }
+		}
+		else = { custom_tooltip = dhm_v076_unknown_outcome_tt }
+	}
+	option = {
+		name = dhm_v073_changed_ack
+		trigger = { NOT = { dhm_v073_couple_continuing_trigger = yes } }
+		is_cancel_option = yes
+	}
+	option = {
+		name = dhm_v076_outcome_ack
+		trigger = { dhm_v073_couple_continuing_trigger = yes NOT = { dhm_v076_choice_known_trigger = { KEY = dhm071_journey_choice VALUE_1 = flag:furnish VALUE_2 = flag:freedom VALUE_3 = flag:custom } } }
+		is_cancel_option = yes
+		custom_tooltip = dhm_v076_unknown_outcome_tt
+	}
+}
+
+dhm_legacy.0610 = {
+	orphan = yes # Compatibility-only: allow old queued saves, never reschedule.
+	type = character_event
+	title = dhm_legacy.0610.t
+	desc = dhm_legacy.0610.desc
+	theme = marriage
+	override_background = { reference = dhm_v050_family }
+	option = { name = dhm081_back_marriage trigger_event = dhm_manager.0006 is_cancel_option = yes }
+}
+
+# =============================================================================
+# FAMILY CRISIS AND RECOVERY
+# =============================================================================
+
+dhm_legacy.0700 = {
+	type = character_event
+	title = dhm_legacy.0700.t
+	desc = {
+		desc = dhm_legacy.0700.opening
+		first_valid = {
+			triggered_desc = { trigger = { short_term_gold < minor_gold_value } desc = dhm_legacy.0700.thin_coffers }
+			triggered_desc = { trigger = { scope:dhm_crisis_relative = { stress >= 100 } } desc = dhm_legacy.0700.weary }
+			triggered_desc = { trigger = { global_var:dhm_household_cohesion < 40 } desc = dhm_legacy.0700.uneasy }
+			desc = dhm_legacy.0700.default
+		}
+	}
+	theme = stewardship
+	override_background = { reference = dhm_v050_family }
+	right_portrait = scope:dhm_crisis_relative
+	trigger = { is_ai = no exists = scope:dhm_crisis_relative scope:dhm_crisis_relative = { is_alive = yes } }
+	immediate = { dhm_v050_record_crisis_effect = yes }
+
+	option = {
+		name = dhm_legacy.0700.pay
+		hidden_effect = { save_scope_value_as = { name = dhm071_crisis_choice value = flag:pay } }
+		trigger = { short_term_gold >= minor_gold_value }
+		remove_short_term_gold = minor_gold_value
+		add_stress = miniscule_stress_gain
+		scope:dhm_crisis_relative = { add_opinion = { target = root modifier = dhm_crisis_supported_opinion } add_stress = minor_stress_loss  create_character_memory = { type = dhm_household_crisis_memory participants = { supporter = root } } }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_household_recovery_modifier YEARS = 3 RENEWAL_TT = dhm_household_recovery_modifier_renewed_3_tt }
+		dhm_v050_cohesion_gain_large_effect = yes
+		trigger_event = { id = dhm_legacy.0701 years = 2 }
+	}
+	option = {
+		name = dhm_legacy.0700.austerity
+		hidden_effect = { save_scope_value_as = { name = dhm071_crisis_choice value = flag:austerity } }
+		add_prestige = minor_prestige_gain
+		add_stress = miniscule_stress_loss
+		scope:dhm_crisis_relative = { add_opinion = { target = root modifier = dhm_crisis_burdened_opinion } add_stress = miniscule_stress_gain  }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_household_austerity_modifier YEARS = 3 RENEWAL_TT = dhm_household_austerity_modifier_renewed_3_tt }
+		dhm_v050_cohesion_loss_small_effect = yes
+		trigger_event = { id = dhm_legacy.0701 years = 2 }
+	}
+	option = {
+		name = dhm_legacy.0700.share
+		hidden_effect = { save_scope_value_as = { name = dhm071_crisis_choice value = flag:share } }
+		add_prestige = minor_prestige_loss
+		add_stress = miniscule_stress_gain
+		scope:dhm_crisis_relative = { add_opinion = { target = root modifier = dhm_shared_family_burden_opinion } add_stress = miniscule_stress_gain  create_character_memory = { type = dhm_household_crisis_memory participants = { supporter = root } } }
+		dhm_v050_cohesion_gain_small_effect = yes
+		trigger_event = { id = dhm_legacy.0701 years = 2 }
+	}
+}
+
+dhm_legacy.0701 = {
+	type = character_event
+	title = dhm_legacy.0701.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_crisis_choice VALUE = flag:pay LEGACY = dhm_crisis_paid_outcome } } } desc = dhm_legacy.0701.pay }
+			triggered_desc = { trigger = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_crisis_choice VALUE = flag:austerity LEGACY = dhm_crisis_austerity_outcome } } } desc = dhm_legacy.0701.austerity }
+			triggered_desc = { trigger = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_crisis_choice VALUE = flag:share LEGACY = dhm_crisis_shared_outcome } } } desc = dhm_legacy.0701.share }
+			desc = dhm_v076_dhm_legacy_0701_unknown_desc
+		}
+	}
+	theme = stewardship
+	override_background = { reference = dhm_v050_family }
+	right_portrait = scope:dhm_crisis_relative
+	trigger = { is_ai = no exists = scope:dhm_crisis_relative scope:dhm_crisis_relative = { is_alive = yes } }
+	immediate = { scope:dhm_crisis_relative = { dhm_v076_resolve_3_legacy_choices_effect = { KEY = dhm071_crisis_choice FLAG_1 = dhm_crisis_paid_outcome VALUE_1 = flag:pay FLAG_2 = dhm_crisis_austerity_outcome VALUE_2 = flag:austerity FLAG_3 = dhm_crisis_shared_outcome VALUE_3 = flag:share } } }
+	option = {
+		name = dhm_legacy.0701.a
+		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_crisis_choice VALUE_1 = flag:pay VALUE_2 = flag:austerity VALUE_3 = flag:share } }
+		if = {
+			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_crisis_choice VALUE_1 = flag:pay VALUE_2 = flag:austerity VALUE_3 = flag:share } }
+			if = {
+				limit = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_crisis_choice VALUE = flag:pay LEGACY = dhm_crisis_paid_outcome } } }
+				add_prestige = minor_prestige_gain
+				add_stress = miniscule_stress_gain
+				dhm_v050_cohesion_gain_small_effect = yes
+			}
+			else_if = {
+				limit = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_crisis_choice VALUE = flag:austerity LEGACY = dhm_crisis_austerity_outcome } } }
+				add_prestige = minor_prestige_gain
+				dhm_v050_cohesion_loss_small_effect = yes
+			}
+			else_if = {
+				limit = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_crisis_choice VALUE = flag:share LEGACY = dhm_crisis_shared_outcome } } }
+				dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_peacemaker_modifier YEARS = 2 RENEWAL_TT = dhm_reward_household_peacemaker_renewed_2_tt }
+				add_stress = miniscule_stress_gain
+			}
+		}
+		else = { custom_tooltip = dhm_v076_unknown_outcome_tt }
+	}
+	option = {
+		name = dhm_v076_outcome_ack
+		trigger = { NOT = { dhm_v076_choice_known_trigger = { KEY = dhm071_crisis_choice VALUE_1 = flag:pay VALUE_2 = flag:austerity VALUE_3 = flag:share } } }
+		is_cancel_option = yes
+		custom_tooltip = dhm_v076_unknown_outcome_tt
+	}
+}
+
+# =============================================================================
+# LIVING CHRONICLE CHAPTERS
+# =============================================================================
+
+dhm_legacy.0800 = {
+	type = character_event
+	title = dhm_legacy.0800.t
+	desc = {
+		desc = dhm_legacy.0800.desc
+		first_valid = {
+			triggered_desc = { trigger = { has_global_variable = dhm_setting_stories_off } desc = dhm_v080_triumph_progress_quiet_desc }
+			triggered_desc = { trigger = { has_character_flag = dhm_v080_triumph_pending } desc = dhm_v080_triumph_progress_pending_desc }
+			triggered_desc = { trigger = { dhm_v080_triumph_cooldown_active_trigger = yes } desc = dhm_v080_triumph_progress_recent_desc }
+			triggered_desc = {
+				trigger = {
+					has_variable = dhm_v080_report_named_chapters
+					has_variable = dhm_v080_report_next_triumph
+					var:dhm_v080_report_named_chapters >= var:dhm_v080_report_next_triumph
+				}
+				desc = dhm_v080_triumph_progress_ready_desc
+			}
+			desc = dhm_v080_triumph_progress_desc
+		}
+		first_valid = { triggered_desc = { trigger = { has_global_variable = dhm_chapter_ambitions_opened } desc = dhm_legacy.0800.ambitions } desc = dhm_legacy.0800.ambitions.empty }
+		first_valid = { triggered_desc = { trigger = { has_global_variable = dhm_chapter_relationships_opened } desc = dhm_legacy.0800.relationships } desc = dhm_legacy.0800.relationships.empty }
+		first_valid = { triggered_desc = { trigger = { has_global_variable = dhm_chapter_heir_opened } desc = dhm_legacy.0800.heir } desc = dhm_legacy.0800.heir.empty }
+		first_valid = { triggered_desc = { trigger = { has_global_variable = dhm_chapter_partnership_opened } desc = dhm_legacy.0800.partnership } desc = dhm_legacy.0800.partnership.empty }
+		first_valid = { triggered_desc = { trigger = { has_global_variable = dhm_chapter_marriages_opened } desc = dhm_legacy.0800.marriages } desc = dhm_legacy.0800.marriages.empty }
+		first_valid = { triggered_desc = { trigger = { has_global_variable = dhm_chapter_crises_opened } desc = dhm_legacy.0800.crises } desc = dhm_legacy.0800.crises.empty }
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_v050_legacy }
+	immediate = { dhm_v080_prepare_triumph_report_effect = yes }
+	option = { name = dhm081_back_chronicle trigger_event = dhm_manager.0008 is_cancel_option = yes }
+}
+
+# =============================================================================
+# HOUSE LEGACY IDENTITY — unlocked by repeated behavior, never a free best pick
+# =============================================================================
+
+dhm_legacy.0900 = {
+	type = character_event
+	title = dhm_legacy.0900.t
+	desc = {
+		desc = dhm_legacy.0900.desc
+		first_valid = {
+			triggered_desc = { trigger = { has_global_variable = dhm_legacy_identity_scholarly } desc = dhm_legacy.0900.scholarly }
+			triggered_desc = { trigger = { has_global_variable = dhm_legacy_identity_honorable } desc = dhm_legacy.0900.honorable }
+			triggered_desc = { trigger = { has_global_variable = dhm_legacy_identity_protective } desc = dhm_legacy.0900.protective }
+			triggered_desc = { trigger = { has_global_variable = dhm_legacy_identity_ambitious } desc = dhm_legacy.0900.ambitious }
+			triggered_desc = { trigger = { has_global_variable = dhm_legacy_identity_traditional } desc = dhm_legacy.0900.traditional }
+			triggered_desc = { trigger = { has_global_variable = dhm_legacy_identity_severe } desc = dhm_legacy.0900.severe }
+			desc = dhm_legacy.0900.unformed
+		}
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_v050_legacy }
+	option = { name = dhm_legacy.0900.choose trigger = { NOT = { has_character_flag = dhm_legacy_identity_recent } } trigger_event = dhm_legacy.0910 }
+	option = { name = dhm081_back_advanced trigger_event = dhm_manager.0091 is_cancel_option = yes }
+}
+
+dhm_legacy.0910 = {
+	type = character_event
+	title = dhm_legacy.0910.t
+	desc = dhm_legacy.0910.desc
+	theme = diplomacy
+	override_background = { reference = dhm_v050_legacy }
+
+	option = {
+		name = dhm_legacy.0910.scholarly
+		trigger = { global_var:dhm_legacy_scholarly >= 3 }
+		dhm_v050_clear_legacy_identity_effect = yes
+		set_global_variable = { name = dhm_legacy_identity_scholarly value = yes }
+		dhm_v050_apply_legacy_modifier_effect = yes
+		add_prestige = minor_prestige_gain
+		add_character_flag = { flag = dhm_legacy_identity_recent years = 10 }
+		trigger_event = dhm_legacy.0900
+	}
+	option = {
+		name = dhm_legacy.0910.honorable
+		trigger = { global_var:dhm_legacy_honorable >= 3 }
+		dhm_v050_clear_legacy_identity_effect = yes
+		set_global_variable = { name = dhm_legacy_identity_honorable value = yes }
+		dhm_v050_apply_legacy_modifier_effect = yes
+		add_prestige = minor_prestige_gain
+		add_character_flag = { flag = dhm_legacy_identity_recent years = 10 }
+		trigger_event = dhm_legacy.0900
+	}
+	option = {
+		name = dhm_legacy.0910.protective
+		trigger = { global_var:dhm_legacy_protective >= 3 }
+		dhm_v050_clear_legacy_identity_effect = yes
+		set_global_variable = { name = dhm_legacy_identity_protective value = yes }
+		dhm_v050_apply_legacy_modifier_effect = yes
+		add_prestige = minor_prestige_gain
+		add_character_flag = { flag = dhm_legacy_identity_recent years = 10 }
+		trigger_event = dhm_legacy.0900
+	}
+	option = { name = dhm_legacy.0910.more trigger_event = dhm_legacy.0920 }
+	option = { name = dhm081_back_legacy trigger_event = dhm_legacy.0900 is_cancel_option = yes }
+}
+
+dhm_legacy.0920 = {
+	type = character_event
+	title = dhm_legacy.0920.t
+	desc = dhm_legacy.0920.desc
+	theme = diplomacy
+	override_background = { reference = dhm_v050_legacy }
+
+	option = {
+		name = dhm_legacy.0920.ambitious
+		trigger = { global_var:dhm_legacy_ambitious >= 3 }
+		dhm_v050_clear_legacy_identity_effect = yes
+		set_global_variable = { name = dhm_legacy_identity_ambitious value = yes }
+		dhm_v050_apply_legacy_modifier_effect = yes
+		add_prestige = minor_prestige_gain
+		add_character_flag = { flag = dhm_legacy_identity_recent years = 10 }
+		trigger_event = dhm_legacy.0900
+	}
+	option = {
+		name = dhm_legacy.0920.traditional
+		trigger = { global_var:dhm_legacy_traditional >= 3 }
+		dhm_v050_clear_legacy_identity_effect = yes
+		set_global_variable = { name = dhm_legacy_identity_traditional value = yes }
+		dhm_v050_apply_legacy_modifier_effect = yes
+		add_prestige = minor_prestige_gain
+		add_character_flag = { flag = dhm_legacy_identity_recent years = 10 }
+		trigger_event = dhm_legacy.0900
+	}
+	option = {
+		name = dhm_legacy.0920.severe
+		trigger = { global_var:dhm_legacy_severe >= 3 }
+		dhm_v050_clear_legacy_identity_effect = yes
+		set_global_variable = { name = dhm_legacy_identity_severe value = yes }
+		dhm_v050_apply_legacy_modifier_effect = yes
+		add_prestige = minor_prestige_gain
+		add_character_flag = { flag = dhm_legacy_identity_recent years = 10 }
+		trigger_event = dhm_legacy.0900
+	}
+	option = { name = dhm_legacy.0920.previous trigger_event = dhm_legacy.0910 }
+	option = { name = dhm081_back_legacy trigger_event = dhm_legacy.0900 is_cancel_option = yes }
+}

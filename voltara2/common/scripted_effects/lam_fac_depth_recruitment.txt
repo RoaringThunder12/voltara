@@ -1,0 +1,420 @@
+﻿lam_pd_recruit_restore_effect = {
+	save_scope_as = lam_pd_recruit_person
+	var:lam_pd_recruit_from ?= {
+		if = {
+			limit = {
+				is_alive = yes
+			}
+			save_scope_as = lam_rc_head
+		}
+	}
+	var:lam_pd_recruit_lord ?= {
+		save_scope_as = lam_pd_recruit_lord
+	}
+	save_scope_value_as = {
+		name = lam_pd_recruit_record
+		value = var:lam_pd_recruit_record
+	}
+}
+lam_pd_recruit_clear_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+		}
+		save_scope_as = lam_pd_recruit_person
+		var:lam_pd_recruit_from ?= {
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				if = {
+					limit = {
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = scope:lam_pd_recruit_person
+								}
+								var:lam_pd_recruit_target ?= scope:lam_pd_recruit_person
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+					remove_variable = lam_pd_recruit_target
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_recruit_from
+			}
+			remove_variable = lam_pd_recruit_from
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_recruit_old
+			}
+			remove_variable = lam_pd_recruit_old
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_recruit_ready
+			}
+			remove_variable = lam_pd_recruit_ready
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_recruit_retained
+			}
+			remove_variable = lam_pd_recruit_retained
+		}
+		set_variable = {
+			name = lam_pd_recruit_cd
+			value = yes
+			months = 12
+		}
+	}
+}
+lam_pd_recruit_commit_effect = {
+	lam_pd_recruit_restore_effect = yes
+	if = {
+		limit = {
+			lam_pd_recruit_current_trigger = yes
+			has_variable = lam_pd_recruit_ready
+			scope:lam_rc_head = {
+				trigger_if = {
+					limit = {
+						is_alive = yes
+					}
+					gold >= scope:lam_pd_recruit_person.var:lam_pd_recruit_price
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		remove_variable = lam_pd_recruit_ready
+		scope:lam_rc_head = {
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				pay_short_term_gold = {
+					target = scope:lam_pd_recruit_person
+					gold = scope:lam_pd_recruit_person.var:lam_pd_recruit_price
+				}
+			}
+		}
+		var:lam_bloc ?= {
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				remove_list_variable = {
+					name = lam_fac_members
+					target = scope:lam_pd_recruit_person
+				}
+				add_opinion = {
+					target = scope:lam_rc_head
+					modifier = lam_fac_poached_opinion
+				}
+			}
+		}
+		set_variable = {
+			name = lam_bloc
+			value = scope:lam_rc_head
+		}
+		set_variable = {
+			name = lam_fac_tier
+			value = 2
+		}
+		set_variable = {
+			name = lam_fac_pinned
+			value = yes
+			years = 2
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_unbound
+			}
+			remove_variable = lam_fac_unbound
+		}
+		scope:lam_rc_head = {
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				if = {
+					limit = {
+						NOT = {
+							is_target_in_variable_list = {
+								name = lam_fac_members
+								target = scope:lam_pd_recruit_person
+							}
+						}
+					}
+					add_to_variable_list = {
+						name = lam_fac_members
+						target = scope:lam_pd_recruit_person
+					}
+				}
+				set_variable = {
+					name = lam_pd_plan_result
+					value = flag:recruited
+				}
+				if = {
+					limit = {
+						is_ai = no
+					}
+					send_interface_message = {
+						type = event_generic_good
+						title = lam_pd_recruit_success
+						right_icon = scope:lam_pd_recruit_person
+					}
+				}
+			}
+		}
+		lam_pd_recruit_clear_effect = yes
+		lam_fac_quick_refresh_court_effect = yes
+	}
+}
+lam_pd_recruit_retain_effect = {
+	scope:lam_pd_recruit_person ?= {
+		lam_pd_recruit_restore_effect = yes
+		if = {
+			limit = {
+				lam_pd_recruit_current_trigger = yes
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_pd_retain_head
+						}
+						var:lam_pd_recruit_old ?= scope:lam_pd_retain_head
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				scope:lam_pd_retain_head = {
+					is_alive = yes
+					has_variable = lam_bloc_lead
+					gold >= scope:lam_pd_recruit_person.var:lam_pd_recruit_price
+				}
+			}
+			scope:lam_pd_retain_head = {
+				pay_short_term_gold = {
+					target = scope:lam_pd_recruit_person
+					gold = scope:lam_pd_recruit_person.var:lam_pd_recruit_price
+				}
+			}
+			set_variable = {
+				name = lam_pd_recruit_retained
+				value = yes
+			}
+			set_variable = {
+				name = lam_fac_pinned
+				value = yes
+				years = 1
+			}
+			lam_pd_recruit_clear_effect = yes
+		}
+	}
+}
+lam_pd_recruit_begin_effect = {
+	if = {
+		limit = {
+			lam_pd_recruit_candidate_trigger = yes
+			scope:lam_rc_head = {
+				trigger_if = {
+					limit = {
+						is_alive = yes
+					}
+					is_alive = yes
+					has_variable = lam_bloc_lead
+					NOT = {
+						has_variable = lam_pd_recruit_target
+					}
+					gold >= 10
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		save_scope_as = lam_pd_recruit_person
+		if = {
+			limit = {
+				NOT = {
+					has_global_variable = lam_pd_recruit_serial
+				}
+			}
+			set_global_variable = {
+				name = lam_pd_recruit_serial
+				value = 0
+			}
+		}
+		change_global_variable = {
+			name = lam_pd_recruit_serial
+			add = 1
+		}
+		set_variable = {
+			name = lam_pd_recruit_id
+			value = global_var:lam_pd_recruit_serial
+		}
+		save_scope_value_as = {
+			name = lam_pd_recruit_token
+			value = var:lam_pd_recruit_id
+		}
+		set_variable = {
+			name = lam_pd_recruit_from
+			value = scope:lam_rc_head
+		}
+		set_variable = {
+			name = lam_pd_recruit_record
+			value = scope:lam_rc_head.var:lam_fac_rec
+		}
+		set_variable = {
+			name = lam_pd_recruit_lord
+			value = liege
+		}
+		set_variable = {
+			name = lam_pd_recruit_until
+			value = {
+				value = lam_now_m
+				add = 4
+			}
+		}
+		set_variable = {
+			name = lam_pd_recruit_price
+			value = lam_pd_recruit_price_value
+		}
+		if = {
+			limit = {
+				has_variable = lam_bloc
+			}
+			set_variable = {
+				name = lam_pd_recruit_old
+				value = var:lam_bloc
+			}
+		}
+		scope:lam_rc_head = {
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				remove_short_term_gold = 10
+				set_variable = {
+					name = lam_pd_recruit_target
+					value = scope:lam_pd_recruit_person
+				}
+				set_variable = {
+					name = lam_fac_recruit_cd
+					value = yes
+					months = 12
+				}
+				if = {
+					limit = {
+						is_ai = no
+					}
+					send_interface_message = {
+						type = event_generic_neutral
+						title = lam_pt_recruit_started
+						right_icon = scope:lam_pd_recruit_person
+						desc = lam_pt_recruit_started_desc
+					}
+				}
+			}
+		}
+		lam_pd_recruit_restore_effect = yes
+		if = {
+			limit = {
+				has_variable = lam_pd_recruit_old
+			}
+			var:lam_pd_recruit_old = {
+				save_scope_as = lam_pd_retain_head
+				if = {
+					limit = {
+						is_ai = no
+					}
+					trigger_event = lam_pd.0201
+				}
+				else_if = {
+					limit = {
+						gold >= scope:lam_pd_recruit_person.var:lam_pd_recruit_price
+						OR = {
+							scope:lam_pd_recruit_person = {
+								var:lam_fac_tier ?= 1
+							}
+							scope:lam_pd_recruit_person = {
+								AND = {
+									trigger_if = {
+										limit = {
+											exists = scope:lam_pd_retain_head.house
+										}
+										house ?= scope:lam_pd_retain_head.house
+									}
+									trigger_else = {
+										always = no
+									}
+								}
+							}
+						}
+					}
+					lam_pd_recruit_retain_effect = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_rc_head.diplomacy >= 15
+			}
+			trigger_event = {
+				id = lam_pd.0200
+				days = 30
+			}
+		}
+		else = {
+			trigger_event = {
+				id = lam_pd.0200
+				days = 60
+			}
+		}
+		trigger_event = {
+			id = lam_pd.0202
+			days = 100
+		}
+	}
+}
+lam_pd_recruit_search_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+			is_adult = yes
+			is_imprisoned = no
+			has_variable = lam_bloc_lead
+			exists = liege
+			NOT = {
+				has_variable = lam_pd_recruit_target
+			}
+			NOT = {
+				has_variable = lam_fac_recruit_cd
+			}
+			gold >= 60
+			lam_pd_recruit_needed_trigger = yes
+		}
+		save_scope_as = lam_rc_head
+		liege = {
+			ordered_vassal = {
+				max = 1
+				check_range_bounds = no
+				limit = {
+					lam_pd_recruit_candidate_trigger = yes
+					lam_pd_recruit_interest_value >= 0
+				}
+				order_by = lam_pd_recruit_interest_value
+				lam_pd_recruit_begin_effect = yes
+			}
+		}
+	}
+}

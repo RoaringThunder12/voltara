@@ -1,0 +1,10 @@
+﻿# GetCurrentDateWithDiff accepts a day offset. Date values are native day counts.
+dhm_v075_last_scan_offset_value = {
+ value = var:dhm075_last_scan_date
+ subtract = current_date
+}
+
+dhm_v075_last_digest_offset_value = {
+ value = var:dhm075_digest_last_date
+ subtract = current_date
+}

@@ -1,0 +1,30 @@
+﻿# Opens the visual, lightweight management hub.
+dhm_open_household_manager_decision = {
+    picture = {
+        reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+    }
+
+    decision_group_type = major
+    ai_check_interval = 0
+    desc = dhm_open_household_manager_decision_desc
+    selection_tooltip = dhm_open_household_manager_decision_tooltip
+    confirm_text = dhm_open_household_manager_decision_confirm
+
+    is_shown = {
+        is_ai = no
+    }
+
+    is_valid = {}
+
+    effect = {
+        trigger_event = dhm_manager.0001
+    }
+
+    ai_potential = {
+        always = no
+    }
+
+    ai_will_do = {
+        base = 0
+    }
+}

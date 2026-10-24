@@ -1902,9 +1902,11 @@ interactive_random_ruler_placement_effect = {
 }
 
 interactive_divided_china_effect = {
-	title:h_china.holder = {
-		save_scope_as = miv_china_emperor
-	}
+	# Native-world scope has no target in Voltara; original follows.
+# title:h_china.holder = {
+# 		save_scope_as = miv_china_emperor
+# 	}
+
 	scope:miv_china_emperor = {
 		every_vassal_or_below = {
 			add_to_list = miv_china_former_vassals
@@ -1989,16 +1991,18 @@ interactive_divided_japan_effect = {
 		}
 		change_government = japan_feudal_government
 	}
-	title:e_japan.holder = {
-		if = {
-			limit = {
-				NOT = {
-					has_realm_law = japanese_bureaucracy_0
-				}
-			}
-			add_realm_law = japanese_bureaucracy_0
-		}
-	}
+	# Native-world scope has no target in Voltara; original follows.
+# title:e_japan.holder = {
+# 		if = {
+# 			limit = {
+# 				NOT = {
+# 					has_realm_law = japanese_bureaucracy_0
+# 				}
+# 			}
+# 			add_realm_law = japanese_bureaucracy_0
+# 		}
+# 	}
+
 }
 
 interactive_divided_japan_blocs_effect = {

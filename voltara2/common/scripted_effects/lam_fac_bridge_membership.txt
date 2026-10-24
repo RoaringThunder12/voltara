@@ -1,0 +1,138 @@
+﻿lam_pb_clear_membership_effect = {
+	save_scope_as = lam_pb_detached_member
+	var:lam_bloc ?= {
+		if = {
+			limit = {
+				is_alive = yes
+			}
+			remove_list_variable = {
+				name = lam_fac_members
+				target = scope:lam_pb_detached_member
+			}
+			remove_list_variable = {
+				name = lam_fac_prev_members
+				target = scope:lam_pb_detached_member
+			}
+		}
+	}
+	remove_variable = lam_bloc
+	remove_variable = lam_fac_tier
+	remove_variable = lam_fac_pinned
+	remove_variable = lam_cr_service_head
+	remove_variable = lam_cr_since_m
+	remove_variable = lam_cr_service
+	if = {
+		limit = {
+			has_variable = lam_fac_blocked
+		}
+		lam_fac_unblock_effect = yes
+	}
+	lam_ss_clear_member_effect = yes
+}
+lam_pb_validate_member_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+		}
+		if = {
+			limit = {
+				has_variable = lam_bloc
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+			}
+			if = {
+				limit = {
+					lam_pb_member_current_trigger = yes
+				}
+				save_scope_as = lam_pb_verified_member
+				var:lam_bloc = {
+					if = {
+						limit = {
+							NOT = {
+								is_target_in_variable_list = {
+									name = lam_fac_members
+									target = scope:lam_pb_verified_member
+								}
+							}
+						}
+						add_to_variable_list = {
+							name = lam_fac_members
+							target = scope:lam_pb_verified_member
+						}
+					}
+				}
+			}
+			else = {
+				lam_pb_clear_membership_effect = yes
+			}
+		}
+	}
+
+vip_lf_changed_membership = yes
+}
+lam_pb_court_membership_effect = {
+	save_scope_as = lam_pb_checked_court
+	lam_pb_reconcile_court_heads_effect = yes
+	lam_pb_validate_member_effect = yes
+	every_vassal = {
+		lam_pb_validate_member_effect = yes
+	}
+	every_courtier = {
+		lam_pb_validate_member_effect = yes
+	}
+	every_in_list = {
+		variable = lam_bloc_leads
+		if = {
+			limit = {
+				is_alive = yes
+			}
+			if = {
+				limit = {
+					has_variable = lam_bloc_lead
+				}
+				save_scope_as = lam_pb_checked_head
+				every_in_list = {
+					variable = lam_fac_members
+					if = {
+						limit = {
+							is_alive = no
+						}
+						scope:lam_pb_checked_head = {
+							remove_list_variable = {
+								name = lam_fac_members
+								target = prev
+							}
+						}
+					}
+					else = {
+						lam_pb_validate_member_effect = yes
+						if = {
+							limit = {
+								NOT = {
+									AND = {
+										trigger_if = {
+											limit = {
+												exists = scope:lam_pb_checked_head
+											}
+											var:lam_bloc ?= scope:lam_pb_checked_head
+										}
+										trigger_else = {
+											always = no
+										}
+									}
+								}
+							}
+							scope:lam_pb_checked_head = {
+								remove_list_variable = {
+									name = lam_fac_members
+									target = prev
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

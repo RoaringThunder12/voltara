@@ -1,0 +1,120 @@
+﻿lam_st_campaign_current_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	has_variable = lam_bloc_lead
+	var:lam_bloc ?= this
+	liege ?= var:lam_st_campaign_lord
+	has_variable = lam_st_campaign_kind
+	has_variable = lam_st_campaign_until
+	var:lam_st_campaign_until > lam_now_m
+	NOT = {
+		has_variable = lam_fac_disband
+	}
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_fac_rec
+			}
+			NOT = {
+				has_variable = lam_st_campaign_record
+			}
+		}
+		var:lam_st_campaign_record ?= var:lam_fac_rec
+	}
+	trigger_if = {
+		limit = {
+			var:lam_st_campaign_kind ?= flag:heir
+		}
+		var:lam_fac_heir ?= var:lam_st_campaign_target
+		save_temporary_scope_as = lam_st_candidate_head
+		liege = {
+			lam_nc_heir_trigger = {
+				CANDIDATE = scope:lam_st_candidate_head.var:lam_st_campaign_target
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_st_campaign_kind ?= flag:council
+		}
+		NOT = {
+			is_councillor_of = liege
+		}
+		lam_st_office_available_trigger = yes
+	}
+	trigger_if = {
+		limit = {
+			var:lam_st_campaign_kind ?= flag:gold
+		}
+		has_variable = lam_pd_gr_wealth
+		var:lam_pd_gr_wealth > 0
+	}
+}
+lam_st_office_available_trigger = {
+	save_temporary_scope_as = lam_st_office_head
+	exists = liege
+	liege = {
+		OR = {
+			lam_nc_appoint_trigger = {
+				SEAT = marshal
+				CANDIDATE = scope:lam_st_office_head
+			}
+			lam_nc_appoint_trigger = {
+				SEAT = steward
+				CANDIDATE = scope:lam_st_office_head
+			}
+			lam_nc_appoint_trigger = {
+				SEAT = spymaster
+				CANDIDATE = scope:lam_st_office_head
+			}
+			lam_nc_appoint_trigger = {
+				SEAT = chancellor
+				CANDIDATE = scope:lam_st_office_head
+			}
+		}
+	}
+}
+lam_st_reward_member_trigger = {
+	is_alive = yes
+	var:lam_bloc ?= scope:lam_sg_lead
+	liege ?= scope:lam_sg_lead.liege
+	NOT = {
+		this = scope:lam_sg_lead
+	}
+	OR = {
+		var:lam_fac_tier ?= 1
+		var:lam_fac_tier ?= 2
+	}
+}
+lam_st_reconcile_current_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	has_variable = lam_bloc_lead
+	has_variable = lam_st_reconcile_open
+	var:lam_st_reconcile_lord ?= liege
+	var:lam_st_reconcile_id ?= scope:lam_st_reconcile_token
+	var:lam_st_reconcile_member ?= {
+		is_alive = yes
+		is_imprisoned = no
+		var:lam_bloc ?= prev
+		liege ?= prev.liege
+		var:lam_cr_unrest_head ?= prev
+		var:lam_cr_unrest >= 2
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+	}
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_fac_rec
+			}
+			NOT = {
+				has_variable = lam_st_reconcile_record
+			}
+		}
+		var:lam_st_reconcile_record ?= var:lam_fac_rec
+	}
+}

@@ -1,0 +1,335 @@
+﻿lam_cr_transfer_service_effect = {
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_cr_active
+			}
+			lam_cr_cancel_effect = yes
+		}
+		every_in_list = {
+			variable = lam_fac_members
+			limit = {
+				var:lam_cr_service_head ?= $FROM$
+			}
+			set_variable = {
+				name = lam_cr_service_head
+				value = $TO$
+			}
+		}
+		if = {
+			limit = {
+				var:lam_cr_service_head ?= $FROM$
+			}
+			set_variable = {
+				name = lam_cr_service_head
+				value = $TO$
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_cr_cp_offered_lord
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_cr_cp_offered_lord
+				value = $FROM$.var:lam_cr_cp_offered_lord
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_cr_cp_offered_m
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_cr_cp_offered_m
+				value = $FROM$.var:lam_cr_cp_offered_m
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_cr_cp_offered_favour
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_cr_cp_offered_favour
+				value = $FROM$.var:lam_cr_cp_offered_favour
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_fac_courtparty
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_fac_courtparty
+				value = $FROM$.var:lam_fac_courtparty
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_cr_cp_lord
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_cr_cp_lord
+				value = $FROM$.var:lam_cr_cp_lord
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_cr_cp_reviewed_m
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_cr_cp_reviewed_m
+				value = $FROM$.var:lam_cr_cp_reviewed_m
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_fac_cp_warned_m
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_fac_cp_warned_m
+				value = $FROM$.var:lam_fac_cp_warned_m
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_cr_access
+				has_variable = lam_cr_access_end
+				var:lam_cr_access_end > lam_now_m
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_cr_access_end
+				value = $FROM$.var:lam_cr_access_end
+			}
+			set_variable = {
+				name = lam_cr_access
+				value = yes
+				months = lam_pt_access_remaining_value
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_cr_excluded
+				has_variable = lam_cr_excluded_end
+				var:lam_cr_excluded_end > lam_now_m
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_cr_excluded_end
+				value = $FROM$.var:lam_cr_excluded_end
+			}
+			set_variable = {
+				name = lam_cr_excluded
+				value = yes
+				months = lam_pt_excluded_remaining_value
+			}
+		}
+	}
+}
+lam_cr_relations_effect = {
+	if = {
+		limit = {
+			$A$ = {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+			}
+			$B$ = {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				liege ?= $A$.liege
+			}
+			OR = {
+				$A$ = {
+					has_variable = lam_cr_obstruct
+					var:lam_cr_rival ?= $B$
+				}
+				$B$ = {
+					has_variable = lam_cr_obstruct
+					var:lam_cr_rival ?= $A$
+				}
+			}
+			NOT = {
+				$A$ = {
+					is_target_in_variable_list = {
+						name = lam_fac_allies
+						target = $B$
+					}
+				}
+			}
+		}
+		$A$ = {
+			if = {
+				limit = {
+					NOT = {
+						is_target_in_variable_list = {
+							name = lam_fac_foes
+							target = $B$
+						}
+					}
+				}
+				add_to_variable_list = {
+					name = lam_fac_foes
+					target = $B$
+				}
+			}
+			if = {
+				limit = {
+					is_target_in_variable_list = {
+						name = lam_fac_friends
+						target = $B$
+					}
+				}
+				remove_list_variable = {
+					name = lam_fac_friends
+					target = $B$
+				}
+			}
+		}
+		$B$ = {
+			if = {
+				limit = {
+					NOT = {
+						is_target_in_variable_list = {
+							name = lam_fac_foes
+							target = $A$
+						}
+					}
+				}
+				add_to_variable_list = {
+					name = lam_fac_foes
+					target = $A$
+				}
+			}
+			if = {
+				limit = {
+					is_target_in_variable_list = {
+						name = lam_fac_friends
+						target = $A$
+					}
+				}
+				remove_list_variable = {
+					name = lam_fac_friends
+					target = $A$
+				}
+			}
+		}
+	}
+}
+lam_cr_drop_patronage_effect = {
+	if = {
+		limit = {
+			has_variable = lam_cr_active
+		}
+		lam_cr_cancel_effect = yes
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_access
+		}
+		remove_variable = lam_cr_access
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_access_end
+		}
+		remove_variable = lam_cr_access_end
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_excluded
+		}
+		remove_variable = lam_cr_excluded
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_excluded_end
+		}
+		remove_variable = lam_cr_excluded_end
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_reaction_open
+		}
+		remove_variable = lam_cr_reaction_open
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_reaction_id
+		}
+		remove_variable = lam_cr_reaction_id
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_alliance_offer
+		}
+		remove_variable = lam_cr_alliance_offer
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_obstruct
+		}
+		remove_variable = lam_cr_obstruct
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_rival
+		}
+		remove_variable = lam_cr_rival
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_cp_offered_m
+		}
+		remove_variable = lam_cr_cp_offered_m
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_cp_offered_lord
+		}
+		remove_variable = lam_cr_cp_offered_lord
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_cp_offered_favour
+		}
+		remove_variable = lam_cr_cp_offered_favour
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_contract_pending
+		}
+		remove_variable = lam_cr_contract_pending
+	}
+}

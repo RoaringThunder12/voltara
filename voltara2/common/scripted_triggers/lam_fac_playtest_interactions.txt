@@ -1,0 +1,77 @@
+﻿lam_pt_recruit_search_trigger = {
+	lam_pt_head_ready_trigger = yes
+	gold >= 60
+	NOT = {
+		has_variable = lam_pd_recruit_target
+	}
+	NOT = {
+		has_variable = lam_fac_recruit_cd
+	}
+	save_temporary_scope_as = lam_rc_head
+	liege = {
+		any_vassal = {
+			lam_pd_recruit_candidate_trigger = yes
+			lam_pd_recruit_interest_value >= 0
+		}
+	}
+}
+lam_pt_hm_current_trigger = {
+	scope:actor = {
+		lam_pt_head_ready_trigger = yes
+	}
+	scope:recipient = {
+		is_alive = yes
+		var:lam_bloc ?= scope:actor
+		liege ?= scope:actor.liege
+		NOT = {
+			this = scope:actor
+		}
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+	}
+}
+lam_pt_confidence_ready_trigger = {
+	NOT = {
+		has_variable = lam_cr_retry_confidence
+	}
+	save_temporary_scope_as = lam_pt_conf_head
+	any_in_list = {
+		variable = lam_fac_members
+		is_alive = yes
+		is_adult = yes
+		is_imprisoned = no
+		is_ruler = yes
+		var:lam_bloc ?= scope:lam_pt_conf_head
+		liege ?= scope:lam_pt_conf_head.liege
+		NOT = {
+			this = scope:lam_pt_conf_head
+		}
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		OR = {
+			var:lam_fac_tier ?= 1
+			var:lam_fac_tier ?= 2
+		}
+	}
+}
+lam_pt_rise_ready_trigger = {
+	NOT = {
+		has_variable = lam_cr_retry_rise
+	}
+}
+lam_pt_task_ready_trigger = {
+	scope:recipient = {
+		is_adult = yes
+		is_imprisoned = no
+	}
+	trigger_if = {
+		limit = {
+			scope:lam_tk_win ?= yes
+		}
+		scope:actor = {
+			lam_pt_recruit_search_trigger = yes
+		}
+	}
+}

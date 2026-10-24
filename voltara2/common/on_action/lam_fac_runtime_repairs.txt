@@ -1,0 +1,62 @@
+﻿on_vassal_change = {
+	on_actions = {
+		lam_pb_membership_transition
+	}
+}
+on_leave_court = {
+	on_actions = {
+		lam_pb_membership_transition
+	}
+}
+on_join_court = {
+	on_actions = {
+		lam_pb_membership_transition
+	}
+}
+lam_pb_membership_transition = {
+	trigger = {
+		trigger_if = {
+			limit = {
+				is_alive = yes
+			}
+			OR = {
+				has_variable = lam_bloc
+				has_variable = lam_bloc_lead
+				any_in_list = {
+					variable = lam_bloc_leads
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	effect = {
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_pb_membership_pending
+				}
+			}
+			set_variable = {
+				name = lam_pb_membership_pending
+				value = yes
+				days = 3
+			}
+			trigger_event = {
+				id = lam_pb_repair.0001
+				days = 1
+			}
+		}
+	}
+}
+on_title_gain = {
+	on_actions = {
+		lam_pb_membership_transition
+	}
+}
+on_title_lost = {
+	on_actions = {
+		lam_pb_membership_transition
+	}
+}

@@ -1,7 +1,7 @@
 ﻿vic_manage_tharn = { picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" }
  desc = vic_manage_tharn_desc selection_tooltip = vic_manage_tharn_tooltip confirm_text = vic_manage_tharn_confirm
  decision_group_type = major ai_check_interval = 0
- is_shown = { this = character:19060033 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete } is_valid = { NOT = { has_character_flag = vic_action_pending } NOT = { has_character_flag = vic_action_cooldown } }
+ is_shown = { this = character:19060033 global_var:vic_assassination != 2 vic_participant_available = yes vic_politics = yes has_character_flag = vic_opening_complete } is_valid = { NOT = { has_character_flag = vic_action_pending } NOT = { has_character_flag = vic_action_cooldown } }
  cooldown = { months = 1 } effect = { add_character_flag = vic_action_pending trigger_event = vic_story.10 }
  ai_potential = { always = no } ai_will_do = { base = 0 } }
 vic_manage_octavian = { picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" }

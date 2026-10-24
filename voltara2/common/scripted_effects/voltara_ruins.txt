@@ -39,10 +39,10 @@ voltara_convert_ruin_county = {
    else_if = { limit = { has_holding_type = tribal_holding } set_variable = { name = voltara_old_holding value = flag:tribal } }
    else = { set_variable = { name = voltara_old_holding value = flag:castle } }
    if = { limit = { scope:ruins_mode = flag:wasteland }
-    if = { limit = { is_county_capital = yes } set_holding_type = voltara_wasteland_holding }
+    if = { limit = { is_county_capital = yes } if = { limit = { NOT = { has_holding_type = voltara_wasteland_holding } } set_holding_type = voltara_wasteland_holding } }
     else = { remove_holding = yes }
    }
-   else = { set_holding_type = voltara_ruin_holding }
+   else = { if = { limit = { NOT = { has_holding_type = voltara_ruin_holding } } set_holding_type = voltara_ruin_holding } }
   }
   create_title_and_vassal_change = { type = granted save_scope_as = ruins_change add_claim_on_loss = no }
   change_title_holder = { holder = global_var:voltara_ruins_keeper change = scope:ruins_change take_baronies = yes }
@@ -82,4 +82,5 @@ voltara_restore_ruin_county = {
  remove_list_global_variable = { name = voltara_ruined_counties target = scope:restored_ruin }
 
  voltara_restore_ancient_elven_site = yes
+ vkw_record_colony = yes
 }

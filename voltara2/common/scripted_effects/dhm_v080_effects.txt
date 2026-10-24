@@ -1,0 +1,169 @@
+﻿# v0.8.0 quiet conclusions and continuity actions.
+
+# Eight-month progress report. Choice ownership is carried by this event chain;
+# resolved legacy evidence may be used, but an unknown choice earns nothing.
+dhm_v080_resolve_officer_progress_effect = {
+	if = {
+		limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_officer_choice VALUE_1 = flag:trust VALUE_2 = flag:audit VALUE_3 = flag:credit } }
+		if = {
+			limit = { scope:dhm_story_officer = { dhm_v071_choice_is_trigger = { KEY = dhm071_officer_choice VALUE = flag:trust LEGACY = dhm_officer_trusted_outcome } } }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_trusted_counsel_modifier YEARS = 2 RENEWAL_TT = dhm_reward_trusted_counsel_renewed_2_tt }
+			add_stress = miniscule_stress_gain
+			send_interface_message = { type = event_stewardship_neutral_with_text title = dhm_v080_officer_progress_title desc = dhm_v080_officer_progress_trust_desc left_icon = scope:dhm_story_officer }
+		}
+		else_if = {
+			limit = { scope:dhm_story_officer = { dhm_v071_choice_is_trigger = { KEY = dhm071_officer_choice VALUE = flag:audit LEGACY = dhm_officer_audited_outcome } } }
+			add_prestige = minor_prestige_gain
+			scope:dhm_story_officer = { add_stress = minor_stress_gain }
+			send_interface_message = { type = event_stewardship_neutral_with_text title = dhm_v080_officer_progress_title desc = dhm_v080_officer_progress_audit_desc left_icon = scope:dhm_story_officer }
+		}
+		else_if = {
+			limit = { scope:dhm_story_officer = { dhm_v071_choice_is_trigger = { KEY = dhm071_officer_choice VALUE = flag:credit LEGACY = dhm_officer_credited_outcome } } }
+			add_prestige = minor_prestige_gain
+			scope:dhm_story_officer = { add_stress = miniscule_stress_loss }
+			send_interface_message = { type = event_stewardship_good_with_text title = dhm_v080_officer_progress_title desc = dhm_v080_officer_progress_credit_desc left_icon = scope:dhm_story_officer }
+		}
+	}
+	else = {
+		send_interface_message = { type = event_stewardship_neutral_with_text title = dhm_v080_officer_progress_title desc = dhm_v080_officer_progress_unknown_desc left_icon = scope:dhm_story_officer }
+	}
+}
+
+
+# The first courtship notice may arrive after circumstances already changed.
+# Because the player never began that chain, return its anti-spam reservations
+# as well as the pair variables. A later-stage lapse deliberately keeps them.
+dhm_v080_release_unstarted_courtship_effect = {
+	dhm_v071_release_courtship_effect = yes
+	if = {
+		limit = { exists = scope:dhm_marriage_subject scope:dhm_marriage_subject = { is_alive = yes } }
+		scope:dhm_marriage_subject = { remove_character_flag = dhm_courtship_recent }
+	}
+	if = {
+		limit = { exists = scope:dhm_marriage_candidate scope:dhm_marriage_candidate = { is_alive = yes } }
+		scope:dhm_marriage_candidate = { remove_character_flag = dhm_courtship_recent }
+	}
+	remove_character_flag = dhm_courtship_story_cooldown
+}
+
+# The old event ID still dispatches this effect, so pending v0.7.x officer
+# reports resolve without opening another acknowledgement-only window.
+dhm_v080_resolve_officer_report_effect = {
+	if = {
+		limit = { exists = scope:dhm071_officer_success scope:dhm071_officer_success = yes }
+		dhm_v081_officer_accomplishment_effect = yes
+		scope:dhm_story_officer = { set_variable = { name = dhm090_proven_to value = root years = 10 } }
+		dhm_v090_officer_thanks_effect = yes
+
+		add_prestige = minor_prestige_gain
+		if = { limit = { has_trait = shy } add_stress = miniscule_stress_gain }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_officer_proven_service_modifier YEARS = 3 RENEWAL_TT = dhm_officer_proven_service_modifier_renewed_3_tt }
+		scope:dhm_story_officer = {
+			add_opinion = { target = root modifier = dhm_officer_loyal_service_opinion }
+			change_variable = { name = dhm_officer_loyalty add = 8 }
+			dhm_v080_clamp_officer_loyalty_effect = yes
+			create_character_memory = { type = dhm_officer_triumph_memory participants = { house_head = root } }
+		}
+		dhm_v071_record_named_chapter_effect = { CHAPTER = dhm_chapter_officer_triumph }
+	}
+	else = {
+		if = {
+			limit = { dhm_v080_officer_service_history_trigger = yes }
+			send_interface_message = {
+				type = event_stewardship_bad_with_text
+				title = dhm_v080_officer_setback_title
+				desc = dhm_v080_officer_setback_remembered_desc
+				left_icon = scope:dhm_story_officer
+			}
+		}
+		else = {
+			send_interface_message = {
+				type = event_stewardship_bad_with_text
+				title = dhm_v080_officer_setback_title
+				desc = dhm_v080_officer_setback_desc
+				left_icon = scope:dhm_story_officer
+			}
+		}
+		add_prestige = minor_prestige_loss
+		add_stress = miniscule_stress_loss
+		scope:dhm_story_officer = {
+			change_variable = { name = dhm_officer_loyalty subtract = 6 }
+			dhm_v080_clamp_officer_loyalty_effect = yes
+			add_stress = miniscule_stress_gain
+		}
+	}
+}
+
+# The delayed family letter now arrives as a compact message. Missing old-save
+# evidence is deliberately neutral: no reward or penalty is invented.
+dhm_v080_resolve_letter_reply_effect = {
+	if = {
+		limit = { scope:dhm_story_relative = { scope:dhm072_letter_result = flag:aid } }
+		send_interface_message = {
+			type = event_diplomacy_good_with_text
+			title = dhm_v080_letter_aid_title
+			desc = dhm_v080_letter_aid_desc
+			left_icon = scope:dhm_story_relative
+		}
+		add_prestige = minor_prestige_gain
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_patron_modifier YEARS = 3 RENEWAL_TT = dhm_reward_household_patron_renewed_3_tt }
+		scope:dhm_story_relative = {
+			add_stress = minor_stress_loss
+			add_opinion = { target = root modifier = dhm_sent_household_aid_opinion }
+			dhm_v090_remember_help_effect = yes
+		}
+	}
+	else_if = {
+		limit = { scope:dhm_story_relative = { scope:dhm072_letter_result = flag:counsel } }
+		send_interface_message = {
+			type = event_diplomacy_good_with_text
+			title = dhm_v080_letter_counsel_title
+			desc = dhm_v080_letter_counsel_desc
+			left_icon = scope:dhm_story_relative
+		}
+		add_prestige = minor_prestige_gain
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_trusted_counsel_modifier YEARS = 3 RENEWAL_TT = dhm_reward_trusted_counsel_renewed_3_tt }
+		scope:dhm_story_relative = {
+			add_stress = minor_stress_loss
+			add_opinion = { target = root modifier = dhm_answered_family_letter_opinion }
+			dhm_v090_remember_help_effect = yes
+		}
+	}
+	else = {
+		send_interface_message = {
+			type = event_diplomacy_neutral_with_text
+			title = dhm_v080_letter_unknown_title
+			desc = dhm_v080_letter_unknown_desc
+			left_icon = scope:dhm_story_relative
+		}
+	}
+}
+
+# A remembered reconciliation opens one additional, costly route. The click
+# rechecks both living relatives and their shared memory before touching either.
+dhm_v080_reconcile_remembered_dispute_effect = {
+	if = {
+		limit = { dhm_v080_dispute_pair_history_trigger = yes }
+		save_scope_value_as = { name = dhm072_dispute_result value = flag:reconciled }
+		add_stress = minor_stress_gain
+		add_prestige = minor_prestige_loss
+		scope:dhm_dispute_first = {
+			add_opinion = { target = root modifier = dhm_mediated_family_dispute_opinion }
+			add_opinion = { target = scope:dhm_dispute_second modifier = dhm_mediated_family_dispute_opinion }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 3 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_3_tt }
+			create_character_memory = { type = dhm_family_reconciliation_memory participants = { reconciled_relative = scope:dhm_dispute_second } }
+		}
+		scope:dhm_dispute_second = {
+			add_opinion = { target = root modifier = dhm_mediated_family_dispute_opinion }
+			add_opinion = { target = scope:dhm_dispute_first modifier = dhm_mediated_family_dispute_opinion }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 3 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_3_tt }
+			create_character_memory = { type = dhm_family_reconciliation_memory participants = { reconciled_relative = scope:dhm_dispute_first } }
+		}
+		dhm_record_reconciliation_effect = yes
+		dhm_v050_cohesion_gain_small_effect = yes
+		dhm_mark_reputation_guardian_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0410 years = 2 }
+	}
+	else = { custom_tooltip = dhm_v080_memory_context_changed_tt }
+}

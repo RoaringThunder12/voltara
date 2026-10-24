@@ -1,0 +1,34 @@
+﻿lam_pb_dispatch_effect = {
+	if = {
+		limit = {
+			var:lam_pb_selected_kind ?= flag:liberty_faction
+		}
+		lam_pb_begin_effect = {
+			KIND = liberty_faction
+		}
+	}
+	if = {
+		limit = {
+			var:lam_pb_selected_kind ?= flag:independence_faction
+		}
+		lam_pb_begin_effect = {
+			KIND = independence_faction
+		}
+	}
+	if = {
+		limit = {
+			var:lam_pb_selected_kind ?= flag:claimant_faction
+		}
+		lam_pb_begin_effect = {
+			KIND = claimant_faction
+		}
+	}
+	if = {
+		limit = {
+			var:lam_pb_selected_kind ?= flag:nation_fracturing_faction
+		}
+		lam_pb_begin_effect = {
+			KIND = nation_fracturing_faction
+		}
+	}
+}

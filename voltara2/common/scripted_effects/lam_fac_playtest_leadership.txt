@@ -1,0 +1,122 @@
+﻿lam_pt_order_cooldown_effect = {
+	set_variable = {
+		name = lam_head_order_cd
+		value = yes
+		years = 1
+	}
+	lam_fac_quick_refresh_court_effect = yes
+}
+lam_pt_order_expel_effect = {
+	if = {
+		limit = {
+			lam_pt_order_current_trigger = yes
+			scope:lam_ds_out ?= {
+				lam_pt_order_member_trigger = yes
+			}
+		}
+		scope:lam_ds_out = {
+			remove_variable = lam_bloc
+			remove_variable = lam_fac_tier
+			remove_variable = lam_fac_pinned
+			remove_variable = lam_fac_tier_fixed
+			lam_fac_waver_clear_effect = yes
+			remove_variable = lam_fac_want
+			set_variable = {
+				name = lam_fac_unbound
+				value = yes
+				years = 2
+			}
+			add_opinion = {
+				target = scope:lam_pt_order_head
+				modifier = lam_fac_left_opinion
+			}
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 5
+		}
+		lam_pt_order_cooldown_effect = yes
+	}
+	else = {
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_pt_action_lapsed
+			desc = lam_pt_order_lapsed
+		}
+	}
+}
+lam_pt_order_promote_effect = {
+	if = {
+		limit = {
+			lam_pt_order_current_trigger = yes
+			scope:lam_ds_up ?= {
+				lam_pt_order_member_trigger = yes
+				var:lam_fac_tier ?= 2
+			}
+		}
+		scope:lam_ds_up = {
+			set_variable = {
+				name = lam_fac_tier
+				value = 1
+			}
+			set_variable = {
+				name = lam_fac_pinned
+				value = yes
+				years = 5
+			}
+			set_variable = {
+				name = lam_fac_tier_fixed
+				value = yes
+				years = 5
+			}
+			add_opinion = {
+				target = scope:lam_pt_order_head
+				modifier = lam_fac_granted_opinion
+			}
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 3
+		}
+		lam_pt_order_cooldown_effect = yes
+	}
+	else = {
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_pt_action_lapsed
+			desc = lam_pt_order_lapsed
+		}
+	}
+}
+lam_pt_order_heir_effect = {
+	if = {
+		limit = {
+			lam_pt_order_current_trigger = yes
+			NOT = {
+				has_variable = lam_fac_heir_locked
+			}
+			NOT = {
+				has_variable = lam_cr_retry_heir
+			}
+			scope:lam_ds_heir ?= {
+				lam_pt_order_heir_trigger = yes
+			}
+		}
+		lam_cr_start_effect = {
+			ISSUE = heir
+			ACTION = heir
+			TARGET = scope:lam_ds_heir
+		}
+		if = {
+			limit = {
+				has_variable = lam_cr_active
+			}
+			lam_pt_order_cooldown_effect = yes
+		}
+	}
+	else = {
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_pt_action_lapsed
+			desc = lam_pt_order_lapsed
+		}
+	}
+}

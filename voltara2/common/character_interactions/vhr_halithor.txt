@@ -1,0 +1,22 @@
+﻿vhr_assign_mine = {
+ category = interaction_category_friendly icon = icon_gold common_interaction = yes desc = vhr_assign_mine_desc
+ is_shown = { scope:actor = { vhr_mine_owner = yes } scope:recipient = { has_trait = voltara_slave is_courtier_of = scope:actor } }
+ is_valid_showing_failures_only = { scope:actor = { voltara_slavery_is_legal = yes vhr_labor_capacity = yes } scope:recipient = { vhr_worker_available = yes } }
+ auto_accept = yes
+ on_accept = { if = { limit = { scope:actor = { vhr_mine_owner = yes voltara_slavery_is_legal = yes vhr_labor_capacity = yes } scope:recipient = { vhr_worker_available = yes } }
+ scope:recipient = { set_variable = { name = vhr_employer value = scope:actor } add_character_flag = vhr_mine_worker } scope:actor = { add_trait = voltara_slaver } } }
+ ai_targets = { ai_recipients = courtiers } ai_frequency = 12 ai_will_do = { base = 25 modifier = { factor = 0 scope:actor = { has_trait = compassionate } } }
+}
+vhr_assign_workshop = {
+ category = interaction_category_friendly icon = icon_gold common_interaction = yes desc = vhr_assign_workshop_desc
+ is_shown = { scope:actor = { vhr_region = yes } scope:recipient = { has_trait = voltara_slave is_courtier_of = scope:actor } }
+ is_valid_showing_failures_only = { scope:actor = { voltara_slavery_is_legal = yes vhr_labor_capacity = yes } scope:recipient = { vhr_worker_available = yes } }
+ auto_accept = yes
+ on_accept = { if = { limit = { scope:actor = { vhr_region = yes voltara_slavery_is_legal = yes vhr_labor_capacity = yes } scope:recipient = { vhr_worker_available = yes } }
+ scope:recipient = { set_variable = { name = vhr_employer value = scope:actor } add_character_flag = vhr_workshop_worker } scope:actor = { add_trait = voltara_slaver } } }
+ ai_targets = { ai_recipients = courtiers } ai_frequency = 12 ai_will_do = { base = 25 modifier = { factor = 0 scope:actor = { has_trait = compassionate } } }
+}
+vhr_recall_worker = { category = interaction_category_friendly icon = prison common_interaction = yes desc = vhr_recall_worker_desc
+ is_shown = { scope:recipient = { var:vhr_employer ?= scope:actor } } auto_accept = yes
+ on_accept = { scope:recipient = { vhr_clear_assignment = yes } } ai_will_do = { base = 0 }
+}

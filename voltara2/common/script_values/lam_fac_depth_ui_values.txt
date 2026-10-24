@@ -1,0 +1,91 @@
+﻿lam_pd_memory_office_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_office
+			AND = {
+				has_variable = lam_pd_gr_office_until
+				var:lam_pd_gr_office_until > lam_now_m
+			}
+		}
+		add = var:lam_pd_gr_office
+	}
+}
+lam_pd_memory_wealth_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_wealth
+			AND = {
+				has_variable = lam_pd_gr_wealth_until
+				var:lam_pd_gr_wealth_until > lam_now_m
+			}
+		}
+		add = var:lam_pd_gr_wealth
+	}
+}
+lam_pd_memory_promise_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_promise
+			AND = {
+				has_variable = lam_pd_gr_promise_until
+				var:lam_pd_gr_promise_until > lam_now_m
+			}
+		}
+		add = var:lam_pd_gr_promise
+	}
+}
+lam_pd_memory_repression_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_repression
+			AND = {
+				has_variable = lam_pd_gr_repression_until
+				var:lam_pd_gr_repression_until > lam_now_m
+			}
+		}
+		add = var:lam_pd_gr_repression
+	}
+}
+lam_pd_memory_succession_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_succession
+			AND = {
+				has_variable = lam_pd_gr_succession_until
+				var:lam_pd_gr_succession_until > lam_now_m
+			}
+		}
+		add = var:lam_pd_gr_succession
+	}
+}
+lam_pd_memory_policy_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_policy
+			AND = {
+				has_variable = lam_pd_gr_policy_until
+				var:lam_pd_gr_policy_until > lam_now_m
+			}
+		}
+		add = var:lam_pd_gr_policy
+	}
+}
+lam_pd_memory_legacy_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_legacy
+			AND = {
+				has_variable = lam_pd_gr_legacy_until
+				var:lam_pd_gr_legacy_until > lam_now_m
+			}
+		}
+		add = var:lam_pd_gr_legacy
+	}
+}

@@ -3,7 +3,9 @@
  war_name = voltara_alutor_slave_raid_name cb_name = voltara_alutor_slave_raid
  allowed_for_character = { voltara_slave_expedition_attacker = yes }
  allowed_against_character = { scope:defender = { voltara_slave_expedition_target = yes } scope:attacker = { voltara_slavery_is_legal = yes } }
- valid_to_start = { scope:attacker = { voltara_slave_expedition_attacker = yes } scope:defender = { voltara_slave_expedition_target = yes } scope:attacker = { voltara_slavery_is_legal = yes } }
+ valid_to_start = {
+ voltara_keeper_war_permitted = yes
+ scope:attacker = { voltara_slave_expedition_attacker = yes } scope:defender = { voltara_slave_expedition_target = yes } scope:attacker = { voltara_slavery_is_legal = yes } }
  cost = { prestige = 250 }
  on_primary_attacker_death = inherit on_primary_defender_death = inherit
  on_victory_desc = { desc = voltara_alutor_slave_raid_victory }

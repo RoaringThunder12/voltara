@@ -1,0 +1,27 @@
+﻿# Dedicated hidden relationship pair for the Specialist Tutor module.
+# The child holds dhm_specialist_tutor toward the adult; the adult receives the
+# corresponding dhm_specialist_student relation toward the child.
+
+dhm_specialist_tutor = {
+    hidden = yes
+    corresponding = dhm_specialist_student
+}
+
+dhm_specialist_student = {
+    hidden = yes
+    corresponding = dhm_specialist_tutor
+}
+
+# Hidden, reciprocal and multi-capable like vanilla Friend/Lover relations.
+# It records the exact DHM-arranged pair without breaking polygamous households.
+dhm_arranged_spouse = {
+    hidden = yes
+    corresponding = dhm_arranged_spouse
+}
+
+# Multi-pair and reciprocal. Each cancelled courtship schedules its own hidden
+# five-year cleanup, so refusing another proposal cannot erase an earlier one.
+dhm_refused_courtship = {
+    hidden = yes
+    corresponding = dhm_refused_courtship
+}

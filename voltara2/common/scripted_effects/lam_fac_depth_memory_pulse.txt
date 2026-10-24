@@ -1,0 +1,51 @@
+﻿lam_pd_memory_pulse_effect = {
+	save_scope_as = lam_pd_memory_lord
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+			liege ?= scope:lam_pd_memory_lord
+		}
+		lam_pd_grievance_migrate_effect = yes
+		if = {
+			limit = {
+				has_variable = lam_pd_active
+				NOT = {
+					lam_pd_proposal_current_trigger = yes
+				}
+			}
+			lam_pd_cancel_effect = yes
+		}
+	}
+}
+lam_pd_office_relief_effect = {
+	save_scope_as = lam_pd_memory_lord
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			liege ?= scope:lam_pd_memory_lord
+			has_variable = lam_pd_gr_office
+			NOT = {
+				lam_pol_office_excluded_trigger = yes
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_pd_office_relief_cd
+				}
+			}
+			set_variable = {
+				name = lam_pd_office_relief_cd
+				value = yes
+				years = 1
+			}
+			lam_pd_grievance_relieve_effect = {
+				KIND = office
+				AMOUNT = -10
+			}
+		}
+	}
+}

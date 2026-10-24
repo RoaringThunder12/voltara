@@ -1,0 +1,799 @@
+﻿# Living Factions - agendas a player head puts to the faction council (tools/claude_fixes/council_ui.py)
+namespace = lam_cv
+lam_cv.0001 = {
+	type = character_event
+	title = lam_cv_menu_posture_t
+	desc = lam_cv_menu_desc
+	theme = realm
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	option = {
+		name = lam_po_loyal
+		trigger = {
+			NOT = {
+				var:lam_fac_posture ?= flag:loyal
+			}
+			NOT = {
+				has_variable = lam_cr_retry_posture_loyal
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			lam_cr_start_effect = {
+				ISSUE = loyal
+				ACTION = posture_loyal
+				TARGET = liege
+			}
+		}
+	}
+	option = {
+		name = lam_po_watch
+		trigger = {
+			NOT = {
+				var:lam_fac_posture ?= flag:watch
+			}
+			NOT = {
+				has_variable = lam_cr_retry_posture_watch
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			lam_cr_start_effect = {
+				ISSUE = watch
+				ACTION = posture_watch
+				TARGET = liege
+			}
+		}
+	}
+	option = {
+		name = lam_po_quiet
+		trigger = {
+			NOT = {
+				var:lam_fac_posture ?= flag:quiet
+			}
+			NOT = {
+				has_variable = lam_cr_retry_posture_quiet
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			lam_cr_start_effect = {
+				ISSUE = quiet
+				ACTION = posture_quiet
+				TARGET = liege
+			}
+		}
+	}
+	option = {
+		name = lam_po_oppose
+		trigger = {
+			NOT = {
+				var:lam_fac_posture ?= flag:oppose
+			}
+			NOT = {
+				has_variable = lam_cr_retry_posture_oppose
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			lam_cr_start_effect = {
+				ISSUE = oppose
+				ACTION = posture_oppose
+				TARGET = liege
+			}
+		}
+	}
+	option = {
+		name = lam_po_arm
+		trigger = {
+			NOT = {
+				var:lam_fac_posture ?= flag:arm
+			}
+			NOT = {
+				has_variable = lam_cr_retry_posture_arm
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			lam_cr_start_effect = {
+				ISSUE = arm
+				ACTION = posture_arm
+				TARGET = liege
+			}
+		}
+	}
+	option = {
+		name = lam_po_people
+		trigger = {
+			has_variable = lam_fac_posture
+			NOT = {
+				has_variable = lam_cr_retry_posture_people
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			lam_cr_start_effect = {
+				ISSUE = people
+				ACTION = posture_people
+				TARGET = liege
+			}
+		}
+	}
+	option = {
+		name = lam_cv_menu_back
+		set_variable = {
+			name = lam_cr_view
+			value = this
+		}
+	}
+}
+lam_cv.0002 = {
+	type = character_event
+	title = lam_cv_menu_goal_t
+	desc = lam_cv_menu_desc
+	theme = realm
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	option = {
+		name = lam_faction.2110.auto
+		trigger = {
+			has_variable = lam_fac_goal_pick
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			set_variable = {
+				name = lam_cr_goal_n
+				value = 0
+			}
+			remove_variable = lam_cr_goal_person
+			lam_cr_start_effect = {
+				ISSUE = goal
+				ACTION = goal
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2110.g1
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 1
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			set_variable = {
+				name = lam_cr_goal_n
+				value = 1
+			}
+			remove_variable = lam_cr_goal_person
+			lam_cr_start_effect = {
+				ISSUE = goal
+				ACTION = goal
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2110.g2
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 2
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			set_variable = {
+				name = lam_cr_goal_n
+				value = 2
+			}
+			remove_variable = lam_cr_goal_person
+			lam_cr_start_effect = {
+				ISSUE = goal
+				ACTION = goal
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2110.g3
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 3
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			set_variable = {
+				name = lam_cr_goal_n
+				value = 3
+			}
+			remove_variable = lam_cr_goal_person
+			lam_cr_start_effect = {
+				ISSUE = goal
+				ACTION = goal
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2110.g4
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 4
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			set_variable = {
+				name = lam_cr_goal_n
+				value = 4
+			}
+			remove_variable = lam_cr_goal_person
+			lam_cr_start_effect = {
+				ISSUE = goal
+				ACTION = goal
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2110.g6
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 6
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			set_variable = {
+				name = lam_cr_goal_n
+				value = 6
+			}
+			remove_variable = lam_cr_goal_person
+			lam_cr_start_effect = {
+				ISSUE = goal
+				ACTION = goal
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2110.g7
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 7
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			set_variable = {
+				name = lam_cr_goal_n
+				value = 7
+			}
+			remove_variable = lam_cr_goal_person
+			lam_cr_start_effect = {
+				ISSUE = goal
+				ACTION = goal
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2110.g8
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 8
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			set_variable = {
+				name = lam_cr_goal_n
+				value = 8
+			}
+			remove_variable = lam_cr_goal_person
+			lam_cr_start_effect = {
+				ISSUE = goal
+				ACTION = goal
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_faction.2110.g9
+		trigger = {
+			NOT = {
+				var:lam_fac_goal_pick ?= 9
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			set_variable = {
+				name = lam_cr_goal_n
+				value = 9
+			}
+			remove_variable = lam_cr_goal_person
+			lam_cr_start_effect = {
+				ISSUE = goal
+				ACTION = goal
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_cv_menu_back
+		set_variable = {
+			name = lam_cr_view
+			value = this
+		}
+	}
+}
+lam_cv.0003 = {
+	type = character_event
+	title = lam_cv_menu_stance_t
+	desc = lam_cv_menu_desc
+	theme = realm
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	option = {
+		name = lam_cv_call_stance_btn_crown
+		trigger = {
+			liege = {
+				has_variable = lam_is_crown_open
+			}
+			var:lam_is_lk_crown_lord ?= liege
+			OR = {
+				var:lam_is_lk_crown ?= flag:x
+				var:lam_is_lk_crown ?= flag:y
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			if = {
+				limit = {
+					var:lam_is_lk_crown ?= flag:x
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:y
+				}
+			}
+			else = {
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:x
+				}
+			}
+			set_variable = {
+				name = lam_cr_st_t
+				value = flag:crown
+			}
+			lam_cr_start_effect = {
+				ISSUE = stance
+				ACTION = stance
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_cv_call_stance_btn_council
+		trigger = {
+			liege = {
+				has_variable = lam_is_council_open
+			}
+			var:lam_is_lk_council_lord ?= liege
+			OR = {
+				var:lam_is_lk_council ?= flag:x
+				var:lam_is_lk_council ?= flag:y
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			if = {
+				limit = {
+					var:lam_is_lk_council ?= flag:x
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:y
+				}
+			}
+			else = {
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:x
+				}
+			}
+			set_variable = {
+				name = lam_cr_st_t
+				value = flag:council
+			}
+			lam_cr_start_effect = {
+				ISSUE = stance
+				ACTION = stance
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_cv_call_stance_btn_faith
+		trigger = {
+			liege = {
+				has_variable = lam_is_faith_open
+			}
+			var:lam_is_lk_faith_lord ?= liege
+			OR = {
+				var:lam_is_lk_faith ?= flag:x
+				var:lam_is_lk_faith ?= flag:y
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			if = {
+				limit = {
+					var:lam_is_lk_faith ?= flag:x
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:y
+				}
+			}
+			else = {
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:x
+				}
+			}
+			set_variable = {
+				name = lam_cr_st_t
+				value = flag:faith
+			}
+			lam_cr_start_effect = {
+				ISSUE = stance
+				ACTION = stance
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_cv_call_stance_btn_tax
+		trigger = {
+			liege = {
+				has_variable = lam_is_tax_open
+			}
+			var:lam_is_lk_tax_lord ?= liege
+			OR = {
+				var:lam_is_lk_tax ?= flag:x
+				var:lam_is_lk_tax ?= flag:y
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			if = {
+				limit = {
+					var:lam_is_lk_tax ?= flag:x
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:y
+				}
+			}
+			else = {
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:x
+				}
+			}
+			set_variable = {
+				name = lam_cr_st_t
+				value = flag:tax
+			}
+			lam_cr_start_effect = {
+				ISSUE = stance
+				ACTION = stance
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_cv_call_stance_btn_war
+		trigger = {
+			liege = {
+				has_variable = lam_is_war_open
+			}
+			var:lam_is_lk_war_lord ?= liege
+			OR = {
+				var:lam_is_lk_war ?= flag:x
+				var:lam_is_lk_war ?= flag:y
+			}
+		}
+		custom_tooltip = lam_cv_call_tt
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			if = {
+				limit = {
+					var:lam_is_lk_war ?= flag:x
+				}
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:y
+				}
+			}
+			else = {
+				set_variable = {
+					name = lam_cr_st_side
+					value = flag:x
+				}
+			}
+			set_variable = {
+				name = lam_cr_st_t
+				value = flag:war
+			}
+			lam_cr_start_effect = {
+				ISSUE = stance
+				ACTION = stance
+				TARGET = this
+			}
+		}
+	}
+	option = {
+		name = lam_cv_menu_back
+		set_variable = {
+			name = lam_cr_view
+			value = this
+		}
+	}
+}
+lam_cv.0004 = {
+	type = character_event
+	title = lam_cv_menu_rise_t
+	desc = lam_fac_head_rise_decision_desc
+	theme = realm
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	option = {
+		name = lam_cv_rise_council
+		trigger = {
+			lam_pt_head_ready_trigger = yes
+			NOT = {
+				lam_wc_committed_trigger = yes
+			}
+			NOT = {
+				exists = joined_faction
+			}
+			NOT = {
+				is_at_war_with = liege
+			}
+			custom_description = {
+				text = lam_fac_rise_cd_tt
+				NOT = {
+					has_variable = lam_fac_rebel_cd
+				}
+			}
+			custom_description = {
+				text = lam_fac_rise_cause_tt
+				lam_rv_rise_cause_trigger = yes
+			}
+			custom_description = {
+				text = lam_fac_rise_blocked_tt
+				OR = {
+					NOT = {
+						has_character_flag = joining_faction_block
+					}
+					has_variable = lam_fac_blocked
+				}
+			}
+			custom_description = {
+				text = lam_cv_call_retry_tt
+				NOT = {
+					has_variable = lam_cr_retry_rise
+				}
+			}
+		}
+		custom_tooltip = lam_cv_rise_preview_tt
+		custom_tooltip = lam_fac_head_rise_decision_tt
+		if = {
+			limit = {
+				has_variable = lam_fac_oath
+			}
+			custom_tooltip = lam_fac_rise_oath_tt
+			add_prestige = major_prestige_loss
+			hidden_effect = {
+				remove_variable = lam_fac_oath
+				lam_fac_timeline_add_effect = {
+					KEY = oath_broken
+				}
+				liege = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_betrayed_opinion
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			set_variable = {
+				name = lam_cr_view
+				value = this
+			}
+			liege = {
+				save_scope_as = lam_abs_lord
+			}
+			set_variable = {
+				name = lam_fac_stage
+				value = 4
+			}
+			lam_fac_rise_effect = yes
+		}
+	}
+	option = {
+		name = lam_cv_rise_puppet
+		trigger = {
+			lam_pt_head_ready_trigger = yes
+			NOT = {
+				lam_wc_committed_trigger = yes
+			}
+			NOT = {
+				exists = joined_faction
+			}
+			NOT = {
+				is_at_war_with = liege
+			}
+			custom_description = {
+				text = lam_fac_rise_cd_tt
+				NOT = {
+					has_variable = lam_fac_rebel_cd
+				}
+			}
+			custom_description = {
+				text = lam_fac_rise_cause_tt
+				lam_rv_rise_cause_trigger = yes
+			}
+			custom_description = {
+				text = lam_fac_rise_blocked_tt
+				OR = {
+					NOT = {
+						has_character_flag = joining_faction_block
+					}
+					has_variable = lam_fac_blocked
+				}
+			}
+			custom_description = {
+				text = lam_cv_call_retry_tt
+				NOT = {
+					has_variable = lam_cr_retry_rise
+				}
+			}
+			NOT = {
+				liege ?= {
+					has_variable = lam_fac_puppet_master
+				}
+			}
+			lam_pol_ready_trigger = yes
+		}
+		show_as_unavailable = {
+			lam_pol_control_trigger = yes
+		}
+		custom_tooltip = lam_cv_rise_puppet_tt
+		if = {
+			limit = {
+				has_variable = lam_fac_oath
+			}
+			custom_tooltip = lam_fac_rise_oath_tt
+			add_prestige = major_prestige_loss
+			hidden_effect = {
+				remove_variable = lam_fac_oath
+				lam_fac_timeline_add_effect = {
+					KEY = oath_broken
+				}
+				liege = {
+					add_opinion = {
+						target = root
+						modifier = lam_fac_betrayed_opinion
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			liege = {
+				save_scope_as = lam_abs_lord
+			}
+			lam_fac_ult_puppet_effect = yes
+		}
+	}
+	option = {
+		name = lam_cv_menu_back
+		set_variable = {
+			name = lam_cr_view
+			value = this
+		}
+	}
+}

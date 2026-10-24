@@ -1,0 +1,346 @@
+﻿lam_pol_founder_trigger = {
+	lam_ff_not_head_trigger = yes
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	is_ruler = yes
+	is_ai = yes
+	AND = {
+		trigger_if = {
+			limit = {
+				exists = scope:lam_bloc_lord
+			}
+			var:lam_fac_weighed ?= scope:lam_bloc_lord
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	AND = {
+		trigger_if = {
+			limit = {
+				exists = scope:lam_bloc_lord
+			}
+			liege ?= scope:lam_bloc_lord
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	NOT = {
+		has_variable = lam_bloc_lead
+	}
+	has_variable = lam_fac_engage
+	var:lam_fac_engage >= lam_tune_found_lead_engage
+	NOT = {
+		scope:lam_bloc_lord = {
+			has_variable = lam_fac_ban
+		}
+	}
+	NOT = {
+		OR = {
+			var:lam_fac_tier ?= 1
+			var:lam_fac_tier ?= 2
+		}
+		var:lam_bloc ?= {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+			NOT = {
+				has_variable = lam_fac_disband
+			}
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_bloc_lord
+					}
+					liege ?= scope:lam_bloc_lord
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+	}
+	NOT = {
+		has_variable = lam_fac_unbound
+	}
+	lam_ev_not_affiliated_trigger = yes
+}
+lam_pol_organization_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	has_variable = lam_bloc_lead
+	var:lam_bloc ?= this
+	exists = liege
+	NOT = {
+		has_variable = lam_fac_disband
+	}
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	NOT = {
+		var:lam_fac_stage ?= 9
+	}
+	has_variable = lam_fac_count
+	var:lam_fac_count >= 3
+	has_variable = lam_fac_age
+	var:lam_fac_age >= lam_tune_pol_min_age
+}
+lam_pol_base_trigger = {
+	lam_fac_seize_share_value >= lam_tune_seize_share
+	has_variable = lam_cr_share
+	var:lam_cr_share >= lam_tune_pol_own_share
+	lam_pol_coalition_value >= lam_tune_pol_coalition_share
+}
+lam_pol_offices_trigger = {
+	lam_pol_seats_value >= 2
+	save_temporary_scope_as = lam_pol_key_head
+	liege ?= {
+		OR = {
+			cp:councillor_steward ?= {
+				OR = {
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_pol_key_head
+							}
+							this = scope:lam_pol_key_head
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_pol_key_head
+							}
+							var:lam_bloc ?= scope:lam_pol_key_head
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+			}
+			cp:councillor_spymaster ?= {
+				OR = {
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_pol_key_head
+							}
+							this = scope:lam_pol_key_head
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_pol_key_head
+							}
+							var:lam_bloc ?= scope:lam_pol_key_head
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+			}
+			AND = {
+				has_active_diarchy = yes
+				diarch ?= scope:lam_pol_key_head
+			}
+		}
+	}
+}
+lam_pol_leverage_trigger = {
+	exists = liege
+	OR = {
+		liege = {
+			has_variable = lam_crown
+			var:lam_crown <= lam_tune_pol_weak_crown
+		}
+		has_strong_hook = liege
+		liege = {
+			has_active_diarchy = yes
+			diarch ?= prev
+		}
+	}
+}
+lam_pol_no_rival_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+			exists = liege
+		}
+		save_temporary_scope_as = lam_pol_rival_head
+		liege = {
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_bloc_lead
+						liege ?= scope:lam_pol_rival_head.liege
+						NOT = {
+							this = scope:lam_pol_rival_head
+						}
+						NOT = {
+							var:lam_fac_stage ?= 9
+						}
+						NOT = {
+							has_variable = lam_fac_disband
+						}
+						save_temporary_scope_as = lam_pol_rival_other
+						NOT = {
+							is_target_in_variable_list = {
+								name = lam_fac_allies
+								target = scope:lam_pol_rival_head
+							}
+							scope:lam_pol_rival_head = {
+								is_target_in_variable_list = {
+									name = lam_fac_allies
+									target = scope:lam_pol_rival_other
+								}
+							}
+						}
+						trigger_if = {
+							limit = {
+								has_variable = lam_fac_share
+								has_variable = lam_cr_share
+							}
+							OR = {
+								var:lam_fac_share > lam_tune_seize_rival_share
+								var:lam_cr_share > lam_tune_pol_rival_share
+							}
+						}
+						trigger_else = {
+							always = yes
+						}
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_pol_control_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	has_variable = lam_bloc_lead
+	var:lam_bloc ?= this
+	exists = liege
+	NOT = {
+		has_variable = lam_fac_disband
+	}
+	NOT = {
+		has_variable = lam_fac_hide
+	}
+	NOT = {
+		var:lam_fac_stage ?= 9
+	}
+	lam_pol_organization_trigger = yes
+	lam_pol_base_trigger = yes
+	has_variable = lam_fac_cohesion
+	var:lam_fac_cohesion >= lam_tune_seize_cohesion
+	lam_pol_offices_trigger = yes
+	lam_pol_leverage_trigger = yes
+	lam_pol_no_rival_trigger = yes
+	liege = {
+		is_alive = yes
+		NOT = {
+			has_variable = lam_fac_puppet_master
+		}
+	}
+}
+lam_pol_ready_trigger = {
+	lam_pol_control_trigger = yes
+	var:lam_pol_control_lord ?= liege
+	has_variable = lam_pol_control_since
+	lam_pol_hold_left_value <= 0
+}
+lam_pol_keep_base_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	has_variable = lam_bloc_lead
+	NOT = {
+		has_variable = lam_fac_disband
+	}
+	has_variable = lam_cr_share
+	var:lam_cr_share >= lam_tune_pol_keep_share
+	has_variable = lam_fac_cohesion
+	var:lam_fac_cohesion >= 40
+	lam_pol_seats_value >= 1
+}
+lam_pol_office_excluded_trigger = {
+	trigger_if = {
+		limit = {
+			lam_cu_office_evaluable_trigger = yes
+		}
+		has_variable = lam_cr_share
+		has_variable = lam_fac_count
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		NOT = {
+			has_variable = lam_fac_disband
+		}
+		NOT = {
+			var:lam_fac_stage ?= 9
+		}
+		var:lam_fac_count >= 3
+		var:lam_cr_share >= 20
+		lam_pol_seats_value = 0
+		save_temporary_scope_as = lam_pol_excluded_head
+		liege ?= {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_pol_excluded_head.liege
+						}
+						liege ?= scope:lam_pol_excluded_head.liege
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				NOT = {
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_pol_excluded_head
+							}
+							this = scope:lam_pol_excluded_head
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+				NOT = {
+					has_variable = lam_fac_disband
+				}
+				lam_pol_seats_value >= 2
+			}
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}

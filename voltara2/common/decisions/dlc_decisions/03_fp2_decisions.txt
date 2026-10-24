@@ -52,13 +52,13 @@ struggle_iberia_ending_hostility_decision = {
 				text = struggle_iberia_ending_hostility_decision_kingdom_tt
 				any_held_title = { # 1st kingdom
 					title_tier = kingdom
-					de_jure_liege = title:e_spain
+					always = no
 					root = { completely_controls = prev }
 					save_temporary_scope_as = spanish_kingdom
 				}
 				any_held_title = { # 2nd kingdom
 					title_tier = kingdom
-					de_jure_liege = title:e_spain
+					always = no
 					trigger_if = {
 						limit = { exists = scope:spanish_kingdom }
 						this != scope:spanish_kingdom
@@ -130,11 +130,11 @@ struggle_iberia_ending_hostility_decision = {
 		# Completely control at least 2 of the important Iberian duchies
 		calc_true_if = {
 			amount >= 2
-			completely_controls = title:d_galicia
-			completely_controls = title:d_toledo
-			completely_controls = title:d_cordoba
-			completely_controls = title:d_valencia
-			completely_controls = title:d_barcelona
+			always = no
+			always = no
+			always = no
+			always = no
+			always = no
 		}
 	}
 
@@ -347,11 +347,11 @@ struggle_iberia_ending_compromise_decision = {
 		# Completely control any of the important Iberian duchies
 		calc_true_if = {
 			amount >= 1
-			completely_controls = title:d_galicia
-			completely_controls = title:d_toledo
-			completely_controls = title:d_cordoba
-			completely_controls = title:d_valencia
-			completely_controls = title:d_barcelona
+			always = no
+			always = no
+			always = no
+			always = no
+			always = no
 		}
 	}
 
@@ -371,14 +371,11 @@ struggle_iberia_ending_compromise_decision = {
 		# Personal effects for ruler
 		show_as_tooltip = { fp2_struggle_compromise_ender_effect = yes }
 		# Independent/Split De Jure Duchies will become De Jure Kingdoms
-		if = {
-			limit = {
-				title:e_spain = {
-					any_in_de_jure_hierarchy = { fp2_struggle_ending_compromise_independent_duchy_trigger = yes }
-				}
-			}
-			custom_tooltip = fp2_struggle_compromise_create_new_kingdoms_tt
-		}
+		if = { limit = {
+				always = no
+			} # Proven unreachable; original effects retained below.
+# custom_tooltip = fp2_struggle_compromise_create_new_kingdoms_tt
+}
 		# Other Tooltips!
 		fp2_struggle_compromise_tooltip_effect = yes
 
@@ -942,7 +939,7 @@ secure_iberian_foothold_decision = {
 				}
 			}
 		}
-		NOT = { has_title = title:e_spain }
+		NOT = { always = no }
 		# Struggle is active
 		exists = struggle:iberian_struggle
 		# DLC check
@@ -1286,17 +1283,7 @@ found_kingdom_toledo_decision = {
 	is_shown = {
   		culture ?= { has_cultural_pillar = heritage_iberian }
 		rite ?= rite:mozarabic_church
-		title:e_spain = {
-			any_in_de_jure_hierarchy = {
-				any_title_to_title_neighboring_and_across_water_duchy = { this = title:d_toledo }
-				de_jure_liege = {
-					any_in_de_jure_hierarchy = {
-						count > 2
-						tier = tier_duchy
-					}
-				}
-			}
-		}
+		always = no
 		NOT = {
 			is_target_in_global_variable_list = {
 				name = unavailable_unique_decisions
@@ -1311,7 +1298,7 @@ found_kingdom_toledo_decision = {
 		top_liege = this
 		custom_tooltip = {
 			text = found_kingdom_toledo_capital_tt
-			capital_county = title:c_toledo
+			always = no
 		}
 		custom_tooltip = {
 			text = found_kingdom_toledo_culture_tt
@@ -1321,15 +1308,15 @@ found_kingdom_toledo_decision = {
 			text = found_kingdom_toledo_faith_tt
 			rite = rite:mozarabic_church
 		}
-		completely_controls = title:d_toledo
+		always = no
 		custom_tooltip = {
 			text = found_kingdom_toledo_duchy_tt
 			any_held_title = {
 				title_tier = duchy
 				is_titular = no
-				NOT = { this = title:d_toledo }
+				NOT = { always = no }
 				root = { completely_controls = prev }
-				any_title_to_title_neighboring_and_across_water_duchy = { this = title:d_toledo }
+				any_title_to_title_neighboring_and_across_water_duchy = { always = no }
 			}
 		}
 	}

@@ -1,0 +1,1462 @@
+﻿namespace = dhm_living_family
+
+# =============================================================================
+# LETTERS FROM MARRIED-AWAY FAMILY
+# =============================================================================
+
+dhm_living_family.0100 = {
+	type = letter_event
+	opening = { desc = dhm_living_family.0100.opening }
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:dhm_story_relative = { opinion = { target = root value < -20 } } }
+				desc = dhm_living_family.0100.desc.resentful
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_story_relative = { dhm_v090_rc2_letter_marriage_strained_trigger = yes } }
+    desc = dhm090_rc2_letter_strained
+   }
+   triggered_desc = {
+    trigger = { scope:dhm_story_relative = { stress >= 100 } }
+				desc = dhm_living_family.0100.desc.weary
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_story_relative = { has_trait = ambitious } }
+				desc = dhm_living_family.0100.desc.ambitious
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_story_relative = { has_trait = content } }
+				desc = { first_valid = {
+     triggered_desc = { trigger = { scope:dhm_story_relative = { dhm_v090_rc2_letter_marriage_peaceful_trigger = yes } } desc = dhm_living_family.0100.desc.content }
+     desc = dhm090_rc2_letter_content_neutral
+    } }
+			}
+			desc = dhm_living_family.0100.desc.default
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:dhm_story_relative = {
+						faith = root.faith
+						culture = root.culture
+					}
+				}
+				desc = dhm_living_family.0100.desc.familiar
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_story_relative = { NOT = { faith = root.faith } } }
+				desc = dhm_living_family.0100.desc.new_faith
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_story_relative = { NOT = { culture = root.culture } } }
+				desc = dhm_living_family.0100.desc.new_customs
+			}
+		}
+		triggered_desc = { trigger = { dhm_v080_relative_letter_history_trigger = yes } desc = dhm_v080_relative_letter_history_desc }
+	}
+	sender = scope:dhm_story_relative
+	trigger = {
+		is_ai = no
+		exists = scope:dhm_story_relative
+		scope:dhm_story_relative = { is_alive = yes is_adult = yes is_married = yes }
+	}
+	immediate = { dhm_record_living_letter_effect = yes dhm_v090_record_letter_news_effect = yes }
+
+	option = {
+		name = dhm_living_family.0100.a
+		hidden_effect = { save_scope_value_as = { name = dhm072_letter_result value = flag:aid } }
+		trigger = { short_term_gold >= minor_gold_value }
+		remove_short_term_gold = minor_gold_value
+		scope:dhm_story_relative = {
+			add_opinion = { target = root modifier = dhm_sent_household_aid_opinion }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_letters_from_home_modifier YEARS = 3 RENEWAL_TT = dhm_letters_from_home_modifier_renewed_3_tt }
+			create_character_memory = {
+				type = dhm_family_letter_memory
+				participants = { correspondent = root }
+			}
+		}
+		create_character_memory = {
+			type = dhm_family_letter_memory
+			participants = { correspondent = scope:dhm_story_relative }
+		}
+		dhm_mark_reputation_generous_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0110 years = 2 }
+	}
+
+	option = {
+		name = dhm_living_family.0100.b
+		hidden_effect = { save_scope_value_as = { name = dhm072_letter_result value = flag:counsel } }
+		scope:dhm_story_relative = {
+			add_opinion = { target = root modifier = dhm_answered_family_letter_opinion }
+			add_stress = minor_stress_loss
+		}
+		if = { limit = { has_trait = callous } add_stress = minor_stress_gain }
+		else = { add_stress = minor_stress_loss }
+		dhm_mark_reputation_guardian_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0110 years = 2 }
+	}
+
+	option = {
+		name = dhm_living_family.0100.c
+		scope:dhm_story_relative = {
+			add_opinion = { target = root modifier = dhm_ignored_family_letter_opinion }
+		}
+		if = { limit = { has_trait = compassionate } add_stress = minor_stress_gain }
+	}
+}
+
+dhm_living_family.0110 = {
+	type = character_event
+	hidden = yes
+	trigger = { is_ai = no exists = scope:dhm_story_relative scope:dhm_story_relative = { is_alive = yes } }
+	immediate = {
+		dhm_v072_restore_letter_outcome_effect = yes
+		dhm_v080_resolve_letter_reply_effect = yes
+	}
+}
+
+# =============================================================================
+# LIVING EDUCATION
+# =============================================================================
+
+dhm_living_family.0200 = {
+	type = character_event
+	title = dhm_living_family.0200.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_story_child = { has_focus = education_diplomacy } } desc = dhm_living_family.0200.desc.opening.diplomacy }
+			triggered_desc = { trigger = { scope:dhm_story_child = { has_focus = education_martial } } desc = dhm_living_family.0200.desc.opening.martial }
+			triggered_desc = { trigger = { scope:dhm_story_child = { has_focus = education_stewardship } } desc = dhm_living_family.0200.desc.opening.stewardship }
+			triggered_desc = { trigger = { scope:dhm_story_child = { has_focus = education_intrigue } } desc = dhm_living_family.0200.desc.opening.intrigue }
+			triggered_desc = { trigger = { scope:dhm_story_child = { has_focus = education_learning } } desc = dhm_living_family.0200.desc.opening.learning }
+			desc = dhm_living_family.0200.desc.opening
+		}
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_story_child = { has_trait = diligent } } desc = dhm_living_family.0200.desc.diligent }
+			triggered_desc = { trigger = { scope:dhm_story_child = { has_trait = stubborn } } desc = dhm_living_family.0200.desc.stubborn }
+			triggered_desc = { trigger = { scope:dhm_story_child = { has_trait = shy } } desc = dhm_living_family.0200.desc.shy }
+			triggered_desc = { trigger = { scope:dhm_story_child = { has_trait = ambitious } } desc = dhm_living_family.0200.desc.ambitious }
+			triggered_desc = { trigger = { scope:dhm_story_child = { has_trait = lazy } } desc = dhm_living_family.0200.desc.lazy }
+			desc = dhm_living_family.0200.desc.default
+		}
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_story_tutor = { has_trait = patient } } desc = dhm_living_family.0200.tutor.patient }
+			triggered_desc = { trigger = { scope:dhm_story_tutor = { has_trait = wrathful } } desc = dhm_living_family.0200.tutor.wrathful }
+			triggered_desc = { trigger = { scope:dhm_story_tutor = { has_trait = callous } } desc = dhm_living_family.0200.tutor.callous }
+			desc = dhm_living_family.0200.tutor.default
+		}
+		triggered_desc = { trigger = { scope:dhm_story_child = { is_alive = yes has_trait = stubborn } } desc = dhm_living_family_0200_voice_1 }
+		triggered_desc = { trigger = { scope:dhm_story_child = { is_alive = yes has_trait = humble NOT = { has_trait = stubborn } } } desc = dhm_living_family_0200_voice_2 }
+		triggered_desc = { trigger = { dhm_v080_school_pair_history_trigger = yes } desc = dhm_v080_school_pair_history_desc }
+	}
+	theme = learning
+	override_background = { reference = dhm_living_schoolroom }
+	left_portrait = scope:dhm_story_child
+	right_portrait = scope:dhm_story_tutor
+	trigger = { is_ai = no dhm_v081_school_current_trigger = yes }
+
+	immediate = { dhm_record_living_education_effect = yes dhm_v090_record_lesson_context_effect = yes }
+
+	option = {
+		name = dhm081_school_diplomacy_a
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:diplomacy } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { has_focus = education_diplomacy }   }
+		hidden_effect = { save_scope_value_as = { name = dhm072_school_result value = flag:encouraged } }
+		if = { limit = { OR = { has_trait = callous has_trait = impatient } } add_stress = minor_stress_gain }
+		add_prestige = minor_prestige_loss
+		scope:dhm_story_child = {
+			add_opinion = { target = root modifier = dhm_encouraged_true_nature_opinion }
+			if = {
+				limit = { has_character_modifier = dhm_schoolroom_resentment_modifier }
+				custom_tooltip = {
+					text = dhm_schoolroom_resentment_ends_tt
+					remove_character_modifier = dhm_schoolroom_resentment_modifier
+				}
+			}
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_diplomacy_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_diplomacy_lesson_renewed_tt }
+			add_stress = minor_stress_loss
+			if = { limit = { has_trait = shy } add_stress = miniscule_stress_loss }
+			create_character_memory = {
+				type = dhm_education_breakthrough_memory
+				participants = { tutor = scope:dhm_story_tutor }
+			}
+		}
+		scope:dhm_story_child = { set_variable = { name = dhm081_listened_by value = root years = 10 } }
+		scope:dhm_story_tutor = { add_opinion = { target = root modifier = dhm_spouse_overruled_opinion } set_variable = { name = dhm081_refused_by value = root years = 4 } }
+		custom_tooltip = dhm081_tutor_overruled_tt
+		dhm_mark_reputation_guardian_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm081_school_diplomacy_b
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:diplomacy } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { has_focus = education_diplomacy }   }
+		hidden_effect = { save_scope_value_as = { name = dhm072_school_result value = flag:disciplined } }
+		add_prestige = minor_prestige_gain
+		scope:dhm_story_child = {
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_diplomacy_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_diplomacy_lesson_renewed_tt }
+			add_opinion = { target = root modifier = dhm_harsh_schoolroom_opinion }
+			if = {
+				limit = { has_character_modifier = dhm_schoolroom_breakthrough_modifier }
+				custom_tooltip = {
+					text = dhm_schoolroom_breakthrough_lost_tt
+					remove_character_modifier = dhm_schoolroom_breakthrough_modifier
+				}
+			}
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_schoolroom_resentment_modifier YEARS = 2 RENEWAL_TT = dhm_schoolroom_resentment_modifier_renewed_2_tt }
+			if = { limit = { has_trait = diligent } add_stress = minor_stress_loss }
+			else = { add_stress = minor_stress_gain }
+			if = { limit = { OR = { has_trait = arrogant has_trait = stubborn } } add_stress = miniscule_stress_gain }
+		}
+		if = { limit = { has_trait = compassionate } add_stress = minor_stress_gain }
+		scope:dhm_story_child = { remove_variable = dhm081_listened_by }
+		dhm_mark_reputation_strict_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm081_school_diplomacy_c
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:diplomacy } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { has_focus = education_diplomacy } dhm_v081_tutor_willing_trigger = yes  }
+		show_as_tooltip = { custom_tooltip = dhm_v090_school_diplomacy_risk_tt }
+
+		add_prestige = minor_prestige_loss
+		add_stress = miniscule_stress_loss
+		scope:dhm_story_tutor = { add_opinion = { target = root modifier = dhm_guided_education_opinion } add_stress = miniscule_stress_gain }
+		random_list = {
+			55 = {
+				modifier = { dhm_v080_school_pair_history_trigger = yes add = 20 }
+				modifier = { add = 20 scope:dhm_story_tutor = { diplomacy >= 12 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { learning >= 12 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { diplomacy >= 18 } }
+				modifier = { add = 5 scope:dhm_story_tutor = { learning >= 18 } }
+				modifier = { add = 10 scope:dhm_story_child = { diplomacy >= 6 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { has_trait = patient } }
+				modifier = { add = -10 scope:dhm_story_tutor = { has_trait = lazy } }
+				save_scope_value_as = { name = dhm072_school_result value = flag:tutor_success }
+				scope:dhm_story_child = {
+					if = { limit = { has_character_modifier = dhm_schoolroom_resentment_modifier } custom_tooltip = { text = dhm_schoolroom_resentment_ends_tt remove_character_modifier = dhm_schoolroom_resentment_modifier } }
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_diplomacy_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_diplomacy_lesson_renewed_tt }
+				}
+			}
+			45 = {
+				save_scope_value_as = { name = dhm072_school_result value = flag:setback }
+				scope:dhm_story_child = {
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_schoolroom_resentment_modifier YEARS = 2 RENEWAL_TT = dhm_schoolroom_resentment_modifier_renewed_2_tt }
+					add_stress = miniscule_stress_gain
+				}
+			}
+		}
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm081_school_martial_a
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:martial } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { has_focus = education_martial }   }
+		hidden_effect = { save_scope_value_as = { name = dhm072_school_result value = flag:encouraged } }
+		if = { limit = { OR = { has_trait = callous has_trait = impatient } } add_stress = minor_stress_gain }
+		add_prestige = minor_prestige_loss
+		scope:dhm_story_child = {
+			add_opinion = { target = root modifier = dhm_encouraged_true_nature_opinion }
+			if = {
+				limit = { has_character_modifier = dhm_schoolroom_resentment_modifier }
+				custom_tooltip = {
+					text = dhm_schoolroom_resentment_ends_tt
+					remove_character_modifier = dhm_schoolroom_resentment_modifier
+				}
+			}
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_martial_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_martial_lesson_renewed_tt }
+			add_stress = minor_stress_loss
+			if = { limit = { has_trait = shy } add_stress = miniscule_stress_loss }
+			create_character_memory = {
+				type = dhm_education_breakthrough_memory
+				participants = { tutor = scope:dhm_story_tutor }
+			}
+		}
+		scope:dhm_story_child = { set_variable = { name = dhm081_listened_by value = root years = 10 } }
+		scope:dhm_story_tutor = { add_opinion = { target = root modifier = dhm_spouse_overruled_opinion } set_variable = { name = dhm081_refused_by value = root years = 4 } }
+		custom_tooltip = dhm081_tutor_overruled_tt
+		dhm_mark_reputation_guardian_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm081_school_martial_b
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:martial } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { has_focus = education_martial }   }
+		hidden_effect = { save_scope_value_as = { name = dhm072_school_result value = flag:disciplined } }
+		add_prestige = minor_prestige_gain
+		scope:dhm_story_child = {
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_martial_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_martial_lesson_renewed_tt }
+			add_opinion = { target = root modifier = dhm_harsh_schoolroom_opinion }
+			if = {
+				limit = { has_character_modifier = dhm_schoolroom_breakthrough_modifier }
+				custom_tooltip = {
+					text = dhm_schoolroom_breakthrough_lost_tt
+					remove_character_modifier = dhm_schoolroom_breakthrough_modifier
+				}
+			}
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_schoolroom_resentment_modifier YEARS = 2 RENEWAL_TT = dhm_schoolroom_resentment_modifier_renewed_2_tt }
+			if = { limit = { has_trait = diligent } add_stress = minor_stress_loss }
+			else = { add_stress = minor_stress_gain }
+			if = { limit = { OR = { has_trait = arrogant has_trait = stubborn } } add_stress = miniscule_stress_gain }
+		}
+		if = { limit = { has_trait = compassionate } add_stress = minor_stress_gain }
+		scope:dhm_story_child = { remove_variable = dhm081_listened_by }
+		dhm_mark_reputation_strict_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm081_school_martial_c
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:martial } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { has_focus = education_martial } dhm_v081_tutor_willing_trigger = yes  }
+		show_as_tooltip = { custom_tooltip = dhm_v090_school_martial_risk_tt }
+
+		add_prestige = minor_prestige_loss
+		add_stress = miniscule_stress_loss
+		scope:dhm_story_tutor = { add_opinion = { target = root modifier = dhm_guided_education_opinion } add_stress = miniscule_stress_gain }
+		random_list = {
+			55 = {
+				modifier = { dhm_v080_school_pair_history_trigger = yes add = 20 }
+				modifier = { add = 20 scope:dhm_story_tutor = { martial >= 12 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { learning >= 12 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { martial >= 18 } }
+				modifier = { add = 5 scope:dhm_story_tutor = { learning >= 18 } }
+				modifier = { add = 10 scope:dhm_story_child = { martial >= 6 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { has_trait = patient } }
+				modifier = { add = -10 scope:dhm_story_tutor = { has_trait = lazy } }
+				save_scope_value_as = { name = dhm072_school_result value = flag:tutor_success }
+				scope:dhm_story_child = {
+					if = { limit = { has_character_modifier = dhm_schoolroom_resentment_modifier } custom_tooltip = { text = dhm_schoolroom_resentment_ends_tt remove_character_modifier = dhm_schoolroom_resentment_modifier } }
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_martial_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_martial_lesson_renewed_tt }
+				}
+			}
+			45 = {
+				save_scope_value_as = { name = dhm072_school_result value = flag:setback }
+				scope:dhm_story_child = {
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_schoolroom_resentment_modifier YEARS = 2 RENEWAL_TT = dhm_schoolroom_resentment_modifier_renewed_2_tt }
+					add_stress = miniscule_stress_gain
+				}
+			}
+		}
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm081_school_stewardship_a
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:stewardship } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { has_focus = education_stewardship }  short_term_gold >= minor_gold_value }
+		hidden_effect = { save_scope_value_as = { name = dhm072_school_result value = flag:encouraged } }
+		remove_short_term_gold = minor_gold_value
+		if = { limit = { has_trait = greedy } add_stress = minor_stress_gain }
+		scope:dhm_story_child = {
+			add_opinion = { target = root modifier = dhm_encouraged_true_nature_opinion }
+			if = {
+				limit = { has_character_modifier = dhm_schoolroom_resentment_modifier }
+				custom_tooltip = {
+					text = dhm_schoolroom_resentment_ends_tt
+					remove_character_modifier = dhm_schoolroom_resentment_modifier
+				}
+			}
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_stewardship_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_stewardship_lesson_renewed_tt }
+			add_stress = minor_stress_loss
+			if = { limit = { has_trait = shy } add_stress = miniscule_stress_loss }
+			create_character_memory = {
+				type = dhm_education_breakthrough_memory
+				participants = { tutor = scope:dhm_story_tutor }
+			}
+		}
+		scope:dhm_story_child = { set_variable = { name = dhm081_listened_by value = root years = 10 } }
+		scope:dhm_story_tutor = { add_opinion = { target = root modifier = dhm_spouse_overruled_opinion } set_variable = { name = dhm081_refused_by value = root years = 4 } }
+		custom_tooltip = dhm081_tutor_overruled_tt
+		dhm_mark_reputation_guardian_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm081_school_stewardship_b
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:stewardship } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { has_focus = education_stewardship }   }
+		hidden_effect = { save_scope_value_as = { name = dhm072_school_result value = flag:disciplined } }
+		add_prestige = minor_prestige_gain
+		scope:dhm_story_child = {
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_stewardship_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_stewardship_lesson_renewed_tt }
+			add_opinion = { target = root modifier = dhm_harsh_schoolroom_opinion }
+			if = {
+				limit = { has_character_modifier = dhm_schoolroom_breakthrough_modifier }
+				custom_tooltip = {
+					text = dhm_schoolroom_breakthrough_lost_tt
+					remove_character_modifier = dhm_schoolroom_breakthrough_modifier
+				}
+			}
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_schoolroom_resentment_modifier YEARS = 2 RENEWAL_TT = dhm_schoolroom_resentment_modifier_renewed_2_tt }
+			if = { limit = { has_trait = diligent } add_stress = minor_stress_loss }
+			else = { add_stress = minor_stress_gain }
+			if = { limit = { OR = { has_trait = arrogant has_trait = stubborn } } add_stress = miniscule_stress_gain }
+		}
+		if = { limit = { has_trait = compassionate } add_stress = minor_stress_gain }
+		scope:dhm_story_child = { remove_variable = dhm081_listened_by }
+		dhm_mark_reputation_strict_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm081_school_stewardship_c
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:stewardship } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { has_focus = education_stewardship } dhm_v081_tutor_willing_trigger = yes  }
+		show_as_tooltip = { custom_tooltip = dhm_v090_school_stewardship_risk_tt }
+
+		add_prestige = minor_prestige_loss
+		add_stress = miniscule_stress_loss
+		scope:dhm_story_tutor = { add_opinion = { target = root modifier = dhm_guided_education_opinion } add_stress = miniscule_stress_gain }
+		random_list = {
+			55 = {
+				modifier = { dhm_v080_school_pair_history_trigger = yes add = 20 }
+				modifier = { add = 20 scope:dhm_story_tutor = { stewardship >= 12 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { learning >= 12 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { stewardship >= 18 } }
+				modifier = { add = 5 scope:dhm_story_tutor = { learning >= 18 } }
+				modifier = { add = 10 scope:dhm_story_child = { stewardship >= 6 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { has_trait = patient } }
+				modifier = { add = -10 scope:dhm_story_tutor = { has_trait = lazy } }
+				save_scope_value_as = { name = dhm072_school_result value = flag:tutor_success }
+				scope:dhm_story_child = {
+					if = { limit = { has_character_modifier = dhm_schoolroom_resentment_modifier } custom_tooltip = { text = dhm_schoolroom_resentment_ends_tt remove_character_modifier = dhm_schoolroom_resentment_modifier } }
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_stewardship_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_stewardship_lesson_renewed_tt }
+				}
+			}
+			45 = {
+				save_scope_value_as = { name = dhm072_school_result value = flag:setback }
+				scope:dhm_story_child = {
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_schoolroom_resentment_modifier YEARS = 2 RENEWAL_TT = dhm_schoolroom_resentment_modifier_renewed_2_tt }
+					add_stress = miniscule_stress_gain
+				}
+			}
+		}
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm081_school_intrigue_a
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:intrigue } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { has_focus = education_intrigue }   }
+		hidden_effect = { save_scope_value_as = { name = dhm072_school_result value = flag:encouraged } }
+		if = { limit = { OR = { has_trait = callous has_trait = impatient } } add_stress = minor_stress_gain }
+		add_prestige = minor_prestige_loss
+		scope:dhm_story_child = {
+			add_opinion = { target = root modifier = dhm_encouraged_true_nature_opinion }
+			if = {
+				limit = { has_character_modifier = dhm_schoolroom_resentment_modifier }
+				custom_tooltip = {
+					text = dhm_schoolroom_resentment_ends_tt
+					remove_character_modifier = dhm_schoolroom_resentment_modifier
+				}
+			}
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_intrigue_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_intrigue_lesson_renewed_tt }
+			add_stress = minor_stress_loss
+			if = { limit = { has_trait = shy } add_stress = miniscule_stress_loss }
+			create_character_memory = {
+				type = dhm_education_breakthrough_memory
+				participants = { tutor = scope:dhm_story_tutor }
+			}
+		}
+		scope:dhm_story_child = { set_variable = { name = dhm081_listened_by value = root years = 10 } }
+		scope:dhm_story_tutor = { add_opinion = { target = root modifier = dhm_spouse_overruled_opinion } set_variable = { name = dhm081_refused_by value = root years = 4 } }
+		custom_tooltip = dhm081_tutor_overruled_tt
+		dhm_mark_reputation_guardian_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm081_school_intrigue_b
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:intrigue } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { has_focus = education_intrigue }   }
+		hidden_effect = { save_scope_value_as = { name = dhm072_school_result value = flag:disciplined } }
+		add_prestige = minor_prestige_gain
+		scope:dhm_story_child = {
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_intrigue_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_intrigue_lesson_renewed_tt }
+			add_opinion = { target = root modifier = dhm_harsh_schoolroom_opinion }
+			if = {
+				limit = { has_character_modifier = dhm_schoolroom_breakthrough_modifier }
+				custom_tooltip = {
+					text = dhm_schoolroom_breakthrough_lost_tt
+					remove_character_modifier = dhm_schoolroom_breakthrough_modifier
+				}
+			}
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_schoolroom_resentment_modifier YEARS = 2 RENEWAL_TT = dhm_schoolroom_resentment_modifier_renewed_2_tt }
+			if = { limit = { has_trait = diligent } add_stress = minor_stress_loss }
+			else = { add_stress = minor_stress_gain }
+			if = { limit = { OR = { has_trait = arrogant has_trait = stubborn } } add_stress = miniscule_stress_gain }
+		}
+		if = { limit = { has_trait = compassionate } add_stress = minor_stress_gain }
+		scope:dhm_story_child = { remove_variable = dhm081_listened_by }
+		dhm_mark_reputation_strict_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm081_school_intrigue_c
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:intrigue } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { has_focus = education_intrigue } dhm_v081_tutor_willing_trigger = yes  }
+		show_as_tooltip = { custom_tooltip = dhm_v090_school_intrigue_risk_tt }
+
+		add_prestige = minor_prestige_loss
+		add_stress = miniscule_stress_loss
+		scope:dhm_story_tutor = { add_opinion = { target = root modifier = dhm_guided_education_opinion } add_stress = miniscule_stress_gain }
+		random_list = {
+			55 = {
+				modifier = { dhm_v080_school_pair_history_trigger = yes add = 20 }
+				modifier = { add = 20 scope:dhm_story_tutor = { intrigue >= 12 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { learning >= 12 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { intrigue >= 18 } }
+				modifier = { add = 5 scope:dhm_story_tutor = { learning >= 18 } }
+				modifier = { add = 10 scope:dhm_story_child = { intrigue >= 6 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { has_trait = patient } }
+				modifier = { add = -10 scope:dhm_story_tutor = { has_trait = lazy } }
+				save_scope_value_as = { name = dhm072_school_result value = flag:tutor_success }
+				scope:dhm_story_child = {
+					if = { limit = { has_character_modifier = dhm_schoolroom_resentment_modifier } custom_tooltip = { text = dhm_schoolroom_resentment_ends_tt remove_character_modifier = dhm_schoolroom_resentment_modifier } }
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_intrigue_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_intrigue_lesson_renewed_tt }
+				}
+			}
+			45 = {
+				save_scope_value_as = { name = dhm072_school_result value = flag:setback }
+				scope:dhm_story_child = {
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_schoolroom_resentment_modifier YEARS = 2 RENEWAL_TT = dhm_schoolroom_resentment_modifier_renewed_2_tt }
+					add_stress = miniscule_stress_gain
+				}
+			}
+		}
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm_living_family.0200.a
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:learning } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { NOT = { OR = { has_focus = education_diplomacy has_focus = education_martial has_focus = education_stewardship has_focus = education_intrigue } } }   }
+		hidden_effect = { save_scope_value_as = { name = dhm072_school_result value = flag:encouraged } }
+		if = { limit = { OR = { has_trait = callous has_trait = impatient } } add_stress = minor_stress_gain }
+		add_prestige = minor_prestige_loss
+		scope:dhm_story_child = {
+			add_opinion = { target = root modifier = dhm_encouraged_true_nature_opinion }
+			if = {
+				limit = { has_character_modifier = dhm_schoolroom_resentment_modifier }
+				custom_tooltip = {
+					text = dhm_schoolroom_resentment_ends_tt
+					remove_character_modifier = dhm_schoolroom_resentment_modifier
+				}
+			}
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_learning_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_learning_lesson_renewed_tt }
+			add_stress = minor_stress_loss
+			if = { limit = { has_trait = shy } add_stress = miniscule_stress_loss }
+			create_character_memory = {
+				type = dhm_education_breakthrough_memory
+				participants = { tutor = scope:dhm_story_tutor }
+			}
+		}
+		scope:dhm_story_child = { set_variable = { name = dhm081_listened_by value = root years = 10 } }
+		scope:dhm_story_tutor = { add_opinion = { target = root modifier = dhm_spouse_overruled_opinion } set_variable = { name = dhm081_refused_by value = root years = 4 } }
+		custom_tooltip = dhm081_tutor_overruled_tt
+		dhm_mark_reputation_guardian_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm_living_family.0200.b
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:learning } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { NOT = { OR = { has_focus = education_diplomacy has_focus = education_martial has_focus = education_stewardship has_focus = education_intrigue } } }   }
+		hidden_effect = { save_scope_value_as = { name = dhm072_school_result value = flag:disciplined } }
+		add_prestige = minor_prestige_gain
+		scope:dhm_story_child = {
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_learning_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_learning_lesson_renewed_tt }
+			add_opinion = { target = root modifier = dhm_harsh_schoolroom_opinion }
+			if = {
+				limit = { has_character_modifier = dhm_schoolroom_breakthrough_modifier }
+				custom_tooltip = {
+					text = dhm_schoolroom_breakthrough_lost_tt
+					remove_character_modifier = dhm_schoolroom_breakthrough_modifier
+				}
+			}
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_schoolroom_resentment_modifier YEARS = 2 RENEWAL_TT = dhm_schoolroom_resentment_modifier_renewed_2_tt }
+			if = { limit = { has_trait = diligent } add_stress = minor_stress_loss }
+			else = { add_stress = minor_stress_gain }
+			if = { limit = { OR = { has_trait = arrogant has_trait = stubborn } } add_stress = miniscule_stress_gain }
+		}
+		if = { limit = { has_trait = compassionate } add_stress = minor_stress_gain }
+		scope:dhm_story_child = { remove_variable = dhm081_listened_by }
+		dhm_mark_reputation_strict_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+
+	option = {
+		name = dhm_living_family.0200.c
+		hidden_effect = { save_scope_value_as = { name = dhm082_school_focus value = flag:learning } }
+		trigger = { dhm_v081_school_current_trigger = yes scope:dhm_story_child = { NOT = { OR = { has_focus = education_diplomacy has_focus = education_martial has_focus = education_stewardship has_focus = education_intrigue } } } dhm_v081_tutor_willing_trigger = yes  }
+		show_as_tooltip = { custom_tooltip = dhm_v090_school_learning_risk_tt }
+
+		add_prestige = minor_prestige_loss
+		add_stress = miniscule_stress_loss
+		scope:dhm_story_tutor = { add_opinion = { target = root modifier = dhm_guided_education_opinion } add_stress = miniscule_stress_gain }
+		random_list = {
+			55 = {
+				modifier = { dhm_v080_school_pair_history_trigger = yes add = 20 }
+				modifier = { add = 20 scope:dhm_story_tutor = { learning >= 12 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { learning >= 12 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { learning >= 18 } }
+				modifier = { add = 5 scope:dhm_story_tutor = { learning >= 18 } }
+				modifier = { add = 10 scope:dhm_story_child = { learning >= 6 } }
+				modifier = { add = 10 scope:dhm_story_tutor = { has_trait = patient } }
+				modifier = { add = -10 scope:dhm_story_tutor = { has_trait = lazy } }
+				save_scope_value_as = { name = dhm072_school_result value = flag:tutor_success }
+				scope:dhm_story_child = {
+					if = { limit = { has_character_modifier = dhm_schoolroom_resentment_modifier } custom_tooltip = { text = dhm_schoolroom_resentment_ends_tt remove_character_modifier = dhm_schoolroom_resentment_modifier } }
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_learning_lesson_modifier YEARS = 2 RENEWAL_TT = dhm081_learning_lesson_renewed_tt }
+				}
+			}
+			45 = {
+				save_scope_value_as = { name = dhm072_school_result value = flag:setback }
+				scope:dhm_story_child = {
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_schoolroom_resentment_modifier YEARS = 2 RENEWAL_TT = dhm_schoolroom_resentment_modifier_renewed_2_tt }
+					add_stress = miniscule_stress_gain
+				}
+			}
+		}
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0210 months = 18 }
+	}
+	option = {
+		name = dhm081_school_restore_trust
+		trigger = { dhm_v081_school_current_trigger = yes NOT = { dhm_v081_tutor_willing_trigger = yes } }
+		add_prestige = minor_prestige_loss
+		if = { limit = { has_trait = arrogant } add_stress = minor_stress_gain }
+		scope:dhm_story_tutor = { remove_variable = dhm081_refused_by add_opinion = { target = root modifier = dhm_quiet_encouragement_opinion } }
+		scope:dhm_story_child = { add_stress = miniscule_stress_loss }
+		custom_tooltip = dhm081_trust_restored_tt
+	}
+	option = { name = dhm_v073_changed_ack trigger = { NOT = { dhm_v081_school_current_trigger = yes } } is_cancel_option = yes }
+
+}
+
+dhm_living_family.0210 = {
+	type = character_event
+	title = dhm_living_family.0210.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { NOT = { dhm_v073_school_recipient_valid_trigger = yes } } desc = dhm_v073_school_unavailable_desc }
+			triggered_desc = { trigger = { scope:dhm072_school_result = flag:unknown } desc = dhm_v073_school_unknown_desc }
+			triggered_desc = {
+				trigger = { scope:dhm_story_child = { age >= 16 } }
+				desc = { first_valid = {
+					triggered_desc = { trigger = { scope:dhm072_school_result = flag:setback } desc = dhm_v073_school_grown_setback_desc }
+					triggered_desc = { trigger = { scope:dhm072_school_result = flag:disciplined } desc = dhm_v073_school_grown_discipline_desc }
+					desc = dhm_v073_school_grown_success_desc
+				} }
+			}
+			triggered_desc = { trigger = { NOT = { dhm_v073_school_still_current_trigger = yes } } desc = dhm_v073_school_changed_desc }
+			triggered_desc = { trigger = { OR = { scope:dhm072_school_result = flag:encouraged scope:dhm072_school_result = flag:tutor_success } } desc = dhm_living_family.0210.desc.breakthrough }
+			triggered_desc = { trigger = { scope:dhm072_school_result = flag:setback } desc = dhm_living_family.0210.desc.resentment }
+			triggered_desc = { trigger = { scope:dhm072_school_result = flag:disciplined } desc = dhm_v072_school_disciplined_desc }
+			desc = dhm_v073_school_unknown_desc
+		}
+  triggered_desc = { trigger = { NOT = { AND = { exists = scope:dhm_story_tutor scope:dhm_story_tutor = { is_alive = yes } } } } desc = dhm090_rc2_teacher_absent }
+	}
+	theme = learning
+	override_background = { reference = dhm_living_schoolroom }
+	left_portrait = scope:dhm_story_child
+	right_portrait = { trigger = { exists = scope:dhm_story_tutor scope:dhm_story_tutor = { is_alive = yes } } character = scope:dhm_story_tutor }
+	trigger = {
+		is_ai = no
+		exists = scope:dhm_story_child
+		scope:dhm_story_child = { is_alive = yes }
+	}
+	immediate = { dhm_v072_restore_school_outcome_effect = yes dhm_v081_breathing_room_effect = yes }
+
+	option = {
+		name = dhm_living_family.0210.reward
+		trigger = { dhm_v073_school_recipient_valid_trigger = yes scope:dhm_story_child = { OR = { scope:dhm072_school_result = flag:encouraged scope:dhm072_school_result = flag:tutor_success } } }
+		if = {
+			limit = { dhm_v073_school_recipient_valid_trigger = yes }
+			add_prestige = minor_prestige_gain
+			custom_tooltip = dhm081_school_credit_tt
+			dhm_v090_school_recognition_effect = yes
+			scope:dhm_story_child = {
+				add_stress = minor_stress_loss
+				dhm_v082_school_conclusion_reward_effect = { LEGACY_MODIFIER = dhm_commended_scholar_modifier LEGACY_RENEWAL_TT = dhm_commended_scholar_modifier_renewed_3_tt }
+				add_opinion = { target = root modifier = dhm_honored_education_opinion }
+			}
+			if = {
+				limit = { dhm_v090_rc2_tutor_can_receive_trigger = yes }
+				scope:dhm_story_tutor = {
+				dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_honored_tutor_modifier YEARS = 3 RENEWAL_TT = dhm_honored_tutor_modifier_renewed_3_tt }
+				add_opinion = { target = root modifier = dhm_guided_education_opinion }
+				}
+			}
+		}
+		else = { custom_tooltip = dhm_v073_circumstances_changed_tt }
+	}
+
+	option = {
+		name = dhm_living_family.0210.repair
+		trigger = { dhm_v073_school_recipient_valid_trigger = yes scope:dhm_story_child = { scope:dhm072_school_result = flag:setback } }
+		if = {
+			limit = { dhm_v073_school_recipient_valid_trigger = yes }
+			add_stress = minor_stress_gain
+			scope:dhm_story_child = {
+				custom_tooltip = {
+					text = dhm_schoolroom_resentment_ends_tt
+					remove_character_modifier = dhm_schoolroom_resentment_modifier
+				}
+				if = {
+					limit = { root = { dhm_v073_school_still_current_trigger = yes } }
+					dhm_v082_school_conclusion_reward_effect = { LEGACY_MODIFIER = dhm_steady_lessons_modifier LEGACY_RENEWAL_TT = dhm_steady_lessons_modifier_renewed_3_tt }
+				}
+				else = { add_stress = minor_stress_loss }
+				add_opinion = { target = root modifier = dhm_quiet_encouragement_opinion }
+			}
+			if = {
+				limit = { dhm_v090_rc2_tutor_can_receive_trigger = yes }
+				scope:dhm_story_tutor = { add_opinion = { target = root modifier = dhm_quiet_encouragement_opinion } }
+			}
+			custom_tooltip = dhm081_school_recovery_tt
+		}
+		else = { custom_tooltip = dhm_v073_circumstances_changed_tt }
+	}
+
+	option = {
+		name = dhm_living_family.0210.grown
+		trigger = { dhm_v073_school_recipient_valid_trigger = yes scope:dhm072_school_result = flag:unknown }
+		if = {
+			limit = { dhm_v073_school_recipient_valid_trigger = yes }
+			scope:dhm_story_child = { add_opinion = { target = root modifier = dhm_quiet_encouragement_opinion } }
+		}
+		else = { custom_tooltip = dhm_v073_circumstances_changed_tt }
+	}
+
+	option = {
+		name = dhm_v072_school_disciplined_option
+		trigger = { dhm_v073_school_recipient_valid_trigger = yes scope:dhm072_school_result = flag:disciplined }
+		if = {
+			limit = { dhm_v073_school_recipient_valid_trigger = yes }
+			add_prestige = minor_prestige_gain
+			add_stress = miniscule_stress_gain
+			scope:dhm_story_child = {
+				dhm_v082_school_conclusion_reward_effect = { LEGACY_MODIFIER = dhm_v072_school_discipline_modifier LEGACY_RENEWAL_TT = dhm_v072_school_discipline_modifier_renewed_3_tt }
+				add_prestige = minor_prestige_gain
+				add_opinion = { target = root modifier = dhm_guided_education_opinion }
+			}
+		}
+		else = { custom_tooltip = dhm_v073_circumstances_changed_tt }
+	}
+	option = {
+		name = dhm_v073_changed_ack
+		trigger = { NOT = { dhm_v073_school_recipient_valid_trigger = yes } }
+		is_cancel_option = yes
+	}
+}
+
+# =============================================================================
+# MARRIED LIFE AFTER THE WEDDING
+# =============================================================================
+
+dhm_living_family.0300 = {
+	orphan = yes # Compatibility-only: allow old queued saves, never reschedule.
+	type = character_event
+	title = dhm_living_family.0300.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:dhm_story_relative = { opinion = { target = scope:dhm_story_spouse value >= 40 } } }
+				desc = dhm_living_family.0300.desc.warm
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_story_relative = { opinion = { target = scope:dhm_story_spouse value < 0 } } }
+				desc = dhm_living_family.0300.desc.cold
+			}
+			desc = dhm_living_family.0300.desc.measured
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:dhm_story_relative = { NOT = { faith = scope:dhm_story_spouse.faith } } }
+				desc = dhm_living_family.0300.desc.faith
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_story_relative = { NOT = { culture = scope:dhm_story_spouse.culture } } }
+				desc = dhm_living_family.0300.desc.culture
+			}
+			desc = dhm_living_family.0300.desc.shared
+		}
+		triggered_desc = { trigger = { dhm_v080_union_reconciliation_history_trigger = yes } desc = dhm_v080_union_reconciliation_history_desc }
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_living_hearth }
+	left_portrait = scope:dhm_story_relative
+	right_portrait = scope:dhm_story_spouse
+	trigger = {
+		is_ai = no
+		exists = scope:dhm_story_relative
+		exists = scope:dhm_story_spouse
+		scope:dhm_story_relative = { is_alive = yes is_spouse_of = scope:dhm_story_spouse is_in_the_same_court_as = root }
+		scope:dhm_story_spouse = { is_alive = yes is_in_the_same_court_as = root }
+	}
+	immediate = { dhm_record_living_marriage_effect = yes }
+
+	option = {
+		name = dhm_living_family.0300.a
+		show_as_tooltip = {
+			custom_tooltip = dhm_v080_risk_hearth_base_tt
+			if = {
+				limit = { dhm_v080_union_reconciliation_history_trigger = yes }
+				custom_tooltip = dhm_v080_risk_hearth_memory_tt
+			}
+			if = {
+				limit = { diplomacy >= 12 }
+				custom_tooltip = dhm_v080_risk_hearth_diplomacy_tt
+			}
+			if = {
+				limit = { has_trait = compassionate }
+				custom_tooltip = dhm_v080_risk_hearth_compassionate_tt
+			}
+			if = {
+				limit = { has_trait = callous }
+				custom_tooltip = dhm_v080_risk_hearth_callous_tt
+			}
+			custom_tooltip = dhm_v080_risk_hearth_setback_tt
+		}
+		random_list = {
+			65 = {
+				modifier = { dhm_v080_union_reconciliation_history_trigger = yes add = 20 }
+				modifier = { add = 25 root = { diplomacy >= 12 } }
+				modifier = { add = 15 root = { has_trait = compassionate } }
+				save_scope_value_as = { name = dhm072_hearth_result value = flag:reconciled }
+				scope:dhm_story_relative = {
+					add_opinion = { target = scope:dhm_story_spouse modifier = dhm_compatible_spouse_opinion }
+					add_opinion = { target = root modifier = dhm_respected_married_household_opinion }
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 3 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_3_tt }
+					create_character_memory = { type = dhm_marriage_reconciled_memory participants = { spouse = scope:dhm_story_spouse } }
+				}
+				scope:dhm_story_spouse = {
+					add_opinion = { target = scope:dhm_story_relative modifier = dhm_compatible_spouse_opinion }
+					add_opinion = { target = root modifier = dhm_respected_married_household_opinion }
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 3 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_3_tt }
+					create_character_memory = { type = dhm_marriage_reconciled_memory participants = { spouse = scope:dhm_story_relative } }
+				}
+				dhm_record_reconciliation_effect = yes
+			}
+			35 = {
+				modifier = { add = 20 root = { has_trait = callous } }
+				save_scope_value_as = { name = dhm072_hearth_result value = flag:unsettled }
+				scope:dhm_story_relative = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_unsettled_household_modifier YEARS = 2 RENEWAL_TT = dhm_unsettled_household_modifier_renewed_2_tt } }
+				scope:dhm_story_spouse = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_unsettled_household_modifier YEARS = 2 RENEWAL_TT = dhm_unsettled_household_modifier_renewed_2_tt } }
+			}
+		}
+		if = { limit = { has_trait = callous } add_stress = minor_stress_gain }
+		else = { add_stress = minor_stress_loss }
+		dhm_mark_reputation_guardian_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0310 months = 18 }
+	}
+
+	option = {
+		name = dhm_living_family.0300.b
+		hidden_effect = { save_scope_value_as = { name = dhm072_hearth_result value = flag:established } }
+		trigger = { short_term_gold >= minor_gold_value }
+		remove_short_term_gold = minor_gold_value
+		scope:dhm_story_relative = {
+			add_opinion = { target = root modifier = dhm_sent_household_aid_opinion }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_established_household_modifier YEARS = 3 RENEWAL_TT = dhm_established_household_modifier_renewed_3_tt }
+		}
+		scope:dhm_story_spouse = {
+			add_opinion = { target = root modifier = dhm_sent_household_aid_opinion }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_established_household_modifier YEARS = 3 RENEWAL_TT = dhm_established_household_modifier_renewed_3_tt }
+		}
+		dhm_mark_reputation_generous_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0310 months = 18 }
+	}
+
+	option = {
+		name = dhm_living_family.0300.c
+		if = {
+			limit = { scope:dhm_story_relative = { opinion = { target = scope:dhm_story_spouse value >= 20 } } }
+			save_scope_value_as = { name = dhm072_hearth_result value = flag:independent }
+			scope:dhm_story_relative = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_marital_self_reliance_modifier YEARS = 3 RENEWAL_TT = dhm_marital_self_reliance_modifier_renewed_3_tt } }
+			scope:dhm_story_spouse = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_marital_self_reliance_modifier YEARS = 3 RENEWAL_TT = dhm_marital_self_reliance_modifier_renewed_3_tt } }
+		}
+		else = {
+			save_scope_value_as = { name = dhm072_hearth_result value = flag:unsettled }
+			scope:dhm_story_relative = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_unsettled_household_modifier YEARS = 2 RENEWAL_TT = dhm_unsettled_household_modifier_renewed_2_tt } }
+			scope:dhm_story_spouse = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_unsettled_household_modifier YEARS = 2 RENEWAL_TT = dhm_unsettled_household_modifier_renewed_2_tt } }
+		}
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0310 months = 18 }
+	}
+}
+
+dhm_living_family.0310 = {
+	type = character_event
+	title = dhm_living_family.0310.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_story_relative = { scope:dhm072_hearth_result = flag:reconciled } } desc = dhm_living_family.0310.desc.reconciled }
+			triggered_desc = { trigger = { scope:dhm_story_relative = { scope:dhm072_hearth_result = flag:established } } desc = dhm_living_family.0310.desc.established }
+			triggered_desc = { trigger = { scope:dhm_story_relative = { scope:dhm072_hearth_result = flag:independent } } desc = dhm_living_family.0310.desc.independent }
+			triggered_desc = { trigger = { scope:dhm072_hearth_result = flag:unsettled } desc = dhm_living_family.0310.desc.unsettled }
+			desc = dhm_v072_marriage_unknown_desc
+		}
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_living_hearth }
+	left_portrait = scope:dhm_story_relative
+	right_portrait = scope:dhm_story_spouse
+	trigger = {
+		is_ai = no
+		exists = scope:dhm_story_relative
+		exists = scope:dhm_story_spouse
+		scope:dhm_story_relative = { is_alive = yes is_spouse_of = scope:dhm_story_spouse }
+		scope:dhm_story_spouse = { is_alive = yes }
+	}
+	immediate = { dhm_v072_restore_union_outcome_effect = { KEY = dhm072_hearth_result SUBJECT = scope:dhm_story_relative SPOUSE = scope:dhm_story_spouse NEGATIVE = dhm_unsettled_household_modifier } }
+
+	option = {
+		name = dhm_living_family.0310.rejoice
+		trigger = {
+			OR = {
+				scope:dhm_story_relative = { scope:dhm072_hearth_result = flag:reconciled }
+				scope:dhm_story_relative = { scope:dhm072_hearth_result = flag:established }
+				scope:dhm_story_relative = { scope:dhm072_hearth_result = flag:independent }
+			}
+		}
+		dhm_v081_close_pair_effect = { FIRST = scope:dhm_story_relative SECOND = scope:dhm_story_spouse }
+		add_prestige = minor_prestige_gain
+		if = {
+			limit = { scope:dhm_story_relative = { scope:dhm072_hearth_result = flag:reconciled } }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_peacemaker_modifier YEARS = 3 RENEWAL_TT = dhm_reward_household_peacemaker_renewed_3_tt }
+		}
+		else_if = {
+			limit = { scope:dhm_story_relative = { scope:dhm072_hearth_result = flag:established } }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_patron_modifier YEARS = 3 RENEWAL_TT = dhm_reward_household_patron_renewed_3_tt }
+		}
+		else = {
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_dynastic_momentum_modifier YEARS = 3 RENEWAL_TT = dhm_reward_dynastic_momentum_renewed_3_tt }
+			add_stress = minor_stress_loss
+		}
+		scope:dhm_story_relative = { add_opinion = { target = root modifier = dhm_respected_married_household_opinion } }
+		scope:dhm_story_spouse = { add_opinion = { target = root modifier = dhm_respected_married_household_opinion } }
+	}
+
+	option = {
+		name = dhm_living_family.0310.repair
+		trigger = {
+			short_term_gold >= minor_gold_value
+			scope:dhm_story_relative = { scope:dhm072_hearth_result = flag:unsettled }
+		}
+		remove_short_term_gold = minor_gold_value
+		add_prestige = minor_prestige_gain
+		scope:dhm_story_relative = {
+			remove_character_modifier = dhm_unsettled_household_modifier
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 3 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_3_tt }
+			add_opinion = { target = root modifier = dhm_supported_newlyweds_opinion }
+			add_opinion = { target = scope:dhm_story_spouse modifier = dhm_promising_spouse_opinion }
+			create_character_memory = { type = dhm_marriage_reconciled_memory participants = { spouse = scope:dhm_story_spouse } }
+		}
+		scope:dhm_story_spouse = {
+			remove_character_modifier = dhm_unsettled_household_modifier
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 3 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_3_tt }
+			add_opinion = { target = root modifier = dhm_supported_newlyweds_opinion }
+			add_opinion = { target = scope:dhm_story_relative modifier = dhm_promising_spouse_opinion }
+			create_character_memory = { type = dhm_marriage_reconciled_memory participants = { spouse = scope:dhm_story_relative } }
+		}
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_peacemaker_modifier YEARS = 3 RENEWAL_TT = dhm_reward_household_peacemaker_renewed_3_tt }
+		dhm_record_reconciliation_effect = yes
+		dhm_v081_close_pair_effect = { FIRST = scope:dhm_story_relative SECOND = scope:dhm_story_spouse }
+	}
+
+	option = {
+		name = dhm_living_family.0310.wait
+		trigger = { scope:dhm072_hearth_result = flag:unsettled }
+		if = { limit = { has_trait = compassionate } add_stress = minor_stress_gain }
+	}
+
+	option = { name = dhm_v072_old_outcome_ack trigger = { scope:dhm072_hearth_result = flag:unknown } }
+}
+
+# =============================================================================
+# FAMILY DISPUTES AND RECONCILIATION
+# =============================================================================
+
+dhm_living_family.0400 = {
+	type = character_event
+	title = dhm_living_family.0400.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { has_character_flag = dhm_dispute_silver_scene } desc = dhm_living_family.0400.desc.opening }
+			triggered_desc = { trigger = { has_character_flag = dhm_dispute_inheritance_scene } desc = dhm_living_family.0400.desc.opening.inheritance }
+			triggered_desc = { trigger = { has_character_flag = dhm_dispute_hospitality_scene } desc = dhm_living_family.0400.desc.opening.hospitality }
+			desc = dhm_living_family.0400.desc.opening
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:dhm_dispute_first = { has_trait = wrathful } }
+				desc = dhm_living_family.0400.desc.wrathful
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_dispute_second = { has_trait = stubborn } }
+				desc = dhm_living_family.0400.desc.stubborn
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_dispute_first = { has_trait = forgiving } }
+				desc = dhm_living_family.0400.desc.forgiving
+			}
+			desc = dhm_living_family.0400.desc.default
+		}
+		triggered_desc = { trigger = { dhm_v080_dispute_pair_history_trigger = yes } desc = dhm_v080_dispute_pair_history_desc }
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_living_council }
+	left_portrait = scope:dhm_dispute_first
+	right_portrait = scope:dhm_dispute_second
+	trigger = {
+		is_ai = no
+		exists = scope:dhm_dispute_first
+		exists = scope:dhm_dispute_second
+		scope:dhm_dispute_first = { is_alive = yes is_adult = yes is_imprisoned = no is_in_the_same_court_as = root }
+		scope:dhm_dispute_second = { is_alive = yes is_adult = yes is_imprisoned = no is_in_the_same_court_as = root }
+	}
+	immediate = {
+		dhm_record_living_dispute_effect = yes
+		dhm_v090_prepare_mediator_effect = yes
+		random_list = {
+			34 = { add_character_flag = { flag = dhm_dispute_silver_scene days = 30 } }
+			33 = { add_character_flag = { flag = dhm_dispute_inheritance_scene days = 30 } }
+			33 = { add_character_flag = { flag = dhm_dispute_hospitality_scene days = 30 } }
+		}
+	}
+
+	option = {
+		name = dhm090_dispute_accept_helper
+		trigger = { dhm_v090_mediator_offer_current_trigger = yes }
+		show_as_tooltip = { custom_tooltip = dhm090_mediator_risk_tt }
+		dhm_v090_accept_mediator_effect = yes
+	}
+
+	option = {
+		name = dhm_living_family.0400.a
+		show_as_tooltip = {
+			custom_tooltip = dhm_v080_risk_dispute_base_tt
+			if = {
+				limit = { dhm_v080_dispute_pair_history_trigger = yes }
+				custom_tooltip = dhm_v080_risk_dispute_memory_tt
+			}
+			if = {
+				limit = { diplomacy >= 12 }
+				custom_tooltip = dhm_v080_risk_dispute_diplomacy_tt
+			}
+			if = {
+				limit = { has_trait = just }
+				custom_tooltip = dhm_v080_risk_dispute_just_tt
+			}
+			custom_tooltip = dhm_v080_risk_dispute_setback_tt
+		}
+		random_list = {
+			65 = {
+				modifier = { dhm_v080_dispute_pair_history_trigger = yes add = 20 }
+				modifier = { add = 25 root = { diplomacy >= 12 } }
+				modifier = { add = 20 root = { has_trait = just } }
+				save_scope_value_as = { name = dhm072_dispute_result value = flag:reconciled }
+				scope:dhm_dispute_first = {
+					add_opinion = { target = root modifier = dhm_mediated_family_dispute_opinion }
+					add_opinion = { target = scope:dhm_dispute_second modifier = dhm_mediated_family_dispute_opinion }
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 3 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_3_tt }
+					create_character_memory = { type = dhm_family_reconciliation_memory participants = { reconciled_relative = scope:dhm_dispute_second } }
+				}
+				scope:dhm_dispute_second = {
+					add_opinion = { target = root modifier = dhm_mediated_family_dispute_opinion }
+					add_opinion = { target = scope:dhm_dispute_first modifier = dhm_mediated_family_dispute_opinion }
+					dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 3 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_3_tt }
+					create_character_memory = { type = dhm_family_reconciliation_memory participants = { reconciled_relative = scope:dhm_dispute_first } }
+				}
+				dhm_record_reconciliation_effect = yes
+			}
+			35 = {
+				save_scope_value_as = { name = dhm072_dispute_result value = flag:grievance_both }
+				scope:dhm_dispute_first = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_grievance_modifier YEARS = 3 RENEWAL_TT = dhm_family_grievance_modifier_renewed_3_tt } }
+				scope:dhm_dispute_second = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_grievance_modifier YEARS = 3 RENEWAL_TT = dhm_family_grievance_modifier_renewed_3_tt } }
+			}
+		}
+		if = { limit = { has_trait = callous } add_stress = minor_stress_gain }
+		else = { add_stress = minor_stress_loss }
+		dhm_mark_reputation_guardian_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0410 years = 2 }
+	}
+
+	option = {
+		name = dhm_v080_dispute_remembered_option
+		trigger = { dhm_v080_dispute_pair_history_trigger = yes }
+		custom_tooltip = dhm_v080_dispute_remembered_tt
+		dhm_v080_reconcile_remembered_dispute_effect = yes
+	}
+
+	option = {
+		name = dhm_living_family.0400.b
+		hidden_effect = { save_scope_value_as = { name = dhm072_dispute_result value = flag:grievance_second } }
+		scope:dhm_dispute_first = { add_opinion = { target = root modifier = dhm_mediated_family_dispute_opinion } }
+		scope:dhm_dispute_second = {
+			add_opinion = { target = root modifier = dhm_sided_against_me_opinion }
+			add_opinion = { target = scope:dhm_dispute_first modifier = dhm_family_verdict_grievance_opinion }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_grievance_modifier YEARS = 4 RENEWAL_TT = dhm_family_grievance_modifier_renewed_4_tt }
+		}
+		dhm_mark_reputation_strict_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0410 years = 2 }
+	}
+
+	option = {
+		name = dhm_living_family.0400.c
+		hidden_effect = { save_scope_value_as = { name = dhm072_dispute_result value = flag:grievance_first } }
+		scope:dhm_dispute_second = { add_opinion = { target = root modifier = dhm_mediated_family_dispute_opinion } }
+		scope:dhm_dispute_first = {
+			add_opinion = { target = root modifier = dhm_sided_against_me_opinion }
+			add_opinion = { target = scope:dhm_dispute_second modifier = dhm_family_verdict_grievance_opinion }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_grievance_modifier YEARS = 4 RENEWAL_TT = dhm_family_grievance_modifier_renewed_4_tt }
+		}
+		dhm_mark_reputation_strict_effect = yes
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0410 years = 2 }
+	}
+
+	option = {
+		name = dhm_living_family.0400.d
+		hidden_effect = { save_scope_value_as = { name = dhm072_dispute_result value = flag:grievance_both } }
+		scope:dhm_dispute_first = {
+			add_opinion = { target = root modifier = dhm_refused_family_dispute_opinion }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_grievance_modifier YEARS = 3 RENEWAL_TT = dhm_family_grievance_modifier_renewed_3_tt }
+		}
+		scope:dhm_dispute_second = {
+			add_opinion = { target = root modifier = dhm_refused_family_dispute_opinion }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_grievance_modifier YEARS = 3 RENEWAL_TT = dhm_family_grievance_modifier_renewed_3_tt }
+		}
+		if = { limit = { has_trait = compassionate } add_stress = minor_stress_gain }
+		custom_tooltip = dhm_outcome_will_return_tt
+		trigger_event = { id = dhm_living_family.0410 years = 2 }
+	}
+}
+
+dhm_living_family.0410 = {
+	type = character_event
+	title = dhm_living_family.0410.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm072_dispute_result = flag:reconciled } desc = dhm_living_family.0410.desc.reconciled }
+			triggered_desc = { trigger = { scope:dhm072_dispute_result = flag:grievance_first } desc = dhm_v072_dispute_first_desc }
+			triggered_desc = { trigger = { scope:dhm072_dispute_result = flag:grievance_second } desc = dhm_v072_dispute_second_desc }
+			triggered_desc = { trigger = { dhm_v072_dispute_unresolved_trigger = yes } desc = dhm_living_family.0410.desc.grievance }
+			desc = dhm_v072_dispute_unknown_desc
+		}
+		triggered_desc = { trigger = { exists = scope:dhm090_mediator scope:dhm090_mediator = { is_alive = yes } exists = scope:dhm090_mediator_result scope:dhm090_mediator_result = flag:peace } desc = dhm090_mediator_ending_peace }
+		triggered_desc = { trigger = { exists = scope:dhm090_mediator scope:dhm090_mediator = { is_alive = yes } exists = scope:dhm090_mediator_result scope:dhm090_mediator_result = flag:blame } desc = dhm090_mediator_ending_blame }
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_living_council }
+	left_portrait = scope:dhm_dispute_first
+	right_portrait = scope:dhm_dispute_second
+	trigger = {
+		is_ai = no
+		exists = scope:dhm_dispute_first
+		exists = scope:dhm_dispute_second
+		scope:dhm_dispute_first = { is_alive = yes }
+		scope:dhm_dispute_second = { is_alive = yes }
+	}
+	immediate = { dhm_v072_restore_dispute_outcome_effect = yes dhm_v090_rc2_record_mediated_peace_effect = yes }
+
+	option = {
+		name = dhm_living_family.0410.celebrate
+		trigger = { scope:dhm072_dispute_result = flag:reconciled }
+		dhm_v081_close_dispute_effect = yes
+		add_prestige = minor_prestige_gain
+		add_stress = minor_stress_loss
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_peacemaker_modifier YEARS = 4 RENEWAL_TT = dhm_reward_household_peacemaker_renewed_4_tt }
+		scope:dhm_dispute_first = { add_opinion = { target = root modifier = dhm_mediated_family_dispute_opinion } }
+		scope:dhm_dispute_second = { add_opinion = { target = root modifier = dhm_mediated_family_dispute_opinion } }
+	}
+
+	option = {
+		name = dhm_living_family.0410.settle
+		trigger = {
+			short_term_gold >= minor_gold_value
+			dhm_v072_dispute_unresolved_trigger = yes
+		}
+		remove_short_term_gold = minor_gold_value
+		add_prestige = minor_prestige_gain
+		scope:dhm_dispute_first = {
+			if = { limit = { OR = { scope:dhm072_dispute_result = flag:grievance_first scope:dhm072_dispute_result = flag:grievance_both } } remove_character_modifier = dhm_family_grievance_modifier }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 4 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_4_tt }
+			add_opinion = { target = root modifier = dhm_mediated_family_dispute_opinion }
+			add_opinion = { target = scope:dhm_dispute_second modifier = dhm_mediated_family_dispute_opinion }
+			create_character_memory = { type = dhm_family_reconciliation_memory participants = { reconciled_relative = scope:dhm_dispute_second } }
+		}
+		scope:dhm_dispute_second = {
+			if = { limit = { OR = { scope:dhm072_dispute_result = flag:grievance_second scope:dhm072_dispute_result = flag:grievance_both } } remove_character_modifier = dhm_family_grievance_modifier }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 4 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_4_tt }
+			add_opinion = { target = root modifier = dhm_mediated_family_dispute_opinion }
+			add_opinion = { target = scope:dhm_dispute_first modifier = dhm_mediated_family_dispute_opinion }
+			create_character_memory = { type = dhm_family_reconciliation_memory participants = { reconciled_relative = scope:dhm_dispute_first } }
+		}
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_peacemaker_modifier YEARS = 4 RENEWAL_TT = dhm_reward_household_peacemaker_renewed_4_tt }
+		dhm_record_reconciliation_effect = yes
+		dhm_v081_close_dispute_effect = yes
+	}
+
+	option = {
+		name = dhm_living_family.0410.endure
+		trigger = { dhm_v072_dispute_unresolved_trigger = yes }
+		add_prestige = minor_prestige_gain
+		dhm_v050_cohesion_loss_small_effect = yes
+		dhm_mark_reputation_strict_effect = yes
+	}
+
+	option = { name = dhm_living_family.0410.faded trigger = { scope:dhm072_dispute_result = flag:unknown } }
+}
+
+# =============================================================================
+# PERSONAL MARRIAGE WISHES
+# =============================================================================
+
+dhm_living_family.0500 = {
+	type = character_event
+	title = dhm_living_family.0500.t
+	desc = {
+		desc = dhm_living_family.0500.desc.opening
+		first_valid = {
+			triggered_desc = { trigger = { scope:dhm_story_relative = { has_trait = compassionate } } desc = dhm_living_family.0500.desc.romantic }
+			triggered_desc = { trigger = { scope:dhm_story_relative = { has_trait = zealous } } desc = dhm_living_family.0500.desc.zealous }
+			triggered_desc = { trigger = { scope:dhm_story_relative = { has_trait = ambitious } } desc = dhm_living_family.0500.desc.ambitious }
+			triggered_desc = { trigger = { scope:dhm_story_relative = { has_trait = shy } } desc = dhm_living_family.0500.desc.shy }
+			desc = dhm_living_family.0500.desc.default
+		}
+	}
+	theme = diplomacy
+	override_background = { reference = dhm_living_hearth }
+	left_portrait = scope:dhm_story_relative
+	trigger = {
+		is_ai = no
+		exists = scope:dhm_story_relative
+		scope:dhm_story_relative = {
+			is_alive = yes
+			is_ai = yes
+			is_adult = yes
+			is_married = no
+			is_betrothed = no
+			can_marry_trigger = yes
+			is_in_the_same_court_as = root
+			NOT = { has_character_flag = dhm_profile_do_not_marry }
+		}
+	}
+	immediate = { dhm_record_living_wish_effect = yes }
+
+	option = {
+		name = dhm_living_family.0500.a
+		scope:dhm_story_relative = {
+			dhm_clear_primary_strategy_effect = yes
+			add_character_flag = dhm_strategy_compatibility
+			dhm_clear_profile_automation_effect = yes
+			add_character_flag = dhm_profile_ask
+			add_opinion = { target = root modifier = dhm_respected_marriage_choice_opinion }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_household_confidence_modifier YEARS = 3 RENEWAL_TT = dhm_household_confidence_modifier_renewed_3_tt }
+			create_character_memory = { type = dhm_household_promise_memory participants = { promise_keeper = root } }
+		}
+		add_stress = minor_stress_loss
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_trusted_counsel_modifier YEARS = 2 RENEWAL_TT = dhm_reward_trusted_counsel_renewed_2_tt }
+	}
+
+	option = {
+		name = dhm_living_family.0500.b
+		scope:dhm_story_relative = {
+			add_character_flag = dhm_strategy_same_faith
+			add_character_flag = dhm_strategy_same_culture
+			add_opinion = { target = root modifier = dhm_persuaded_about_marriage_opinion }
+		}
+		dhm_mark_reputation_traditional_effect = yes
+		add_piety = minor_piety_gain
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_cherished_customs_modifier YEARS = 3 RENEWAL_TT = dhm_reward_cherished_customs_renewed_3_tt }
+	}
+
+	option = {
+		name = dhm_living_family.0500.c
+			scope:dhm_story_relative = {
+			dhm_clear_profile_automation_effect = yes
+			add_character_flag = dhm_profile_ask
+			add_opinion = { target = root modifier = dhm_respected_marriage_choice_opinion }
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_household_confidence_modifier YEARS = 3 RENEWAL_TT = dhm_household_confidence_modifier_renewed_3_tt }
+		}
+		add_stress = minor_stress_loss
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_trusted_counsel_modifier YEARS = 2 RENEWAL_TT = dhm_reward_trusted_counsel_renewed_2_tt }
+	}
+
+	option = {
+		name = dhm_living_family.0500.d
+			scope:dhm_story_relative = {
+			dhm_v075_set_retry_effect = { MONTHS = 24 REASON = flag:wish }
+			add_opinion = { target = root modifier = dhm_respected_marriage_choice_opinion }
+			add_stress = minor_stress_loss
+		}
+		add_stress = minor_stress_loss
+	}
+}
+
+# =============================================================================
+# CULTURE- AND FAITH-AWARE HOUSEHOLD CEREMONY
+# =============================================================================
+
+dhm_living_family.0600 = {
+	type = character_event
+	title = dhm_living_family.0600.t
+	desc = {
+		desc = dhm_living_family.0600.desc.opening
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:dhm_ceremony_relative = { faith = root.faith culture = root.culture } }
+				desc = dhm_living_family.0600.desc.shared
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_ceremony_relative = { NOT = { faith = root.faith } } }
+				desc = dhm_living_family.0600.desc.faith
+			}
+			triggered_desc = {
+				trigger = { scope:dhm_ceremony_relative = { NOT = { culture = root.culture } } }
+				desc = dhm_living_family.0600.desc.culture
+			}
+		}
+	}
+	theme = faith
+	override_background = { reference = dhm_living_hearth }
+	left_portrait = scope:dhm_ceremony_relative
+	trigger = {
+		is_ai = no
+		exists = scope:dhm_ceremony_relative
+		scope:dhm_ceremony_relative = { dhm_v040_ceremony_relative_trigger = yes }
+	}
+	immediate = { dhm_record_living_ceremony_effect = yes }
+
+	option = {
+		name = dhm_living_family.0600.a
+		scope:dhm_ceremony_relative = {
+			add_opinion = { target = root modifier = dhm_respected_my_custom_opinion }
+			add_stress = minor_stress_loss
+		}
+		dhm_mark_reputation_generous_effect = yes
+		add_piety = minor_piety_gain
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_cherished_customs_modifier YEARS = 3 RENEWAL_TT = dhm_reward_cherished_customs_renewed_3_tt }
+	}
+	option = {
+		name = dhm_living_family.0600.b
+		scope:dhm_ceremony_relative = { add_opinion = { target = root modifier = dhm_welcomed_my_custom_opinion } }
+		dhm_mark_reputation_traditional_effect = yes
+		add_piety = minor_piety_gain
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_cherished_customs_modifier YEARS = 3 RENEWAL_TT = dhm_reward_cherished_customs_renewed_3_tt }
+	}
+	option = {
+		name = dhm_living_family.0600.c
+		if = { limit = { has_trait = zealous } add_stress = minor_stress_gain }
+		else = { add_stress = minor_stress_loss }
+		scope:dhm_ceremony_relative = { add_opinion = { target = root modifier = dhm_welcomed_my_custom_opinion } }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_trusted_counsel_modifier YEARS = 2 RENEWAL_TT = dhm_reward_trusted_counsel_renewed_2_tt }
+	}
+}
+
+# =============================================================================
+# HOUSEHOLD CHRONICLE AND STORY FREQUENCY
+# =============================================================================
+
+dhm_living_family.0800 = {
+	type = character_event
+	title = dhm_living_family.0800.t
+	desc = {
+		desc = dhm_living_family.0800.desc
+		first_valid = {
+			triggered_desc = { trigger = { has_character_flag = dhm_reputation_generous_active } desc = dhm_living_family.0800.rep.generous }
+			triggered_desc = { trigger = { has_character_flag = dhm_reputation_guardian_active } desc = dhm_living_family.0800.rep.guardian }
+			triggered_desc = { trigger = { has_character_flag = dhm_reputation_traditional_active } desc = dhm_living_family.0800.rep.traditional }
+			triggered_desc = { trigger = { has_character_flag = dhm_reputation_strict_active } desc = dhm_living_family.0800.rep.strict }
+			triggered_desc = { trigger = { var:dhm_rep_generous >= 3 } desc = dhm_living_family.0800.rep.generous }
+			triggered_desc = { trigger = { var:dhm_rep_guardian >= 3 } desc = dhm_living_family.0800.rep.guardian }
+			triggered_desc = { trigger = { var:dhm_rep_traditional >= 3 } desc = dhm_living_family.0800.rep.traditional }
+			triggered_desc = { trigger = { var:dhm_rep_strict >= 1 } desc = dhm_living_family.0800.rep.strict }
+			desc = dhm_living_family.0800.rep.new
+		}
+	}
+	theme = stewardship
+	override_background = { reference = dhm_living_council }
+	option = { name = dhm_living_family.0800.a trigger_event = dhm_manager.0008 }
+	option = { name = dhm_living_family.0800.b is_cancel_option = yes }
+}
+
+dhm_living_family.0900 = {
+	type = character_event
+	title = dhm_living_family.0900.t
+	desc = {
+		desc = dhm_living_family.0900.desc
+		first_valid = {
+			triggered_desc = { trigger = { has_global_variable = dhm_setting_stories_off } desc = dhm_living_family.0900.status.off }
+			triggered_desc = { trigger = { has_global_variable = dhm_setting_stories_quiet } desc = dhm_living_family.0900.status.quiet }
+			triggered_desc = { trigger = { has_global_variable = dhm_setting_stories_lively } desc = dhm_living_family.0900.status.lively }
+			desc = dhm_living_family.0900.status.balanced
+		}
+	}
+	theme = stewardship
+	override_background = { reference = dhm_living_council }
+
+	option = {
+		name = dhm_living_family.0900.quiet
+		remove_global_variable = dhm_setting_stories_off
+		remove_global_variable = dhm_setting_stories_lively
+		set_global_variable = { name = dhm_setting_stories_quiet value = yes }
+		dhm_v070_mark_custom_preset_effect = yes
+		trigger_event = dhm_living_family.0900
+	}
+	option = {
+		name = dhm_living_family.0900.balanced
+		remove_global_variable = dhm_setting_stories_off
+		remove_global_variable = dhm_setting_stories_quiet
+		remove_global_variable = dhm_setting_stories_lively
+		dhm_v070_mark_custom_preset_effect = yes
+		trigger_event = dhm_living_family.0900
+	}
+	option = {
+		name = dhm_living_family.0900.lively
+		remove_global_variable = dhm_setting_stories_off
+		remove_global_variable = dhm_setting_stories_quiet
+		set_global_variable = { name = dhm_setting_stories_lively value = yes }
+		dhm_v070_mark_custom_preset_effect = yes
+		trigger_event = dhm_living_family.0900
+	}
+	option = {
+		name = dhm_living_family.0900.off
+		remove_global_variable = dhm_setting_stories_quiet
+		remove_global_variable = dhm_setting_stories_lively
+		set_global_variable = { name = dhm_setting_stories_off value = yes }
+		dhm_v070_mark_custom_preset_effect = yes
+		trigger_event = dhm_living_family.0900
+	}
+	option = { name = dhm_living_family.0900.back trigger_event = dhm_manager.0092 is_cancel_option = yes }
+}

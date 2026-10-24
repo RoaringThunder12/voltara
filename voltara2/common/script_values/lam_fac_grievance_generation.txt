@@ -1,0 +1,31 @@
+﻿lam_gg_crown_alignment_value = {
+	value = "opinion(scope:lam_ev_head.liege)"
+	if = {
+		limit = {
+			is_councillor_of = scope:lam_ev_head.liege
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			is_close_family_of = scope:lam_ev_head.liege
+		}
+		add = 15
+	}
+	if = {
+		limit = {
+			has_relation_friend = scope:lam_ev_head.liege
+		}
+		add = 15
+	}
+	if = {
+		limit = {
+			has_relation_rival = scope:lam_ev_head.liege
+		}
+		add = -20
+	}
+}
+lam_dd_alignment_gap_value = {
+	value = lam_gg_crown_alignment_value
+	subtract = scope:lam_ev_head.lam_gg_crown_alignment_value
+}

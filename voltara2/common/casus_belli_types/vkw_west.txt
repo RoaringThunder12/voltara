@@ -1,0 +1,18 @@
+﻿vkw_native_revolt = {
+ valid_to_start = { voltara_keeper_war_permitted = yes }
+
+ icon = peasant_faction group = civil_war
+ allowed_for_character = { has_character_flag = vkw_rebellion } allowed_against_character = { scope:defender = { is_landed = yes } }
+ target_titles = all target_title_tier = county
+ on_victory_desc = { desc = vkw_native_win } on_defeat_desc = { desc = vkw_native_loss } on_white_peace_desc = { desc = vkw_native_peace }
+ on_victory = {
+ create_title_and_vassal_change = { type = conquest save_scope_as = vkw_revolt_change add_claim_on_loss = yes }
+ every_in_list = { list = target_titles change_title_holder_include_vassals = { holder = scope:attacker change = scope:vkw_revolt_change } remove_county_modifier = vkw_exhausted remove_county_modifier = vkw_concession }
+ resolve_title_and_vassal_change = scope:vkw_revolt_change
+ scope:attacker = { remove_character_flag = vkw_rebellion var:vkw_rebel_title = { set_landless_title = no } }
+ vkw_grievance_change = { VALUE = -15 }
+ }
+ on_defeat = { scope:defender = { add_prestige = 100 } scope:attacker = { destroy_title = var:vkw_rebel_title remove_character_flag = vkw_rebellion } } on_white_peace = { scope:attacker = { destroy_title = var:vkw_rebel_title remove_character_flag = vkw_rebellion } } on_invalidated = { scope:attacker = { if = { limit = { exists = var:vkw_rebel_title } destroy_title = var:vkw_rebel_title } remove_character_flag = vkw_rebellion } } on_invalidated_desc = { desc = vkw_native_peace } on_primary_attacker_death = invalidate on_primary_defender_death = inherit
+ war_name = vkw_native_revolt_name war_name_base = vkw_native_revolt_name cb_name = vkw_native_revolt_name
+
+}

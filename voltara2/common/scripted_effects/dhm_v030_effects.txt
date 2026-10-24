@@ -1,0 +1,452 @@
+﻿# =============================================================================
+# Dynasty & Household Manager v0.3.0 — profile, lifecycle and planning effects
+# =============================================================================
+
+dhm_clear_profile_automation_effect = {
+	remove_character_flag = dhm_profile_full_auto
+	remove_character_flag = dhm_profile_ask
+	remove_character_flag = dhm_profile_manual
+	remove_character_flag = dhm_profile_do_not_marry
+}
+
+dhm_clear_profile_strategy_effect = {
+	remove_character_flag = dhm_strategy_dynasty
+	remove_character_flag = dhm_strategy_alliance
+	remove_character_flag = dhm_strategy_claims
+	remove_character_flag = dhm_strategy_bloodline
+	remove_character_flag = dhm_strategy_compatibility
+	remove_character_flag = dhm_strategy_same_faith
+	remove_character_flag = dhm_strategy_same_culture
+	remove_character_flag = dhm_strategy_grand_wedding
+}
+
+dhm_clear_primary_strategy_effect = {
+	remove_character_flag = dhm_strategy_dynasty
+	remove_character_flag = dhm_strategy_alliance
+	remove_character_flag = dhm_strategy_claims
+	remove_character_flag = dhm_strategy_bloodline
+	remove_character_flag = dhm_strategy_compatibility
+}
+
+dhm_clear_career_plan_effect = {
+	remove_character_flag = dhm_career_diplomat
+	remove_character_flag = dhm_career_commander
+	remove_character_flag = dhm_career_steward
+	remove_character_flag = dhm_career_spymaster
+	remove_character_flag = dhm_career_scholar
+	remove_character_flag = dhm_career_physician
+	remove_character_flag = dhm_career_court_officer
+	dhm_v080_clear_career_plan_progress_effect = yes
+}
+
+dhm_clear_child_plan_effect = {
+	remove_character_flag = dhm_child_plan_diplomacy
+	remove_character_flag = dhm_child_plan_martial
+	remove_character_flag = dhm_child_plan_stewardship
+	remove_character_flag = dhm_child_plan_intrigue
+	remove_character_flag = dhm_child_plan_learning
+	dhm_v080_clear_child_plan_outcome_effect = yes
+}
+
+# Clear only a proposal/handoff. Existing arranged marriages remain tracked.
+dhm_clear_pending_arranged_union_state_effect = {
+	remove_character_flag = dhm_arranged_union_pending
+	remove_character_flag = dhm_awaiting_native_marriage
+	remove_character_flag = dhm_matchmaking_proposal_pending
+	remove_variable = dhm074_proposal_id
+	remove_variable = dhm074_proposal_candidate
+	remove_variable = dhm074_proposal_manager
+	remove_variable = dhm_arranged_union_spouse
+	if = {
+		limit = { NOT = { any_relation = { type = dhm_arranged_spouse always = yes } } }
+		remove_variable = dhm_arranging_manager
+	}
+}
+
+# Reconcile generic compatibility/follow-up flags after one exact arranged
+# spouse relation ends. Other polygamous arranged unions are preserved.
+dhm_reconcile_arranged_union_state_effect = {
+	if = {
+		limit = { NOT = { any_relation = { type = dhm_arranged_spouse always = yes } } }
+		remove_character_flag = dhm_arranged_union_active
+		remove_character_flag = dhm_first_child_followup_pending
+		if = {
+			limit = {
+				NOR = {
+					has_character_flag = dhm_arranged_union_pending
+					has_character_flag = dhm_awaiting_native_marriage
+				}
+			}
+			remove_variable = dhm_arranging_manager
+			remove_variable = dhm_arranged_union_spouse
+		}
+	}
+}
+
+# Current scope = child. Uses the actual education focus selected by vanilla.
+dhm_assign_default_child_plan_effect = {
+	dhm_clear_child_plan_effect = yes
+	if = { limit = { has_focus = education_diplomacy } add_character_flag = dhm_child_plan_diplomacy }
+	else_if = { limit = { has_focus = education_martial } add_character_flag = dhm_child_plan_martial }
+	else_if = { limit = { has_focus = education_stewardship } add_character_flag = dhm_child_plan_stewardship }
+	else_if = { limit = { has_focus = education_intrigue } add_character_flag = dhm_child_plan_intrigue }
+	else_if = { limit = { has_focus = education_learning } add_character_flag = dhm_child_plan_learning }
+}
+
+# Current scope = child; manager scope required. A manual re-evaluation removes
+# only DHM's secondary Tutor relation and immediately searches the same court.
+dhm_force_reselect_tutor_effect = {
+	save_scope_as = dhm_child
+	if = {
+		limit = { is_in_the_same_court_as = scope:dhm_manager }
+		every_relation = {
+			type = dhm_specialist_tutor
+			save_scope_as = dhm_previous_tutor
+			scope:dhm_child = { remove_relation_dhm_specialist_tutor = scope:dhm_previous_tutor }
+		}
+		dhm_try_assign_tutor_effect = yes
+	}
+}
+
+# Current scope = marriage subject; candidate + manager scopes required.
+dhm_mark_arranged_union_pending_effect = {
+	set_variable = {
+		name = dhm_arranging_manager
+		value = scope:dhm_manager
+	}
+	set_variable = {
+		name = dhm_arranged_union_spouse
+		value = scope:dhm_marriage_candidate
+	}
+	add_character_flag = {
+		flag = dhm_arranged_union_pending
+		years = 10
+	}
+}
+
+# Current scope = marriage subject. Exceptional consent, settlement and Grand
+# Wedding cases become visible; routine legal matches stay fully automatic.
+dhm_route_family_match_effect = {
+	save_scope_as = dhm_marriage_subject
+
+	if = {
+		limit = {
+			has_character_flag = dhm_strategy_grand_wedding
+			scope:dhm_manager = {
+				has_dlc_feature = tours_and_tournaments
+				has_dlc_feature = advanced_activities
+				highest_held_title_tier > tier_barony
+				is_landed_or_landless_administrative = yes
+			}
+		}
+		dhm_v074_mark_proposal_effect = yes
+		scope:dhm_manager = { trigger_event = dhm_marriage.0120 }
+	}
+	else_if = {
+		limit = { dhm_subject_requires_consent_event_trigger = yes }
+		dhm_v074_mark_proposal_effect = yes
+		scope:dhm_manager = { trigger_event = dhm_marriage.0110 }
+	}
+	else_if = {
+		limit = {
+			scope:dhm_marriage_candidate = {
+				dhm_foreign_negotiation_required_trigger = yes
+			}
+		}
+		dhm_v074_mark_proposal_effect = yes
+		scope:dhm_manager = { trigger_event = dhm_marriage.0130 }
+	}
+	else = {
+		dhm_v060_begin_match_effect = yes
+	}
+}
+
+# Called from on_marriage. Root is the major partner; scope:spouse the minor.
+dhm_register_arranged_union_effect = {
+	if = {
+		limit = {
+			OR = {
+				has_character_flag = dhm_arranged_union_pending
+				has_character_flag = dhm_awaiting_native_marriage
+			}
+		}
+		save_scope_as = dhm_union_subject
+		scope:spouse = { save_scope_as = dhm_union_spouse }
+	}
+	else = {
+		scope:spouse = { save_scope_as = dhm_union_subject }
+		save_scope_as = dhm_union_spouse
+	}
+
+	if = {
+		limit = {
+			exists = scope:dhm_union_subject
+			exists = scope:dhm_union_spouse
+			scope:dhm_union_subject = { has_variable = dhm_arranging_manager }
+		}
+		scope:dhm_union_subject.var:dhm_arranging_manager ?= { save_scope_as = dhm_manager }
+		if = {
+			limit = {
+				exists = scope:dhm_manager
+				scope:dhm_manager = { is_alive = yes is_ai = no }
+			}
+			scope:dhm_union_subject = {
+				add_character_flag = dhm_arranged_union_active
+				add_character_flag = dhm_first_child_followup_pending
+				set_relation_dhm_arranged_spouse = scope:dhm_union_spouse
+				create_character_memory = {
+					type = dhm_household_arranged_marriage_memory
+					participants = { spouse = scope:dhm_union_spouse }
+				}
+			}
+			scope:dhm_union_spouse = {
+				add_character_flag = dhm_arranged_union_active
+				add_character_flag = dhm_first_child_followup_pending
+				set_variable = { name = dhm_arranging_manager value = scope:dhm_manager }
+				create_character_memory = {
+					type = dhm_household_arranged_marriage_memory
+					participants = { spouse = scope:dhm_union_subject }
+				}
+			}
+			scope:dhm_manager = {
+				if = {
+					limit = { scope:dhm_union_subject = { has_character_flag = dhm_v060_courtship_completed } }
+					scope:dhm_union_subject = { add_character_flag = { flag = dhm_marriage_matter_recent years = 3 } }
+					scope:dhm_union_spouse = { add_character_flag = { flag = dhm_marriage_matter_recent years = 3 } }
+					add_character_flag = { flag = dhm_v080_visible_followup_pending days = 45 }
+					trigger_event = { id = dhm_saga.5020 days = { 10 25 } }
+				}
+				else_if = {
+					limit = { NOT = { has_global_variable = dhm_setting_marriage_stories_off } }
+					# Without a connected courtship, one silent assessor may open a
+					# first-year window only for an actual issue.
+					trigger_event = { id = dhm_marriage.0295 months = { 6 18 } }
+				}
+			}
+		}
+		scope:dhm_union_subject = {
+			remove_character_flag = dhm_v060_courtship_completed
+			remove_character_flag = dhm_arranged_union_pending
+			remove_character_flag = dhm_awaiting_native_marriage
+			remove_character_flag = dhm_matchmaking_proposal_pending
+			remove_variable = dhm074_proposal_id
+			remove_variable = dhm074_proposal_candidate
+			remove_variable = dhm074_proposal_manager
+			remove_variable = dhm_arranged_union_spouse
+		}
+		scope:dhm_union_spouse = { remove_character_flag = dhm_v060_courtship_completed }
+	}
+}
+
+# Current scope = newborn. Uses standard on_birth_child parent scopes.
+dhm_first_child_union_followup_effect = {
+	if = {
+		limit = {
+			exists = scope:mother
+			exists = scope:father
+			scope:mother = {
+				has_character_flag = dhm_first_child_followup_pending
+				any_relation = { type = dhm_arranged_spouse this = scope:father }
+			}
+			scope:father = {
+				has_character_flag = dhm_arranged_union_active
+				any_relation = { type = dhm_arranged_spouse this = scope:mother }
+			}
+		}
+		scope:mother = { save_scope_as = dhm_union_subject }
+		scope:father = { save_scope_as = dhm_union_spouse }
+	}
+	else_if = {
+		limit = {
+			exists = scope:mother
+			exists = scope:father
+			scope:father = {
+				has_character_flag = dhm_first_child_followup_pending
+				any_relation = { type = dhm_arranged_spouse this = scope:mother }
+			}
+			scope:mother = {
+				has_character_flag = dhm_arranged_union_active
+				any_relation = { type = dhm_arranged_spouse this = scope:father }
+			}
+		}
+		scope:father = { save_scope_as = dhm_union_subject }
+		scope:mother = { save_scope_as = dhm_union_spouse }
+	}
+
+	if = {
+		limit = {
+			exists = scope:dhm_union_subject
+			exists = scope:dhm_union_spouse
+			scope:dhm_union_subject = { has_variable = dhm_arranging_manager }
+		}
+		save_scope_as = dhm_union_child
+		scope:dhm_union_subject.var:dhm_arranging_manager ?= { save_scope_as = dhm_manager }
+		scope:dhm_union_subject = {
+			remove_character_flag = dhm_first_child_followup_pending
+			create_character_memory = {
+				type = dhm_first_child_of_union_memory
+				participants = { spouse = scope:dhm_union_spouse child = scope:dhm_union_child }
+			}
+		}
+		scope:dhm_union_spouse = {
+			remove_character_flag = dhm_first_child_followup_pending
+			create_character_memory = {
+				type = dhm_first_child_of_union_memory
+				participants = { spouse = scope:dhm_union_subject child = scope:dhm_union_child }
+			}
+		}
+		if = {
+			limit = { exists = scope:dhm_manager scope:dhm_manager = { is_alive = yes is_ai = no } }
+			scope:dhm_manager = {
+				add_character_flag = { flag = dhm_v080_visible_followup_pending days = 30 }
+				trigger_event = { id = dhm_marriage.0320 days = { 3 10 } }
+			}
+		}
+	}
+}
+
+# Current scope = character about to die. Create only one visible household
+# notice per surviving arranged spouse; all targets are revalidated by the event.
+dhm_arranged_widowhood_effect = {
+	save_scope_as = dhm_deceased_spouse
+	every_spouse = {
+		limit = {
+			has_character_flag = dhm_arranged_union_active
+			any_relation = { type = dhm_arranged_spouse this = scope:dhm_deceased_spouse }
+		}
+		save_scope_as = dhm_surviving_spouse
+		create_character_memory = {
+			type = dhm_lost_household_spouse_memory
+			participants = { deceased_spouse = scope:dhm_deceased_spouse }
+		}
+		if = {
+			limit = {
+				has_variable = dhm_arranging_manager
+				NOT = { has_global_variable = dhm_setting_marriage_stories_off }
+			}
+			var:dhm_arranging_manager ?= { save_scope_as = dhm_manager }
+			if = {
+				limit = { exists = scope:dhm_manager scope:dhm_manager = { is_alive = yes is_ai = no } }
+				scope:dhm_deceased_spouse = { add_character_flag = { flag = dhm_arranged_widowhood_notice_scheduled days = 30 } }
+				add_character_flag = { flag = dhm_arranged_widowhood_pending years = 1 }
+				scope:dhm_manager = {
+					add_character_flag = { flag = dhm_v080_visible_followup_pending days = 30 }
+					trigger_event = { id = dhm_marriage.0330 days = { 3 10 } }
+				}
+			}
+		}
+		remove_relation_dhm_arranged_spouse = scope:dhm_deceased_spouse
+		dhm_reconcile_arranged_union_state_effect = yes
+	}
+}
+
+# Current scope = player. Build a bounded, variable-backed career dashboard.
+dhm_refresh_career_report_effect = {
+	save_scope_as = dhm_manager
+	remove_variable = dhm_career_best_diplomat
+	remove_variable = dhm_career_best_commander
+	remove_variable = dhm_career_best_steward
+	remove_variable = dhm_career_best_spymaster
+	remove_variable = dhm_career_best_scholar
+
+	ordered_courtier = {
+		limit = { is_alive = yes is_adult = yes is_imprisoned = no NOT = { has_trait = incapable } }
+		order_by = diplomacy
+		position = 0
+		check_range_bounds = no
+		save_scope_as = dhm_career_candidate
+		scope:dhm_manager = { set_variable = { name = dhm_career_best_diplomat value = scope:dhm_career_candidate } }
+	}
+	ordered_courtier = {
+		limit = {
+			is_alive = yes
+			is_adult = yes
+			is_imprisoned = no
+			can_be_knight_trigger = { ARMY_OWNER = scope:dhm_manager }
+		}
+		order_by = martial
+		position = 0
+		check_range_bounds = no
+		save_scope_as = dhm_career_candidate
+		scope:dhm_manager = { set_variable = { name = dhm_career_best_commander value = scope:dhm_career_candidate } }
+	}
+	ordered_courtier = {
+		limit = { is_alive = yes is_adult = yes is_imprisoned = no NOT = { has_trait = incapable } }
+		order_by = stewardship
+		position = 0
+		check_range_bounds = no
+		save_scope_as = dhm_career_candidate
+		scope:dhm_manager = { set_variable = { name = dhm_career_best_steward value = scope:dhm_career_candidate } }
+	}
+	ordered_courtier = {
+		limit = { is_alive = yes is_adult = yes is_imprisoned = no NOT = { has_trait = incapable } }
+		order_by = intrigue
+		position = 0
+		check_range_bounds = no
+		save_scope_as = dhm_career_candidate
+		scope:dhm_manager = { set_variable = { name = dhm_career_best_spymaster value = scope:dhm_career_candidate } }
+	}
+	ordered_courtier = {
+		limit = { is_alive = yes is_adult = yes is_imprisoned = no NOT = { has_trait = incapable } }
+		order_by = learning
+		position = 0
+		check_range_bounds = no
+		save_scope_as = dhm_career_candidate
+		scope:dhm_manager = { set_variable = { name = dhm_career_best_scholar value = scope:dhm_career_candidate } }
+	}
+	dhm_v080_refresh_personal_plan_report_effect = yes
+}
+
+# Current scope = player. Extinction risk and profile counts are family/court-only.
+dhm_refresh_v030_dashboard_effect = {
+	save_scope_as = dhm_manager
+	set_variable = { name = dhm_report_profiled value = 0 }
+	set_variable = { name = dhm_report_extinction_risk value = 0 }
+	set_variable = { name = dhm_report_children_planned value = 0 }
+
+	every_close_family_member = {
+		limit = { is_alive = yes }
+		if = {
+			limit = {
+				OR = {
+					has_character_flag = dhm_profile_full_auto
+					has_character_flag = dhm_profile_ask
+					has_character_flag = dhm_profile_manual
+					has_character_flag = dhm_profile_do_not_marry
+					has_character_flag = dhm_strategy_dynasty
+					has_character_flag = dhm_strategy_alliance
+					has_character_flag = dhm_strategy_claims
+					has_character_flag = dhm_strategy_bloodline
+					has_character_flag = dhm_strategy_compatibility
+					has_character_flag = dhm_strategy_same_faith
+					has_character_flag = dhm_strategy_same_culture
+					has_character_flag = dhm_strategy_grand_wedding
+				}
+			}
+			scope:dhm_manager = { change_variable = { name = dhm_report_profiled add = 1 } }
+		}
+		if = {
+			limit = { age >= 30 is_married = no NOT = { any_child = { is_alive = yes } } }
+			scope:dhm_manager = { change_variable = { name = dhm_report_extinction_risk add = 1 } }
+		}
+		if = {
+			limit = { age < 16 dhm_has_child_development_plan_trigger = yes }
+			scope:dhm_manager = { change_variable = { name = dhm_report_children_planned add = 1 } }
+		}
+	}
+
+	dhm_refresh_career_report_effect = yes
+}
+
+# One-time save-compatible migration. Existing global settings, relationships,
+# cooldowns and report state are deliberately preserved.
+dhm_v030_migration_effect = {
+	set_global_variable = { name = dhm_migration_0300 value = yes }
+	remove_variable = dhm_report_manual_example
+	remove_variable = dhm_report_ready_example
+	remove_variable = dhm_report_outside_example
+	remove_variable = dhm_report_unavailable_example
+	remove_variable = dhm_report_authority_example
+	remove_variable = dhm_report_cooldown_example
+	remove_variable = dhm_report_no_candidate_example
+}

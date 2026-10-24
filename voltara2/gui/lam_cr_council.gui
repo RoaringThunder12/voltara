@@ -1,0 +1,1054 @@
+﻿# Living Factions - the faction council chamber (tools/claude_fixes/council_ui.py)
+window = {
+	name = "lam_cr_council_window"
+	parentanchor = center
+	layer = middle
+	size = {
+		1140
+		900
+	}
+	movable = yes
+	visible = "[And( GetPlayer.IsValid, GetPlayer.MakeScope.Var('lam_cr_view').IsSet )]"
+	datacontext = "[GetPlayer.MakeScope.Var('lam_cr_view').Char]"
+	using = Window_Background
+	using = Window_Decoration
+	vbox = {
+		using = Window_Margins
+		background = {
+			using = Background_Area_Dark
+		}
+		header_pattern = {
+			layoutpolicy_horizontal = expanding
+			blockoverride
+			"header_text"
+			  {
+				text = "lam_cv_title"
+			}
+			blockoverride
+			"button_close"
+			  {
+				onclick = "[GetScriptedGui('lam_cv_close').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+			}
+		}
+		scrollbox = {
+			size = {
+				1110
+				800
+			}
+			blockoverride
+			"scrollbox_content"
+			  {
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					spacing = 8
+					vbox = {
+						visible = "[GetScriptedGui('lam_cv_call_any').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						margin = {
+							12
+							10
+						}
+						spacing = 8
+						background = {
+							using = Background_Area
+						}
+						text_single = {
+							text = "lam_cv_call_title"
+							fontsize = 18
+							fontsize_min = 15
+							max_width = 1040
+							align = left|nobaseline
+						}
+						hbox = {
+							spacing = 10
+							button_standard = {
+								size = {
+									164
+									40
+								}
+								text = "lam_cv_menu_posture"
+								tooltip = "[SelectLocalization( GetScriptedGui('lam_cv_menu_posture').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), 'lam_cv_menu_posture_tt', GetScriptedGui('lam_cv_menu_posture').IsValidTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ) )]"
+								visible = "[GetScriptedGui('lam_cv_menu_posture').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_cv_menu_posture').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_cv_menu_posture').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							button_standard = {
+								size = {
+									164
+									40
+								}
+								text = "lam_cv_menu_goal"
+								tooltip = "[SelectLocalization( GetScriptedGui('lam_cv_menu_goal').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), 'lam_cv_menu_goal_tt', GetScriptedGui('lam_cv_menu_goal').IsValidTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ) )]"
+								visible = "[GetScriptedGui('lam_cv_menu_goal').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_cv_menu_goal').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_cv_menu_goal').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							button_standard = {
+								size = {
+									164
+									40
+								}
+								text = "lam_cv_menu_seat"
+								tooltip = "[SelectLocalization( GetScriptedGui('lam_cv_menu_seat').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), 'lam_cv_menu_seat_tt', GetScriptedGui('lam_cv_menu_seat').IsValidTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ) )]"
+								visible = "[GetScriptedGui('lam_cv_menu_seat').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_cv_menu_seat').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_cv_menu_seat').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetPlayer.GetLiege.OpenPlayerInteraction( 'lam_cv_seat_interaction' )]"
+							}
+							button_standard = {
+								size = {
+									164
+									40
+								}
+								text = "lam_cv_menu_heir"
+								tooltip = "[SelectLocalization( GetScriptedGui('lam_cv_menu_heir').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), 'lam_cv_menu_heir_tt', GetScriptedGui('lam_cv_menu_heir').IsValidTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ) )]"
+								visible = "[GetScriptedGui('lam_cv_menu_heir').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_cv_menu_heir').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_cv_menu_heir').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetPlayer.GetLiege.OpenPlayerInteraction( 'lam_cv_heir_interaction' )]"
+							}
+							button_standard = {
+								size = {
+									164
+									40
+								}
+								text = "lam_cv_menu_stance"
+								tooltip = "[SelectLocalization( GetScriptedGui('lam_cv_menu_stance').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), 'lam_cv_menu_stance_tt', GetScriptedGui('lam_cv_menu_stance').IsValidTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ) )]"
+								visible = "[GetScriptedGui('lam_cv_menu_stance').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_cv_menu_stance').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_cv_menu_stance').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							button_standard = {
+								size = {
+									164
+									40
+								}
+								text = "lam_cv_menu_rise"
+								tooltip = "[SelectLocalization( GetScriptedGui('lam_cv_menu_rise').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), 'lam_cv_menu_rise_tt', GetScriptedGui('lam_cv_menu_rise').IsValidTooltip( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ) )]"
+								visible = "[GetScriptedGui('lam_cv_menu_rise').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_cv_menu_rise').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_cv_menu_rise').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							expand = {}
+						}
+					}
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						margin = {
+							12
+							6
+						}
+						spacing = 14
+						vbox = {
+							layoutpolicy_horizontal = expanding
+							spacing = 4
+							text_single = {
+								text = "lam_cv_head"
+								fontsize = 15
+								fontsize_min = 12
+								max_width = 860
+								align = left|nobaseline
+								minimumsize = {
+									860
+									0
+								}
+							}
+							text_multi = {
+								text = "[Character.Custom('LamCvAgenda')]"
+								autoresize = yes
+								max_width = 860
+								minimumsize = {
+									860
+									-1
+								}
+								fontsize = 17
+								fontsize_min = 14
+							}
+						}
+						expand = {}
+						vbox = {
+							visible = "[And( Character.MakeScope.Var('lam_cr_target').IsSet, Not( ObjectsEqual( Character.MakeScope.Var('lam_cr_target').Char, GetPlayer.MakeScope.Var('lam_cr_view').Char ) ) )]"
+							spacing = 2
+							text_single = {
+								text = "lam_cv_target"
+								fontsize = 13
+								fontsize_min = 10
+								max_width = 200
+								align = center|nobaseline
+							}
+							widget = {
+								size = {
+									100
+									100
+								}
+								datacontext = "[GetPlayer.MakeScope.Var('lam_cr_view').Char.MakeScope.Var('lam_cr_target').Char]"
+								portrait_head_small = {}
+							}
+							text_single = {
+								datacontext = "[GetPlayer.MakeScope.Var('lam_cr_view').Char.MakeScope.Var('lam_cr_target').Char]"
+								text = "lam_cr_person_name"
+								fontsize = 14
+								fontsize_min = 11
+								max_width = 200
+								align = center|nobaseline
+							}
+						}
+					}
+					vbox = {
+						visible = "[Character.MakeScope.Var('lam_cr_active').IsSet]"
+						layoutpolicy_horizontal = expanding
+						margin = {
+							12
+							4
+						}
+						spacing = 8
+						progressbar_standard = {
+							size = {
+								1060
+								14
+							}
+							min = 0
+							max = 100
+							value = "[Character.MakeScope.ScriptValue('lam_cr_yes_pct_value')]"
+						}
+						text_single = {
+							text = "lam_cv2_tally"
+							fontsize = 15
+							fontsize_min = 12
+							max_width = 1060
+							align = left|nobaseline
+						}
+						hbox = {
+							spacing = 8
+							button_standard = {
+								size = {
+									150
+									30
+								}
+								text = "lam_cv_vote_yes"
+								tooltip = "lam_cv_vote_tt"
+								visible = "[GetScriptedGui('lam_cv_vote_yes').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_cv_vote_yes').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_cv_vote_yes').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							button_standard = {
+								size = {
+									150
+									30
+								}
+								text = "lam_cv_vote_no"
+								tooltip = "lam_cv_vote_tt"
+								visible = "[GetScriptedGui('lam_cv_vote_no').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_cv_vote_no').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_cv_vote_no').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							button_standard = {
+								size = {
+									150
+									30
+								}
+								text = "lam_cv_vote_abstain"
+								tooltip = "lam_cv_vote_tt"
+								visible = "[GetScriptedGui('lam_cv_vote_abstain').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_cv_vote_abstain').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_cv_vote_abstain').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							button_standard = {
+								size = {
+									170
+									30
+								}
+								text = "lam_cv_finish"
+								tooltip = "lam_cv_finish_tt"
+								visible = "[GetScriptedGui('lam_cv_finish').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('lam_cv_finish').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+								onclick = "[GetScriptedGui('lam_cv_finish').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+							}
+							expand = {}
+						}
+						hbox = {
+							spacing = 8
+							vbox = {
+								spacing = 4
+								button_standard = {
+									size = {
+										258
+										30
+									}
+									text = "lam_cv2_col_yes"
+									tooltip = "lam_cv2_fold_tt"
+									onclick = "[GetScriptedGui('lam_cv_fold_yes').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								}
+								scrollbox = {
+									size = {
+										262
+										330
+									}
+									blockoverride
+									"scrollbox_content"
+									  {
+										vbox = {
+											layoutpolicy_horizontal = expanding
+											spacing = 3
+											ignoreinvisible = yes
+											datamodel = "[Character.MakeScope.GetList('lam_cr_voters')]"
+											item = {
+												widget = {
+													datacontext = "[Scope.Char]"
+													size = {
+														246
+														74
+													}
+													visible = "[And( GetScriptedGui('lam_cv_col_yes').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), Not( GetPlayer.MakeScope.Var('lam_cv_fold_yes').IsSet ) )]"
+													background = {
+														using = Background_Area
+													}
+													hbox = {
+														margin = {
+															4
+															4
+														}
+														spacing = 6
+														widget = {
+															size = {
+																44
+																48
+															}
+															portrait_button = {
+																size = {
+																	44
+																	48
+																}
+																using = portrait_base
+																portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+																mask = "gfx/portraits/portrait_mask_head_small.dds"
+																effectname = "NoHighlight"
+																onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+																tooltip = "[Character.GetName]"
+																onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+															}
+														}
+														vbox = {
+															layoutpolicy_horizontal = expanding
+															spacing = 1
+															text_single = {
+																text = "lam_cv2_row"
+																fontsize = 14
+																fontsize_min = 11
+																max_width = 180
+																align = left|nobaseline
+															}
+															text_single = {
+																text = "[Character.Custom('LamCv2Why')]"
+																fontsize = 13
+																fontsize_min = 10
+																max_width = 180
+																align = left|nobaseline
+																tooltip = "lam_cv_why"
+															}
+															button_standard = {
+																size = {
+																	90
+																	24
+																}
+																text = "lam_cv_sway"
+																tooltip = "lam_cv_sway_tt"
+																visible = "[And( GetScriptedGui('lam_cv_sway').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), GetScriptedGui('lam_cv_sway').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ) )]"
+																enabled = "[GetScriptedGui('lam_cv_sway').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+																onclick = "[GetScriptedGui('lam_cv_sway').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+															}
+															expand = {}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							vbox = {
+								spacing = 4
+								button_standard = {
+									size = {
+										258
+										30
+									}
+									text = "lam_cv2_col_no"
+									tooltip = "lam_cv2_fold_tt"
+									onclick = "[GetScriptedGui('lam_cv_fold_no').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								}
+								scrollbox = {
+									size = {
+										262
+										330
+									}
+									blockoverride
+									"scrollbox_content"
+									  {
+										vbox = {
+											layoutpolicy_horizontal = expanding
+											spacing = 3
+											ignoreinvisible = yes
+											datamodel = "[Character.MakeScope.GetList('lam_cr_voters')]"
+											item = {
+												widget = {
+													datacontext = "[Scope.Char]"
+													size = {
+														246
+														74
+													}
+													visible = "[And( GetScriptedGui('lam_cv_col_no').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), Not( GetPlayer.MakeScope.Var('lam_cv_fold_no').IsSet ) )]"
+													background = {
+														using = Background_Area
+													}
+													hbox = {
+														margin = {
+															4
+															4
+														}
+														spacing = 6
+														widget = {
+															size = {
+																44
+																48
+															}
+															portrait_button = {
+																size = {
+																	44
+																	48
+																}
+																using = portrait_base
+																portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+																mask = "gfx/portraits/portrait_mask_head_small.dds"
+																effectname = "NoHighlight"
+																onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+																tooltip = "[Character.GetName]"
+																onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+															}
+														}
+														vbox = {
+															layoutpolicy_horizontal = expanding
+															spacing = 1
+															text_single = {
+																text = "lam_cv2_row"
+																fontsize = 14
+																fontsize_min = 11
+																max_width = 180
+																align = left|nobaseline
+															}
+															text_single = {
+																text = "[Character.Custom('LamCv2Why')]"
+																fontsize = 13
+																fontsize_min = 10
+																max_width = 180
+																align = left|nobaseline
+																tooltip = "lam_cv_why"
+															}
+															button_standard = {
+																size = {
+																	90
+																	24
+																}
+																text = "lam_cv_sway"
+																tooltip = "lam_cv_sway_tt"
+																visible = "[And( GetScriptedGui('lam_cv_sway').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), GetScriptedGui('lam_cv_sway').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ) )]"
+																enabled = "[GetScriptedGui('lam_cv_sway').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+																onclick = "[GetScriptedGui('lam_cv_sway').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+															}
+															expand = {}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							vbox = {
+								spacing = 4
+								button_standard = {
+									size = {
+										258
+										30
+									}
+									text = "lam_cv2_col_abstain"
+									tooltip = "lam_cv2_fold_tt"
+									onclick = "[GetScriptedGui('lam_cv_fold_abstain').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								}
+								scrollbox = {
+									size = {
+										262
+										330
+									}
+									blockoverride
+									"scrollbox_content"
+									  {
+										vbox = {
+											layoutpolicy_horizontal = expanding
+											spacing = 3
+											ignoreinvisible = yes
+											datamodel = "[Character.MakeScope.GetList('lam_cr_voters')]"
+											item = {
+												widget = {
+													datacontext = "[Scope.Char]"
+													size = {
+														246
+														74
+													}
+													visible = "[And( GetScriptedGui('lam_cv_col_abstain').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), Not( GetPlayer.MakeScope.Var('lam_cv_fold_abstain').IsSet ) )]"
+													background = {
+														using = Background_Area
+													}
+													hbox = {
+														margin = {
+															4
+															4
+														}
+														spacing = 6
+														widget = {
+															size = {
+																44
+																48
+															}
+															portrait_button = {
+																size = {
+																	44
+																	48
+																}
+																using = portrait_base
+																portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+																mask = "gfx/portraits/portrait_mask_head_small.dds"
+																effectname = "NoHighlight"
+																onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+																tooltip = "[Character.GetName]"
+																onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+															}
+														}
+														vbox = {
+															layoutpolicy_horizontal = expanding
+															spacing = 1
+															text_single = {
+																text = "lam_cv2_row"
+																fontsize = 14
+																fontsize_min = 11
+																max_width = 180
+																align = left|nobaseline
+															}
+															text_single = {
+																text = "[Character.Custom('LamCv2Why')]"
+																fontsize = 13
+																fontsize_min = 10
+																max_width = 180
+																align = left|nobaseline
+																tooltip = "lam_cv_why"
+															}
+															button_standard = {
+																size = {
+																	90
+																	24
+																}
+																text = "lam_cv_sway"
+																tooltip = "lam_cv_sway_tt"
+																visible = "[And( GetScriptedGui('lam_cv_sway').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), GetScriptedGui('lam_cv_sway').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ) )]"
+																enabled = "[GetScriptedGui('lam_cv_sway').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+																onclick = "[GetScriptedGui('lam_cv_sway').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+															}
+															expand = {}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							vbox = {
+								spacing = 4
+								button_standard = {
+									size = {
+										258
+										30
+									}
+									text = "lam_cv2_col_pending"
+									tooltip = "lam_cv2_fold_tt"
+									onclick = "[GetScriptedGui('lam_cv_fold_pending').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								}
+								scrollbox = {
+									size = {
+										262
+										330
+									}
+									blockoverride
+									"scrollbox_content"
+									  {
+										vbox = {
+											layoutpolicy_horizontal = expanding
+											spacing = 3
+											ignoreinvisible = yes
+											datamodel = "[Character.MakeScope.GetList('lam_cr_voters')]"
+											item = {
+												widget = {
+													datacontext = "[Scope.Char]"
+													size = {
+														246
+														74
+													}
+													visible = "[And( GetScriptedGui('lam_cv_col_pending').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), Not( GetPlayer.MakeScope.Var('lam_cv_fold_pending').IsSet ) )]"
+													background = {
+														using = Background_Area
+													}
+													hbox = {
+														margin = {
+															4
+															4
+														}
+														spacing = 6
+														widget = {
+															size = {
+																44
+																48
+															}
+															portrait_button = {
+																size = {
+																	44
+																	48
+																}
+																using = portrait_base
+																portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+																mask = "gfx/portraits/portrait_mask_head_small.dds"
+																effectname = "NoHighlight"
+																onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+																tooltip = "[Character.GetName]"
+																onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+															}
+														}
+														vbox = {
+															layoutpolicy_horizontal = expanding
+															spacing = 1
+															text_single = {
+																text = "lam_cv2_row"
+																fontsize = 14
+																fontsize_min = 11
+																max_width = 180
+																align = left|nobaseline
+															}
+															text_single = {
+																text = "[Character.Custom('LamCv2Why')]"
+																fontsize = 13
+																fontsize_min = 10
+																max_width = 180
+																align = left|nobaseline
+																tooltip = "lam_cv_why"
+															}
+															button_standard = {
+																size = {
+																	90
+																	24
+																}
+																text = "lam_cv_sway"
+																tooltip = "lam_cv_sway_tt"
+																visible = "[And( GetScriptedGui('lam_cv_sway').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), GetScriptedGui('lam_cv_sway').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ) )]"
+																enabled = "[GetScriptedGui('lam_cv_sway').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+																onclick = "[GetScriptedGui('lam_cv_sway').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End )]"
+															}
+															expand = {}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							expand = {}
+						}
+					}
+					vbox = {
+						visible = "[And( Not( Character.MakeScope.Var('lam_cr_active').IsSet ), Character.MakeScope.Var('lam_cr_last_total').IsSet )]"
+						layoutpolicy_horizontal = expanding
+						margin = {
+							12
+							4
+						}
+						spacing = 8
+						progressbar_standard = {
+							size = {
+								1060
+								14
+							}
+							min = 0
+							max = 100
+							value = "[Character.MakeScope.ScriptValue('lam_cv2_last_yes_pct_value')]"
+						}
+						text_single = {
+							text = "lam_cv2_ltally"
+							fontsize = 15
+							fontsize_min = 12
+							max_width = 1060
+							align = left|nobaseline
+						}
+						hbox = {
+							spacing = 8
+							vbox = {
+								spacing = 4
+								button_standard = {
+									size = {
+										258
+										30
+									}
+									text = "lam_cv2_lcol_yes"
+									tooltip = "lam_cv2_fold_tt"
+									onclick = "[GetScriptedGui('lam_cv_lopen_yes').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								}
+								scrollbox = {
+									size = {
+										262
+										230
+									}
+									blockoverride
+									"scrollbox_content"
+									  {
+										vbox = {
+											layoutpolicy_horizontal = expanding
+											spacing = 3
+											ignoreinvisible = yes
+											datamodel = "[Character.MakeScope.GetList('lam_cv_last')]"
+											item = {
+												widget = {
+													datacontext = "[Scope.Char]"
+													size = {
+														246
+														56
+													}
+													visible = "[And( GetScriptedGui('lam_cv_lcol_yes').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), Not( GetPlayer.MakeScope.Var('lam_cv_fold_last_yes').IsSet ) )]"
+													background = {
+														using = Background_Area
+													}
+													hbox = {
+														margin = {
+															4
+															4
+														}
+														spacing = 6
+														widget = {
+															size = {
+																44
+																48
+															}
+															portrait_button = {
+																size = {
+																	44
+																	48
+																}
+																using = portrait_base
+																portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+																mask = "gfx/portraits/portrait_mask_head_small.dds"
+																effectname = "NoHighlight"
+																onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+																tooltip = "[Character.GetName]"
+																onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+															}
+														}
+														vbox = {
+															layoutpolicy_horizontal = expanding
+															spacing = 1
+															text_single = {
+																text = "lam_cv2_lrow"
+																fontsize = 14
+																fontsize_min = 11
+																max_width = 180
+																align = left|nobaseline
+															}
+															text_single = {
+																text = "[Character.Custom('LamCv2Why')]"
+																fontsize = 13
+																fontsize_min = 10
+																max_width = 180
+																align = left|nobaseline
+																tooltip = "lam_cv_why"
+															}
+															expand = {}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							vbox = {
+								spacing = 4
+								button_standard = {
+									size = {
+										258
+										30
+									}
+									text = "lam_cv2_lcol_no"
+									tooltip = "lam_cv2_fold_tt"
+									onclick = "[GetScriptedGui('lam_cv_lopen_no').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								}
+								scrollbox = {
+									size = {
+										262
+										230
+									}
+									blockoverride
+									"scrollbox_content"
+									  {
+										vbox = {
+											layoutpolicy_horizontal = expanding
+											spacing = 3
+											ignoreinvisible = yes
+											datamodel = "[Character.MakeScope.GetList('lam_cv_last')]"
+											item = {
+												widget = {
+													datacontext = "[Scope.Char]"
+													size = {
+														246
+														56
+													}
+													visible = "[And( GetScriptedGui('lam_cv_lcol_no').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), Not( GetPlayer.MakeScope.Var('lam_cv_fold_last_no').IsSet ) )]"
+													background = {
+														using = Background_Area
+													}
+													hbox = {
+														margin = {
+															4
+															4
+														}
+														spacing = 6
+														widget = {
+															size = {
+																44
+																48
+															}
+															portrait_button = {
+																size = {
+																	44
+																	48
+																}
+																using = portrait_base
+																portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+																mask = "gfx/portraits/portrait_mask_head_small.dds"
+																effectname = "NoHighlight"
+																onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+																tooltip = "[Character.GetName]"
+																onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+															}
+														}
+														vbox = {
+															layoutpolicy_horizontal = expanding
+															spacing = 1
+															text_single = {
+																text = "lam_cv2_lrow"
+																fontsize = 14
+																fontsize_min = 11
+																max_width = 180
+																align = left|nobaseline
+															}
+															text_single = {
+																text = "[Character.Custom('LamCv2Why')]"
+																fontsize = 13
+																fontsize_min = 10
+																max_width = 180
+																align = left|nobaseline
+																tooltip = "lam_cv_why"
+															}
+															expand = {}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							vbox = {
+								spacing = 4
+								button_standard = {
+									size = {
+										258
+										30
+									}
+									text = "lam_cv2_lcol_abstain"
+									tooltip = "lam_cv2_fold_tt"
+									onclick = "[GetScriptedGui('lam_cv_lopen_abstain').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								}
+								scrollbox = {
+									size = {
+										262
+										230
+									}
+									blockoverride
+									"scrollbox_content"
+									  {
+										vbox = {
+											layoutpolicy_horizontal = expanding
+											spacing = 3
+											ignoreinvisible = yes
+											datamodel = "[Character.MakeScope.GetList('lam_cv_last')]"
+											item = {
+												widget = {
+													datacontext = "[Scope.Char]"
+													size = {
+														246
+														56
+													}
+													visible = "[And( GetScriptedGui('lam_cv_lcol_abstain').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), Not( GetPlayer.MakeScope.Var('lam_cv_fold_last_abstain').IsSet ) )]"
+													background = {
+														using = Background_Area
+													}
+													hbox = {
+														margin = {
+															4
+															4
+														}
+														spacing = 6
+														widget = {
+															size = {
+																44
+																48
+															}
+															portrait_button = {
+																size = {
+																	44
+																	48
+																}
+																using = portrait_base
+																portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+																mask = "gfx/portraits/portrait_mask_head_small.dds"
+																effectname = "NoHighlight"
+																onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+																tooltip = "[Character.GetName]"
+																onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+															}
+														}
+														vbox = {
+															layoutpolicy_horizontal = expanding
+															spacing = 1
+															text_single = {
+																text = "lam_cv2_lrow"
+																fontsize = 14
+																fontsize_min = 11
+																max_width = 180
+																align = left|nobaseline
+															}
+															text_single = {
+																text = "[Character.Custom('LamCv2Why')]"
+																fontsize = 13
+																fontsize_min = 10
+																max_width = 180
+																align = left|nobaseline
+																tooltip = "lam_cv_why"
+															}
+															expand = {}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							vbox = {
+								spacing = 4
+								button_standard = {
+									size = {
+										258
+										30
+									}
+									text = "lam_cv2_lcol_pending"
+									tooltip = "lam_cv2_fold_tt"
+									onclick = "[GetScriptedGui('lam_cv_lopen_pending').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								}
+								scrollbox = {
+									size = {
+										262
+										230
+									}
+									blockoverride
+									"scrollbox_content"
+									  {
+										vbox = {
+											layoutpolicy_horizontal = expanding
+											spacing = 3
+											ignoreinvisible = yes
+											datamodel = "[Character.MakeScope.GetList('lam_cv_last')]"
+											item = {
+												widget = {
+													datacontext = "[Scope.Char]"
+													size = {
+														246
+														56
+													}
+													visible = "[And( GetScriptedGui('lam_cv_lcol_pending').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'target', Character.MakeScope ).End ), Not( GetPlayer.MakeScope.Var('lam_cv_fold_last_pending').IsSet ) )]"
+													background = {
+														using = Background_Area
+													}
+													hbox = {
+														margin = {
+															4
+															4
+														}
+														spacing = 6
+														widget = {
+															size = {
+																44
+																48
+															}
+															portrait_button = {
+																size = {
+																	44
+																	48
+																}
+																using = portrait_base
+																portrait_texture = "[Character.GetPortrait('environment_head', 'camera_head', 'idle', PdxGetWidgetScreenSize(PdxGuiWidget.Self))]"
+																mask = "gfx/portraits/portrait_mask_head_small.dds"
+																effectname = "NoHighlight"
+																onclick = "[DefaultOnCharacterClick(Character.GetID)]"
+																tooltip = "[Character.GetName]"
+																onrightclick = "[DefaultOnCharacterRightClick(Character.GetID)]"
+															}
+														}
+														vbox = {
+															layoutpolicy_horizontal = expanding
+															spacing = 1
+															text_single = {
+																text = "lam_cv2_lrow"
+																fontsize = 14
+																fontsize_min = 11
+																max_width = 180
+																align = left|nobaseline
+															}
+															text_single = {
+																text = "[Character.Custom('LamCv2Why')]"
+																fontsize = 13
+																fontsize_min = 10
+																max_width = 180
+																align = left|nobaseline
+																tooltip = "lam_cv_why"
+															}
+															expand = {}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							expand = {}
+						}
+					}
+					text_single = {
+						text = "lam_cv_hint"
+						fontsize = 13
+						fontsize_min = 10
+						max_width = 1060
+						align = left|nobaseline
+					}
+				}
+			}
+		}
+	}
+}

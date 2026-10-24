@@ -1,0 +1,407 @@
+﻿# Living Factions - agendas a player head puts to the council (tools/claude_fixes/council_ui.py)
+lam_cv_call_any = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		this = scope:target
+		has_variable = lam_bloc_lead
+		var:lam_bloc ?= this
+		exists = liege
+		liege = {
+			is_target_in_variable_list = {
+				name = lam_bloc_leads
+				target = root
+			}
+		}
+		NOT = {
+			has_variable = lam_cr_active
+		}
+	}
+	effect = {
+	}
+}
+lam_cv_menu_posture = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		this = scope:target
+		has_variable = lam_bloc_lead
+		var:lam_bloc ?= this
+		exists = liege
+		liege = {
+			is_target_in_variable_list = {
+				name = lam_bloc_leads
+				target = root
+			}
+		}
+		NOT = {
+			has_variable = lam_cr_active
+		}
+
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_pt_head_available_tt
+			lam_pt_head_ready_trigger = yes
+		}
+		custom_description = {
+			text = lam_cv_committed_tt
+			NOT = {
+				lam_wc_committed_trigger = yes
+			}
+		}
+		custom_description = {
+			text = lam_fac_head_posture_cd_tt
+			NOT = {
+				has_variable = lam_fac_posture_cd
+			}
+		}
+	}
+	effect = {
+		remove_variable = lam_cr_view
+		trigger_event = lam_cv.0001
+	}
+}
+lam_cv_menu_goal = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		this = scope:target
+		has_variable = lam_bloc_lead
+		var:lam_bloc ?= this
+		exists = liege
+		liege = {
+			is_target_in_variable_list = {
+				name = lam_bloc_leads
+				target = root
+			}
+		}
+		NOT = {
+			has_variable = lam_cr_active
+		}
+
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_pt_head_available_tt
+			lam_pt_head_ready_trigger = yes
+		}
+		custom_description = {
+			text = lam_cv_committed_tt
+			NOT = {
+				lam_wc_committed_trigger = yes
+			}
+		}
+		custom_description = {
+			text = lam_cv_call_retry_tt
+			NOT = {
+				has_variable = lam_cr_retry_goal
+			}
+		}
+	}
+	effect = {
+		remove_variable = lam_cr_view
+		trigger_event = lam_cv.0002
+	}
+}
+lam_cv_menu_stance = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		this = scope:target
+		has_variable = lam_bloc_lead
+		var:lam_bloc ?= this
+		exists = liege
+		liege = {
+			is_target_in_variable_list = {
+				name = lam_bloc_leads
+				target = root
+			}
+		}
+		NOT = {
+			has_variable = lam_cr_active
+		}
+		OR = {
+			AND = {
+				liege = {
+					has_variable = lam_is_crown_open
+				}
+				var:lam_is_lk_crown_lord ?= liege
+				OR = {
+					var:lam_is_lk_crown ?= flag:x
+					var:lam_is_lk_crown ?= flag:y
+				}
+			}
+			AND = {
+				liege = {
+					has_variable = lam_is_council_open
+				}
+				var:lam_is_lk_council_lord ?= liege
+				OR = {
+					var:lam_is_lk_council ?= flag:x
+					var:lam_is_lk_council ?= flag:y
+				}
+			}
+			AND = {
+				liege = {
+					has_variable = lam_is_faith_open
+				}
+				var:lam_is_lk_faith_lord ?= liege
+				OR = {
+					var:lam_is_lk_faith ?= flag:x
+					var:lam_is_lk_faith ?= flag:y
+				}
+			}
+			AND = {
+				liege = {
+					has_variable = lam_is_tax_open
+				}
+				var:lam_is_lk_tax_lord ?= liege
+				OR = {
+					var:lam_is_lk_tax ?= flag:x
+					var:lam_is_lk_tax ?= flag:y
+				}
+			}
+			AND = {
+				liege = {
+					has_variable = lam_is_war_open
+				}
+				var:lam_is_lk_war_lord ?= liege
+				OR = {
+					var:lam_is_lk_war ?= flag:x
+					var:lam_is_lk_war ?= flag:y
+				}
+			}
+		}
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_pt_head_available_tt
+			lam_pt_head_ready_trigger = yes
+		}
+		custom_description = {
+			text = lam_cv_committed_tt
+			NOT = {
+				lam_wc_committed_trigger = yes
+			}
+		}
+		custom_description = {
+			text = lam_cv_call_retry_tt
+			NOT = {
+				has_variable = lam_cr_retry_stance
+			}
+		}
+	}
+	effect = {
+		remove_variable = lam_cr_view
+		trigger_event = lam_cv.0003
+	}
+}
+lam_cv_menu_seat = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		this = scope:target
+		has_variable = lam_bloc_lead
+		var:lam_bloc ?= this
+		exists = liege
+		liege = {
+			is_target_in_variable_list = {
+				name = lam_bloc_leads
+				target = root
+			}
+		}
+		NOT = {
+			has_variable = lam_cr_active
+		}
+
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_pt_head_available_tt
+			lam_pt_head_ready_trigger = yes
+		}
+		custom_description = {
+			text = lam_cv_committed_tt
+			NOT = {
+				lam_wc_committed_trigger = yes
+			}
+		}
+		custom_description = {
+			text = lam_cv_call_retry_tt
+			NOT = {
+				has_variable = lam_cr_retry_goal
+			}
+		}
+		custom_description = {
+			text = lam_cv_no_seat_tt
+			save_temporary_scope_as = vip_seat_head
+			any_in_list = {
+				variable = lam_fac_members
+				is_alive = yes
+				is_adult = yes
+				is_imprisoned = no
+				var:lam_bloc ?= scope:vip_seat_head
+				NOT = {
+					this = scope:vip_seat_head
+				}
+				NOT = {
+					scope:vip_seat_head = {
+						var:lam_fac_seat_pick ?= prev
+					}
+				}
+				liege ?= scope:vip_seat_head.liege
+				NOT = {
+					is_councillor_of = scope:vip_seat_head.liege
+				}
+				OR = {
+					can_be_marshal_trigger = {
+						COURT_OWNER = scope:vip_seat_head.liege
+					}
+					can_be_steward_trigger = {
+						COURT_OWNER = scope:vip_seat_head.liege
+					}
+					can_be_spymaster_trigger = {
+						COURT_OWNER = scope:vip_seat_head.liege
+					}
+					can_be_chancellor_trigger = {
+						COURT_OWNER = scope:vip_seat_head.liege
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		remove_variable = lam_cr_view
+
+	}
+}
+lam_cv_menu_heir = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		this = scope:target
+		has_variable = lam_bloc_lead
+		var:lam_bloc ?= this
+		exists = liege
+		liege = {
+			is_target_in_variable_list = {
+				name = lam_bloc_leads
+				target = root
+			}
+		}
+		NOT = {
+			has_variable = lam_cr_active
+		}
+		lam_cv_has_heir_candidate_trigger = yes
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_pt_head_available_tt
+			lam_pt_head_ready_trigger = yes
+		}
+		custom_description = {
+			text = lam_cv_committed_tt
+			NOT = {
+				lam_wc_committed_trigger = yes
+			}
+		}
+		custom_description = {
+			text = lam_fac_back_heir_locked_tt
+			NOT = {
+				has_variable = lam_fac_heir_locked
+			}
+		}
+		custom_description = {
+			text = lam_cv_call_retry_tt
+			NOT = {
+				has_variable = lam_cr_retry_heir
+			}
+		}
+	}
+	effect = {
+		remove_variable = lam_cr_view
+
+	}
+}
+lam_cv_menu_rise = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		this = scope:target
+		has_variable = lam_bloc_lead
+		var:lam_bloc ?= this
+		exists = liege
+		liege = {
+			is_target_in_variable_list = {
+				name = lam_bloc_leads
+				target = root
+			}
+		}
+		NOT = {
+			has_variable = lam_cr_active
+		}
+
+	}
+	is_valid = {
+		custom_description = {
+			text = lam_pt_head_available_tt
+			lam_pt_head_ready_trigger = yes
+		}
+		custom_description = {
+			text = lam_cv_committed_tt
+			NOT = {
+				lam_wc_committed_trigger = yes
+			}
+		}
+		NOT = {
+			exists = joined_faction
+		}
+		NOT = {
+			is_at_war_with = liege
+		}
+		custom_description = {
+			text = lam_fac_rise_cd_tt
+			NOT = {
+				has_variable = lam_fac_rebel_cd
+			}
+		}
+		custom_description = {
+			text = lam_fac_rise_cause_tt
+			lam_rv_rise_cause_trigger = yes
+		}
+		custom_description = {
+			text = lam_fac_rise_blocked_tt
+			OR = {
+				NOT = {
+					has_character_flag = joining_faction_block
+				}
+				has_variable = lam_fac_blocked
+			}
+		}
+		custom_description = {
+			text = lam_cv_call_retry_tt
+			NOT = {
+				has_variable = lam_cr_retry_rise
+			}
+		}
+	}
+	effect = {
+		remove_variable = lam_cr_view
+		trigger_event = lam_cv.0004
+	}
+}

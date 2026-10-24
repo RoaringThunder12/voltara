@@ -1,0 +1,3539 @@
+﻿# Living Factions (split from Love & Marriage).
+
+# Look into a realm's living factions (independent rulers; one's own court and liege's are in the window itself).
+lam_view_factions_interaction = {
+	category = interaction_category_diplomacy
+	common_interaction = yes
+	icon = lam_ic_terms
+	desc = lam_view_factions_interaction_desc
+	auto_accept = yes
+	ignores_pending_interaction_block = yes
+
+	is_shown = {
+		scope:actor = { is_ai = no }
+		scope:recipient = {
+			is_ruler = yes
+			any_vassal = { lam_fac_peer_trigger = yes }
+		}
+	}
+
+	on_accept = {
+		scope:actor = {
+			set_variable = { name = lam_fac_view value = scope:recipient }
+			scope:recipient = { lam_gn_book_ensure_effect = yes }
+			lam_gn_view_main_effect = yes
+			lam_factions_refresh_effect = yes
+			set_variable = { name = lam_factions_open value = yes }
+		}
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# The window of the faction this character leads or belongs to.
+lam_view_their_faction_interaction = {
+	category = interaction_category_diplomacy
+	common_interaction = yes
+	icon = lam_ic_issue
+	desc = lam_view_their_faction_interaction_desc
+	auto_accept = yes
+	ignores_pending_interaction_block = yes
+
+	is_shown = {
+		scope:actor = { is_ai = no }
+		scope:recipient = {
+			# (Only a faction seated in a court.)
+			OR = {
+				AND = { has_variable = lam_bloc_lead liege ?= { is_target_in_variable_list = { name = lam_bloc_leads target = prev } } }
+				var:lam_bloc ?= { is_alive = yes has_variable = lam_bloc_lead liege ?= { is_target_in_variable_list = { name = lam_bloc_leads target = prev } } }
+			}
+			# (What the crown has not uncovered stays hidden.)
+			NOT = { var:lam_bloc ?= { has_variable = lam_fac_vl has_variable = lam_fac_hide } }
+		}
+	}
+
+	on_accept = {
+		scope:actor = {
+			if = {
+				limit = { scope:recipient = { has_variable = lam_bloc_lead } }
+				set_variable = { name = lam_fac_detail value = scope:recipient }
+			}
+			else = { set_variable = { name = lam_fac_detail value = scope:recipient.var:lam_bloc } }
+		}
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Ask to join someone's faction (both vassals of the same lord).
+lam_join_faction_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_join_faction_interaction_desc
+
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			is_independent_ruler = no
+			NOT = { has_variable = lam_bloc_lead }
+		}
+		scope:recipient = {
+			has_variable = lam_bloc_lead
+			liege ?= scope:actor.liege
+			NOT = { this = scope:actor }
+		}
+		NOT = { scope:actor.var:lam_bloc ?= scope:recipient }
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = { NOT = { has_variable = lam_fac_left_cd } }
+	}
+
+	# The head weighs what the newcomer brings: strength above all, then a shared cause, ties and trust.
+	ai_accept = {
+		base = -10
+		opinion_modifier = {
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 0.6
+		}
+		modifier = {
+			add = 40
+			desc = lam_ai_fac_strong_reason
+			scope:actor.max_military_strength >= scope:recipient.max_military_strength
+		}
+		modifier = {
+			add = 20
+			desc = lam_ai_fac_useful_reason
+			scope:actor.max_military_strength < scope:recipient.max_military_strength
+			scope:actor.max_military_strength >= { value = scope:recipient.max_military_strength multiply = 0.4 }
+		}
+		modifier = {
+			add = -25
+			desc = lam_ai_fac_weak_reason
+			scope:actor.max_military_strength < { value = scope:recipient.max_military_strength multiply = 0.15 }
+		}
+		modifier = {
+			add = 15
+			desc = lam_ai_fac_cause_reason
+			scope:recipient = { lam_fac_cause_of_trigger = { WHO = scope:actor } }
+		}
+		modifier = {
+			add = 25
+			desc = lam_ai_fac_kin_reason
+			scope:actor.house ?= scope:recipient.house
+		}
+		modifier = {
+			add = -50
+			desc = lam_ai_fac_foe_reason
+			scope:actor.var:lam_bloc ?= { is_target_in_variable_list = { name = lam_fac_foes target = scope:recipient } }
+		}
+		modifier = {
+			add = -100
+			desc = lam_ai_fac_rival_reason
+			scope:recipient = { OR = { has_relation_rival = scope:actor has_relation_nemesis = scope:actor } }
+		}
+		# A faction set against the crown does not take in one of the crown's own council.
+		modifier = {
+			add = -30
+			desc = lam_ai_fac_spy_reason
+			scope:recipient = { OR = { var:lam_fac_stage ?= 3 var:lam_fac_stage ?= 4 has_variable = lam_fac_hide } }
+			scope:actor = { is_councillor_of = scope:actor.liege }
+		}
+	}
+
+	on_accept = {
+		scope:actor = {
+			set_variable = { name = lam_bloc value = scope:recipient }
+			set_variable = { name = lam_fac_pinned value = yes }
+			send_interface_message = { type = event_generic_good title = lam_fac_joined_title right_icon = scope:recipient }
+		}
+		hidden_effect = { scope:actor = { lam_fac_quick_refresh_court_effect = yes } }
+	}
+	ai_will_do = { base = 0 }
+}
+
+# Invite a peer into my faction.
+lam_invite_faction_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_invite_faction_interaction_desc
+
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+		}
+		scope:recipient = {
+			is_ai = yes
+			is_ruler = yes
+			liege ?= scope:actor.liege
+			NOT = { this = scope:actor.liege }
+			# (Not one who outranks the head: a king does not follow a count.)
+			highest_held_title_tier <= scope:actor.highest_held_title_tier
+			NOT = { has_variable = lam_bloc_lead }
+			NOT = { var:lam_bloc ?= scope:actor }
+		}
+	}
+
+	# The invited weigh it: what the head and the faction amount to, what it stands for, and where they stand now.
+	ai_accept = {
+		base = -20
+		opinion_modifier = {
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 0.5
+		}
+		modifier = {
+			add = 20
+			desc = lam_ai_inv_stronger_reason
+			scope:actor.max_military_strength >= { value = scope:recipient.max_military_strength multiply = 2 }
+		}
+		modifier = {
+			add = -30
+			desc = lam_ai_inv_weaker_reason
+			scope:actor.max_military_strength < scope:recipient.max_military_strength
+		}
+		modifier = {
+			add = 15
+			desc = lam_ai_inv_standing_reason
+			scope:actor = { has_variable = lam_fac_share var:lam_fac_share >= 20 }
+		}
+		modifier = {
+			add = -15
+			desc = lam_ai_inv_small_reason
+			scope:actor = { OR = { NOT = { has_variable = lam_fac_count } var:lam_fac_count < 3 } }
+		}
+		modifier = {
+			add = 15
+			desc = lam_ai_inv_parted_reason
+			scope:recipient = { var:lam_fac_parted ?= scope:actor }
+		}
+		modifier = {
+			add = 20
+			desc = lam_ai_inv_cause_reason
+			scope:actor = { lam_fac_cause_of_trigger = { WHO = scope:recipient } }
+		}
+		# Loyal to the crown and asked into a faction set against it - or the other way round.
+		modifier = {
+			add = -40
+			desc = lam_ai_inv_against_crown_reason
+			scope:actor = { OR = { var:lam_fac_stage ?= 2 var:lam_fac_stage ?= 3 var:lam_fac_stage ?= 4 } }
+			scope:recipient = { has_variable = lam_gui_att var:lam_gui_att >= 25 }
+		}
+		modifier = {
+			add = -25
+			desc = lam_ai_inv_for_crown_reason
+			scope:actor = { OR = { var:lam_fac_stage ?= 5 var:lam_fac_stage ?= 6 var:lam_fac_stage ?= 8 } }
+			scope:recipient = { has_variable = lam_gui_att var:lam_gui_att <= -15 }
+		}
+		modifier = {
+			add = 10
+			desc = lam_ai_inv_renown_reason
+			scope:actor = { has_variable = lam_fac_renown var:lam_fac_renown >= 20 }
+		}
+		modifier = {
+			add = -100
+			desc = lam_ai_fac_rival_reason
+			scope:recipient = { OR = { has_relation_rival = scope:actor has_relation_nemesis = scope:actor } }
+		}
+		modifier = {
+			add = -15
+			desc = lam_ai_inv_content_reason
+			scope:recipient = { has_trait = content }
+		}
+		modifier = {
+			add = 10
+			desc = lam_ai_inv_ambitious_reason
+			scope:recipient = { has_trait = ambitious }
+		}
+		modifier = {
+			add = 30
+			desc = lam_ai_fac_kin_reason
+			scope:recipient.house ?= scope:actor.house
+		}
+		modifier = {
+			add = -40
+			desc = lam_ai_fac_core_reason
+			scope:recipient = { var:lam_fac_tier ?= 1 }
+		}
+		modifier = {
+			add = -15
+			desc = lam_ai_fac_client_reason
+			scope:recipient = { var:lam_fac_tier ?= 2 }
+		}
+	}
+
+	on_accept = {
+		scope:recipient = {
+			set_variable = { name = lam_bloc value = scope:actor }
+			set_variable = { name = lam_fac_pinned value = yes years = 2 }
+		}
+		scope:actor = { send_interface_message = { type = event_generic_good title = lam_fac_invited_title right_icon = scope:recipient } }
+		hidden_effect = { scope:actor = { lam_fac_quick_refresh_court_effect = yes } }
+	}
+	ai_will_do = { base = 0 }
+}
+
+# Leave that faction - or else (a hook, or dread).
+lam_coerce_leave_interaction = {
+	category = interaction_category_hostile
+	icon = lam_ic_issue
+	desc = lam_coerce_leave_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = { is_ai = no }
+		scope:recipient = {
+			is_ai = yes
+			has_variable = lam_bloc
+			NOT = { has_variable = lam_bloc_lead }
+			NOT = { var:lam_bloc ?= scope:actor }
+		}
+	}
+	is_valid_showing_failures_only = {
+		custom_tooltip = {
+			text = lam_coerce_need_leverage_tt
+			OR = {
+				scope:actor = { has_usable_hook = scope:recipient }
+				scope:recipient = { has_dread_level_towards = { target = scope:actor level >= 1 } }
+			}
+		}
+	}
+
+	on_accept = {
+		if = {
+			limit = { scope:actor = { has_usable_hook = scope:recipient } }
+			scope:actor = { use_hook = scope:recipient }
+		}
+		scope:recipient = {
+			var:lam_bloc ?= { if = { limit = { is_alive = yes } add_opinion = { target = scope:actor modifier = lam_fac_left_opinion } } }
+			remove_variable = lam_bloc
+			if = { limit = { has_variable = lam_fac_pinned } remove_variable = lam_fac_pinned }
+			set_variable = { name = lam_fac_unbound value = yes years = 2 }
+			add_opinion = { target = scope:actor modifier = lam_fac_coerced_opinion }
+		}
+		scope:actor = { send_interface_message = { type = event_generic_neutral title = lam_coerce_leave_done_title right_icon = scope:recipient } }
+		hidden_effect = { scope:recipient = { lam_fac_quick_refresh_court_effect = yes } }
+	}
+	ai_will_do = { base = 0 }
+}
+
+# Join us - or else. Into my own faction, or (as liege) into my court party.
+lam_coerce_join_interaction = {
+	category = interaction_category_hostile
+	icon = lam_ic_issue
+	desc = lam_coerce_join_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = { is_ai = no }
+		scope:recipient = {
+			is_ai = yes
+			NOT = { has_variable = lam_bloc_lead }
+		}
+		OR = {
+			AND = {
+				scope:actor = { has_variable = lam_bloc_lead is_independent_ruler = no }
+				scope:recipient.liege ?= scope:actor.liege
+				NOT = { scope:recipient.var:lam_bloc ?= scope:actor }
+			}
+			AND = {
+				scope:recipient.liege ?= scope:actor
+				scope:actor = { any_in_list = { variable = lam_bloc_leads has_variable = lam_fac_courtparty } }
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		custom_tooltip = {
+			text = lam_coerce_need_leverage_tt
+			OR = {
+				scope:actor = { has_usable_hook = scope:recipient }
+				scope:recipient = { has_dread_level_towards = { target = scope:actor level >= 1 } }
+			}
+		}
+	}
+
+	on_accept = {
+		if = {
+			limit = { scope:actor = { has_variable = lam_bloc_lead } }
+			scope:actor = { save_scope_as = lam_cj_target }
+		}
+		else = {
+			scope:actor = {
+				random_in_list = {
+					variable = lam_bloc_leads
+					limit = { is_alive = yes has_variable = lam_fac_courtparty }
+					save_scope_as = lam_cj_target
+				}
+			}
+		}
+		if = {
+			limit = { scope:actor = { has_usable_hook = scope:recipient } }
+			scope:actor = { use_hook = scope:recipient }
+		}
+		scope:recipient = {
+			var:lam_bloc ?= { if = { limit = { is_alive = yes } add_opinion = { target = scope:actor modifier = lam_fac_left_opinion } } }
+			set_variable = { name = lam_bloc value = scope:lam_cj_target }
+			set_variable = { name = lam_fac_pinned value = yes years = 2 }
+			set_variable = { name = lam_fac_coerced value = yes years = 2 }
+			if = { limit = { has_variable = lam_fac_unbound } remove_variable = lam_fac_unbound }
+			add_opinion = { target = scope:actor modifier = lam_fac_coerced_opinion }
+		}
+		scope:actor = { send_interface_message = { type = event_generic_neutral title = lam_coerce_join_done_title right_icon = scope:recipient } }
+		hidden_effect = { scope:recipient = { lam_fac_quick_refresh_court_effect = yes } }
+	}
+	ai_will_do = { base = 0 }
+}
+
+# The lord deals with one of the factions at court: something given, something asked.
+lam_fac_deal_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_deal_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			is_target_in_variable_list = { name = lam_bloc_leads target = scope:recipient }
+		}
+		scope:recipient = { has_variable = lam_bloc_lead }
+	}
+	is_valid_showing_failures_only = {
+		scope:recipient = {
+			is_imprisoned = no
+			custom_description = {
+				text = lam_fac_deal_cd_tt
+				NOT = { has_variable = lam_fac_deal_cd }
+			}
+		}
+	}
+	on_accept = {
+		scope:actor = {
+			custom_tooltip = lam_fac_deal_interaction_tt
+			hidden_effect = {
+				scope:recipient = { save_scope_as = lam_deal_lead }
+				lam_deal_clear_effect = yes
+				trigger_event = lam_faction.1000
+			}
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+# The lord commands the court party (their own faction in all but name).
+lam_fac_command_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_issue
+	desc = lam_fac_command_interaction_desc
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			is_target_in_variable_list = { name = lam_bloc_leads target = scope:recipient }
+		}
+		scope:recipient = { has_variable = lam_fac_courtparty }
+	}
+	on_accept = {
+		scope:actor = {
+			custom_tooltip = lam_fac_command_interaction_tt
+			hidden_effect = {
+				scope:recipient = { save_scope_as = lam_cp_lead }
+				trigger_event = lam_faction.1100
+			}
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+
+# The head of a faction speaks for it before the liege.
+lam_fac_head_demand_interaction = {
+	category = interaction_category_vassal
+	icon = lam_ic_terms
+	desc = lam_fac_head_demand_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			liege ?= scope:recipient
+		}
+		scope:recipient = {
+			is_target_in_variable_list = {
+				name = lam_bloc_leads
+				target = scope:actor
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_demand_ready_tt
+				lam_pt_demand_ready_trigger = yes
+			}
+		}
+	}
+	on_accept = {
+		scope:actor = {
+			custom_tooltip = lam_fac_head_demand_interaction_tt
+			hidden_effect = {
+				scope:recipient = {
+					save_scope_as = lam_hd_lord
+				}
+				trigger_event = lam_faction.1200
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+############################
+# Faction against faction (the player as a head, toward another head in the same court).
+############################
+lam_fac_ally_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_ally_interaction_desc
+	cooldown_against_recipient = {
+		years = 2
+	}
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+		}
+		scope:recipient = {
+			has_variable = lam_bloc_lead
+			NOT = {
+				this = scope:actor
+			}
+			liege ?= scope:actor.liege
+			NOT = {
+				scope:actor = {
+					is_target_in_variable_list = {
+						name = lam_fac_allies
+						target = scope:recipient
+					}
+				}
+			}
+		}
+	}
+	ai_accept = {
+		base = 0
+		opinion_modifier = {
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 0.5
+		}
+		modifier = {
+			add = 25
+			desc = lam_fac_ally_same_heart_reason
+			OR = {
+				AND = {
+					scope:actor = {
+						has_variable = lam_fac_att
+						var:lam_fac_att >= 25
+					}
+					scope:recipient = {
+						has_variable = lam_fac_att
+						var:lam_fac_att >= 25
+					}
+				}
+				AND = {
+					scope:actor = {
+						has_variable = lam_fac_att
+						var:lam_fac_att <= -15
+					}
+					scope:recipient = {
+						has_variable = lam_fac_att
+						var:lam_fac_att <= -15
+					}
+				}
+			}
+		}
+		modifier = {
+			add = -40
+			desc = lam_fac_ally_foes_reason
+			scope:recipient = {
+				is_target_in_variable_list = {
+					name = lam_fac_foes
+					target = scope:actor
+				}
+			}
+		}
+		modifier = {
+			add = 15
+			desc = lam_fac_ally_same_heir_reason
+			scope:actor.var:lam_fac_heir ?= scope:recipient.var:lam_fac_heir
+		}
+		modifier = {
+			add = 15
+			desc = lam_fac_amity_same_side_reason
+			lam_fac_issue_same_side_trigger = {
+				A = scope:actor
+				B = scope:recipient
+			}
+		}
+		modifier = {
+			add = -25
+			desc = lam_fac_amity_opp_side_reason
+			lam_fac_issue_opposite_side_trigger = {
+				A = scope:actor
+				B = scope:recipient
+			}
+		}
+	}
+	on_accept = {
+		lam_fac_ally_effect = {
+			A = scope:actor
+			B = scope:recipient
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+	is_valid_showing_failures_only = {
+		custom_description = {
+			text = lam_fac_amity_possible_tt
+			lam_fac_amity_pair_trigger = {
+				A = scope:actor
+				B = scope:recipient
+			}
+		}
+		custom_description = {
+			text = lam_pd_pact_possible_tt
+			lam_pd_pact_pair_trigger = {
+				A = scope:actor
+				B = scope:recipient
+			}
+		}
+	}
+}
+lam_fac_break_ally_interaction = {
+	category = interaction_category_hostile
+	icon = lam_ic_issue
+	desc = lam_fac_break_ally_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			is_target_in_variable_list = { name = lam_fac_allies target = scope:recipient }
+		}
+	}
+	on_accept = { lam_fac_break_ally_effect = { A = scope:actor B = scope:recipient } }
+	ai_will_do = { base = 0 }
+}
+lam_fac_poach_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_poach_interaction_desc
+	cooldown = {
+		years = 1
+	}
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+		}
+		scope:recipient = {
+			is_ai = yes
+			NOT = {
+				has_variable = lam_bloc_lead
+			}
+			var:lam_bloc ?= {
+				has_variable = lam_bloc_lead
+				NOT = {
+					this = scope:actor
+				}
+			}
+			NOT = {
+				var:lam_fac_tier ?= 1
+			}
+			liege ?= scope:actor.liege
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			gold >= 60
+			NOT = {
+				has_variable = lam_pd_recruit_target
+			}
+			NOT = {
+				has_variable = lam_fac_recruit_cd
+			}
+		}
+		scope:recipient = {
+			is_alive = yes
+			is_imprisoned = no
+			NOT = {
+				has_variable = lam_fac_pinned
+			}
+			NOT = {
+				has_variable = lam_pd_recruit_from
+			}
+			NOT = {
+				has_variable = lam_pd_recruit_cd
+			}
+		}
+	}
+	on_accept = {
+		lam_fac_poach_effect = yes
+	}
+	ai_will_do = {
+		base = 0
+	}
+	auto_accept = yes
+}
+lam_fac_smear_interaction = {
+	category = interaction_category_hostile
+	icon = lam_ic_issue
+	desc = lam_fac_smear_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = { is_ai = no has_variable = lam_bloc_lead }
+		scope:recipient = {
+			has_variable = lam_bloc_lead
+			NOT = { this = scope:actor }
+			liege ?= scope:actor.liege
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_description = {
+				text = lam_fac_smear_cd_tt
+				NOT = { has_variable = lam_fac_smear_cd }
+			}
+		}
+	}
+	on_accept = {
+		custom_tooltip = lam_fac_smear_interaction_tt
+		hidden_effect = { lam_fac_smear_effect = yes }
+	}
+	ai_will_do = { base = 0 }
+}
+
+############################
+# A member against the head, or the lord's informer.
+############################
+lam_fac_challenge_interaction = {
+	category = interaction_category_hostile
+	icon = lam_ic_issue
+	desc = lam_fac_challenge_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			var:lam_bloc ?= scope:recipient
+			NOT = { has_variable = lam_bloc_lead }
+		}
+		scope:recipient = { has_variable = lam_bloc_lead }
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = { custom_description = { text = lam_fac_challenge_unfit_tt lam_fac_fit_head_trigger = yes } }
+		scope:recipient = { custom_description = { text = lam_fac_challenge_council_tt has_variable = lam_fac_count var:lam_fac_count >= 3 } }
+		scope:recipient = { custom_description = { text = lam_rv_conf_recent_tt NOT = { has_variable = lam_fac_conf_cd } } }
+		scope:recipient = { custom_description = { text = lam_rv_conf_busy_tt NOT = { has_variable = lam_cr_active } NOT = { has_variable = lam_cr_contract_pending } NOT = { has_variable = lam_pd_pending } NOT = { has_variable = lam_cr_retry_confidence } } }
+	}
+	on_accept = {
+		custom_tooltip = lam_fac_challenge_interaction_tt
+		hidden_effect = { lam_fac_challenge_effect = { CHALLENGER = scope:actor HEAD = scope:recipient } }
+	}
+	ai_will_do = { base = 0 }
+}
+lam_fac_inform_interaction = {
+	category = interaction_category_vassal
+	icon = lam_ic_issue
+	desc = lam_fac_inform_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			liege ?= scope:recipient
+			NOT = {
+				has_variable = lam_bloc_lead
+			}
+			var:lam_bloc ?= {
+				has_variable = lam_bloc_lead
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_description = {
+				text = lam_pd_information_tt
+				lam_pd_information_trigger = yes
+			}
+		}
+	}
+	on_accept = {
+		custom_tooltip = lam_fac_inform_interaction_tt
+		hidden_effect = {
+			lam_fac_inform_effect = yes
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+
+############################
+# Underground only.
+############################
+# The head or one of the core asks someone with a grudge to join, by night. The loyal may go to the crown.
+lam_fac_ug_recruit_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_ug_recruit_interaction_desc
+	cooldown = { years = 1 }
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			var:lam_bloc ?= { has_variable = lam_bloc_lead has_variable = lam_fac_ug }
+			OR = {
+				has_variable = lam_bloc_lead
+				var:lam_fac_tier ?= 1
+			}
+		}
+		scope:recipient = {
+			is_ai = yes
+			is_adult = yes
+			NOT = { has_variable = lam_bloc_lead }
+			NOT = { var:lam_bloc ?= scope:actor.var:lam_bloc }
+			NOT = { this = scope:actor.liege }
+			liege ?= scope:actor.liege
+		}
+	}
+	ai_accept = {
+		base = -10
+		opinion_modifier = { who = scope:recipient opinion_target = scope:actor multiplier = 0.5 }
+		modifier = {
+			add = -30
+			desc = lam_fac_ug_recruit_loyal_reason
+			scope:recipient = { opinion = { target = scope:actor.liege value >= 40 } }
+		}
+		modifier = {
+			add = 25
+			desc = lam_fac_ug_recruit_grudge_reason
+			scope:recipient = { opinion = { target = scope:actor.liege value <= -20 } }
+		}
+		modifier = {
+			add = 15
+			desc = lam_fac_ug_recruit_bold_reason
+			scope:recipient = { OR = { has_trait = ambitious has_trait = vengeful has_trait = zealous } }
+		}
+		modifier = {
+			add = -25
+			desc = lam_fac_ug_recruit_craven_reason
+			scope:recipient = { has_trait = craven }
+		}
+	}
+	on_accept = {
+		custom_tooltip = lam_fac_ug_recruit_yes_tt
+		hidden_effect = { lam_fac_ug_recruit_effect = yes }
+	}
+	on_decline = {
+		custom_tooltip = lam_fac_ug_recruit_no_tt
+		hidden_effect = { lam_fac_ug_betray_effect = yes }
+	}
+	ai_will_do = { base = 0 }
+}
+# A member of an underground faction turns themselves in: pardoned, out - and the crown learns much.
+lam_fac_ug_confess_interaction = {
+	category = interaction_category_vassal
+	icon = lam_ic_issue
+	desc = lam_fac_ug_confess_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			liege ?= scope:recipient
+			NOT = { has_variable = lam_bloc_lead }
+			var:lam_bloc ?= { has_variable = lam_bloc_lead has_variable = lam_fac_ug }
+		}
+		scope:recipient = { is_ai = yes }
+	}
+	on_accept = {
+		custom_tooltip = lam_fac_ug_confess_tt
+		hidden_effect = { lam_fac_ug_confess_effect = yes }
+	}
+	ai_will_do = { base = 0 }
+}
+
+# The lord orders a defeated faction dissolved.
+lam_fac_dissolve_interaction = {
+	category = interaction_category_vassal
+	icon = lam_ic_issue
+	desc = lam_fac_dissolve_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = { is_ai = no }
+		scope:recipient = {
+			has_variable = lam_bloc_lead
+			has_variable = lam_fac_defeated
+			liege ?= scope:actor
+		}
+	}
+	on_accept = {
+		custom_tooltip = lam_fac_dissolve_interaction_tt
+		hidden_effect = { scope:recipient = { lam_fac_dissolve_effect = yes } }
+	}
+	ai_will_do = { base = 0 }
+}
+
+# My faction backs this one of the lord's children (or heir) for the succession.
+
+
+############################
+# A player head's own menu: right-click my own portrait (step_head_menu).
+############################
+lam_fac_self_posture_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_self_posture_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = scope:recipient
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			exists = liege
+			liege = {
+				is_target_in_variable_list = {
+					name = lam_bloc_leads
+					target = scope:actor
+				}
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_description = {
+				text = lam_fac_head_posture_cd_tt
+				NOT = {
+					has_variable = lam_fac_posture_cd
+				}
+			}
+		}
+		scope:actor = {
+			NOT = {
+				has_variable = lam_cr_active
+			}
+		}
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+		}
+	}
+	send_options_exclusive = yes
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_posture ?= flag:loyal
+				}
+			}
+			scope:actor = {
+				NOT = {
+					has_variable = lam_cr_retry_posture_loyal
+				}
+			}
+		}
+		flag = lam_po_loyal
+		localization = lam_po_loyal
+		current_description = lam_po_loyal_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_posture ?= flag:watch
+				}
+			}
+			scope:actor = {
+				NOT = {
+					has_variable = lam_cr_retry_posture_watch
+				}
+			}
+		}
+		flag = lam_po_watch
+		localization = lam_po_watch
+		current_description = lam_po_watch_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_posture ?= flag:quiet
+				}
+			}
+			scope:actor = {
+				NOT = {
+					has_variable = lam_cr_retry_posture_quiet
+				}
+			}
+		}
+		flag = lam_po_quiet
+		localization = lam_po_quiet
+		current_description = lam_po_quiet_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_posture ?= flag:oppose
+				}
+			}
+			scope:actor = {
+				NOT = {
+					has_variable = lam_cr_retry_posture_oppose
+				}
+			}
+		}
+		flag = lam_po_oppose
+		localization = lam_po_oppose
+		current_description = lam_po_oppose_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_posture ?= flag:arm
+				}
+			}
+			scope:actor = {
+				NOT = {
+					has_variable = lam_cr_retry_posture_arm
+				}
+			}
+		}
+		flag = lam_po_arm
+		localization = lam_po_arm
+		current_description = lam_po_arm_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				has_variable = lam_fac_posture
+			}
+			scope:actor = {
+				NOT = {
+					has_variable = lam_cr_retry_posture_people
+				}
+			}
+		}
+		flag = lam_po_people
+		localization = lam_po_people
+		current_description = lam_po_people_desc
+	}
+	on_accept = {
+		if = {
+			limit = {
+				scope:actor = scope:recipient
+				scope:actor = {
+					is_ai = no
+					has_variable = lam_bloc_lead
+					exists = liege
+					liege = {
+						is_target_in_variable_list = {
+							name = lam_bloc_leads
+							target = scope:actor
+						}
+					}
+				}
+				scope:actor = {
+					custom_description = {
+						text = lam_fac_head_posture_cd_tt
+						NOT = {
+							has_variable = lam_fac_posture_cd
+						}
+					}
+				}
+				scope:actor = {
+					NOT = {
+						has_variable = lam_cr_active
+					}
+				}
+				scope:actor = {
+					custom_description = {
+						text = lam_pt_head_available_tt
+						lam_pt_head_ready_trigger = yes
+					}
+				}
+			}
+			scope:actor = {
+				if = {
+					limit = {
+						scope:lam_po_loyal = yes
+					}
+					lam_cr_start_effect = {
+						ISSUE = loyal
+						ACTION = posture_loyal
+						TARGET = liege
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_po_watch = yes
+					}
+					lam_cr_start_effect = {
+						ISSUE = watch
+						ACTION = posture_watch
+						TARGET = liege
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_po_quiet = yes
+					}
+					lam_cr_start_effect = {
+						ISSUE = quiet
+						ACTION = posture_quiet
+						TARGET = liege
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_po_oppose = yes
+					}
+					lam_cr_start_effect = {
+						ISSUE = oppose
+						ACTION = posture_oppose
+						TARGET = liege
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_po_arm = yes
+					}
+					lam_cr_start_effect = {
+						ISSUE = arm
+						ACTION = posture_arm
+						TARGET = liege
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_po_people = yes
+					}
+					lam_cr_start_effect = {
+						ISSUE = people
+						ACTION = posture_people
+						TARGET = liege
+					}
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+lam_fac_self_goal_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_self_goal_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		always = no
+		scope:actor = scope:recipient
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			exists = liege
+			liege = {
+				is_target_in_variable_list = {
+					name = lam_bloc_leads
+					target = scope:actor
+				}
+			}
+		}
+	}
+	send_options_exclusive = yes
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_goal_pick ?= 1
+				}
+			}
+		}
+		flag = lam_go_1
+		localization = lam_faction.2110.g1
+		current_description = lam_go_1_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_goal_pick ?= 2
+				}
+			}
+		}
+		flag = lam_go_2
+		localization = lam_faction.2110.g2
+		current_description = lam_go_2_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_goal_pick ?= 3
+				}
+			}
+		}
+		flag = lam_go_3
+		localization = lam_faction.2110.g3
+		current_description = lam_go_3_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_goal_pick ?= 4
+				}
+			}
+		}
+		flag = lam_go_4
+		localization = lam_faction.2110.g4
+		current_description = lam_go_4_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_goal_pick ?= 5
+				}
+			}
+		}
+		flag = lam_go_5
+		localization = lam_faction.2110.g5
+		current_description = lam_go_5_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_goal_pick ?= 6
+				}
+			}
+		}
+		flag = lam_go_6
+		localization = lam_faction.2110.g6
+		current_description = lam_go_6_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_goal_pick ?= 7
+				}
+			}
+		}
+		flag = lam_go_7
+		localization = lam_faction.2110.g7
+		current_description = lam_go_7_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_goal_pick ?= 8
+				}
+			}
+		}
+		flag = lam_go_8
+		localization = lam_faction.2110.g8
+		current_description = lam_go_8_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					var:lam_fac_goal_pick ?= 9
+				}
+			}
+		}
+		flag = lam_go_9
+		localization = lam_faction.2110.g9
+		current_description = lam_go_9_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				has_variable = lam_fac_goal_pick
+			}
+		}
+		flag = lam_go_auto
+		localization = lam_faction.2110.auto
+	}
+	on_accept = {
+		if = {
+			limit = {
+				scope:actor = scope:recipient
+				scope:actor = {
+					is_ai = no
+					has_variable = lam_bloc_lead
+					exists = liege
+					liege = {
+						is_target_in_variable_list = {
+							name = lam_bloc_leads
+							target = scope:actor
+						}
+					}
+				}
+				scope:actor = {
+					custom_description = {
+						text = lam_pt_head_available_tt
+						lam_pt_head_ready_trigger = yes
+					}
+				}
+			}
+			scope:actor = {
+				custom_tooltip = lam_fac_self_goal_interaction_tt
+				if = {
+					limit = {
+						scope:lam_go_1 = yes
+					}
+					set_variable = {
+						name = lam_fac_goal_pick
+						value = 1
+					}
+					set_variable = {
+						name = lam_fac_goal
+						value = 1
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_go_2 = yes
+					}
+					set_variable = {
+						name = lam_fac_goal_pick
+						value = 2
+					}
+					set_variable = {
+						name = lam_fac_goal
+						value = 2
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_go_3 = yes
+					}
+					set_variable = {
+						name = lam_fac_goal_pick
+						value = 3
+					}
+					set_variable = {
+						name = lam_fac_goal
+						value = 3
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_go_4 = yes
+					}
+					set_variable = {
+						name = lam_fac_goal_pick
+						value = 4
+					}
+					set_variable = {
+						name = lam_fac_goal
+						value = 4
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_go_5 = yes
+					}
+					set_variable = {
+						name = lam_fac_goal_pick
+						value = 5
+					}
+					set_variable = {
+						name = lam_fac_goal
+						value = 5
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_go_6 = yes
+					}
+					set_variable = {
+						name = lam_fac_goal_pick
+						value = 6
+					}
+					set_variable = {
+						name = lam_fac_goal
+						value = 6
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_go_7 = yes
+					}
+					set_variable = {
+						name = lam_fac_goal_pick
+						value = 7
+					}
+					set_variable = {
+						name = lam_fac_goal
+						value = 7
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_go_8 = yes
+					}
+					set_variable = {
+						name = lam_fac_goal_pick
+						value = 8
+					}
+					set_variable = {
+						name = lam_fac_goal
+						value = 8
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_go_9 = yes
+					}
+					set_variable = {
+						name = lam_fac_goal_pick
+						value = 9
+					}
+					set_variable = {
+						name = lam_fac_goal
+						value = 9
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_go_auto = yes
+					}
+					remove_variable = lam_fac_goal_pick
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+		}
+	}
+}
+lam_fac_self_confidence_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_issue
+	desc = lam_fac_self_confidence_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = scope:recipient
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			exists = liege
+			liege = {
+				is_target_in_variable_list = {
+					name = lam_bloc_leads
+					target = scope:actor
+				}
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_description = {
+				text = lam_fac_head_confidence_cd_tt
+				NOT = {
+					has_variable = lam_fac_conf_cd
+				}
+			}
+			custom_description = {
+				text = lam_fac_challenge_council_tt
+				has_variable = lam_fac_count
+				var:lam_fac_count >= 3
+			}
+		}
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+		}
+		scope:actor = {
+			lam_pt_confidence_ready_trigger = yes
+		}
+	}
+	on_accept = {
+		if = {
+			limit = {
+				scope:actor = scope:recipient
+				scope:actor = {
+					is_ai = no
+					has_variable = lam_bloc_lead
+					exists = liege
+					liege = {
+						is_target_in_variable_list = {
+							name = lam_bloc_leads
+							target = scope:actor
+						}
+					}
+				}
+				scope:actor = {
+					custom_description = {
+						text = lam_fac_head_confidence_cd_tt
+						NOT = {
+							has_variable = lam_fac_conf_cd
+						}
+					}
+					custom_description = {
+						text = lam_fac_challenge_council_tt
+						has_variable = lam_fac_count
+						var:lam_fac_count >= 3
+					}
+				}
+				scope:actor = {
+					custom_description = {
+						text = lam_pt_head_available_tt
+						lam_pt_head_ready_trigger = yes
+					}
+				}
+				scope:actor = {
+					lam_pt_confidence_ready_trigger = yes
+				}
+			}
+			scope:actor = {
+				custom_tooltip = lam_fac_head_confidence_decision_tt
+				custom_tooltip = lam_fac_self_confidence_preview_tt
+				hidden_effect = {
+					lam_fac_head_confidence_effect = yes
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+lam_fac_self_recruit_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_self_recruit_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = scope:recipient
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			exists = liege
+			liege = {
+				is_target_in_variable_list = {
+					name = lam_bloc_leads
+					target = scope:actor
+				}
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_description = {
+				text = lam_fac_recruit_cd_tt
+				NOT = {
+					has_variable = lam_fac_recruit_cd
+				}
+			}
+		}
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+		}
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_recruit_ready_tt
+				lam_pt_recruit_search_trigger = yes
+			}
+		}
+	}
+	cost = {
+		prestige = minor_prestige_value
+	}
+	on_accept = {
+		if = {
+			limit = {
+				scope:actor = scope:recipient
+				scope:actor = {
+					is_ai = no
+					has_variable = lam_bloc_lead
+					exists = liege
+					liege = {
+						is_target_in_variable_list = {
+							name = lam_bloc_leads
+							target = scope:actor
+						}
+					}
+				}
+				scope:actor = {
+					custom_description = {
+						text = lam_fac_recruit_cd_tt
+						NOT = {
+							has_variable = lam_fac_recruit_cd
+						}
+					}
+				}
+				scope:actor = {
+					custom_description = {
+						text = lam_pt_head_available_tt
+						lam_pt_head_ready_trigger = yes
+					}
+				}
+				scope:actor = {
+					custom_description = {
+						text = lam_pt_recruit_ready_tt
+						lam_pt_recruit_search_trigger = yes
+					}
+				}
+			}
+			scope:actor = {
+				custom_tooltip = lam_fac_self_recruit_interaction_tt
+				hidden_effect = {
+					lam_fac_self_recruit_effect = yes
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+lam_fac_self_order_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_issue
+	desc = lam_fac_head_order_decision_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = scope:recipient
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			exists = liege
+			liege = {
+				is_target_in_variable_list = {
+					name = lam_bloc_leads
+					target = scope:actor
+				}
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_order_ready_tt
+				lam_pt_order_ready_trigger = yes
+			}
+		}
+	}
+	on_accept = {
+		scope:actor = {
+			if = {
+				limit = {
+					lam_pt_order_ready_trigger = yes
+				}
+				hidden_effect = {
+					trigger_event = lam_faction.1300
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+lam_fac_self_arms_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_issue
+	desc = lam_fac_head_arms_decision_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = scope:recipient
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			exists = liege
+			liege = {
+				is_target_in_variable_list = {
+					name = lam_bloc_leads
+					target = scope:actor
+				}
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_arms_ready_tt
+				lam_pt_head_ready_trigger = yes
+				lam_pt_arms_available_trigger = yes
+			}
+			custom_description = {
+				text = lam_fac_head_arms_cd_tt
+				NOT = {
+					has_variable = lam_head_arms_cd
+				}
+			}
+		}
+	}
+	on_accept = {
+		scope:actor = {
+			custom_tooltip = lam_fac_head_arms_decision_tt
+			custom_tooltip = lam_fac_self_arms_chance_tt
+			hidden_effect = {
+				lam_fac_head_arms_effect = yes
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+lam_fac_self_rise_interaction = {
+	category = interaction_category_hostile
+	icon = lam_ic_issue
+	desc = lam_fac_head_rise_decision_desc
+	auto_accept = yes
+	is_shown = {
+		always = no
+		scope:actor = scope:recipient
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			exists = liege
+			liege = {
+				is_target_in_variable_list = {
+					name = lam_bloc_leads
+					target = scope:actor
+				}
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			NOT = {
+				exists = joined_faction
+			}
+			NOT = {
+				is_at_war_with = liege
+			}
+			custom_description = {
+				text = lam_fac_rise_cd_tt
+				NOT = {
+					has_variable = lam_fac_rebel_cd
+				}
+			}
+			custom_description = {
+				text = lam_fac_rise_cause_tt
+				OR = {
+					has_variable = lam_fac_grievance
+					AND = {
+						has_variable = lam_fac_favour
+						var:lam_fac_favour <= -20
+					}
+					liege = {
+						has_variable = lam_fac_ban
+					}
+				}
+			}
+			custom_description = {
+				text = lam_fac_rise_blocked_tt
+				NOT = {
+					has_character_flag = joining_faction_block
+					NOT = {
+						has_variable = lam_fac_blocked
+					}
+				}
+			}
+		}
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+		}
+		scope:actor = {
+			lam_pt_rise_ready_trigger = yes
+		}
+	}
+	send_options_exclusive = yes
+	send_option = {
+		flag = lam_rs_rise
+		localization = lam_rs_rise
+		current_description = lam_rs_rise_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				NOT = {
+					liege ?= {
+						has_variable = lam_fac_puppet_master
+					}
+				}
+			}
+			scope:actor = {
+				lam_pol_ready_trigger = yes
+			}
+		}
+		flag = lam_rs_puppet
+		localization = lam_rs_puppet
+		current_description = lam_rs_puppet_desc
+	}
+	on_accept = {
+		if = {
+			limit = {
+				scope:actor = scope:recipient
+				scope:actor = {
+					is_ai = no
+					has_variable = lam_bloc_lead
+					exists = liege
+					liege = {
+						is_target_in_variable_list = {
+							name = lam_bloc_leads
+							target = scope:actor
+						}
+					}
+				}
+				scope:actor = {
+					NOT = {
+						exists = joined_faction
+					}
+					NOT = {
+						is_at_war_with = liege
+					}
+					custom_description = {
+						text = lam_fac_rise_cd_tt
+						NOT = {
+							has_variable = lam_fac_rebel_cd
+						}
+					}
+					custom_description = {
+						text = lam_fac_rise_cause_tt
+						OR = {
+							has_variable = lam_fac_grievance
+							AND = {
+								has_variable = lam_fac_favour
+								var:lam_fac_favour <= -20
+							}
+							liege = {
+								has_variable = lam_fac_ban
+							}
+						}
+					}
+					custom_description = {
+						text = lam_fac_rise_blocked_tt
+						NOT = {
+							has_character_flag = joining_faction_block
+							NOT = {
+								has_variable = lam_fac_blocked
+							}
+						}
+					}
+				}
+				scope:actor = {
+					custom_description = {
+						text = lam_pt_head_available_tt
+						lam_pt_head_ready_trigger = yes
+					}
+				}
+				scope:actor = {
+					lam_pt_rise_ready_trigger = yes
+				}
+			}
+			scope:actor = {
+				custom_tooltip = lam_fac_self_rise_preview_tt
+				custom_tooltip = lam_fac_head_rise_decision_tt
+				if = {
+					limit = {
+						has_variable = lam_fac_oath
+					}
+					custom_tooltip = lam_fac_rise_oath_tt
+					add_prestige = major_prestige_loss
+					hidden_effect = {
+						remove_variable = lam_fac_oath
+						lam_fac_timeline_add_effect = {
+							KEY = oath_broken
+						}
+						liege = {
+							add_opinion = {
+								target = root
+								modifier = lam_fac_betrayed_opinion
+							}
+						}
+					}
+				}
+				hidden_effect = {
+					liege = {
+						save_scope_as = lam_abs_lord
+					}
+					if = {
+						limit = {
+							scope:lam_rs_puppet = yes
+						}
+						lam_fac_ult_puppet_effect = yes
+					}
+					else = {
+						set_variable = {
+							name = lam_fac_stage
+							value = 4
+						}
+						lam_fac_rise_effect = yes
+					}
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+
+############################
+# A head and the members of their faction (step_faction_life).
+############################
+# Head -> member: a task for the faction.
+lam_fac_hm_task_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_hm_task_interaction_desc
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+		}
+		scope:recipient = {
+			is_ai = yes
+			NOT = {
+				this = scope:actor
+			}
+			var:lam_bloc ?= scope:actor
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:recipient = {
+			custom_description = {
+				text = lam_fac_task_sulking_tt
+				NOT = {
+					lam_fac_sulking_trigger = {
+						HEAD = scope:actor
+					}
+				}
+			}
+		}
+		scope:recipient = {
+			custom_description = {
+				text = lam_fac_hm_task_cd_tt
+				NOT = {
+					has_variable = lam_fac_task_cd
+				}
+			}
+		}
+		lam_pt_hm_current_trigger = yes
+		lam_pt_task_ready_trigger = yes
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+		}
+	}
+	send_options_exclusive = yes
+	send_option = {
+		flag = lam_tk_lord
+		localization = lam_tk_lord
+		current_description = lam_tk_lord_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor = {
+				lam_pt_recruit_search_trigger = yes
+			}
+		}
+		flag = lam_tk_win
+		localization = lam_tk_win
+		current_description = lam_tk_win_desc
+	}
+	send_option = {
+		is_valid = {
+			scope:actor.liege ?= {
+				any_in_list = {
+					variable = lam_bloc_leads
+					NOT = {
+						this = scope:actor
+					}
+					is_alive = yes
+				}
+			}
+		}
+		flag = lam_tk_spy
+		localization = lam_tk_spy
+		current_description = lam_tk_spy_desc
+	}
+	ai_accept = {
+		base = 10
+		opinion_modifier = {
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 0.8
+		}
+		modifier = {
+			add = 25
+			desc = lam_ai_fac_core_member_reason
+			scope:recipient = {
+				var:lam_fac_tier ?= 1
+			}
+		}
+		modifier = {
+			add = -20
+			desc = lam_ai_lazy_reason
+			scope:recipient = {
+				has_trait = lazy
+			}
+		}
+		modifier = {
+			add = 10
+			desc = lam_ai_diligent_reason
+			scope:recipient = {
+				has_trait = diligent
+			}
+		}
+	}
+	on_accept = {
+		if = {
+			limit = {
+				scope:actor = {
+					is_ai = no
+					has_variable = lam_bloc_lead
+				}
+				scope:recipient = {
+					is_ai = yes
+					NOT = {
+						this = scope:actor
+					}
+					var:lam_bloc ?= scope:actor
+				}
+				scope:recipient = {
+					custom_description = {
+						text = lam_fac_task_sulking_tt
+						NOT = {
+							lam_fac_sulking_trigger = {
+								HEAD = scope:actor
+							}
+						}
+					}
+				}
+				scope:recipient = {
+					custom_description = {
+						text = lam_fac_hm_task_cd_tt
+						NOT = {
+							has_variable = lam_fac_task_cd
+						}
+					}
+				}
+				lam_pt_hm_current_trigger = yes
+				lam_pt_task_ready_trigger = yes
+				scope:actor = {
+					custom_description = {
+						text = lam_pt_head_available_tt
+						lam_pt_head_ready_trigger = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					scope:recipient = {
+						is_alive = yes
+						var:lam_bloc ?= scope:actor
+						NOT = {
+							lam_fac_sulking_trigger = {
+								HEAD = scope:actor
+							}
+						}
+					}
+				}
+				scope:recipient = {
+					set_variable = {
+						name = lam_fac_task_cd
+						value = yes
+						years = 1
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_tk_lord = yes
+					}
+					custom_tooltip = lam_tk_lord_tt
+					hidden_effect = {
+						lam_fac_task_lord_effect = yes
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_tk_win = yes
+					}
+					custom_tooltip = lam_tk_win_tt
+					hidden_effect = {
+						lam_fac_task_win_effect = yes
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_tk_spy = yes
+					}
+					custom_tooltip = lam_tk_spy_tt
+					hidden_effect = {
+						lam_fac_task_spy_effect = yes
+					}
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+# Head -> member: praise, with gold.
+lam_fac_hm_praise_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_hm_praise_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+		}
+		scope:recipient = {
+			is_ai = yes
+			NOT = {
+				this = scope:actor
+			}
+			var:lam_bloc ?= scope:actor
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:recipient = {
+			custom_description = {
+				text = lam_fac_hm_praise_cd_tt
+				NOT = {
+					has_variable = lam_fac_praise_cd
+				}
+			}
+		}
+		lam_pt_hm_current_trigger = yes
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+		}
+	}
+	cost = {
+		gold = minor_gold_value
+	}
+	on_accept = {
+		if = {
+			limit = {
+				scope:actor = {
+					is_ai = no
+					has_variable = lam_bloc_lead
+				}
+				scope:recipient = {
+					is_ai = yes
+					NOT = {
+						this = scope:actor
+					}
+					var:lam_bloc ?= scope:actor
+				}
+				scope:recipient = {
+					custom_description = {
+						text = lam_fac_hm_praise_cd_tt
+						NOT = {
+							has_variable = lam_fac_praise_cd
+						}
+					}
+				}
+				lam_pt_hm_current_trigger = yes
+				scope:actor = {
+					custom_description = {
+						text = lam_pt_head_available_tt
+						lam_pt_head_ready_trigger = yes
+					}
+				}
+			}
+			scope:recipient = {
+				add_opinion = {
+					target = scope:actor
+					modifier = lam_fac_praised_opinion
+				}
+				set_variable = {
+					name = lam_fac_praise_cd
+					value = yes
+					years = 2
+				}
+				if = {
+					limit = {
+						var:lam_fac_tier ?= 2
+						opinion = {
+							target = scope:actor
+							value >= 30
+						}
+					}
+					custom_tooltip = lam_fac_hm_praise_up_tt
+					hidden_effect = {
+						set_variable = {
+							name = lam_fac_tier
+							value = 1
+						}
+						set_variable = {
+							name = lam_fac_tier_fixed
+							value = yes
+							years = 5
+						}
+						set_variable = {
+							name = lam_fac_pinned
+							value = yes
+							years = 2
+						}
+					}
+				}
+			}
+			scope:actor = {
+				lam_fac_cohesion_add_effect = {
+					ADD = 2
+				}
+			}
+			hidden_effect = {
+				scope:actor = {
+					lam_fac_quick_refresh_court_effect = yes
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+# Head -> member: raise to the core / lower to a client.
+lam_fac_hm_raise_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_hm_raise_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+		}
+		scope:recipient = {
+			is_ai = yes
+			NOT = {
+				this = scope:actor
+			}
+			var:lam_bloc ?= scope:actor
+			NOT = {
+				var:lam_fac_tier ?= 1
+			}
+		}
+	}
+	on_accept = {
+		if = {
+			limit = {
+				scope:actor = {
+					is_ai = no
+					has_variable = lam_bloc_lead
+				}
+				scope:recipient = {
+					is_ai = yes
+					NOT = {
+						this = scope:actor
+					}
+					var:lam_bloc ?= scope:actor
+					NOT = {
+						var:lam_fac_tier ?= 1
+					}
+				}
+				lam_pt_hm_current_trigger = yes
+				scope:recipient = {
+					custom_description = {
+						text = lam_pt_rank_cd_tt
+						NOT = {
+							has_variable = lam_pt_rank_cd
+						}
+					}
+				}
+				scope:actor = {
+					custom_description = {
+						text = lam_pt_head_available_tt
+						lam_pt_head_ready_trigger = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					scope:recipient = {
+						has_variable = lam_fac_merit
+					}
+				}
+				custom_tooltip = lam_fac_raise_merit_tt
+				scope:actor = {
+					lam_fac_cohesion_add_effect = {
+						ADD = 2
+					}
+				}
+			}
+			else = {
+				scope:actor = {
+					random_in_list = {
+						variable = lam_fac_members
+						limit = {
+							is_alive = yes
+							is_ai = yes
+							var:lam_bloc ?= scope:actor
+							NOT = {
+								this = scope:recipient
+							}
+							has_variable = lam_fac_merit
+							NOT = {
+								var:lam_fac_tier ?= 1
+							}
+						}
+						save_scope_as = lam_rz_passed
+					}
+				}
+				if = {
+					limit = {
+						exists = scope:lam_rz_passed
+					}
+					custom_tooltip = lam_fac_raise_passed_tt
+					scope:lam_rz_passed = {
+						add_opinion = {
+							target = scope:actor
+							modifier = insulted_opinion
+							opinion = -10
+						}
+					}
+				}
+			}
+			scope:recipient = {
+				set_variable = {
+					name = lam_fac_tier
+					value = 1
+				}
+				set_variable = {
+					name = lam_fac_tier_fixed
+					value = yes
+					years = 5
+				}
+				set_variable = {
+					name = lam_fac_pinned
+					value = yes
+					years = 2
+				}
+				add_opinion = {
+					target = scope:actor
+					modifier = lam_fac_granted_opinion
+				}
+			}
+			hidden_effect = {
+				scope:actor = {
+					lam_fac_quick_refresh_court_effect = yes
+				}
+			}
+			scope:recipient = {
+				set_variable = {
+					name = lam_pt_rank_cd
+					value = yes
+					months = 6
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+	is_valid_showing_failures_only = {
+		lam_pt_hm_current_trigger = yes
+		scope:recipient = {
+			custom_description = {
+				text = lam_pt_rank_cd_tt
+				NOT = {
+					has_variable = lam_pt_rank_cd
+				}
+			}
+		}
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+		}
+	}
+}
+lam_fac_hm_lower_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_issue
+	desc = lam_fac_hm_lower_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+		}
+		scope:recipient = {
+			is_ai = yes
+			NOT = {
+				this = scope:actor
+			}
+			var:lam_bloc ?= scope:actor
+			var:lam_fac_tier ?= 1
+		}
+	}
+	on_accept = {
+		if = {
+			limit = {
+				scope:actor = {
+					is_ai = no
+					has_variable = lam_bloc_lead
+				}
+				scope:recipient = {
+					is_ai = yes
+					NOT = {
+						this = scope:actor
+					}
+					var:lam_bloc ?= scope:actor
+					var:lam_fac_tier ?= 1
+				}
+				lam_pt_hm_current_trigger = yes
+				scope:recipient = {
+					custom_description = {
+						text = lam_pt_rank_cd_tt
+						NOT = {
+							has_variable = lam_pt_rank_cd
+						}
+					}
+				}
+				scope:actor = {
+					custom_description = {
+						text = lam_pt_head_available_tt
+						lam_pt_head_ready_trigger = yes
+					}
+				}
+			}
+			scope:recipient = {
+				set_variable = {
+					name = lam_fac_tier
+					value = 2
+				}
+				if = {
+					limit = {
+						has_variable = lam_fac_tier_fixed
+					}
+					remove_variable = lam_fac_tier_fixed
+				}
+				add_opinion = {
+					target = scope:actor
+					modifier = lam_fac_demoted_opinion
+				}
+			}
+			hidden_effect = {
+				scope:actor = {
+					lam_fac_quick_refresh_court_effect = yes
+				}
+			}
+			scope:recipient = {
+				set_variable = {
+					name = lam_pt_rank_cd
+					value = yes
+					months = 6
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+	is_valid_showing_failures_only = {
+		lam_pt_hm_current_trigger = yes
+		scope:recipient = {
+			custom_description = {
+				text = lam_pt_rank_cd_tt
+				NOT = {
+					has_variable = lam_pt_rank_cd
+				}
+			}
+		}
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+		}
+	}
+}
+# Head -> member: cast out.
+lam_fac_hm_expel_interaction = {
+	category = interaction_category_hostile
+	icon = lam_ic_issue
+	desc = lam_fac_hm_expel_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+		}
+		scope:recipient = {
+			is_ai = yes
+			NOT = {
+				this = scope:actor
+			}
+			var:lam_bloc ?= scope:actor
+		}
+	}
+	on_accept = {
+		if = {
+			limit = {
+				scope:actor = {
+					is_ai = no
+					has_variable = lam_bloc_lead
+				}
+				scope:recipient = {
+					is_ai = yes
+					NOT = {
+						this = scope:actor
+					}
+					var:lam_bloc ?= scope:actor
+				}
+				lam_pt_hm_current_trigger = yes
+				scope:actor = {
+					custom_description = {
+						text = lam_pt_head_available_tt
+						lam_pt_head_ready_trigger = yes
+					}
+				}
+			}
+			scope:recipient = {
+				remove_variable = lam_bloc
+				if = {
+					limit = {
+						has_variable = lam_fac_tier
+					}
+					remove_variable = lam_fac_tier
+				}
+				if = {
+					limit = {
+						has_variable = lam_fac_pinned
+					}
+					remove_variable = lam_fac_pinned
+				}
+				if = {
+					limit = {
+						has_variable = lam_fac_tier_fixed
+					}
+					remove_variable = lam_fac_tier_fixed
+				}
+				set_variable = {
+					name = lam_fac_unbound
+					value = yes
+					years = 2
+				}
+				add_opinion = {
+					target = scope:actor
+					modifier = lam_fac_expelled_opinion
+				}
+			}
+			scope:actor = {
+				lam_fac_cohesion_add_effect = {
+					ADD = 3
+				}
+				if = {
+					limit = {
+						var:lam_fac_succ_pick ?= scope:recipient
+					}
+					remove_variable = lam_fac_succ_pick
+				}
+			}
+			hidden_effect = {
+				scope:actor = {
+					lam_fac_quick_refresh_court_effect = yes
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+	is_valid_showing_failures_only = {
+		lam_pt_hm_current_trigger = yes
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+		}
+	}
+}
+# Head -> member: name them to follow me as head.
+lam_fac_hm_successor_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_hm_successor_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+		}
+		scope:recipient = {
+			is_ai = yes
+			NOT = {
+				this = scope:actor
+			}
+			var:lam_bloc ?= scope:actor
+			is_ruler = yes
+			NOT = {
+				scope:actor.var:lam_fac_succ_pick ?= this
+			}
+		}
+	}
+	on_accept = {
+		if = {
+			limit = {
+				scope:actor = {
+					is_ai = no
+					has_variable = lam_bloc_lead
+				}
+				scope:recipient = {
+					is_ai = yes
+					NOT = {
+						this = scope:actor
+					}
+					var:lam_bloc ?= scope:actor
+					is_ruler = yes
+					NOT = {
+						scope:actor.var:lam_fac_succ_pick ?= this
+					}
+				}
+				lam_pt_hm_current_trigger = yes
+				scope:recipient = {
+					is_adult = yes
+					is_imprisoned = no
+				}
+				scope:actor = {
+					custom_description = {
+						text = lam_pt_head_available_tt
+						lam_pt_head_ready_trigger = yes
+					}
+				}
+			}
+			custom_tooltip = lam_fac_hm_successor_tt
+			scope:actor = {
+				set_variable = {
+					name = lam_fac_succ_pick
+					value = scope:recipient
+				}
+			}
+			scope:recipient = {
+				add_opinion = {
+					target = scope:actor
+					modifier = lam_fac_named_successor_opinion
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+	is_valid_showing_failures_only = {
+		lam_pt_hm_current_trigger = yes
+		scope:recipient = {
+			is_adult = yes
+			is_imprisoned = no
+		}
+		scope:actor = {
+			custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+		}
+	}
+}
+
+# Member -> head: raise me to the core.
+lam_fac_mh_raise_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_mh_raise_interaction_desc
+	is_shown = {
+		scope:actor = { is_ai = no NOT = { has_variable = lam_bloc_lead } var:lam_bloc ?= scope:recipient NOT = { var:lam_fac_tier ?= 1 } }
+		scope:recipient = { is_ai = yes has_variable = lam_bloc_lead }
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = { custom_description = { text = lam_fac_mh_cd_tt NOT = { has_variable = lam_fac_mh_raise_cd } } }
+	}
+	ai_accept = {
+		base = -10
+		opinion_modifier = { who = scope:recipient opinion_target = scope:actor multiplier = 0.6 }
+		modifier = { add = 30 desc = lam_ai_fac_strong_reason scope:actor.max_military_strength >= { value = scope:recipient.max_military_strength multiply = 0.5 } }
+		modifier = { add = -20 desc = lam_ai_fac_weak_reason scope:actor.max_military_strength < { value = scope:recipient.max_military_strength multiply = 0.15 } }
+		modifier = { add = 25 desc = lam_ai_fac_kin_reason scope:actor.house ?= scope:recipient.house }
+		modifier = { add = 15 desc = lam_ai_fac_long_reason scope:actor = { has_variable = lam_fac_pinned } }
+	}
+	on_accept = {
+		scope:actor = {
+			set_variable = { name = lam_fac_tier value = 1 }
+			set_variable = { name = lam_fac_tier_fixed value = yes years = 5 }
+			send_interface_message = { type = event_generic_good title = lam_fac_mh_raised_title right_icon = scope:recipient }
+		}
+		hidden_effect = { scope:actor = { lam_fac_quick_refresh_court_effect = yes } }
+	}
+	on_decline = { scope:actor = { set_variable = { name = lam_fac_mh_raise_cd value = yes years = 1 } } }
+	ai_will_do = { base = 0 }
+}
+# Member -> head: the faction's help (gold, or arms in my war).
+lam_fac_mh_aid_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_mh_aid_interaction_desc
+	is_shown = {
+		scope:actor = { is_ai = no NOT = { has_variable = lam_bloc_lead } var:lam_bloc ?= scope:recipient }
+		scope:recipient = { is_ai = yes has_variable = lam_bloc_lead }
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = { custom_description = { text = lam_fac_mh_aid_cd_tt NOT = { has_variable = lam_fac_mh_aid_cd } } }
+	}
+	send_options_exclusive = yes
+	send_option = { is_valid = { scope:recipient = { gold >= minor_gold_value } } flag = lam_ad_gold localization = lam_ad_gold current_description = lam_ad_gold_desc }
+	send_option = { is_valid = { scope:actor = { is_at_war = yes } } flag = lam_ad_arms localization = lam_ad_arms current_description = lam_ad_arms_desc }
+	ai_accept = {
+		base = -15
+		opinion_modifier = { who = scope:recipient opinion_target = scope:actor multiplier = 0.7 }
+		modifier = { add = 25 desc = lam_ai_fac_core_member_reason scope:actor = { var:lam_fac_tier ?= 1 } }
+		modifier = { add = 15 desc = lam_ai_fac_cohesive_reason scope:recipient = { has_variable = lam_fac_cohesion var:lam_fac_cohesion >= 60 } }
+		modifier = { add = -15 desc = lam_ai_fac_greedy_reason scope:recipient = { has_trait = greedy } }
+		modifier = { add = 25 desc = lam_ai_fac_kin_reason scope:actor.house ?= scope:recipient.house }
+	}
+	on_accept = {
+		scope:actor = { set_variable = { name = lam_fac_mh_aid_cd value = yes years = 3 } }
+		if = {
+			limit = { scope:lam_ad_gold = yes }
+			scope:recipient = { pay_short_term_gold = { target = scope:actor gold = minor_gold_value } }
+		}
+		if = {
+			limit = { scope:lam_ad_arms = yes }
+			custom_tooltip = lam_ad_arms_tt
+			hidden_effect = {
+				scope:actor = {
+					save_scope_as = lam_ca_lord
+					every_character_war = {
+						save_scope_as = lam_ca_war
+						scope:recipient = { lam_fac_join_war_effect = yes }
+						scope:recipient = {
+							every_in_list = {
+								variable = lam_fac_members
+								limit = { is_alive = yes is_ruler = yes var:lam_bloc ?= scope:recipient var:lam_fac_tier ?= 1 NOT = { this = scope:actor } }
+								random = { chance = 50 lam_fac_join_war_effect = yes }
+							}
+						}
+					}
+				}
+			}
+		}
+		scope:recipient = { add_opinion = { target = scope:actor modifier = lam_fac_aid_given_opinion } }
+	}
+	on_decline = { scope:actor = { set_variable = { name = lam_fac_mh_aid_cd value = yes years = 1 } } }
+	ai_will_do = { base = 0 }
+}
+# Member -> head: counsel.
+lam_fac_mh_counsel_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_mh_counsel_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = { is_ai = no NOT = { has_variable = lam_bloc_lead } var:lam_bloc ?= scope:recipient }
+		scope:recipient = { is_ai = yes has_variable = lam_bloc_lead }
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = { custom_description = { text = lam_fac_mh_counsel_cd_tt NOT = { has_variable = lam_fac_mh_counsel_cd } } }
+	}
+	send_options_exclusive = yes
+	send_option = { flag = lam_cs_close localization = lam_cs_close current_description = lam_cs_close_desc }
+	send_option = { flag = lam_cs_stir localization = lam_cs_stir current_description = lam_cs_stir_desc }
+	send_option = { flag = lam_cs_calm localization = lam_cs_calm current_description = lam_cs_calm_desc }
+	on_accept = {
+		scope:actor = { set_variable = { name = lam_fac_mh_counsel_cd value = yes years = 1 } }
+		scope:recipient = {
+			add_opinion = { target = scope:actor modifier = lam_fac_counselled_opinion }
+			if = { limit = { scope:lam_cs_close = yes } custom_tooltip = lam_cs_close_tt hidden_effect = { lam_fac_cohesion_add_effect = { ADD = 5 } } }
+			if = { limit = { scope:lam_cs_stir = yes } custom_tooltip = lam_cs_stir_tt hidden_effect = { set_variable = { name = lam_fac_grievance value = yes years = 2 } } }
+			if = {
+				limit = { scope:lam_cs_calm = yes }
+				custom_tooltip = lam_cs_calm_tt
+				hidden_effect = {
+					if = { limit = { has_variable = lam_fac_grievance } remove_variable = lam_fac_grievance }
+					if = { limit = { NOT = { has_variable = lam_fac_favour } } set_variable = { name = lam_fac_favour value = 0 } }
+					change_variable = { name = lam_fac_favour add = 5 }
+					clamp_variable = { name = lam_fac_favour min = -100 max = 100 }
+				}
+			}
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+# Member -> head: pledge myself.
+lam_fac_mh_pledge_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_fac_mh_pledge_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = { is_ai = no NOT = { has_variable = lam_bloc_lead } var:lam_bloc ?= scope:recipient }
+		scope:recipient = { is_ai = yes has_variable = lam_bloc_lead }
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = { custom_description = { text = lam_fac_mh_pledge_cd_tt NOT = { has_variable = lam_fac_mh_pledge_cd } } }
+	}
+	on_accept = {
+		scope:actor = {
+			set_variable = { name = lam_fac_mh_pledge_cd value = yes years = 3 }
+			set_variable = { name = lam_fac_pinned value = yes }
+			add_prestige = minor_prestige_gain
+		}
+		scope:recipient = {
+			add_opinion = { target = scope:actor modifier = lam_fac_pledged_opinion }
+			lam_fac_cohesion_add_effect = { ADD = 3 }
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+
+############################
+# The court party's road (step_court_party).
+############################
+# Counsel the lord.
+lam_cp_counsel_interaction = {
+	category = interaction_category_vassal
+	icon = lam_ic_terms
+	desc = lam_cp_counsel_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = { is_ai = no has_variable = lam_fac_courtparty NOT = { has_variable = lam_cp_treason } liege ?= scope:recipient }
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = { custom_description = { text = lam_cp_counsel_cd_tt NOT = { has_variable = lam_cp_counsel_cd } } }
+	}
+	send_options_exclusive = yes
+	send_option = { flag = lam_cc_purse localization = lam_cc_purse current_description = lam_cc_purse_desc }
+	send_option = { flag = lam_cc_arms localization = lam_cc_arms current_description = lam_cc_arms_desc }
+	send_option = { flag = lam_cc_court localization = lam_cc_court current_description = lam_cc_court_desc }
+	on_accept = {
+		scope:actor = {
+			set_variable = { name = lam_cp_counsel_cd value = yes years = 1 }
+			custom_tooltip = lam_cp_counsel_tt
+			hidden_effect = {
+				save_temporary_scope_value_as = { name = lam_cc_skill value = diplomacy }
+				if = { limit = { scope:lam_cc_purse = yes } save_temporary_scope_value_as = { name = lam_cc_skill value = stewardship } }
+				if = { limit = { scope:lam_cc_arms = yes } save_temporary_scope_value_as = { name = lam_cc_skill value = martial } }
+				random_list = {
+					0 = {
+						modifier = { add = { value = 35 add = { value = scope:lam_cc_skill multiply = 3 } } }
+						scope:recipient = { add_opinion = { target = scope:actor modifier = lam_cp_counsel_opinion } }
+						if = { limit = { NOT = { has_variable = lam_fac_favour } } set_variable = { name = lam_fac_favour value = 0 } }
+						change_variable = { name = lam_fac_favour add = 5 }
+						clamp_variable = { name = lam_fac_favour min = -100 max = 100 }
+						lam_cp_merit_add_effect = { ADD = 1 }
+						send_interface_message = { type = event_generic_good title = lam_cp_counsel_yes_title right_icon = scope:recipient }
+					}
+					0 = {
+						modifier = { add = 40 }
+						scope:recipient = { add_opinion = { target = scope:actor modifier = lam_cp_counsel_bad_opinion } }
+						send_interface_message = { type = event_generic_bad title = lam_cp_counsel_no_title right_icon = scope:recipient }
+					}
+				}
+			}
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+# Ask the lord for a task (event 2830).
+lam_cp_mission_interaction = {
+	category = interaction_category_vassal
+	icon = lam_ic_terms
+	desc = lam_cp_mission_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = { is_ai = no has_variable = lam_fac_courtparty NOT = { has_variable = lam_cp_treason } liege ?= scope:recipient }
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = { custom_description = { text = lam_cp_mission_cd_tt NOT = { has_variable = lam_cp_mission_cd } } }
+	}
+	on_accept = {
+		scope:actor = {
+			set_variable = { name = lam_cp_mission_cd value = yes years = 2 }
+			scope:recipient = { save_scope_as = lam_cp_lord }
+			trigger_event = lam_faction.2830
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+# Report a faction plotting against the lord.
+lam_cp_report_interaction = {
+	category = interaction_category_hostile
+	icon = lam_ic_issue
+	desc = lam_cp_report_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = { is_ai = no has_variable = lam_fac_courtparty NOT = { has_variable = lam_cp_treason } }
+		scope:recipient = {
+			has_variable = lam_bloc_lead
+			NOT = { this = scope:actor }
+			liege ?= scope:actor.liege
+			OR = { var:lam_fac_stage ?= 2 var:lam_fac_stage ?= 3 var:lam_fac_stage ?= 4 var:lam_fac_stage ?= 9 }
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = { custom_description = { text = lam_cp_report_cd_tt NOT = { has_variable = lam_cp_report_cd } } }
+	}
+	on_accept = {
+		scope:actor = {
+			set_variable = { name = lam_cp_report_cd value = yes years = 2 }
+			lam_cp_merit_add_effect = { ADD = 1 }
+			liege = { add_opinion = { target = scope:actor modifier = lam_fac_reported_opinion } add_opinion = { target = scope:recipient modifier = lam_fac_plot_reported_opinion } }
+			if = { limit = { NOT = { is_target_in_variable_list = { name = lam_fac_foes target = scope:recipient } } } add_to_variable_list = { name = lam_fac_foes target = scope:recipient } }
+		}
+		scope:recipient = {
+			lam_fac_cohesion_add_effect = { ADD = -10 }
+			add_opinion = { target = scope:actor modifier = lam_fac_turned_coat_opinion }
+			if = { limit = { has_variable = lam_fac_intel } change_variable = { name = lam_fac_intel add = 1 } clamp_variable = { name = lam_fac_intel min = 0 max = 3 } }
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+# The hidden blade: begin to plot.
+lam_cp_hidden_blade_interaction = {
+	category = interaction_category_hostile
+	icon = lam_ic_issue
+	desc = lam_cp_hidden_blade_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = scope:recipient
+		scope:actor = { is_ai = no has_variable = lam_bloc_lead exists = liege }
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_description = { text = lam_cp_blade_need_tt has_variable = lam_fac_courtparty }
+			custom_description = { text = lam_cp_blade_years_tt has_variable = lam_cp_years var:lam_cp_years >= 3 }
+			NOT = { has_variable = lam_cp_treason }
+		}
+	}
+	on_accept = {
+		scope:actor = {
+			custom_tooltip = lam_cp_hidden_blade_tt
+			hidden_effect = {
+				set_variable = { name = lam_cp_treason value = yes }
+				set_variable = { name = lam_cp_treason_m value = { value = lam_now_m add = 12 } }
+				add_secret = { type = lam_secret_cp_treason }
+			}
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+# The hidden blade: draw it.
+lam_cp_draw_blade_interaction = {
+	category = interaction_category_hostile
+	icon = lam_ic_issue
+	desc = lam_cp_draw_blade_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = scope:recipient
+		scope:actor = { is_ai = no has_variable = lam_cp_treason exists = liege }
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_description = { text = lam_cp_draw_wait_tt has_variable = lam_cp_treason_m var:lam_cp_treason_m <= lam_now_m }
+			NOT = { exists = joined_faction }
+			NOT = { is_at_war_with = liege }
+		}
+	}
+	send_options_exclusive = yes
+	send_option = { flag = lam_db_rise localization = lam_db_rise current_description = lam_db_rise_desc }
+	send_option = {
+		is_valid = { scope:actor = { custom_description = { text = lam_db_seize_need_tt has_variable = lam_fac_share var:lam_fac_share >= 40 } } }
+		flag = lam_db_seize localization = lam_db_seize current_description = lam_db_seize_desc
+	}
+	on_accept = {
+		scope:actor = {
+			if = { limit = { scope:lam_db_seize = yes } custom_tooltip = lam_db_seize_tt hidden_effect = { save_scope_value_as = { name = lam_cp_way value = flag:seize } lam_cp_draw_blade_effect = yes } }
+			else = { custom_tooltip = lam_db_rise_tt hidden_effect = { save_scope_value_as = { name = lam_cp_way value = flag:rise } lam_cp_draw_blade_effect = yes } }
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+
+############################
+# The power behind the throne (step_shadow_ruler): the king's council and court are mine to fill.
+############################
+lam_sh_council_interaction = {
+	category = interaction_category_vassal
+	icon = lam_ic_terms
+	desc = lam_sh_council_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_fac_puppeteer_of
+		}
+		scope:recipient = {
+			is_adult = yes
+			OR = {
+				this = scope:actor
+				liege ?= scope:actor.var:lam_fac_puppeteer_of
+				is_courtier_of = scope:actor.var:lam_fac_puppeteer_of
+			}
+			NOT = {
+				this = scope:actor.var:lam_fac_puppeteer_of
+			}
+		}
+		scope:actor = {
+			lam_nc_control_trigger = {
+				LORD = scope:actor.var:lam_fac_puppeteer_of
+			}
+		}
+	}
+	send_options_exclusive = yes
+	send_option = {
+		flag = lam_ss_chancellor
+		localization = lam_ss_chancellor
+		is_valid = {
+			scope:actor = {
+				lam_nc_control_trigger = {
+					LORD = scope:actor.var:lam_fac_puppeteer_of
+				}
+			}
+			scope:actor.var:lam_fac_puppeteer_of = {
+				lam_nc_appoint_trigger = {
+					SEAT = chancellor
+					CANDIDATE = scope:recipient
+				}
+			}
+		}
+	}
+	send_option = {
+		flag = lam_ss_marshal
+		localization = lam_ss_marshal
+		is_valid = {
+			scope:actor = {
+				lam_nc_control_trigger = {
+					LORD = scope:actor.var:lam_fac_puppeteer_of
+				}
+			}
+			scope:actor.var:lam_fac_puppeteer_of = {
+				lam_nc_appoint_trigger = {
+					SEAT = marshal
+					CANDIDATE = scope:recipient
+				}
+			}
+		}
+	}
+	send_option = {
+		flag = lam_ss_steward
+		localization = lam_ss_steward
+		is_valid = {
+			scope:actor = {
+				lam_nc_control_trigger = {
+					LORD = scope:actor.var:lam_fac_puppeteer_of
+				}
+			}
+			scope:actor.var:lam_fac_puppeteer_of = {
+				lam_nc_appoint_trigger = {
+					SEAT = steward
+					CANDIDATE = scope:recipient
+				}
+			}
+		}
+	}
+	send_option = {
+		flag = lam_ss_spymaster
+		localization = lam_ss_spymaster
+		is_valid = {
+			scope:actor = {
+				lam_nc_control_trigger = {
+					LORD = scope:actor.var:lam_fac_puppeteer_of
+				}
+			}
+			scope:actor.var:lam_fac_puppeteer_of = {
+				lam_nc_appoint_trigger = {
+					SEAT = spymaster
+					CANDIDATE = scope:recipient
+				}
+			}
+		}
+	}
+	send_option = {
+		flag = lam_ss_chaplain
+		localization = lam_ss_chaplain
+		is_valid = {
+			scope:actor = {
+				lam_nc_control_trigger = {
+					LORD = scope:actor.var:lam_fac_puppeteer_of
+				}
+			}
+			scope:actor.var:lam_fac_puppeteer_of = {
+				can_appoint_own_court_chaplain_trigger = yes
+				lam_nc_appoint_trigger = {
+					SEAT = court_chaplain
+					CANDIDATE = scope:recipient
+				}
+			}
+		}
+	}
+	on_accept = {
+		if = {
+			limit = {
+				scope:actor = {
+					lam_nc_control_trigger = {
+						LORD = scope:actor.var:lam_fac_puppeteer_of
+					}
+				}
+			}
+			custom_tooltip = lam_sh_council_tt
+			if = {
+				limit = {
+					scope:lam_ss_chancellor = yes
+				}
+				scope:actor.var:lam_fac_puppeteer_of = {
+					lam_nc_appoint_effect = {
+						SEAT = chancellor
+						CANDIDATE = scope:recipient
+					}
+				}
+			}
+			if = {
+				limit = {
+					scope:lam_ss_marshal = yes
+				}
+				scope:actor.var:lam_fac_puppeteer_of = {
+					lam_nc_appoint_effect = {
+						SEAT = marshal
+						CANDIDATE = scope:recipient
+					}
+				}
+			}
+			if = {
+				limit = {
+					scope:lam_ss_steward = yes
+				}
+				scope:actor.var:lam_fac_puppeteer_of = {
+					lam_nc_appoint_effect = {
+						SEAT = steward
+						CANDIDATE = scope:recipient
+					}
+				}
+			}
+			if = {
+				limit = {
+					scope:lam_ss_spymaster = yes
+				}
+				scope:actor.var:lam_fac_puppeteer_of = {
+					lam_nc_appoint_effect = {
+						SEAT = spymaster
+						CANDIDATE = scope:recipient
+					}
+				}
+			}
+			if = {
+				limit = {
+					scope:lam_ss_chaplain = yes
+				}
+				scope:actor.var:lam_fac_puppeteer_of = {
+					if = {
+						limit = {
+							can_appoint_own_court_chaplain_trigger = yes
+						}
+						lam_nc_appoint_effect = {
+							SEAT = court_chaplain
+							CANDIDATE = scope:recipient
+						}
+					}
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+lam_sh_office_interaction = {
+	category = interaction_category_vassal
+	icon = lam_ic_terms
+	desc = lam_sh_office_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = scope:recipient
+		scope:actor = { is_ai = no has_variable = lam_fac_puppeteer_of }
+	}
+	send_options_exclusive = yes
+	send_option = { flag = lam_so_0 localization = champion_court_position }
+	send_option = { flag = lam_so_1 localization = master_of_horse_court_position }
+	send_option = { flag = lam_so_2 localization = court_physician_court_position }
+	send_option = { flag = lam_so_3 localization = court_tutor_court_position }
+	send_option = { flag = lam_so_4 localization = bodyguard_court_position }
+	send_option = { flag = lam_so_5 localization = chronicler_court_position }
+	send_option = { flag = lam_so_6 localization = antiquarian_court_position }
+	send_option = { flag = lam_so_7 localization = master_of_hunt_court_position }
+	send_option = { flag = lam_so_8 localization = cupbearer_court_position }
+	send_option = { flag = lam_so_9 localization = food_taster_court_position }
+	send_option = { flag = lam_so_10 localization = master_assassin_court_position }
+	send_option = { flag = lam_so_11 localization = seneschal_court_position }
+	on_accept = {
+		custom_tooltip = lam_sh_office_tt
+		if = { limit = { scope:lam_so_0 = yes } scope:actor.var:lam_fac_puppeteer_of = { appoint_court_position = { recipient = scope:actor court_position = champion_court_position } } }
+		if = { limit = { scope:lam_so_1 = yes } scope:actor.var:lam_fac_puppeteer_of = { appoint_court_position = { recipient = scope:actor court_position = master_of_horse_court_position } } }
+		if = { limit = { scope:lam_so_2 = yes } scope:actor.var:lam_fac_puppeteer_of = { appoint_court_position = { recipient = scope:actor court_position = court_physician_court_position } } }
+		if = { limit = { scope:lam_so_3 = yes } scope:actor.var:lam_fac_puppeteer_of = { appoint_court_position = { recipient = scope:actor court_position = court_tutor_court_position } } }
+		if = { limit = { scope:lam_so_4 = yes } scope:actor.var:lam_fac_puppeteer_of = { appoint_court_position = { recipient = scope:actor court_position = bodyguard_court_position } } }
+		if = { limit = { scope:lam_so_5 = yes } scope:actor.var:lam_fac_puppeteer_of = { appoint_court_position = { recipient = scope:actor court_position = chronicler_court_position } } }
+		if = { limit = { scope:lam_so_6 = yes } scope:actor.var:lam_fac_puppeteer_of = { appoint_court_position = { recipient = scope:actor court_position = antiquarian_court_position } } }
+		if = { limit = { scope:lam_so_7 = yes } scope:actor.var:lam_fac_puppeteer_of = { appoint_court_position = { recipient = scope:actor court_position = master_of_hunt_court_position } } }
+		if = { limit = { scope:lam_so_8 = yes } scope:actor.var:lam_fac_puppeteer_of = { appoint_court_position = { recipient = scope:actor court_position = cupbearer_court_position } } }
+		if = { limit = { scope:lam_so_9 = yes } scope:actor.var:lam_fac_puppeteer_of = { appoint_court_position = { recipient = scope:actor court_position = food_taster_court_position } } }
+		if = { limit = { scope:lam_so_10 = yes } scope:actor.var:lam_fac_puppeteer_of = { appoint_court_position = { recipient = scope:actor court_position = master_assassin_court_position } } }
+		if = { limit = { scope:lam_so_11 = yes } scope:actor.var:lam_fac_puppeteer_of = { appoint_court_position = { recipient = scope:actor court_position = seneschal_court_position } } }
+	}
+	ai_will_do = { base = 0 }
+}
+
+# The power behind the throne: decrees in the crown's name (step_shadow_more). Right-click the puppet ruler.
+lam_sh_decree_interaction = {
+	category = interaction_category_vassal
+	icon = lam_ic_terms
+	desc = lam_sh_decree_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = { is_ai = no var:lam_fac_puppeteer_of ?= scope:recipient }
+		scope:recipient = { var:lam_fac_puppet_master ?= scope:actor }
+	}
+	send_options_exclusive = yes
+	send_option = {
+		flag = lam_sd_up
+		localization = lam_sd_up
+		is_valid = {
+			scope:recipient = { realm_law_use_crown_authority = yes NOT = { has_realm_law = crown_authority_3 } }
+			custom_description = { text = lam_sd_law_cd_tt scope:actor = { NOT = { has_variable = lam_sd_law_cd } } }
+		}
+	}
+	send_option = {
+		flag = lam_sd_down
+		localization = lam_sd_down
+		is_valid = {
+			scope:recipient = { realm_law_use_crown_authority = yes NOT = { has_realm_law = crown_authority_0 } }
+			custom_description = { text = lam_sd_law_cd_tt scope:actor = { NOT = { has_variable = lam_sd_law_cd } } }
+		}
+	}
+	send_option = {
+		flag = lam_sd_gold
+		localization = lam_sd_gold
+		is_valid = {
+			scope:recipient = { gold > 0 }
+			custom_description = { text = lam_sd_gold_cd_tt scope:actor = { NOT = { has_variable = lam_sd_gold_cd } } }
+		}
+	}
+	send_option = {
+		flag = lam_sd_favor
+		localization = lam_sd_favor
+		is_valid = {
+			scope:recipient = { any_vassal = { NOT = { this = scope:actor } } }
+			custom_description = { text = lam_sd_favor_cd_tt scope:actor = { NOT = { has_variable = lam_sd_favor_cd } } }
+		}
+	}
+	send_option = {
+		flag = lam_sd_abdicate
+		localization = lam_sd_abdicate
+		is_valid = {
+			custom_description = { text = lam_sd_heir_tt scope:recipient = { exists = primary_heir } }
+			custom_description = { text = lam_sd_abd_cd_tt scope:actor = { NOT = { has_variable = lam_sd_abd_cd } } }
+			scope:actor = { prestige >= 500 }
+		}
+	}
+	on_accept = {
+		if = {
+			limit = { scope:lam_sd_up = yes }
+			custom_tooltip = lam_sd_up_tt
+			scope:actor = { set_variable = { name = lam_sd_law_cd value = yes years = 1 } }
+			scope:recipient = {
+				if = { limit = { has_realm_law = crown_authority_2 } add_realm_law_skip_effects = crown_authority_3 }
+				else_if = { limit = { has_realm_law = crown_authority_1 } add_realm_law_skip_effects = crown_authority_2 }
+				else_if = { limit = { has_realm_law = crown_authority_0 } add_realm_law_skip_effects = crown_authority_1 }
+			}
+		}
+		if = {
+			limit = { scope:lam_sd_down = yes }
+			custom_tooltip = lam_sd_down_tt
+			scope:actor = { set_variable = { name = lam_sd_law_cd value = yes years = 1 } }
+			scope:recipient = {
+				if = { limit = { has_realm_law = crown_authority_1 } add_realm_law_skip_effects = crown_authority_0 }
+				else_if = { limit = { has_realm_law = crown_authority_2 } add_realm_law_skip_effects = crown_authority_1 }
+				else_if = { limit = { has_realm_law = crown_authority_3 } add_realm_law_skip_effects = crown_authority_2 }
+			}
+		}
+		if = {
+			limit = { scope:lam_sd_gold = yes }
+			custom_tooltip = lam_sd_gold_tt
+			hidden_effect = {
+				scope:actor = { set_variable = { name = lam_sd_gold_cd value = yes years = 1 } }
+				scope:recipient = { save_scope_value_as = { name = lam_sd_g value = { value = gold multiply = { value = lam_tune_sh_treasury_pct divide = 100 } min = 0 } } }
+				scope:recipient = { remove_short_term_gold = scope:lam_sd_g }
+				scope:actor = { add_gold = scope:lam_sd_g }
+			}
+		}
+		if = {
+			limit = { scope:lam_sd_favor = yes }
+			custom_tooltip = lam_sd_favor_tt
+			hidden_effect = {
+				scope:actor = { set_variable = { name = lam_sd_favor_cd value = yes years = 5 } }
+				scope:recipient = {
+					every_vassal = {
+						limit = { NOT = { this = scope:actor } }
+						add_opinion = { target = scope:actor modifier = lam_sh_royal_favor_opinion }
+					}
+				}
+			}
+		}
+		if = {
+			limit = { scope:lam_sd_abdicate = yes }
+			custom_tooltip = lam_sd_abdicate_tt
+			scope:actor = { add_prestige = -500 }
+			hidden_effect = {
+				scope:actor = { set_variable = { name = lam_sd_abd_cd value = yes years = 10 } }
+				scope:recipient = {
+					save_scope_as = lam_sd_old
+					primary_heir ?= { save_scope_as = lam_sd_heir }
+					if = { limit = { has_variable = lam_fac_puppet_vanilla } save_scope_value_as = { name = lam_sd_wv value = yes } }
+				}
+				if = {
+					limit = { exists = scope:lam_sd_heir }
+					scope:lam_sd_old = {
+						lam_fac_release_effect = yes
+						depose = yes
+					}
+					# The strings pass to the new ruler (unless the throne is now mine).
+					scope:lam_sd_heir = {
+						if = {
+							limit = { is_alive = yes is_ruler = yes NOT = { this = scope:actor } NOT = { has_variable = lam_fac_puppet_master } }
+							if = { limit = { exists = scope:lam_sd_wv } set_variable = { name = lam_fac_puppet_vanilla value = yes } }
+							lam_fac_seize_effect = { LEAD = scope:actor }
+						}
+					}
+				}
+			}
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+
+# Debug mode only: become this ruler's power behind the throne at once (for testing).
+lam_fac_debug_seize_interaction = {
+	category = interaction_category_hostile
+	icon = lam_ic_terms
+	desc = lam_fac_debug_seize_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		debug_only = yes
+		scope:actor = { is_ai = no NOT = { var:lam_fac_puppeteer_of ?= { is_alive = yes } } }
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			is_ruler = yes
+			is_landed = yes
+			NOT = { has_variable = lam_fac_puppet_master }
+		}
+	}
+	on_accept = {
+		custom_tooltip = lam_fac_debug_seize_tt
+		hidden_effect = {
+			scope:recipient = {
+				set_variable = { name = lam_fac_puppet_vanilla value = yes }
+				lam_fac_seize_effect = { LEAD = scope:actor }
+			}
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+
+# The power behind the throne takes a member of the royal household as spouse or concubine (step_shadow_royal).
+lam_sh_royal_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	desc = lam_sh_royal_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = { is_ai = no var:lam_fac_puppeteer_of ?= { is_alive = yes var:lam_fac_puppet_master ?= scope:actor } }
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			is_adult = yes
+			is_ruler = no
+			OR = {
+				is_spouse_of = scope:actor.var:lam_fac_puppeteer_of
+				is_child_of = scope:actor.var:lam_fac_puppeteer_of
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		custom_description = { text = lam_sh_royal_cd_tt scope:actor = { NOT = { has_variable = lam_sh_royal_cd } } }
+		scope:recipient = {
+			is_imprisoned = no
+			could_marry_character_trigger = { CHARACTER = scope:actor }
+			trigger_if = {
+				limit = { NOT = { is_spouse_of = scope:actor.var:lam_fac_puppeteer_of } }
+				is_married = no
+				is_betrothed = no
+			}
+		}
+	}
+	send_options_exclusive = yes
+	send_option = {
+		flag = lam_tr_spouse
+		localization = lam_tr_spouse
+		is_valid = { scope:actor = { can_marry_trigger = yes } }
+	}
+	send_option = {
+		flag = lam_tr_concubine
+		localization = lam_tr_concubine
+		is_valid = { can_have_concubines_trigger = { CHAR = scope:actor } }
+	}
+	on_accept = {
+		scope:actor.var:lam_fac_puppeteer_of = { save_scope_as = lam_tr_king }
+		scope:actor = { set_variable = { name = lam_sh_royal_cd value = yes years = 1 } }
+		# The ruler's spouse is put aside first.
+		if = {
+			limit = { scope:recipient = { is_spouse_of = scope:lam_tr_king } }
+			scope:recipient = { divorce = scope:lam_tr_king }
+		}
+		if = {
+			limit = { scope:lam_tr_spouse = yes }
+			scope:actor = { marry = scope:recipient }
+			scope:recipient = { add_opinion = { target = scope:actor modifier = angry_opinion opinion = -10 } }
+		}
+		else = {
+			scope:actor = { add_courtier = scope:recipient make_concubine = scope:recipient }
+			scope:recipient = { add_opinion = { target = scope:actor modifier = angry_opinion opinion = -25 } }
+		}
+		scope:lam_tr_king = {
+			add_opinion = { target = scope:actor modifier = humiliated_opinion opinion = -40 }
+			add_stress = major_stress_gain
+		}
+		scope:actor = {
+			add_prestige = minor_prestige_loss
+			add_dread = minor_dread_gain
+			custom_tooltip = lam_sh_royal_counter_tt
+			hidden_effect = { if = { limit = { has_variable = lam_sh_counter_cd } remove_variable = lam_sh_counter_cd } }
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+
+# Administrative courts: the faction's chest pushes our own (step_admin_factions).
+lam_fac_adm_back_interaction = {
+	category = interaction_category_vassal
+	icon = lam_ic_terms
+	desc = lam_fac_adm_back_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = { is_ai = no has_variable = lam_bloc_lead liege ?= { government_has_flag = government_is_administrative } }
+		scope:recipient = { is_adult = yes OR = { this = scope:actor var:lam_bloc ?= scope:actor } }
+	}
+	is_valid_showing_failures_only = {
+		custom_description = { text = lam_fac_adm_chest_tt scope:actor = { has_variable = lam_fac_inf var:lam_fac_inf >= lam_tune_adm_cost } }
+	}
+	send_options_exclusive = yes
+	send_option = {
+		flag = lam_adb_throne
+		localization = lam_adb_throne
+		is_valid = { trigger_if = { limit = { exists = scope:actor.top_liege.primary_title scope:actor.top_liege.primary_title = { exists = holder OR = { has_title_law_flag = appointment_type_succession holder = { has_realm_law_flag = appointment_type_succession } } } } is_appointment_valid_trigger = { TITLE = scope:actor.top_liege.primary_title CANDIDATE = scope:recipient TOP_LIEGE = scope:actor.top_liege } } trigger_else = { always = no } }
+	}
+	send_option = {
+		flag = lam_adb_gov
+		localization = lam_adb_gov
+		is_valid = { trigger_if = { limit = { exists = scope:recipient.capital_county.duchy scope:recipient.capital_county.duchy = { exists = holder OR = { has_title_law_flag = appointment_type_succession holder = { has_realm_law_flag = appointment_type_succession } } } } is_appointment_valid_trigger = { TITLE = scope:recipient.capital_county.duchy CANDIDATE = scope:recipient TOP_LIEGE = scope:actor.top_liege } } trigger_else = { always = no } }
+	}
+	on_accept = {
+		custom_tooltip = lam_fac_adm_back_tt
+		hidden_effect = {
+			scope:actor = { change_variable = { name = lam_fac_inf subtract = lam_tune_adm_cost } }
+			if = { limit = { scope:lam_adb_throne = yes } scope:actor.top_liege.primary_title = { save_scope_as = lam_adb_t } }
+			else = { scope:recipient.capital_county.duchy = { save_scope_as = lam_adb_t } }
+			scope:lam_adb_t = { change_appointment_investment = { target = scope:recipient investor = scope:actor value = lam_tune_adm_invest } }
+			scope:recipient = { set_variable = { name = lam_fac_backed_for value = scope:lam_adb_t years = 10 } set_variable = { name = lam_fac_backed_by value = scope:actor years = 10 } }
+		scope:actor = { add_to_variable_list = { name = lam_fac_backed_candidates target = scope:recipient } }
+			if = { limit = { NOT = { scope:recipient = scope:actor } } scope:recipient = { add_opinion = { target = scope:actor modifier = grateful_opinion opinion = 15 } } }
+		}
+	}
+	ai_will_do = { base = 0 }
+}
+# Administrative courts: the chest undercuts a rival faction's man.
+lam_fac_adm_harm_interaction = {
+	category = interaction_category_hostile
+	icon = lam_ic_terms
+	desc = lam_fac_adm_harm_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = { is_ai = no has_variable = lam_bloc_lead liege ?= { government_has_flag = government_is_administrative } }
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			is_adult = yes
+			top_liege ?= scope:actor.top_liege
+			OR = {
+				AND = { has_variable = lam_bloc_lead NOT = { this = scope:actor } }
+				AND = { has_variable = lam_bloc NOT = { var:lam_bloc ?= scope:actor } }
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		custom_description = { text = lam_fac_adm_chest_tt scope:actor = { has_variable = lam_fac_inf var:lam_fac_inf >= lam_tune_adm_cost } }
+	}
+	send_options_exclusive = yes
+	send_option = {
+		flag = lam_adh_throne
+		localization = lam_adh_throne
+		is_valid = { trigger_if = { limit = { exists = scope:actor.top_liege.primary_title scope:actor.top_liege.primary_title = { exists = holder OR = { has_title_law_flag = appointment_type_succession holder = { has_realm_law_flag = appointment_type_succession } } } } is_appointment_valid_trigger = { TITLE = scope:actor.top_liege.primary_title CANDIDATE = scope:recipient TOP_LIEGE = scope:actor.top_liege } } trigger_else = { always = no } }
+	}
+	send_option = {
+		flag = lam_adh_gov
+		localization = lam_adh_gov
+		is_valid = { trigger_if = { limit = { exists = scope:recipient.capital_county.duchy scope:recipient.capital_county.duchy = { exists = holder OR = { has_title_law_flag = appointment_type_succession holder = { has_realm_law_flag = appointment_type_succession } } } } is_appointment_valid_trigger = { TITLE = scope:recipient.capital_county.duchy CANDIDATE = scope:recipient TOP_LIEGE = scope:actor.top_liege } } trigger_else = { always = no } }
+	}
+	on_accept = {
+		custom_tooltip = lam_fac_adm_harm_tt
+		hidden_effect = {
+			scope:actor = { change_variable = { name = lam_fac_inf subtract = lam_tune_adm_cost } }
+			if = { limit = { scope:lam_adh_throne = yes } scope:actor.top_liege.primary_title = { save_scope_as = lam_adh_t } }
+			else = { scope:recipient.capital_county.duchy = { save_scope_as = lam_adh_t } }
+			scope:lam_adh_t = { change_appointment_investment = { target = scope:recipient investor = scope:actor value = { value = lam_tune_adm_invest multiply = -1 } } }
+			scope:recipient = { add_opinion = { target = scope:actor modifier = angry_opinion opinion = -15 } }
+		}
+	}
+	ai_will_do = { base = 0 }
+}

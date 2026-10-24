@@ -1,0 +1,103 @@
+﻿new_faith_created_conversion_effect = {
+	# Convert Capital (if of same faith as recipient's old faith)
+	if = {
+		limit = {
+			scope:recipient = {
+				is_playable_character = yes
+				highest_held_title_tier > tier_barony
+			}
+		}
+		scope:recipient.capital_county = {
+			save_scope_value_as = {
+				name = kCAFG_converted_amount
+				value = {
+					value = 0
+					every_county_province = {
+						every_in_list = {
+							variable = kCAFG_province_rite_structs
+							limit = { var:rite.faith = scope:actor.faith }
+							add = var:factor
+						}
+					}
+					divide = {
+						value = 0
+						every_county_province = { add = 1 }
+						min = 1
+					}
+					multiply = 0.75
+				}
+			}
+			E_kCAFG_convert_rite_in_all_county_provinces = {
+				FACTOR = scope:kCAFG_converted_amount
+				VARIANCE = 0.2
+				RITE = scope:actor.rite
+				MAX = 0.95
+			}
+		}
+	}
+	grab_spouses_and_family_to_convert_effect = yes
+	convert_family_to_faith_effect = {
+		FALSE_CONVERSION = no
+		FORCED = yes
+	}
+}
+
+adopt_religion_interaction_effect = {
+	# Convert Capital (if of same faith as recipient's old faith)
+	if = {
+		limit = {
+			scope:actor = {
+				highest_held_title_tier > tier_barony
+			}
+		}
+		scope:recipient.capital_county = {
+			save_scope_value_as = {
+				name = kCAFG_converted_amount
+				value = {
+					value = 0
+					every_county_province = {
+						every_in_list = {
+							variable = kCAFG_province_rite_structs
+							limit = { var:rite.faith = scope:recipient.faith }
+							add = var:factor
+						}
+					}
+					divide = {
+						value = 0
+						every_county_province = { add = 1 }
+						min = 1
+					}
+					multiply = 0.75
+				}
+			}
+			E_kCAFG_convert_rite_in_all_county_provinces = {
+				FACTOR = scope:kCAFG_converted_amount
+				VARIANCE = 0.2
+				RITE = scope:recipient.rite
+				MAX = 0.95
+			}
+		}
+	}
+	if = {
+		limit = {
+			scope:actor = {
+				highest_held_title_tier > tier_barony
+				NOT = { capital_county.faith = scope:recipient.faith }
+			}
+		}
+		scope:actor.capital_county = {
+			E_kCAFG_convert_rite_in_all_county_provinces = {
+				FACTOR = 0.65
+				VARIANCE = 0.3
+				RITE = scope:recipient.rite
+				MAX = 0.95
+			}
+		}
+	}
+	# Spouses and family convert
+	grab_spouses_and_family_to_convert_effect = yes
+	convert_family_to_faith_effect = {
+		FALSE_CONVERSION = no
+		FORCED = no
+	}
+}

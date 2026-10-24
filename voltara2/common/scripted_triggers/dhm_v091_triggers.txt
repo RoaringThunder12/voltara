@@ -1,0 +1,92 @@
+﻿# v0.9.1: active personality guidance. These are DHM rules, not overrides of
+# vanilla childhood events or the Wards & Wardens interaction.
+
+# Current scope = pupil; manager is the existing human household authority.
+dhm_v091_pupil_eligible_trigger = {
+    exists = scope:dhm_manager
+    scope:dhm_manager = {
+        is_alive = yes
+        is_ai = no
+        NOT = { has_character_flag = dhm_v070_skip_story_pulse }
+    }
+    NOT = { has_global_variable = dhm_setting_education_disabled }
+    NOT = { has_global_variable = dhm091_personality_disabled }
+    is_alive = yes
+    is_ai = yes
+    age >= 6
+    age < 16
+    is_imprisoned = no
+    is_hostage = no
+    is_travelling = no
+    NOT = { has_trait = incapable }
+    is_close_family_of = scope:dhm_manager
+    is_in_the_same_court_as = scope:dhm_manager
+    number_of_personality_traits < 4
+    NOT = { has_character_flag = dhm091_personality_recent }
+}
+
+# Current scope = a personality trait owned by the proposed educator.
+# A deliberately constructive teaching pool; not a universal moral judgement.
+dhm_v091_teachable_trait_trigger = {
+    has_trait_category = personality
+    OR = {
+        this = trait:diligent
+        this = trait:patient
+        this = trait:temperate
+        this = trait:just
+        this = trait:honest
+        this = trait:compassionate
+        this = trait:generous
+        this = trait:humble
+        this = trait:brave
+        this = trait:calm
+        this = trait:gregarious
+        this = trait:forgiving
+    }
+    scope:dhm_v091_pupil = { NOT = { has_trait = prev } }
+    NOT = {
+        any_opposite_trait = {
+            scope:dhm_v091_pupil = { has_trait = prev }
+        }
+    }
+}
+
+# Current scope = educator. Only existing same-court teaching relations qualify.
+dhm_v091_mentor_eligible_trigger = {
+    is_alive = yes
+    is_physically_able_adult = yes
+    is_imprisoned = no
+    is_hostage = no
+    is_travelling = no
+    NOT = { has_trait = incapable }
+    this != scope:dhm_v091_pupil
+    is_in_the_same_court_as = scope:dhm_manager
+    OR = {
+        has_relation_dhm_specialist_student = scope:dhm_v091_pupil
+        has_relation_ward = scope:dhm_v091_pupil
+    }
+    NOR = {
+        has_relation_rival = scope:dhm_v091_pupil
+        has_relation_nemesis = scope:dhm_v091_pupil
+    }
+    any_character_trait = { dhm_v091_teachable_trait_trigger = yes }
+}
+
+# Same childhood-compatibility groups as influence_child_personality_interaction.
+# Current scope = pupil; selected trait is saved as dhm_v091_trait.
+dhm_v091_compatible_lesson_trigger = {
+    OR = {
+        AND = { scope:dhm_v091_trait = trait:diligent OR = { has_trait = pensive has_trait = curious } }
+        AND = { scope:dhm_v091_trait = trait:patient has_trait = pensive }
+        AND = { scope:dhm_v091_trait = trait:temperate OR = { has_trait = pensive has_trait = charming } }
+        AND = { scope:dhm_v091_trait = trait:just OR = { has_trait = pensive has_trait = charming } }
+        AND = { scope:dhm_v091_trait = trait:honest OR = { has_trait = pensive has_trait = rowdy } }
+        AND = { scope:dhm_v091_trait = trait:compassionate OR = { has_trait = charming has_trait = pensive } }
+        AND = { scope:dhm_v091_trait = trait:generous OR = { has_trait = charming has_trait = curious } }
+        AND = { scope:dhm_v091_trait = trait:humble has_trait = pensive }
+        AND = { scope:dhm_v091_trait = trait:brave OR = { has_trait = curious has_trait = rowdy } }
+        AND = { scope:dhm_v091_trait = trait:calm has_trait = pensive }
+        AND = { scope:dhm_v091_trait = trait:gregarious OR = { has_trait = charming has_trait = curious } }
+        AND = { scope:dhm_v091_trait = trait:forgiving OR = { has_trait = charming has_trait = curious } }
+    }
+}

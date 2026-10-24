@@ -1,0 +1,49 @@
+﻿lam_cr_refresh_person_effect = {
+    if = {
+        limit = { var:lam_bloc ?= { is_alive = yes has_variable = lam_bloc_lead } }
+        if = { limit = { NOT = { var:lam_cr_service_head ?= var:lam_bloc } }
+            set_variable = { name = lam_cr_service_head value = var:lam_bloc }
+            set_variable = { name = lam_cr_since_m value = lam_now_m }
+            set_variable = { name = lam_cr_service value = 0 }
+        }
+    }
+    set_variable = { name = lam_cr_influence value = lam_cr_influence_value }
+}
+lam_cr_service_add_effect = {
+    lam_cr_refresh_person_effect = yes
+    if = { limit = { has_variable = lam_bloc }
+        if = { limit = { NOT = { has_variable = lam_cr_service } } set_variable = { name = lam_cr_service value = 0 } }
+        change_variable = { name = lam_cr_service add = $ADD$ }
+        clamp_variable = { name = lam_cr_service min = 0 max = 9 }
+    }
+}
+# Called on a court. Both strength denominators come from the SAME live pool.
+lam_cr_refresh_totals_effect = {
+    save_scope_as = lam_cr_count_lord
+    set_variable = { name = lam_bloc_total value = 0 }
+    set_variable = { name = lam_cr_court_total value = 0 }
+    every_in_list = {
+        variable = lam_fac_pool
+        limit = { is_alive = yes liege ?= scope:lam_cr_count_lord }
+        lam_cr_refresh_person_effect = yes
+        scope:lam_cr_count_lord = {
+            change_variable = { name = lam_bloc_total add = prev.max_military_strength }
+            change_variable = { name = lam_cr_court_total add = prev.var:lam_cr_influence }
+        }
+    }
+}
+lam_cr_finish_political_effect = {
+    lam_cr_refresh_person_effect = yes
+    set_variable = { name = lam_cr_power value = var:lam_cr_influence }
+    save_scope_as = lam_cr_sum_head
+    every_in_list = {
+        variable = lam_fac_members
+        limit = { is_alive = yes var:lam_bloc ?= scope:lam_cr_sum_head liege ?= scope:lam_cr_sum_head.liege NOT = { this = scope:lam_cr_sum_head } }
+        lam_cr_refresh_person_effect = yes
+        scope:lam_cr_sum_head = { change_variable = { name = lam_cr_power add = prev.var:lam_cr_influence } }
+    }
+    set_variable = { name = lam_cr_share value = 0 }
+    if = { limit = { liege ?= { has_variable = lam_cr_court_total var:lam_cr_court_total > 0 } }
+        set_variable = { name = lam_cr_share value = { value = var:lam_cr_power multiply = 100 divide = liege.var:lam_cr_court_total } }
+    }
+}

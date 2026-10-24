@@ -1,0 +1,81 @@
+﻿lam_pd_relief_priority_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_cr_share
+		}
+		add = var:lam_cr_share
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_total
+		}
+		add = var:lam_pd_gr_total
+	}
+}
+lam_pd_petition_accept_value = {
+	value = 15
+	add = {
+		value = "opinion(scope:lam_pd_head)"
+		multiply = 0.25
+	}
+	add = {
+		value = scope:lam_pd_head.lam_pd_relief_priority_value
+		multiply = 0.3
+	}
+	if = {
+		limit = {
+			has_trait = just
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			has_trait = generous
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			has_trait = arrogant
+		}
+		add = -15
+	}
+	if = {
+		limit = {
+			has_trait = stubborn
+		}
+		add = -10
+	}
+	if = {
+		limit = {
+			is_at_war = yes
+		}
+		add = -15
+	}
+	if = {
+		limit = {
+			scope:lam_pd_head = {
+				var:lam_pd_kind ?= flag:heir
+			}
+		}
+		add = -25
+	}
+	if = {
+		limit = {
+			scope:lam_pd_head = {
+				var:lam_pd_kind ?= flag:council
+			}
+		}
+		add = -10
+	}
+	subtract = scope:lam_pd_head.lam_pd_petition_pressure_value
+	if = {
+		limit = {
+			scope:lam_pd_head = {
+				has_variable = lam_pd_unverified_rumor
+			}
+		}
+		add = -5
+	}
+}

@@ -1,0 +1,116 @@
+﻿namespace = ce1_decision_events
+
+# Pacifist conversion
+ce1_decision_events.1020 = {
+	type = character_event
+	title = ce1_decision_events.1020.t
+	desc = ce1_decision_events.1020.desc
+	theme = learning
+	left_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+	right_portrait = {
+		character = scope:legendary_character
+		animation = personality_zealous
+	}
+
+	# kCAFG override : low priority, it's okay if this event is replaced
+	id_override_priority = 1
+
+	immediate = {
+		scope:legendary_character.rite = { save_scope_as = leg_rite }
+		save_scope_as = liege_convert
+	}
+
+	option = { # Convert I shall!
+		name = ce1_decision_events.1020.a
+		every_vassal_or_below = {
+			custom = every_same_faith_vassal
+			limit = {
+				faith = root.faith
+				NOT = { any_held_title = { is_head_of_faith = yes } }
+			}
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				set_character_rite = scope:leg_rite
+			}
+			else = {
+				trigger_event = ce1_decision_events.1021 # Give players a choice
+			}
+		}
+		every_sub_realm_county = {
+			custom = every_same_faith_county_in_realm
+			limit = {
+				faith = root.faith
+			}
+			
+			E_kCAFG_convert_rite_in_all_county_provinces = {
+				FACTOR = 0.25
+				VARIANCE = 0.4
+				RITE = scope:leg_rite
+				MAX = 0.9
+			}
+		}
+		scope:legendary_character = {
+			send_interface_toast = {
+				title = ce1_decision_events.1020.conversion
+				left_icon = scope:legendary_character
+				right_icon = scope:liege_convert
+				scope:liege_convert = {
+					set_character_rite = scope:leg_rite
+					if = {
+						limit = { 
+							scope:leg_rite = { rite_has_doctrine = doctrine_monotheist }
+						}
+						custom_description_no_bullet = { text = mandala_monotheist_warning_tt }
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 350 # Should be high, this is a reward for a massive investment
+			ai_value_modifier = {
+				ai_zeal = -2
+				ai_honor = 0.5
+				ai_compassion = 2 # Pacifism is epic
+				ai_vengefulness = -0.5
+				ai_rationality = -0.75
+			}
+			opinion_modifier = {
+				opinion_target = scope:legendary_character
+				multiplier = 1
+			}
+		}
+	}
+
+	option = { # Pacifism is cringe
+		name = ce1_decision_events.1020.b
+		trigger = {
+			NOT = {
+				has_character_flag = guarantee_conversion
+			}
+		}
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_zeal = 2
+				ai_honor = -0.5
+				ai_compassion = -2
+				ai_vengefulness = 0.5
+				ai_rationality = 0.75
+			}
+		}
+	}
+
+	after = {
+		if = {
+			limit = {
+				has_character_flag = guarantee_conversion
+			}
+			remove_character_flag = guarantee_conversion
+		}
+	}
+}

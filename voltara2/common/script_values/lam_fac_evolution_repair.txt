@@ -1,0 +1,19 @@
+﻿lam_er_follow_pull_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_ev_since
+			has_variable = lam_cr_unrest
+		}
+		value = lam_now_m
+		subtract = var:lam_ev_since
+		divide = 12
+		multiply = 10
+		add = {
+			value = var:lam_cr_unrest
+			multiply = 5
+		}
+		min = 0
+		max = 40
+	}
+}

@@ -1,0 +1,100 @@
+﻿on_war_started = {
+	on_actions = {
+		lam_wc_on_war_changed
+	}
+}
+on_join_war_as_secondary = {
+	on_actions = {
+		lam_wc_on_war_changed
+	}
+}
+on_war_transferred = {
+	on_actions = {
+		lam_wc_on_war_changed
+	}
+}
+on_war_won_attacker = {
+	on_actions = {
+		lam_wc_on_war_finished
+	}
+}
+on_war_won_defender = {
+	on_actions = {
+		lam_wc_on_war_finished
+	}
+}
+on_war_white_peace = {
+	on_actions = {
+		lam_wc_on_war_finished
+	}
+}
+on_war_invalidated = {
+	on_actions = {
+		lam_wc_on_war_finished
+	}
+}
+lam_wc_on_war_changed = {
+	trigger = {
+		exists = this
+		exists = scope:war
+	}
+	effect = {
+		lam_wc_war_sync_effect = yes
+	}
+}
+lam_wc_on_war_finished = {
+	effect = {
+		scope:attacker ?= {
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				trigger_event = {
+					id = lam_wc.0001
+					days = 1
+				}
+			}
+		}
+		scope:defender ?= {
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				trigger_event = {
+					id = lam_wc.0001
+					days = 1
+				}
+			}
+		}
+		scope:war ?= {
+			every_war_participant = {
+				limit = {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_bloc_lead
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				trigger_event = {
+					id = lam_wc.0001
+					days = 1
+				}
+			}
+			primary_defender = {
+				if = {
+					limit = {
+						is_alive = yes
+					}
+					trigger_event = {
+						id = lam_wc.0001
+						days = 1
+					}
+				}
+			}
+		}
+	}
+}

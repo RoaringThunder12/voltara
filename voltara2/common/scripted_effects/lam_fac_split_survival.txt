@@ -1,0 +1,402 @@
+﻿lam_ss_clear_member_effect = {
+	remove_variable = lam_ss_home
+	remove_variable = lam_ss_until
+	remove_variable = lam_ss_lord
+	remove_variable = lam_ss_record
+	remove_variable = lam_ss_topic
+	remove_variable = lam_ss_side
+	remove_variable = lam_ss_alternative
+	remove_variable = lam_ss_sympathy
+}
+lam_ss_clear_birth_effect = {
+	remove_variable = lam_ss_birth_m
+	remove_variable = lam_ss_birth_count
+	remove_variable = lam_ss_expected
+	remove_variable = lam_ss_seen_m
+	remove_variable = lam_ss_stayed
+	remove_variable = lam_ss_dead
+	remove_variable = lam_ss_foreign
+	remove_variable = lam_ss_parent
+	remove_variable = lam_ss_other
+	remove_variable = lam_ss_unaligned
+	clear_variable_list = lam_ss_founders
+}
+lam_ss_prepare_split_effect = {
+	save_scope_value_as = {
+		name = lam_ss_expected_count
+		value = 0
+	}
+	scope:lam_vt_head = {
+		every_in_list = {
+			variable = $LIST$
+			limit = {
+				trigger_if = {
+					limit = {
+						is_alive = yes
+					}
+					has_variable = lam_vt_against
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			save_scope_value_as = {
+				name = lam_ss_expected_count
+				value = {
+					value = scope:lam_ss_expected_count
+					add = 1
+				}
+			}
+		}
+	}
+}
+lam_ss_complete_split_effect = {
+	scope:lam_vt_lead = {
+		if = {
+			limit = {
+				is_alive = yes
+			}
+			if = {
+				limit = {
+					has_variable = lam_bloc_lead
+					var:lam_bp_origin_parent ?= scope:lam_vt_head
+					exists = liege
+				}
+				set_variable = {
+					name = lam_ss_birth_m
+					value = lam_now_m
+				}
+				set_variable = {
+					name = lam_ss_birth_count
+					value = 1
+				}
+				clear_variable_list = lam_ss_founders
+				if = {
+					limit = {
+						exists = scope:lam_ss_expected_count
+					}
+					set_variable = {
+						name = lam_ss_expected
+						value = scope:lam_ss_expected_count
+					}
+				}
+				every_in_list = {
+					variable = lam_fac_members
+					limit = {
+						trigger_if = {
+							limit = {
+								is_alive = yes
+							}
+							var:lam_bloc ?= scope:lam_vt_lead
+							NOT = {
+								this = scope:lam_vt_lead
+							}
+							OR = {
+								liege ?= scope:lam_vt_lead.liege
+								is_courtier_of = scope:lam_vt_lead.liege
+							}
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					scope:lam_vt_lead = {
+						change_variable = {
+							name = lam_ss_birth_count
+							add = 1
+						}
+						add_to_variable_list = {
+							name = lam_ss_founders
+							target = prev
+						}
+					}
+					if = {
+						limit = {
+							is_ai = yes
+							has_variable = lam_vt_against
+						}
+						lam_ss_clear_member_effect = yes
+						set_variable = {
+							name = lam_ss_home
+							value = scope:lam_vt_lead
+						}
+						set_variable = {
+							name = lam_ss_until
+							value = {
+								value = lam_now_m
+								add = 24
+							}
+						}
+						set_variable = {
+							name = lam_ss_lord
+							value = scope:lam_vt_lead.liege
+						}
+						if = {
+							limit = {
+								scope:lam_vt_lead = {
+									has_variable = lam_fac_rec
+								}
+							}
+							set_variable = {
+								name = lam_ss_record
+								value = scope:lam_vt_lead.var:lam_fac_rec
+							}
+						}
+						if = {
+							limit = {
+								has_variable = lam_bp_position_topic
+							}
+							set_variable = {
+								name = lam_ss_topic
+								value = var:lam_bp_position_topic
+							}
+						}
+						if = {
+							limit = {
+								has_variable = lam_bp_position_side
+							}
+							set_variable = {
+								name = lam_ss_side
+								value = var:lam_bp_position_side
+							}
+						}
+						if = {
+							limit = {
+								exists = var:lam_bp_position_alternative
+							}
+							set_variable = {
+								name = lam_ss_alternative
+								value = var:lam_bp_position_alternative
+							}
+						}
+						lam_sy_adopt_platform_effect = yes
+					}
+				}
+				lam_ss_monitor_effect = yes
+			}
+		}
+	}
+}
+lam_ss_pass_effect = {
+	$FROM$ = {
+		if = {
+			limit = {
+				is_alive = yes
+			}
+			if = {
+				limit = {
+					has_variable = lam_ss_birth_m
+					$TO$ = {
+						is_alive = yes
+					}
+				}
+				$TO$ = {
+					lam_ss_clear_birth_effect = yes
+					set_variable = {
+						name = lam_ss_birth_m
+						value = $FROM$.var:lam_ss_birth_m
+					}
+					if = {
+						limit = {
+							$FROM$ = {
+								has_variable = lam_ss_birth_count
+							}
+						}
+						set_variable = {
+							name = lam_ss_birth_count
+							value = $FROM$.var:lam_ss_birth_count
+						}
+					}
+					if = {
+						limit = {
+							$FROM$ = {
+								has_variable = lam_ss_expected
+							}
+						}
+						set_variable = {
+							name = lam_ss_expected
+							value = $FROM$.var:lam_ss_expected
+						}
+					}
+				}
+				every_in_list = {
+					variable = lam_ss_founders
+					$TO$ = {
+						add_to_variable_list = {
+							name = lam_ss_founders
+							target = prev
+						}
+					}
+				}
+				every_in_list = {
+					variable = lam_fac_members
+					limit = {
+						trigger_if = {
+							limit = {
+								is_alive = yes
+							}
+							var:lam_ss_home ?= $FROM$
+							OR = {
+								var:lam_bloc ?= $FROM$
+								var:lam_bloc ?= $TO$
+							}
+							NOT = {
+								this = $TO$
+							}
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					set_variable = {
+						name = lam_ss_home
+						value = $TO$
+					}
+				}
+			}
+		}
+	}
+}
+lam_ss_monitor_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+		}
+		if = {
+			limit = {
+				has_variable = lam_ss_birth_m
+			}
+			if = {
+				limit = {
+					var:lam_ss_birth_m >= {
+						value = lam_now_m
+						subtract = 36
+					}
+				}
+				save_scope_as = lam_ss_head
+				set_variable = {
+					name = lam_ss_seen_m
+					value = lam_now_m
+				}
+				set_variable = {
+					name = lam_ss_stayed
+					value = 0
+				}
+				set_variable = {
+					name = lam_ss_dead
+					value = 0
+				}
+				set_variable = {
+					name = lam_ss_foreign
+					value = 0
+				}
+				set_variable = {
+					name = lam_ss_parent
+					value = 0
+				}
+				set_variable = {
+					name = lam_ss_other
+					value = 0
+				}
+				set_variable = {
+					name = lam_ss_unaligned
+					value = 0
+				}
+				every_in_list = {
+					variable = lam_ss_founders
+					if = {
+						limit = {
+							is_alive = no
+						}
+						scope:lam_ss_head = {
+							change_variable = {
+								name = lam_ss_dead
+								add = 1
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							exists = scope:lam_ss_head.liege
+						}
+						if = {
+							limit = {
+								NOR = {
+									liege ?= scope:lam_ss_head.liege
+									is_courtier_of = scope:lam_ss_head.liege
+								}
+							}
+							scope:lam_ss_head = {
+								change_variable = {
+									name = lam_ss_foreign
+									add = 1
+								}
+							}
+						}
+						else_if = {
+							limit = {
+								var:lam_bloc ?= scope:lam_ss_head
+							}
+							scope:lam_ss_head = {
+								change_variable = {
+									name = lam_ss_stayed
+									add = 1
+								}
+							}
+						}
+						else_if = {
+							limit = {
+								AND = {
+									trigger_if = {
+										limit = {
+											scope:lam_ss_head = {
+												exists = var:lam_bp_origin_parent
+											}
+										}
+										var:lam_bloc ?= scope:lam_ss_head.var:lam_bp_origin_parent
+									}
+									trigger_else = {
+										always = no
+									}
+								}
+							}
+							scope:lam_ss_head = {
+								change_variable = {
+									name = lam_ss_parent
+									add = 1
+								}
+							}
+						}
+						else_if = {
+							limit = {
+								has_variable = lam_bloc
+							}
+							scope:lam_ss_head = {
+								change_variable = {
+									name = lam_ss_other
+									add = 1
+								}
+							}
+						}
+						else = {
+							scope:lam_ss_head = {
+								change_variable = {
+									name = lam_ss_unaligned
+									add = 1
+								}
+							}
+						}
+					}
+					else = {
+						scope:lam_ss_head = {
+							change_variable = {
+								name = lam_ss_foreign
+								add = 1
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

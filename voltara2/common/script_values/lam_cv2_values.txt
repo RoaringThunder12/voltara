@@ -1,0 +1,45 @@
+﻿# Living Factions - the faction council chamber (tools/claude_fixes/council_ui.py)
+# This = a council's head: the last council's share for, for its bar.
+lam_cv2_last_yes_pct_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_cr_last_total
+			var:lam_cr_last_total > 0
+		}
+		value = var:lam_cr_last_yes
+		multiply = 100
+		divide = var:lam_cr_last_total
+	}
+}
+# This = an elector: the size of each part of their judgment (lam_cv_snapshot_effect).
+lam_cv2_op_abs_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_cv_op
+		}
+		value = var:lam_cv_op
+		abs = yes
+	}
+}
+lam_cv2_rep_abs_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_cv_rep
+		}
+		value = var:lam_cv_rep
+		abs = yes
+	}
+}
+lam_cv2_iss_abs_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_cv_iss
+		}
+		value = var:lam_cv_iss
+		abs = yes
+	}
+}

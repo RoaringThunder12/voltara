@@ -1,0 +1,9 @@
+﻿# Every consequence option requires a recognized, recorded choice.
+dhm_v076_choice_known_trigger = {
+	exists = scope:$KEY$
+	OR = {
+		scope:$KEY$ = $VALUE_1$
+		scope:$KEY$ = $VALUE_2$
+		scope:$KEY$ = $VALUE_3$
+	}
+}

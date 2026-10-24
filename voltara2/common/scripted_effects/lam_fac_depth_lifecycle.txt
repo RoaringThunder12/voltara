@@ -1,0 +1,174 @@
+﻿lam_pd_promise_result_effect = {
+	set_variable = {
+		name = lam_pd_last_result
+		value = flag:$STATE$
+	}
+	set_variable = {
+		name = lam_pd_last_m
+		value = lam_now_m
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_promised_title
+		}
+		remove_variable = lam_pd_promised_title
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_promised_owner
+		}
+		remove_variable = lam_pd_promised_owner
+	}
+}
+lam_pd_identity_clear_effect = {
+	if = {
+		limit = {
+			has_variable = lam_pd_pact_partner
+		}
+		lam_pd_pact_clear_effect = yes
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_recruit_target
+		}
+		var:lam_pd_recruit_target ?= {
+			lam_pd_recruit_clear_effect = yes
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_recruit_from
+		}
+		lam_pd_recruit_clear_effect = yes
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_goal_until
+		}
+		remove_variable = lam_pd_goal_until
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_goal_kind
+		}
+		remove_variable = lam_pd_goal_kind
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_goal_owner
+		}
+		remove_variable = lam_pd_goal_owner
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_goal_person
+		}
+		remove_variable = lam_pd_goal_person
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_goal_title
+		}
+		remove_variable = lam_pd_goal_title
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_goal_blocked
+		}
+		remove_variable = lam_pd_goal_blocked
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_plan
+		}
+		remove_variable = lam_pd_plan
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_plan_next
+		}
+		remove_variable = lam_pd_plan_next
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_promised_title
+		}
+		remove_variable = lam_pd_promised_title
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_promised_owner
+		}
+		remove_variable = lam_pd_promised_owner
+	}
+	lam_st_campaign_clear_effect = yes
+	remove_variable = lam_st_reconcile_open
+	remove_variable = lam_st_reconcile_record
+	remove_variable = lam_st_retry_after
+	lam_lf_identity_clear_effect = yes
+	lam_bp_origin_clear_effect = yes
+}
+lam_pd_identity_pass_effect = {
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_pd_active
+			}
+			lam_pd_cancel_effect = yes
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_recruit_target
+			}
+			var:lam_pd_recruit_target ?= {
+				lam_pd_recruit_clear_effect = yes
+			}
+		}
+	}
+	$TO$ = {
+		if = {
+			limit = {
+				has_variable = lam_pd_goal_until
+			}
+			remove_variable = lam_pd_goal_until
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_plan_next
+			}
+			remove_variable = lam_pd_plan_next
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_promised_title
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_promised_title
+				value = $FROM$.var:lam_pd_promised_title
+			}
+			set_variable = {
+				name = lam_pd_promised_owner
+				value = $FROM$.var:lam_pd_promised_owner
+			}
+		}
+	}
+	$TO$ = {
+		lam_pd_grievance_sync_effect = yes
+	}
+	lam_st_identity_pass_effect = {
+		FROM = $FROM$
+		TO = $TO$
+	}
+	lam_lf_identity_pass_effect = {
+		FROM = $FROM$
+		TO = $TO$
+	}
+	lam_bp_origin_pass_effect = {
+		FROM = $FROM$
+		TO = $TO$
+	}
+}

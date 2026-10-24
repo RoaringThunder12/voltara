@@ -1,0 +1,1241 @@
+﻿namespace = dhm_marriage
+
+# A newly adult AI child asks their human matchmaker's household office to run a
+# prompt bounded pass immediately instead of waiting for the next quarter.
+# Re-root through the existing hidden manager event; nested effect scope alone
+# would leave ROOT on this birthday child. Existing scan cooldowns still apply.
+dhm_marriage.0001 = {
+    type = character_event
+    hidden = yes
+
+    trigger = {
+        is_ai = yes
+        age = 16
+        exists = matchmaker
+        matchmaker = { is_ai = no }
+    }
+
+    immediate = {
+        if = {
+            limit = { matchmaker = { has_character_flag = dhm_v080_birthday_story_pending } }
+            # The graduation/recovery scene lands first; the hidden scan follows
+            # after its three-month breathing room instead of being discarded.
+            matchmaker = { trigger_event = { id = dhm_core.0001 months = 4 } }
+        }
+        else = { matchmaker = { trigger_event = dhm_core.0001 } }
+    }
+}
+
+# Assisted-mode recommendation for any eligible family member.
+dhm_marriage.0100 = {
+	type = character_event
+	title = dhm_marriage.0100.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes } desc = dhm_marriage.0100.desc }
+			desc = dhm_v074_proposal_lapsed_desc
+		}
+		first_valid = {
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_bond_trigger = yes } desc = dhm_v080_match_reason_bond_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_alliance_trigger = yes } desc = dhm_v080_match_reason_alliance_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_claim_trigger = yes } desc = dhm_v080_match_reason_claim_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_bloodline_trigger = yes } desc = dhm_v080_match_reason_bloodline_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_same_culture_trigger = yes } desc = dhm_v080_match_reason_same_culture_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_compatibility_trigger = yes } desc = dhm_v080_match_reason_compatibility_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_dynasty_trigger = yes } desc = dhm_v080_match_reason_dynasty_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes } desc = dhm_v080_match_reason_bounded_desc }
+		}
+		triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_shared_customs_trigger = yes } desc = dhm_v080_match_shared_customs_desc }
+		first_valid = {
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_warning_personal_trigger = yes } desc = dhm_v080_match_warning_personal_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_warning_faith_trigger = yes } desc = dhm_v080_match_warning_faith_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_warning_culture_trigger = yes } desc = dhm_v080_match_warning_culture_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes } desc = dhm_v080_match_warning_none_desc }
+		}
+	}
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = scope:dhm_marriage_subject
+	right_portrait = scope:dhm_marriage_candidate
+
+	trigger = {
+		exists = scope:dhm_marriage_subject
+		exists = scope:dhm_marriage_candidate
+		exists = scope:dhm_manager
+		scope:dhm_marriage_subject = {
+			dhm_marriage_subject_event_valid_trigger = yes
+		}
+		scope:dhm_marriage_candidate = {
+			dhm_valid_marriage_candidate_trigger = yes
+		}
+	}
+
+	option = {
+		name = dhm_marriage.0100.accept
+		trigger = { dhm_v074_proposal_context_trigger = yes  }
+		custom_tooltip = dhm_v074_confirm_match_tt
+		show_as_tooltip = {
+			custom_tooltip = dhm_marriage.approve_tt
+		}
+		hidden_effect = {
+			if = {
+				limit = { dhm_v074_family_proposal_valid_trigger = yes  }
+				save_scope_as = dhm_manager
+				custom_tooltip = dhm_marriage.approve_tt
+				hidden_effect = {
+					scope:dhm_marriage_subject = {
+						dhm_v074_release_proposal_effect = yes
+						dhm_route_family_match_effect = yes
+					}
+				}
+			}
+			else = { dhm_v074_release_proposal_effect = yes }
+		}
+	}
+
+	option = {
+		name = dhm_marriage.0100.reject
+		trigger = { dhm_v074_proposal_context_trigger = yes  }
+		custom_tooltip = dhm_v074_confirm_match_tt
+		show_as_tooltip = {
+			scope:dhm_marriage_subject = {
+				remove_character_flag = dhm_matchmaking_proposal_pending
+				add_character_flag = {
+					flag = dhm_matchmaking_cooldown
+					years = 1
+				}
+				if = {
+					limit = { opinion = { target = scope:dhm_marriage_candidate value >= 25 } }
+					add_opinion = { target = root modifier = dhm_match_denied_opinion }
+				}
+				else_if = {
+					limit = { opinion = { target = scope:dhm_marriage_candidate value <= -25 } }
+					add_opinion = { target = root modifier = dhm_unwanted_match_spared_opinion }
+				}
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { dhm_v074_family_proposal_valid_trigger = yes  }
+				scope:dhm_marriage_subject = {
+					dhm_v074_release_proposal_effect = yes
+					add_character_flag = {
+						flag = dhm_matchmaking_cooldown
+						years = 1
+					}
+					if = {
+						limit = { opinion = { target = scope:dhm_marriage_candidate value >= 25 } }
+						add_opinion = { target = root modifier = dhm_match_denied_opinion }
+					}
+					else_if = {
+						limit = { opinion = { target = scope:dhm_marriage_candidate value <= -25 } }
+						add_opinion = { target = root modifier = dhm_unwanted_match_spared_opinion }
+					}
+				}
+			}
+			else = { dhm_v074_release_proposal_effect = yes }
+		}
+	}
+
+	option = {
+		name = dhm_marriage.0100.manual
+		scope:dhm_marriage_subject = { dhm_v074_release_proposal_effect = yes }
+		set_global_variable = { name = dhm_setting_marriage_manual value = yes }
+		remove_global_variable = dhm_setting_marriage_full_auto
+	}
+	option = {
+		name = dhm_v074_proposal_lapsed_option
+		trigger = { NOT = { dhm_v074_proposal_context_trigger = yes } }
+		custom_tooltip = dhm_v074_proposal_lapsed_tt
+		hidden_effect = { dhm_v074_release_proposal_effect = yes }
+		is_cancel_option = yes
+	}
+}
+
+# Assisted courtier matchmaking recommendation. Default Automatic mode never
+# opens this event; it exists only when the player explicitly selects Assisted.
+dhm_marriage.0200 = {
+	type = character_event
+	title = dhm_marriage.0200.t
+	desc = {
+		first_valid = {
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes } desc = dhm_marriage.0200.desc }
+			desc = dhm_v074_proposal_lapsed_desc
+		}
+		first_valid = {
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_bond_trigger = yes } desc = dhm_v080_match_reason_bond_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_alliance_trigger = yes } desc = dhm_v080_match_reason_alliance_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_claim_trigger = yes } desc = dhm_v080_match_reason_claim_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_bloodline_trigger = yes } desc = dhm_v080_match_reason_bloodline_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_same_culture_trigger = yes } desc = dhm_v080_match_reason_same_culture_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_compatibility_trigger = yes } desc = dhm_v080_match_reason_compatibility_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_reason_dynasty_trigger = yes } desc = dhm_v080_match_reason_dynasty_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes } desc = dhm_v080_match_reason_bounded_desc }
+		}
+		triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_shared_customs_trigger = yes } desc = dhm_v080_match_shared_customs_desc }
+		first_valid = {
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_warning_personal_trigger = yes } desc = dhm_v080_match_warning_personal_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_warning_faith_trigger = yes } desc = dhm_v080_match_warning_faith_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes dhm_v080_match_warning_culture_trigger = yes } desc = dhm_v080_match_warning_culture_desc }
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes } desc = dhm_v080_match_warning_none_desc }
+		}
+	}
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = scope:dhm_marriage_subject
+	right_portrait = scope:dhm_marriage_candidate
+
+	trigger = {
+		exists = scope:dhm_marriage_subject
+		exists = scope:dhm_marriage_candidate
+		exists = scope:dhm_manager
+		scope:dhm_marriage_subject = {
+			dhm_courtier_marriage_subject_event_valid_trigger = yes
+		}
+		scope:dhm_marriage_candidate = {
+			dhm_valid_courtier_marriage_candidate_trigger = yes
+		}
+	}
+
+	option = {
+		name = dhm_marriage.0200.accept
+		trigger = { dhm_v074_proposal_context_trigger = yes  }
+		custom_tooltip = dhm_v074_confirm_match_tt
+		show_as_tooltip = {
+			custom_tooltip = dhm_marriage.approve_tt
+		}
+		hidden_effect = {
+			if = {
+				limit = { dhm_v074_courtier_proposal_valid_trigger = yes  }
+				save_scope_as = dhm_manager
+				custom_tooltip = dhm_marriage.approve_tt
+				hidden_effect = {
+					scope:dhm_marriage_subject = {
+						dhm_v074_release_proposal_effect = yes
+						dhm_execute_courtier_match_effect = yes
+					}
+				}
+			}
+			else = { dhm_v074_release_proposal_effect = yes }
+		}
+	}
+
+	option = {
+		name = dhm_marriage.0200.reject
+		trigger = { dhm_v074_proposal_context_trigger = yes  }
+		custom_tooltip = dhm_v074_confirm_match_tt
+		show_as_tooltip = {
+			scope:dhm_marriage_subject = {
+				remove_character_flag = dhm_matchmaking_proposal_pending
+				add_character_flag = {
+					flag = dhm_matchmaking_cooldown
+					years = 1
+				}
+				if = {
+					limit = { opinion = { target = scope:dhm_marriage_candidate value >= 25 } }
+					add_opinion = { target = root modifier = dhm_match_denied_opinion }
+				}
+				else_if = {
+					limit = { opinion = { target = scope:dhm_marriage_candidate value <= -25 } }
+					add_opinion = { target = root modifier = dhm_unwanted_match_spared_opinion }
+				}
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { dhm_v074_courtier_proposal_valid_trigger = yes  }
+				scope:dhm_marriage_subject = {
+					dhm_v074_release_proposal_effect = yes
+					add_character_flag = {
+						flag = dhm_matchmaking_cooldown
+						years = 1
+					}
+					if = {
+						limit = { opinion = { target = scope:dhm_marriage_candidate value >= 25 } }
+						add_opinion = { target = root modifier = dhm_match_denied_opinion }
+					}
+					else_if = {
+						limit = { opinion = { target = scope:dhm_marriage_candidate value <= -25 } }
+						add_opinion = { target = root modifier = dhm_unwanted_match_spared_opinion }
+					}
+				}
+			}
+			else = { dhm_v074_release_proposal_effect = yes }
+		}
+	}
+	option = {
+		name = dhm_v074_proposal_lapsed_option
+		trigger = { NOT = { dhm_v074_proposal_context_trigger = yes } }
+		custom_tooltip = dhm_v074_proposal_lapsed_tt
+		hidden_effect = { dhm_v074_release_proposal_effect = yes }
+		is_cancel_option = yes
+	}
+}
+
+# Exceptional personal objection. Ordinary matches never open this event.
+dhm_marriage.0110 = {
+	type = character_event
+	title = dhm_marriage.0110.t
+	desc = { first_valid = {
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes } desc = dhm_marriage.0110.desc }
+			desc = dhm_v074_proposal_lapsed_desc
+	} }
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = scope:dhm_marriage_subject
+	right_portrait = scope:dhm_marriage_candidate
+
+	trigger = {
+		exists = scope:dhm_manager
+		exists = scope:dhm_marriage_subject
+		exists = scope:dhm_marriage_candidate
+		scope:dhm_marriage_subject = { dhm_marriage_subject_event_valid_trigger = yes }
+		scope:dhm_marriage_candidate = { dhm_valid_marriage_candidate_trigger = yes }
+	}
+
+	immediate = {
+		dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_consent_reviews }
+	}
+
+	option = {
+		name = dhm_marriage.0110.persuade
+		trigger = { dhm_v074_proposal_context_trigger = yes  }
+		custom_tooltip = dhm_v074_confirm_match_tt
+		show_as_tooltip = {
+			add_prestige = minor_prestige_loss
+			scope:dhm_marriage_subject = {
+				remove_character_flag = dhm_matchmaking_proposal_pending
+				add_character_flag = { flag = dhm_consent_resolved_cooldown years = 2 }
+				add_opinion = { target = root modifier = dhm_persuaded_about_marriage_opinion }
+			}
+			custom_tooltip = dhm_marriage.approve_tt
+		}
+		hidden_effect = {
+			if = {
+				limit = { dhm_v074_family_proposal_valid_trigger = yes  }
+				add_prestige = minor_prestige_loss
+				scope:dhm_marriage_subject = {
+					dhm_v074_release_proposal_effect = yes
+					add_character_flag = { flag = dhm_consent_resolved_cooldown years = 2 }
+					add_opinion = { target = root modifier = dhm_persuaded_about_marriage_opinion }
+				}
+				custom_tooltip = dhm_marriage.approve_tt
+				hidden_effect = { scope:dhm_marriage_subject = { dhm_route_family_match_effect = yes } }
+			}
+			else = { dhm_v074_release_proposal_effect = yes }
+		}
+	}
+	option = {
+		name = dhm_marriage.0110.compel
+		trigger = { dhm_v074_proposal_context_trigger = yes  }
+		custom_tooltip = dhm_v074_confirm_match_tt
+		show_as_tooltip = {
+			scope:dhm_marriage_subject = {
+				remove_character_flag = dhm_matchmaking_proposal_pending
+				add_character_flag = { flag = dhm_consent_resolved_cooldown years = 5 }
+				add_opinion = { target = root modifier = dhm_pressured_into_marriage_opinion }
+				add_stress = minor_stress_gain
+			}
+			custom_tooltip = dhm_marriage.approve_tt
+		}
+		hidden_effect = {
+			if = {
+				limit = { dhm_v074_family_proposal_valid_trigger = yes  }
+				scope:dhm_marriage_subject = {
+					dhm_v074_release_proposal_effect = yes
+					add_character_flag = { flag = dhm_consent_resolved_cooldown years = 5 }
+					add_opinion = { target = root modifier = dhm_pressured_into_marriage_opinion }
+					add_stress = minor_stress_gain
+				}
+				custom_tooltip = dhm_marriage.approve_tt
+				hidden_effect = { scope:dhm_marriage_subject = { dhm_route_family_match_effect = yes } }
+			}
+			else = { dhm_v074_release_proposal_effect = yes }
+		}
+	}
+	option = {
+		name = dhm_marriage.0110.respect
+		trigger = { dhm_v074_proposal_context_trigger = yes  }
+		custom_tooltip = dhm_v074_confirm_match_tt
+		show_as_tooltip = {
+			scope:dhm_marriage_subject = {
+				remove_character_flag = dhm_matchmaking_proposal_pending
+				dhm_v075_set_retry_effect = { MONTHS = 12 REASON = flag:refusal }
+				add_opinion = { target = root modifier = dhm_respected_marriage_choice_opinion }
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { dhm_v074_family_proposal_valid_trigger = yes  }
+				scope:dhm_marriage_subject = {
+					dhm_v074_release_proposal_effect = yes
+					dhm_v075_set_retry_effect = { MONTHS = 12 REASON = flag:refusal }
+					add_opinion = { target = root modifier = dhm_respected_marriage_choice_opinion }
+				}
+			}
+			else = { dhm_v074_release_proposal_effect = yes }
+		}
+	}
+	option = {
+		name = dhm_v074_proposal_lapsed_option
+		trigger = { NOT = { dhm_v074_proposal_context_trigger = yes } }
+		custom_tooltip = dhm_v074_proposal_lapsed_tt
+		hidden_effect = { dhm_v074_release_proposal_effect = yes }
+		is_cancel_option = yes
+	}
+}
+
+# A profile may require the player to use CK3's native arrange-marriage window,
+# where the Grand Wedding promise is selected and validated by vanilla.
+dhm_marriage.0120 = {
+	type = character_event
+	title = dhm_marriage.0120.t
+	desc = { first_valid = {
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes } desc = dhm_marriage.0120.desc }
+			desc = dhm_v074_proposal_lapsed_desc
+	} }
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = scope:dhm_marriage_subject
+	right_portrait = scope:dhm_marriage_candidate
+
+	trigger = {
+		exists = scope:dhm_manager
+		exists = scope:dhm_marriage_subject
+		exists = scope:dhm_marriage_candidate
+		scope:dhm_marriage_subject = { dhm_marriage_subject_event_valid_trigger = yes }
+		scope:dhm_marriage_candidate = { dhm_valid_marriage_candidate_trigger = yes }
+	}
+
+	immediate = { dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_native_handoffs } }
+
+	option = {
+		name = dhm_marriage.0120.open
+		trigger = { dhm_v074_proposal_context_trigger = yes  }
+		custom_tooltip = dhm_v074_confirm_match_tt
+		show_as_tooltip = {
+			custom_tooltip = dhm_marriage.0120.open_tt
+			scope:dhm_marriage_subject = {
+				remove_character_flag = dhm_matchmaking_proposal_pending
+				set_variable = { name = dhm_arranging_manager value = root }
+				set_variable = { name = dhm_arranged_union_spouse value = scope:dhm_marriage_candidate }
+				add_character_flag = { flag = dhm_awaiting_native_marriage years = 5 }
+				dhm_v075_set_retry_effect = { MONTHS = 3 REASON = flag:negotiation }
+			}
+			open_interaction_window = {
+				interaction = arrange_marriage_interaction
+				actor = root
+				recipient = scope:dhm_marriage_candidate.matchmaker
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { dhm_v074_family_proposal_valid_trigger = yes  }
+				custom_tooltip = dhm_marriage.0120.open_tt
+				scope:dhm_marriage_subject = {
+					dhm_v074_release_proposal_effect = yes
+					set_variable = { name = dhm_arranging_manager value = root }
+					set_variable = { name = dhm_arranged_union_spouse value = scope:dhm_marriage_candidate }
+					add_character_flag = { flag = dhm_awaiting_native_marriage years = 5 }
+					dhm_v075_set_retry_effect = { MONTHS = 3 REASON = flag:negotiation }
+				}
+				open_interaction_window = {
+					interaction = arrange_marriage_interaction
+					actor = root
+					recipient = scope:dhm_marriage_candidate.matchmaker
+				}
+			}
+			else = { dhm_v074_release_proposal_effect = yes }
+		}
+	}
+	option = {
+		name = dhm_marriage.0120.later
+		trigger = { dhm_v074_proposal_context_trigger = yes  }
+		custom_tooltip = dhm_v074_confirm_match_tt
+		show_as_tooltip = {
+			scope:dhm_marriage_subject = {
+				remove_character_flag = dhm_matchmaking_proposal_pending
+				dhm_v075_set_retry_effect = { MONTHS = 12 REASON = flag:refusal }
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { dhm_v074_family_proposal_valid_trigger = yes  }
+				scope:dhm_marriage_subject = {
+					dhm_v074_release_proposal_effect = yes
+					dhm_v075_set_retry_effect = { MONTHS = 12 REASON = flag:refusal }
+				}
+			}
+			else = { dhm_v074_release_proposal_effect = yes }
+		}
+	}
+	option = {
+		name = dhm_v074_proposal_lapsed_option
+		trigger = { NOT = { dhm_v074_proposal_context_trigger = yes } }
+		custom_tooltip = dhm_v074_proposal_lapsed_tt
+		hidden_effect = { dhm_v074_release_proposal_effect = yes }
+		is_cancel_option = yes
+	}
+}
+
+# A marginally willing foreign court can request a settlement or public pledge.
+dhm_marriage.0130 = {
+	type = character_event
+	title = dhm_marriage.0130.t
+	desc = { first_valid = {
+			triggered_desc = { trigger = { dhm_v074_proposal_context_trigger = yes } desc = dhm_marriage.0130.desc }
+			desc = dhm_v074_proposal_lapsed_desc
+	} }
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = scope:dhm_marriage_subject
+	right_portrait = scope:dhm_marriage_candidate
+
+	trigger = {
+		exists = scope:dhm_manager
+		exists = scope:dhm_marriage_subject
+		exists = scope:dhm_marriage_candidate
+		scope:dhm_marriage_subject = { dhm_marriage_subject_event_valid_trigger = yes }
+		scope:dhm_marriage_candidate = { dhm_valid_marriage_candidate_trigger = yes }
+	}
+
+	immediate = { dhm_v076_increment_counter_effect = { COUNTER = dhm_scan_negotiations } }
+
+	option = {
+		name = dhm_marriage.0130.settlement
+		trigger = { dhm_v074_proposal_context_trigger = yes short_term_gold >= minor_gold_value }
+		custom_tooltip = dhm_v074_confirm_match_tt
+		show_as_tooltip = {
+			remove_short_term_gold = minor_gold_value
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_household_settlement_modifier YEARS = 5 RENEWAL_TT = dhm_household_settlement_modifier_renewed_5_tt }
+			scope:dhm_marriage_candidate.matchmaker = {
+				if = { limit = { this != root } add_opinion = { target = root modifier = dhm_household_settlement_opinion } }
+			}
+			scope:dhm_marriage_subject = {
+				remove_character_flag = dhm_matchmaking_proposal_pending
+				add_character_flag = { flag = dhm_negotiation_resolved_cooldown years = 1 }
+			}
+			custom_tooltip = dhm_marriage.approve_tt
+		}
+		hidden_effect = {
+			if = {
+				limit = { dhm_v074_family_proposal_valid_trigger = yes short_term_gold >= minor_gold_value }
+				remove_short_term_gold = minor_gold_value
+				dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_household_settlement_modifier YEARS = 5 RENEWAL_TT = dhm_household_settlement_modifier_renewed_5_tt }
+				scope:dhm_marriage_candidate.matchmaker = {
+					if = { limit = { this != root } add_opinion = { target = root modifier = dhm_household_settlement_opinion } }
+				}
+				scope:dhm_marriage_subject = {
+					dhm_v074_release_proposal_effect = yes
+					add_character_flag = { flag = dhm_negotiation_resolved_cooldown years = 1 }
+				}
+				custom_tooltip = dhm_marriage.approve_tt
+				hidden_effect = { scope:dhm_marriage_subject = { dhm_route_family_match_effect = yes } }
+			}
+			else = { dhm_v074_release_proposal_effect = yes }
+		}
+	}
+	option = {
+		name = dhm_marriage.0130.pledge
+		trigger = { dhm_v074_proposal_context_trigger = yes  }
+		custom_tooltip = dhm_v074_confirm_match_tt
+		show_as_tooltip = {
+			add_prestige = minor_prestige_loss
+			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_sworn_household_pledge_modifier YEARS = 3 RENEWAL_TT = dhm_sworn_household_pledge_modifier_renewed_3_tt }
+			scope:dhm_marriage_candidate.matchmaker = {
+				if = { limit = { this != root } add_opinion = { target = root modifier = dhm_public_pledge_opinion } }
+			}
+			scope:dhm_marriage_subject = {
+				remove_character_flag = dhm_matchmaking_proposal_pending
+				add_character_flag = { flag = dhm_negotiation_resolved_cooldown years = 1 }
+			}
+			custom_tooltip = dhm_marriage.approve_tt
+		}
+		hidden_effect = {
+			if = {
+				limit = { dhm_v074_family_proposal_valid_trigger = yes  }
+				add_prestige = minor_prestige_loss
+				dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_sworn_household_pledge_modifier YEARS = 3 RENEWAL_TT = dhm_sworn_household_pledge_modifier_renewed_3_tt }
+				scope:dhm_marriage_candidate.matchmaker = {
+					if = { limit = { this != root } add_opinion = { target = root modifier = dhm_public_pledge_opinion } }
+				}
+				scope:dhm_marriage_subject = {
+					dhm_v074_release_proposal_effect = yes
+					add_character_flag = { flag = dhm_negotiation_resolved_cooldown years = 1 }
+				}
+				custom_tooltip = dhm_marriage.approve_tt
+				hidden_effect = { scope:dhm_marriage_subject = { dhm_route_family_match_effect = yes } }
+			}
+			else = { dhm_v074_release_proposal_effect = yes }
+		}
+	}
+	option = {
+		name = dhm_marriage.0130.withdraw
+		trigger = { dhm_v074_proposal_context_trigger = yes  }
+		custom_tooltip = dhm_v074_confirm_match_tt
+		show_as_tooltip = {
+			scope:dhm_marriage_candidate.matchmaker = {
+				if = { limit = { this != root } add_opinion = { target = root modifier = dhm_withdrew_negotiation_opinion } }
+			}
+			scope:dhm_marriage_subject = {
+				remove_character_flag = dhm_matchmaking_proposal_pending
+				dhm_v075_set_retry_effect = { MONTHS = 12 REASON = flag:refusal }
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { dhm_v074_family_proposal_valid_trigger = yes  }
+				scope:dhm_marriage_candidate.matchmaker = {
+					if = { limit = { this != root } add_opinion = { target = root modifier = dhm_withdrew_negotiation_opinion } }
+				}
+				scope:dhm_marriage_subject = {
+					dhm_v074_release_proposal_effect = yes
+					dhm_v075_set_retry_effect = { MONTHS = 12 REASON = flag:refusal }
+				}
+			}
+			else = { dhm_v074_release_proposal_effect = yes }
+		}
+	}
+	option = {
+		name = dhm_v074_proposal_lapsed_option
+		trigger = { NOT = { dhm_v074_proposal_context_trigger = yes } }
+		custom_tooltip = dhm_v074_proposal_lapsed_tt
+		hidden_effect = { dhm_v074_release_proposal_effect = yes }
+		is_cancel_option = yes
+	}
+}
+
+# Native on_marriage bridge for direct matches, betrothal fulfillment and the
+# Grand Wedding handoff. The event is hidden and bounded to DHM-marked unions.
+dhm_marriage.0290 = {
+    type = character_event
+    hidden = yes
+    trigger = {
+        exists = scope:spouse
+        OR = {
+            AND = {
+                OR = {
+                    has_character_flag = dhm_arranged_union_pending
+                    has_character_flag = dhm_awaiting_native_marriage
+                }
+                has_variable = dhm_arranged_union_spouse
+                var:dhm_arranged_union_spouse = scope:spouse
+            }
+            scope:spouse = {
+                AND = {
+                    OR = {
+                        has_character_flag = dhm_arranged_union_pending
+                        has_character_flag = dhm_awaiting_native_marriage
+                    }
+                    has_variable = dhm_arranged_union_spouse
+                    var:dhm_arranged_union_spouse = root
+                }
+            }
+        }
+    }
+    immediate = {
+        if = { limit = { is_alive = yes } add_character_flag = { flag = dhm090_marriage_news years = 5 } }
+        if = { limit = { exists = scope:spouse scope:spouse = { is_alive = yes } } scope:spouse = { add_character_flag = { flag = dhm090_marriage_news years = 5 } } }
+        dhm_register_arranged_union_effect = yes
+    }
+}
+
+# Silent assessment of a newly established DHM union. Routine outcomes stay in
+# the background; only the selected policy and current circumstances can open a
+# visible story.
+dhm_marriage.0295 = {
+    type = character_event
+    hidden = yes
+    trigger = {
+        is_ai = no
+        exists = scope:dhm_union_subject
+        exists = scope:dhm_union_spouse
+        scope:dhm_union_subject = { is_alive = yes is_spouse_of = scope:dhm_union_spouse }
+        scope:dhm_union_spouse = { is_alive = yes }
+    }
+    immediate = {
+        scope:dhm_union_subject = { save_scope_as = dhm_marriage_subject }
+        if = {
+            limit = {
+                NOT = { has_global_variable = dhm_setting_marriage_stories_off }
+                scope:dhm_union_subject = {
+                    NOT = { has_character_flag = dhm_marriage_matter_recent }
+                    NOT = { has_character_flag = dhm_living_marriage_recent }
+                    NOT = { has_character_flag = dhm_marriage_recovery_recent }
+                }
+                scope:dhm_union_spouse = {
+                    NOT = { has_character_flag = dhm_marriage_matter_recent }
+                    NOT = { has_character_flag = dhm_living_marriage_recent }
+                    NOT = { has_character_flag = dhm_marriage_recovery_recent }
+                }
+                OR = {
+                    has_global_variable = dhm_setting_marriage_stories_all
+                    scope:dhm_union_spouse = { dhm_spousal_compatibility_poor_trigger = yes }
+                    scope:dhm_union_subject = { opinion = { target = scope:dhm_union_spouse value <= 0 } }
+                    scope:dhm_union_spouse = { opinion = { target = scope:dhm_union_subject value <= 0 } }
+                    scope:dhm_union_subject = { stress_level >= 2 }
+                    scope:dhm_union_spouse = { stress_level >= 2 }
+                }
+            }
+            trigger_event = dhm_marriage.0300
+        }
+        else = {
+            if = {
+                limit = { scope:dhm_union_spouse = { dhm_spousal_compatibility_good_trigger = yes } }
+                scope:dhm_union_subject = { add_opinion = { target = scope:dhm_union_spouse modifier = dhm_compatible_spouse_opinion } }
+                scope:dhm_union_spouse = { add_opinion = { target = scope:dhm_union_subject modifier = dhm_compatible_spouse_opinion } }
+            }
+            else_if = {
+                limit = { scope:dhm_union_spouse = { dhm_spousal_compatibility_poor_trigger = yes } }
+                scope:dhm_union_subject = { add_opinion = { target = scope:dhm_union_spouse modifier = dhm_household_marriage_friction_opinion } }
+                scope:dhm_union_spouse = { add_opinion = { target = scope:dhm_union_subject modifier = dhm_household_marriage_friction_opinion } }
+            }
+            else = {
+                scope:dhm_union_subject = { add_opinion = { target = scope:dhm_union_spouse modifier = dhm_promising_spouse_opinion } }
+                scope:dhm_union_spouse = { add_opinion = { target = scope:dhm_union_subject modifier = dhm_promising_spouse_opinion } }
+            }
+        }
+    }
+}
+
+dhm_marriage.0300 = {
+    type = character_event
+    title = {
+        first_valid = {
+            triggered_desc = {
+                trigger = {
+                    OR = {
+                        scope:dhm_union_spouse = { dhm_spousal_compatibility_poor_trigger = yes }
+                        scope:dhm_union_subject = { opinion = { target = scope:dhm_union_spouse value <= 0 } }
+                        scope:dhm_union_spouse = { opinion = { target = scope:dhm_union_subject value <= 0 } }
+                    }
+                }
+                desc = dhm_marriage.0300.t.quarrel
+            }
+            triggered_desc = {
+                trigger = { scope:dhm_union_subject = { NOT = { faith = scope:dhm_union_spouse.faith } } }
+                desc = dhm_marriage.0300.t.faith
+            }
+            triggered_desc = {
+                trigger = { scope:dhm_union_subject = { NOT = { culture = scope:dhm_union_spouse.culture } } }
+                desc = dhm_marriage.0300.t.culture
+            }
+            triggered_desc = {
+                trigger = { scope:dhm_union_spouse = { dhm_spousal_compatibility_good_trigger = yes } }
+                desc = dhm_marriage.0300.t.warm
+            }
+            desc = dhm_marriage.0300.t
+        }
+    }
+    desc = {
+        first_valid = {
+            triggered_desc = {
+                trigger = {
+                    OR = {
+                        scope:dhm_union_spouse = { dhm_spousal_compatibility_poor_trigger = yes }
+                        scope:dhm_union_subject = { opinion = { target = scope:dhm_union_spouse value <= 0 } }
+                        scope:dhm_union_spouse = { opinion = { target = scope:dhm_union_subject value <= 0 } }
+                    }
+                }
+                desc = dhm_marriage.0300.desc_friction
+            }
+            triggered_desc = {
+                trigger = { scope:dhm_union_subject = { NOT = { faith = scope:dhm_union_spouse.faith } } }
+                desc = dhm_marriage.0300.desc_faith
+            }
+            triggered_desc = {
+                trigger = { scope:dhm_union_subject = { NOT = { culture = scope:dhm_union_spouse.culture } } }
+                desc = dhm_marriage.0300.desc_culture
+            }
+            triggered_desc = {
+                trigger = { scope:dhm_union_spouse = { dhm_spousal_compatibility_good_trigger = yes } }
+                desc = dhm_marriage.0300.desc_good
+            }
+            desc = dhm_marriage.0300.desc_mixed
+        }
+    }
+    theme = diplomacy
+    override_background = { reference = dhm_living_hearth }
+    left_portrait = scope:dhm_union_subject
+    right_portrait = scope:dhm_union_spouse
+
+    trigger = {
+        is_ai = no
+        NOT = { has_global_variable = dhm_setting_marriage_stories_off }
+        exists = scope:dhm_union_subject
+        exists = scope:dhm_union_spouse
+        scope:dhm_union_subject = {
+            is_alive = yes
+            is_spouse_of = scope:dhm_union_spouse
+            NOT = { has_character_flag = dhm_marriage_matter_recent }
+            NOT = { has_character_flag = dhm_living_marriage_recent }
+            NOT = { has_character_flag = dhm_marriage_recovery_recent }
+        }
+        scope:dhm_union_spouse = {
+            is_alive = yes
+            NOT = { has_character_flag = dhm_marriage_matter_recent }
+            NOT = { has_character_flag = dhm_living_marriage_recent }
+            NOT = { has_character_flag = dhm_marriage_recovery_recent }
+        }
+        OR = {
+            has_global_variable = dhm_setting_marriage_stories_all
+            scope:dhm_union_spouse = { dhm_spousal_compatibility_poor_trigger = yes }
+            scope:dhm_union_subject = { opinion = { target = scope:dhm_union_spouse value <= 0 } }
+            scope:dhm_union_spouse = { opinion = { target = scope:dhm_union_subject value <= 0 } }
+            scope:dhm_union_subject = { stress_level >= 2 }
+            scope:dhm_union_spouse = { stress_level >= 2 }
+        }
+    }
+
+    immediate = {
+        scope:dhm_union_subject = {
+            save_scope_as = dhm_marriage_subject
+            add_character_flag = { flag = dhm_marriage_matter_recent years = 5 }
+        }
+        scope:dhm_union_spouse = { add_character_flag = { flag = dhm_marriage_matter_recent years = 5 } }
+        if = {
+            limit = { scope:dhm_union_spouse = { dhm_spousal_compatibility_good_trigger = yes } }
+            scope:dhm_union_subject = { add_opinion = { target = scope:dhm_union_spouse modifier = dhm_compatible_spouse_opinion } }
+            scope:dhm_union_spouse = { add_opinion = { target = scope:dhm_union_subject modifier = dhm_compatible_spouse_opinion } }
+        }
+        else_if = {
+            limit = { scope:dhm_union_spouse = { dhm_spousal_compatibility_poor_trigger = yes } }
+            scope:dhm_union_subject = { add_opinion = { target = scope:dhm_union_spouse modifier = dhm_household_marriage_friction_opinion } }
+            scope:dhm_union_spouse = { add_opinion = { target = scope:dhm_union_subject modifier = dhm_household_marriage_friction_opinion } }
+        }
+        else = {
+            scope:dhm_union_subject = { add_opinion = { target = scope:dhm_union_spouse modifier = dhm_promising_spouse_opinion } }
+            scope:dhm_union_spouse = { add_opinion = { target = scope:dhm_union_subject modifier = dhm_promising_spouse_opinion } }
+        }
+    }
+
+    option = {
+        name = dhm_marriage.0300.mediate
+		hidden_effect = { save_scope_value_as = { name = dhm072_union_result value = flag:reconciled } }
+        if = {
+            limit = { NOR = { has_trait = patient has_trait = compassionate } }
+            add_stress = minor_stress_gain
+        }
+        scope:dhm_union_subject = {
+            add_opinion = { target = root modifier = dhm_respected_married_household_opinion }
+            add_opinion = { target = scope:dhm_union_spouse modifier = dhm_promising_spouse_opinion }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 3 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_3_tt }
+            create_character_memory = { type = dhm_marriage_reconciled_memory participants = { spouse = scope:dhm_union_spouse } }
+        }
+        scope:dhm_union_spouse = {
+            add_opinion = { target = root modifier = dhm_respected_married_household_opinion }
+            add_opinion = { target = scope:dhm_union_subject modifier = dhm_promising_spouse_opinion }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 3 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_3_tt }
+            create_character_memory = { type = dhm_marriage_reconciled_memory participants = { spouse = scope:dhm_union_subject } }
+        }
+        add_prestige = minor_prestige_gain
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_peacemaker_modifier YEARS = 2 RENEWAL_TT = dhm_reward_household_peacemaker_renewed_2_tt }
+        custom_tooltip = dhm_outcome_will_return_tt
+        trigger_event = { id = dhm_marriage.0305 months = 18 }
+    }
+
+    option = {
+        name = dhm_marriage.0300.support
+		hidden_effect = { save_scope_value_as = { name = dhm072_union_result value = flag:established } }
+        trigger = { short_term_gold >= minor_gold_value }
+        remove_short_term_gold = minor_gold_value
+        scope:dhm_union_subject = {
+            add_opinion = { target = root modifier = dhm_supported_newlyweds_opinion }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_established_household_modifier YEARS = 3 RENEWAL_TT = dhm_established_household_modifier_renewed_3_tt }
+        }
+        scope:dhm_union_spouse = {
+            add_opinion = { target = root modifier = dhm_supported_newlyweds_opinion }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_established_household_modifier YEARS = 3 RENEWAL_TT = dhm_established_household_modifier_renewed_3_tt }
+        }
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_patron_modifier YEARS = 2 RENEWAL_TT = dhm_reward_household_patron_renewed_2_tt }
+        custom_tooltip = dhm_outcome_will_return_tt
+        trigger_event = { id = dhm_marriage.0305 months = 18 }
+    }
+
+    option = {
+        name = dhm_marriage.0300.customs
+		hidden_effect = { save_scope_value_as = { name = dhm072_union_result value = flag:reconciled } }
+        trigger = {
+            OR = {
+                scope:dhm_union_subject = { NOT = { faith = scope:dhm_union_spouse.faith } }
+                scope:dhm_union_subject = { NOT = { culture = scope:dhm_union_spouse.culture } }
+            }
+        }
+        scope:dhm_union_subject = {
+            add_stress = minor_stress_loss
+            add_opinion = { target = scope:dhm_union_spouse modifier = dhm_compatible_spouse_opinion }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 3 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_3_tt }
+        }
+        scope:dhm_union_spouse = {
+            add_stress = minor_stress_loss
+            add_opinion = { target = scope:dhm_union_subject modifier = dhm_compatible_spouse_opinion }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 3 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_3_tt }
+        }
+        add_piety = minor_piety_gain
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_cherished_customs_modifier YEARS = 2 RENEWAL_TT = dhm_reward_cherished_customs_renewed_2_tt }
+        custom_tooltip = dhm_outcome_will_return_tt
+        trigger_event = { id = dhm_marriage.0305 months = 18 }
+    }
+
+    option = {
+        name = dhm_marriage.0300.observe
+        if = {
+            limit = {
+                OR = {
+                    scope:dhm_union_spouse = { dhm_spousal_compatibility_poor_trigger = yes }
+                    scope:dhm_union_subject = { opinion = { target = scope:dhm_union_spouse value <= 0 } }
+                    scope:dhm_union_spouse = { opinion = { target = scope:dhm_union_subject value <= 0 } }
+                }
+            }
+            save_scope_value_as = { name = dhm072_union_result value = flag:unsettled }
+            scope:dhm_union_subject = {
+                add_stress = minor_stress_gain
+                dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_household_left_unsupported_modifier YEARS = 2 RENEWAL_TT = dhm_household_left_unsupported_modifier_renewed_2_tt }
+            }
+            scope:dhm_union_spouse = {
+                add_stress = minor_stress_gain
+                dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_household_left_unsupported_modifier YEARS = 2 RENEWAL_TT = dhm_household_left_unsupported_modifier_renewed_2_tt }
+            }
+        }
+        else_if = {
+            limit = { scope:dhm_union_spouse = { dhm_spousal_compatibility_good_trigger = yes } }
+            save_scope_value_as = { name = dhm072_union_result value = flag:independent }
+            scope:dhm_union_subject = {
+                add_stress = minor_stress_loss
+                dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_marital_self_reliance_modifier YEARS = 3 RENEWAL_TT = dhm_marital_self_reliance_modifier_renewed_3_tt }
+            }
+            scope:dhm_union_spouse = {
+                add_stress = minor_stress_loss
+                dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_marital_self_reliance_modifier YEARS = 3 RENEWAL_TT = dhm_marital_self_reliance_modifier_renewed_3_tt }
+            }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_dynastic_momentum_modifier YEARS = 2 RENEWAL_TT = dhm_reward_dynastic_momentum_renewed_2_tt }
+        }
+        else = {
+            save_scope_value_as = { name = dhm072_union_result value = flag:independent }
+            scope:dhm_union_subject = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_marital_self_reliance_modifier YEARS = 3 RENEWAL_TT = dhm_marital_self_reliance_modifier_renewed_3_tt } }
+            scope:dhm_union_spouse = { dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_marital_self_reliance_modifier YEARS = 3 RENEWAL_TT = dhm_marital_self_reliance_modifier_renewed_3_tt } }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_dynastic_momentum_modifier YEARS = 2 RENEWAL_TT = dhm_reward_dynastic_momentum_renewed_2_tt }
+        }
+        custom_tooltip = dhm_outcome_will_return_tt
+        trigger_event = { id = dhm_marriage.0305 months = 18 }
+    }
+}
+
+# Completion of a meaningful arranged-marriage intervention. This only follows
+# a scene the player actually saw and turns the earlier choice into a visible,
+# mechanical household outcome.
+dhm_marriage.0305 = {
+    type = character_event
+    title = dhm_marriage.0305.t
+    desc = {
+        first_valid = {
+            triggered_desc = {
+                trigger = { scope:dhm_union_subject = { scope:dhm072_union_result = flag:reconciled } }
+                desc = dhm_marriage.0305.desc.reconciled
+            }
+            triggered_desc = {
+                trigger = { scope:dhm_union_subject = { scope:dhm072_union_result = flag:established } }
+                desc = dhm_marriage.0305.desc.established
+            }
+            triggered_desc = {
+                trigger = { scope:dhm_union_subject = { scope:dhm072_union_result = flag:independent } }
+                desc = dhm_marriage.0305.desc.independent
+            }
+            triggered_desc = { trigger = { scope:dhm072_union_result = flag:unsettled } desc = dhm_marriage.0305.desc.unsettled }
+			desc = dhm_v072_marriage_unknown_desc
+        }
+    }
+    theme = diplomacy
+    override_background = { reference = dhm_living_hearth }
+    left_portrait = scope:dhm_union_subject
+    right_portrait = scope:dhm_union_spouse
+    trigger = {
+        is_ai = no
+        NOT = { has_global_variable = dhm_setting_marriage_stories_off }
+        exists = scope:dhm_union_subject
+        exists = scope:dhm_union_spouse
+        scope:dhm_union_subject = { is_alive = yes is_spouse_of = scope:dhm_union_spouse }
+        scope:dhm_union_spouse = { is_alive = yes }
+    }
+
+	immediate = { dhm_v072_restore_union_outcome_effect = { KEY = dhm072_union_result SUBJECT = scope:dhm_union_subject SPOUSE = scope:dhm_union_spouse NEGATIVE = dhm_household_left_unsupported_modifier } }
+
+    option = {
+        name = dhm_marriage.0305.celebrate
+        trigger = {
+            scope:dhm_union_subject = {
+                OR = {
+                    scope:dhm072_union_result = flag:reconciled
+                    scope:dhm072_union_result = flag:established
+                    scope:dhm072_union_result = flag:independent
+                }
+            }
+        }
+        add_prestige = minor_prestige_gain
+        if = {
+            limit = { scope:dhm_union_subject = { scope:dhm072_union_result = flag:reconciled } }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_peacemaker_modifier YEARS = 4 RENEWAL_TT = dhm_reward_household_peacemaker_renewed_4_tt }
+        }
+        else_if = {
+            limit = { scope:dhm_union_subject = { scope:dhm072_union_result = flag:established } }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_patron_modifier YEARS = 4 RENEWAL_TT = dhm_reward_household_patron_renewed_4_tt }
+        }
+        else = {
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_dynastic_momentum_modifier YEARS = 4 RENEWAL_TT = dhm_reward_dynastic_momentum_renewed_4_tt }
+            add_stress = minor_stress_loss
+        }
+        scope:dhm_union_subject = { add_opinion = { target = root modifier = dhm_respected_married_household_opinion } }
+        scope:dhm_union_spouse = { add_opinion = { target = root modifier = dhm_respected_married_household_opinion } }
+    }
+
+    option = {
+        name = dhm_marriage.0305.repair
+        trigger = {
+            short_term_gold >= minor_gold_value
+            scope:dhm_union_subject = { scope:dhm072_union_result = flag:unsettled }
+        }
+        remove_short_term_gold = minor_gold_value
+        add_prestige = minor_prestige_gain
+        scope:dhm_union_subject = {
+            remove_character_modifier = dhm_household_left_unsupported_modifier
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 4 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_4_tt }
+            add_opinion = { target = root modifier = dhm_supported_newlyweds_opinion }
+            add_opinion = { target = scope:dhm_union_spouse modifier = dhm_promising_spouse_opinion }
+            create_character_memory = { type = dhm_marriage_reconciled_memory participants = { spouse = scope:dhm_union_spouse } }
+        }
+        scope:dhm_union_spouse = {
+            remove_character_modifier = dhm_household_left_unsupported_modifier
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_reconciled_modifier YEARS = 4 RENEWAL_TT = dhm_family_reconciled_modifier_renewed_4_tt }
+            add_opinion = { target = root modifier = dhm_supported_newlyweds_opinion }
+            add_opinion = { target = scope:dhm_union_subject modifier = dhm_promising_spouse_opinion }
+            create_character_memory = { type = dhm_marriage_reconciled_memory participants = { spouse = scope:dhm_union_subject } }
+        }
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_peacemaker_modifier YEARS = 4 RENEWAL_TT = dhm_reward_household_peacemaker_renewed_4_tt }
+    }
+
+    option = {
+        name = dhm_marriage.0305.wait
+        trigger = { scope:dhm072_union_result = flag:unsettled }
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_family_regret_modifier YEARS = 2 RENEWAL_TT = dhm_reward_family_regret_renewed_2_tt }
+        if = { limit = { has_trait = compassionate } add_stress = minor_stress_gain }
+    }
+
+	option = { name = dhm_v072_old_outcome_ack trigger = { scope:dhm072_union_result = flag:unknown } }
+}
+
+dhm_marriage.0310 = {
+	orphan = yes # Compatibility-only: allow old queued saves, never reschedule.
+    type = character_event
+    title = dhm_marriage.0310.t
+    desc = dhm_marriage.0310.desc
+    theme = diplomacy
+    override_background = { reference = dhm_living_hearth }
+    left_portrait = scope:dhm_union_subject
+    right_portrait = scope:dhm_union_spouse
+    trigger = {
+        has_global_variable = dhm_setting_marriage_stories_all
+        NOT = { has_global_variable = dhm_setting_marriage_stories_off }
+        exists = scope:dhm_union_subject
+        exists = scope:dhm_union_spouse
+        scope:dhm_union_subject = { is_alive = yes is_spouse_of = scope:dhm_union_spouse }
+        scope:dhm_union_spouse = { is_alive = yes }
+    }
+    option = {
+        name = dhm_marriage.0310.commemorate
+        trigger = { short_term_gold >= minor_gold_value }
+        remove_short_term_gold = minor_gold_value
+        add_prestige = minor_prestige_gain
+        scope:dhm_union_subject = {
+            add_opinion = { target = scope:dhm_union_spouse modifier = dhm_compatible_spouse_opinion }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_anniversary_warmth_modifier YEARS = 3 RENEWAL_TT = dhm_anniversary_warmth_modifier_renewed_3_tt }
+        }
+        scope:dhm_union_spouse = {
+            add_opinion = { target = scope:dhm_union_subject modifier = dhm_compatible_spouse_opinion }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_anniversary_warmth_modifier YEARS = 3 RENEWAL_TT = dhm_anniversary_warmth_modifier_renewed_3_tt }
+        }
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_proud_house_modifier YEARS = 3 RENEWAL_TT = dhm_reward_proud_house_renewed_3_tt }
+    }
+    option = {
+        name = dhm_marriage.0310.private
+        add_stress = minor_stress_loss
+        scope:dhm_union_subject = {
+            add_stress = minor_stress_loss
+            add_opinion = { target = scope:dhm_union_spouse modifier = dhm_private_anniversary_opinion }
+        }
+        scope:dhm_union_spouse = {
+            add_stress = minor_stress_loss
+            add_opinion = { target = scope:dhm_union_subject modifier = dhm_private_anniversary_opinion }
+        }
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_trusted_counsel_modifier YEARS = 2 RENEWAL_TT = dhm_reward_trusted_counsel_renewed_2_tt }
+    }
+}
+
+dhm_marriage.0320 = {
+    type = character_event
+    title = dhm_marriage.0320.t
+    desc = dhm_marriage.0320.desc
+    theme = family
+    override_background = { reference = dhm_living_hearth }
+    left_portrait = scope:dhm_union_subject
+    right_portrait = scope:dhm_union_child
+    trigger = {
+		is_ai = no
+		is_alive = yes
+        NOT = { has_global_variable = dhm_setting_marriage_stories_off }
+        exists = scope:dhm_union_subject
+        exists = scope:dhm_union_spouse
+        exists = scope:dhm_union_child
+        scope:dhm_union_subject = { is_alive = yes }
+        scope:dhm_union_spouse = { is_alive = yes }
+        scope:dhm_union_child = { is_alive = yes }
+    }
+    option = {
+        name = dhm_marriage.0320.celebrate
+        trigger = { short_term_gold >= minor_gold_value }
+        remove_short_term_gold = minor_gold_value
+        add_prestige = minor_prestige_gain
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_dynastic_celebration_modifier YEARS = 2 RENEWAL_TT = dhm_dynastic_celebration_modifier_renewed_2_tt }
+        scope:dhm_union_subject = { add_opinion = { target = root modifier = dhm_welcomed_child_opinion } }
+        scope:dhm_union_spouse = { add_opinion = { target = root modifier = dhm_welcomed_child_opinion } }
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_proud_house_modifier YEARS = 5 RENEWAL_TT = dhm_reward_proud_house_renewed_5_tt }
+    }
+    option = {
+        name = dhm_marriage.0320.rejoice
+        add_stress = minor_stress_loss
+        scope:dhm_union_subject = {
+            add_stress = minor_stress_loss
+            add_opinion = { target = root modifier = dhm_quiet_encouragement_opinion }
+        }
+        scope:dhm_union_spouse = {
+            add_stress = minor_stress_loss
+            add_opinion = { target = root modifier = dhm_quiet_encouragement_opinion }
+        }
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_dynastic_momentum_modifier YEARS = 3 RENEWAL_TT = dhm_reward_dynastic_momentum_renewed_3_tt }
+    }
+}
+
+dhm_marriage.0330 = {
+    type = character_event
+    title = dhm_marriage.0330.t
+    desc = dhm_marriage.0330.desc
+    theme = family
+    override_background = { reference = dhm_living_hearth }
+    left_portrait = scope:dhm_surviving_spouse
+    trigger = {
+		is_ai = no
+		is_alive = yes
+        NOT = { has_global_variable = dhm_setting_marriage_stories_off }
+        exists = scope:dhm_surviving_spouse
+        exists = scope:dhm_deceased_spouse
+        scope:dhm_surviving_spouse = { is_alive = yes }
+        scope:dhm_deceased_spouse = { is_alive = no }
+    }
+	immediate = { scope:dhm_surviving_spouse = { remove_character_flag = dhm_arranged_widowhood_pending } }
+    option = {
+        name = dhm_marriage.0330.support
+        trigger = { short_term_gold >= minor_gold_value }
+        remove_short_term_gold = minor_gold_value
+        scope:dhm_surviving_spouse = {
+            add_stress = medium_stress_loss
+            add_opinion = { target = root modifier = dhm_supported_newlyweds_opinion }
+            dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_family_shelter_modifier YEARS = 3 RENEWAL_TT = dhm_family_shelter_modifier_renewed_3_tt }
+        }
+        add_prestige = minor_prestige_gain
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_household_patron_modifier YEARS = 3 RENEWAL_TT = dhm_reward_household_patron_renewed_3_tt }
+    }
+    option = {
+        name = dhm_marriage.0330.mourn
+        add_stress = minor_stress_loss
+        scope:dhm_surviving_spouse = {
+            add_stress = minor_stress_loss
+            add_opinion = { target = root modifier = dhm_shared_mourning_opinion }
+        }
+        dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_trusted_counsel_modifier YEARS = 3 RENEWAL_TT = dhm_reward_trusted_counsel_renewed_3_tt }
+    }
+}
+
+# Newborn bridge. The standard birth scopes are preserved by on_birth_child.
+dhm_marriage.0360 = {
+    type = character_event
+    hidden = yes
+    trigger = {
+        OR = {
+            scope:mother ?= { has_character_flag = dhm_first_child_followup_pending }
+            scope:father ?= { has_character_flag = dhm_first_child_followup_pending }
+        }
+    }
+    immediate = { dhm_first_child_union_followup_effect = yes }
+}
+
+# Death bridge runs before the character is removed, so spouse relations and the
+# stored household manager can be cleaned without any global search.
+dhm_marriage.0370 = {
+    type = character_event
+    hidden = yes
+    trigger = {
+        any_spouse = {
+            has_character_flag = dhm_arranged_union_active
+            any_relation = { type = dhm_arranged_spouse this = root }
+        }
+    }
+    immediate = { dhm_arranged_widowhood_effect = yes }
+}
+
+# Divorce cleanup is pair-specific, so polygamous characters keep state for any
+# other DHM-arranged spouse they may still have.
+dhm_marriage.0380 = {
+    type = character_event
+    hidden = yes
+    trigger = {
+        exists = scope:spouse
+        OR = {
+            any_relation = { type = dhm_arranged_spouse this = scope:spouse }
+            AND = {
+                has_variable = dhm_arranged_union_spouse
+                var:dhm_arranged_union_spouse = scope:spouse
+            }
+            scope:spouse = {
+                has_variable = dhm_arranged_union_spouse
+                var:dhm_arranged_union_spouse = root
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = { any_relation = { type = dhm_arranged_spouse this = scope:spouse } }
+            remove_relation_dhm_arranged_spouse = scope:spouse
+            dhm_reconcile_arranged_union_state_effect = yes
+            scope:spouse = { dhm_reconcile_arranged_union_state_effect = yes }
+        }
+        if = {
+            limit = {
+                has_variable = dhm_arranged_union_spouse
+                var:dhm_arranged_union_spouse = scope:spouse
+            }
+            dhm_clear_pending_arranged_union_state_effect = yes
+        }
+        scope:spouse = {
+            if = {
+                limit = {
+                    has_variable = dhm_arranged_union_spouse
+                    var:dhm_arranged_union_spouse = root
+                }
+                dhm_clear_pending_arranged_union_state_effect = yes
+            }
+        }
+    }
+}
+
+# One hidden cleanup per cancelled pair. Because the refusal relation is
+# reciprocal and multi-capable, cancelling later talks cannot overwrite this
+# pair's five-year waiting period.
+dhm_marriage.0390 = {
+	type = character_event
+	hidden = yes
+	trigger = {
+		is_alive = yes
+		exists = scope:dhm_marriage_candidate
+		any_relation = { type = dhm_refused_courtship this = scope:dhm_marriage_candidate }
+	}
+	immediate = { remove_relation_dhm_refused_courtship = scope:dhm_marriage_candidate }
+}

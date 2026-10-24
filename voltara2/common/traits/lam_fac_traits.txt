@@ -1,0 +1,48 @@
+﻿# Living Factions - shows a vassal's faction in their tooltip. No effects of its own. (Fame category: the vanilla hover tooltip
+# shows only a few personality traits, and a badge there could push out a real one; it shows in the character window.)
+# Kept on the faction's open members; those of a banned (underground) faction hide it.
+lam_fac_member = {
+	category = fame
+	icon = lam_fac_member.dds
+	shown_in_ruler_designer = no
+	inherit_chance = 0
+
+	name = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = trait_lam_fac_member
+			}
+			triggered_desc = {
+				trigger = { has_variable = lam_bloc_lead }
+				desc = trait_lam_fac_member_lead
+			}
+			triggered_desc = {
+				trigger = { var:lam_bloc ?= { is_alive = yes } }
+				desc = trait_lam_fac_member_0
+			}
+			desc = trait_lam_fac_member
+		}
+	}
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = trait_lam_fac_member_desc
+			}
+			triggered_desc = {
+				trigger = { has_variable = lam_bloc_lead }
+				desc = trait_lam_fac_member_desc_lead
+			}
+			triggered_desc = {
+				trigger = { var:lam_fac_tier ?= 1 }
+				desc = trait_lam_fac_member_desc_core
+			}
+			triggered_desc = {
+				trigger = { var:lam_fac_tier ?= 2 }
+				desc = trait_lam_fac_member_desc_client
+			}
+			desc = trait_lam_fac_member_desc_sym
+		}
+	}
+}

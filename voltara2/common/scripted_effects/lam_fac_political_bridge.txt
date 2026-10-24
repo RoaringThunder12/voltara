@@ -1,0 +1,739 @@
+﻿lam_pb_prepare_create_effect = {
+	set_variable = {
+		name = lam_pb_create_target
+		value = var:lam_pb_lord
+		days = 1
+	}
+	set_variable = {
+		name = lam_pb_create_kind
+		value = var:lam_pb_kind
+		days = 1
+	}
+	if = {
+		limit = {
+			var:lam_pb_kind ?= flag:claimant_faction
+			exists = var:lam_pb_title
+		}
+		set_variable = {
+			name = claiming_title
+			value = var:lam_pb_title
+		}
+	}
+}
+lam_pb_clear_create_effect = {
+	remove_variable = lam_pb_create_target
+	remove_variable = lam_pb_create_kind
+	remove_variable = claiming_title
+}
+lam_pb_request_cleanup_effect = {
+	var:lam_pb_lord ?= {
+		if = {
+			limit = {
+				is_alive = yes
+			}
+			remove_list_variable = {
+				name = lam_pb_pending_hosts
+				target = prev
+			}
+		}
+	}
+	remove_variable = lam_pb_gathering
+	remove_variable = lam_pb_kind
+	remove_variable = lam_pb_lord
+	remove_variable = lam_pb_title
+	remove_variable = lam_pb_claimant
+	remove_variable = lam_pb_origin_party
+	clear_variable_list = lam_pb_supporters
+	clear_variable_list = lam_pb_refused
+	lam_pb_clear_create_effect = yes
+}
+lam_pb_begin_effect = {
+	if = {
+		limit = {
+			lam_pb_can_propose_trigger = yes
+			lam_pb_legal_$KIND$_trigger = yes
+		}
+		liege = {
+			lam_pb_takeover_effect = yes
+		}
+		save_scope_as = lam_pb_host
+		if = {
+			limit = {
+				NOT = {
+					has_global_variable = lam_pb_serial
+				}
+			}
+			set_global_variable = {
+				name = lam_pb_serial
+				value = 0
+			}
+		}
+		change_global_variable = {
+			name = lam_pb_serial
+			add = 1
+		}
+		set_variable = {
+			name = lam_pb_serial
+			value = global_var:lam_pb_serial
+		}
+		save_scope_value_as = {
+			name = lam_pb_token
+			value = var:lam_pb_serial
+		}
+		set_variable = {
+			name = lam_pb_kind
+			value = flag:$KIND$
+		}
+		clear_saved_scope = lam_pb_invited_claimant
+		var:lam_pb_claimant ?= {
+			save_scope_as = lam_pb_invited_claimant
+		}
+		if = {
+			limit = {
+				NOT = {
+					var:lam_pb_kind ?= flag:claimant_faction
+				}
+			}
+			remove_variable = lam_pb_claimant
+		}
+		set_variable = {
+			name = lam_pb_lord
+			value = liege
+		}
+		set_variable = {
+			name = lam_pb_title
+			value = liege.primary_title
+		}
+		set_variable = {
+			name = lam_pb_gathering
+			value = yes
+		}
+		set_variable = {
+			name = lam_pb_retry
+			value = yes
+			months = 12
+		}
+		clear_variable_list = lam_pb_supporters
+		clear_variable_list = lam_pb_refused
+		add_to_variable_list = {
+			name = lam_pb_supporters
+			target = this
+		}
+		var:lam_pb_origin_party ?= {
+			every_in_list = {
+				variable = lam_cr_voters
+				limit = {
+					is_alive = yes
+				}
+				if = {
+					limit = {
+						var:lam_cr_choice ?= flag:yes
+					}
+					scope:lam_pb_host = {
+						add_to_variable_list = {
+							name = lam_pb_supporters
+							target = prev
+						}
+					}
+				}
+				else = {
+					scope:lam_pb_host = {
+						add_to_variable_list = {
+							name = lam_pb_refused
+							target = prev
+						}
+					}
+				}
+			}
+		}
+		liege = {
+			add_to_variable_list = {
+				name = lam_pb_pending_hosts
+				target = scope:lam_pb_host
+			}
+			every_vassal = {
+				limit = {
+					NOT = {
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = scope:lam_pb_host
+								}
+								this = scope:lam_pb_host
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+					lam_pb_can_support_trigger = yes
+					NOT = {
+						scope:lam_pb_host = {
+							is_target_in_variable_list = {
+								name = lam_pb_supporters
+								target = prev
+							}
+						}
+					}
+					NOT = {
+						scope:lam_pb_host = {
+							is_target_in_variable_list = {
+								name = lam_pb_refused
+								target = prev
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						is_ai = no
+						NOT = {
+							has_variable = lam_pb_invite_cd
+						}
+						OR = {
+							NOT = {
+								has_variable = lam_pb_declined_reset
+							}
+							NOT = {
+								is_target_in_variable_list = {
+									name = lam_pb_declined_hosts
+									target = scope:lam_pb_host
+								}
+							}
+						}
+					}
+					set_variable = {
+						name = lam_pb_invite_cd
+						value = yes
+						months = 6
+					}
+					trigger_event = lam_pb.0001
+				}
+				else_if = {
+					limit = {
+						is_ai = yes
+						NOT = {
+							has_variable = lam_bloc
+						}
+						lam_pb_political_consent_trigger = yes
+						lam_pb_support_value >= 20
+					}
+					scope:lam_pb_host = {
+						add_to_variable_list = {
+							name = lam_pb_supporters
+							target = prev
+						}
+					}
+				}
+			}
+		}
+		trigger_event = {
+			id = lam_pb.0002
+			days = 30
+		}
+		if = {
+			limit = {
+				is_ai = no
+			}
+			send_interface_message = {
+				type = event_generic_neutral
+				title = lam_pb_gathering_notice
+				right_icon = this
+			}
+		}
+	}
+}
+lam_pb_finish_effect = {
+	save_scope_as = lam_pb_host
+	clear_saved_scope = lam_pb_faction
+	clear_saved_scope = lam_pb_merge_front
+	if = {
+		limit = {
+			has_variable = lam_pb_gathering
+			is_alive = yes
+			lam_pb_objective_current_trigger = yes
+			NOT = {
+				exists = joined_faction
+			}
+		}
+		liege = {
+			every_targeting_faction = {
+				limit = {
+					lam_pb_same_front_trigger = yes
+					NOT = {
+						exists = scope:lam_pb_merge_front
+					}
+				}
+				save_scope_as = lam_pb_merge_front
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:lam_pb_merge_front
+			}
+			scope:lam_pb_merge_front = {
+				add_to_variable_list = {
+					name = lam_pb_consented
+					target = scope:lam_pb_host
+				}
+			}
+			if = {
+				limit = {
+					can_join_faction = scope:lam_pb_merge_front
+				}
+				join_faction = scope:lam_pb_merge_front
+			}
+			if = {
+				limit = {
+					joined_faction ?= scope:lam_pb_merge_front
+				}
+				scope:lam_pb_merge_front = {
+					save_scope_as = lam_pb_faction
+				}
+			}
+			else = {
+				scope:lam_pb_merge_front = {
+					remove_list_variable = {
+						name = lam_pb_consented
+						target = scope:lam_pb_host
+					}
+				}
+			}
+		}
+		else = {
+			lam_pb_prepare_create_effect = yes
+			if = {
+				limit = {
+					var:lam_pb_kind ?= flag:liberty_faction
+					can_create_faction = {
+						type = liberty_faction
+						target = var:lam_pb_lord
+					}
+				}
+				create_faction = {
+					type = liberty_faction
+					target = var:lam_pb_lord
+				}
+			}
+			if = {
+				limit = {
+					var:lam_pb_kind ?= flag:independence_faction
+					can_create_faction = {
+						type = independence_faction
+						target = var:lam_pb_lord
+					}
+				}
+				create_faction = {
+					type = independence_faction
+					target = var:lam_pb_lord
+				}
+			}
+			if = {
+				limit = {
+					var:lam_pb_kind ?= flag:claimant_faction
+					can_create_faction = {
+						type = claimant_faction
+						target = var:lam_pb_lord
+					}
+				}
+				create_faction = {
+					type = claimant_faction
+					target = var:lam_pb_lord
+				}
+			}
+			if = {
+				limit = {
+					var:lam_pb_kind ?= flag:nation_fracturing_faction
+					can_create_faction = {
+						type = nation_fracturing_faction
+						target = var:lam_pb_lord
+					}
+				}
+				create_faction = {
+					type = nation_fracturing_faction
+					target = var:lam_pb_lord
+				}
+			}
+			joined_faction ?= {
+				save_scope_as = lam_pb_faction
+				set_variable = {
+					name = lam_pb_managed
+					value = yes
+				}
+				set_variable = {
+					name = lam_pb_serial
+					value = scope:lam_pb_host.var:lam_pb_serial
+				}
+				set_variable = {
+					name = lam_pb_origin
+					value = scope:lam_pb_host
+				}
+				set_variable = {
+					name = lam_pb_approved
+					value = yes
+				}
+				add_to_variable_list = {
+					name = lam_pb_consented
+					target = scope:lam_pb_host
+				}
+				if = {
+					limit = {
+						faction_is_type = claimant_faction
+					}
+					set_special_character = scope:lam_pb_host.var:lam_pb_claimant
+					set_special_title = scope:lam_pb_host.var:lam_pb_title
+					special_character = {
+						add_to_variable_list = {
+							name = claimant_factions
+							target = scope:lam_pb_faction
+						}
+					}
+				}
+				lam_pb_snapshot_backend_effect = yes
+			}
+			lam_pb_clear_create_effect = yes
+		}
+		if = {
+			limit = {
+				exists = scope:lam_pb_faction
+			}
+			set_variable = {
+				name = lam_pb_front
+				value = scope:lam_pb_faction
+			}
+			set_variable = {
+				name = lam_pb_front_kind
+				value = var:lam_pb_kind
+			}
+			every_in_list = {
+				variable = lam_pb_supporters
+				limit = {
+					is_alive = yes
+					NOT = {
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = scope:lam_pb_host
+								}
+								this = scope:lam_pb_host
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+					lam_pb_can_support_trigger = yes
+					lam_pb_political_consent_trigger = yes
+				}
+				save_scope_as = lam_pb_supporter
+				scope:lam_pb_faction = {
+					add_to_variable_list = {
+						name = lam_pb_consented
+						target = scope:lam_pb_supporter
+					}
+				}
+				if = {
+					limit = {
+						can_join_faction = scope:lam_pb_faction
+					}
+					join_faction = scope:lam_pb_faction
+				}
+				if = {
+					limit = {
+						NOT = {
+							joined_faction ?= scope:lam_pb_faction
+						}
+					}
+					scope:lam_pb_faction = {
+						remove_list_variable = {
+							name = lam_pb_consented
+							target = scope:lam_pb_supporter
+						}
+					}
+				}
+			}
+			lam_wc_sync_effect = yes
+			if = {
+				limit = {
+					lam_rv_can_send_trigger = yes
+				}
+				trigger_event = lam_rv.0001
+			}
+		}
+	}
+	if = {
+		limit = {
+			is_ai = no
+			NOT = {
+				exists = scope:lam_pb_faction
+			}
+		}
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_pb_failed_notice
+			right_icon = this
+		}
+	}
+	lam_pb_request_cleanup_effect = yes
+	liege ?= {
+		lam_pb_refresh_fronts_effect = yes
+	}
+}
+lam_pb_refresh_fronts_effect = {
+	lam_pb_takeover_effect = yes
+	save_scope_as = lam_pb_front_court
+	clear_variable_list = lam_pb_fronts
+	every_in_list = {
+		variable = lam_pb_pending_hosts
+		if = {
+			limit = {
+				is_alive = yes
+			}
+			if = {
+				limit = {
+					has_variable = lam_pb_gathering
+					lam_pb_objective_current_trigger = yes
+				}
+				remove_variable = lam_pb_front
+				remove_variable = lam_pb_front_candidate
+				set_variable = {
+					name = lam_pb_front_kind
+					value = var:lam_pb_kind
+				}
+				set_variable = {
+					name = lam_pb_front_phase
+					value = 1
+				}
+				set_variable = {
+					name = lam_pb_front_count
+					value = 0
+				}
+				clear_variable_list = lam_pb_front_members
+				save_scope_as = lam_pb_front_host
+				every_in_list = {
+					variable = lam_pb_supporters
+					limit = {
+						is_alive = yes
+					}
+					scope:lam_pb_front_host = {
+						change_variable = {
+							name = lam_pb_front_count
+							add = 1
+						}
+						add_to_variable_list = {
+							name = lam_pb_front_members
+							target = prev
+						}
+					}
+				}
+				if = {
+					limit = {
+						exists = var:lam_pb_claimant
+					}
+					set_variable = {
+						name = lam_pb_front_candidate
+						value = var:lam_pb_claimant
+					}
+				}
+				scope:lam_pb_front_court = {
+					add_to_variable_list = {
+						name = lam_pb_fronts
+						target = prev
+					}
+				}
+			}
+			else = {
+				lam_pb_request_cleanup_effect = yes
+				scope:lam_pb_front_court = {
+					remove_list_variable = {
+						name = lam_pb_pending_hosts
+						target = prev
+					}
+				}
+			}
+		}
+		else = {
+			scope:lam_pb_front_court = {
+				remove_list_variable = {
+					name = lam_pb_pending_hosts
+					target = prev
+				}
+			}
+		}
+	}
+	every_targeting_faction = {
+		limit = {
+			has_variable = lam_pb_managed
+		}
+		save_scope_as = lam_pb_refresh_faction
+		faction_leader ?= {
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				save_scope_as = lam_pb_front_host
+				remove_variable = lam_pb_front_candidate
+				set_variable = {
+					name = lam_pb_front
+					value = scope:lam_pb_refresh_faction
+				}
+				set_variable = {
+					name = lam_pb_front_count
+					value = 0
+				}
+				set_variable = {
+					name = lam_pb_front_phase
+					value = 2
+				}
+				set_variable = {
+					name = lam_pb_front_power
+					value = scope:lam_pb_refresh_faction.faction_power
+				}
+				clear_variable_list = lam_pb_front_members
+				if = {
+					limit = {
+						scope:lam_pb_refresh_faction = {
+							faction_is_type = liberty_faction
+						}
+					}
+					set_variable = {
+						name = lam_pb_front_kind
+						value = flag:liberty_faction
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_pb_refresh_faction = {
+							faction_is_type = independence_faction
+						}
+					}
+					set_variable = {
+						name = lam_pb_front_kind
+						value = flag:independence_faction
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_pb_refresh_faction = {
+							faction_is_type = claimant_faction
+						}
+					}
+					set_variable = {
+						name = lam_pb_front_kind
+						value = flag:claimant_faction
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_pb_refresh_faction = {
+							faction_is_type = nation_fracturing_faction
+						}
+					}
+					set_variable = {
+						name = lam_pb_front_kind
+						value = flag:nation_fracturing_faction
+					}
+				}
+				scope:lam_pb_refresh_faction = {
+					every_faction_member = {
+						scope:lam_pb_front_host = {
+							change_variable = {
+								name = lam_pb_front_count
+								add = 1
+							}
+							add_to_variable_list = {
+								name = lam_pb_front_members
+								target = prev
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_variable = lam_pb_sent
+						}
+						scope:lam_pb_front_host = {
+							set_variable = {
+								name = lam_pb_front_phase
+								value = 3
+							}
+						}
+					}
+					if = {
+						limit = {
+							faction_is_at_war = yes
+						}
+						scope:lam_pb_front_host = {
+							set_variable = {
+								name = lam_pb_front_phase
+								value = 4
+							}
+						}
+					}
+					special_character ?= {
+						scope:lam_pb_front_host = {
+							set_variable = {
+								name = lam_pb_front_candidate
+								value = prev
+							}
+						}
+					}
+				}
+				scope:lam_pb_front_court = {
+					add_to_variable_list = {
+						name = lam_pb_fronts
+						target = prev
+					}
+				}
+			}
+		}
+	}
+}
+lam_pb_unaligned_pulse_effect = {
+	if = {
+		limit = {
+			lam_pb_managed_court_trigger = yes
+		}
+		every_vassal = {
+			limit = {
+				is_alive = yes
+				is_ai = yes
+				NOT = {
+					has_variable = lam_bloc
+				}
+				lam_pb_can_propose_trigger = yes
+			}
+			if = {
+				limit = {
+					lam_pb_proposal_pressure_value >= 35
+				}
+				if = {
+					limit = {
+						has_variable = lam_pb_grievance_m
+					}
+					if = {
+						limit = {
+							lam_now_m >= {
+								value = var:lam_pb_grievance_m
+								add = 6
+							}
+						}
+						trigger_event = {
+							id = lam_pb.0003
+							days = 1
+						}
+					}
+				}
+				else = {
+					set_variable = {
+						name = lam_pb_grievance_m
+						value = lam_now_m
+					}
+				}
+			}
+			else = {
+				remove_variable = lam_pb_grievance_m
+			}
+		}
+	}
+	lam_pb_refresh_fronts_effect = yes
+}

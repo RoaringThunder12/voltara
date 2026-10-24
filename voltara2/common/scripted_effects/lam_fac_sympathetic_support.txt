@@ -1,0 +1,44 @@
+﻿lam_sy_adopt_platform_effect = {
+	if = {
+		limit = {
+			has_variable = lam_sy_support
+		}
+		set_variable = {
+			name = lam_ss_sympathy
+			value = yes
+		}
+		if = {
+			limit = {
+				scope:lam_vt_lead = {
+					has_variable = lam_bp_origin_topic
+				}
+			}
+			set_variable = {
+				name = lam_ss_topic
+				value = scope:lam_vt_lead.var:lam_bp_origin_topic
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_vt_lead = {
+					has_variable = lam_bp_origin_side
+				}
+			}
+			set_variable = {
+				name = lam_ss_side
+				value = scope:lam_vt_lead.var:lam_bp_origin_side
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_vt_lead = {
+					exists = var:lam_bp_origin_alternative
+				}
+			}
+			set_variable = {
+				name = lam_ss_alternative
+				value = scope:lam_vt_lead.var:lam_bp_origin_alternative
+			}
+		}
+	}
+}

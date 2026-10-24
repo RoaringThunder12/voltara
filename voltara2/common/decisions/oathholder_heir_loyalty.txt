@@ -1,0 +1,40 @@
+﻿oathbound_heir_force = { 
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = oathbound_heir_force_desc
+	selection_tooltip = oathbound_heir_tooltip
+
+	ai_check_interval = 0
+
+	is_shown = {
+		always = no
+		#is_ruler = yes
+		#primary_heir = { is_child_of = root }		
+		#num_of_relation_oathbound > 0
+	}
+
+	is_valid = {
+		has_trait = ambitious
+		root.var:val_oathkeeper = { has_trait = oathkeeper }
+		NOT = { 
+			is_imprisoned = yes
+			has_trait = incapable 
+		}
+		OR = {
+			root.var:val_oathholder.primary_heir = { is_child_of = root.var:val_oathholder } # Oathholders heir is actually their child.
+		}	
+	}
+
+	effect = {
+		trigger_event = oathbound_heir_events.1002
+	}
+	
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}

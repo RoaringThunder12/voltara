@@ -1,0 +1,143 @@
+﻿lam_ev_base_player_seat_trigger = {
+	OR = {
+		NOT = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				count >= 3
+			}
+		}
+		AND = {
+			any_vassal = {
+				lam_fac_peer_trigger = yes
+				count >= 8
+			}
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					count >= 4
+				}
+			}
+		}
+		AND = {
+			any_vassal = {
+				lam_fac_peer_trigger = yes
+				count >= 15
+			}
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					count >= 5
+				}
+			}
+		}
+		AND = {
+			any_vassal = {
+				lam_fac_peer_trigger = yes
+				count >= 25
+			}
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					count >= 6
+				}
+			}
+		}
+	}
+}
+lam_ev_player_seat_trigger = {
+	trigger_if = {
+		limit = {
+			lam_ev_extra_active_trigger = yes
+		}
+		OR = {
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					count >= 4
+				}
+			}
+			AND = {
+				any_vassal = {
+					lam_fac_peer_trigger = yes
+					count >= 8
+				}
+				NOT = {
+					any_in_list = {
+						variable = lam_bloc_leads
+						count >= 5
+					}
+				}
+			}
+			AND = {
+				any_vassal = {
+					lam_fac_peer_trigger = yes
+					count >= 15
+				}
+				NOT = {
+					any_in_list = {
+						variable = lam_bloc_leads
+						count >= 6
+					}
+				}
+			}
+			AND = {
+				any_vassal = {
+					lam_fac_peer_trigger = yes
+					count >= 25
+				}
+				NOT = {
+					any_in_list = {
+						variable = lam_bloc_leads
+						count >= 7
+					}
+				}
+			}
+		}
+	}
+	trigger_else = {
+		OR = {
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					count >= 3
+				}
+			}
+			AND = {
+				any_vassal = {
+					lam_fac_peer_trigger = yes
+					count >= 8
+				}
+				NOT = {
+					any_in_list = {
+						variable = lam_bloc_leads
+						count >= 4
+					}
+				}
+			}
+			AND = {
+				any_vassal = {
+					lam_fac_peer_trigger = yes
+					count >= 15
+				}
+				NOT = {
+					any_in_list = {
+						variable = lam_bloc_leads
+						count >= 5
+					}
+				}
+			}
+			AND = {
+				any_vassal = {
+					lam_fac_peer_trigger = yes
+					count >= 25
+				}
+				NOT = {
+					any_in_list = {
+						variable = lam_bloc_leads
+						count >= 6
+					}
+				}
+			}
+		}
+	}
+}

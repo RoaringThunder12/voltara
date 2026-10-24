@@ -1,0 +1,25 @@
+﻿namespace = call_oathbound
+
+# Notification that you have been automatically called
+call_oathbound.0001 = {
+	type = letter_event
+	opening = {
+		desc = call_oathbound.0001.opening
+	}
+	desc = call_oathbound.0001.desc
+	sender = var:val_oathholder
+
+	immediate = {
+		var:val_oathholder = {
+			save_scope_as = scope_oathholder
+		}
+		root = {
+			save_scope_as = scope_me
+		}
+	}
+
+	option = {
+		name = call_oathbound.0001.a
+		play_music_cue = mx_cue_combat_stinger
+	}
+}

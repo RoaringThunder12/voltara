@@ -11,19 +11,10 @@ religious_interaction.2002 = {
 	type = character_event
 	hidden = yes
 	immediate = {
-		if = {
-			limit = {
-				has_title = title:e_minister_of_rites
-			}
-			change_influence = {
-				value = minor_influence_gain
-				multiply = scope:recipient.primary_title.tier
-			}
-			add_piety = {
-				value = minor_piety_gain
-				multiply = scope:recipient.primary_title.tier
-			}
-		}
+		if = { limit = {
+				always = no
+			} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 		notify_puppeteer_of_outcome_effect = {
 			TYPE = event_toast_effect_good
 			TITLE = religious_interaction.2002.toast_puppeteer

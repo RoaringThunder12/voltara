@@ -1,0 +1,18 @@
+﻿# Living Factions: the date to the month, for ends that must not depend on the season they began in.
+# lam_now_m = year * 12 + month (1..12).
+lam_now_m = {
+	value = current_year
+	multiply = 12
+	if = { limit = { current_month >= 1 } add = 1 }
+	if = { limit = { current_month >= 2 } add = 1 }
+	if = { limit = { current_month >= 3 } add = 1 }
+	if = { limit = { current_month >= 4 } add = 1 }
+	if = { limit = { current_month >= 5 } add = 1 }
+	if = { limit = { current_month >= 6 } add = 1 }
+	if = { limit = { current_month >= 7 } add = 1 }
+	if = { limit = { current_month >= 8 } add = 1 }
+	if = { limit = { current_month >= 9 } add = 1 }
+	if = { limit = { current_month >= 10 } add = 1 }
+	if = { limit = { current_month >= 11 } add = 1 }
+	if = { limit = { current_month >= 12 } add = 1 }
+}

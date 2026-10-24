@@ -1,0 +1,92 @@
+﻿lam_pol_grant_power_effect = {
+	set_variable = {
+		name = lam_fac_puppet_master
+		value = $LEAD$
+	}
+	save_scope_as = lam_sz_lord
+	lam_rv_court_puppet_effect = {
+		LEAD = $LEAD$
+	}
+	add_opinion = {
+		target = $LEAD$
+		modifier = lam_puppet_master_opinion
+	}
+	$LEAD$ = {
+		if = {
+			limit = {
+				is_ai = no
+				NOT = {
+					exists = scope:lam_sh_inherit
+				}
+			}
+			save_scope_as = lam_sh_master
+			scope:lam_sz_lord = {
+				save_scope_as = lam_sh_king
+			}
+			trigger_event = lam_faction.2900
+		}
+	}
+	$LEAD$ = {
+		set_variable = {
+			name = lam_fac_puppeteer
+			value = yes
+		}
+		set_variable = {
+			name = lam_fac_puppeteer_of
+			value = prev
+		}
+		lam_fac_timeline_add_effect = {
+			KEY = seized
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_hook = prev
+				}
+			}
+			add_hook = {
+				type = lam_nc_control_hook
+				target = prev
+			}
+		}
+	}
+	add_character_modifier = {
+		modifier = lam_fac_puppet_modifier
+		months = 13
+	}
+	$LEAD$ = {
+		add_character_modifier = {
+			modifier = lam_fac_puppeteer_modifier
+			months = 13
+		}
+	}
+	$LEAD$ = {
+		if = {
+			limit = {
+				NOT = {
+					has_character_modifier = lam_sh_power_modifier
+				}
+			}
+			add_character_modifier = lam_sh_power_modifier
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = scope:lam_sh_inherit
+				}
+				government_has_flag = government_has_influence
+			}
+			change_influence = lam_tune_sh_influence_lump
+		}
+	}
+	if = {
+		limit = {
+			is_ai = no
+		}
+		save_scope_as = lam_pm_lord
+		$LEAD$ = {
+			save_scope_as = lam_pm_lead
+		}
+		trigger_event = lam_faction.1410
+	}
+}

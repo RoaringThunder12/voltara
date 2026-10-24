@@ -1,0 +1,438 @@
+﻿# =============================================================================
+# Dynasty & Household Manager v0.4.0 — Living Family story engine
+# =============================================================================
+
+# One story at a time. Milestone events remain independent of this governor.
+dhm_apply_living_story_cooldown_effect = {
+	if = {
+		limit = { has_global_variable = dhm_setting_stories_quiet }
+		add_character_flag = { flag = dhm_living_story_cooldown months = 30 }
+	}
+	else_if = {
+		limit = { has_global_variable = dhm_setting_stories_lively }
+		add_character_flag = { flag = dhm_living_story_cooldown months = 9 }
+	}
+	else = {
+		add_character_flag = { flag = dhm_living_story_cooldown months = 18 }
+	}
+}
+
+dhm_record_living_letter_effect = {
+	if = { limit = { exists = scope:dhm_story_relative } scope:dhm_story_relative = { add_character_flag = { flag = dhm081_family_recent years = 3 } } }
+	dhm_v075_count_digest_effect = { COUNTER = dhm075_digest_letters }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_year_letters }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_chronicle_letters }
+}
+
+dhm_record_living_education_effect = {
+	if = { limit = { exists = scope:dhm_story_child } scope:dhm_story_child = { add_character_flag = { flag = dhm081_family_recent years = 3 } } }
+	dhm_v075_count_digest_effect = { COUNTER = dhm075_digest_education }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_year_education_stories }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_chronicle_education_stories }
+}
+
+dhm_record_living_marriage_effect = {
+	dhm_v075_count_digest_effect = { COUNTER = dhm075_digest_marriage_stories }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_year_marriage_stories }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_chronicle_marriage_stories }
+}
+
+dhm_record_living_dispute_effect = {
+	if = { limit = { exists = scope:dhm_dispute_first } scope:dhm_dispute_first = { add_character_flag = { flag = dhm081_family_recent years = 3 } } }
+	if = { limit = { exists = scope:dhm_dispute_second } scope:dhm_dispute_second = { add_character_flag = { flag = dhm081_family_recent years = 3 } } }
+	dhm_v075_count_digest_effect = { COUNTER = dhm075_digest_disputes }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_year_disputes }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_chronicle_disputes }
+}
+
+dhm_record_living_wish_effect = {
+	if = { limit = { exists = scope:dhm_story_relative } scope:dhm_story_relative = { add_character_flag = { flag = dhm081_family_recent years = 3 } } }
+	dhm_v075_count_digest_effect = { COUNTER = dhm075_digest_wishes }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_year_marriage_wishes }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_chronicle_marriage_wishes }
+}
+
+dhm_record_living_ceremony_effect = {
+	if = { limit = { exists = scope:dhm_ceremony_relative } scope:dhm_ceremony_relative = { add_character_flag = { flag = dhm081_family_recent years = 3 } } }
+	dhm_v075_count_digest_effect = { COUNTER = dhm075_digest_ceremonies }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_year_ceremonies }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_chronicle_ceremonies }
+}
+
+dhm_record_reconciliation_effect = {
+	dhm_v075_count_digest_effect = { COUNTER = dhm075_digest_reconciliations }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_year_reconciliations }
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_chronicle_reconciliations }
+}
+
+# A household carries one current public character at a time. Historical marks
+# remain in the Chronicle counters, but opposite short-term bonuses never stack.
+dhm_clear_active_reputation_effect = {
+	hidden_effect = {
+		remove_character_flag = dhm_reputation_generous_active
+		remove_character_flag = dhm_reputation_strict_active
+		remove_character_flag = dhm_reputation_guardian_active
+		remove_character_flag = dhm_reputation_traditional_active
+		remove_character_modifier = dhm_reputation_generous_modifier
+		remove_character_modifier = dhm_reputation_strict_modifier
+		remove_character_modifier = dhm_reputation_guardian_modifier
+		remove_character_modifier = dhm_reputation_traditional_modifier
+	}
+}
+
+dhm_mark_reputation_generous_effect = {
+	if = {
+		limit = {
+			NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled }
+			OR = {
+				has_character_flag = dhm_reputation_strict_active
+				has_character_flag = dhm_reputation_guardian_active
+				has_character_flag = dhm_reputation_traditional_active
+				has_character_modifier = dhm_reputation_strict_modifier
+				has_character_modifier = dhm_reputation_guardian_modifier
+				has_character_modifier = dhm_reputation_traditional_modifier
+			}
+		}
+		custom_tooltip = dhm_reputation_previous_lost_tt
+	}
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_rep_generous }
+	hidden_effect = {
+		remove_character_flag = dhm_reputation_generous_active
+		remove_character_flag = dhm_reputation_strict_active
+		remove_character_flag = dhm_reputation_guardian_active
+		remove_character_flag = dhm_reputation_traditional_active
+		remove_character_modifier = dhm_reputation_strict_modifier
+		remove_character_modifier = dhm_reputation_guardian_modifier
+		remove_character_modifier = dhm_reputation_traditional_modifier
+		if = { limit = { has_global_variable = dhm_setting_legacy_mechanics_disabled } remove_character_modifier = dhm_reputation_generous_modifier }
+	}
+	add_character_flag = dhm_reputation_generous_active
+	if = {
+		limit = { NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled } }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reputation_generous_modifier YEARS = 3 RENEWAL_TT = dhm_reputation_generous_modifier_renewed_3_tt }
+	}
+}
+
+dhm_mark_reputation_strict_effect = {
+	if = {
+		limit = {
+			NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled }
+			OR = {
+				has_character_flag = dhm_reputation_generous_active
+				has_character_flag = dhm_reputation_guardian_active
+				has_character_flag = dhm_reputation_traditional_active
+				has_character_modifier = dhm_reputation_generous_modifier
+				has_character_modifier = dhm_reputation_guardian_modifier
+				has_character_modifier = dhm_reputation_traditional_modifier
+			}
+		}
+		custom_tooltip = dhm_reputation_previous_lost_tt
+	}
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_rep_strict }
+	hidden_effect = {
+		remove_character_flag = dhm_reputation_generous_active
+		remove_character_flag = dhm_reputation_strict_active
+		remove_character_flag = dhm_reputation_guardian_active
+		remove_character_flag = dhm_reputation_traditional_active
+		remove_character_modifier = dhm_reputation_generous_modifier
+		remove_character_modifier = dhm_reputation_guardian_modifier
+		remove_character_modifier = dhm_reputation_traditional_modifier
+		if = { limit = { has_global_variable = dhm_setting_legacy_mechanics_disabled } remove_character_modifier = dhm_reputation_strict_modifier }
+	}
+	add_character_flag = dhm_reputation_strict_active
+	if = {
+		limit = { NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled } }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reputation_strict_modifier YEARS = 3 RENEWAL_TT = dhm_reputation_strict_modifier_renewed_3_tt }
+	}
+}
+
+dhm_mark_reputation_guardian_effect = {
+	if = {
+		limit = {
+			NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled }
+			OR = {
+				has_character_flag = dhm_reputation_generous_active
+				has_character_flag = dhm_reputation_strict_active
+				has_character_flag = dhm_reputation_traditional_active
+				has_character_modifier = dhm_reputation_generous_modifier
+				has_character_modifier = dhm_reputation_strict_modifier
+				has_character_modifier = dhm_reputation_traditional_modifier
+			}
+		}
+		custom_tooltip = dhm_reputation_previous_lost_tt
+	}
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_rep_guardian }
+	hidden_effect = {
+		remove_character_flag = dhm_reputation_generous_active
+		remove_character_flag = dhm_reputation_strict_active
+		remove_character_flag = dhm_reputation_guardian_active
+		remove_character_flag = dhm_reputation_traditional_active
+		remove_character_modifier = dhm_reputation_generous_modifier
+		remove_character_modifier = dhm_reputation_strict_modifier
+		remove_character_modifier = dhm_reputation_traditional_modifier
+		if = { limit = { has_global_variable = dhm_setting_legacy_mechanics_disabled } remove_character_modifier = dhm_reputation_guardian_modifier }
+	}
+	add_character_flag = dhm_reputation_guardian_active
+	if = {
+		limit = { NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled } }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reputation_guardian_modifier YEARS = 3 RENEWAL_TT = dhm_reputation_guardian_modifier_renewed_3_tt }
+	}
+}
+
+dhm_mark_reputation_traditional_effect = {
+	if = {
+		limit = {
+			NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled }
+			OR = {
+				has_character_flag = dhm_reputation_generous_active
+				has_character_flag = dhm_reputation_strict_active
+				has_character_flag = dhm_reputation_guardian_active
+				has_character_modifier = dhm_reputation_generous_modifier
+				has_character_modifier = dhm_reputation_strict_modifier
+				has_character_modifier = dhm_reputation_guardian_modifier
+			}
+		}
+		custom_tooltip = dhm_reputation_previous_lost_tt
+	}
+	dhm_v076_increment_counter_effect = { COUNTER = dhm_rep_traditional }
+	hidden_effect = {
+		remove_character_flag = dhm_reputation_generous_active
+		remove_character_flag = dhm_reputation_strict_active
+		remove_character_flag = dhm_reputation_guardian_active
+		remove_character_flag = dhm_reputation_traditional_active
+		remove_character_modifier = dhm_reputation_generous_modifier
+		remove_character_modifier = dhm_reputation_strict_modifier
+		remove_character_modifier = dhm_reputation_guardian_modifier
+		if = { limit = { has_global_variable = dhm_setting_legacy_mechanics_disabled } remove_character_modifier = dhm_reputation_traditional_modifier }
+	}
+	add_character_flag = dhm_reputation_traditional_active
+	if = {
+		limit = { NOT = { has_global_variable = dhm_setting_legacy_mechanics_disabled } }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reputation_traditional_modifier YEARS = 3 RENEWAL_TT = dhm_reputation_traditional_modifier_renewed_3_tt }
+	}
+}
+
+# Snapshot the year before the council text is evaluated, then begin a new page.
+dhm_prepare_annual_living_report_effect = {
+	dhm_v040_initialize_character_effect = yes
+	set_variable = { name = dhm_report_year_letters value = var:dhm_year_letters }
+	set_variable = { name = dhm_report_year_education value = var:dhm_year_education_stories }
+	set_variable = { name = dhm_report_year_marriages value = var:dhm_year_marriage_stories }
+	set_variable = { name = dhm_report_year_wishes value = var:dhm_year_marriage_wishes }
+	set_variable = { name = dhm_report_year_disputes value = var:dhm_year_disputes }
+	set_variable = { name = dhm_report_year_reconciliations value = var:dhm_year_reconciliations }
+	set_variable = { name = dhm_report_year_ceremonies value = var:dhm_year_ceremonies }
+	set_variable = { name = dhm_year_letters value = 0 }
+	set_variable = { name = dhm_year_education_stories value = 0 }
+	set_variable = { name = dhm_year_marriage_stories value = 0 }
+	set_variable = { name = dhm_year_marriage_wishes value = 0 }
+	set_variable = { name = dhm_year_disputes value = 0 }
+	set_variable = { name = dhm_year_reconciliations value = 0 }
+	set_variable = { name = dhm_year_ceremonies value = 0 }
+
+	# A living voice for the report: the best available household administrator.
+	save_scope_as = dhm_council_advisor
+	ordered_courtier = {
+		limit = {
+			is_alive = yes
+			is_adult = yes
+			is_imprisoned = no
+			NOT = { has_trait = incapable }
+		}
+		order_by = stewardship
+		position = 0
+		check_range_bounds = no
+		save_scope_as = dhm_council_advisor
+	}
+}
+
+# Repair v0.3.x arranged unions created before the relation-effect spelling was
+# corrected. This is family-bounded and only touches pairs recorded for this
+# manager, preserving unrelated marriages and other mods' data.
+dhm_repair_arranged_union_relations_effect = {
+	save_scope_as = dhm_repair_manager
+	every_close_family_member = {
+		limit = {
+			is_alive = yes
+			is_married = yes
+			has_character_flag = dhm_arranged_union_active
+			has_variable = dhm_arranging_manager
+			var:dhm_arranging_manager ?= scope:dhm_repair_manager
+		}
+		save_scope_as = dhm_repair_subject
+		every_spouse = {
+			limit = {
+				is_alive = yes
+				has_character_flag = dhm_arranged_union_active
+				has_variable = dhm_arranging_manager
+				var:dhm_arranging_manager ?= scope:dhm_repair_manager
+				NOT = { any_relation = { type = dhm_arranged_spouse this = scope:dhm_repair_subject } }
+			}
+			save_scope_as = dhm_repair_spouse
+			scope:dhm_repair_subject = {
+				set_relation_dhm_arranged_spouse = scope:dhm_repair_spouse
+			}
+		}
+	}
+	add_character_flag = dhm_v040_arranged_relations_repaired
+}
+
+# Select at most one local/family scene per governed interval.
+dhm_living_family_pulse_effect = {
+	save_scope_as = dhm_manager
+	if = {
+		limit = {
+			is_alive = yes
+			is_ai = no
+			NOT = { has_character_flag = dhm_living_story_cooldown }
+			NOT = { has_character_flag = dhm081_aftermath_pause }
+			NOT = { has_global_variable = dhm_setting_stories_off }
+		}
+		random_list = {
+			24 = {
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:letter } any_close_family_member = { dhm_v040_letter_relative_trigger = yes } }
+				random_close_family_member = {
+					limit = { dhm_v040_letter_relative_trigger = yes }
+					save_scope_as = dhm_story_relative
+					add_character_flag = { flag = dhm_living_letter_recent years = 5 }
+				}
+				set_variable = { name = dhm081_last_story_family value = flag:letter years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_living_family.0100 days = { 4 12 } }
+			}
+			24 = {
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:school } any_close_family_member = { dhm_v040_student_trigger = yes } }
+				random_close_family_member = {
+					limit = { dhm_v040_student_trigger = yes }
+					save_scope_as = dhm_story_child
+					add_character_flag = { flag = dhm_living_education_recent years = 3 }
+					random_relation = {
+						type = dhm_specialist_tutor
+						limit = { dhm_v082_story_tutor_eligible_trigger = yes }
+						save_scope_as = dhm_story_tutor
+					}
+				}
+				set_variable = { name = dhm081_last_story_family value = flag:school years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				if = { limit = { dhm_v081_learned_to_listen_trigger = yes } dhm_v081_school_callback_effect = yes }
+				else = { trigger_event = { id = dhm_living_family.0200 days = { 4 12 } } }
+			}
+			16 = {
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:wish } any_close_family_member = { dhm_v040_marriage_wish_trigger = yes } }
+				random_close_family_member = {
+					limit = { dhm_v040_marriage_wish_trigger = yes }
+					save_scope_as = dhm_story_relative
+					add_character_flag = { flag = dhm_living_wish_recent years = 4 }
+				}
+				set_variable = { name = dhm081_last_story_family value = flag:wish years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_living_family.0500 days = { 4 12 } }
+			}
+			14 = {
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:dispute }
+					any_close_family_member = {
+						count >= 2
+						dhm_v040_dispute_relative_trigger = yes
+					}
+				}
+				random_close_family_member = {
+					limit = { dhm_v040_dispute_relative_trigger = yes }
+					save_scope_as = dhm_dispute_first
+				}
+				random_close_family_member = {
+					limit = {
+						dhm_v040_dispute_relative_trigger = yes
+						this != scope:dhm_dispute_first dhm_v090_dispute_pair_trigger = { OTHER = scope:dhm_dispute_first }
+					}
+					save_scope_as = dhm_dispute_second
+				}
+				if = {
+					limit = { exists = scope:dhm_dispute_first exists = scope:dhm_dispute_second }
+					scope:dhm_dispute_first = { add_character_flag = { flag = dhm_living_dispute_recent years = 4 } }
+					scope:dhm_dispute_second = { add_character_flag = { flag = dhm_living_dispute_recent years = 4 } }
+					set_variable = { name = dhm081_last_story_family value = flag:dispute years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+					trigger_event = { id = dhm_living_family.0400 days = { 4 12 } }
+				}
+			}
+			12 = {
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:ceremony }
+					any_close_family_member = { dhm_v040_ceremony_relative_trigger = yes }
+				}
+				random_close_family_member = {
+					limit = { dhm_v040_ceremony_relative_trigger = yes }
+					save_scope_as = dhm_ceremony_relative
+					add_character_flag = { flag = dhm_living_ceremony_recent years = 5 }
+				}
+				set_variable = { name = dhm081_last_story_family value = flag:ceremony years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_living_family.0600 days = { 4 12 } }
+			}
+		}
+	}
+}
+
+# Per-ruler initialization also covers succession after the one-time save
+# migration. Existing counters are never overwritten on a continuing ruler.
+dhm_v040_initialize_character_effect = {
+	if = { limit = { NOT = { has_variable = dhm_chronicle_letters } } set_variable = { name = dhm_chronicle_letters value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_chronicle_education_stories } } set_variable = { name = dhm_chronicle_education_stories value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_chronicle_marriage_stories } } set_variable = { name = dhm_chronicle_marriage_stories value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_chronicle_marriage_wishes } } set_variable = { name = dhm_chronicle_marriage_wishes value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_chronicle_disputes } } set_variable = { name = dhm_chronicle_disputes value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_chronicle_reconciliations } } set_variable = { name = dhm_chronicle_reconciliations value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_chronicle_ceremonies } } set_variable = { name = dhm_chronicle_ceremonies value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_rep_generous } } set_variable = { name = dhm_rep_generous value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_rep_strict } } set_variable = { name = dhm_rep_strict value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_rep_guardian } } set_variable = { name = dhm_rep_guardian value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_rep_traditional } } set_variable = { name = dhm_rep_traditional value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_year_letters } } set_variable = { name = dhm_year_letters value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_year_education_stories } } set_variable = { name = dhm_year_education_stories value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_year_marriage_stories } } set_variable = { name = dhm_year_marriage_stories value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_year_marriage_wishes } } set_variable = { name = dhm_year_marriage_wishes value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_year_disputes } } set_variable = { name = dhm_year_disputes value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_year_reconciliations } } set_variable = { name = dhm_year_reconciliations value = 0 } }
+	if = { limit = { NOT = { has_variable = dhm_year_ceremonies } } set_variable = { name = dhm_year_ceremonies value = 0 } }
+	add_character_flag = dhm_v040_character_initialized
+}
+
+# One-time, save-safe migration. Existing v0.3 settings and relationships stay.
+dhm_v040_migration_effect = {
+	set_global_variable = { name = dhm_migration_0400 value = yes }
+	dhm_v040_initialize_character_effect = yes
+}
+
+# Non-stacking rewards track expiry in native date-days (365 days per year).
+# Repeat awards extend only to a later expiry. Untracked old-save rewards keep
+# their original duration; first awards start tracking without a global reset.
+dhm_v040_apply_or_renew_reward_effect = {
+	if = {
+		limit = { has_character_modifier = $MODIFIER$ }
+		if = {
+			limit = {
+				has_variable = dhm073_expiry_$MODIFIER$
+				var:dhm073_expiry_$MODIFIER$ < { value = current_date add = { value = $YEARS$ multiply = 365 } }
+			}
+			custom_tooltip = $RENEWAL_TT$
+			hidden_effect = {
+				remove_character_modifier = $MODIFIER$
+				add_character_modifier = { modifier = $MODIFIER$ years = $YEARS$ }
+				set_variable = { name = dhm073_expiry_$MODIFIER$ value = { value = current_date add = { value = $YEARS$ multiply = 365 } } years = $YEARS$ }
+			}
+		}
+		else_if = {
+			limit = { has_variable = dhm073_expiry_$MODIFIER$ }
+			# A later known expiry wins. An old-save bonus with unknown expiry is
+			# left untouched until it ends naturally; never guess away earned time.
+			custom_tooltip = $MODIFIER$_preserved_tt
+		}
+		else = { custom_tooltip = $MODIFIER$_untracked_tt }
+	}
+	else = {
+		custom_tooltip = $MODIFIER$_new_$YEARS$_tt
+		add_character_modifier = { modifier = $MODIFIER$ years = $YEARS$ }
+		hidden_effect = {
+			set_variable = { name = dhm073_expiry_$MODIFIER$ value = { value = current_date add = { value = $YEARS$ multiply = 365 } } years = $YEARS$ }
+		}
+	}
+}

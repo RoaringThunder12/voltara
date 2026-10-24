@@ -1,0 +1,98 @@
+﻿lam_ev_repeat_months = {
+	value = 6
+}
+lam_ev_single_months = {
+	value = 12
+}
+lam_ev_split_share = {
+	value = 0.30
+}
+lam_ev_memory_months = {
+	value = 60
+}
+lam_ev_found_prepare_value = {
+	value = lam_tune_pol_found_prepare
+	if = {
+		limit = {
+			exists = scope:lam_bloc_lord
+		}
+		if = {
+			limit = {
+				scope:lam_bloc_lord = {
+					lam_ev_established_court_trigger = yes
+				}
+			}
+			multiply = 3
+		}
+	}
+}
+lam_ev_follow_value = {
+	value = "opinion(scope:lam_vt_lead)"
+	subtract = "opinion(scope:lam_cr_head)"
+	if = {
+		limit = {
+			has_relation_friend = scope:lam_vt_lead
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			has_relation_rival = scope:lam_vt_lead
+		}
+		add = -80
+	}
+	if = {
+		limit = {
+			exists = scope:lam_vt_lead.house
+		}
+		if = {
+			limit = {
+				house ?= scope:lam_vt_lead.house
+			}
+			add = 10
+		}
+	}
+	if = {
+		limit = {
+			has_relation_friend = scope:lam_cr_head
+		}
+		add = -25
+	}
+	if = {
+		limit = {
+			is_councillor_of = scope:lam_cr_head.liege
+		}
+		add = -20
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_pinned
+		}
+		add = -15
+	}
+	if = {
+		limit = {
+			lam_ev_position_trigger = yes
+		}
+		add = 20
+	}
+	if = {
+		limit = {
+			lam_ev_position_trigger = yes
+		}
+		add = lam_er_follow_pull_value
+	}
+	if = {
+		limit = {
+			opinion = {
+				target = scope:lam_ev_head
+				value <= -40
+			}
+			opinion = {
+				target = scope:lam_vt_lead
+				value <= -20
+			}
+		}
+		value = -100
+	}
+}

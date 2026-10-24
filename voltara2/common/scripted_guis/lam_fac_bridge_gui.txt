@@ -1,0 +1,156 @@
+﻿lam_pb_gui_open = {
+	scope = character
+	effect = { lam_fac_default_view_effect = yes vip_refresh_public = yes 
+		if = {
+			limit = {
+				NOT = {
+					exists = var:lam_fac_view
+				}
+			}
+			lam_fac_default_view_effect = yes
+		}
+		var:lam_fac_view ?= {
+			lam_pb_refresh_fronts_effect = yes
+		}
+		set_variable = {
+			name = lam_pb_open
+			value = yes
+		}
+	}
+ is_valid = { vip_actor = yes } }
+lam_pb_gui_close = {
+	scope = character
+	effect = {
+		remove_variable = lam_pb_open
+	}
+}
+lam_pb_gui_managed = {
+	scope = character
+	is_shown = {
+		lam_pb_managed_court_trigger = yes
+	}
+}
+lam_pb_gui_backend_hidden = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		scope:target = {
+			lam_pb_managed_court_trigger = yes
+		}
+		joined_faction ?= {
+			OR = {
+				faction_is_type = liberty_faction
+				faction_is_type = independence_faction
+				faction_is_type = claimant_faction
+				faction_is_type = nation_fracturing_faction
+			}
+		}
+	}
+}
+lam_pb_gui_join = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		is_ai = no
+		NOT = {
+			exists = joined_faction
+		}
+		scope:target = {
+			exists = var:lam_pb_front
+		}
+	}
+	is_valid = {
+		is_alive = yes
+		is_ai = no
+		NOT = {
+			exists = joined_faction
+		}
+		NOT = {
+			has_variable = lam_fac_oath
+		}
+		scope:target.var:lam_pb_front ?= {
+			has_variable = lam_pb_managed
+			NOT = {
+				has_variable = lam_pb_sent
+			}
+			faction_is_at_war = no
+			faction_target ?= root.liege
+		}
+		lam_pb_native_join_eligibility_trigger = {
+			FACTION_TARGET = liege
+		}
+	}
+	effect = {
+		scope:target.var:lam_pb_front = {
+			save_scope_as = lam_pb_gui_front
+			add_to_variable_list = {
+				name = lam_pb_consented
+				target = root
+			}
+		}
+		if = {
+			limit = {
+				can_join_faction = scope:lam_pb_gui_front
+			}
+			join_faction = scope:lam_pb_gui_front
+		}
+		if = {
+			limit = {
+				NOT = {
+					joined_faction ?= scope:lam_pb_gui_front
+				}
+			}
+			scope:lam_pb_gui_front = {
+				remove_list_variable = {
+					name = lam_pb_consented
+					target = root
+				}
+			}
+		}
+		var:lam_fac_view ?= {
+			lam_pb_refresh_fronts_effect = yes
+		}
+	}
+}
+lam_pb_gui_leave = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		trigger_if = {
+			limit = {
+				exists = scope:target.var:lam_pb_front
+			}
+			joined_faction ?= scope:target.var:lam_pb_front
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	is_valid = {
+		joined_faction ?= {
+			has_variable = lam_pb_managed
+			NOT = {
+				has_variable = lam_pb_sent
+			}
+			faction_is_at_war = no
+		}
+	}
+	effect = {
+		joined_faction = {
+			remove_list_variable = {
+				name = lam_pb_consented
+				target = root
+			}
+		}
+		leave_faction = joined_faction
+		var:lam_fac_view ?= {
+			lam_pb_refresh_fronts_effect = yes
+		}
+	}
+}

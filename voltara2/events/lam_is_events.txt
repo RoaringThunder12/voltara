@@ -1,0 +1,758 @@
+﻿namespace = lam_is
+# A court issue reached side Y: the player lord gives way, promises (where the promise system has a matching kind) or
+# refuses. This = the lord; scope:lam_is_lord (and for the heir issue lam_is_ca / lam_is_cb) are saved.
+lam_is.0001 = {
+	type = character_event
+	title = lam_is.0001.t
+	desc = {
+		triggered_desc = {
+			trigger = {
+				var:lam_is_evt ?= flag:heir
+			}
+			desc = lam_is.0001.heir
+		}
+		triggered_desc = {
+			trigger = {
+				var:lam_is_evt ?= flag:crown
+			}
+			desc = lam_is.0001.crown
+		}
+		triggered_desc = {
+			trigger = {
+				var:lam_is_evt ?= flag:council
+			}
+			desc = lam_is.0001.council
+		}
+		triggered_desc = {
+			trigger = {
+				var:lam_is_evt ?= flag:faith
+			}
+			desc = lam_is.0001.faith
+		}
+		triggered_desc = {
+			trigger = {
+				var:lam_is_evt ?= flag:tax
+			}
+			desc = lam_is.0001.tax
+		}
+		triggered_desc = {
+			trigger = {
+				var:lam_is_evt ?= flag:war
+			}
+			desc = lam_is.0001.war
+		}
+	}
+	theme = realm
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	trigger = {
+		has_variable = lam_is_evt
+	}
+	immediate = {
+		save_scope_as = lam_is_lord
+		lam_is_heir_scopes_effect = yes
+	}
+	option = {
+		name = lam_is.0001.heir.a
+		trigger = {
+			var:lam_is_evt ?= flag:heir
+			lam_is_heir_can_concede_trigger = yes
+		}
+		lam_is_heir_concede_effect = yes
+	}
+	option = {
+		name = lam_is.0001.heir.b
+		trigger = {
+			var:lam_is_evt ?= flag:heir
+		}
+		lam_is_refused_effect = {
+			T = heir
+		}
+	}
+	option = {
+		name = lam_is.0001.crown.a
+		trigger = {
+			var:lam_is_evt ?= flag:crown
+			lam_is_crown_can_concede_trigger = yes
+		}
+		lam_is_crown_concede_effect = yes
+	}
+	option = {
+		name = lam_is.0001.crown.b
+		trigger = {
+			var:lam_is_evt ?= flag:crown
+		}
+		lam_is_refused_effect = {
+			T = crown
+		}
+	}
+	option = {
+		name = lam_is.0001.faith.a
+		trigger = {
+			var:lam_is_evt ?= flag:faith
+			lam_is_faith_can_concede_trigger = yes
+		}
+		lam_is_faith_concede_effect = yes
+	}
+	option = {
+		name = lam_is.0001.faith.p
+		trigger = {
+			var:lam_is_evt ?= flag:faith
+			lam_is_faith_can_promise_trigger = yes
+		}
+		lam_is_promise_effect = {
+			T = faith
+			TYPE = tolerance
+			YEARS = 1
+		}
+	}
+	option = {
+		name = lam_is.0001.faith.b
+		trigger = {
+			var:lam_is_evt ?= flag:faith
+		}
+		lam_is_refused_effect = {
+			T = faith
+		}
+	}
+	option = {
+		name = lam_is.0001.war.a
+		trigger = {
+			var:lam_is_evt ?= flag:war
+			lam_is_war_can_concede_trigger = yes
+		}
+		lam_is_war_concede_effect = yes
+	}
+	option = {
+		name = lam_is.0001.war.b
+		trigger = {
+			var:lam_is_evt ?= flag:war
+		}
+		lam_is_refused_effect = {
+			T = war
+		}
+	}
+	option = {
+		name = lam_is.0001.council.a
+		trigger = {
+			var:lam_is_evt ?= flag:council
+			lam_is_council_can_concede_trigger = yes
+		}
+		lam_is_council_concede_effect = yes
+	}
+	option = {
+		name = lam_is.0001.council.p
+		trigger = {
+			var:lam_is_evt ?= flag:council
+			lam_is_council_can_promise_trigger = yes
+		}
+		lam_is_promise_effect = {
+			T = council
+			TYPE = council
+			YEARS = 1
+		}
+	}
+	option = {
+		name = lam_is.0001.council.b
+		trigger = {
+			var:lam_is_evt ?= flag:council
+		}
+		lam_is_refused_effect = {
+			T = council
+		}
+	}
+	option = {
+		name = lam_is.0001.tax.a
+		trigger = {
+			var:lam_is_evt ?= flag:tax
+			lam_is_tax_can_concede_trigger = yes
+		}
+		lam_is_tax_concede_effect = yes
+	}
+	option = {
+		name = lam_is.0001.tax.b
+		trigger = {
+			var:lam_is_evt ?= flag:tax
+		}
+		lam_is_refused_effect = {
+			T = tax
+		}
+	}
+}
+# Once a year, to a player vassal of a court with open issues: where each stands, how our faction (or I) stand,
+# whether we just won or lost one, and what this role can do. This = the player; scope:lam_is_lord = the liege.
+lam_is.0002 = {
+	type = character_event
+	title = lam_is.0002.t
+	desc = {
+		desc = lam_is.0002.open
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_heir_open
+				}
+			}
+			desc = lam_is.0002.heir
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_heir_open
+						var:lam_is_heir_bar <= -5
+					}
+				}
+				desc = lam_is.0002.heir_lx
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_heir_open
+						var:lam_is_heir_bar >= 5
+					}
+				}
+				desc = lam_is.0002.heir_ly
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_heir_open
+					}
+				}
+				desc = lam_is.0002.heir_ev
+			}
+			desc = lam_is_none
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_heir_open
+				}
+				scope:lam_is_myhead ?= {
+					var:lam_is_st_heir ?= flag:x
+				}
+			}
+			desc = lam_is.0002.heir_us_x
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_heir_open
+				}
+				var:lam_is_bk_heir_lord ?= scope:lam_is_lord
+				var:lam_is_bk_heir ?= flag:x
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			desc = lam_is.0002.heir_me_x
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_heir_open
+				}
+				scope:lam_is_myhead ?= {
+					var:lam_is_st_heir ?= flag:y
+				}
+			}
+			desc = lam_is.0002.heir_us_y
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_heir_open
+				}
+				var:lam_is_bk_heir_lord ?= scope:lam_is_lord
+				var:lam_is_bk_heir ?= flag:y
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			desc = lam_is.0002.heir_me_y
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_crown_open
+				}
+			}
+			desc = lam_is.0002.crown
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_crown_open
+						var:lam_is_crown_bar <= -5
+					}
+				}
+				desc = lam_is.0002.crown_lx
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_crown_open
+						var:lam_is_crown_bar >= 5
+					}
+				}
+				desc = lam_is.0002.crown_ly
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_crown_open
+					}
+				}
+				desc = lam_is.0002.crown_ev
+			}
+			desc = lam_is_none
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_crown_open
+				}
+				scope:lam_is_myhead ?= {
+					var:lam_is_st_crown ?= flag:x
+				}
+			}
+			desc = lam_is.0002.crown_us_x
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_crown_open
+				}
+				var:lam_is_bk_crown_lord ?= scope:lam_is_lord
+				var:lam_is_bk_crown ?= flag:x
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			desc = lam_is.0002.crown_me_x
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_crown_open
+				}
+				scope:lam_is_myhead ?= {
+					var:lam_is_st_crown ?= flag:y
+				}
+			}
+			desc = lam_is.0002.crown_us_y
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_crown_open
+				}
+				var:lam_is_bk_crown_lord ?= scope:lam_is_lord
+				var:lam_is_bk_crown ?= flag:y
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			desc = lam_is.0002.crown_me_y
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_council_open
+				}
+			}
+			desc = lam_is.0002.council
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_council_open
+						var:lam_is_council_bar <= -5
+					}
+				}
+				desc = lam_is.0002.council_lx
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_council_open
+						var:lam_is_council_bar >= 5
+					}
+				}
+				desc = lam_is.0002.council_ly
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_council_open
+					}
+				}
+				desc = lam_is.0002.council_ev
+			}
+			desc = lam_is_none
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_council_open
+				}
+				scope:lam_is_myhead ?= {
+					var:lam_is_st_council ?= flag:x
+				}
+			}
+			desc = lam_is.0002.council_us_x
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_council_open
+				}
+				var:lam_is_bk_council_lord ?= scope:lam_is_lord
+				var:lam_is_bk_council ?= flag:x
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			desc = lam_is.0002.council_me_x
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_council_open
+				}
+				scope:lam_is_myhead ?= {
+					var:lam_is_st_council ?= flag:y
+				}
+			}
+			desc = lam_is.0002.council_us_y
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_council_open
+				}
+				var:lam_is_bk_council_lord ?= scope:lam_is_lord
+				var:lam_is_bk_council ?= flag:y
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			desc = lam_is.0002.council_me_y
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_faith_open
+				}
+			}
+			desc = lam_is.0002.faith
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_faith_open
+						var:lam_is_faith_bar <= -5
+					}
+				}
+				desc = lam_is.0002.faith_lx
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_faith_open
+						var:lam_is_faith_bar >= 5
+					}
+				}
+				desc = lam_is.0002.faith_ly
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_faith_open
+					}
+				}
+				desc = lam_is.0002.faith_ev
+			}
+			desc = lam_is_none
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_faith_open
+				}
+				scope:lam_is_myhead ?= {
+					var:lam_is_st_faith ?= flag:x
+				}
+			}
+			desc = lam_is.0002.faith_us_x
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_faith_open
+				}
+				var:lam_is_bk_faith_lord ?= scope:lam_is_lord
+				var:lam_is_bk_faith ?= flag:x
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			desc = lam_is.0002.faith_me_x
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_faith_open
+				}
+				scope:lam_is_myhead ?= {
+					var:lam_is_st_faith ?= flag:y
+				}
+			}
+			desc = lam_is.0002.faith_us_y
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_faith_open
+				}
+				var:lam_is_bk_faith_lord ?= scope:lam_is_lord
+				var:lam_is_bk_faith ?= flag:y
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			desc = lam_is.0002.faith_me_y
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_tax_open
+				}
+			}
+			desc = lam_is.0002.tax
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_tax_open
+						var:lam_is_tax_bar <= -5
+					}
+				}
+				desc = lam_is.0002.tax_lx
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_tax_open
+						var:lam_is_tax_bar >= 5
+					}
+				}
+				desc = lam_is.0002.tax_ly
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_tax_open
+					}
+				}
+				desc = lam_is.0002.tax_ev
+			}
+			desc = lam_is_none
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_tax_open
+				}
+				scope:lam_is_myhead ?= {
+					var:lam_is_st_tax ?= flag:x
+				}
+			}
+			desc = lam_is.0002.tax_us_x
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_tax_open
+				}
+				var:lam_is_bk_tax_lord ?= scope:lam_is_lord
+				var:lam_is_bk_tax ?= flag:x
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			desc = lam_is.0002.tax_me_x
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_tax_open
+				}
+				scope:lam_is_myhead ?= {
+					var:lam_is_st_tax ?= flag:y
+				}
+			}
+			desc = lam_is.0002.tax_us_y
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_tax_open
+				}
+				var:lam_is_bk_tax_lord ?= scope:lam_is_lord
+				var:lam_is_bk_tax ?= flag:y
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			desc = lam_is.0002.tax_me_y
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_war_open
+				}
+			}
+			desc = lam_is.0002.war
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_war_open
+						var:lam_is_war_bar <= -5
+					}
+				}
+				desc = lam_is.0002.war_lx
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_war_open
+						var:lam_is_war_bar >= 5
+					}
+				}
+				desc = lam_is.0002.war_ly
+			}
+			triggered_desc = {
+				trigger = {
+					scope:lam_is_lord = {
+						has_variable = lam_is_war_open
+					}
+				}
+				desc = lam_is.0002.war_ev
+			}
+			desc = lam_is_none
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_war_open
+				}
+				scope:lam_is_myhead ?= {
+					var:lam_is_st_war ?= flag:x
+				}
+			}
+			desc = lam_is.0002.war_us_x
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_war_open
+				}
+				var:lam_is_bk_war_lord ?= scope:lam_is_lord
+				var:lam_is_bk_war ?= flag:x
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			desc = lam_is.0002.war_me_x
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_war_open
+				}
+				scope:lam_is_myhead ?= {
+					var:lam_is_st_war ?= flag:y
+				}
+			}
+			desc = lam_is.0002.war_us_y
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_lord = {
+					has_variable = lam_is_war_open
+				}
+				var:lam_is_bk_war_lord ?= scope:lam_is_lord
+				var:lam_is_bk_war ?= flag:y
+				NOT = {
+					has_variable = lam_bloc
+				}
+			}
+			desc = lam_is.0002.war_me_y
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_myhead ?= {
+					has_variable = lam_is_beaten
+				}
+			}
+			desc = lam_is.0002.beaten
+		}
+		triggered_desc = {
+			trigger = {
+				scope:lam_is_myhead ?= {
+					has_variable = lam_is_victor
+				}
+			}
+			desc = lam_is.0002.victor
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_bloc_lead
+				}
+				desc = lam_is.0002.tip_head
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = lam_bloc
+				}
+				desc = lam_is.0002.tip_member
+			}
+			desc = lam_is.0002.tip_unaligned
+		}
+	}
+	theme = realm
+	left_portrait = {
+		character = scope:lam_is_lord
+		animation = personality_rational
+	}
+	trigger = {
+		exists = scope:lam_is_lord
+		liege ?= scope:lam_is_lord
+	}
+	immediate = {
+		if = {
+			limit = {
+				has_variable = lam_bloc_lead
+			}
+			save_scope_as = lam_is_myhead
+		}
+		else = {
+			var:lam_bloc ?= {
+				save_scope_as = lam_is_myhead
+			}
+		}
+	}
+	option = {
+		name = lam_is.0002.a
+	}
+}

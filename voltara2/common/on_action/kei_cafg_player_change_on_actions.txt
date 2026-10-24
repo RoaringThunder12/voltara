@@ -1,0 +1,69 @@
+﻿# On actions for when the player character changes, triggered automatically by the game
+
+# For mods that want to intercept all cases where a player changes character from one to another
+# Root is the new player character
+# scope:previous_player_character is the old player character
+on_player_character_change = {
+	on_actions = {
+        kCAFG_on_player_character_change
+    }
+}
+
+kCAFG_on_player_character_change = {
+	effect = {
+        # Inherit player only variables
+
+        # County View
+        if = {
+            limit = { scope:previous_player_character = { has_variable = kCAFG_UI_province_cultures_visible } }
+            set_variable = kCAFG_UI_province_cultures_visible
+        }
+        if = {
+            limit = { scope:previous_player_character = { has_variable = kCAFG_UI_province_faiths_visible } }
+            set_variable = kCAFG_UI_province_faiths_visible
+        }
+        if = {
+            limit = { scope:previous_player_character = { has_variable = kCAFG_UI_viewed_province } }
+            set_variable = {
+                name = kCAFG_UI_viewed_province
+                value = scope:previous_player_character.var:kCAFG_UI_viewed_province
+            }
+        }
+
+        # Map Modes
+        if = {
+            limit = {
+                is_target_in_global_variable_list = {
+                    name = kCAFG_UI_viewing_culture_map_mode
+                    target = scope:previous_player_character
+                }
+            }
+            add_to_global_variable_list = {
+                name = kCAFG_UI_viewing_culture_map_mode
+                target = this
+            }
+        }
+        if = {
+            limit = {
+                is_target_in_global_variable_list = {
+                    name = kCAFG_UI_viewing_rite_map_mode
+                    target = scope:previous_player_character
+                }
+            }
+            add_to_global_variable_list = {
+                name = kCAFG_UI_viewing_rite_map_mode
+                target = this
+            }
+        }
+
+        # Councillor suggestions
+        if = {
+            limit = { scope:previous_player_character = { has_variable = kCAFG_ignore_steward_promotion_suggestions } }
+            set_variable = kCAFG_ignore_steward_promotion_suggestions
+        }
+        if = {
+            limit = { scope:previous_player_character = { has_variable = kCAFG_ignore_court_chaplain_conversion_suggestions } }
+            set_variable = kCAFG_ignore_court_chaplain_conversion_suggestions
+        }
+    }
+}

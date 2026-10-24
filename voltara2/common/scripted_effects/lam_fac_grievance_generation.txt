@@ -1,0 +1,263 @@
+﻿lam_gg_seed_effect = {
+	lam_ev_clear_person_effect = yes
+	set_variable = {
+		name = lam_gg_source
+		value = flag:$SOURCE$
+	}
+	set_variable = {
+		name = lam_bp_position_head
+		value = scope:lam_ev_head
+	}
+	set_variable = {
+		name = lam_bp_position_lord
+		value = scope:lam_ev_head.liege
+	}
+	set_variable = {
+		name = lam_bp_position_topic
+		value = flag:$TOPIC$
+	}
+	set_variable = {
+		name = lam_bp_position_side
+		value = flag:$SIDE$
+	}
+	remove_variable = lam_bp_position_target
+	remove_variable = lam_bp_position_alternative
+	remove_variable = lam_bp_position_object
+	remove_variable = lam_bp_position_detail
+	remove_variable = lam_bp_position_record
+	if = {
+		limit = {
+			scope:lam_ev_head = {
+				has_variable = lam_fac_rec
+			}
+		}
+		set_variable = {
+			name = lam_bp_position_record
+			value = scope:lam_ev_head.var:lam_fac_rec
+		}
+	}
+	set_variable = {
+		name = lam_bp_position_until
+		value = {
+			value = lam_now_m
+			add = lam_ev_memory_months
+		}
+	}
+	set_variable = {
+		name = lam_cr_unrest_head
+		value = scope:lam_ev_head
+		years = 5
+	}
+	set_variable = {
+		name = lam_cr_unrest
+		value = 1
+		years = 5
+	}
+	set_variable = {
+		name = lam_ev_since
+		value = lam_now_m
+	}
+	set_variable = {
+		name = lam_dr_had_dispute
+		value = yes
+	}
+	lam_fac_stat_add_effect = {
+		KEY = dispute_new_$SOURCE$
+	}
+	if = {
+		limit = {
+			scope:lam_ev_head = {
+				var:lam_fac_stage ?= 7
+			}
+		}
+		lam_fac_stat_add_effect = {
+			KEY = dispute_new_watchful
+		}
+	}
+	if = {
+		limit = {
+			scope:lam_ev_head = {
+				var:lam_fac_stage ?= 8
+			}
+		}
+		lam_fac_stat_add_effect = {
+			KEY = dispute_new_loyal
+		}
+	}
+}
+lam_gg_observe_effect = {
+	if = {
+		limit = {
+			lam_er_heir_conflict_trigger = yes
+		}
+		scope:lam_ev_head = {
+			change_variable = {
+				name = lam_gg_heir_count
+				add = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			lam_gg_pressure_trigger = yes
+		}
+		scope:lam_ev_head = {
+			change_variable = {
+				name = lam_gg_pressure_count
+				add = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			lam_gg_restraint_trigger = yes
+		}
+		scope:lam_ev_head = {
+			change_variable = {
+				name = lam_gg_restraint_count
+				add = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			lam_gg_service_trigger = yes
+		}
+		scope:lam_ev_head = {
+			change_variable = {
+				name = lam_gg_service_count
+				add = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			lam_gg_exclusion_trigger = yes
+		}
+		scope:lam_ev_head = {
+			change_variable = {
+				name = lam_gg_exclusion_count
+				add = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			NOT = {
+				lam_ev_position_trigger = yes
+			}
+		}
+		if = {
+			limit = {
+				lam_gg_exclusion_trigger = yes
+				NOT = {
+					lam_gg_assent_trigger = {
+						TOPIC = council
+					}
+				}
+			}
+			lam_gg_seed_effect = {
+				SOURCE = exclusion
+				TOPIC = council
+				SIDE = fair
+			}
+		}
+		else_if = {
+			limit = {
+				lam_gg_service_trigger = yes
+				NOT = {
+					lam_gg_assent_trigger = {
+						TOPIC = council
+					}
+				}
+			}
+			lam_gg_seed_effect = {
+				SOURCE = service
+				TOPIC = council
+				SIDE = fair
+			}
+		}
+		else_if = {
+			limit = {
+				lam_gg_pressure_trigger = yes
+				NOT = {
+					lam_gg_assent_trigger = {
+						TOPIC = settlement
+					}
+				}
+			}
+			lam_gg_seed_effect = {
+				SOURCE = pressure
+				TOPIC = settlement
+				SIDE = pressure
+			}
+		}
+		else_if = {
+			limit = {
+				lam_gg_restraint_trigger = yes
+				NOT = {
+					lam_gg_assent_trigger = {
+						TOPIC = force
+					}
+				}
+			}
+			lam_gg_seed_effect = {
+				SOURCE = restraint
+				TOPIC = force
+				SIDE = restraint
+			}
+		}
+	}
+}
+lam_gg_record_assent_effect = {
+	every_in_list = {
+		variable = lam_cr_voters
+		limit = {
+			lam_gg_saved_yes_trigger = yes
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					has_variable = lam_bp_meeting_topic
+					exists = liege
+				}
+			}
+			set_variable = {
+				name = lam_gg_assent_head
+				value = scope:lam_cr_head
+			}
+			set_variable = {
+				name = lam_gg_assent_lord
+				value = scope:lam_cr_head.liege
+			}
+			set_variable = {
+				name = lam_gg_assent_topic
+				value = scope:lam_cr_head.var:lam_bp_meeting_topic
+			}
+			set_variable = {
+				name = lam_gg_assent_until
+				value = {
+					value = lam_now_m
+					add = 36
+				}
+			}
+			if = {
+				limit = {
+					scope:lam_cr_head = {
+						var:lam_cr_issue ?= flag:loyal
+					}
+				}
+				set_variable = {
+					name = lam_gg_assent_topic
+					value = flag:settlement
+				}
+				if = {
+					limit = {
+						var:lam_gg_source ?= flag:pressure
+					}
+					lam_dr_resolved_clear_effect = yes
+				}
+			}
+		}
+	}
+}

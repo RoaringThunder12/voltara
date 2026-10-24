@@ -1,0 +1,69 @@
+﻿legendary_conversion = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_legend.dds"
+	}
+	decision_group_type = major
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 0
+		kingdom = 120
+		empire = 120
+		hegemony = 120
+	}
+	desc = legendary_conversion_desc
+
+	is_shown = {
+		OR = {
+			AND = {
+				has_character_flag = legendary_conversion
+				has_dlc_feature = legends
+			}
+			has_character_flag = major_religious_inspiration
+		}
+	}
+
+	is_valid = {
+		custom_tooltip = {
+			text = leg_conv_valid_county
+			any_sub_realm_county = {
+				faith != root.faith
+			}
+		}
+		is_landless_adventurer = no
+	}
+
+	effect = {
+		custom_tooltip = {
+			text = legendary_conversion_tt
+			remove_character_flag = legendary_conversion
+			remove_character_flag = major_religious_inspiration
+			random_sub_realm_county = { # Give em a freebie
+                E_kCAFG_convert_rite_in_all_county_provinces = {
+                    FACTOR = 0.7
+                    VARIANCE = 0.1
+                    RITE = root.rite
+                    MAX = 1
+                }
+			}
+			every_sub_realm_county = {
+                E_kCAFG_convert_rite_in_all_county_provinces = {
+                    FACTOR = 0.5
+                    VARIANCE = 0.3
+                    RITE = root.rite
+                    MAX = 0.9
+                }
+			}
+		}
+	}
+	
+
+	ai_potential = {
+		always = yes
+	}
+
+	ai_will_do = {
+		base = 100
+	}
+}

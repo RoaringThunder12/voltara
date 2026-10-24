@@ -1,0 +1,64 @@
+﻿lam_pb_demand_nation_fracturing_faction_effect = {
+	if = {
+		limit = {
+			faction_target = {
+				lam_pb_managed_court_trigger = yes
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_pb_managed
+				has_variable = lam_pb_approved
+				NOT = {
+					has_variable = lam_pb_sent
+				}
+			}
+			set_variable = {
+				name = lam_pb_sent
+				value = yes
+			}
+			save_scope_as = faction
+			faction_leader = {
+				save_scope_as = faction_leader
+			}
+			faction_target = {
+				save_scope_as = faction_target
+			}
+			every_faction_member = {
+				limit = {
+					is_ai = no
+					this != scope:faction.faction_leader
+				}
+				trigger_event = faction_demand.1005
+			}
+			faction_target = {
+				trigger_event = {
+					id = faction_demand.1000
+					days = 5
+				}
+			}
+		}
+	}
+	else = {
+		save_scope_as = faction
+		faction_leader = {
+			save_scope_as = faction_leader
+		}
+		faction_target = {
+			save_scope_as = faction_target
+		}
+		every_faction_member = {
+			limit = {
+				is_ai = no
+				this != scope:faction.faction_leader
+			}
+			trigger_event = faction_demand.1005
+		}
+		faction_target = {
+			trigger_event = {
+				id = faction_demand.1000
+				days = 5
+			}
+		}
+	}
+}

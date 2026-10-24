@@ -1,0 +1,511 @@
+﻿lam_wc_clear_effect = {
+	remove_variable = lam_wc_war
+	remove_variable = lam_wc_faction
+	remove_variable = lam_wc_lord
+	remove_variable = lam_wc_commander
+	remove_variable = lam_wc_candidate
+	remove_variable = lam_wc_title
+	remove_variable = lam_wc_side
+	remove_variable = lam_wc_phase
+	remove_variable = lam_wc_shared_front
+}
+lam_wc_sync_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+		}
+		save_scope_as = lam_wc_head
+		clear_saved_scope = lam_wc_previous_war
+		var:lam_wc_war ?= {
+			save_scope_as = lam_wc_previous_war
+		}
+		clear_saved_scope = lam_wc_had_commitment
+		if = {
+			limit = {
+				OR = {
+					has_variable = lam_wc_phase
+					has_variable = lam_fac_armed
+					var:lam_fac_stage ?= 4
+					has_variable = lam_fac_rallied
+				}
+			}
+			save_scope_value_as = {
+				name = lam_wc_had_commitment
+				value = yes
+			}
+		}
+		lam_wc_clear_effect = yes
+		every_character_war = {
+			limit = {
+				OR = {
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_wc_previous_war
+							}
+							this ?= scope:lam_wc_previous_war
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					lam_wc_relevant_war_trigger = {
+						HEAD = scope:lam_wc_head
+					}
+				}
+				is_attacker = scope:lam_wc_head
+			}
+			if = {
+				limit = {
+					scope:lam_wc_head = {
+						NOT = {
+							has_variable = lam_wc_war
+						}
+					}
+				}
+				scope:lam_wc_head = {
+					set_variable = {
+						name = lam_wc_war
+						value = prev
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_wc_war
+				}
+			}
+			every_character_war = {
+				limit = {
+					OR = {
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = scope:lam_wc_previous_war
+								}
+								this ?= scope:lam_wc_previous_war
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+						lam_wc_relevant_war_trigger = {
+							HEAD = scope:lam_wc_head
+						}
+					}
+					is_defender = scope:lam_wc_head
+				}
+				if = {
+					limit = {
+						scope:lam_wc_head = {
+							NOT = {
+								has_variable = lam_wc_war
+							}
+						}
+					}
+					scope:lam_wc_head = {
+						set_variable = {
+							name = lam_wc_war
+							value = prev
+						}
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_wc_war
+			}
+			set_variable = {
+				name = lam_wc_phase
+				value = 2
+			}
+			set_variable = {
+				name = lam_wc_lord
+				value = var:lam_wc_war.primary_defender
+			}
+			set_variable = {
+				name = lam_wc_home
+				value = var:lam_wc_lord
+			}
+			set_variable = {
+				name = lam_wc_commander
+				value = var:lam_wc_war.primary_attacker
+			}
+			if = {
+				limit = {
+					var:lam_wc_war = {
+						is_attacker = scope:lam_wc_head
+					}
+				}
+				set_variable = {
+					name = lam_wc_side
+					value = 1
+				}
+			}
+			else = {
+				set_variable = {
+					name = lam_wc_side
+					value = 2
+				}
+			}
+			var:lam_wc_war = {
+				casus_belli = {
+					claimant ?= {
+						scope:lam_wc_head = {
+							set_variable = {
+								name = lam_wc_candidate
+								value = prev
+							}
+						}
+					}
+					ordered_target_title = {
+						order_by = tier
+						max = 1
+						check_range_bounds = no
+						scope:lam_wc_head = {
+							set_variable = {
+								name = lam_wc_title
+								value = prev
+							}
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_wc_candidate
+					}
+					var:lam_wc_war = {
+						OR = {
+							using_cb = claimant_faction_war
+							using_cb = ceremonial_claimant_faction_war
+						}
+					}
+				}
+				var:lam_wc_commander.joined_faction.special_character ?= {
+					scope:lam_wc_head = {
+						set_variable = {
+							name = lam_wc_candidate
+							value = prev
+						}
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				joined_faction ?= {
+					faction_target = scope:lam_wc_head.liege
+				}
+			}
+			set_variable = {
+				name = lam_wc_phase
+				value = 1
+			}
+			set_variable = {
+				name = lam_wc_side
+				value = 1
+			}
+			set_variable = {
+				name = lam_wc_faction
+				value = joined_faction
+			}
+			set_variable = {
+				name = lam_wc_lord
+				value = joined_faction.faction_target
+			}
+			set_variable = {
+				name = lam_wc_home
+				value = var:lam_wc_lord
+			}
+			set_variable = {
+				name = lam_wc_commander
+				value = joined_faction.faction_leader
+			}
+			joined_faction.special_title ?= {
+				scope:lam_wc_head = {
+					set_variable = {
+						name = lam_wc_title
+						value = prev
+					}
+				}
+			}
+			if = {
+				limit = {
+					joined_faction = {
+						faction_is_type = claimant_faction
+					}
+				}
+				joined_faction.special_character ?= {
+					scope:lam_wc_head = {
+						set_variable = {
+							name = lam_wc_candidate
+							value = prev
+						}
+					}
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					exists = liege
+				}
+				set_variable = {
+					name = lam_wc_home
+					value = liege
+				}
+			}
+			else = {
+				remove_variable = lam_wc_home
+			}
+			if = {
+				limit = {
+					exists = scope:lam_wc_had_commitment
+				}
+				remove_variable = lam_fac_armed
+				remove_variable = lam_fac_rose_head
+				remove_variable = lam_fac_rose_vs
+				remove_variable = lam_fac_rallied
+				remove_variable = lam_fac_rallied_war
+				set_variable = {
+					name = lam_fac_stage
+					value = 7
+				}
+			}
+		}
+		lam_wc_enforce_effect = yes
+	}
+}
+lam_wc_enforce_effect = {
+	if = {
+		limit = {
+			var:lam_wc_side ?= 1
+		}
+		set_variable = {
+			name = lam_fac_stage
+			value = 4
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_courtparty
+			}
+			remove_variable = lam_fac_courtparty
+			set_variable = {
+				name = lam_fac_cp_broken_m
+				value = {
+					value = lam_now_m
+					add = 120
+				}
+			}
+		}
+		remove_variable = lam_fac_kings_own
+		remove_variable = lam_fac_goal_met
+	}
+	else_if = {
+		limit = {
+			var:lam_wc_side ?= 2
+		}
+		set_variable = {
+			name = lam_fac_stage
+			value = 6
+		}
+	}
+}
+lam_wc_court_sync_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+		}
+		lam_wc_sync_effect = yes
+	}
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			has_variable = lam_wc_war
+		}
+		save_scope_as = lam_wc_front_head
+		every_in_list = {
+			variable = lam_fac_foes
+			limit = {
+				is_alive = yes
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_wc_front_head.var:lam_wc_war
+						}
+						var:lam_wc_war ?= scope:lam_wc_front_head.var:lam_wc_war
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_wc_front_head.var:lam_wc_side
+						}
+						var:lam_wc_side ?= scope:lam_wc_front_head.var:lam_wc_side
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			scope:lam_wc_front_head = {
+				set_variable = {
+					name = lam_wc_shared_front
+					value = yes
+				}
+			}
+		}
+	}
+}
+lam_wc_war_sync_effect = {
+	scope:war ?= {
+		every_war_participant = {
+			limit = {
+				trigger_if = {
+					limit = {
+						is_alive = yes
+					}
+					has_variable = lam_bloc_lead
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			lam_wc_sync_effect = yes
+		}
+		primary_defender = {
+			if = {
+				limit = {
+					is_alive = yes
+				}
+				lam_wc_court_sync_effect = yes
+			}
+		}
+	}
+}
+lam_wc_plan_rise_effect = {
+	remove_variable = lam_wc_plan_candidate
+	remove_variable = lam_wc_plan_title
+	if = {
+		limit = {
+			OR = {
+				var:lam_cr_action ?= flag:rise
+				var:lam_cr_action ?= flag:cp_rise
+			}
+		}
+		set_variable = {
+			name = lam_wc_plan_title
+			value = var:lam_cr_lord.primary_title
+		}
+		if = {
+			limit = {
+				var:lam_fac_heir ?= {
+					is_alive = yes
+					has_claim_on = scope:lam_cr_head.var:lam_wc_plan_title
+				}
+			}
+			set_variable = {
+				name = lam_wc_plan_candidate
+				value = var:lam_fac_heir
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					var:lam_fac_heir ?= {
+						is_alive = yes
+					}
+				}
+				has_claim_on = var:lam_wc_plan_title
+			}
+			set_variable = {
+				name = lam_wc_plan_candidate
+				value = this
+			}
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				var:lam_cr_action ?= flag:rise
+				var:lam_cr_action ?= flag:cp_rise
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_pb_council_kind
+				}
+			}
+			if = {
+				limit = {
+					has_variable = lam_wc_plan_candidate
+				}
+				set_variable = {
+					name = lam_pb_council_kind
+					value = flag:claimant_faction
+				}
+			}
+			else_if = {
+				limit = {
+					lam_rv_fracture_cause_trigger = yes
+					lam_pb_legal_nation_fracturing_faction_trigger = yes
+				}
+				set_variable = {
+					name = lam_pb_council_kind
+					value = flag:nation_fracturing_faction
+				}
+			}
+			else_if = {
+				limit = {
+					var:lam_fac_agenda ?= flag:parochial
+					lam_pb_legal_independence_faction_trigger = yes
+				}
+				set_variable = {
+					name = lam_pb_council_kind
+					value = flag:independence_faction
+				}
+			}
+			else = {
+				set_variable = {
+					name = lam_pb_council_kind
+					value = flag:liberty_faction
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_pb_council_kind
+		}
+		if = {
+			limit = {
+				var:lam_pb_council_kind ?= flag:claimant_faction
+			}
+			if = {
+				limit = {
+					exists = var:lam_pb_selected_claimant
+				}
+				set_variable = {
+					name = lam_wc_plan_candidate
+					value = var:lam_pb_selected_claimant
+				}
+			}
+		}
+		else = {
+			remove_variable = lam_wc_plan_candidate
+		}
+	}
+}

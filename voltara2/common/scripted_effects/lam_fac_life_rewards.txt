@@ -1,0 +1,613 @@
+﻿lam_lf_pick_beneficiary_effect = {
+	save_scope_as = lam_lf_head
+	remove_variable = lam_lf_beneficiary
+	remove_variable = lam_lf_land_title
+	remove_variable = lam_pd_incumbent
+	remove_variable = lam_pd_seat
+	clear_saved_scope = lam_lf_pick
+	set_variable = {
+		name = lam_lf_pick_score
+		value = -1000
+	}
+	if = {
+		limit = {
+			var:lam_pd_kind ?= flag:council
+		}
+		if = {
+			limit = {
+				lam_lf_office_person_trigger = yes
+			}
+			save_scope_as = lam_lf_pick
+			set_variable = {
+				name = lam_lf_pick_score
+				value = lam_lf_office_merit_value
+			}
+		}
+		ordered_in_list = {
+			variable = lam_fac_members
+			max = 1
+			check_range_bounds = no
+			order_by = lam_lf_office_merit_value
+			limit = {
+				lam_lf_office_person_trigger = yes
+			}
+			if = {
+				limit = {
+					lam_lf_office_merit_value > scope:lam_lf_head.var:lam_lf_pick_score
+				}
+				save_scope_as = lam_lf_pick
+			}
+		}
+		if = {
+			limit = {
+				lam_lf_exchange_current_trigger = yes
+				var:lam_lf_exchange_role ?= flag:sponsor
+				var:lam_lf_exchange_stage ?= 2
+			}
+			var:lam_lf_exchange_person = {
+				if = {
+					limit = {
+						NOT = {
+							is_councillor_of = liege
+						}
+						lam_st_office_available_trigger = yes
+					}
+					save_scope_as = lam_lf_pick
+				}
+			}
+		}
+		scope:lam_lf_pick ?= {
+			scope:lam_lf_head = {
+				set_variable = {
+					name = lam_lf_beneficiary
+					value = scope:lam_lf_pick
+				}
+			}
+		}
+		set_variable = {
+			name = lam_lf_pick_score
+			value = -1000
+		}
+		if = {
+			limit = {
+				exists = scope:lam_lf_pick
+				liege = {
+					lam_nc_appoint_trigger = {
+						SEAT = marshal
+						CANDIDATE = scope:lam_lf_pick
+					}
+				}
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = var:lam_lf_pick_score
+						}
+						scope:lam_lf_pick.martial > var:lam_lf_pick_score
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			set_variable = {
+				name = lam_pd_seat
+				value = flag:marshal
+			}
+			set_variable = {
+				name = lam_lf_pick_score
+				value = scope:lam_lf_pick.martial
+			}
+			remove_variable = lam_pd_incumbent
+			if = {
+				limit = {
+					exists = liege.cp:councillor_marshal
+				}
+				set_variable = {
+					name = lam_pd_incumbent
+					value = liege.cp:councillor_marshal
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:lam_lf_pick
+				liege = {
+					lam_nc_appoint_trigger = {
+						SEAT = steward
+						CANDIDATE = scope:lam_lf_pick
+					}
+				}
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = var:lam_lf_pick_score
+						}
+						scope:lam_lf_pick.stewardship > var:lam_lf_pick_score
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			set_variable = {
+				name = lam_pd_seat
+				value = flag:steward
+			}
+			set_variable = {
+				name = lam_lf_pick_score
+				value = scope:lam_lf_pick.stewardship
+			}
+			remove_variable = lam_pd_incumbent
+			if = {
+				limit = {
+					exists = liege.cp:councillor_steward
+				}
+				set_variable = {
+					name = lam_pd_incumbent
+					value = liege.cp:councillor_steward
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:lam_lf_pick
+				liege = {
+					lam_nc_appoint_trigger = {
+						SEAT = spymaster
+						CANDIDATE = scope:lam_lf_pick
+					}
+				}
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = var:lam_lf_pick_score
+						}
+						scope:lam_lf_pick.intrigue > var:lam_lf_pick_score
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			set_variable = {
+				name = lam_pd_seat
+				value = flag:spymaster
+			}
+			set_variable = {
+				name = lam_lf_pick_score
+				value = scope:lam_lf_pick.intrigue
+			}
+			remove_variable = lam_pd_incumbent
+			if = {
+				limit = {
+					exists = liege.cp:councillor_spymaster
+				}
+				set_variable = {
+					name = lam_pd_incumbent
+					value = liege.cp:councillor_spymaster
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:lam_lf_pick
+				liege = {
+					lam_nc_appoint_trigger = {
+						SEAT = chancellor
+						CANDIDATE = scope:lam_lf_pick
+					}
+				}
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = var:lam_lf_pick_score
+						}
+						scope:lam_lf_pick.diplomacy > var:lam_lf_pick_score
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			set_variable = {
+				name = lam_pd_seat
+				value = flag:chancellor
+			}
+			set_variable = {
+				name = lam_lf_pick_score
+				value = scope:lam_lf_pick.diplomacy
+			}
+			remove_variable = lam_pd_incumbent
+			if = {
+				limit = {
+					exists = liege.cp:councillor_chancellor
+				}
+				set_variable = {
+					name = lam_pd_incumbent
+					value = liege.cp:councillor_chancellor
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:land
+		}
+		if = {
+			limit = {
+				lam_lf_member_trigger = yes
+				liege = {
+					lam_nc_county_available_trigger = {
+						RECIPIENT = scope:lam_lf_head
+					}
+				}
+			}
+			save_scope_as = lam_lf_pick
+			set_variable = {
+				name = lam_lf_pick_score
+				value = lam_lf_merit_value
+			}
+		}
+		ordered_in_list = {
+			variable = lam_fac_members
+			max = 1
+			check_range_bounds = no
+			order_by = lam_lf_merit_value
+			limit = {
+				lam_lf_member_trigger = yes
+				save_temporary_scope_as = lam_lf_land_person
+				liege = {
+					lam_nc_county_available_trigger = {
+						RECIPIENT = scope:lam_lf_land_person
+					}
+				}
+			}
+			if = {
+				limit = {
+					lam_lf_merit_value > scope:lam_lf_head.var:lam_lf_pick_score
+				}
+				save_scope_as = lam_lf_pick
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:lam_lf_pick
+			}
+			set_variable = {
+				name = lam_lf_beneficiary
+				value = scope:lam_lf_pick
+			}
+			liege = {
+				ordered_held_title = {
+					max = 1
+					check_range_bounds = no
+					order_by = {
+						value = 0
+						subtract = development_level
+					}
+					limit = {
+						lam_nc_county_pair_trigger = {
+							LORD = scope:lam_lf_head.liege
+							RECIPIENT = scope:lam_lf_pick
+						}
+					}
+					scope:lam_lf_head = {
+						set_variable = {
+							name = lam_lf_land_title
+							value = prev
+						}
+					}
+				}
+			}
+		}
+	}
+	remove_variable = lam_lf_pick_score
+}
+lam_lf_reward_confirmed_effect = {
+	save_scope_as = lam_lf_head
+	var:lam_lf_beneficiary ?= {
+		set_variable = {
+			name = lam_lf_reward_head
+			value = scope:lam_lf_head
+		}
+		set_variable = {
+			name = lam_lf_reward_until
+			value = {
+				value = lam_now_m
+				add = 60
+			}
+		}
+		if = {
+			limit = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_lf_head
+						}
+						var:lam_st_reward_head ?= scope:lam_lf_head
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			remove_variable = lam_st_overlooked
+		}
+		if = {
+			limit = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_head
+					}
+					NOT = {
+						this = scope:lam_lf_head
+					}
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			add_opinion = {
+				target = scope:lam_lf_head
+				modifier = lam_fac_fair_share_opinion
+			}
+		}
+	}
+	if = {
+		limit = {
+			NOT = {
+				var:lam_lf_beneficiary ?= this
+			}
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 5
+		}
+	}
+	every_in_list = {
+		variable = lam_fac_members
+		limit = {
+			lam_lf_member_trigger = yes
+			NOT = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = scope:lam_lf_head.var:lam_lf_beneficiary
+						}
+						this = scope:lam_lf_head.var:lam_lf_beneficiary
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:lam_lf_head
+					}
+					var:lam_cr_service_head ?= scope:lam_lf_head
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			var:lam_cr_service >= 6
+			NOT = {
+				AND = {
+					has_variable = lam_lf_reward_until
+					var:lam_lf_reward_until > lam_now_m
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:lam_lf_head
+							}
+							var:lam_lf_reward_head ?= scope:lam_lf_head
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+			}
+		}
+		set_variable = {
+			name = lam_st_reward_head
+			value = scope:lam_lf_head
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_st_overlooked
+				}
+			}
+			set_variable = {
+				name = lam_st_overlooked
+				value = 0
+			}
+		}
+		change_variable = {
+			name = lam_st_overlooked
+			add = 1
+		}
+		clamp_variable = {
+			name = lam_st_overlooked
+			min = 0
+			max = 3
+		}
+		set_variable = {
+			name = lam_st_overlooked
+			value = var:lam_st_overlooked
+			years = 5
+		}
+	}
+	if = {
+		limit = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = var:lam_lf_pledged_member
+					}
+					var:lam_lf_beneficiary ?= var:lam_lf_pledged_member
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		lam_lf_pledge_kept_effect = yes
+	}
+	lam_lf_exchange_fulfilled_effect = yes
+	lam_ev_reward_effect = yes
+}
+lam_lf_office_commit_effect = {
+	clear_saved_scope = lam_lf_reward_done
+	if = {
+		limit = {
+			lam_lf_office_valid_trigger = yes
+		}
+		save_scope_as = lam_lf_head
+		if = {
+			limit = {
+				var:lam_pd_seat ?= flag:marshal
+			}
+			var:lam_pd_lord = {
+				lam_nc_appoint_effect = {
+					SEAT = marshal
+					CANDIDATE = scope:lam_lf_head.var:lam_lf_beneficiary
+				}
+			}
+		}
+		if = {
+			limit = {
+				var:lam_pd_seat ?= flag:steward
+			}
+			var:lam_pd_lord = {
+				lam_nc_appoint_effect = {
+					SEAT = steward
+					CANDIDATE = scope:lam_lf_head.var:lam_lf_beneficiary
+				}
+			}
+		}
+		if = {
+			limit = {
+				var:lam_pd_seat ?= flag:spymaster
+			}
+			var:lam_pd_lord = {
+				lam_nc_appoint_effect = {
+					SEAT = spymaster
+					CANDIDATE = scope:lam_lf_head.var:lam_lf_beneficiary
+				}
+			}
+		}
+		if = {
+			limit = {
+				var:lam_pd_seat ?= flag:chancellor
+			}
+			var:lam_pd_lord = {
+				lam_nc_appoint_effect = {
+					SEAT = chancellor
+					CANDIDATE = scope:lam_lf_head.var:lam_lf_beneficiary
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:lam_nc_appointed
+			}
+			save_scope_value_as = {
+				name = lam_lf_reward_done
+				value = yes
+			}
+			lam_pd_grievance_relieve_effect = {
+				KIND = office
+				AMOUNT = -15
+			}
+			lam_lf_reward_confirmed_effect = yes
+			var:lam_pd_incumbent ?= {
+				save_scope_as = lam_lf_harmed
+				var:lam_bloc ?= {
+					if = {
+						limit = {
+							has_variable = lam_bloc_lead
+							NOT = {
+								AND = {
+									trigger_if = {
+										limit = {
+											exists = scope:lam_lf_head
+										}
+										this = scope:lam_lf_head
+									}
+									trigger_else = {
+										always = no
+									}
+								}
+							}
+						}
+						lam_pd_grievance_add_effect = {
+							KIND = office
+							AMOUNT = 10
+							MONTHS = 36
+						}
+						lam_lf_incident_effect = {
+							KIND = dismissal
+							ACTOR = scope:lam_lf_head.var:lam_pd_lord
+							VICTIM = scope:lam_lf_harmed
+							MONTHS = 60
+						}
+					}
+				}
+			}
+		}
+	}
+}
+lam_lf_land_commit_effect = {
+	clear_saved_scope = lam_lf_reward_done
+	if = {
+		limit = {
+			lam_lf_land_valid_trigger = yes
+		}
+		save_scope_as = lam_lf_head
+		var:lam_pd_lord = {
+			create_title_and_vassal_change = {
+				type = granted
+				save_scope_as = lam_lf_grant
+				add_claim_on_loss = no
+			}
+		}
+		var:lam_lf_land_title = {
+			change_title_holder = {
+				holder = scope:lam_lf_head.var:lam_lf_beneficiary
+				change = scope:lam_lf_grant
+				take_baronies = yes
+			}
+		}
+		resolve_title_and_vassal_change = scope:lam_lf_grant
+		if = {
+			limit = {
+				AND = {
+					trigger_if = {
+						limit = {
+							exists = var:lam_lf_beneficiary
+						}
+						var:lam_lf_land_title.holder ?= var:lam_lf_beneficiary
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+			save_scope_value_as = {
+				name = lam_lf_reward_done
+				value = yes
+			}
+			lam_pd_grievance_relieve_effect = {
+				KIND = wealth
+				AMOUNT = -15
+			}
+			lam_lf_reward_confirmed_effect = yes
+			lam_st_record_effect = {
+				KEY = land_reward
+			}
+		}
+	}
+}

@@ -1,0 +1,237 @@
+﻿lam_er_observe_member_effect = {
+	if = {
+		limit = {
+			has_variable = lam_gg_source
+			NOT = {
+				lam_ev_position_trigger = yes
+			}
+		}
+		lam_ev_clear_person_effect = yes
+	}
+	if = {
+		limit = {
+			NOT = {
+				lam_ev_position_trigger = yes
+			}
+		}
+		if = {
+			limit = {
+				lam_er_heir_conflict_trigger = yes
+			}
+			set_variable = {
+				name = lam_bp_position_head
+				value = scope:lam_ev_head
+			}
+			set_variable = {
+				name = lam_bp_position_lord
+				value = scope:lam_ev_head.liege
+			}
+			set_variable = {
+				name = lam_bp_position_topic
+				value = flag:heir
+			}
+			set_variable = {
+				name = lam_bp_position_side
+				value = flag:retain
+			}
+			set_variable = {
+				name = lam_bp_position_target
+				value = scope:lam_ev_head.var:lam_fac_heir
+			}
+			set_variable = {
+				name = lam_bp_position_alternative
+				value = scope:lam_ev_head.liege.primary_heir
+			}
+			remove_variable = lam_bp_position_object
+			remove_variable = lam_bp_position_detail
+			remove_variable = lam_bp_position_record
+			if = {
+				limit = {
+					scope:lam_ev_head = {
+						has_variable = lam_fac_rec
+					}
+				}
+				set_variable = {
+					name = lam_bp_position_record
+					value = scope:lam_ev_head.var:lam_fac_rec
+				}
+			}
+			set_variable = {
+				name = lam_bp_position_until
+				value = {
+					value = lam_now_m
+					add = lam_ev_memory_months
+				}
+			}
+			set_variable = {
+				name = lam_cr_unrest_head
+				value = scope:lam_ev_head
+				years = 5
+			}
+			set_variable = {
+				name = lam_cr_unrest
+				value = 1
+				years = 5
+			}
+			lam_dr_clock_restart_effect = yes
+			set_variable = {
+				name = lam_ev_since
+				value = lam_now_m
+			}
+			set_variable = {
+				name = lam_er_observed_heir
+				value = yes
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_er_observed_heir
+		}
+		if = {
+			limit = {
+				NOT = {
+					lam_er_heir_conflict_trigger = yes
+				}
+			}
+			lam_ev_clear_person_effect = yes
+			remove_variable = lam_er_observed_heir
+		}
+	}
+	lam_gg_observe_effect = yes
+	if = {
+		limit = {
+			lam_ev_position_trigger = yes
+		}
+		set_variable = {
+			name = lam_dr_had_dispute
+			value = yes
+		}
+	}
+}
+lam_er_pulse_diagnostic_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+		}
+		if = {
+			limit = {
+				has_variable = lam_bloc_lead
+				exists = liege
+			}
+			set_variable = {
+				name = lam_er_pulse_m
+				value = lam_now_m
+			}
+			if = {
+				limit = {
+					NOT = {
+						lam_ev_head_trigger = yes
+					}
+				}
+				set_variable = {
+					name = lam_er_state
+					value = flag:busy
+				}
+			}
+		}
+	}
+}
+lam_er_group_diagnostic_effect = {
+	if = {
+		limit = {
+			var:lam_ev_group_count > var:lam_er_best_count
+		}
+		set_variable = {
+			name = lam_er_best_count
+			value = var:lam_ev_group_count
+		}
+		if = {
+			limit = {
+				var:lam_ev_total > 0
+			}
+			set_variable = {
+				name = lam_er_best_share
+				value = {
+					value = var:lam_ev_group_weight
+					divide = var:lam_ev_total
+					multiply = 100
+				}
+			}
+		}
+		set_variable = {
+			name = lam_er_state
+			value = flag:support
+		}
+		if = {
+			limit = {
+				var:lam_ev_group_count >= 2
+				var:lam_er_best_share >= {
+					value = lam_ev_split_share
+					multiply = 100
+				}
+			}
+			set_variable = {
+				name = lam_er_state
+				value = flag:ready
+			}
+			if = {
+				limit = {
+					NOT = {
+						lam_fac_can_split_trigger = yes
+					}
+				}
+				set_variable = {
+					name = lam_er_state
+					value = flag:cooldown
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = {
+						liege = {
+							lam_ev_split_seat_trigger = yes
+						}
+					}
+				}
+				set_variable = {
+					name = lam_er_state
+					value = flag:capacity
+				}
+			}
+			else_if = {
+				limit = {
+					OR = {
+						lam_lf_pledge_current_trigger = yes
+						AND = {
+							trigger_if = {
+								limit = {
+									has_variable = lam_lf_split_grace
+								}
+								var:lam_lf_split_grace > lam_now_m
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+						AND = {
+							trigger_if = {
+								limit = {
+									has_variable = lam_ev_conciliation_until
+								}
+								var:lam_ev_conciliation_until > lam_now_m
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+				}
+				set_variable = {
+					name = lam_er_state
+					value = flag:compromise
+				}
+			}
+		}
+	}
+}

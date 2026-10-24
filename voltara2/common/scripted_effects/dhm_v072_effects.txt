@@ -1,0 +1,99 @@
+﻿# DHM v0.7.2: event-local outcomes; compatibility never overwrites a new result.
+# Old queued events do not contain a unique result. Specific remaining effects
+# provide a fallback; a generic reconciliation bonus is deliberately insufficient.
+dhm_v072_restore_union_outcome_effect = {
+	if = {
+		limit = { NOT = { exists = scope:$KEY$ } }
+		save_scope_value_as = { name = $KEY$ value = flag:unknown }
+		if = {
+			limit = { OR = { $SUBJECT$ = { has_character_modifier = $NEGATIVE$ } $SPOUSE$ = { has_character_modifier = $NEGATIVE$ } } }
+			save_scope_value_as = { name = $KEY$ value = flag:unsettled }
+		}
+		else_if = {
+			limit = { $SUBJECT$ = { has_character_modifier = dhm_established_household_modifier } $SPOUSE$ = { has_character_modifier = dhm_established_household_modifier } }
+			save_scope_value_as = { name = $KEY$ value = flag:established }
+		}
+		else_if = {
+			limit = { $SUBJECT$ = { has_character_modifier = dhm_marital_self_reliance_modifier } $SPOUSE$ = { has_character_modifier = dhm_marital_self_reliance_modifier } }
+			save_scope_value_as = { name = $KEY$ value = flag:independent }
+		}
+	}
+}
+
+dhm_v072_restore_dispute_outcome_effect = {
+	if = {
+		limit = { NOT = { exists = scope:dhm072_dispute_result } }
+		save_scope_value_as = { name = dhm072_dispute_result value = flag:unknown }
+		if = {
+			limit = { scope:dhm_dispute_first = { has_character_modifier = dhm_family_grievance_modifier } scope:dhm_dispute_second = { has_character_modifier = dhm_family_grievance_modifier } }
+			save_scope_value_as = { name = dhm072_dispute_result value = flag:grievance_both }
+		}
+		else_if = {
+			limit = { scope:dhm_dispute_first = { has_character_modifier = dhm_family_grievance_modifier } }
+			save_scope_value_as = { name = dhm072_dispute_result value = flag:grievance_first }
+		}
+		else_if = {
+			limit = { scope:dhm_dispute_second = { has_character_modifier = dhm_family_grievance_modifier } }
+			save_scope_value_as = { name = dhm072_dispute_result value = flag:grievance_second }
+		}
+	}
+}
+
+dhm_v072_restore_school_outcome_effect = {
+	if = {
+		limit = { NOT = { exists = scope:dhm072_school_result } }
+		save_scope_value_as = { name = dhm072_school_result value = flag:unknown }
+		if = {
+			limit = { scope:dhm_story_child = { has_character_modifier = dhm_schoolroom_resentment_modifier } }
+			save_scope_value_as = { name = dhm072_school_result value = flag:setback }
+		}
+		else_if = {
+			limit = { scope:dhm_story_child = { has_character_modifier = dhm_schoolroom_breakthrough_modifier } }
+			save_scope_value_as = { name = dhm072_school_result value = flag:encouraged }
+		}
+	}
+}
+
+dhm_v072_restore_letter_outcome_effect = {
+	if = {
+		limit = { NOT = { exists = scope:dhm072_letter_result } }
+		save_scope_value_as = { name = dhm072_letter_result value = flag:unknown }
+		if = {
+			limit = { scope:dhm_story_relative = { has_character_modifier = dhm_letters_from_home_modifier } }
+			save_scope_value_as = { name = dhm072_letter_result value = flag:aid }
+		}
+		else_if = {
+			limit = { scope:dhm_story_relative = { has_character_flag = dhm_letter_counsel_outcome } }
+			save_scope_value_as = { name = dhm072_letter_result value = flag:counsel }
+		}
+	}
+}
+
+# The second decision can repair harsh beginnings or undo early openness.
+# Missing old-save evidence receives a neutral ending, not invented trust.
+dhm_v072_prepare_parent_ending_effect = {
+	save_scope_value_as = { name = dhm072_parent_ending value = flag:unknown }
+	if = {
+		limit = { exists = scope:dhm072_parent_reply scope:dhm072_parent_reply = flag:speak }
+		if = {
+			limit = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_parent_choice VALUE = flag:duty LEGACY = dhm_parent_arc_duty } } }
+			save_scope_value_as = { name = dhm072_parent_ending value = flag:repaired }
+		}
+		else_if = {
+			limit = { exists = scope:dhm071_parent_choice OR = { scope:dhm071_parent_choice = flag:listen scope:dhm071_parent_choice = flag:test } }
+			save_scope_value_as = { name = dhm072_parent_ending value = flag:trust }
+		}
+		else_if = {
+			limit = { NOT = { exists = scope:dhm071_parent_choice } scope:dhm_arc_first = { has_character_flag = dhm_parent_arc_listened } }
+			save_scope_value_as = { name = dhm072_parent_ending value = flag:trust }
+		}
+	}
+	else_if = {
+		limit = { exists = scope:dhm072_parent_reply scope:dhm072_parent_reply = flag:silence }
+		if = {
+			limit = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_parent_choice VALUE = flag:duty LEGACY = dhm_parent_arc_duty } } }
+			save_scope_value_as = { name = dhm072_parent_ending value = flag:resentment }
+		}
+		else = { save_scope_value_as = { name = dhm072_parent_ending value = flag:distance } }
+	}
+}

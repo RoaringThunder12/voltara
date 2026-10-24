@@ -1,0 +1,706 @@
+﻿lam_cr_cp_maintain_effect = {
+	if = {
+		limit = {
+			has_variable = lam_fac_courtparty
+		}
+		if = {
+			limit = {
+				scope:lam_bloc_lord = {
+					var:lam_fac_puppet_master ?= prev
+				}
+			}
+			remove_variable = lam_fac_courtparty
+		}
+		else = {
+			set_variable = {
+				name = lam_cr_cp_lord
+				value = scope:lam_bloc_lord
+			}
+			if = {
+				limit = {
+					lam_fac_cp_rift_trigger = {
+						LORD = scope:lam_bloc_lord
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_variable = lam_fac_cp_warned_m
+						}
+					}
+					set_variable = {
+						name = lam_fac_cp_warned_m
+						value = {
+							value = lam_now_m
+							add = 6
+						}
+					}
+					set_variable = {
+						name = lam_fac_cp_warned
+						value = yes
+						years = 1
+					}
+					if = {
+						limit = {
+							is_ai = no
+						}
+						save_scope_as = lam_cpw_head
+						scope:lam_bloc_lord = {
+							save_scope_as = lam_cpw_lord
+						}
+						trigger_event = lam_faction.2200
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_fac_cp_warned_m <= lam_now_m
+					}
+					remove_variable = lam_fac_courtparty
+					remove_variable = lam_fac_cp_warned_m
+					if = {
+						limit = {
+							has_variable = lam_fac_cp_warned
+						}
+						remove_variable = lam_fac_cp_warned
+					}
+					if = {
+						limit = {
+							has_variable = lam_fac_kings_own
+						}
+						remove_variable = lam_fac_kings_own
+					}
+					set_variable = {
+						name = lam_fac_cp_broken_m
+						value = {
+							value = lam_now_m
+							add = 60
+						}
+					}
+					lam_gn_event_effect = {
+						KEY = cp_broken
+					}
+					save_scope_as = lam_cp_lead
+					if = {
+						limit = {
+							is_ai = no
+						}
+						send_interface_message = {
+							type = event_generic_bad
+							title = lam_fac_cp_revoked_title
+							right_icon = scope:lam_bloc_lord
+						}
+					}
+					scope:lam_bloc_lord = {
+						if = {
+							limit = {
+								is_ai = no
+							}
+							send_interface_message = {
+								type = event_generic_bad
+								title = lam_fac_cp_broken_title
+								desc = lam_fac_cp_broken_desc
+								left_icon = scope:lam_cp_lead
+							}
+						}
+					}
+				}
+			}
+			else = {
+				if = {
+					limit = {
+						has_variable = lam_fac_cp_warned_m
+					}
+					remove_variable = lam_fac_cp_warned_m
+				}
+				if = {
+					limit = {
+						has_variable = lam_fac_cp_warned
+					}
+					remove_variable = lam_fac_cp_warned
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_patron_lord
+			NOT = {
+				var:lam_cr_patron_lord ?= liege
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_cr_access
+			}
+			remove_variable = lam_cr_access
+		}
+		if = {
+			limit = {
+				has_variable = lam_cr_excluded
+			}
+			remove_variable = lam_cr_excluded
+		}
+		if = {
+			limit = {
+				has_variable = lam_cr_rival
+			}
+			remove_variable = lam_cr_rival
+		}
+		remove_variable = lam_cr_patron_lord
+	}
+}
+lam_cr_court_party_effect = {
+	save_scope_as = lam_cr_nom_lord
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_cr_cp_offer_cd
+			}
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					is_alive = yes
+					has_variable = lam_fac_courtparty
+				}
+			}
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					is_alive = yes
+					has_variable = lam_cr_active
+					var:lam_cr_action ?= flag:court
+				}
+			}
+		}
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			max = 1
+			check_range_bounds = no
+			limit = {
+				is_alive = yes
+				is_adult = yes
+				is_imprisoned = no
+				has_variable = lam_bloc_lead
+				liege ?= scope:lam_cr_nom_lord
+				NOT = {
+					has_variable = lam_fac_disband
+				}
+				NOT = {
+					has_variable = lam_fac_cp_broken_m
+				}
+				NOT = {
+					has_variable = lam_cr_active
+				}
+				NOT = {
+					has_variable = lam_cr_retry_court
+				}
+				NOT = {
+					scope:lam_cr_nom_lord = {
+						var:lam_fac_puppet_master ?= prev
+					}
+				}
+				NOT = {
+					lam_fac_cp_rift_trigger = {
+						LORD = scope:lam_cr_nom_lord
+					}
+				}
+				OR = {
+					AND = {
+						var:lam_fac_favour >= lam_tune_cp_favour
+						scope:lam_cr_nom_lord = {
+							is_ai = no
+						}
+					}
+					var:lam_fac_favour >= 50
+					has_variable = lam_fac_kings_own
+					has_variable = lam_fac_ban_cp
+				}
+				OR = {
+					NOT = {
+						var:lam_cr_cp_offered_lord ?= scope:lam_cr_nom_lord
+					}
+					AND = {
+						has_variable = lam_cr_cp_offered_m
+						var:lam_cr_cp_offered_m <= {
+							value = lam_now_m
+							subtract = 12
+						}
+						has_variable = lam_cr_cp_offered_favour
+						var:lam_fac_favour >= {
+							value = var:lam_cr_cp_offered_favour
+							add = 15
+						}
+					}
+				}
+			}
+			order_by = {
+				value = var:lam_fac_favour
+				if = {
+					limit = {
+						has_variable = lam_fac_kings_own
+					}
+					add = 200
+				}
+			}
+			set_variable = {
+				name = lam_cr_cp_offered_lord
+				value = scope:lam_cr_nom_lord
+			}
+			set_variable = {
+				name = lam_cr_cp_offered_m
+				value = lam_now_m
+			}
+			set_variable = {
+				name = lam_cr_cp_offered_favour
+				value = var:lam_fac_favour
+			}
+			scope:lam_cr_nom_lord = {
+				set_variable = {
+					name = lam_cr_cp_offer_cd
+					value = yes
+					years = 1
+				}
+				if = {
+					limit = {
+						is_ai = yes
+					}
+					set_variable = {
+						name = lam_cr_cp_offer_cd
+						value = yes
+						months = 23
+					}
+				}
+			}
+			lam_cr_start_effect = {
+				ISSUE = court
+				ACTION = court
+				TARGET = scope:lam_cr_nom_lord
+			}
+		}
+	}
+}
+lam_cr_patronage_effect = {
+	if = {
+		limit = {
+			scope:target = {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				liege ?= root
+				NOT = {
+					has_variable = lam_fac_disband
+				}
+				NOT = {
+					has_variable = lam_fac_favour_cd
+				}
+			}
+		}
+		save_scope_as = lam_pr_lord
+		scope:target = {
+			save_scope_as = lam_pr_head
+		}
+		save_scope_value_as = {
+			name = lam_pr_add
+			value = $ADD$
+		}
+		scope:lam_pr_head = {
+			set_variable = {
+				name = lam_cr_patron_lord
+				value = scope:lam_pr_lord
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			change_variable = {
+				name = lam_fac_favour
+				add = $ADD$
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+			set_variable = {
+				name = lam_fac_favour_cd
+				value = yes
+				years = 1
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_pr_add > 0
+			}
+			every_in_list = {
+				variable = lam_bloc_leads
+				limit = {
+					is_alive = yes
+					has_variable = lam_cr_access
+					NOT = {
+						this = scope:lam_pr_head
+					}
+					liege ?= scope:lam_pr_lord
+				}
+				remove_variable = lam_cr_access
+			}
+			scope:lam_pr_head = {
+				if = {
+					limit = {
+						has_variable = lam_cr_excluded
+					}
+					remove_variable = lam_cr_excluded
+				}
+				set_variable = {
+					name = lam_cr_access
+					value = yes
+					years = 2
+				}
+				set_variable = {
+					name = lam_cr_access_end
+					value = {
+						value = lam_now_m
+						add = 24
+					}
+				}
+				lam_fac_cohesion_add_effect = {
+					ADD = 3
+				}
+			}
+			ordered_in_list = {
+				variable = lam_bloc_leads
+				limit = {
+					is_alive = yes
+					has_variable = lam_bloc_lead
+					liege ?= scope:lam_pr_lord
+					NOT = {
+						this = scope:lam_pr_head
+					}
+					NOT = {
+						has_variable = lam_fac_disband
+					}
+					NOT = {
+						is_target_in_variable_list = {
+							name = lam_fac_allies
+							target = scope:lam_pr_head
+						}
+					}
+					NOT = {
+						has_variable = lam_cr_reaction_cd
+					}
+				}
+				order_by = {
+					value = lam_cr_influence_value
+					if = {
+						limit = {
+							is_target_in_variable_list = {
+								name = lam_fac_foes
+								target = scope:lam_pr_head
+							}
+						}
+						add = 30
+					}
+				}
+				max = 2
+				check_range_bounds = no
+				set_variable = {
+					name = lam_cr_patron_lord
+					value = scope:lam_pr_lord
+				}
+				set_variable = {
+					name = lam_cr_rival
+					value = scope:lam_pr_head
+					years = 2
+				}
+				set_variable = {
+					name = lam_cr_reaction_cd
+					value = yes
+					years = 1
+				}
+				change_variable = {
+					name = lam_fac_favour
+					add = -5
+				}
+				clamp_variable = {
+					name = lam_fac_favour
+					min = -100
+					max = 100
+				}
+				lam_cr_react_effect = yes
+			}
+		}
+		else = {
+			scope:lam_pr_head = {
+				if = {
+					limit = {
+						has_variable = lam_cr_access
+					}
+					remove_variable = lam_cr_access
+				}
+				set_variable = {
+					name = lam_cr_excluded
+					value = yes
+					years = 2
+				}
+				set_variable = {
+					name = lam_cr_excluded_end
+					value = {
+						value = lam_now_m
+						add = 24
+					}
+				}
+				lam_pd_grievance_add_effect = {
+					KIND = policy
+					AMOUNT = 10
+					MONTHS = 24
+				}
+				set_variable = {
+					name = lam_cr_reaction_cd
+					value = yes
+					years = 1
+				}
+				clear_saved_scope = lam_pr_beneficiary
+				scope:lam_pr_lord = {
+					ordered_in_list = {
+						variable = lam_bloc_leads
+						max = 1
+						check_range_bounds = no
+						limit = {
+							is_alive = yes
+							has_variable = lam_bloc_lead
+							NOT = {
+								this = scope:lam_pr_head
+							}
+							NOT = {
+								has_variable = lam_fac_disband
+							}
+						}
+						order_by = {
+							value = var:lam_fac_favour
+							if = {
+								limit = {
+									has_variable = lam_cr_access
+								}
+								add = 30
+							}
+						}
+						save_scope_as = lam_pr_beneficiary
+					}
+				}
+				scope:lam_pr_beneficiary ?= {
+					change_variable = {
+						name = lam_fac_favour
+						add = 5
+					}
+					clamp_variable = {
+						name = lam_fac_favour
+						min = -100
+						max = 100
+					}
+					scope:lam_pr_head = {
+						set_variable = {
+							name = lam_cr_rival
+							value = scope:lam_pr_beneficiary
+							years = 2
+						}
+					}
+				}
+				lam_cr_react_effect = yes
+			}
+		}
+		lam_fac_quick_refresh_effect = yes
+		lam_cr_court_party_effect = yes
+	}
+}
+lam_cr_react_effect = {
+	save_scope_as = lam_pr_reactor
+	if = {
+		limit = {
+			NOT = {
+				has_global_variable = lam_cr_serial
+			}
+		}
+		set_global_variable = {
+			name = lam_cr_serial
+			value = 0
+		}
+	}
+	if = {
+		limit = {
+			has_global_variable = lam_cr_serial
+		}
+		change_global_variable = {
+			name = lam_cr_serial
+			add = 1
+		}
+	}
+	if = {
+		limit = {
+			has_global_variable = lam_cr_serial
+		}
+		set_variable = {
+			name = lam_cr_reaction_id
+			value = global_var:lam_cr_serial
+		}
+	}
+	set_variable = {
+		name = lam_cr_reaction_open
+		value = yes
+		months = 2
+	}
+	if = {
+		limit = {
+			has_variable = lam_cr_reaction_id
+		}
+		save_scope_value_as = {
+			name = lam_pr_token
+			value = var:lam_cr_reaction_id
+		}
+	}
+	clear_saved_scope = lam_pr_rival
+	var:lam_cr_rival ?= {
+		save_scope_as = lam_pr_rival
+	}
+	if = {
+		limit = {
+			is_ai = no
+		}
+		trigger_event = lam_cr.0010
+	}
+	else_if = {
+		limit = {
+			NOT = {
+				lam_pol_office_excluded_trigger = yes
+			}
+			lam_pol_seats_value >= 1
+		}
+		set_variable = {
+			name = lam_pd_plan
+			value = flag:wait
+		}
+	}
+	else_if = {
+		limit = {
+			lam_pol_office_excluded_trigger = yes
+			var:lam_cr_share >= 20
+			NOT = {
+				has_variable = lam_pd_pact_partner
+			}
+		}
+		lam_cr_counterweight_effect = yes
+	}
+	else_if = {
+		limit = {
+			lam_pd_obstruct_possible_trigger = yes
+			var:lam_pd_gr_total >= 15
+		}
+		lam_cr_obstruct_effect = yes
+	}
+	else_if = {
+		limit = {
+			liege = {
+				gold >= medium_gold_value
+			}
+			NOT = {
+				has_variable = lam_head_demand_cd
+			}
+		}
+		lam_cr_approach_effect = yes
+	}
+	else = {
+		set_variable = {
+			name = lam_pd_plan
+			value = flag:wait
+		}
+	}
+}
+lam_cr_approach_effect = {
+if = { limit = { lam_cr_patronage_valid_trigger = yes }
+ set_variable = { name = lam_cr_approach value = yes months = 6 }
+ if = { limit = { lam_pol_office_excluded_trigger = yes } lam_pd_begin_effect = { KIND = council } }
+ else_if = { limit = { var:lam_pd_gr_wealth > 0 } lam_pd_begin_effect = { KIND = gold } }
+ else = { lam_pd_hearing_effect = yes }
+}
+}
+lam_cr_obstruct_effect = {
+if = { limit = { lam_pd_obstruct_possible_trigger = yes }
+ set_variable = { name = lam_cr_obstruct value = yes months = 4 }
+ set_variable = { name = lam_pd_obstruct_id value = var:lam_cr_rival.var:lam_pd_id }
+ set_variable = { name = lam_pd_plan value = flag:obstruct }
+ var:lam_cr_patron_lord = { if = { limit = { is_ai = no } send_interface_message = { type = event_generic_neutral title = lam_pd_obstruct_title right_icon = scope:lam_pr_reactor } } }
+}
+else = { set_variable = { name = lam_pd_plan value = flag:wait } }
+}
+lam_cr_counterweight_effect = {
+	if = {
+		limit = {
+			lam_cr_patronage_valid_trigger = yes
+		}
+		save_scope_as = lam_pr_reactor
+		clear_saved_scope = lam_pr_partner
+		liege = {
+			ordered_in_list = {
+				variable = lam_bloc_leads
+				max = 1
+				check_range_bounds = no
+				limit = {
+					is_alive = yes
+					has_variable = lam_bloc_lead
+					liege ?= scope:lam_pr_reactor.liege
+					NOT = {
+						this = scope:lam_pr_reactor
+					}
+					NOT = {
+						this = scope:lam_pr_reactor.var:lam_cr_rival
+					}
+					NOT = {
+						has_variable = lam_fac_disband
+					}
+					NOT = {
+						has_variable = lam_cr_access
+					}
+					NOT = {
+						is_target_in_variable_list = {
+							name = lam_fac_allies
+							target = scope:lam_pr_reactor
+						}
+					}
+					NOT = {
+						has_relation_rival = scope:lam_pr_reactor
+					}
+					opinion = {
+						target = scope:lam_pr_reactor
+						value >= -10
+					}
+					lam_pd_pact_pair_trigger = {
+						A = scope:lam_pr_reactor
+						B = this
+					}
+				}
+				order_by = lam_pd_relief_priority_value
+				save_scope_as = lam_pr_partner
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:lam_pr_partner
+			}
+			set_variable = {
+				name = lam_cr_alliance_offer
+				value = scope:lam_pr_partner
+				months = 2
+			}
+			scope:lam_pr_partner = {
+				trigger_event = lam_cr.0011
+			}
+		}
+		else = {
+			lam_cr_obstruct_effect = yes
+		}
+	}
+}

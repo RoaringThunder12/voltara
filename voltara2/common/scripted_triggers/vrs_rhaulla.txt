@@ -1,0 +1,4 @@
+﻿vrs_in_swamp = { location = { geographical_region = world_vrs_rhaulla terrain = wetlands } }
+vrs_traveller = { is_alive = yes is_adult = yes is_available_travelling = yes vrs_in_swamp = yes NOT = { has_trait = dragon } NOT = { has_character_flag = vrs_encounter_cooldown } }
+vrs_county = { tier = tier_county de_jure_liege.de_jure_liege.de_jure_liege = title:e_voltara_rhaulla any_county_province = { terrain = wetlands } NOT = { has_county_modifier = vrs_managed } NOT = { has_county_modifier = vrs_works } NOT = { has_variable = vrs_work_pending } NOT = { has_variable = voltara_ruin_state } holder = { NOT = { has_trait = voltara_ruins_keeper } } }
+vrs_ruler = { is_landed = yes is_adult = yes any_held_title = { vrs_county = yes } }

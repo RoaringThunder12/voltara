@@ -1,0 +1,24 @@
+﻿# Living Factions - a player head's menu (step_head_menu).
+# Root = one asked to join; scope:lam_rc_head = the head asking. Above 0: they say yes (the same weighing as the
+# invitation interaction's).
+lam_fac_invite_accept_value = {
+value = lam_pd_recruit_interest_value
+}
+# Root = a player head: months until they may make demands in the faction's name again.
+lam_fac_hd_cd_left_value = {
+	value = 0
+	if = { limit = { has_variable = lam_head_demand_cd_m } add = var:lam_head_demand_cd_m subtract = lam_now_m }
+	min = 0
+}
+# Root = a head about to rise: will the crown yield and become our puppet rather than fight? (0..90)
+lam_fac_ult_puppet_chance_value = {
+	value = 0
+	if = { limit = { has_variable = lam_fac_share } add = { value = var:lam_fac_share multiply = 1.2 } }
+	if = { limit = { liege ?= { has_variable = lam_crown } } add = { value = liege.var:lam_crown multiply = -0.6 } }
+	if = { limit = { liege ?= { is_at_war = yes } } add = 10 }
+	if = { limit = { liege ?= { has_trait = craven } } add = 10 }
+	if = { limit = { liege ?= { has_trait = brave } } add = -10 }
+	if = { limit = { liege ?= { has_trait = stubborn } } add = -10 }
+	min = 0
+	max = 90
+}

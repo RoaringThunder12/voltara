@@ -1,0 +1,163 @@
+﻿lam_sy_accept_platform_trigger = {
+	trigger_if = {
+		limit = {
+			lam_ev_member_trigger = yes
+			exists = $OTHER$
+		}
+		trigger_if = {
+			limit = {
+				$OTHER$ = {
+					lam_ev_position_trigger = yes
+				}
+			}
+			lam_cu_accept_position_trigger = {
+				OTHER = $OTHER$
+			}
+			trigger_if = {
+				limit = {
+					$OTHER$ = {
+						var:lam_bp_position_side ?= flag:pressure
+					}
+				}
+				lam_gg_crown_alignment_value <= 20
+			}
+			trigger_if = {
+				limit = {
+					$OTHER$ = {
+						var:lam_bp_position_side ?= flag:restraint
+					}
+				}
+				lam_gg_crown_alignment_value >= -20
+			}
+			NOT = {
+				AND = {
+					trigger_if = {
+						limit = {
+							has_variable = lam_gg_assent_until
+						}
+						var:lam_gg_assent_until > lam_now_m
+						var:lam_gg_assent_head ?= scope:lam_ev_head
+						var:lam_gg_assent_lord ?= scope:lam_ev_head.liege
+						var:lam_gg_assent_topic ?= $OTHER$.var:lam_bp_position_topic
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_sy_supporter_trigger = {
+	trigger_if = {
+		limit = {
+			lam_ev_member_trigger = yes
+			exists = scope:lam_vt_lead
+		}
+		trigger_if = {
+			limit = {
+				scope:lam_vt_lead = {
+					lam_co_organizer_trigger = yes
+				}
+			}
+			is_ai = yes
+			NOT = {
+				has_variable = lam_fac_unbound
+			}
+			NOT = {
+				has_variable = lam_fac_let_go
+			}
+			NOT = {
+				has_relation_rival = scope:lam_vt_lead
+			}
+			NOT = {
+				lam_hi_memory_trigger = yes
+			}
+			NOT = {
+				has_variable = lam_hi_paused
+			}
+			"opinion(scope:lam_vt_lead)" >= {
+				value = "opinion(scope:lam_ev_head)"
+				add = -15
+			}
+			opinion = {
+				target = scope:lam_vt_lead
+				value >= 0
+			}
+			lam_ev_follow_value >= -15
+			lam_sy_accept_platform_trigger = {
+				OTHER = scope:lam_vt_lead
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}
+lam_sy_pair_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+			exists = $OTHER$
+		}
+		trigger_if = {
+			limit = {
+				$OTHER$ = {
+					is_alive = yes
+				}
+			}
+			trigger_if = {
+				limit = {
+					has_variable = lam_sy_support
+				}
+				trigger_if = {
+					limit = {
+						$OTHER$ = {
+							has_variable = lam_sy_support
+						}
+					}
+					always = yes
+				}
+				trigger_else = {
+					lam_sy_accept_platform_trigger = {
+						OTHER = $OTHER$
+					}
+				}
+			}
+			trigger_else = {
+				trigger_if = {
+					limit = {
+						$OTHER$ = {
+							has_variable = lam_sy_support
+						}
+					}
+					$OTHER$ = {
+						lam_sy_accept_platform_trigger = {
+							OTHER = prev
+						}
+					}
+				}
+				trigger_else = {
+					lam_cu_pair_trigger = {
+						OTHER = $OTHER$
+					}
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}

@@ -95,18 +95,10 @@ witchcraft_legacy_4 = { # Magic Practitioners
 		custom_description_no_bullet = {
 			text = witchcraft_legacy_3b_ct_effect
 		}
-		if = {
-			limit = {
+		if = { limit = {
 				always = no
-			}
-			custom_label = witchcraft_legacy_4_ct2	#Because the log will scream that the text is not being used...
-			custom_label = ev2.11.d
-			custom_label = ev3.6.c
-			custom_label = ev3.69.c
-			custom_description_no_bullet = {
-				text = witchcraft_legacy_4_ct1_effect
-			}
-		}
+			} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 		#give_magic_artifacts_claims_from_dynasty_perks_effect = yes
 	}
 	#character_modifier = {

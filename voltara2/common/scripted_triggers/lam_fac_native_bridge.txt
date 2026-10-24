@@ -1,0 +1,77 @@
+﻿lam_pb_create_permit_trigger = {
+	exists = scope:target
+	trigger_if = {
+		limit = {
+			scope:target = {
+				lam_pb_managed_court_trigger = yes
+			}
+		}
+		OR = {
+			AND = {
+				trigger_if = {
+					limit = {
+						exists = scope:target
+					}
+					var:lam_pb_create_target ?= scope:target
+				}
+				trigger_else = {
+					always = no
+				}
+				var:lam_pb_create_kind ?= flag:$TYPE$
+			}
+			joined_faction ?= {
+				has_variable = lam_pb_managed
+				faction_is_type = $TYPE$
+				faction_target ?= scope:target
+			}
+		}
+		is_alive = yes
+		is_adult = yes
+		is_imprisoned = no
+		common_can_character_join_trigger = {
+			FACTION_TARGET = scope:target
+		}
+	}
+}
+lam_pb_join_permit_trigger = {
+	trigger_if = {
+		limit = {
+			exists = scope:faction
+		}
+		trigger_if = {
+			limit = {
+				scope:faction.faction_target = {
+					lam_pb_managed_court_trigger = yes
+				}
+			}
+			OR = {
+				custom_tooltip = {
+					text = lam_pb_consent_required_tt
+					scope:faction = {
+						is_target_in_variable_list = {
+							name = lam_pb_consented
+							target = prev
+						}
+					}
+				}
+				AND = {
+					var:lam_pb_create_kind ?= flag:$TYPE$
+					AND = {
+						trigger_if = {
+							limit = {
+								exists = scope:faction.faction_target
+							}
+							var:lam_pb_create_target ?= scope:faction.faction_target
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+			}
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}

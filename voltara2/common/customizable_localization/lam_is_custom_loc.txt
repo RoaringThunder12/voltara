@@ -1,0 +1,2839 @@
+﻿# Living Factions - court issues (tools/claude_fixes/issue.py). Character = the lord.
+LamIsWarX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mode ?= flag:peace
+		}
+		localization_key = lam_is_war_x_p
+	}
+	text = {
+		localization_key = lam_is_war_x_c
+	}
+}
+LamIsWarY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mode ?= flag:peace
+		}
+		localization_key = lam_is_war_y_p
+	}
+	text = {
+		localization_key = lam_is_war_y_c
+	}
+}
+LamIsWarEvt = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mode ?= flag:peace
+		}
+		localization_key = lam_is_war_evt_p
+	}
+	text = {
+		localization_key = lam_is_war_evt_c
+	}
+}
+LamIsWarAccept = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mode ?= flag:peace
+		}
+		localization_key = lam_is_war_acc_p
+	}
+	text = {
+		localization_key = lam_is_war_acc_c
+	}
+}
+LamIsWarTitle = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mode ?= flag:peace
+		}
+		localization_key = lam_is_war_title_p
+	}
+	text = {
+		localization_key = lam_is_war_title_c
+	}
+}
+LamIsWarTt = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mode ?= flag:peace
+		}
+		localization_key = lam_is_war_tt_p
+	}
+	text = {
+		localization_key = lam_is_war_tt_c
+	}
+}
+LamIsHeirCauseX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_heir_cz
+			var:lam_is_heir_cz <= -1
+		}
+		localization_key = lam_is_heir_czl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsHeirCauseY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_heir_cz
+			var:lam_is_heir_cz >= 1
+		}
+		localization_key = lam_is_heir_czl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsHeirUaX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_heir_ua
+			var:lam_is_heir_ua >= 1
+		}
+		localization_key = lam_is_heir_ual
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsHeirUaY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_heir_ub
+			var:lam_is_heir_ub >= 1
+		}
+		localization_key = lam_is_heir_ubl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsHeirLw = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_heir_lw
+			var:lam_is_heir_lw >= 1
+		}
+		localization_key = lam_is_heir_lwl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsHeirLead = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_heir_bar
+			var:lam_is_heir_bar <= -5
+		}
+		localization_key = lam_is_heir_lead_x
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_heir_bar
+			var:lam_is_heir_bar >= 5
+		}
+		localization_key = lam_is_heir_lead_y
+	}
+	text = {
+		localization_key = lam_is_even
+	}
+}
+LamIsHeirDir1 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv1_d ?= flag:y
+		}
+		localization_key = lam_is_heir_dir_y
+	}
+	text = {
+		localization_key = lam_is_heir_dir_x
+	}
+}
+LamIsHeirMove1 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_heir_mv1
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv1_k ?= flag:drift
+		}
+		localization_key = lam_is_heir_mv1_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv1_k ?= flag:lord
+		}
+		localization_key = lam_is_heir_mv1_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv1_k ?= flag:head
+		}
+		localization_key = lam_is_heir_mv1_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv1_k ?= flag:member
+		}
+		localization_key = lam_is_heir_mv1_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv1_k ?= flag:unaligned
+		}
+		localization_key = lam_is_heir_mv1_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv1_k ?= flag:clash
+		}
+		localization_key = lam_is_heir_mv1_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv1_k ?= flag:petition
+		}
+		localization_key = lam_is_heir_mv1_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv1_k ?= flag:favour
+		}
+		localization_key = lam_is_heir_mv1_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv1_k ?= flag:slight
+		}
+		localization_key = lam_is_heir_mv1_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsHeirDir2 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv2_d ?= flag:y
+		}
+		localization_key = lam_is_heir_dir_y
+	}
+	text = {
+		localization_key = lam_is_heir_dir_x
+	}
+}
+LamIsHeirMove2 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_heir_mv2
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv2_k ?= flag:drift
+		}
+		localization_key = lam_is_heir_mv2_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv2_k ?= flag:lord
+		}
+		localization_key = lam_is_heir_mv2_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv2_k ?= flag:head
+		}
+		localization_key = lam_is_heir_mv2_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv2_k ?= flag:member
+		}
+		localization_key = lam_is_heir_mv2_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv2_k ?= flag:unaligned
+		}
+		localization_key = lam_is_heir_mv2_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv2_k ?= flag:clash
+		}
+		localization_key = lam_is_heir_mv2_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv2_k ?= flag:petition
+		}
+		localization_key = lam_is_heir_mv2_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv2_k ?= flag:favour
+		}
+		localization_key = lam_is_heir_mv2_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv2_k ?= flag:slight
+		}
+		localization_key = lam_is_heir_mv2_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsHeirDir3 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv3_d ?= flag:y
+		}
+		localization_key = lam_is_heir_dir_y
+	}
+	text = {
+		localization_key = lam_is_heir_dir_x
+	}
+}
+LamIsHeirMove3 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_heir_mv3
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv3_k ?= flag:drift
+		}
+		localization_key = lam_is_heir_mv3_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv3_k ?= flag:lord
+		}
+		localization_key = lam_is_heir_mv3_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv3_k ?= flag:head
+		}
+		localization_key = lam_is_heir_mv3_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv3_k ?= flag:member
+		}
+		localization_key = lam_is_heir_mv3_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv3_k ?= flag:unaligned
+		}
+		localization_key = lam_is_heir_mv3_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv3_k ?= flag:clash
+		}
+		localization_key = lam_is_heir_mv3_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv3_k ?= flag:petition
+		}
+		localization_key = lam_is_heir_mv3_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv3_k ?= flag:favour
+		}
+		localization_key = lam_is_heir_mv3_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_heir_mv3_k ?= flag:slight
+		}
+		localization_key = lam_is_heir_mv3_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCrownCauseX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_crown_cz
+			var:lam_is_crown_cz <= -1
+		}
+		localization_key = lam_is_crown_czl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCrownCauseY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_crown_cz
+			var:lam_is_crown_cz >= 1
+		}
+		localization_key = lam_is_crown_czl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCrownUaX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_crown_ua
+			var:lam_is_crown_ua >= 1
+		}
+		localization_key = lam_is_crown_ual
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCrownUaY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_crown_ub
+			var:lam_is_crown_ub >= 1
+		}
+		localization_key = lam_is_crown_ubl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCrownLw = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_crown_lw
+			var:lam_is_crown_lw >= 1
+		}
+		localization_key = lam_is_crown_lwl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCrownLead = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_crown_bar
+			var:lam_is_crown_bar <= -5
+		}
+		localization_key = lam_is_crown_lead_x
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_crown_bar
+			var:lam_is_crown_bar >= 5
+		}
+		localization_key = lam_is_crown_lead_y
+	}
+	text = {
+		localization_key = lam_is_even
+	}
+}
+LamIsCrownDir1 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv1_d ?= flag:y
+		}
+		localization_key = lam_is_crown_dir_y
+	}
+	text = {
+		localization_key = lam_is_crown_dir_x
+	}
+}
+LamIsCrownMove1 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_crown_mv1
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv1_k ?= flag:drift
+		}
+		localization_key = lam_is_crown_mv1_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv1_k ?= flag:lord
+		}
+		localization_key = lam_is_crown_mv1_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv1_k ?= flag:head
+		}
+		localization_key = lam_is_crown_mv1_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv1_k ?= flag:member
+		}
+		localization_key = lam_is_crown_mv1_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv1_k ?= flag:unaligned
+		}
+		localization_key = lam_is_crown_mv1_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv1_k ?= flag:clash
+		}
+		localization_key = lam_is_crown_mv1_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv1_k ?= flag:petition
+		}
+		localization_key = lam_is_crown_mv1_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv1_k ?= flag:favour
+		}
+		localization_key = lam_is_crown_mv1_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv1_k ?= flag:slight
+		}
+		localization_key = lam_is_crown_mv1_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCrownDir2 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv2_d ?= flag:y
+		}
+		localization_key = lam_is_crown_dir_y
+	}
+	text = {
+		localization_key = lam_is_crown_dir_x
+	}
+}
+LamIsCrownMove2 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_crown_mv2
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv2_k ?= flag:drift
+		}
+		localization_key = lam_is_crown_mv2_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv2_k ?= flag:lord
+		}
+		localization_key = lam_is_crown_mv2_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv2_k ?= flag:head
+		}
+		localization_key = lam_is_crown_mv2_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv2_k ?= flag:member
+		}
+		localization_key = lam_is_crown_mv2_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv2_k ?= flag:unaligned
+		}
+		localization_key = lam_is_crown_mv2_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv2_k ?= flag:clash
+		}
+		localization_key = lam_is_crown_mv2_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv2_k ?= flag:petition
+		}
+		localization_key = lam_is_crown_mv2_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv2_k ?= flag:favour
+		}
+		localization_key = lam_is_crown_mv2_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv2_k ?= flag:slight
+		}
+		localization_key = lam_is_crown_mv2_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCrownDir3 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv3_d ?= flag:y
+		}
+		localization_key = lam_is_crown_dir_y
+	}
+	text = {
+		localization_key = lam_is_crown_dir_x
+	}
+}
+LamIsCrownMove3 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_crown_mv3
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv3_k ?= flag:drift
+		}
+		localization_key = lam_is_crown_mv3_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv3_k ?= flag:lord
+		}
+		localization_key = lam_is_crown_mv3_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv3_k ?= flag:head
+		}
+		localization_key = lam_is_crown_mv3_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv3_k ?= flag:member
+		}
+		localization_key = lam_is_crown_mv3_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv3_k ?= flag:unaligned
+		}
+		localization_key = lam_is_crown_mv3_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv3_k ?= flag:clash
+		}
+		localization_key = lam_is_crown_mv3_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv3_k ?= flag:petition
+		}
+		localization_key = lam_is_crown_mv3_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv3_k ?= flag:favour
+		}
+		localization_key = lam_is_crown_mv3_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_crown_mv3_k ?= flag:slight
+		}
+		localization_key = lam_is_crown_mv3_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCouncilCauseX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_council_cz
+			var:lam_is_council_cz <= -1
+		}
+		localization_key = lam_is_council_czl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCouncilCauseY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_council_cz
+			var:lam_is_council_cz >= 1
+		}
+		localization_key = lam_is_council_czl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCouncilUaX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_council_ua
+			var:lam_is_council_ua >= 1
+		}
+		localization_key = lam_is_council_ual
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCouncilUaY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_council_ub
+			var:lam_is_council_ub >= 1
+		}
+		localization_key = lam_is_council_ubl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCouncilLw = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_council_lw
+			var:lam_is_council_lw >= 1
+		}
+		localization_key = lam_is_council_lwl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCouncilLead = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_council_bar
+			var:lam_is_council_bar <= -5
+		}
+		localization_key = lam_is_council_lead_x
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_council_bar
+			var:lam_is_council_bar >= 5
+		}
+		localization_key = lam_is_council_lead_y
+	}
+	text = {
+		localization_key = lam_is_even
+	}
+}
+LamIsCouncilDir1 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv1_d ?= flag:y
+		}
+		localization_key = lam_is_council_dir_y
+	}
+	text = {
+		localization_key = lam_is_council_dir_x
+	}
+}
+LamIsCouncilMove1 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_council_mv1
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv1_k ?= flag:drift
+		}
+		localization_key = lam_is_council_mv1_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv1_k ?= flag:lord
+		}
+		localization_key = lam_is_council_mv1_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv1_k ?= flag:head
+		}
+		localization_key = lam_is_council_mv1_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv1_k ?= flag:member
+		}
+		localization_key = lam_is_council_mv1_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv1_k ?= flag:unaligned
+		}
+		localization_key = lam_is_council_mv1_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv1_k ?= flag:clash
+		}
+		localization_key = lam_is_council_mv1_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv1_k ?= flag:petition
+		}
+		localization_key = lam_is_council_mv1_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv1_k ?= flag:favour
+		}
+		localization_key = lam_is_council_mv1_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv1_k ?= flag:slight
+		}
+		localization_key = lam_is_council_mv1_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCouncilDir2 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv2_d ?= flag:y
+		}
+		localization_key = lam_is_council_dir_y
+	}
+	text = {
+		localization_key = lam_is_council_dir_x
+	}
+}
+LamIsCouncilMove2 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_council_mv2
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv2_k ?= flag:drift
+		}
+		localization_key = lam_is_council_mv2_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv2_k ?= flag:lord
+		}
+		localization_key = lam_is_council_mv2_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv2_k ?= flag:head
+		}
+		localization_key = lam_is_council_mv2_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv2_k ?= flag:member
+		}
+		localization_key = lam_is_council_mv2_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv2_k ?= flag:unaligned
+		}
+		localization_key = lam_is_council_mv2_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv2_k ?= flag:clash
+		}
+		localization_key = lam_is_council_mv2_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv2_k ?= flag:petition
+		}
+		localization_key = lam_is_council_mv2_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv2_k ?= flag:favour
+		}
+		localization_key = lam_is_council_mv2_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv2_k ?= flag:slight
+		}
+		localization_key = lam_is_council_mv2_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsCouncilDir3 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv3_d ?= flag:y
+		}
+		localization_key = lam_is_council_dir_y
+	}
+	text = {
+		localization_key = lam_is_council_dir_x
+	}
+}
+LamIsCouncilMove3 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_council_mv3
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv3_k ?= flag:drift
+		}
+		localization_key = lam_is_council_mv3_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv3_k ?= flag:lord
+		}
+		localization_key = lam_is_council_mv3_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv3_k ?= flag:head
+		}
+		localization_key = lam_is_council_mv3_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv3_k ?= flag:member
+		}
+		localization_key = lam_is_council_mv3_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv3_k ?= flag:unaligned
+		}
+		localization_key = lam_is_council_mv3_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv3_k ?= flag:clash
+		}
+		localization_key = lam_is_council_mv3_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv3_k ?= flag:petition
+		}
+		localization_key = lam_is_council_mv3_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv3_k ?= flag:favour
+		}
+		localization_key = lam_is_council_mv3_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_council_mv3_k ?= flag:slight
+		}
+		localization_key = lam_is_council_mv3_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsFaithCauseX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_faith_cz
+			var:lam_is_faith_cz <= -1
+		}
+		localization_key = lam_is_faith_czl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsFaithCauseY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_faith_cz
+			var:lam_is_faith_cz >= 1
+		}
+		localization_key = lam_is_faith_czl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsFaithUaX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_faith_ua
+			var:lam_is_faith_ua >= 1
+		}
+		localization_key = lam_is_faith_ual
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsFaithUaY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_faith_ub
+			var:lam_is_faith_ub >= 1
+		}
+		localization_key = lam_is_faith_ubl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsFaithLw = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_faith_lw
+			var:lam_is_faith_lw >= 1
+		}
+		localization_key = lam_is_faith_lwl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsFaithLead = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_faith_bar
+			var:lam_is_faith_bar <= -5
+		}
+		localization_key = lam_is_faith_lead_x
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_faith_bar
+			var:lam_is_faith_bar >= 5
+		}
+		localization_key = lam_is_faith_lead_y
+	}
+	text = {
+		localization_key = lam_is_even
+	}
+}
+LamIsFaithDir1 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv1_d ?= flag:y
+		}
+		localization_key = lam_is_faith_dir_y
+	}
+	text = {
+		localization_key = lam_is_faith_dir_x
+	}
+}
+LamIsFaithMove1 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_faith_mv1
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv1_k ?= flag:drift
+		}
+		localization_key = lam_is_faith_mv1_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv1_k ?= flag:lord
+		}
+		localization_key = lam_is_faith_mv1_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv1_k ?= flag:head
+		}
+		localization_key = lam_is_faith_mv1_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv1_k ?= flag:member
+		}
+		localization_key = lam_is_faith_mv1_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv1_k ?= flag:unaligned
+		}
+		localization_key = lam_is_faith_mv1_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv1_k ?= flag:clash
+		}
+		localization_key = lam_is_faith_mv1_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv1_k ?= flag:petition
+		}
+		localization_key = lam_is_faith_mv1_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv1_k ?= flag:favour
+		}
+		localization_key = lam_is_faith_mv1_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv1_k ?= flag:slight
+		}
+		localization_key = lam_is_faith_mv1_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsFaithDir2 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv2_d ?= flag:y
+		}
+		localization_key = lam_is_faith_dir_y
+	}
+	text = {
+		localization_key = lam_is_faith_dir_x
+	}
+}
+LamIsFaithMove2 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_faith_mv2
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv2_k ?= flag:drift
+		}
+		localization_key = lam_is_faith_mv2_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv2_k ?= flag:lord
+		}
+		localization_key = lam_is_faith_mv2_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv2_k ?= flag:head
+		}
+		localization_key = lam_is_faith_mv2_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv2_k ?= flag:member
+		}
+		localization_key = lam_is_faith_mv2_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv2_k ?= flag:unaligned
+		}
+		localization_key = lam_is_faith_mv2_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv2_k ?= flag:clash
+		}
+		localization_key = lam_is_faith_mv2_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv2_k ?= flag:petition
+		}
+		localization_key = lam_is_faith_mv2_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv2_k ?= flag:favour
+		}
+		localization_key = lam_is_faith_mv2_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv2_k ?= flag:slight
+		}
+		localization_key = lam_is_faith_mv2_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsFaithDir3 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv3_d ?= flag:y
+		}
+		localization_key = lam_is_faith_dir_y
+	}
+	text = {
+		localization_key = lam_is_faith_dir_x
+	}
+}
+LamIsFaithMove3 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_faith_mv3
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv3_k ?= flag:drift
+		}
+		localization_key = lam_is_faith_mv3_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv3_k ?= flag:lord
+		}
+		localization_key = lam_is_faith_mv3_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv3_k ?= flag:head
+		}
+		localization_key = lam_is_faith_mv3_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv3_k ?= flag:member
+		}
+		localization_key = lam_is_faith_mv3_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv3_k ?= flag:unaligned
+		}
+		localization_key = lam_is_faith_mv3_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv3_k ?= flag:clash
+		}
+		localization_key = lam_is_faith_mv3_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv3_k ?= flag:petition
+		}
+		localization_key = lam_is_faith_mv3_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv3_k ?= flag:favour
+		}
+		localization_key = lam_is_faith_mv3_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_faith_mv3_k ?= flag:slight
+		}
+		localization_key = lam_is_faith_mv3_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsTaxCauseX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_tax_cz
+			var:lam_is_tax_cz <= -1
+		}
+		localization_key = lam_is_tax_czl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsTaxCauseY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_tax_cz
+			var:lam_is_tax_cz >= 1
+		}
+		localization_key = lam_is_tax_czl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsTaxUaX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_tax_ua
+			var:lam_is_tax_ua >= 1
+		}
+		localization_key = lam_is_tax_ual
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsTaxUaY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_tax_ub
+			var:lam_is_tax_ub >= 1
+		}
+		localization_key = lam_is_tax_ubl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsTaxLw = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_tax_lw
+			var:lam_is_tax_lw >= 1
+		}
+		localization_key = lam_is_tax_lwl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsTaxLead = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_tax_bar
+			var:lam_is_tax_bar <= -5
+		}
+		localization_key = lam_is_tax_lead_x
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_tax_bar
+			var:lam_is_tax_bar >= 5
+		}
+		localization_key = lam_is_tax_lead_y
+	}
+	text = {
+		localization_key = lam_is_even
+	}
+}
+LamIsTaxDir1 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv1_d ?= flag:y
+		}
+		localization_key = lam_is_tax_dir_y
+	}
+	text = {
+		localization_key = lam_is_tax_dir_x
+	}
+}
+LamIsTaxMove1 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_tax_mv1
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv1_k ?= flag:drift
+		}
+		localization_key = lam_is_tax_mv1_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv1_k ?= flag:lord
+		}
+		localization_key = lam_is_tax_mv1_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv1_k ?= flag:head
+		}
+		localization_key = lam_is_tax_mv1_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv1_k ?= flag:member
+		}
+		localization_key = lam_is_tax_mv1_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv1_k ?= flag:unaligned
+		}
+		localization_key = lam_is_tax_mv1_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv1_k ?= flag:clash
+		}
+		localization_key = lam_is_tax_mv1_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv1_k ?= flag:petition
+		}
+		localization_key = lam_is_tax_mv1_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv1_k ?= flag:favour
+		}
+		localization_key = lam_is_tax_mv1_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv1_k ?= flag:slight
+		}
+		localization_key = lam_is_tax_mv1_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsTaxDir2 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv2_d ?= flag:y
+		}
+		localization_key = lam_is_tax_dir_y
+	}
+	text = {
+		localization_key = lam_is_tax_dir_x
+	}
+}
+LamIsTaxMove2 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_tax_mv2
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv2_k ?= flag:drift
+		}
+		localization_key = lam_is_tax_mv2_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv2_k ?= flag:lord
+		}
+		localization_key = lam_is_tax_mv2_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv2_k ?= flag:head
+		}
+		localization_key = lam_is_tax_mv2_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv2_k ?= flag:member
+		}
+		localization_key = lam_is_tax_mv2_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv2_k ?= flag:unaligned
+		}
+		localization_key = lam_is_tax_mv2_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv2_k ?= flag:clash
+		}
+		localization_key = lam_is_tax_mv2_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv2_k ?= flag:petition
+		}
+		localization_key = lam_is_tax_mv2_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv2_k ?= flag:favour
+		}
+		localization_key = lam_is_tax_mv2_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv2_k ?= flag:slight
+		}
+		localization_key = lam_is_tax_mv2_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsTaxDir3 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv3_d ?= flag:y
+		}
+		localization_key = lam_is_tax_dir_y
+	}
+	text = {
+		localization_key = lam_is_tax_dir_x
+	}
+}
+LamIsTaxMove3 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_tax_mv3
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv3_k ?= flag:drift
+		}
+		localization_key = lam_is_tax_mv3_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv3_k ?= flag:lord
+		}
+		localization_key = lam_is_tax_mv3_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv3_k ?= flag:head
+		}
+		localization_key = lam_is_tax_mv3_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv3_k ?= flag:member
+		}
+		localization_key = lam_is_tax_mv3_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv3_k ?= flag:unaligned
+		}
+		localization_key = lam_is_tax_mv3_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv3_k ?= flag:clash
+		}
+		localization_key = lam_is_tax_mv3_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv3_k ?= flag:petition
+		}
+		localization_key = lam_is_tax_mv3_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv3_k ?= flag:favour
+		}
+		localization_key = lam_is_tax_mv3_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_tax_mv3_k ?= flag:slight
+		}
+		localization_key = lam_is_tax_mv3_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsWarCauseX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_war_cz
+			var:lam_is_war_cz <= -1
+		}
+		localization_key = lam_is_war_czl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsWarCauseY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_war_cz
+			var:lam_is_war_cz >= 1
+		}
+		localization_key = lam_is_war_czl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsWarUaX = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_war_ua
+			var:lam_is_war_ua >= 1
+		}
+		localization_key = lam_is_war_ual
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsWarUaY = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_war_ub
+			var:lam_is_war_ub >= 1
+		}
+		localization_key = lam_is_war_ubl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsWarLw = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_war_lw
+			var:lam_is_war_lw >= 1
+		}
+		localization_key = lam_is_war_lwl
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsWarLead = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_war_bar
+			var:lam_is_war_bar <= -5
+		}
+		localization_key = lam_is_war_lead_x
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_war_bar
+			var:lam_is_war_bar >= 5
+		}
+		localization_key = lam_is_war_lead_y
+	}
+	text = {
+		localization_key = lam_is_even
+	}
+}
+LamIsWarDir1 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv1_d ?= flag:y
+		}
+		localization_key = lam_is_war_dir_y
+	}
+	text = {
+		localization_key = lam_is_war_dir_x
+	}
+}
+LamIsWarMove1 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_war_mv1
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv1_k ?= flag:drift
+		}
+		localization_key = lam_is_war_mv1_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv1_k ?= flag:lord
+		}
+		localization_key = lam_is_war_mv1_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv1_k ?= flag:head
+		}
+		localization_key = lam_is_war_mv1_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv1_k ?= flag:member
+		}
+		localization_key = lam_is_war_mv1_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv1_k ?= flag:unaligned
+		}
+		localization_key = lam_is_war_mv1_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv1_k ?= flag:clash
+		}
+		localization_key = lam_is_war_mv1_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv1_k ?= flag:petition
+		}
+		localization_key = lam_is_war_mv1_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv1_k ?= flag:favour
+		}
+		localization_key = lam_is_war_mv1_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv1_k ?= flag:slight
+		}
+		localization_key = lam_is_war_mv1_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsWarDir2 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv2_d ?= flag:y
+		}
+		localization_key = lam_is_war_dir_y
+	}
+	text = {
+		localization_key = lam_is_war_dir_x
+	}
+}
+LamIsWarMove2 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_war_mv2
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv2_k ?= flag:drift
+		}
+		localization_key = lam_is_war_mv2_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv2_k ?= flag:lord
+		}
+		localization_key = lam_is_war_mv2_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv2_k ?= flag:head
+		}
+		localization_key = lam_is_war_mv2_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv2_k ?= flag:member
+		}
+		localization_key = lam_is_war_mv2_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv2_k ?= flag:unaligned
+		}
+		localization_key = lam_is_war_mv2_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv2_k ?= flag:clash
+		}
+		localization_key = lam_is_war_mv2_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv2_k ?= flag:petition
+		}
+		localization_key = lam_is_war_mv2_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv2_k ?= flag:favour
+		}
+		localization_key = lam_is_war_mv2_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv2_k ?= flag:slight
+		}
+		localization_key = lam_is_war_mv2_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsWarDir3 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv3_d ?= flag:y
+		}
+		localization_key = lam_is_war_dir_y
+	}
+	text = {
+		localization_key = lam_is_war_dir_x
+	}
+}
+LamIsWarMove3 = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			NOT = {
+				has_variable = lam_is_war_mv3
+			}
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv3_k ?= flag:drift
+		}
+		localization_key = lam_is_war_mv3_drift
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv3_k ?= flag:lord
+		}
+		localization_key = lam_is_war_mv3_lord
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv3_k ?= flag:head
+		}
+		localization_key = lam_is_war_mv3_head
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv3_k ?= flag:member
+		}
+		localization_key = lam_is_war_mv3_member
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv3_k ?= flag:unaligned
+		}
+		localization_key = lam_is_war_mv3_unaligned
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv3_k ?= flag:clash
+		}
+		localization_key = lam_is_war_mv3_clash
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv3_k ?= flag:petition
+		}
+		localization_key = lam_is_war_mv3_petition
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv3_k ?= flag:favour
+		}
+		localization_key = lam_is_war_mv3_favour
+	}
+	text = {
+		trigger = {
+			var:lam_is_war_mv3_k ?= flag:slight
+		}
+		localization_key = lam_is_war_mv3_slight
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsStHeir = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_heir ?= flag:x
+		}
+		localization_key = lam_is_st_heir_x
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_heir ?= flag:y
+		}
+		localization_key = lam_is_st_heir_y
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsStCrown = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_crown ?= flag:x
+		}
+		localization_key = lam_is_st_crown_x
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_crown ?= flag:y
+		}
+		localization_key = lam_is_st_crown_y
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsStCouncil = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_council ?= flag:x
+		}
+		localization_key = lam_is_st_council_x
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_council ?= flag:y
+		}
+		localization_key = lam_is_st_council_y
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsStFaith = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_faith ?= flag:x
+		}
+		localization_key = lam_is_st_faith_x
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_faith ?= flag:y
+		}
+		localization_key = lam_is_st_faith_y
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsStTax = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_tax ?= flag:x
+		}
+		localization_key = lam_is_st_tax_x
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_tax ?= flag:y
+		}
+		localization_key = lam_is_st_tax_y
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsStWar = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_war ?= flag:x
+			var:lam_is_st_wm ?= flag:peace
+		}
+		localization_key = lam_is_st_war_x_peace
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_war ?= flag:x
+			var:lam_is_st_wm ?= flag:campaign
+		}
+		localization_key = lam_is_st_war_x_campaign
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_war ?= flag:y
+			var:lam_is_st_wm ?= flag:peace
+		}
+		localization_key = lam_is_st_war_y_peace
+	}
+	text = {
+		trigger = {
+			var:lam_is_st_war ?= flag:y
+			var:lam_is_st_wm ?= flag:campaign
+		}
+		localization_key = lam_is_st_war_y_campaign
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamCrStanceEv = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:crown
+			var:lam_cr_st_side ?= flag:x
+		}
+		localization_key = lam_cr_stance_ev_crown_x
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:crown
+			var:lam_cr_st_side ?= flag:y
+		}
+		localization_key = lam_cr_stance_ev_crown_y
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:council
+			var:lam_cr_st_side ?= flag:x
+		}
+		localization_key = lam_cr_stance_ev_council_x
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:council
+			var:lam_cr_st_side ?= flag:y
+		}
+		localization_key = lam_cr_stance_ev_council_y
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:faith
+			var:lam_cr_st_side ?= flag:x
+		}
+		localization_key = lam_cr_stance_ev_faith_x
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:faith
+			var:lam_cr_st_side ?= flag:y
+		}
+		localization_key = lam_cr_stance_ev_faith_y
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:tax
+			var:lam_cr_st_side ?= flag:x
+		}
+		localization_key = lam_cr_stance_ev_tax_x
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:tax
+			var:lam_cr_st_side ?= flag:y
+		}
+		localization_key = lam_cr_stance_ev_tax_y
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:war
+			var:lam_cr_st_side ?= flag:x
+		}
+		localization_key = lam_cr_stance_ev_war_x
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:war
+			var:lam_cr_st_side ?= flag:y
+		}
+		localization_key = lam_cr_stance_ev_war_y
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamCrStanceUi = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:crown
+			var:lam_cr_st_side ?= flag:x
+		}
+		localization_key = lam_cr_stance_ui_crown_x
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:crown
+			var:lam_cr_st_side ?= flag:y
+		}
+		localization_key = lam_cr_stance_ui_crown_y
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:council
+			var:lam_cr_st_side ?= flag:x
+		}
+		localization_key = lam_cr_stance_ui_council_x
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:council
+			var:lam_cr_st_side ?= flag:y
+		}
+		localization_key = lam_cr_stance_ui_council_y
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:faith
+			var:lam_cr_st_side ?= flag:x
+		}
+		localization_key = lam_cr_stance_ui_faith_x
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:faith
+			var:lam_cr_st_side ?= flag:y
+		}
+		localization_key = lam_cr_stance_ui_faith_y
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:tax
+			var:lam_cr_st_side ?= flag:x
+		}
+		localization_key = lam_cr_stance_ui_tax_x
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:tax
+			var:lam_cr_st_side ?= flag:y
+		}
+		localization_key = lam_cr_stance_ui_tax_y
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:war
+			var:lam_cr_st_side ?= flag:x
+		}
+		localization_key = lam_cr_stance_ui_war_x
+	}
+	text = {
+		trigger = {
+			var:lam_cr_st_t ?= flag:war
+			var:lam_cr_st_side ?= flag:y
+		}
+		localization_key = lam_cr_stance_ui_war_y
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}
+LamIsFate = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_is_none
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_beaten
+		}
+		localization_key = lam_is_fate_beaten
+	}
+	text = {
+		trigger = {
+			has_variable = lam_is_victor
+		}
+		localization_key = lam_is_fate_victor
+	}
+	text = {
+		localization_key = lam_is_none
+	}
+}

@@ -1,0 +1,106 @@
+﻿# Living Factions - the faction council chamber (tools/claude_fixes/council_ui.py)
+LamCv2Why = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_fac_empty
+	}
+	text = {
+		trigger = {
+			has_variable = lam_cv_swayed
+		}
+		localization_key = lam_cv_why_swayed
+	}
+	text = {
+		trigger = {
+			is_ai = no
+			OR = {
+				var:lam_cr_choice ?= flag:pending
+				AND = {
+					NOT = {
+						has_variable = lam_cr_choice
+					}
+					NOT = {
+						has_variable = lam_cv_ch
+					}
+				}
+			}
+		}
+		localization_key = lam_cv2_why_notyet
+	}
+	text = {
+		trigger = {
+			is_ai = no
+		}
+		localization_key = lam_cv_why_player
+	}
+	text = {
+		trigger = {
+			has_variable = lam_cv_sway_head
+		}
+		localization_key = lam_cv_why_held
+	}
+	text = {
+		trigger = {
+			save_temporary_scope_as = lam_cv2_me
+			var:lam_cr_ballot_head ?= {
+				var:lam_cr_target ?= scope:lam_cv2_me
+			}
+		}
+		localization_key = lam_cv2_why_candidate
+	}
+	text = {
+		trigger = {
+			var:lam_cr_choice ?= flag:pending
+		}
+		localization_key = lam_cv2_why_price
+	}
+	text = {
+		trigger = {
+			lam_cv2_iss_abs_value >= lam_cv2_op_abs_value
+			lam_cv2_iss_abs_value >= lam_cv2_rep_abs_value
+			var:lam_cv_iss > 0
+		}
+		localization_key = lam_cv2_why_iss_p
+	}
+	text = {
+		trigger = {
+			lam_cv2_iss_abs_value >= lam_cv2_op_abs_value
+			lam_cv2_iss_abs_value >= lam_cv2_rep_abs_value
+			var:lam_cv_iss < 0
+		}
+		localization_key = lam_cv2_why_iss_n
+	}
+	text = {
+		trigger = {
+			lam_cv2_op_abs_value >= lam_cv2_rep_abs_value
+			var:lam_cv_op > 0
+		}
+		localization_key = lam_cv2_why_op_p
+	}
+	text = {
+		trigger = {
+			lam_cv2_op_abs_value >= lam_cv2_rep_abs_value
+			var:lam_cv_op < 0
+		}
+		localization_key = lam_cv2_why_op_n
+	}
+	text = {
+		trigger = {
+			var:lam_cv_rep > 0
+		}
+		localization_key = lam_cv2_why_rep_p
+	}
+	text = {
+		trigger = {
+			var:lam_cv_rep < 0
+		}
+		localization_key = lam_cv2_why_rep_n
+	}
+	text = {
+		localization_key = lam_cv2_why_none
+		fallback = yes
+	}
+}

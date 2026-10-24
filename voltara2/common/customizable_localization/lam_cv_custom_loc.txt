@@ -1,0 +1,443 @@
+﻿# Living Factions - the faction council chamber (tools/claude_fixes/council_ui.py)
+LamCvChoice = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_fac_empty
+	}
+	text = {
+		trigger = {
+			var:lam_cr_choice ?= flag:yes
+		}
+		localization_key = lam_cv_ch_yes
+	}
+	text = {
+		trigger = {
+			var:lam_cr_choice ?= flag:no
+		}
+		localization_key = lam_cv_ch_no
+	}
+	text = {
+		trigger = {
+			var:lam_cr_choice ?= flag:abstain
+		}
+		localization_key = lam_cv_ch_abstain
+	}
+	text = {
+		trigger = {
+			var:lam_cr_choice ?= flag:pending
+		}
+		localization_key = lam_cv_ch_pending
+	}
+	text = {
+		trigger = {
+			var:lam_cv_ch ?= flag:yes
+		}
+		localization_key = lam_cv_ch_yes
+	}
+	text = {
+		trigger = {
+			var:lam_cv_ch ?= flag:no
+		}
+		localization_key = lam_cv_ch_no
+	}
+	text = {
+		trigger = {
+			var:lam_cv_ch ?= flag:abstain
+		}
+		localization_key = lam_cv_ch_abstain
+	}
+	text = {
+		trigger = {
+			var:lam_cv_ch ?= flag:pending
+		}
+		localization_key = lam_cv_ch_pending
+	}
+	text = {
+		localization_key = lam_fac_empty
+	}
+}
+LamCvReason = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_fac_empty
+	}
+	text = {
+		trigger = {
+			has_variable = lam_cv_swayed
+		}
+		localization_key = lam_cv_why_swayed
+	}
+	text = {
+		trigger = {
+			is_ai = no
+			NOT = {
+				var:lam_cr_choice ?= flag:pending
+			}
+		}
+		localization_key = lam_cv_why_player
+	}
+	text = {
+		trigger = {
+			has_variable = lam_cv_sway_head
+		}
+		localization_key = lam_cv_why_held
+	}
+	text = {
+		trigger = {
+			has_variable = lam_cv_tot
+		}
+		localization_key = lam_cv_why
+	}
+	text = {
+		localization_key = lam_fac_empty
+	}
+}
+LamCvAgenda = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_fac_empty
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:court
+		}
+		localization_key = lam_cv_ag_court
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:heir
+		}
+		localization_key = lam_cv_ag_heir
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:crown
+		}
+		localization_key = lam_cv_ag_crown
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:rise
+		}
+		localization_key = lam_cv_ag_rise
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:deal
+		}
+		localization_key = lam_cv_ag_deal
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:merge
+		}
+		localization_key = lam_cv_ag_merge
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:confidence
+		}
+		localization_key = lam_cv_ag_confidence
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:ban
+		}
+		localization_key = lam_cv_ag_ban
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:dissolve
+		}
+		localization_key = lam_cv_ag_dissolve
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:withdraw
+		}
+		localization_key = lam_cv_ag_withdraw
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:loyal
+		}
+		localization_key = lam_cv_ag_loyal
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:oppose
+		}
+		localization_key = lam_cv_ag_oppose
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:arm
+		}
+		localization_key = lam_cv_ag_arm
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:watch
+		}
+		localization_key = lam_cv_ag_watch
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:quiet
+		}
+		localization_key = lam_cv_ag_quiet
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:people
+		}
+		localization_key = lam_cv_ag_people
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:petition
+		}
+		localization_key = lam_cv_ag_petition
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:stance
+		}
+		localization_key = lam_cv_ag_stance
+	}
+	text = {
+		trigger = {
+			var:lam_cr_issue ?= flag:goal
+		}
+		localization_key = lam_cv_ag_goal
+	}
+	text = {
+		localization_key = lam_cv_ag_none
+	}
+}
+LamCvState = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_fac_empty
+	}
+	text = {
+		trigger = {
+			has_variable = lam_cr_active
+		}
+		localization_key = lam_cv_state_now
+	}
+	text = {
+		localization_key = lam_cv_state_last
+	}
+}
+LamCrGoalUi = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_fac_empty
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 5
+			exists = var:lam_cr_goal_person
+		}
+		localization_key = lam_cr_goal_seat_ui
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 0
+		}
+		localization_key = lam_faction.2110.auto
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 1
+		}
+		localization_key = lam_faction.2110.g1
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 2
+		}
+		localization_key = lam_faction.2110.g2
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 3
+		}
+		localization_key = lam_faction.2110.g3
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 4
+		}
+		localization_key = lam_faction.2110.g4
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 5
+		}
+		localization_key = lam_faction.2110.g5
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 6
+		}
+		localization_key = lam_faction.2110.g6
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 7
+		}
+		localization_key = lam_faction.2110.g7
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 8
+		}
+		localization_key = lam_faction.2110.g8
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 9
+		}
+		localization_key = lam_faction.2110.g9
+	}
+	text = {
+		localization_key = lam_fac_empty
+	}
+}
+LamCrGoalEv = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_fac_empty
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 0
+		}
+		localization_key = lam_faction.2110.auto
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 1
+		}
+		localization_key = lam_faction.2110.g1
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 2
+		}
+		localization_key = lam_faction.2110.g2
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 3
+		}
+		localization_key = lam_faction.2110.g3
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 4
+		}
+		localization_key = lam_faction.2110.g4
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 5
+		}
+		localization_key = lam_faction.2110.g5
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 6
+		}
+		localization_key = lam_faction.2110.g6
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 7
+		}
+		localization_key = lam_faction.2110.g7
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 8
+		}
+		localization_key = lam_faction.2110.g8
+	}
+	text = {
+		trigger = {
+			var:lam_cr_goal_n ?= 9
+		}
+		localization_key = lam_faction.2110.g9
+	}
+	text = {
+		localization_key = lam_fac_empty
+	}
+}
+LamCvRole = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_fac_empty
+	}
+	text = {
+		trigger = {
+			has_variable = lam_bloc_lead
+		}
+		localization_key = lam_cv_role_head
+	}
+	text = {
+		trigger = {
+			var:lam_fac_tier ?= 1
+		}
+		localization_key = lam_cv_role_core
+	}
+	text = {
+		localization_key = lam_fac_empty
+	}
+}
+LamCvTally = {
+	type = character
+	text = {
+		trigger = {
+			is_alive = no
+		}
+		localization_key = lam_fac_empty
+	}
+	text = {
+		trigger = {
+			has_variable = lam_cr_active
+		}
+		localization_key = lam_cv_tally_now
+	}
+	text = {
+		trigger = {
+			has_variable = lam_cr_last_total
+		}
+		localization_key = lam_cv_tally_last
+	}
+	text = {
+		localization_key = lam_fac_empty
+	}
+}

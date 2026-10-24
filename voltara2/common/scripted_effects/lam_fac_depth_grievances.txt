@@ -1,0 +1,984 @@
+﻿lam_pd_grievance_add_effect = {
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_pd_gr_$KIND$
+			}
+		}
+		set_variable = {
+			name = lam_pd_gr_$KIND$
+			value = 0
+		}
+	}
+	if = {
+		limit = {
+			NOT = {
+				var:lam_pd_gr_$KIND$_last ?= lam_now_m
+			}
+		}
+		change_variable = {
+			name = lam_pd_gr_$KIND$
+			add = $AMOUNT$
+		}
+		clamp_variable = {
+			name = lam_pd_gr_$KIND$
+			min = 0
+			max = 30
+		}
+		set_variable = {
+			name = lam_pd_gr_$KIND$_last
+			value = lam_now_m
+		}
+	}
+	set_variable = {
+		name = lam_pd_gr_$KIND$_until
+		value = {
+			value = lam_now_m
+			add = $MONTHS$
+		}
+	}
+	if = {
+		limit = {
+			exists = liege
+		}
+		set_variable = {
+			name = lam_pd_gr_$KIND$_actor
+			value = liege
+		}
+	}
+	set_variable = {
+		name = lam_pd_gr_$KIND$_victim
+		value = this
+	}
+	lam_pd_grievance_sync_effect = yes
+}
+lam_pd_grievance_relieve_effect = {
+	lam_ux_relief_begin_effect = {
+		KIND = $KIND$
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_$KIND$
+		}
+		change_variable = {
+			name = lam_pd_gr_$KIND$
+			add = $AMOUNT$
+		}
+		clamp_variable = {
+			name = lam_pd_gr_$KIND$
+			min = 0
+			max = 30
+		}
+	}
+	lam_ux_relief_finish_effect = {
+		KIND = $KIND$
+	}
+	lam_pd_grievance_sync_effect = yes
+}
+lam_pd_hearing_effect = {
+	lam_pd_grievance_migrate_effect = yes
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_pd_hearing_cd
+			}
+		}
+		set_variable = {
+			name = lam_pd_hearing_cd
+			value = yes
+			months = 12
+		}
+		set_variable = {
+			name = lam_pd_heard
+			value = yes
+			months = 6
+		}
+	}
+	lam_pd_grievance_sync_effect = yes
+}
+lam_pd_grievance_sync_effect = {
+	set_variable = {
+		name = lam_pd_gr_total
+		value = 0
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_office
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_gr_office_until
+				var:lam_pd_gr_office_until <= lam_now_m
+			}
+			remove_variable = lam_pd_gr_office
+		}
+		else = {
+			change_variable = {
+				name = lam_pd_gr_total
+				add = var:lam_pd_gr_office
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_wealth
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_gr_wealth_until
+				var:lam_pd_gr_wealth_until <= lam_now_m
+			}
+			remove_variable = lam_pd_gr_wealth
+		}
+		else = {
+			change_variable = {
+				name = lam_pd_gr_total
+				add = var:lam_pd_gr_wealth
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_promise
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_gr_promise_until
+				var:lam_pd_gr_promise_until <= lam_now_m
+			}
+			remove_variable = lam_pd_gr_promise
+		}
+		else = {
+			change_variable = {
+				name = lam_pd_gr_total
+				add = var:lam_pd_gr_promise
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_repression
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_gr_repression_until
+				var:lam_pd_gr_repression_until <= lam_now_m
+			}
+			remove_variable = lam_pd_gr_repression
+		}
+		else = {
+			change_variable = {
+				name = lam_pd_gr_total
+				add = var:lam_pd_gr_repression
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_succession
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_gr_succession_until
+				var:lam_pd_gr_succession_until <= lam_now_m
+			}
+			remove_variable = lam_pd_gr_succession
+		}
+		else = {
+			change_variable = {
+				name = lam_pd_gr_total
+				add = var:lam_pd_gr_succession
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_policy
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_gr_policy_until
+				var:lam_pd_gr_policy_until <= lam_now_m
+			}
+			remove_variable = lam_pd_gr_policy
+		}
+		else = {
+			change_variable = {
+				name = lam_pd_gr_total
+				add = var:lam_pd_gr_policy
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_legacy
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_gr_legacy_until
+				var:lam_pd_gr_legacy_until <= lam_now_m
+			}
+			remove_variable = lam_pd_gr_legacy
+		}
+		else = {
+			change_variable = {
+				name = lam_pd_gr_total
+				add = var:lam_pd_gr_legacy
+			}
+		}
+	}
+	if = {
+		limit = {
+			AND = {
+				has_variable = lam_pd_gr_total
+				var:lam_pd_gr_total > 0
+			}
+		}
+		set_variable = {
+			name = lam_fac_grievance
+			value = yes
+		}
+	}
+	else = {
+		if = {
+			limit = {
+				has_variable = lam_fac_grievance
+			}
+			remove_variable = lam_fac_grievance
+		}
+	}
+}
+lam_pd_grievance_migrate_effect = {
+	if = {
+		limit = {
+			has_variable = lam_fac_grievance
+			NOT = {
+				has_variable = lam_pd_gr_office
+			}
+			NOT = {
+				has_variable = lam_pd_gr_wealth
+			}
+			NOT = {
+				has_variable = lam_pd_gr_promise
+			}
+			NOT = {
+				has_variable = lam_pd_gr_repression
+			}
+			NOT = {
+				has_variable = lam_pd_gr_succession
+			}
+			NOT = {
+				has_variable = lam_pd_gr_policy
+			}
+			NOT = {
+				has_variable = lam_pd_gr_legacy
+			}
+		}
+		lam_pd_grievance_add_effect = {
+			KIND = legacy
+			AMOUNT = 10
+			MONTHS = 24
+		}
+	}
+	lam_pd_grievance_sync_effect = yes
+}
+lam_pd_grievance_clear_effect = {
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_office
+		}
+		remove_variable = lam_pd_gr_office
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_office_last
+		}
+		remove_variable = lam_pd_gr_office_last
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_office_until
+		}
+		remove_variable = lam_pd_gr_office_until
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_office_actor
+		}
+		remove_variable = lam_pd_gr_office_actor
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_office_victim
+		}
+		remove_variable = lam_pd_gr_office_victim
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_wealth
+		}
+		remove_variable = lam_pd_gr_wealth
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_wealth_last
+		}
+		remove_variable = lam_pd_gr_wealth_last
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_wealth_until
+		}
+		remove_variable = lam_pd_gr_wealth_until
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_wealth_actor
+		}
+		remove_variable = lam_pd_gr_wealth_actor
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_wealth_victim
+		}
+		remove_variable = lam_pd_gr_wealth_victim
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_promise
+		}
+		remove_variable = lam_pd_gr_promise
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_promise_last
+		}
+		remove_variable = lam_pd_gr_promise_last
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_promise_until
+		}
+		remove_variable = lam_pd_gr_promise_until
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_promise_actor
+		}
+		remove_variable = lam_pd_gr_promise_actor
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_promise_victim
+		}
+		remove_variable = lam_pd_gr_promise_victim
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_repression
+		}
+		remove_variable = lam_pd_gr_repression
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_repression_last
+		}
+		remove_variable = lam_pd_gr_repression_last
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_repression_until
+		}
+		remove_variable = lam_pd_gr_repression_until
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_repression_actor
+		}
+		remove_variable = lam_pd_gr_repression_actor
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_repression_victim
+		}
+		remove_variable = lam_pd_gr_repression_victim
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_succession
+		}
+		remove_variable = lam_pd_gr_succession
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_succession_last
+		}
+		remove_variable = lam_pd_gr_succession_last
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_succession_until
+		}
+		remove_variable = lam_pd_gr_succession_until
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_succession_actor
+		}
+		remove_variable = lam_pd_gr_succession_actor
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_succession_victim
+		}
+		remove_variable = lam_pd_gr_succession_victim
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_policy
+		}
+		remove_variable = lam_pd_gr_policy
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_policy_last
+		}
+		remove_variable = lam_pd_gr_policy_last
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_policy_until
+		}
+		remove_variable = lam_pd_gr_policy_until
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_policy_actor
+		}
+		remove_variable = lam_pd_gr_policy_actor
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_policy_victim
+		}
+		remove_variable = lam_pd_gr_policy_victim
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_legacy
+		}
+		remove_variable = lam_pd_gr_legacy
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_legacy_last
+		}
+		remove_variable = lam_pd_gr_legacy_last
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_legacy_until
+		}
+		remove_variable = lam_pd_gr_legacy_until
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_legacy_actor
+		}
+		remove_variable = lam_pd_gr_legacy_actor
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_legacy_victim
+		}
+		remove_variable = lam_pd_gr_legacy_victim
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gr_total
+		}
+		remove_variable = lam_pd_gr_total
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_heard
+		}
+		remove_variable = lam_pd_heard
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_hearing_cd
+		}
+		remove_variable = lam_pd_hearing_cd
+	}
+}
+lam_pd_grievance_pass_effect = {
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_office
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_office
+				value = $FROM$.var:lam_pd_gr_office
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_office_last
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_office_last
+				value = $FROM$.var:lam_pd_gr_office_last
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_office_until
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_office_until
+				value = $FROM$.var:lam_pd_gr_office_until
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_office_actor
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_office_actor
+				value = $FROM$.var:lam_pd_gr_office_actor
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_office_victim
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_office_victim
+				value = $FROM$.var:lam_pd_gr_office_victim
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_wealth
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_wealth
+				value = $FROM$.var:lam_pd_gr_wealth
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_wealth_last
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_wealth_last
+				value = $FROM$.var:lam_pd_gr_wealth_last
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_wealth_until
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_wealth_until
+				value = $FROM$.var:lam_pd_gr_wealth_until
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_wealth_actor
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_wealth_actor
+				value = $FROM$.var:lam_pd_gr_wealth_actor
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_wealth_victim
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_wealth_victim
+				value = $FROM$.var:lam_pd_gr_wealth_victim
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_promise
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_promise
+				value = $FROM$.var:lam_pd_gr_promise
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_promise_last
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_promise_last
+				value = $FROM$.var:lam_pd_gr_promise_last
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_promise_until
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_promise_until
+				value = $FROM$.var:lam_pd_gr_promise_until
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_promise_actor
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_promise_actor
+				value = $FROM$.var:lam_pd_gr_promise_actor
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_promise_victim
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_promise_victim
+				value = $FROM$.var:lam_pd_gr_promise_victim
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_repression
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_repression
+				value = $FROM$.var:lam_pd_gr_repression
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_repression_last
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_repression_last
+				value = $FROM$.var:lam_pd_gr_repression_last
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_repression_until
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_repression_until
+				value = $FROM$.var:lam_pd_gr_repression_until
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_repression_actor
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_repression_actor
+				value = $FROM$.var:lam_pd_gr_repression_actor
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_repression_victim
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_repression_victim
+				value = $FROM$.var:lam_pd_gr_repression_victim
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_succession
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_succession
+				value = $FROM$.var:lam_pd_gr_succession
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_succession_last
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_succession_last
+				value = $FROM$.var:lam_pd_gr_succession_last
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_succession_until
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_succession_until
+				value = $FROM$.var:lam_pd_gr_succession_until
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_succession_actor
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_succession_actor
+				value = $FROM$.var:lam_pd_gr_succession_actor
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_succession_victim
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_succession_victim
+				value = $FROM$.var:lam_pd_gr_succession_victim
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_policy
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_policy
+				value = $FROM$.var:lam_pd_gr_policy
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_policy_last
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_policy_last
+				value = $FROM$.var:lam_pd_gr_policy_last
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_policy_until
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_policy_until
+				value = $FROM$.var:lam_pd_gr_policy_until
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_policy_actor
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_policy_actor
+				value = $FROM$.var:lam_pd_gr_policy_actor
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_policy_victim
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_policy_victim
+				value = $FROM$.var:lam_pd_gr_policy_victim
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_legacy
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_legacy
+				value = $FROM$.var:lam_pd_gr_legacy
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_legacy_last
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_legacy_last
+				value = $FROM$.var:lam_pd_gr_legacy_last
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_legacy_until
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_legacy_until
+				value = $FROM$.var:lam_pd_gr_legacy_until
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_legacy_actor
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_legacy_actor
+				value = $FROM$.var:lam_pd_gr_legacy_actor
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_legacy_victim
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_legacy_victim
+				value = $FROM$.var:lam_pd_gr_legacy_victim
+			}
+		}
+	}
+	if = {
+		limit = {
+			$FROM$ = {
+				has_variable = lam_pd_gr_total
+			}
+		}
+		$TO$ = {
+			set_variable = {
+				name = lam_pd_gr_total
+				value = $FROM$.var:lam_pd_gr_total
+			}
+		}
+	}
+}

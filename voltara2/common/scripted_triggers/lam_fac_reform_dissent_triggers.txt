@@ -1,0 +1,50 @@
+﻿lam_cr_split_offer_valid_trigger = {
+	trigger_if = {
+		limit = {
+			is_alive = yes
+			exists = scope:lam_cr_original_head
+			exists = scope:lam_cr_split_head
+			exists = scope:lam_cr_split_token
+			exists = scope:lam_cr_lord
+		}
+		trigger_if = {
+			limit = {
+				scope:lam_cr_original_head = {
+					is_alive = yes
+				}
+				scope:lam_cr_split_head = {
+					is_alive = yes
+				}
+			}
+			NOT = {
+				has_variable = lam_bloc_lead
+			}
+			var:lam_cr_split_offer ?= scope:lam_cr_split_token
+			var:lam_bloc ?= scope:lam_cr_original_head
+			OR = {
+				liege ?= scope:lam_cr_lord
+				is_courtier_of = scope:lam_cr_lord
+			}
+			scope:lam_cr_original_head = {
+				has_variable = lam_bloc_lead
+				liege ?= scope:lam_cr_lord
+				NOT = {
+					has_variable = lam_fac_disband
+				}
+			}
+			scope:lam_cr_split_head = {
+				has_variable = lam_bloc_lead
+				liege ?= scope:lam_cr_lord
+				NOT = {
+					has_variable = lam_fac_disband
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+}

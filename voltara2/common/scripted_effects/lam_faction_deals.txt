@@ -1,0 +1,362 @@
+﻿lam_deal_give_effect = {
+	if = {
+		limit = {
+			var:lam_deal_give ?= flag:seat
+		}
+		save_scope_as = lam_pet_lord
+		scope:lam_deal_lead = {
+			lam_fac_make_promise_effect = {
+				TYPE = council
+				YEARS = 1
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_deal_give ?= flag:marriage
+		}
+		save_scope_as = lam_pet_lord
+		scope:lam_deal_lead = {
+			lam_fac_make_promise_effect = {
+				TYPE = marriage
+				YEARS = 2
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_deal_give ?= flag:gold
+		}
+		remove_short_term_gold = medium_gold_value
+		scope:lam_deal_lead = {
+			lam_fac_share_gold_effect = {
+				GOLD = medium_gold_value
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_deal_give ?= flag:law
+		}
+		lam_nc_lower_law_effect = yes
+	}
+	else_if = {
+		limit = {
+			var:lam_deal_give ?= flag:heir
+		}
+		lam_nc_heir_commit_effect = {
+			CANDIDATE = scope:lam_deal_lead.var:lam_fac_heir
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_deal_give ?= flag:amnesty
+		}
+		scope:lam_deal_lead = {
+			set_variable = {
+				name = lam_fac_pardoned
+				value = yes
+			}
+			lam_fac_timeline_add_effect = {
+				KEY = pardoned
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_deal_give ?= flag:bribe
+		}
+		pay_short_term_gold = {
+			target = scope:lam_deal_lead
+			gold = medium_gold_value
+		}
+		scope:lam_deal_lead = {
+			if = {
+				limit = {
+					NOT = {
+						any_secret = {
+							secret_type = lam_secret_bribed
+						}
+					}
+				}
+				add_secret = {
+					type = lam_secret_bribed
+					target = root
+				}
+			}
+			add_opinion = {
+				target = root
+				modifier = lam_fac_bribed_opinion
+			}
+		}
+	}
+}
+lam_fac_share_gold_effect = {
+	add_gold = $GOLD$
+	hidden_effect = {
+		lam_fac_share_gold_body_effect = {
+			GOLD = $GOLD$
+		}
+	}
+}
+lam_fac_share_gold_body_effect = {
+	lam_st_share_rewards_effect = {
+		GOLD = $GOLD$
+	}
+}
+lam_deal_grant_county_effect = {
+	clear_saved_scope = lam_deal_county
+	clear_saved_scope = lam_nc_county_done
+	save_scope_as = lam_nc_county_lord
+	ordered_held_title = {
+		limit = {
+			lam_nc_county_pair_trigger = {
+				LORD = scope:lam_nc_county_lord
+				RECIPIENT = $RECIPIENT$
+			}
+		}
+		order_by = {
+			value = 0
+			subtract = development_level
+		}
+		save_scope_as = lam_deal_county
+		max = 1
+		check_range_bounds = no
+	}
+	if = {
+		limit = {
+			exists = scope:lam_deal_county
+		}
+		create_title_and_vassal_change = {
+			type = granted
+			save_scope_as = lam_deal_change
+			add_claim_on_loss = no
+		}
+		scope:lam_deal_county = {
+			change_title_holder = {
+				holder = $RECIPIENT$
+				change = scope:lam_deal_change
+				take_baronies = yes
+			}
+		}
+		resolve_title_and_vassal_change = scope:lam_deal_change
+		if = {
+			limit = {
+				scope:lam_deal_county = {
+					holder ?= $RECIPIENT$
+				}
+			}
+			save_scope_value_as = {
+				name = lam_nc_county_done
+				value = yes
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_nc_county_done
+		}
+		scope:lam_deal_lead = {
+			if = {
+				limit = {
+					this = $RECIPIENT$
+				}
+				lam_fac_cohesion_add_effect = {
+					ADD = -10
+				}
+			}
+			else_if = {
+				limit = {
+					$RECIPIENT$ = {
+						OR = {
+							has_relation_rival = scope:lam_deal_lead
+							opinion = {
+								target = scope:lam_deal_lead
+								value <= -20
+							}
+						}
+					}
+				}
+				lam_fac_cohesion_add_effect = {
+					ADD = -20
+				}
+				add_opinion = {
+					target = root
+					modifier = lam_fac_slighted_opinion
+				}
+			}
+			else = {
+				lam_fac_cohesion_add_effect = {
+					ADD = 5
+				}
+			}
+		}
+		$RECIPIENT$ = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_granted_opinion
+			}
+		}
+	}
+}
+lam_deal_ask_effect = {
+	lam_deal_accepted_effect = yes
+}
+lam_fac_call_arms_effect = {
+	save_scope_as = lam_ca_lord
+	every_character_war = {
+		save_scope_as = lam_ca_war
+		$LEAD$ = {
+			lam_fac_join_war_effect = yes
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_ruler = yes
+					var:lam_fac_tier ?= 1
+					var:lam_bloc ?= $LEAD$
+				}
+				lam_fac_join_war_effect = yes
+			}
+		}
+	}
+}
+lam_fac_join_war_effect = {
+	clear_saved_scope = lam_wc_saved_target
+	if = {
+		limit = {
+			exists = scope:target
+		}
+		scope:target = {
+			save_scope_as = lam_wc_saved_target
+		}
+	}
+	scope:lam_ca_war ?= {
+		save_scope_as = target
+	}
+	if = {
+		limit = {
+			lam_wc_join_war_trigger = yes
+		}
+		if = {
+			limit = {
+				scope:lam_ca_war = {
+					is_attacker = scope:lam_ca_lord
+				}
+			}
+			scope:lam_ca_war = {
+				add_attacker = prev
+			}
+		}
+		else = {
+			scope:lam_ca_war = {
+				add_defender = prev
+			}
+		}
+		lam_wc_sync_effect = yes
+	}
+	clear_saved_scope = target
+	scope:lam_wc_saved_target ?= {
+		save_scope_as = target
+	}
+	clear_saved_scope = lam_wc_saved_target
+}
+lam_deal_accepted_effect = {
+	if = {
+		limit = {
+			has_variable = lam_deal_give
+			has_variable = lam_deal_ask
+			scope:lam_deal_lead = {
+				is_alive = yes
+				has_variable = lam_bloc_lead
+				liege ?= root
+				NOT = {
+					has_variable = lam_cr_active
+				}
+				NOT = {
+					has_variable = lam_cr_contract_pending
+				}
+				NOT = {
+					has_variable = lam_cr_retry_deal
+				}
+			}
+		}
+		scope:lam_deal_lead = {
+			set_variable = {
+				name = lam_cr_give
+				value = root.var:lam_deal_give
+			}
+			set_variable = {
+				name = lam_cr_ask
+				value = root.var:lam_deal_ask
+			}
+			lam_cr_start_effect = {
+				ISSUE = deal
+				ACTION = deal
+				TARGET = liege
+			}
+		}
+	}
+}
+lam_deal_refused_effect = {
+	scope:lam_deal_lead = {
+		change_variable = {
+			name = lam_fac_favour
+			add = -5
+		}
+		clamp_variable = {
+			name = lam_fac_favour
+			min = -100
+			max = 100
+		}
+		set_variable = {
+			name = lam_fac_deal_cd
+			value = yes
+			years = 1
+		}
+	}
+	send_interface_message = {
+		type = event_generic_bad
+		title = lam_deal_no_title
+		right_icon = scope:lam_deal_lead
+	}
+}
+lam_deal_clear_effect = {
+	if = {
+		limit = {
+			has_variable = lam_deal_give
+		}
+		remove_variable = lam_deal_give
+	}
+	if = {
+		limit = {
+			has_variable = lam_deal_ask
+		}
+		remove_variable = lam_deal_ask
+	}
+}
+lam_fac_pledged_arms_effect = {
+	if = {
+		limit = {
+			any_in_list = {
+				variable = lam_bloc_leads
+				is_alive = yes
+				has_variable = lam_fac_arms_pledge
+			}
+		}
+		save_scope_as = lam_pa_lord
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_arms_pledge
+			}
+			save_scope_as = lam_pa_lead
+			scope:lam_pa_lord = {
+				lam_fac_call_arms_effect = {
+					LEAD = scope:lam_pa_lead
+				}
+			}
+		}
+	}
+}

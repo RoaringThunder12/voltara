@@ -1,0 +1,243 @@
+﻿lam_dr_count_clear_effect = {
+	lam_fac_stat_add_effect = {
+		KEY = clear_$WHY$
+	}
+	set_variable = {
+		name = lam_dr_last_clear_reason
+		value = flag:$WHY$
+	}
+}
+lam_dr_audit_previous_effect = {
+	clear_saved_scope = lam_dr_restore_head
+	if = {
+		limit = {
+			exists = scope:lam_ev_head
+		}
+		scope:lam_ev_head = {
+			save_scope_as = lam_dr_restore_head
+		}
+	}
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+		}
+		every_in_list = {
+			variable = lam_fac_prev_members
+			limit = {
+				trigger_if = {
+					limit = {
+						is_alive = yes
+					}
+					has_variable = lam_ev_since
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			if = {
+				limit = {
+					lam_dr_detached_trigger = yes
+				}
+				clear_saved_scope = lam_ev_head
+				if = {
+					limit = {
+						exists = var:lam_bp_position_head
+					}
+					var:lam_bp_position_head = {
+						save_scope_as = lam_ev_head
+					}
+				}
+				lam_ev_clear_person_effect = yes
+			}
+		}
+	}
+	clear_saved_scope = lam_ev_head
+	if = {
+		limit = {
+			exists = scope:lam_dr_restore_head
+		}
+		scope:lam_dr_restore_head = {
+			save_scope_as = lam_ev_head
+		}
+	}
+	clear_saved_scope = lam_dr_restore_head
+}
+lam_dr_resolved_clear_effect = {
+	if = {
+		limit = {
+			has_variable = lam_ev_since
+		}
+		set_variable = {
+			name = lam_dr_clear_hint
+			value = flag:resolved
+		}
+	}
+	lam_ev_clear_person_effect = yes
+}
+lam_dr_clock_restart_effect = {
+	if = {
+		limit = {
+			lam_dr_had_dispute_trigger = yes
+		}
+		if = {
+			limit = {
+				var:lam_ev_since < lam_now_m
+			}
+			lam_fac_stat_add_effect = {
+				KEY = clock_restart
+			}
+			set_variable = {
+				name = lam_dr_last_restart_m
+				value = lam_now_m
+			}
+			set_variable = {
+				name = lam_dr_last_restart_age
+				value = {
+					value = lam_now_m
+					subtract = var:lam_ev_since
+				}
+			}
+		}
+	}
+}
+lam_dr_log_clear_effect = {
+	if = {
+		limit = {
+			lam_dr_had_dispute_trigger = yes
+		}
+		lam_fac_stat_add_effect = {
+			KEY = clear_total
+		}
+		set_variable = {
+			name = lam_dr_last_clear_m
+			value = lam_now_m
+		}
+		set_variable = {
+			name = lam_dr_last_clear_age
+			value = {
+				value = lam_now_m
+				subtract = var:lam_ev_since
+			}
+		}
+		if = {
+			limit = {
+				var:lam_ev_since > {
+					value = lam_now_m
+					subtract = 24
+				}
+			}
+			lam_fac_stat_add_effect = {
+				KEY = clear_under24_calendar
+			}
+		}
+		if = {
+			limit = {
+				var:lam_dr_clear_hint ?= flag:resolved
+			}
+			lam_dr_count_clear_effect = {
+				WHY = resolved
+			}
+		}
+		else_if = {
+			limit = {
+				lam_dr_head_changed_trigger = yes
+			}
+			lam_dr_count_clear_effect = {
+				WHY = head
+			}
+		}
+		else_if = {
+			limit = {
+				lam_dr_court_changed_trigger = yes
+			}
+			lam_dr_count_clear_effect = {
+				WHY = court
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					var:lam_bloc ?= scope:lam_ev_head
+				}
+			}
+			lam_dr_count_clear_effect = {
+				WHY = membership
+			}
+		}
+		else_if = {
+			limit = {
+				trigger_if = {
+					limit = {
+						has_variable = lam_bp_position_until
+					}
+					var:lam_bp_position_until <= lam_now_m
+				}
+				trigger_else = {
+					always = yes
+				}
+			}
+			lam_dr_count_clear_effect = {
+				WHY = expiry
+			}
+		}
+		else_if = {
+			limit = {
+				trigger_if = {
+					limit = {
+						has_variable = lam_cr_unrest
+					}
+					var:lam_cr_unrest <= 0
+				}
+				trigger_else = {
+					always = yes
+				}
+			}
+			lam_dr_count_clear_effect = {
+				WHY = resolved
+			}
+		}
+		else_if = {
+			limit = {
+				lam_dr_record_changed_trigger = yes
+			}
+			lam_dr_count_clear_effect = {
+				WHY = record
+			}
+		}
+		else_if = {
+			limit = {
+				trigger_if = {
+					limit = {
+						has_variable = lam_hi_paused
+					}
+					var:lam_hi_paused <= {
+						value = lam_now_m
+						subtract = 6
+					}
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			lam_dr_count_clear_effect = {
+				WHY = dormant_timeout
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					lam_ev_unresolved_trigger = yes
+				}
+			}
+			lam_dr_count_clear_effect = {
+				WHY = cause_ended
+			}
+		}
+		else = {
+			lam_dr_count_clear_effect = {
+				WHY = other
+			}
+		}
+	}
+}

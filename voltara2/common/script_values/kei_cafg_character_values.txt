@@ -1,0 +1,224 @@
+﻿V_kCAFG_cultural_emissary_max_aptitude = 4
+
+# Unfortunately, different_faith_county_opinion_mult is not accessible as a value, so we have to compose it like so
+V_kCAFG_character_different_rite_county_opinion_mult = {
+    value = 1
+
+    ## BONUSES (which are actually bad)
+    multiply = {
+        value = 1
+
+        subtract = V_kCAFG_character_different_rite_county_opinion_mult_bonuses
+    }
+
+    ## MALUSES (which are actually good)
+    divide = {
+        value = 1
+
+        add = V_kCAFG_character_different_rite_county_opinion_mult_maluses
+    }
+}
+
+V_kCAFG_character_different_rite_county_opinion_mult_bonuses = {
+    value = 0
+
+    # Vanilla
+    add = V_kCAFG_character_different_rite_county_opinion_mult_bonuses_VANILLA_B
+    add = V_kCAFG_character_different_rite_county_opinion_mult_bonuses_VANILLA
+}
+
+V_kCAFG_character_different_rite_county_opinion_mult_bonuses_VANILLA_B = {
+    value = 0
+
+    if = {
+        limit = { has_character_modifier = fp3_sided_with_different_faith_vassal_tax_dispute }
+        subtract = {
+            value = 0.15
+            desc = fp3_sided_with_different_faith_vassal_tax_dispute
+		    format = "BREAKDOWN_FORMAT_PERCENTAGE"
+        }
+    }
+
+    if = {
+        limit = { has_character_modifier = fp2_lenient_towards_foreign_merchants_modifier }
+        subtract = {
+            value = 0.15
+            desc = fp2_lenient_towards_foreign_merchants_modifier
+		    format = "BREAKDOWN_FORMAT_PERCENTAGE"
+        }
+    }
+
+    if = {
+        limit = { has_character_modifier = fp2_epitaph_modifier }
+        subtract = {
+            value = 0.15
+            desc = fp2_epitaph_modifier
+		    format = "BREAKDOWN_FORMAT_PERCENTAGE"
+        }
+    }
+}
+
+V_kCAFG_character_different_rite_county_opinion_mult_bonuses_VANILLA = {
+    value = 0
+
+    if = {
+        limit = { has_character_modifier = fp2_mozarab_rejected_modifier }
+        subtract = {
+            value = 0.25
+            desc = fp2_mozarab_rejected_modifier
+		    format = "BREAKDOWN_FORMAT_PERCENTAGE"
+        }
+    }
+}
+
+V_kCAFG_character_different_rite_county_opinion_mult_maluses = {
+    value = 0
+
+    # Vanilla
+    add = V_kCAFG_character_different_rite_county_opinion_mult_maluses_VANILLA_B
+    add = V_kCAFG_character_different_rite_county_opinion_mult_maluses_VANILLA
+}
+
+V_kCAFG_character_different_rite_county_opinion_mult_maluses_VANILLA_B = {
+    if = {
+        limit = { culture = { has_cultural_tradition = tradition_malleable_invaders } }
+        add = {
+            value = 0.2
+            desc = kCAFG_tradition_malleable_invaders_tt
+		    format = "BREAKDOWN_FORMAT_PERCENTAGE"
+        }
+    }
+
+    if = {
+        limit = { culture = { has_cultural_tradition = tradition_steppe_tolerance } }
+        add = {
+            value = 0.25
+            desc = kCAFG_tradition_steppe_tolerance_tt
+		    format = "BREAKDOWN_FORMAT_PERCENTAGE"
+        }
+    }
+    
+    if = {
+        limit = { dynasty ?= { has_dynasty_perk = fp1_adventure_legacy_3 } }
+        add = {
+            value = 0.25
+            desc = kCAFG_fp1_adventure_legacy_3_tt
+		    format = "BREAKDOWN_FORMAT_PERCENTAGE"
+        }
+    }
+    
+    if = {
+        limit = { has_character_modifier = tolerance_gospel_modifier }
+        add = {
+            value = 0.25
+            desc = tolerance_gospel_modifier
+		    format = "BREAKDOWN_FORMAT_PERCENTAGE"
+        }
+    }
+}
+
+V_kCAFG_character_different_rite_county_opinion_mult_maluses_VANILLA = {
+    # Special buildings
+    add = {
+        value = 0
+        every_realm_province = {
+            if = {
+                limit = { has_building_or_higher = holy_site_indian_grand_temple_01 }
+                add = 0.15
+            }
+            if = {
+                limit = { has_building_or_higher = holy_site_mahabodhi_temple_01 }
+                add = 0.2
+            }
+        }
+        desc = kCAFG_special_buildings_tt
+        format = "BREAKDOWN_FORMAT_PERCENTAGE"
+    }
+
+    if = {
+        limit = { culture = { has_cultural_tradition = tradition_african_tolerance } }
+        add = {
+            value = 0.25
+            desc = kCAFG_tradition_african_tolerance_tt
+		    format = "BREAKDOWN_FORMAT_PERCENTAGE"
+        }
+    }
+
+    if = {
+        limit = {
+            OR = {
+                rite = { rite_has_tenet = tenet_adaptive }
+                has_personal_tenet = tenet_adaptive
+            }
+        }
+        add = {
+            value = 0.25
+            desc = kCAFG_tenet_adaptive_tt
+		    format = "BREAKDOWN_FORMAT_PERCENTAGE"
+        }
+    }
+
+    if = {
+        limit = {
+            any_character_struggle = {
+                is_struggle_type = iberian_struggle
+                is_struggle_phase = struggle_iberia_phase_compromise
+            }
+        }
+        add = {
+            value = 0.5
+            desc = kCAFG_struggle_phase_iberia_compromise_tt
+		    format = "BREAKDOWN_FORMAT_PERCENTAGE"
+        }
+    }
+}
+
+V_kCAFG_character_different_rite_county_opinion_mult_diff = {
+    value = V_kCAFG_character_different_rite_county_opinion_mult
+    subtract = 1
+}
+
+# Unfortunately, cultural_acceptance_gain_mult is not accessible as a value, so we have to compose it like so
+V_kCAFG_character_cultural_acceptance_gain_mult = {
+    value = 1
+
+    ## BONUSES
+    multiply = {
+        value = 1
+
+        if = {
+            limit = { culture = { has_cultural_pillar = ethos_egalitarian } }
+            add = 0.35
+        }
+
+        if = {
+            limit = { culture = { has_cultural_tradition = tradition_culture_blending } }
+            add = 0.25
+        }
+
+        if = {
+            limit = { culture = { has_cultural_tradition = tradition_xenophilic } }
+            add = 0.25
+        }
+
+        if = {
+            limit = { culture = { has_cultural_tradition = tradition_fp2_malleable_subjects } }
+            add = 0.25
+        }
+    }
+
+    ## MALUSES
+    divide = {
+        value = 1
+
+        if = {
+            limit = { culture = { has_cultural_tradition = tradition_isolationist } }
+            add = 0.35
+        }
+        
+        if = {
+            limit = { culture = { has_cultural_tradition = tradition_ruling_caste } }
+            add = 0.25
+        }
+    }
+}

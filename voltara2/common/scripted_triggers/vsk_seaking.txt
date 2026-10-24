@@ -1,0 +1,10 @@
+﻿vsk_eligible = {
+ is_adult = yes is_landed = yes highest_held_title_tier = tier_empire
+ culture = culture:voltara_culture_48
+ has_trait = voltara_slaver
+ has_trait_xp = { trait = voltara_pirate value >= 100 }
+ has_trait_xp = { trait = vt_outlaw_bandit value >= 100 }
+ has_trait_xp = { trait = vt_outlaw_smuggler value >= 100 }
+ NOT = { has_trait = vsk_sea_conqueror }
+}
+vsk_coastal_realm = { any_realm_county = { any_county_province = { is_coastal = yes } } }

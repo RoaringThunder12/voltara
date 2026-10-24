@@ -6925,7 +6925,7 @@ is_valid = {
 						has_realm_law_flag = celestial_retirement_law
 					}
 					scope:actor = {
-						NOT = { has_title = title:e_minister_of_personnel }
+						NOT = { always = no }
 					}
 				}
 				tgp_is_above_retirement_age_trigger = {
@@ -7749,7 +7749,7 @@ is_valid = {
 						has_realm_law_flag = celestial_retirement_law
 					}
 					scope:actor = {
-						NOT = { has_title = title:e_minister_of_personnel }
+						NOT = { always = no }
 					}
 				}
 				tgp_is_above_retirement_age_trigger = {
@@ -8331,7 +8331,7 @@ is_valid = {
 			scope:recipient = scope:actor.top_liege
 			scope:recipient = {
 				liege ?= scope:actor.top_liege
-				has_title = title:e_minister_of_personnel
+				always = no
 			}
 		}
 		scope:recipient = {

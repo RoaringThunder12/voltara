@@ -1,0 +1,22 @@
+﻿lam_st_identity_pass_effect = {
+	$FROM$ = {
+		lam_st_campaign_clear_effect = yes
+		remove_variable = lam_st_reconcile_open
+	}
+	$TO$ = {
+		lam_st_campaign_clear_effect = yes
+		remove_variable = lam_st_reconcile_open
+	}
+	$FROM$ = {
+		every_in_list = {
+			variable = lam_fac_members
+			limit = {
+				var:lam_st_reward_head ?= $FROM$
+			}
+			set_variable = {
+				name = lam_st_reward_head
+				value = $TO$
+			}
+		}
+	}
+}

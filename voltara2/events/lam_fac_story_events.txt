@@ -1,0 +1,38 @@
+﻿namespace = lam_st
+lam_st.0100 = {
+	type = character_event
+	title = lam_st.0100.t
+	desc = lam_st.0100.desc
+	theme = diplomacy
+	left_portrait = {
+		character = root
+	}
+	right_portrait = {
+		character = var:lam_st_reconcile_member
+	}
+	trigger = {
+		is_ai = no
+		lam_st_reconcile_current_trigger = yes
+	}
+	option = {
+		name = lam_st.0100.a
+		trigger = {
+			prestige >= 150
+		}
+		custom_tooltip = lam_st.0100.a.tt
+		hidden_effect = {
+			lam_st_reconcile_effect = yes
+		}
+	}
+	option = {
+		name = lam_st.0100.b
+		hidden_effect = {
+			if = {
+				limit = {
+					var:lam_st_reconcile_id ?= scope:lam_st_reconcile_token
+				}
+				remove_variable = lam_st_reconcile_open
+			}
+		}
+	}
+}

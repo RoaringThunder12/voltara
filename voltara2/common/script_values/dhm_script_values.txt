@@ -1,0 +1,750 @@
+﻿# =============================================================================
+# Dynasty & Household Manager — Scoring values (v0.1.6 courtier pass)
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# GUARDIAN SCORE
+# Candidate = current character. Child = scope:dhm_child.
+# Guardian means "who raises this child", not specialist career instruction.
+# -----------------------------------------------------------------------------
+dhm_guardian_score_value = {
+    value = 0
+
+    add = learning
+    add = learning
+    add = diplomacy
+
+    if = { limit = { is_parent_of = scope:dhm_child } add = 140 }
+    if = { limit = { is_close_family_of = scope:dhm_child } add = 65 }
+
+    # Identity continuity is intentionally important: a foreign guardian should
+    # not beat a good household guardian just because of a few extra skill points.
+    if = { limit = { culture = scope:dhm_child.culture } add = 45 }
+    if = { limit = { faith = scope:dhm_child.faith } add = 45 }
+
+    if = {
+        limit = { opinion = { target = scope:dhm_manager value >= 75 } }
+        add = 25
+    }
+    else_if = {
+        limit = { opinion = { target = scope:dhm_manager value >= 50 } }
+        add = 18
+    }
+    else_if = {
+        limit = { opinion = { target = scope:dhm_manager value >= 25 } }
+        add = 10
+    }
+
+    if = { limit = { has_trait = intellect_good_3 } add = 80 }
+    if = { limit = { has_trait = intellect_good_2 } add = 50 }
+    if = { limit = { has_trait = intellect_good_1 } add = 25 }
+    if = { limit = { has_trait = intellect_bad_1 } subtract = 25 }
+    if = { limit = { has_trait = intellect_bad_2 } subtract = 50 }
+    if = { limit = { has_trait = intellect_bad_3 } subtract = 80 }
+
+    if = { limit = { has_trait = diligent } add = 24 }
+    if = { limit = { has_trait = patient } add = 20 }
+    if = { limit = { has_trait = temperate } add = 16 }
+    if = { limit = { has_trait = calm } add = 15 }
+    if = { limit = { has_trait = just } add = 15 }
+    if = { limit = { has_trait = compassionate } add = 12 }
+    if = { limit = { has_trait = honest } add = 8 }
+
+    if = { limit = { has_trait = sadistic } subtract = 35 }
+    if = { limit = { has_trait = arbitrary } subtract = 22 }
+    if = { limit = { has_trait = lazy } subtract = 24 }
+    if = { limit = { has_trait = wrathful } subtract = 14 }
+    if = { limit = { has_trait = deceitful } subtract = 12 }
+    if = { limit = { has_trait = drunkard } subtract = 22 }
+}
+
+# -----------------------------------------------------------------------------
+# SPECIALIST TUTOR SCORE
+# Candidate = current character. Child = scope:dhm_child.
+# Uses the ACTUAL education focus, not the childhood-trait prediction.
+# -----------------------------------------------------------------------------
+dhm_tutor_score_value = {
+    value = 0
+
+    add = learning
+    add = learning
+
+    if = {
+        limit = { scope:dhm_child = { has_focus = education_diplomacy } }
+        add = diplomacy
+        add = diplomacy
+        add = diplomacy
+        if = { limit = { has_education_diplomacy_trigger = yes } add = 55 }
+    }
+    else_if = {
+        limit = { scope:dhm_child = { has_focus = education_martial } }
+        add = martial
+        add = martial
+        add = martial
+        if = { limit = { has_education_martial_trigger = yes } add = 55 }
+    }
+    else_if = {
+        limit = { scope:dhm_child = { has_focus = education_stewardship } }
+        add = stewardship
+        add = stewardship
+        add = stewardship
+        if = { limit = { has_education_stewardship_trigger = yes } add = 55 }
+    }
+    else_if = {
+        limit = { scope:dhm_child = { has_focus = education_intrigue } }
+        add = intrigue
+        add = intrigue
+        add = intrigue
+        if = { limit = { has_education_intrigue_trigger = yes } add = 55 }
+    }
+    else_if = {
+        limit = { scope:dhm_child = { has_focus = education_learning } }
+        add = learning
+        add = learning
+        add = learning
+        if = { limit = { has_education_learning_trigger = yes } add = 55 }
+    }
+
+    if = { limit = { has_education_rank_4_trigger = yes } add = 35 }
+    if = { limit = { has_education_rank_3_trigger = yes } add = 18 }
+
+    if = { limit = { has_trait = intellect_good_3 } add = 65 }
+    if = { limit = { has_trait = intellect_good_2 } add = 40 }
+    if = { limit = { has_trait = intellect_good_1 } add = 20 }
+    if = { limit = { has_trait = diligent } add = 22 }
+    if = { limit = { has_trait = patient } add = 16 }
+    if = { limit = { has_trait = calm } add = 8 }
+
+    if = { limit = { age >= 30 } add = 10 }
+    if = { limit = { age >= 45 } add = 8 }
+    if = { limit = { is_close_family_of = scope:dhm_child } add = 10 }
+    if = { limit = { culture = scope:dhm_child.culture } add = 10 }
+    if = { limit = { faith = scope:dhm_child.faith } add = 10 }
+
+    if = {
+        limit = { opinion = { target = scope:dhm_manager value >= 50 } }
+        add = 10
+    }
+    if = { limit = { has_trait = lazy } subtract = 22 }
+    if = { limit = { has_trait = impatient } subtract = 8 }
+}
+
+# -----------------------------------------------------------------------------
+# MARRIAGE MATCHMAKER ACCEPTANCE PROXY
+# Candidate = current character. Uses the candidate's vanilla matchmaker.
+# The engine does not expose the complete interaction ai_accept calculation as a
+# generic trigger, so DHM deliberately uses a conservative proxy that mirrors
+# its most important social/political signals and never overrides vanilla law.
+# -----------------------------------------------------------------------------
+dhm_marriage_acceptance_score_value = {
+    value = 0
+
+    # Same household authority = no foreign negotiation required.
+    if = {
+        limit = { matchmaker = scope:dhm_manager }
+        add = 1000
+    }
+    else = {
+        # Matchmaker opinion toward the player's ruler.
+        if = {
+            limit = {
+                matchmaker = {
+                    opinion = { target = scope:dhm_manager value >= 75 }
+                }
+            }
+            add = 90
+        }
+        else_if = {
+            limit = {
+                matchmaker = {
+                    opinion = { target = scope:dhm_manager value >= 50 }
+                }
+            }
+            add = 65
+        }
+        else_if = {
+            limit = {
+                matchmaker = {
+                    opinion = { target = scope:dhm_manager value >= 25 }
+                }
+            }
+            add = 40
+        }
+        else_if = {
+            limit = {
+                matchmaker = {
+                    opinion = { target = scope:dhm_manager value >= 0 }
+                }
+            }
+            add = 15
+        }
+        else_if = {
+            limit = {
+                matchmaker = {
+                    opinion = { target = scope:dhm_manager value <= -50 }
+                }
+            }
+            subtract = 140
+        }
+        else_if = {
+            limit = {
+                matchmaker = {
+                    opinion = { target = scope:dhm_manager value <= -25 }
+                }
+            }
+            subtract = 75
+        }
+        else = { subtract = 25 }
+
+        if = { limit = { matchmaker = { is_allied_to = scope:dhm_manager } } add = 45 }
+        if = { limit = { matchmaker = { has_relation_friend = scope:dhm_manager } } add = 35 }
+        if = { limit = { matchmaker = { has_relation_best_friend = scope:dhm_manager } } add = 55 }
+        if = { limit = { matchmaker = { has_relation_rival = scope:dhm_manager } } subtract = 130 }
+        if = { limit = { matchmaker = { has_relation_nemesis = scope:dhm_manager } } subtract = 300 }
+
+        # A much more powerful foreign court is less likely to accept a match
+        # merely because the candidate scores well. This mirrors vanilla's
+        # strong rank / alliance politics without pretending to reproduce every
+        # internal interaction modifier bit-for-bit.
+        if = {
+            limit = {
+                matchmaker = {
+                    tier_difference = {
+                        target = scope:dhm_manager
+                        value >= 3
+                    }
+                }
+            }
+            subtract = 180
+        }
+        else_if = {
+            limit = {
+                matchmaker = {
+                    tier_difference = {
+                        target = scope:dhm_manager
+                        value = 2
+                    }
+                }
+            }
+            subtract = 100
+        }
+        else_if = {
+            limit = {
+                matchmaker = {
+                    tier_difference = {
+                        target = scope:dhm_manager
+                        value = 1
+                    }
+                }
+            }
+            subtract = 35
+        }
+
+        # The proposed spouse's own hostility matters even in an arranged match.
+        if = {
+            limit = { opinion = { target = scope:dhm_marriage_subject value <= -50 } }
+            subtract = 90
+        }
+        else_if = {
+            limit = { opinion = { target = scope:dhm_marriage_subject value <= -25 } }
+            subtract = 45
+        }
+        if = { limit = { has_relation_lover = scope:dhm_marriage_subject } add = 50 }
+        if = { limit = { has_relation_soulmate = scope:dhm_marriage_subject } add = 80 }
+
+        if = { limit = { faith = scope:dhm_marriage_subject.faith } add = 20 }
+        else = { subtract = 15 }
+        if = { limit = { culture = scope:dhm_marriage_subject.culture } add = 10 }
+
+        # Prestige and dynasty make a proposal more credible to another court.
+        if = { limit = { scope:dhm_manager = { prestige_level >= 4 } } add = 30 }
+        else_if = { limit = { scope:dhm_manager = { prestige_level >= 3 } } add = 20 }
+        else_if = { limit = { scope:dhm_manager = { prestige_level >= 2 } } add = 10 }
+
+        # Non-standard dynastic marriage is harder to negotiate, especially when
+        # the man being asked to marry matrilineally is prestigious or landed.
+        if = {
+            limit = {
+                scope:dhm_marriage_subject = {
+                    dhm_subject_should_use_matrilineal_trigger = yes
+                }
+                is_male = yes
+            }
+            subtract = 55
+            if = { limit = { is_ruler = yes } subtract = 90 }
+            if = { limit = { exists = dynasty } subtract = 25 }
+            if = { limit = { prestige_level >= 3 } subtract = 35 }
+        }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# MARRIAGE SUBJECT PRIORITY
+# Subject = current character. Player-ruler = scope:dhm_manager.
+# Everyone receives a first fair turn; thereafter adult children and heirs retain
+# urgency without allowing one repeatedly impossible case to occupy every pass.
+# -----------------------------------------------------------------------------
+dhm_marriage_subject_priority_value = {
+    value = 0
+    add = age
+
+    # Existing saves need no migration: an unmarked relative simply receives one
+    # fair first turn. Recent failures rotate behind untouched relatives, while a
+    # primary heir keeps some urgency once everyone has had an opportunity.
+    if = {
+        limit = { NOT = { has_character_flag = dhm_v080_auto_marriage_attempted_once } }
+        add = 5000
+    }
+    if = {
+        limit = { has_character_flag = dhm_v080_auto_recent_marriage_attempt }
+        if = { limit = { is_primary_heir_of = scope:dhm_manager } subtract = 1800 }
+        else_if = { limit = { is_heir_of = scope:dhm_manager } subtract = 2100 }
+        else = { subtract = 2500 }
+    }
+
+    if = { limit = { is_adult = yes } add = 500 }
+    if = { limit = { is_child_of = scope:dhm_manager } add = 1000 }
+    if = { limit = { is_primary_heir_of = scope:dhm_manager } add = 900 }
+    else_if = { limit = { is_heir_of = scope:dhm_manager } add = 500 }
+    if = { limit = { is_ruler = yes } add = 250 }
+    if = { limit = { has_character_flag = dhm_profile_full_auto } add = 150 }
+    if = { limit = { age >= 30 NOT = { any_child = { is_alive = yes } } } add = 300 }
+    if = { limit = { age >= 38 NOT = { any_child = { is_alive = yes } } } add = 250 }
+    if = {
+        limit = {
+            exists = dynasty
+            scope:dhm_manager = { exists = dynasty }
+            dynasty = scope:dhm_manager.dynasty
+        }
+        add = 75
+    }
+}
+
+# -----------------------------------------------------------------------------
+# MARRIAGE SUITABILITY SCORE
+# Candidate = current character. Subject = scope:dhm_marriage_subject.
+# One shared base plus strongly purpose-specific weights.
+# -----------------------------------------------------------------------------
+dhm_marriage_score_value = {
+    value = 0
+
+    # Preferred realism-tier candidates always rank before safe fallbacks.
+    if = { limit = { dhm_preferred_marriage_candidate_trigger = yes } add = 10000 }
+
+    # Individual strategy and the subject's personal agency now influence every
+    # candidate without bypassing any vanilla legality or authority gate.
+    add = dhm_profile_strategy_score_value
+    add = dhm_candidate_consent_score_value
+
+    # General competence matters, but no longer overwhelms politics/realism.
+    add = diplomacy
+    add = stewardship
+    add = learning
+    add = martial
+    add = intrigue
+
+    if = { limit = { faith = scope:dhm_marriage_subject.faith } add = 35 }
+    if = { limit = { culture = scope:dhm_marriage_subject.culture } add = 20 }
+
+    # Existing personal bonds and hostilities.
+    if = { limit = { has_relation_soulmate = scope:dhm_marriage_subject } add = 240 }
+    if = { limit = { has_relation_lover = scope:dhm_marriage_subject } add = 170 }
+    if = { limit = { has_relation_best_friend = scope:dhm_marriage_subject } add = 80 }
+    if = { limit = { has_relation_friend = scope:dhm_marriage_subject } add = 45 }
+    if = { limit = { has_relation_rival = scope:dhm_marriage_subject } subtract = 180 }
+
+    # Candidate's own disposition toward the proposed spouse.
+    if = {
+        limit = { opinion = { target = scope:dhm_marriage_subject value >= 75 } }
+        add = 45
+    }
+    else_if = {
+        limit = { opinion = { target = scope:dhm_marriage_subject value >= 50 } }
+        add = 30
+    }
+    else_if = {
+        limit = { opinion = { target = scope:dhm_marriage_subject value <= -50 } }
+        subtract = 90
+    }
+    else_if = {
+        limit = { opinion = { target = scope:dhm_marriage_subject value <= -25 } }
+        subtract = 45
+    }
+
+    # Broad positive personality qualities.
+    if = { limit = { has_trait = diligent } add = 18 }
+    if = { limit = { has_trait = patient } add = 14 }
+    if = { limit = { has_trait = temperate } add = 12 }
+    if = { limit = { has_trait = just } add = 10 }
+    if = { limit = { has_trait = calm } add = 10 }
+    if = { limit = { has_trait = compassionate } add = 8 }
+
+    # Personality compatibility / friction pairs.
+    if = {
+        limit = {
+            has_trait = honest
+            scope:dhm_marriage_subject = { has_trait = honest }
+        }
+        add = 18
+    }
+    if = {
+        limit = {
+            has_trait = deceitful
+            scope:dhm_marriage_subject = { has_trait = honest }
+        }
+        subtract = 25
+    }
+    if = {
+        limit = {
+            has_trait = honest
+            scope:dhm_marriage_subject = { has_trait = deceitful }
+        }
+        subtract = 18
+    }
+    if = {
+        limit = {
+            OR = { has_trait = sadistic has_trait = callous }
+            scope:dhm_marriage_subject = { has_trait = compassionate }
+        }
+        subtract = 35
+    }
+    if = {
+        limit = {
+            has_trait = compassionate
+            scope:dhm_marriage_subject = {
+                OR = { has_trait = sadistic has_trait = callous }
+            }
+        }
+        subtract = 25
+    }
+    if = {
+        limit = {
+            has_trait = wrathful
+            scope:dhm_marriage_subject = { has_trait = calm }
+        }
+        subtract = 20
+    }
+    if = {
+        limit = {
+            has_trait = calm
+            scope:dhm_marriage_subject = { has_trait = wrathful }
+        }
+        subtract = 12
+    }
+    if = {
+        limit = {
+            has_trait = arbitrary
+            scope:dhm_marriage_subject = { has_trait = just }
+        }
+        subtract = 22
+    }
+    if = {
+        limit = {
+            has_trait = just
+            scope:dhm_marriage_subject = { has_trait = arbitrary }
+        }
+        subtract = 15
+    }
+    if = {
+        limit = {
+            has_trait = cynical
+            scope:dhm_marriage_subject = { has_trait = zealous }
+        }
+        subtract = 18
+    }
+    if = {
+        limit = {
+            has_trait = zealous
+            scope:dhm_marriage_subject = { has_trait = cynical }
+        }
+        subtract = 18
+    }
+    if = {
+        limit = {
+            has_trait = lazy
+            scope:dhm_marriage_subject = { has_trait = diligent }
+        }
+        subtract = 24
+    }
+    if = {
+        limit = {
+            has_trait = impatient
+            scope:dhm_marriage_subject = { has_trait = patient }
+        }
+        subtract = 15
+    }
+    if = {
+        limit = {
+            has_trait = greedy
+            scope:dhm_marriage_subject = { has_trait = generous }
+        }
+        subtract = 12
+    }
+
+    # Player-selected legal-kin policy. Follow Faith has no artificial modifier.
+    if = {
+        limit = {
+            has_global_variable = dhm_setting_kin_avoid
+            is_extended_family_of = scope:dhm_marriage_subject
+            NOT = { is_close_family_of = scope:dhm_marriage_subject }
+        }
+        subtract = 220
+    }
+    if = {
+        limit = {
+            has_global_variable = dhm_setting_kin_prefer
+            is_close_family_of = scope:dhm_marriage_subject
+        }
+        add = 500
+    }
+    if = {
+        limit = {
+            has_global_variable = dhm_setting_kin_prefer
+            is_extended_family_of = scope:dhm_marriage_subject
+            NOT = { is_close_family_of = scope:dhm_marriage_subject }
+        }
+        add = 220
+    }
+
+    # ------------------------- SECURE SUCCESSION -----------------------------
+    if = {
+        limit = {
+            scope:dhm_marriage_subject = {
+                dhm_marriage_purpose_succession_trigger = yes
+            }
+        }
+        if = { limit = { can_have_children_with = { CHARACTER = scope:dhm_marriage_subject } } add = 110 }
+        if = { limit = { has_trait = fecund } add = 95 }
+        if = { limit = { has_trait = intellect_good_3 } add = 130 }
+        if = { limit = { has_trait = intellect_good_2 } add = 75 }
+        if = { limit = { has_trait = intellect_good_1 } add = 35 }
+        if = { limit = { has_trait = physique_good_3 } add = 55 }
+        if = { limit = { has_trait = physique_good_2 } add = 30 }
+        if = { limit = { has_trait = beauty_good_3 } add = 35 }
+        if = { limit = { has_trait = beauty_good_2 } add = 20 }
+        if = { limit = { has_trait = inbred } subtract = 350 }
+        if = { limit = { has_any_disease_trigger = yes } subtract = 35 }
+
+        if = { limit = { age <= 25 } add = 65 }
+        else_if = { limit = { age <= 32 } add = 45 }
+        else_if = { limit = { age <= 38 } add = 15 }
+        else = { subtract = 45 }
+
+        if = { limit = { NOT = { exists = dynasty } } subtract = 250 }
+        if = { limit = { is_ruler = yes } add = 50 }
+        if = { limit = { is_claimant = yes } add = 35 }
+    }
+
+    # --------------------------- BLOODLINE -----------------------------------
+    if = {
+        limit = {
+            scope:dhm_marriage_subject = {
+                dhm_marriage_purpose_bloodline_trigger = yes
+            }
+        }
+        if = { limit = { has_trait = intellect_good_3 } add = 190 }
+        if = { limit = { has_trait = intellect_good_2 } add = 120 }
+        if = { limit = { has_trait = intellect_good_1 } add = 60 }
+        if = { limit = { has_trait = physique_good_3 } add = 95 }
+        if = { limit = { has_trait = physique_good_2 } add = 55 }
+        if = { limit = { has_trait = physique_good_1 } add = 25 }
+        if = { limit = { has_trait = beauty_good_3 } add = 70 }
+        if = { limit = { has_trait = beauty_good_2 } add = 40 }
+        if = { limit = { has_trait = fecund } add = 90 }
+        if = { limit = { has_trait = inbred } subtract = 400 }
+        if = { limit = { NOT = { exists = dynasty } } subtract = 35 }
+    }
+
+    # ------------------------- CLAIMS / EXPANSION ----------------------------
+    if = {
+        limit = {
+            scope:dhm_marriage_subject = {
+                dhm_marriage_purpose_expansion_trigger = yes
+            }
+        }
+        if = { limit = { is_claimant = yes } add = 180 }
+        if = { limit = { is_ruler = yes } add = 85 }
+        if = { limit = { prestige_level >= 4 } add = 75 }
+        else_if = { limit = { prestige_level >= 3 } add = 50 }
+        else_if = { limit = { prestige_level >= 2 } add = 25 }
+        if = { limit = { NOT = { exists = dynasty } } subtract = 120 }
+    }
+
+    # ---------------------------- ALLIANCE -----------------------------------
+    if = {
+        limit = {
+            scope:dhm_marriage_subject = {
+                dhm_marriage_purpose_alliance_trigger = yes
+            }
+        }
+        if = { limit = { is_ruler = yes } add = 115 }
+        if = {
+            limit = { any_close_family_member = { is_ruler = yes } }
+            add = 70
+        }
+        if = { limit = { prestige_level >= 5 } add = 105 }
+        else_if = { limit = { prestige_level = 4 } add = 75 }
+        else_if = { limit = { prestige_level = 3 } add = 45 }
+        if = { limit = { is_claimant = yes } add = 40 }
+        if = { limit = { NOT = { exists = dynasty } } subtract = 130 }
+    }
+
+    # --------------------------- COMPANION -----------------------------------
+    if = {
+        limit = {
+            scope:dhm_marriage_subject = {
+                dhm_marriage_purpose_companion_trigger = yes
+            }
+        }
+        if = { limit = { has_relation_soulmate = scope:dhm_marriage_subject } add = 220 }
+        if = { limit = { has_relation_lover = scope:dhm_marriage_subject } add = 160 }
+        if = { limit = { has_relation_friend = scope:dhm_marriage_subject } add = 70 }
+        if = { limit = { diplomacy >= 15 } add = 35 }
+        if = { limit = { stewardship >= 15 } add = 30 }
+        if = { limit = { learning >= 15 } add = 25 }
+        if = { limit = { NOT = { exists = dynasty } } subtract = 10 }
+        # Genetics are intentionally secondary for mature companion marriages.
+        if = { limit = { has_trait = intellect_good_3 } add = 40 }
+        if = { limit = { has_trait = fecund } add = 10 }
+    }
+}
+
+# -----------------------------------------------------------------------------
+# COURTIER MATCHMAKING ACCEPTANCE
+# Reuses the family acceptance proxy but adds the extra difficulty of keeping a
+# female courtier in the player's household through a matrilineal arrangement.
+# -----------------------------------------------------------------------------
+dhm_courtier_marriage_acceptance_score_value = {
+    value = 0
+    add = dhm_marriage_acceptance_score_value
+
+    if = {
+        limit = {
+            NOT = { matchmaker = scope:dhm_manager }
+            scope:dhm_marriage_subject = { is_female = yes }
+            is_male = yes
+        }
+        subtract = 65
+        if = { limit = { exists = dynasty } subtract = 20 }
+        if = { limit = { prestige_level >= 3 } subtract = 25 }
+    }
+
+    # A foreign ruler is less likely to surrender a personally valuable officer.
+    # These candidates are already blocked by the trigger, but the penalty is a
+    # second safety layer if CK3 role state changes between search and execution.
+    if = {
+        limit = {
+            NOT = { matchmaker = scope:dhm_manager }
+            OR = {
+                is_councillor = yes
+                has_any_court_position = yes
+                is_knight = yes
+            }
+        }
+        subtract = 250
+    }
+}
+
+# -----------------------------------------------------------------------------
+# COURTIER MARRIAGE SUITABILITY
+# Household matches prioritize compatibility, family formation and retention;
+# they do NOT use heir/claims/bloodline min-max priorities.
+# -----------------------------------------------------------------------------
+dhm_courtier_marriage_subject_priority_value = {
+    value = 0
+    add = age
+    if = {
+        limit = { NOT = { has_character_flag = dhm_v080_auto_marriage_attempted_once } }
+        add = 5000
+    }
+    if = {
+        limit = { has_character_flag = dhm_v080_auto_recent_marriage_attempt }
+        subtract = 2500
+    }
+    if = { limit = { dhm_high_value_courtier_trigger = yes } add = 500 }
+    if = { limit = { is_councillor = yes } add = 150 }
+    if = { limit = { has_any_court_position = yes } add = 120 }
+}
+
+dhm_courtier_marriage_score_value = {
+    value = 0
+
+    add = diplomacy
+    add = stewardship
+    add = learning
+    add = martial
+    add = intrigue
+
+    if = { limit = { is_courtier_of = scope:dhm_manager } add = 90 }
+    if = { limit = { faith = scope:dhm_marriage_subject.faith } add = 35 }
+    if = { limit = { culture = scope:dhm_marriage_subject.culture } add = 25 }
+
+    # Existing bonds matter much more than raw statistics.
+    if = { limit = { has_relation_soulmate = scope:dhm_marriage_subject } add = 260 }
+    if = { limit = { has_relation_lover = scope:dhm_marriage_subject } add = 190 }
+    if = { limit = { has_relation_best_friend = scope:dhm_marriage_subject } add = 90 }
+    if = { limit = { has_relation_friend = scope:dhm_marriage_subject } add = 50 }
+    if = { limit = { has_relation_rival = scope:dhm_marriage_subject } subtract = 220 }
+
+    if = {
+        limit = { opinion = { target = scope:dhm_marriage_subject value >= 50 } }
+        add = 35
+    }
+    else_if = {
+        limit = { opinion = { target = scope:dhm_marriage_subject value <= -25 } }
+        subtract = 55
+    }
+
+    # Ordinary household formation: fertility helps, but is not an absolute
+    # requirement for older/companion-style courtier marriages.
+    if = { limit = { can_have_children_with = { CHARACTER = scope:dhm_marriage_subject } } add = 45 }
+    if = { limit = { has_trait = fecund } add = 35 }
+    if = { limit = { has_trait = celibate } subtract = 80 }
+    if = { limit = { is_eunuch_trigger = yes } subtract = 80 }
+
+    if = { limit = { has_trait = intellect_good_3 } add = 55 }
+    if = { limit = { has_trait = intellect_good_2 } add = 35 }
+    if = { limit = { has_trait = intellect_good_1 } add = 18 }
+    if = { limit = { has_trait = inbred } subtract = 180 }
+
+    # Reliable spouses are preferred; dangerous personality clashes are avoided.
+    if = { limit = { has_trait = diligent } add = 18 }
+    if = { limit = { has_trait = patient } add = 14 }
+    if = { limit = { has_trait = temperate } add = 12 }
+    if = { limit = { has_trait = calm } add = 10 }
+    if = { limit = { has_trait = compassionate } add = 8 }
+    if = { limit = { has_trait = sadistic } subtract = 35 }
+    if = { limit = { has_trait = arbitrary } subtract = 18 }
+    if = { limit = { has_trait = lazy } subtract = 18 }
+
+    if = {
+        limit = {
+            has_trait = deceitful
+            scope:dhm_marriage_subject = { has_trait = honest }
+        }
+        subtract = 22
+    }
+    if = {
+        limit = {
+            has_trait = wrathful
+            scope:dhm_marriage_subject = { has_trait = calm }
+        }
+        subtract = 18
+    }
+    if = {
+        limit = {
+            OR = { has_trait = sadistic has_trait = callous }
+            scope:dhm_marriage_subject = { has_trait = compassionate }
+        }
+        subtract = 35
+    }
+
+    # Retention bonus is stronger when the subject is strategically useful.
+    if = {
+        limit = {
+            is_courtier_of = scope:dhm_manager
+            scope:dhm_marriage_subject = { dhm_high_value_courtier_trigger = yes }
+        }
+        add = 70
+    }
+}

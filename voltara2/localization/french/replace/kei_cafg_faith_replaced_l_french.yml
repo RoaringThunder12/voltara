@@ -1,0 +1,24 @@
+﻿l_french:
+game_concept_faith_righteous: "#P Juste#!"
+game_concept_faith_astray: "Dévoyée"
+game_concept_faith_hostile: "#M Hostile#!"
+game_concept_faith_evil: "#N Néfaste#!"
+
+FAITHS_MAP_MODE_TOOLTIP: "#T Number of [faiths] in [ROOT.Province.GetNameNoTooltip|E]: [GetDataModelSize(ROOT.Province.MakeScope.GetList('kCAFG_province_rites'))] #!\n[majority_rite] du [county] : [ROOT.Province.GetCounty.GetFaith.GetNameNoTooltip]\n[faith] du [top_liege] : [ROOT.Province.GetTitle.GetDeFactoTopLiege.GetHolder.GetFaith.GetNameNoTooltip]"
+PROVINCE_TOOLTIP_FAITH: "[majority_rite|E]: [COUNTY.GetFaith.GetNameNoTooltip|V]"
+COUNCIL_WINDOW_TOOLIP_FAITHS_IN_COUNTY: "[majority_rite|E]: [FAITH.GetName]"
+
+FACTION_REASON_PLURALISM_ASTRAY: "La [faith|E] du [liege|E] est $game_concept_faith_astray$ : $VALUE|0+=$"
+FACTION_REASON_PLURALISM_HOSTILE: "La [faith|E] du [liege|E] est $game_concept_faith_hostile$ : $VALUE|0+=$"
+FACTION_REASON_PLURALISM_EVIL: "La [faith|E] du [liege|E] est $game_concept_faith_evil$ : $VALUE|0+=$"
+
+FAITH_WINDOW_COUNTIES: "[Faith.GetNumberOfCountiesOfFaith] [counties|E] ont cette [faith] en tant que [majority_rite|E]"
+
+task_conversion: "Convertir la Foi"
+task_conversion_development_gain: "\n$EFFECT_LIST_BULLET$#P Augmentation du développement provincial#!"
+task_conversion_levy_gain: "\n$EFFECT_LIST_BULLET$#P Increase des levées provinciales#!"
+
+doctrine_parameter_pluralism_fundamentalist_proselytization_bonus: "Vitesse de Conversion de la [faith]: #P [EmptyScope.ScriptValue('V_kCAFG_rite_conversion_pluralism_fundamentalist_proselytization_bonus')|0%+=]#!"
+doctrine_parameter_pluralism_pluralistic_proselytization_penalty: "Vitesse de Conversion de la [faith]: #N [EmptyScope.ScriptValue('V_kCAFG_rite_conversion_pluralism_pluralistic_proselytization_malus')|0+=%]#!"
+
+MOD_COUNTY_OPINION_DIFFERENT_FAITH_MULT: "[rite_tension_baseline|E]"

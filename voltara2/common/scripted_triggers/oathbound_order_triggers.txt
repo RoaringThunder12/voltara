@@ -1,0 +1,11 @@
+﻿# Shared filter for who the Oathbound can be ordered to wage a claim war against.
+# Scope: the holder of the claimed title.
+# $OATHBOUND$  = the character who will do the fighting
+# $OATHHOLDER$ = the character who owns the claim
+oathbound_valid_claim_war_target_trigger = {
+    is_alive = yes
+    is_imprisoned = no
+    NOT = { top_liege = $OATHBOUND$.top_liege }
+    NOT = { is_vassal_or_below_of = $OATHHOLDER$ }
+    max_military_strength < $OATHBOUND$.max_military_strength
+}

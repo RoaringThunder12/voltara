@@ -1,0 +1,252 @@
+﻿oathholder_decide_rival_kill_type = {
+    picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = oathholder_send_increase_control_decision_ai_desc
+	selection_tooltip = oathholder_send_increase_control_decision_ai_tooltip
+
+	is_shown = {
+        any_relation = {
+            type = oathbound
+            this = {
+                is_ai = no
+            }
+        }
+
+        is_ai = yes
+        is_ruler = yes
+        is_landed = yes
+        is_landless_adventurer = no
+
+		num_of_relation_oathbound > 0
+
+        NOT = { has_character_flag = i_decided_kill_type }
+	}
+
+	is_valid = {
+        num_of_relation_oathbound > 0
+	}
+
+    ai_check_interval = 6
+    ai_potential = { num_of_relation_oathbound > 0 }
+    ai_will_do = {
+        base = 5000
+    }
+
+	effect = {
+        # 1. Clean up any existing preference flags from 10 years ago
+        remove_character_flag = oathholder_prefers_duel
+        remove_character_flag = oathholder_prefers_murder
+
+        add_character_flag = {
+            flag = i_decided_kill_type
+            years = 10
+        }
+
+        # 2. Determine the new preference based on personality and skillset
+        random_list = {
+            
+            # ---------------------------------------------------------
+            # PREFERENCE A: THE HONORABLE DUEL
+            # ---------------------------------------------------------
+            100 = {
+                # 1. Oathholder personality.
+                modifier = { factor = 2.0 has_trait = brave }
+                modifier = { factor = 1.5 has_trait = just }
+                modifier = { factor = 1.5 has_trait = arrogant }
+                modifier = { factor = 1.5 has_trait = wrathful }
+
+                modifier = { factor = 0.1 has_trait = craven }
+                modifier = { factor = 0.1 has_trait = deceitful }
+
+                # 2. PRAGMATISM: Ambitious/Cynical rulers pick the sharpest tool
+                modifier = {
+                    factor = 2.0
+                    OR = { has_trait = ambitious has_trait = cynical }
+                    any_relation = { 
+                        type = oathbound 
+                        this = { prowess > intrigue } 
+                    }
+                }
+
+                # 3. THE DETERRENT: Don't prefer duels if the Oathbound isn't better than ANY of them
+                # If there isn't a single rival or nemesis we can beat, the AI gets cold feet.
+                modifier = {
+                    factor = 0.25
+                    OR = {
+                        any_relation = { type = rival is_alive = yes }
+                        any_relation = { type = nemesis is_alive = yes }
+                    }
+                    NOT = {
+                        OR = {
+                            any_relation = {
+                                type = rival
+                                this = {
+                                    is_alive = yes
+                                    prowess < root.var:val_oathkeeper.prowess
+                                }
+                            }
+                            any_relation = {
+                                type = nemesis
+                                this = {
+                                    is_alive = yes
+                                    prowess < root.var:val_oathkeeper.prowess
+                                }
+                            }
+                        }
+                    }
+                }
+
+                # 4. How good is Oathbound?
+                modifier = {
+                    factor = 1.5
+                    any_relation = { type = oathbound this = { prowess >= 15 } }
+                }
+                modifier = {
+                    factor = 2.0
+                    any_relation = { type = oathbound this = { prowess >= 20 } }
+                }
+                modifier = {
+                    factor = 2.5
+                    any_relation = { type = oathbound this = { prowess >= 25 } }
+                }
+                modifier = {
+                    factor = 3.0
+                    any_relation = { type = oathbound this = { prowess >= 30 } }
+                }
+
+                # 5. Oathbound Personality
+                modifier = {
+                    factor = 1.5
+                    any_relation = { type = oathbound this = { OR = { has_trait = brave has_trait = just has_trait = honest } } }
+                }
+                modifier = {
+                    factor = 0.5
+                    any_relation = { type = oathbound this = { OR = { has_trait = craven has_trait = deceitful } } }
+                }
+                
+                add_character_flag = oathholder_prefers_duel
+
+                # Send the toast to the Oathbound (the player)
+                every_relation = {
+                    type = oathbound
+                    send_interface_toast = {
+                        type = event_toast_effect_good # Or neutral
+                        title = oathholder_decided_duel_toast
+                        left_icon = root
+                        right_icon = this
+                        custom_tooltip = oathholder_decided_duel_toast_desc
+                    }
+                }
+            }
+
+            # ---------------------------------------------------------
+            # PREFERENCE B: THE SHADOW SCHEME (MURDER)
+            # ---------------------------------------------------------
+            100 = {
+                # 1. Oathholder personality.
+                modifier = { factor = 2.0 has_trait = deceitful }
+                modifier = { factor = 2.0 has_trait = craven }
+                modifier = { factor = 1.5 has_trait = paranoid }
+                modifier = { factor = 1.5 has_trait = callous }
+                modifier = { factor = 1.5 has_trait = sadistic }
+
+                modifier = { factor = 0.1 has_trait = brave }
+                modifier = { factor = 0.1 has_trait = just }
+                modifier = { factor = 0.1 has_trait = honest }
+
+                # PRAGMATISM: Ambitious/Cynical rulers pick the sharpest tool
+                modifier = {
+                    factor = 2.0
+                    OR = {
+                        any_relation = { type = rival is_alive = yes }
+                        any_relation = { type = nemesis is_alive = yes }
+                    }
+                    OR = { has_trait = ambitious has_trait = cynical }
+                    any_relation = { 
+                        type = oathbound 
+                        this = { intrigue > prowess } 
+                    }
+                }
+
+                # 2. How good is Oathbound?
+                modifier = {
+                    factor = 1.5
+                    any_relation = { type = oathbound this = { intrigue >= 15 } }
+                }
+                modifier = {
+                    factor = 2.0
+                    any_relation = { type = oathbound this = { intrigue >= 20 } }
+                }
+                modifier = {
+                    factor = 2.5
+                    any_relation = { type = oathbound this = { intrigue >= 25 } }
+                }
+                modifier = {
+                    factor = 3.0
+                    any_relation = { type = oathbound this = { intrigue >= 30 } }
+                }
+
+                # 3. Oathbound Personality
+                modifier = {
+                    factor = 1.5
+                    any_relation = { type = oathbound this = { OR = { has_trait = deceitful has_trait = callous has_trait = schemer } } }
+                }
+                modifier = {
+                    factor = 0.5
+                    any_relation = { type = oathbound this = { OR = { has_trait = just has_trait = honest } } }
+                }
+
+                add_character_flag = oathholder_prefers_murder
+
+                # Send the toast to the Oathbound (the player)
+                every_relation = {
+                    type = oathbound
+                    send_interface_toast = {
+                        type = event_toast_effect_bad # Red toast fits the "murder" vibe perfectly
+                        title = oathholder_decided_murder_toast
+                        left_icon = root
+                        right_icon = this
+                        custom_tooltip = oathholder_decided_murder_toast_desc
+                    }
+                }
+            }
+            # ---------------------------------------------------------
+            # PREFERENCE C: NEITHER (THE PACIFIST / FORGIVING)
+            # ---------------------------------------------------------
+            100 = {
+                # 1. Literal Mortal enemy - probably event content and nice characters realize this mfer gotta go
+                modifier = {
+                    factor = 0
+                    any_relation = { type = nemesis is_alive = yes }
+                }
+
+                # Boss Personality: Forgiving, kind, or just doesn't care
+                modifier = { factor = 3.0 has_trait = compassionate }
+                modifier = { factor = 3.0 has_trait = forgiving }
+                modifier = { factor = 2.0 has_trait = content }
+                modifier = { factor = 2.0 has_trait = trusting }
+                
+                # Boss Personality: would not allow a rival to just live unchallenged
+                modifier = { factor = 0.1 has_trait = wrathful }
+                modifier = { factor = 0.1 has_trait = vengeful }
+                modifier = { factor = 0.1 has_trait = sadistic }
+                modifier = { factor = 0.1 has_trait = ambitious }
+
+
+                # Send the toast to the Oathbound (the player)
+                every_relation = {
+                    type = oathbound
+                    send_interface_toast = {
+                        type = event_toast_effect_good # Or neutral
+                        title = oathholder_decided_neither_toast
+                        left_icon = root
+                        right_icon = this
+                        custom_tooltip = oathholder_decided_neither_toast_desc
+                    }
+                }
+            }
+        }
+    }
+}
+

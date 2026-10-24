@@ -1,0 +1,28 @@
+﻿lam_lf_personal_grievance_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_lf_mem1_until
+			var:lam_lf_mem1_until > lam_now_m
+			var:lam_lf_mem1_actor ?= liege
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem2_until
+			var:lam_lf_mem2_until > lam_now_m
+			var:lam_lf_mem2_actor ?= liege
+		}
+		add = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_lf_mem3_until
+			var:lam_lf_mem3_until > lam_now_m
+			var:lam_lf_mem3_actor ?= liege
+		}
+		add = 4
+	}
+	max = 12
+}

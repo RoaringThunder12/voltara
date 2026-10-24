@@ -268,7 +268,7 @@ life_extension.0290 = {
                     add = 10
                 }
                 modifier = {
-                    faith = { has_doctrine = doctrine_necromancy_accepted}
+                    rite = { rite_has_parameter = necromancy_accepted}
                     add = 10
                 }                                        
                 custom_tooltip = {
@@ -279,7 +279,7 @@ life_extension.0290 = {
             }
             30 = { 
                 modifier = {
-                    faith = { has_doctrine = doctrine_necromancy_shunned }
+                    rite = { rite_has_parameter = necromancy_shunned }
                     add = 10
                 } 
                 custom_tooltip = {
@@ -289,7 +289,7 @@ life_extension.0290 = {
             }
             10 = {
                 modifier = {
-                    faith = { has_doctrine = doctrine_necromancy_crime }
+                    rite = { rite_has_parameter = necromancy_criminal }
                     add = 10
                 }
                 modifier = {
@@ -383,7 +383,7 @@ life_extension.0260 = {
 
         trigger = {
             OR = { 
-                faith = { has_doctrine = doctrine_necromancy_accepted }
+                rite = { rite_has_parameter = necromancy_accepted }
                 vt_ek_is_necromancer = yes
             }
         }
@@ -393,7 +393,7 @@ life_extension.0260 = {
         name = life_extension.0260b
 
         trigger = {
-            faith = { has_doctrine = doctrine_necromancy_shunned }
+            rite = { rite_has_parameter = necromancy_shunned }
             NOT = { vt_ek_is_necromancer = yes }
         }
     }
@@ -402,7 +402,7 @@ life_extension.0260 = {
         name = life_extension.0260c
 
         trigger = {
-            faith = { has_doctrine = doctrine_necromancy_crime }
+            rite = { rite_has_parameter = necromancy_criminal }
             NOT = { vt_ek_is_necromancer = yes }
         }
     }
@@ -1468,7 +1468,7 @@ ek_court_position.0001 = {
 
 		if = {
 			limit = {
-				faith = { has_doctrine = doctrine_necromancy_shunned }
+				rite = { rite_has_parameter = necromancy_shunned }
 			}
 			add_piety = medium_piety_loss
 			stress_impact = {
@@ -1477,7 +1477,7 @@ ek_court_position.0001 = {
 		}	
 		else_if = {
 			limit = { 
-				faith = { has_doctrine = doctrine_necromancy_crime }
+				rite = { rite_has_parameter = necromancy_criminal }
 			}
 			add_piety = major_piety_loss
 			stress_impact = {
@@ -2081,7 +2081,7 @@ life_extension.0200 = { # Cloning Project Succeeds
 					}
 				}
 			}
-			cl_improve_creator_congenital_effect = { TRAIT = arcana }
+			cl_improve_creator_congenital_effect = { TRAIT = vt_ek_arcana GROUP = arcana }
 		}
 		else_if = {
 			limit = {
@@ -2092,7 +2092,7 @@ life_extension.0200 = { # Cloning Project Succeeds
 					}
 				}
 			}
-			cl_improve_creator_congenital_effect = { TRAIT = intellect }
+			cl_improve_creator_congenital_effect = { TRAIT = intellect GROUP = intellect }
 		}
 		else_if = {
 			limit = {
@@ -2103,7 +2103,7 @@ life_extension.0200 = { # Cloning Project Succeeds
 					}
 				}
 			}
-			cl_improve_creator_congenital_effect = { TRAIT = physique }
+			cl_improve_creator_congenital_effect = { TRAIT = physique GROUP = physique }
 		}
 		else_if = {
 			limit = {
@@ -2114,7 +2114,7 @@ life_extension.0200 = { # Cloning Project Succeeds
 					}
 				}
 			}
-			cl_improve_creator_congenital_effect = { TRAIT = beauty }
+			cl_improve_creator_congenital_effect = { TRAIT = beauty GROUP = beauty }
 		}
 
 		add_character_modifier = {

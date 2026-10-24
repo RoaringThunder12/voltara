@@ -1,0 +1,390 @@
+﻿# Living Factions - what the power behind the throne does in the crown's name (step_puppet).
+lam_pa_revoke_title = {
+	type = character_interaction
+	interaction = revoke_title_interaction
+	is_important = yes
+}
+lam_pa_grant_titles = {
+	type = character_interaction
+	interaction = grant_titles_interaction
+	is_important = yes
+}
+lam_pa_retract_vassal = {
+	type = character_interaction
+	interaction = retract_vassal_interaction
+	is_important = yes
+}
+lam_pa_grant_vassal = {
+	type = character_interaction
+	interaction = grant_vassal_interaction
+}
+lam_pa_designate_heir = {
+	type = character_interaction
+	interaction = designate_heir_interaction
+	is_important = yes
+}
+lam_pa_modify_contract = {
+	type = character_interaction
+	interaction = liege_modify_vassal_contract_interaction
+	is_important = yes
+}
+lam_pa_modify_contract_admin = {
+	type = character_interaction
+	interaction = admin_liege_modify_vassal_contract_interaction
+}
+lam_pa_modify_contract_nomad = {
+	type = character_interaction
+	interaction = nomad_liege_modify_vassal_contract_interaction
+}
+lam_pa_grant_governorship = {
+	type = character_interaction
+	interaction = grant_governorship_interaction
+}
+lam_pa_arrange_marriage = {
+	type = character_interaction
+	interaction = arrange_marriage_interaction
+	is_important = yes
+}
+lam_pa_break_betrothal = {
+	type = character_interaction
+	interaction = break_betrothal_interaction
+}
+lam_pa_execute = {
+	type = character_interaction
+	interaction = execute_prisoner_interaction
+	is_important = yes
+}
+lam_pa_offer_ward = {
+	type = character_interaction
+	interaction = offer_ward_interaction
+}
+lam_pa_call_dynasty_war = {
+	type = character_interaction
+	interaction = call_dynasty_member_to_war_interaction
+}
+lam_pa_gift_artifact = {
+	type = character_interaction
+	interaction = gift_artifact_interaction
+}
+lam_pa_declare_war = {
+	type = character_interaction
+	interaction = declare_war_interaction
+	is_important = yes
+}
+lam_pa_imprison = {
+	type = character_interaction
+	interaction = imprison_interaction
+	is_important = yes
+}
+lam_pa_release = {
+	type = character_interaction
+	interaction = release_from_prison_interaction
+}
+lam_pa_pardon = {
+	type = character_interaction
+	interaction = pardon_interaction
+}
+lam_pa_directive = {
+	type = character_interaction
+	interaction = give_vassal_directive_interaction
+	is_important = yes
+}
+lam_pa_alliance = {
+	type = character_interaction
+	interaction = negotiate_alliance_interaction
+	is_important = yes
+}
+lam_pa_demand_payment = {
+	type = character_interaction
+	interaction = demand_payment_interaction
+}
+lam_pa_claim_throne = {
+	type = character_interaction
+	interaction = claim_throne_interaction
+}
+lam_pa_fabricate_hook = {
+	type = character_interaction
+	interaction = fabricate_hook_interaction
+}
+lam_pa_grant_independence = {
+	type = character_interaction
+	interaction = grant_independence_interaction
+}
+lam_pa_purchase_truce = {
+	type = character_interaction
+	interaction = purchase_truce_interaction
+}
+lam_pa_invite_activity = {
+	type = character_interaction
+	interaction = invite_to_activity_interaction
+}
+lam_pa_gift = {
+	type = character_interaction
+	interaction = gift_interaction
+}
+lam_pa_offer_peace = {
+	type = character_interaction
+	interaction = offer_peace_interaction
+	is_important = yes
+}
+lam_pa_disinherit = {
+	type = character_interaction
+	interaction = disinherit_interaction
+	is_important = yes
+}
+lam_pa_disinherit_children = {
+	type = character_interaction
+	interaction = disinherit_children_interaction
+}
+lam_pa_restore_inheritance = {
+	type = character_interaction
+	interaction = restore_inheritance_interaction
+}
+lam_pa_legitimize = {
+	type = character_interaction
+	interaction = dynast_legitimize_bastard_interaction
+	is_important = yes
+}
+lam_pa_denounce = {
+	type = character_interaction
+	interaction = denounce_interaction
+}
+lam_pa_forgive = {
+	type = character_interaction
+	interaction = forgive_interaction
+}
+lam_pa_marry_off = {
+	type = character_interaction
+	interaction = marry_off_interaction
+	is_important = yes
+}
+lam_pa_divorce = {
+	type = character_interaction
+	interaction = divorce_character_interaction
+}
+lam_pa_make_concubine = {
+	type = character_interaction
+	interaction = make_concubine_interaction
+}
+lam_pa_dismiss_concubine = {
+	type = character_interaction
+	interaction = dismiss_concubine_interaction
+}
+lam_pa_offer_concubine = {
+	type = character_interaction
+	interaction = offer_concubine
+}
+lam_pa_find_concubine = {
+	type = character_interaction
+	interaction = find_concubine
+}
+lam_pa_educate_child = {
+	type = character_interaction
+	interaction = educate_child_interaction
+}
+lam_pa_offer_guardianship = {
+	type = character_interaction
+	interaction = offer_guardianship_interaction
+}
+lam_pa_remove_guardian = {
+	type = character_interaction
+	interaction = remove_guardian_interaction
+}
+lam_pa_child_language = {
+	type = character_interaction
+	interaction = make_child_learn_language_interaction
+}
+lam_pa_grant_new_ruler = {
+	type = character_interaction
+	interaction = grant_title_to_new_random_character_interaction
+}
+lam_pa_gift_claim = {
+	type = character_interaction
+	interaction = gift_claim_interaction
+}
+lam_pa_dungeon = {
+	type = character_interaction
+	interaction = move_to_dungeon_interaction
+}
+lam_pa_house_arrest = {
+	type = character_interaction
+	interaction = move_to_house_arrest_interaction
+}
+lam_pa_ransom = {
+	type = character_interaction
+	interaction = ransom_interaction
+}
+lam_pa_pay_ransom = {
+	type = character_interaction
+	interaction = pay_ransom_interaction
+}
+lam_pa_torture = {
+	type = character_interaction
+	interaction = torture_interaction
+}
+lam_pa_blind = {
+	type = character_interaction
+	interaction = blind_interaction
+}
+lam_pa_castrate = {
+	type = character_interaction
+	interaction = castrate_interaction
+}
+lam_pa_maim = {
+	type = character_interaction
+	interaction = systematically_maim_character_interaction
+}
+lam_pa_return_hostage = {
+	type = character_interaction
+	interaction = return_hostage_interaction
+}
+lam_pa_demand_artifact = {
+	type = character_interaction
+	interaction = demand_artifact_interaction
+}
+lam_pa_steal_artifact = {
+	type = character_interaction
+	interaction = start_stealing_back_artifact
+}
+lam_pa_murder = {
+	type = character_interaction
+	interaction = start_murder_interaction
+	is_important = yes
+}
+lam_pa_abduct = {
+	type = character_interaction
+	interaction = start_abduct
+}
+lam_pa_befriend = {
+	type = character_interaction
+	interaction = befriend_interaction
+}
+lam_pa_seduce = {
+	type = character_interaction
+	interaction = seduce_interaction
+}
+lam_pa_court = {
+	type = character_interaction
+	interaction = court_interaction
+}
+lam_pa_sway = {
+	type = character_interaction
+	interaction = sway_interaction
+}
+lam_pa_blackmail = {
+	type = character_interaction
+	interaction = blackmail_interaction
+}
+lam_pa_expose_secret = {
+	type = character_interaction
+	interaction = expose_secret_interaction
+}
+lam_pa_share_secrets = {
+	type = character_interaction
+	interaction = share_known_secrets_interaction
+}
+lam_pa_learn_language = {
+	type = character_interaction
+	interaction = learn_language_interaction
+}
+lam_pa_study_faith = {
+	type = character_interaction
+	interaction = study_faith_interaction
+}
+lam_pa_trial_by_combat = {
+	type = character_interaction
+	interaction = challenge_to_trial_by_combat_interaction
+}
+lam_pa_host_guest = {
+	type = character_interaction
+	interaction = host_honored_guest_interaction
+}
+lam_pa_perk_alliance = {
+	type = character_interaction
+	interaction = perk_alliance_interaction
+}
+lam_pa_buy_claim = {
+	type = character_interaction
+	interaction = buy_claim_interaction
+}
+lam_pa_sell_claim = {
+	type = character_interaction
+	interaction = sell_claim_interaction
+}
+lam_pa_strengthen_claim = {
+	type = character_interaction
+	interaction = strengthen_claim_interaction
+}
+lam_pa_dynast_claim = {
+	type = character_interaction
+	interaction = dynast_claim_title_interaction
+}
+lam_pa_end_dynasty_wars = {
+	type = character_interaction
+	interaction = dynast_end_dynasty_wars_interaction
+}
+lam_pa_demand_tributary = {
+	type = character_interaction
+	interaction = demand_tributary_interaction
+	is_important = yes
+}
+lam_pa_release_tributary = {
+	type = character_interaction
+	interaction = release_tributary_interaction
+}
+lam_pa_cease_tribute = {
+	type = character_interaction
+	interaction = cease_paying_tribute_interaction
+}
+lam_pa_tributary_contract = {
+	type = character_interaction
+	interaction = suzerain_modify_tributary_contract_interaction
+}
+lam_pa_hire_laamp = {
+	type = character_interaction
+	interaction = hire_laamp_mercenaries_interaction
+}
+lam_pa_evict_adventurer = {
+	type = character_interaction
+	interaction = evict_adventurer_interaction
+}
+lam_pa_promote_legend = {
+	type = character_interaction
+	interaction = ce1_ask_to_promote_legend_interaction
+}
+lam_pa_demand_conversion = {
+	type = character_interaction
+	interaction = demand_conversion_interaction
+}
+lam_pa_demand_conversion_vassal = {
+	type = character_interaction
+	interaction = demand_conversion_vassal_ruler_interaction
+}
+lam_pa_holy_order = {
+	type = character_interaction
+	interaction = send_to_holy_order_interaction
+}
+lam_pa_varangian = {
+	type = character_interaction
+	interaction = send_to_varangian_guard_interaction
+}
+lam_pa_request_white_peace = {
+	type = character_interaction
+	interaction = request_white_peace_interaction
+}
+lam_pa_request_victory = {
+	type = character_interaction
+	interaction = request_victory_interaction
+}
+lam_pa_request_legitimacy = {
+	type = character_interaction
+	interaction = request_legitimacy_interaction
+}
+lam_pa_request_unformed_title = {
+	type = character_interaction
+	interaction = request_unformed_title_interaction
+}
+lam_pa_enforce_succession = {
+	type = character_interaction
+	interaction = request_enforce_succession_interaction
+}

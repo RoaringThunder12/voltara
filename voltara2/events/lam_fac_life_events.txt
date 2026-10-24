@@ -1,0 +1,115 @@
+﻿namespace = lam_lf
+lam_lf.0100 = {
+	type = character_event
+	title = lam_lf.0100.t
+	desc = lam_lf.0100.desc
+	theme = diplomacy
+	left_portrait = {
+		character = root
+	}
+	right_portrait = {
+		character = var:lam_lf_caucus_rep
+	}
+	trigger = {
+		is_ai = no
+		lam_lf_caucus_window_trigger = yes
+	}
+	option = {
+		name = lam_lf.0100.a
+		trigger = {
+			var:lam_lf_caucus_rep = {
+				lam_st_office_available_trigger = yes
+				NOT = {
+					is_councillor_of = liege
+				}
+			}
+		}
+		custom_tooltip = lam_lf.0100.a.tt
+		hidden_effect = {
+			lam_lf_pledge_effect = yes
+		}
+	}
+	option = {
+		name = lam_lf.0100.b
+		trigger = {
+			prestige >= 150
+		}
+		custom_tooltip = lam_lf.0100.b.tt
+		hidden_effect = {
+			lam_lf_honor_caucus_effect = yes
+		}
+	}
+	option = {
+		name = lam_lf.0100.c
+		hidden_effect = {
+			if = {
+				limit = {
+					lam_lf_caucus_window_trigger = yes
+				}
+				remove_variable = lam_lf_caucus_open
+				remove_variable = lam_lf_split_grace
+			}
+		}
+	}
+}
+lam_lf.0300 = {
+	type = character_event
+	title = lam_lf.0300.t
+	desc = lam_lf.0300.desc
+	theme = diplomacy
+	left_portrait = {
+		character = scope:lam_lf_succ_a
+	}
+	right_portrait = {
+		character = scope:lam_lf_succ_b
+	}
+	trigger = {
+		is_ai = no
+		is_alive = yes
+		is_imprisoned = no
+		var:lam_bloc ?= scope:lam_ps_old
+		var:lam_lf_endorse_open ?= scope:lam_ps_old
+		var:lam_lf_endorse_deadline > lam_now_m
+		scope:lam_ps_old = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+		}
+		scope:lam_lf_succ_a = {
+			lam_fac_succ_eligible_trigger = {
+				LORD = scope:lam_ps_old.liege
+			}
+		}
+		scope:lam_lf_succ_b = {
+			lam_fac_succ_eligible_trigger = {
+				LORD = scope:lam_ps_old.liege
+			}
+		}
+	}
+	option = {
+		name = lam_lf.0300.a
+		custom_tooltip = lam_lf.0300.tt
+		hidden_effect = {
+			lam_lf_endorse_effect = {
+				WHO = scope:lam_lf_succ_a
+			}
+		}
+	}
+	option = {
+		name = lam_lf.0300.b
+		custom_tooltip = lam_lf.0300.tt
+		hidden_effect = {
+			lam_lf_endorse_effect = {
+				WHO = scope:lam_lf_succ_b
+			}
+		}
+	}
+	option = {
+		name = lam_lf.0300.c
+		hidden_effect = {
+			remove_variable = lam_lf_endorse_open
+			remove_variable = lam_lf_endorse_head
+			remove_variable = lam_lf_endorse_person
+			remove_variable = lam_lf_endorse_until
+		}
+	}
+}

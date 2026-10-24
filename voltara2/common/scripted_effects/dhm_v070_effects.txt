@@ -1,0 +1,249 @@
+﻿# =============================================================================
+# Dynasty & Household Manager v0.7.0 — Focus & Consolidation
+# =============================================================================
+
+dhm_v070_clear_preset_effect = {
+	remove_global_variable = dhm_setting_preset_quiet
+	remove_global_variable = dhm_setting_preset_living
+	remove_global_variable = dhm_setting_preset_chronicle
+	remove_global_variable = dhm_setting_preset_custom
+}
+
+dhm_v070_mark_custom_preset_effect = {
+	dhm_v070_clear_preset_effect = yes
+	set_global_variable = { name = dhm_setting_preset_custom value = yes }
+}
+
+# Quiet Steward changes presentation and maintenance load only. It never changes
+# the player's education, marriage, kinship, or courtier-automation choices.
+dhm_v070_apply_quiet_preset_effect = {
+	dhm_v070_clear_preset_effect = yes
+	set_global_variable = { name = dhm_setting_preset_quiet value = yes }
+	remove_global_variable = dhm_setting_extended_sagas
+	set_global_variable = { name = dhm_setting_stories_off value = yes }
+	remove_global_variable = dhm_setting_stories_quiet
+	remove_global_variable = dhm_setting_stories_lively
+	set_global_variable = { name = dhm_setting_marriage_stories_off value = yes }
+	remove_global_variable = dhm_setting_marriage_stories_all
+	set_global_variable = { name = dhm_setting_development_reports_disabled value = yes }
+	set_global_variable = { name = dhm_setting_council_disabled value = yes }
+	set_global_variable = { name = dhm_setting_performance_light value = yes }
+	remove_global_variable = dhm_setting_performance_deep
+	set_global_variable = { name = dhm_setting_legacy_mechanics_disabled value = yes }
+	set_global_variable = { name = dhm_setting_advanced_profiles_disabled value = yes }
+	remove_character_flag = dhm_v070_story_check_cooldown
+}
+
+# Living Household is the default: one useful education checkpoint, important
+# marriage problems, and paced family stories without the long saga chains.
+dhm_v070_apply_living_preset_effect = {
+	dhm_v070_clear_preset_effect = yes
+	set_global_variable = { name = dhm_setting_preset_living value = yes }
+	remove_global_variable = dhm_setting_extended_sagas
+	remove_global_variable = dhm_setting_stories_off
+	set_global_variable = { name = dhm_setting_stories_quiet value = yes }
+	remove_global_variable = dhm_setting_stories_lively
+	remove_global_variable = dhm_setting_marriage_stories_off
+	remove_global_variable = dhm_setting_marriage_stories_all
+	remove_global_variable = dhm_setting_development_reports_disabled
+	set_global_variable = { name = dhm_setting_council_disabled value = yes }
+	remove_global_variable = dhm_setting_performance_light
+	remove_global_variable = dhm_setting_performance_deep
+	set_global_variable = { name = dhm_setting_legacy_mechanics_disabled value = yes }
+	set_global_variable = { name = dhm_setting_advanced_profiles_disabled value = yes }
+	remove_character_flag = dhm_v070_story_check_cooldown
+}
+
+# Full Chronicle deliberately enables the connected sagas and yearly council.
+dhm_v070_apply_chronicle_preset_effect = {
+	dhm_v070_clear_preset_effect = yes
+	set_global_variable = { name = dhm_setting_preset_chronicle value = yes }
+	set_global_variable = { name = dhm_setting_extended_sagas value = yes }
+	remove_global_variable = dhm_setting_stories_off
+	remove_global_variable = dhm_setting_stories_quiet
+	set_global_variable = { name = dhm_setting_stories_lively value = yes }
+	remove_global_variable = dhm_setting_marriage_stories_off
+	set_global_variable = { name = dhm_setting_marriage_stories_all value = yes }
+	remove_global_variable = dhm_setting_development_reports_disabled
+	remove_global_variable = dhm_setting_council_disabled
+	remove_global_variable = dhm_setting_performance_light
+	remove_global_variable = dhm_setting_performance_deep
+	remove_global_variable = dhm_setting_legacy_mechanics_disabled
+	remove_global_variable = dhm_setting_advanced_profiles_disabled
+	remove_character_flag = dhm_v070_story_check_cooldown
+}
+
+# Existing saves keep every old setting and the old broad story pool. Custom is
+# an honest label for settings that may not match any preset. Only a fresh install
+# receives Living Household automatically, including upgrades from pre-v0.6 saves.
+dhm_v070_migration_effect = {
+	if = {
+		limit = {
+			NOR = {
+				has_global_variable = dhm_migration_0300
+				has_global_variable = dhm_migration_0400
+				has_global_variable = dhm_migration_0500
+				has_global_variable = dhm_migration_0600
+			}
+		}
+		dhm_v070_apply_living_preset_effect = yes
+	}
+	else = {
+		dhm_v070_mark_custom_preset_effect = yes
+		set_global_variable = { name = dhm_setting_extended_sagas value = yes }
+	}
+	set_global_variable = { name = dhm_migration_0700 value = yes }
+}
+
+# A manual scan performs matchmaking immediately but never rolls an unrelated
+# story or council. One completed review starts a short governor, and an existing
+# assisted proposal must be answered before another review may begin.
+dhm_v070_manual_household_scan_effect = {
+	if = {
+		limit = { dhm_v080_auto_pending_proposal_trigger = yes }
+		set_variable = { name = dhm_v080_auto_manual_scan_result value = flag:proposal_pending days = 1 }
+	}
+	else_if = {
+		limit = {
+			OR = {
+				has_character_flag = dhm_v080_birthday_story_pending
+				has_character_flag = dhm_v080_visible_followup_pending
+			}
+		}
+		# The requested review remains available; no 30-day governor is spent.
+		set_variable = { name = dhm_v080_auto_manual_scan_result value = flag:story_pending days = 1 }
+	}
+	else_if = {
+		limit = { has_character_flag = dhm_v080_auto_manual_scan_cooldown }
+		set_variable = { name = dhm_v080_auto_manual_scan_result value = flag:cooldown days = 1 }
+	}
+	else = {
+		remove_variable = dhm_v080_auto_manual_scan_result
+		add_character_flag = { flag = dhm_v080_auto_manual_scan_cooldown days = 30 }
+		remove_character_flag = dhm_marriage_maintenance_cooldown
+		add_character_flag = dhm_v070_skip_story_pulse
+		dhm_process_household_effect = yes
+		remove_character_flag = dhm_v070_skip_story_pulse
+	}
+}
+
+# Applying a preset changes optional bonuses without erasing identity, reputation
+# flags, Chronicle counters, relationships, or memories.
+dhm_v070_refresh_optional_modifiers_effect = {
+	if = {
+		limit = { has_global_variable = dhm_setting_legacy_mechanics_disabled }
+		dhm_v050_clear_legacy_modifier_effect = yes
+		remove_character_modifier = dhm_reputation_generous_modifier
+		remove_character_modifier = dhm_reputation_strict_modifier
+		remove_character_modifier = dhm_reputation_guardian_modifier
+		remove_character_modifier = dhm_reputation_traditional_modifier
+	}
+	else = { dhm_v050_apply_legacy_modifier_effect = yes }
+}
+
+# The recommended preset uses a smaller, non-overlapping story pool. Connected
+# courtship, heir and identity sagas remain exclusive to Full Chronicle.
+dhm_v070_living_story_pulse_effect = {
+	save_scope_as = dhm_manager
+	if = {
+		limit = {
+			is_alive = yes
+			is_ai = no
+			NOT = { has_character_flag = dhm_living_story_cooldown }
+			NOT = { has_character_flag = dhm081_aftermath_pause }
+			NOT = { has_global_variable = dhm_setting_stories_off }
+		}
+		random_list = {
+			18 = {
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:letter } any_close_family_member = { dhm_v040_letter_relative_trigger = yes } }
+				random_close_family_member = { limit = { dhm_v040_letter_relative_trigger = yes } save_scope_as = dhm_story_relative add_character_flag = { flag = dhm_living_letter_recent years = 5 } }
+				set_variable = { name = dhm081_last_story_family value = flag:letter years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_living_family.0100 days = { 4 12 } }
+			}
+			12 = {
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:school } any_close_family_member = { dhm_v040_student_trigger = yes } }
+				random_close_family_member = {
+					limit = { dhm_v040_student_trigger = yes }
+					save_scope_as = dhm_story_child
+					add_character_flag = { flag = dhm_living_education_recent years = 3 }
+					random_relation = { type = dhm_specialist_tutor limit = { dhm_v082_story_tutor_eligible_trigger = yes } save_scope_as = dhm_story_tutor }
+				}
+				set_variable = { name = dhm081_last_story_family value = flag:school years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				if = { limit = { dhm_v081_learned_to_listen_trigger = yes } dhm_v081_school_callback_effect = yes }
+				else = { trigger_event = { id = dhm_living_family.0200 days = { 4 12 } } }
+			}
+			18 = {
+				trigger = {
+					NOT = { var:dhm081_last_story_family ?= flag:dispute } any_close_family_member = {
+						count >= 2
+						dhm_v040_dispute_relative_trigger = yes
+					}
+				}
+				random_close_family_member = { limit = { dhm_v040_dispute_relative_trigger = yes } save_scope_as = dhm_dispute_first }
+				random_close_family_member = { limit = { dhm_v040_dispute_relative_trigger = yes this != scope:dhm_dispute_first dhm_v090_dispute_pair_trigger = { OTHER = scope:dhm_dispute_first } } save_scope_as = dhm_dispute_second }
+				if = {
+					limit = { exists = scope:dhm_dispute_first exists = scope:dhm_dispute_second }
+					scope:dhm_dispute_first = { add_character_flag = { flag = dhm_living_dispute_recent years = 4 } }
+					scope:dhm_dispute_second = { add_character_flag = { flag = dhm_living_dispute_recent years = 4 } }
+					set_variable = { name = dhm081_last_story_family value = flag:dispute years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+					trigger_event = { id = dhm_living_family.0400 days = { 4 12 } }
+				}
+			}
+			10 = {
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:ceremony } any_close_family_member = { dhm_v040_ceremony_relative_trigger = yes } }
+				random_close_family_member = { limit = { dhm_v040_ceremony_relative_trigger = yes } save_scope_as = dhm_ceremony_relative add_character_flag = { flag = dhm_living_ceremony_recent years = 5 } }
+				set_variable = { name = dhm081_last_story_family value = flag:ceremony years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_living_family.0600 days = { 4 12 } }
+			}
+			14 = {
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:ambition } any_close_family_member = { dhm_v050_ambition_target_trigger = yes } }
+				random_close_family_member = { limit = { dhm_v050_ambition_target_trigger = yes } save_scope_as = dhm_ambition_target add_character_flag = { flag = dhm_ambition_story_recent years = 6 } }
+				set_variable = { name = dhm081_last_story_family value = flag:ambition years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				trigger_event = { id = dhm_legacy.0200 days = { 4 12 } }
+			}
+			10 = {
+				trigger = { NOT = { var:dhm081_last_story_family ?= flag:officer } any_courtier = { dhm_v060_officer_trigger = yes dhm_v090_officer_review_due_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } }
+				random_courtier = { limit = { dhm_v060_officer_trigger = yes dhm_v090_officer_review_due_trigger = yes NOT = { has_character_flag = dhm_officer_story_recent } } save_scope_as = dhm_story_officer add_character_flag = { flag = dhm_officer_story_recent years = 2 } }
+				set_variable = { name = dhm081_last_story_family value = flag:officer years = 4 }
+				dhm_apply_living_story_cooldown_effect = yes
+				dhm_v081_capture_officer_role_effect = yes
+				dhm_v090_begin_officer_review_effect = yes
+				if = { limit = { dhm_v081_officer_self_reliant_trigger = yes } trigger_event = { id = dhm_saga.0110 days = { 4 12 } } }
+				else = { trigger_event = { id = dhm_legacy.0150 days = { 4 12 } } }
+			}
+			18 = { }
+		}
+	}
+}
+
+# One click fills vacant offices with distinct, eligible courtiers. Existing live
+# appointments are respected; no opinion, gold, prestige, or loyalty is invented.
+dhm_v070_appoint_best_officers_effect = {
+	save_scope_as = dhm_manager
+	if = {
+		limit = { NOT = { has_variable = dhm_officer_steward } any_courtier = { dhm_v050_officer_candidate_trigger = yes } }
+		ordered_courtier = { limit = { dhm_v050_officer_candidate_trigger = yes } order_by = stewardship position = 0 check_range_bounds = no save_scope_as = dhm_v070_best_officer }
+		if = { limit = { exists = scope:dhm_v070_best_officer } set_variable = { name = dhm_officer_steward value = scope:dhm_v070_best_officer } scope:dhm_v070_best_officer = { add_character_flag = dhm_office_steward dhm_v071_initialize_officer_loyalty_effect = yes dhm_v080_begin_officer_tenure_effect = yes } }
+	}
+	if = {
+		limit = { NOT = { has_variable = dhm_officer_matchmaker } any_courtier = { dhm_v050_officer_candidate_trigger = yes } }
+		ordered_courtier = { limit = { dhm_v050_officer_candidate_trigger = yes } order_by = diplomacy position = 0 check_range_bounds = no save_scope_as = dhm_v070_best_officer }
+		if = { limit = { exists = scope:dhm_v070_best_officer } set_variable = { name = dhm_officer_matchmaker value = scope:dhm_v070_best_officer } scope:dhm_v070_best_officer = { add_character_flag = dhm_office_matchmaker dhm_v071_initialize_officer_loyalty_effect = yes dhm_v080_begin_officer_tenure_effect = yes } }
+	}
+	if = {
+		limit = { NOT = { has_variable = dhm_officer_tutor } any_courtier = { dhm_v050_officer_candidate_trigger = yes } }
+		ordered_courtier = { limit = { dhm_v050_officer_candidate_trigger = yes } order_by = learning position = 0 check_range_bounds = no save_scope_as = dhm_v070_best_officer }
+		if = { limit = { exists = scope:dhm_v070_best_officer } set_variable = { name = dhm_officer_tutor value = scope:dhm_v070_best_officer } scope:dhm_v070_best_officer = { add_character_flag = dhm_office_tutor dhm_v071_initialize_officer_loyalty_effect = yes dhm_v080_begin_officer_tenure_effect = yes } }
+	}
+	if = {
+		limit = { NOT = { has_variable = dhm_officer_chronicler } any_courtier = { dhm_v050_officer_candidate_trigger = yes } }
+		ordered_courtier = { limit = { dhm_v050_officer_candidate_trigger = yes } order_by = learning position = 0 check_range_bounds = no save_scope_as = dhm_v070_best_officer }
+		if = { limit = { exists = scope:dhm_v070_best_officer } set_variable = { name = dhm_officer_chronicler value = scope:dhm_v070_best_officer } scope:dhm_v070_best_officer = { add_character_flag = dhm_office_chronicler dhm_v071_initialize_officer_loyalty_effect = yes dhm_v080_begin_officer_tenure_effect = yes } }
+	}
+	custom_tooltip = dhm_v070_appoint_best_officers_tt
+}

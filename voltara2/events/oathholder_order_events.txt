@@ -1,0 +1,195 @@
+﻿namespace = oathholder_order_events
+
+# Oathholder compels the Oathbound to declare war and push their claim
+oathholder_order_events.0100 = {
+    type = character_event
+    title = oathholder_order_events.0100.t
+    desc = oathholder_order_events.0100.desc
+    theme = realm # Changed from seduction
+
+    # Safety net: never open the event if no pushable claim exists at fire time
+    trigger = {
+        scope:my_oathholder = {
+            any_claim = {
+                holder = {
+                    oathbound_valid_claim_war_target_trigger = {
+                        OATHBOUND = root
+                        OATHHOLDER = scope:my_oathholder
+                    }
+                }
+            }
+        }
+    }
+
+    override_background = {
+        reference = throne_room
+    }
+
+    left_portrait = {
+        character = root
+        animation = marshal 
+    }
+
+    right_portrait = {
+        character = scope:my_oathholder
+        animation = scheme
+    }
+
+    lower_right_portrait = {
+        character = scope:chosen_target
+        animation = personality_bold
+    }
+
+    immediate = {
+        # Pick the best claim the Oathholder holds that we can actually push
+        scope:my_oathholder = {
+            random_claim = {
+                limit = {
+                    tier <= tier_kingdom # No oathbound CB exists above kingdom tier
+                    holder = {
+                        oathbound_valid_claim_war_target_trigger = {
+                            OATHBOUND = root
+                            OATHHOLDER = scope:my_oathholder
+                        }
+                    }
+                }
+                weight = {
+                    base = 1
+                    modifier = { add = 100 NOT = { scope:my_oathholder = { has_weak_claim_on = prev } } }
+                    modifier = { add = 75   tier >= tier_duchy }
+                    modifier = { add = 50   tier >= tier_kingdom }
+                }
+                save_scope_as = chosen_claim
+            }
+        }
+        scope:chosen_claim = {
+            holder = { save_scope_as = chosen_target }
+        }
+    }
+
+    # OPTION A: HONOR THE OATH (Start the War)
+    option = {
+        name = oathholder_order_events.0100.a
+
+        # KINGDOM CLAIM
+        if = {
+            limit = { scope:chosen_claim = { tier >= tier_kingdom } }
+            start_war = {
+                cb = oathbound_kingdom_claim_conquest_cb # NOTE: Rename your CBs to match this!
+                target = scope:chosen_target
+                target_title = scope:chosen_claim
+            }
+        }
+        # DUCHY CLAIM
+        else_if = {
+            limit = { scope:chosen_claim = { tier = tier_duchy } }
+            start_war = {
+                cb = oathbound_duchy_conquest_cb
+                target = scope:chosen_target
+                target_title = scope:chosen_claim
+            }
+        }
+        # COUNTY CLAIM
+        else_if = {
+            limit = { scope:chosen_claim = { tier < tier_duchy } }
+            start_war = {
+                cb = oathbound_county_conquest_cb
+                target = scope:chosen_target
+                target_title = scope:chosen_claim
+            }
+        }
+
+        # --- FIRE SUCCESS EVENT ---
+        hidden_effect = {
+            scope:my_oathholder = { save_scope_as = my_oathholder }
+            scope:chosen_claim = { save_scope_as = chosen_claim }
+            scope:chosen_target = { save_scope_as = chosen_target }
+            trigger_event = {
+                id = oathholder_order_events.0101
+                days = 1
+            }
+        }
+    }
+
+    # OPTION B: BREAK THE OATH (Refuse)
+    option = {
+        name = oathholder_order_events.0100.b
+        
+        # Breaking an oath is deeply dishonorable
+        add_prestige = -350
+        scope:my_oathholder = {
+            add_opinion = {
+                target = root
+                modifier = oathbound_broke_oath_opinion
+            }
+        }
+
+        # --- FIRE FAILURE EVENT ---
+        hidden_effect = {
+            scope:my_oathholder = { save_scope_as = my_oathholder }
+            scope:chosen_claim = { save_scope_as = chosen_claim }
+            scope:chosen_target = { save_scope_as = chosen_target }
+            trigger_event = {
+                id = oathholder_order_events.0102
+                days = 1
+            }
+        }
+    }
+}
+
+# SUCCESS (War Declared)
+oathholder_order_events.0101 = {
+    type = character_event
+    title = oathholder_order_events.0101.t
+    desc = oathholder_order_events.0101.desc
+    theme = realm
+
+    override_background = {
+        reference = throne_room
+    }
+
+    left_portrait = {
+        character = root
+        animation = proud
+    }
+
+    right_portrait = {
+        character = scope:my_oathholder
+        animation = approval
+    }
+
+    lower_right_portrait = {
+        character = scope:chosen_target
+        animation = worry
+    }
+
+    option = {
+        name = oathholder_order_events.0101.a
+    }
+}
+
+# FAILURE (Oath Broken)
+oathholder_order_events.0102 = {
+    type = character_event
+    title = oathholder_order_events.0102.t
+    desc = oathholder_order_events.0102.desc
+    theme = realm
+
+    override_background = {
+        reference = throne_room
+    }
+
+    left_portrait = {
+        character = root
+        animation = shame
+    }
+
+    right_portrait = {
+        character = scope:my_oathholder
+        animation = anger
+    }
+
+    option = {
+        name = oathholder_order_events.0102.a
+    }
+}

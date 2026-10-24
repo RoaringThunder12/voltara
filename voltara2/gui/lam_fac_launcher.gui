@@ -1,0 +1,37 @@
+﻿# Living Factions - a launcher button beside the main tabs (a scripted widget; vanilla's hud is untouched).
+# Sits below Love & Marriage's launcher when both are present.
+widget = {
+	name = "lam_fac_launcher"
+	parentanchor = top|right
+	position = { 0 720 }
+	size = { 50 64 }
+	allow_outside = yes
+	visible = "[GetPlayer.IsValid]"
+
+	vbox = {
+		visible = "[And( GetPlayer.IsValid, And( GetScriptedGui('vip_access').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ), And( Not( IsPauseMenuShown ), And( IsDefaultGUIMode, Not( IsRightWindowOpen ) ) ) ) )]"
+		alwaystransparent = no
+		filter_mouse = all
+		margin = { 3 8 }
+		spacing = 4
+
+		background = {
+			texture = "gfx/interface/skinned/hud_maintab_bg_middle.dds"
+			spriteType = CorneredTiled
+			texture_density = 2
+			margin = { 0 -20 }
+			alpha = 0.9
+		}
+
+		widget_hud_main_tab = {
+			blockoverride "maintab_button"
+			{
+				texture = "gfx/interface/lam_hud/lam_tab_factions.dds"
+				onclick = "[GetVariableSystem.Clear( 'lam_fac_vanilla' )]"
+				onclick = "[GetScriptedGui('lam_sgui_factions_toggle').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				down = "[GetPlayer.MakeScope.Var('lam_factions_open').IsSet]"
+				tooltip = "lam_hud_factions_tt"
+			}
+		}
+	}
+}

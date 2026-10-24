@@ -1,0 +1,39 @@
+﻿l_french:
+kCAFG_show_province_rites_button_tooltip: "Afficher les [faiths|E] dans [Province.GetNameNoTooltip]"
+kCAFG_hide_province_rites_button_tooltip: "Afficher les [faiths|E] dans [Province.GetNameNoTooltip]"
+kCAFG_province_rites_number_show_tooltip: "Nombre de [faiths|E] dans [Province.GetNameNoTooltip]\n#I Cliquer pour $kCAFG_show_province_rites_button_tooltip$#!"
+kCAFG_province_rites_number_hide_tooltip: "Nombre de [faiths|E] dans [Province.GetNameNoTooltip]\n#I Cliquer pour $kCAFG_hide_province_rites_button_tooltip$#!"
+
+
+kCAFG_province_rites_window_header_title: "[faiths|E] dans [Province.GetNameNoTooltip]"
+kCAFG_province_rites_window_amount_description: "Nombre de [Rite.GetAdherentNamePluralNoTooltip|e] dans [Province.GetNameNoTooltip]"
+
+kCAFG_province_rites_window_rite_tension_title: "#E Tension#!:"
+kCAFG_province_rites_window_rite_tension_tooltip: "#T [rite_tension|E] dans [Province.GetNameNoTooltip]#!\n[Concept('rite_tension_baseline', 'Base')|E] : [Province.MakeScope.Var('kCAFG_target_rite_tension').GetValue|v0%][AddLocalizationIf(NotEqualTo_CFixedPoint(Province.MakeScope.ScriptValue('V_kCAFG_rite_tension_monthly_change_desc'), '(CFixedPoint)0'), 'kCAFG_province_rites_window_rite_tension_breakdown')]"
+kCAFG_province_rites_window_rite_tension_breakdown: "\n\n$kCAFG_rite_tension_monthly_change_tt$\n[Province.MakeScope.GetScriptValueDesc('V_kCAFG_rite_tension_monthly_change_desc')]"
+
+kCAFG_province_rite_same_tooltip_desc: "Même [faith|e] que le [holder|E] du [county|E]"
+kCAFG_province_rite_tooltip_desc_tension_baseline_contribution: "#S Contribution à la [Concept('rite_tension_baseline', 'Tension de Base')|E] : [Scope.Story.MakeScope.ScriptValue('V_kCAFG_struct_tension_baseline_contribution')|v2%]#!"
+kCAFG_province_rite_tooltip_desc_fervor_average: "Augmentation dûe à la [fervor|E]: "
+kCAFG_target_rite_view_of_this_rite: "Les #EMP [Rite.GetAdherentNamePluralNoTooltip]#! considèrent les #EMP [kCAFG_target_rite.GetAdherentNamePluralNoTooltip]#! comme [Rite.GetRelationNameTo( kCAFG_target_rite )|V]"
+kCAFG_this_rite_view_of_target_rite: "Les #EMP [kCAFG_target_rite.GetAdherentNamePluralNoTooltip]#! considèrent les #EMP [Rite.GetAdherentNamePluralNoTooltip]#! comme [kCAFG_target_rite.GetRelationNameTo( Rite.Self )|V]"
+kCAFG_province_rite_tooltip_desc_pluralistic: "@change_down_good_2!est #P [GetDoctrineType('doctrine_pluralism_pluralistic').GetBaseName]#!"
+kCAFG_province_rite_tooltip_desc_fundamentalist: "@change_up_bad_2!est #N [GetDoctrineType('doctrine_pluralism_fundamentalist').GetBaseName]#!"
+kCAFG_province_faith_tooltip_desc_fervor: "[fervor|E]: [Faith.GetFervor|=+0]%"
+kCAFG_province_rite_tooltip_desc_province_has_church_holding: "@change_up_bad_1![barony|E] contient un #zero_value [Province.GetHolding.GetType.GetName|e]#!"
+kCAFG_province_rite_opinion_holder_different_rite_county_opinion_mult: "Impact de l'$MOD_COUNTY_OPINION_DIFFERENT_FAITH_MULT$: [Province.GetCounty.GetCount.MakeScope.ScriptValue('V_kCAFG_character_different_rite_county_opinion_mult')|+0%][AddLocalizationIf(NotEqualTo_CFixedPoint(Province.GetCounty.GetCount.MakeScope.ScriptValue('V_kCAFG_character_different_rite_county_opinion_mult_bonuses'), '(CFixedPoint)0'), 'kCAFG_province_rite_opinion_holder_different_rite_county_opinion_mult_bonuses')][AddLocalizationIf(NotEqualTo_CFixedPoint(Province.GetCounty.GetCount.MakeScope.ScriptValue('V_kCAFG_character_different_rite_county_opinion_mult_maluses'), '(CFixedPoint)0'), 'kCAFG_province_rite_opinion_holder_different_rite_county_opinion_mult_maluses')]"
+kCAFG_province_rite_opinion_holder_different_rite_county_opinion_mult_bonuses: "\n[Province.GetCounty.GetCount.MakeScope.GetScriptValueDesc('V_kCAFG_character_different_rite_county_opinion_mult_bonuses')]"
+kCAFG_province_rite_opinion_holder_different_rite_county_opinion_mult_maluses: "\n[Province.GetCounty.GetCount.MakeScope.GetScriptValueDesc('V_kCAFG_character_different_rite_county_opinion_mult_maluses')]"
+
+#kCAFG_province_faith_specific_tension_breakdown_tooltip: "Tension Contribution : [GuiScope.SetRoot(Faith.MakeScope).AddScope('kCAFG_target_rite', Province.GetCounty.GetCount.GetFaith.MakeScope).AddScope('kCAFG_province', Province.MakeScope).ScriptValue('V_kCAFG_rite_tension_target_baseline_complete')|0%]\n[GuiScope.SetRoot(Faith.MakeScope).AddScope('kCAFG_target_rite', Province.GetCounty.GetCount.GetFaith.MakeScope).AddScope('kCAFG_province', Province.MakeScope).GetScriptValueDesc('V_kCAFG_rite_tension_target_baseline_complete')|%]"
+
+kCAFG_RITE_OPEN_MAPMODE_TOOLTIP_TITLE: "#T Afficher le $MAP_MODE$ [Faith.GetAdjectiveNoTooltip]#!"
+kCAFG_RITES_OPEN_MAPMODE_TOOLTIP_TITLE: "#T Afficher la $MAP_MODE$ [faiths|e]#!"
+kCAFG_RITE_OPEN_MAPMODE_TOOLTIP_RC: "#I Clic-droit pour afficher le $MAP_MODE$ [Faith.GetAdjectiveNoTooltip]#!"
+
+kCAFG_rite_tension_monthly_change_tt: "#S Évolution Mensuelle: [Province.MakeScope.ScriptValue('V_kCAFG_rite_tension_monthly_change_desc')|v2-=%]#!"
+kCAFG_rite_tension_monthly_drift_tt: "Dérive vers la [Concept('rite_tension_baseline', 'Valeur de Base')|E]"
+kCAFG_rite_tension_on_lieges_warring_faiths_tt: "Un de nos [rulers|E] est en [holy_war|E] contre une [faith|E] de la [barony|E]"
+
+kCAFG_province_rites_tolerance_law_tt: "#T $game_concept_law$ de [rite_tolerance_law|E] Active#!\n[AddLocalizationIf(EqualTo_CFixedPoint(Province.MakeScope.ScriptValue('V_kCAFG_rite_tolerance_law_value'), '(CFixedPoint)-1'), 'kCAFG_rite_intolerant_law')][AddLocalizationIf(EqualTo_CFixedPoint(Province.MakeScope.ScriptValue('V_kCAFG_rite_tolerance_law_value'), '(CFixedPoint)0'), 'kCAFG_rite_indifferent_law')][AddLocalizationIf(EqualTo_CFixedPoint(Province.MakeScope.ScriptValue('V_kCAFG_rite_tolerance_law_value'), '(CFixedPoint)1'), 'kCAFG_rite_tolerant_law')]\n[GetScriptedGui('kCAFG_province_active_rite_tolerance_law').BuildTooltip(GuiScope.SetRoot(Province.MakeScope).End)]"
+kCAFG_province_rites_tolerance_law_enforcer_tt: "Appliquée par [THIS.Char.GetName]"

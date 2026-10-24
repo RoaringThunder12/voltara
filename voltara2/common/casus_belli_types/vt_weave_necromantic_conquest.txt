@@ -3,7 +3,9 @@
  war_name = vt_weave_necromantic_conquest_name cb_name = vt_weave_necromantic_conquest
  allowed_for_character = { vt_weave_necromancer = yes is_landed = yes }
  allowed_against_character = { scope:defender = { is_landed = yes NOT = { voltara_is_ruins_placeholder = yes } } }
- valid_to_start = { scope:attacker = { vt_weave_necromancer = yes is_landed = yes } scope:target = { tier = tier_county vt_weave_order = yes } scope:target = { any_neighboring_county = { holder = { OR = { this = scope:attacker target_is_liege_or_above = scope:attacker } } } } }
+ valid_to_start = {
+ voltara_keeper_war_permitted = yes
+ scope:attacker = { vt_weave_necromancer = yes is_landed = yes } scope:target = { tier = tier_county vt_weave_order = yes } scope:target = { any_neighboring_county = { holder = { OR = { this = scope:attacker target_is_liege_or_above = scope:attacker } } } } }
  on_primary_attacker_death = inherit on_primary_defender_death = inherit
  should_invalidate = { NOT = { any_in_list = { list = target_titles holder = { OR = { this = scope:defender target_is_liege_or_above = scope:defender } } } } }
  attacker_capital_gives_war_score = no full_occupation_by_defender_gives_victory = no

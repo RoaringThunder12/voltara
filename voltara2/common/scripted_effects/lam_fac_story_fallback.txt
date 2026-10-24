@@ -1,0 +1,187 @@
+﻿lam_st_opportunistic_plan_effect = {
+	set_variable = {
+		name = lam_pd_plan
+		value = flag:wait
+	}
+	set_variable = {
+		name = lam_pd_plan_score
+		value = 20
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_head_demand_cd
+			}
+			NOT = {
+				has_variable = lam_fac_promise
+			}
+			lam_pd_relief_priority_value > var:lam_pd_plan_score
+			AND = {
+				has_variable = lam_pd_gr_total
+				var:lam_pd_gr_total > 0
+			}
+		}
+		set_variable = {
+			name = lam_pd_plan
+			value = flag:petition
+		}
+		set_variable = {
+			name = lam_pd_plan_score
+			value = lam_pd_relief_priority_value
+		}
+	}
+	if = {
+		limit = {
+			gold >= 150
+			NOT = {
+				has_variable = lam_pd_aid_cd
+			}
+			any_in_list = {
+				variable = lam_fac_members
+				is_alive = yes
+				var:lam_bloc ?= prev
+				gold < 0
+			}
+			AND = {
+				has_variable = lam_pd_plan_score
+				var:lam_pd_plan_score < 45
+			}
+		}
+		set_variable = {
+			name = lam_pd_plan
+			value = flag:aid
+		}
+		set_variable = {
+			name = lam_pd_plan_score
+			value = 45
+		}
+	}
+	if = {
+		limit = {
+			gold >= 100
+			NOT = {
+				has_variable = lam_fac_recruit_cd
+			}
+			AND = {
+				trigger_if = {
+					limit = {
+						has_variable = lam_fac_count
+					}
+					var:lam_fac_count < 5
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+			AND = {
+				has_variable = lam_pd_plan_score
+				var:lam_pd_plan_score < 30
+			}
+			lam_pd_recruit_needed_trigger = yes
+		}
+		set_variable = {
+			name = lam_pd_plan
+			value = flag:recruit
+		}
+		set_variable = {
+			name = lam_pd_plan_score
+			value = 30
+		}
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_pd_pact_partner
+			}
+			AND = {
+				has_variable = lam_pd_plan_score
+				var:lam_pd_plan_score < 25
+			}
+			OR = {
+				lam_pol_office_excluded_trigger = yes
+				AND = {
+					has_variable = lam_pd_gr_repression
+					var:lam_pd_gr_repression >= 10
+				}
+			}
+		}
+		set_variable = {
+			name = lam_pd_plan
+			value = flag:pact
+		}
+		set_variable = {
+			name = lam_pd_plan_score
+			value = 25
+		}
+	}
+	set_variable = {
+		name = lam_pd_plan_since
+		value = lam_now_m
+	}
+	if = {
+		limit = {
+			var:lam_pd_plan ?= flag:petition
+			OR = {
+				NOT = {
+					has_variable = lam_st_retry_after
+				}
+				var:lam_st_retry_after <= lam_now_m
+			}
+		}
+		if = {
+			limit = {
+				AND = {
+					has_variable = lam_pd_gr_office
+					var:lam_pd_gr_office >= 10
+				}
+			}
+			lam_pd_begin_effect = {
+				KIND = council
+			}
+		}
+		else_if = {
+			limit = {
+				AND = {
+					has_variable = lam_pd_gr_wealth
+					var:lam_pd_gr_wealth >= 10
+				}
+			}
+			lam_pd_begin_effect = {
+				KIND = gold
+			}
+		}
+		else_if = {
+			limit = {
+				AND = {
+					has_variable = lam_pd_gr_succession
+					var:lam_pd_gr_succession >= 10
+				}
+				has_variable = lam_fac_heir
+			}
+			lam_pd_begin_effect = {
+				KIND = heir
+			}
+		}
+		else = {
+			lam_pd_begin_demand_effect = yes
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_pd_plan ?= flag:aid
+		}
+		lam_pd_aid_member_effect = yes
+	}
+	else_if = {
+		limit = {
+			var:lam_pd_plan ?= flag:recruit
+		}
+		lam_pd_recruit_search_effect = yes
+	}
+	else_if = {
+		limit = {
+			var:lam_pd_plan ?= flag:pact
+		}
+		lam_pd_pact_search_effect = yes
+	}
+}

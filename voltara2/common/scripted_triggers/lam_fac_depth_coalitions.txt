@@ -1,0 +1,158 @@
+﻿lam_pd_pact_pair_trigger = {
+	always = no
+	$A$ = {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		exists = liege
+		NOT = {
+			has_variable = lam_pd_pact_partner
+		}
+		NOT = {
+			has_variable = lam_fac_disband
+		}
+	}
+	$B$ = {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		liege ?= $A$.liege
+		NOT = {
+			this = $A$
+		}
+		NOT = {
+			has_variable = lam_pd_pact_partner
+		}
+		NOT = {
+			has_variable = lam_fac_disband
+		}
+	}
+	OR = {
+		AND = {
+			trigger_if = {
+				limit = {
+					lam_ob_heir_pair_trigger = {
+						A = $A$
+						B = $B$
+					}
+				}
+				$A$.var:lam_fac_heir = {
+					is_alive = yes
+				}
+			}
+			trigger_else = {
+				always = no
+			}
+		}
+		AND = {
+			$A$ = {
+				lam_pol_office_excluded_trigger = yes
+			}
+			$B$ = {
+				lam_pol_office_excluded_trigger = yes
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_fac_goal ?= 1
+			}
+			$B$ = {
+				var:lam_fac_goal ?= 1
+			}
+			$A$.liege = {
+				OR = {
+					has_realm_law = crown_authority_2
+					has_realm_law = crown_authority_3
+				}
+			}
+		}
+		AND = {
+			$A$ = {
+				AND = {
+					has_variable = lam_pd_gr_repression
+					var:lam_pd_gr_repression >= 10
+				}
+			}
+			$B$ = {
+				AND = {
+					has_variable = lam_pd_gr_repression
+					var:lam_pd_gr_repression >= 10
+				}
+			}
+		}
+	}
+}
+lam_pd_pact_current_trigger = {
+	is_alive = yes
+	has_variable = lam_bloc_lead
+	has_variable = lam_pd_pact_partner
+	var:lam_pd_pact_kind ?= flag:exchange
+	AND = {
+		has_variable = lam_pd_pact_until
+		var:lam_pd_pact_until > lam_now_m
+	}
+	liege ?= var:lam_pd_pact_lord
+	var:lam_fac_rec ?= var:lam_pd_pact_record
+	is_target_in_variable_list = {
+		name = lam_fac_allies
+		target = var:lam_pd_pact_partner
+	}
+	var:lam_pd_pact_partner = {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		liege ?= prev.liege
+		var:lam_pd_pact_partner ?= prev
+		is_target_in_variable_list = {
+			name = lam_fac_allies
+			target = prev
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_pact_kind ?= flag:heir
+		}
+		var:lam_pd_pact_target ?= {
+			is_alive = yes
+		}
+		var:lam_fac_heir ?= var:lam_pd_pact_target
+		var:lam_pd_pact_partner.var:lam_fac_heir ?= var:lam_pd_pact_target
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_pact_kind ?= flag:office
+		}
+		OR = {
+			lam_pol_office_excluded_trigger = yes
+			var:lam_pd_pact_partner = {
+				lam_pol_office_excluded_trigger = yes
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_pact_kind ?= flag:law
+		}
+		liege = {
+			OR = {
+				has_realm_law = crown_authority_2
+				has_realm_law = crown_authority_3
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_pact_kind ?= flag:defense
+		}
+		OR = {
+			AND = {
+				has_variable = lam_pd_gr_repression
+				var:lam_pd_gr_repression >= 10
+			}
+			var:lam_pd_pact_partner = {
+				AND = {
+					has_variable = lam_pd_gr_repression
+					var:lam_pd_gr_repression >= 10
+				}
+			}
+		}
+	}
+	lam_lf_exchange_guard_trigger = yes
+}

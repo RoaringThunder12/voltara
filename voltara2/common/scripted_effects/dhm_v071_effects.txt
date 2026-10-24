@@ -1,0 +1,115 @@
+﻿# DHM v0.7.1 — eight audited repairs, no new gameplay dependencies.
+
+# Called on an officer. All appointment paths share this guarded baseline.
+dhm_v071_initialize_officer_loyalty_effect = {
+	if = {
+		limit = { NOT = { has_variable = dhm_officer_loyalty } }
+		set_variable = { name = dhm_officer_loyalty value = 50 }
+		if = { limit = { OR = { has_trait = honest has_trait = diligent has_trait = humble } } change_variable = { name = dhm_officer_loyalty add = 10 } }
+		if = { limit = { OR = { has_trait = deceitful has_trait = arrogant } } change_variable = { name = dhm_officer_loyalty subtract = 5 } }
+	}
+	dhm_v080_clamp_officer_loyalty_effect = yes
+}
+
+# Release only these two reciprocal reservations. Dead scopes are never edited.
+# Timed variables expire after six months even if a queued event is cancelled.
+dhm_v071_release_courtship_effect = {
+	if = {
+		limit = { exists = scope:dhm_marriage_subject scope:dhm_marriage_subject = { is_alive = yes var:dhm_courtship_reserved_for ?= scope:dhm_marriage_candidate } }
+		scope:dhm_marriage_subject = { remove_variable = dhm_courtship_reserved_for }
+	}
+	if = {
+		limit = { exists = scope:dhm_marriage_candidate scope:dhm_marriage_candidate = { is_alive = yes var:dhm_courtship_reserved_for ?= scope:dhm_marriage_subject } }
+		scope:dhm_marriage_candidate = { remove_variable = dhm_courtship_reserved_for }
+	}
+}
+
+# Current scope = manager. An explicit cancellation belongs to the player: the
+# subject rests for a year, and this exact pair cannot be proposed again for
+# five years. A reciprocal multi-pair relation keeps every refusal independent.
+dhm_v080_cancel_courtship_effect = {
+	if = {
+		limit = {
+			exists = scope:dhm_marriage_subject
+			exists = scope:dhm_marriage_candidate
+			# Only a fully legal pair can be refused. A stale notice is
+			# bookkeeping, not a player decision.
+			dhm_v071_courtship_can_finish_trigger = yes
+		}
+		scope:dhm_marriage_subject = {
+			set_relation_dhm_refused_courtship = scope:dhm_marriage_candidate
+			dhm_v075_set_retry_effect = { MONTHS = 12 REASON = flag:refusal }
+			trigger_event = { id = dhm_marriage.0390 years = 5 }
+		}
+	}
+	dhm_v071_release_courtship_effect = yes
+}
+
+# Called before charging a settlement or granting its rewards.
+dhm_v071_finish_courtship_effect = {
+	save_scope_value_as = { name = dhm071_marriage_completed value = no }
+	if = {
+		limit = { dhm_v071_courtship_can_finish_trigger = yes }
+		dhm_v071_release_courtship_effect = yes
+		scope:dhm_marriage_subject = { add_character_flag = dhm_v060_courtship_completed }
+		scope:dhm_marriage_candidate = { add_character_flag = dhm_v060_courtship_completed }
+		scope:dhm_marriage_subject = { dhm_execute_match_effect = yes }
+		if = {
+			limit = { scope:dhm_marriage_subject = { is_spouse_of = scope:dhm_marriage_candidate } }
+			save_scope_value_as = { name = dhm071_marriage_completed value = yes }
+		}
+		else = {
+			scope:dhm_marriage_subject = { remove_character_flag = dhm_v060_courtship_completed }
+			scope:dhm_marriage_candidate = { remove_character_flag = dhm_v060_courtship_completed }
+		}
+	}
+}
+
+# One additional teaching term per heir; reopening never adds another stat award.
+dhm_v071_defer_heir_assessment_effect = {
+	remove_character_flag = dhm_heir_journey_completed
+	add_character_flag = { flag = dhm_heir_reassessment_pending years = 3 }
+	scope:dhm_heir = { add_character_flag = dhm_heir_extra_tuition_used }
+	trigger_event = { id = dhm_saga.2220 years = 2 }
+}
+
+dhm_v071_record_named_chapter_effect = {
+	if = {
+		limit = { NOT = { has_global_variable = dhm_chapter_named_count } }
+		dhm_v071_migration_effect = yes
+	}
+	if = {
+		limit = { NOT = { has_global_variable = $CHAPTER$ } }
+		set_global_variable = { name = $CHAPTER$ value = yes }
+		set_global_variable = { name = dhm090_last_named_chapter value = flag:$CHAPTER$ }
+		dhm_v090_note_office_work_effect = { ROLE = chronicler }
+		change_global_variable = { name = dhm_chapter_named_count add = 1 }
+	}
+	dhm_v080_maybe_schedule_triumph_effect = yes
+}
+
+# Only a derived count is rebuilt. Existing chapters, other totals, officers,
+# loyalty, decisions, event scopes, relationships and memories are preserved.
+dhm_v071_migration_effect = {
+	set_global_variable = { name = dhm_chapter_named_count value = 0 }
+	if = { limit = { has_global_variable = dhm_chapter_first_command } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_heir_ready } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_siblings_reconciled } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_siblings_divided } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_reconciliation } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_parent_heir_trust } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_spouses_stood_together } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_marriage_saved } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_marriage_freed } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_officers_feud } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_officer_triumph } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_scandal_endured } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_failed_lesson } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_shared_grief } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_ambition_kept } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_tutor_bond } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_inlaw_welcomed } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_policy_mediated } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	if = { limit = { has_global_variable = dhm_chapter_legacy_challenged } change_global_variable = { name = dhm_chapter_named_count add = 1 } }
+	set_global_variable = { name = dhm_migration_0710 value = yes }
+}

@@ -1,0 +1,243 @@
+﻿lam_cr_action_valid_trigger = {
+	has_variable = lam_cr_lord
+	AND = {
+		trigger_if = {
+			limit = {
+				has_variable = lam_cr_lord
+			}
+			liege ?= var:lam_cr_lord
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	NOT = {
+		lam_wc_committed_trigger = yes
+	}
+	is_alive = yes
+	has_variable = lam_bloc_lead
+	exists = liege
+	NOT = {
+		has_variable = lam_fac_disband
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_action ?= flag:heir
+		}
+		var:lam_cr_target ?= {
+			is_alive = yes
+			NOT = {
+				this = scope:lam_cr_lord
+			}
+		}
+		NOT = {
+			has_variable = lam_fac_heir_locked
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_action ?= flag:merge
+		}
+		var:lam_cr_target ?= {
+			lam_cr_target_head_trigger = yes
+			NOT = {
+				has_variable = lam_cr_active
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_action ?= flag:confidence
+		}
+		var:lam_cr_target ?= {
+			lam_cr_member_trigger = yes
+			is_ruler = yes
+			NOT = {
+				has_variable = lam_bloc_lead
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			OR = {
+				var:lam_cr_action ?= flag:rise
+				var:lam_cr_action ?= flag:cp_rise
+			}
+		}
+		NOT = {
+			has_variable = lam_fac_oath
+		}
+		NOT = {
+			exists = joined_faction
+		}
+		NOT = {
+			is_at_war_with = scope:lam_cr_lord
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_action ?= flag:court
+		}
+		NOT = {
+			has_variable = lam_fac_courtparty
+		}
+		NOT = {
+			has_variable = lam_fac_cp_broken_m
+		}
+		scope:lam_cr_lord = {
+			NOT = {
+				any_in_list = {
+					variable = lam_bloc_leads
+					is_alive = yes
+					has_variable = lam_fac_courtparty
+					NOT = {
+						this = scope:lam_cr_head
+					}
+				}
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_action ?= flag:withdraw
+		}
+		has_variable = lam_fac_courtparty
+	}
+	trigger_if = {
+		limit = {
+			OR = {
+				var:lam_cr_action ?= flag:ban
+				var:lam_cr_action ?= flag:ban_obey
+			}
+		}
+		scope:lam_cr_lord = {
+			has_variable = lam_fac_ban
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_action ?= flag:deal
+		}
+		lam_cr_deal_valid_trigger = yes
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_action ?= flag:ult_oath
+		}
+		scope:lam_cr_lord = {
+			gold >= major_gold_value
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_action ?= flag:cp_rise
+		}
+		has_variable = lam_cp_treason
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_action ?= flag:petition
+		}
+		lam_pd_petition_valid_trigger = yes
+	}
+	trigger_if = {
+		limit = {
+			OR = {
+				var:lam_cr_action ?= flag:rise
+				var:lam_cr_action ?= flag:cp_rise
+			}
+			has_variable = lam_wc_plan_candidate
+		}
+		var:lam_wc_plan_title ?= var:lam_cr_lord.primary_title
+		var:lam_wc_plan_candidate ?= {
+			is_alive = yes
+			has_claim_on = scope:lam_cr_head.var:lam_wc_plan_title
+		}
+	}
+	lam_cs_merge_action_trigger = yes
+}
+lam_cr_supermajority_trigger = {
+	OR = {
+		var:lam_cr_action ?= flag:rise
+		var:lam_cr_action ?= flag:merge
+		var:lam_cr_action ?= flag:ban_obey
+		AND = {
+			var:lam_cr_action ?= flag:deal
+			var:lam_cr_give ?= flag:county
+		}
+		AND = {
+			var:lam_cr_action ?= flag:deal
+			var:lam_cr_ask ?= flag:disband
+		}
+		var:lam_cr_action ?= flag:cp_rise
+	}
+}
+lam_cr_deal_valid_trigger = {
+	save_temporary_scope_as = lam_nc_deal_head
+	has_variable = lam_cr_give
+	has_variable = lam_cr_ask
+	trigger_if = {
+		limit = {
+			OR = {
+				var:lam_cr_give ?= flag:gold
+				var:lam_cr_give ?= flag:bribe
+			}
+		}
+		scope:lam_cr_lord = {
+			gold >= medium_gold_value
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_give ?= flag:county
+		}
+		scope:lam_cr_lord = {
+			any_held_title = {
+				tier = tier_county
+				NOT = {
+					this = scope:lam_cr_lord.capital_county
+				}
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_ask ?= flag:heir
+		}
+		scope:lam_cr_lord = {
+			exists = primary_heir
+			primary_heir = {
+				is_alive = yes
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			OR = {
+				var:lam_cr_give ?= flag:seat
+				var:lam_cr_give ?= flag:marriage
+			}
+		}
+		NOT = {
+			has_variable = lam_fac_promise
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_give ?= flag:law
+		}
+		scope:lam_cr_lord = {
+			lam_nc_lower_law_trigger = yes
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_cr_give ?= flag:heir
+		}
+		scope:lam_cr_lord = {
+			lam_nc_heir_trigger = {
+				CANDIDATE = scope:lam_nc_deal_head.var:lam_fac_heir
+			}
+		}
+	}
+}

@@ -1,0 +1,29 @@
+﻿l_french:
+task_kCAFG_accept_culture: "Promouvoir l'$game_concept_cultural_acceptance$"
+kCAFG_task_accept_culture_effect_unassigned_warning: "@alert_icon! #alert_trial La promotion de l'[cultural_acceptance] sera focalisée sur la première [culture|E] du [county|E] qu'il est possible de cibler en assignant la Tâche depuis le Menu du Conseil, mais il est possible de #S Focaliser la Tâche#! sur une autre [barony|E] dans la Vue de Propriété.#!"
+task_kCAFG_accept_culture_desc: "\n\nL'[cultural_acceptance|E] entre la [culture|E] focalisée et la culture [councillor_liege.GetCulture.GetName] augmentera chaque année"
+kCAFG_task_accept_culture_focused_culture_tooltip: "\n\n#S [culture|E] Focalisée Actuelle#!: [councillor.MakeScope.Var('kCAFG_task_accept_culture_focused_culture').Culture.GetName]"
+task_kCAFG_accept_culture_desc_focus_detail: "\n\n#S Augmentation Annuelle de l'Acceptation: [GuiScope.SetRoot(councillor.MakeScope.Var('kCAFG_task_accept_culture_focused_culture').Culture.MakeScope).AddScope('councillor', councillor.MakeScope).AddScope('councillor_liege', councillor_liege.MakeScope).ScriptValue('V_kCAFG_steward_acceptance_bonuses')|+=2]#!\n$task_kCAFG_accept_culture_desc_focus_breakdown$"
+task_kCAFG_accept_culture_desc_focus_breakdown: "[GuiScope.SetRoot(councillor.MakeScope.Var('kCAFG_task_accept_culture_focused_culture').Culture.MakeScope).AddScope('councillor', councillor.MakeScope).AddScope('councillor_liege', councillor_liege.MakeScope).GetScriptValueDesc('V_kCAFG_steward_acceptance_bonuses')]"
+#kCAFG_task_accept_culture_tension_decreases: "The [culture_tension|E] of the selected [county|E] will progressively #P decrease#!\n\n"
+
+kCAFG_task_accept_culture_no_province_can_be_targeted: "Aucune [culture|E] dans ce [county|E] ne peut être ciblée par la tâche."
+
+kCAFG_task_accept_culture_focus_culture_tooltip_title: "#E [Concept('accept_culture', SelectLocalization(And(Character.IsValid, ScriptedGui.IsShown(GuiScope.SetRoot(Character.MakeScope).AddScope('culture', Culture.MakeScope).AddScope('kCAFG_province', Province.MakeScope).End)), 'kCAFG_task_accept_culture_focus_culture_tooltip_title_focused', 'kCAFG_task_accept_culture_focus_culture_tooltip_title_focus'))]#!"
+kCAFG_task_accept_culture_focus_culture_tooltip_title_focused: "Focalisation de la Promotion de l’[cultural_acceptance]"
+kCAFG_task_accept_culture_focus_culture_tooltip_title_focus: "Promouvoir l’[cultural_acceptance]"
+kCAFG_task_accept_culture_focus_culture_tooltip_desc: "[SelectLocalization(ScriptedGui.IsShown(GuiScope.SetRoot(Character.MakeScope).AddScope('culture', Culture.MakeScope).AddScope('kCAFG_province', Province.MakeScope).End), 'kCAFG_task_accept_culture_focus_culture_tooltip_desc_stop', 'kCAFG_task_accept_culture_focus_culture_tooltip_desc_start')]"
+kCAFG_task_accept_culture_focus_culture_tooltip_desc_start: "Assigner votre [Concept('steward', GetPlayer.GetCouncillorPosition('councillor_steward').GetPositionName)|e] [Character.GetName] à la promotion de l’[cultural_acceptance] entre les [GetPlayer.GetCulture.GetCollectiveNoun] et les [Culture.GetCollectiveNoun]."
+kCAFG_task_accept_culture_focus_culture_tooltip_desc_stop: "Votre [Concept('steward', GetPlayer.GetCouncillorPosition('councillor_steward').GetPositionName)|e] [Character.GetName] est actuellement focalisé[GetPlayer.GetCouncillorPosition('councillor_steward').GetCouncillor.Custom('FR_E')] sur la promotion de l’[cultural_acceptance] entre les [GetPlayer.GetCulture.GetCollectiveNoun] et les [Culture.GetCollectiveNoun]."
+kCAFG_task_accept_culture_focus_culture_tooltip_task_will_be_aborted: "\n@warning_icon! #warning La tâche de votre [Character.GetActiveCouncilTask.GetPositionName] ('[Character.GetActiveCouncilTask.GetTaskType.GetName]') sera annulée.#!"
+kCAFG_task_accept_culture_focus_culture_tooltip_cannot_target: "\n#warning Impossible de promouvoir l'[cultural_acceptance] dans la [barony|E] de [Province.GetName]:#!\n[GetScriptedGui('kCAFG_is_task_accept_culture_possible_scripted_gui').BuildTooltip(GuiScope.SetRoot(Character.MakeScope).AddScope('kCAFG_culture', Culture.MakeScope).AddScope('kCAFG_province', Province.MakeScope).End)]"
+kCAFG_task_accept_culture_focus_culture_tooltip_progress_breakdown_title: "\n#L Augmentation Annuelle de l'[cultural_acceptance] Estimée#!: [GuiScope.SetRoot(Culture.MakeScope).AddScope('councillor', Character.MakeScope).AddScope('councillor_liege', Character.GetLiege.MakeScope).ScriptValue('V_kCAFG_steward_acceptance_bonuses')|+=2]#!"
+kCAFG_task_accept_culture_focus_culture_tooltip_progress_breakdown: "[GuiScope.SetRoot(Culture.MakeScope).AddScope('councillor', Character.MakeScope).AddScope('councillor_liege', Character.GetLiege.MakeScope).GetScriptValueDesc('V_kCAFG_steward_acceptance_bonuses')]"
+kCAFG_task_accept_culture_focus_culture_disabled_tooltip: "#T $task_kCAFG_accept_culture$#!\nUn [steward|E] doit être nommé pour commencer cette tâche."
+
+kCAFG_task_accept_culture_acceptance_increase_effect: "[councillor_liege.GetShortUINameNotMe] [Concept('promoting_cultural_acceptance', 'a promu l’acceptation')|E]"
+
+kCAFG_task_accept_culture_focused_culture: "[GetPlayer.GetCouncillorPosition('councillor_steward').GetCouncillor.MakeScope.Var('kCAFG_task_accept_culture_focused_culture').Culture.GetName]"
+
+kCAFG_councillor_liege_culture_is_identical: "[councillor_liege.GetName] est [THIS.Culture.GetName]"
+kCAFG_councillor_liege_culture_acceptance_is_maximized: "L'Acceptance Culturelle entre la culture [councillor_liege.GetCulture.GetName] et la culture [THIS.Culture.GetName] est à 100%"

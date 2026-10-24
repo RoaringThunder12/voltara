@@ -1,0 +1,20 @@
+﻿ven_kingsmoot = {
+ electors = { character_sets = { ven_holder = { type = holder } ven_electors = { type = title_dejure_vassals limit = { is_landed = yes highest_held_title_tier >= tier_county target_is_liege_or_above = scope:holder ven_northerner = yes } } } }
+ elector_vote_strength = { base = 1 modifier = { desc = ven_vote_lodge add = 1 has_character_flag = ven_lodge_member } }
+ candidates = { character_sets = {
+ ven_family = { type = holder_close_or_extended_family limit = { ven_candidate = yes } }
+ ven_claimants = { type = title_claimants limit = { ven_candidate = yes } }
+ ven_vassals = { type = title_dejure_vassals limit = { ven_candidate = yes is_landed = yes highest_held_title_tier >= tier_county target_is_liege_or_above = scope:holder } }
+ } }
+ candidate_score = { base = 0 elector_self_voting_pattern_feudal_elective_modifier = yes holder_voting_pattern_feudal_elective_modifier = yes
+ elector_voting_pattern_opinion_feudal_elective_modifier = yes elector_voting_pattern_prestige_piety_feudal_elective_modifier = yes
+ modifier = { desc = ven_vote_bear add = 60 scope:candidate = { has_trait = supernatural_werewolf } }
+modifier = { desc = ven_vote_lodge add = 35 scope:candidate = { has_character_flag = ven_lodge_member } }
+modifier = { desc = ven_vote_creed add = 25 scope:candidate = { rite = rite:voltara_order_rite_26 } }
+modifier = { desc = ven_vote_champion add = 30 scope:candidate = { has_character_modifier = ven_ring_victor } }
+modifier = { desc = ven_vote_service add = 25 scope:candidate = { has_character_modifier = ven_hearth_service } }
+modifier = { desc = ven_vote_oathbreaker add = -100 scope:candidate = { has_character_modifier = ven_oathbreaker } }
+modifier = { desc = ven_vote_pledge add = 65 var:ven_endorsed_candidate ?= scope:candidate }
+modifier = { desc = ven_vote_prowess add = 20 scope:candidate = { prowess >= 18 } }
+modifier = { desc = ven_vote_cruelty add = -25 scope:candidate = { has_trait = sadistic } }
+} }

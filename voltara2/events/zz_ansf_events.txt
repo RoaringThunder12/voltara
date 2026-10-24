@@ -1627,11 +1627,8 @@ ansf.1001 = { #Who am I?
 			ansf_load_traits = yes
 			
 			# this is here to prevent error checks
-			if = {
-				limit = { always = no }
-				save_scope_as = selection
-				set_global_variable = { name = AGOT_is_loaded value = yes }
-			}
+			if = { limit = { always = no } # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 		}
 	}
 	

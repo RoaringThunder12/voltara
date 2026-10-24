@@ -1,0 +1,109 @@
+﻿order_oathbound_to_push_my_claim = {
+    category = interaction_category_diplomacy
+    common_interaction = yes
+    desc = compell_oathbound_to_push_my_claim_desc
+    icon = icon_war_declaration
+
+    is_shown = {
+        scope:actor = {
+            is_ai = yes
+            any_claim = { count >= 1 }
+            is_at_war = no
+        }
+        scope:recipient = {
+            is_ai = no
+            is_available = yes
+            is_at_war = no
+        }
+        scope:actor = { has_relation_oathbound = scope:recipient }
+    }
+
+    is_valid = {
+        scope:actor = {
+            is_imprisoned = no
+            is_incapable = no
+            any_claim = {
+                tier <= tier_kingdom # No oathbound CB exists above kingdom tier
+                holder = {
+                    oathbound_valid_claim_war_target_trigger = {
+                        OATHBOUND = scope:recipient
+                        OATHHOLDER = scope:actor
+                    }
+                }
+            }
+        }
+        scope:recipient = {
+            is_imprisoned = no
+            is_incapable = no
+        }
+    }
+
+    ai_frequency = 12
+    cooldown = { years = 6 }
+    ai_potential = {
+        num_of_relation_oathbound > 0
+        OR = { has_trait = oathholder_male has_trait = oathholder_female }
+        any_claim = { count >= 1 }
+    }
+    ai_targets = {
+        ai_recipients = scripted_relations
+    }
+
+    ai_will_do = {
+        base = -50
+
+        # SHE HAS A STRONG CLAIM WORTH PRESSING
+        modifier = {
+            add = 200
+            scope:actor = {
+                any_claim = { NOT = { scope:actor = { has_weak_claim_on = prev } } }
+            }
+        }
+
+        # THE CLAIM IS ON A HIGH-VALUE TITLE (DUCHY)
+        modifier = {
+            add = 75
+            scope:actor = {
+                any_claim = {
+                    tier = tier_county
+                }
+            }
+        }
+
+        # THE CLAIM IS ON A HIGH-VALUE TITLE (DUCHY)
+        modifier = {
+            add = 150
+            scope:actor = {
+                any_claim = {
+                    tier = tier_duchy
+                }
+            }
+        }
+
+        # THE CLAIM IS ON A KINGDOM — EVEN HIGHER VALUE
+        modifier = {
+            add = 250
+            scope:actor = {
+                any_claim = {
+                    tier >= tier_kingdom
+                }
+            }
+        }
+
+        # SCHEMING AND AMBITIOUS oathholderS PURSUE TERRITORIAL EXPANSION
+        modifier = { add = 100 scope:actor = { has_trait = ambitious } }
+        modifier = { add = 75  scope:actor = { has_trait = greedy } }
+        modifier = { add = 75  scope:actor = { has_trait = vengeful } }
+    }
+
+    auto_accept = yes
+
+    on_accept = {
+        scope:actor = {
+            save_scope_as = my_oathholder
+        }
+        scope:recipient = {
+            trigger_event = oathholder_order_events.0100
+        }
+    }
+}

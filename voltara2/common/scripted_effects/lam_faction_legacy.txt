@@ -1,0 +1,393 @@
+﻿# Living Factions - renown and legacies (like a house's), and the faction's relations with the others.
+# var:lam_fac_renown on the head (passed on with the faction). Five traditions (lam_fac_leg_*), each 0..3,
+# grown from its history (lam_fac_traditions_effect), plus the will (0..1):
+#   lam_fac_leg_org (organisation: cohesion), lam_fac_leg_ties (connections: drawing people),
+#   lam_fac_leg_purse (the purse), lam_fac_leg_arms (swords: answering the call), lam_fac_leg_cause (a cause: demands heard).
+
+############################
+# Each pulse. Root = the lord (from lam_fac_power_pulse_effect).
+############################
+lam_fac_legacy_pulse_effect = {
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = { is_alive = yes }
+		save_scope_as = lam_lg_lead
+		if = { limit = { NOT = { has_variable = lam_fac_renown } } set_variable = { name = lam_fac_renown value = 0 } }
+		# A year's renown: its age, its weight at court. Seasons in fast courts, years elsewhere.
+		# Only a faction of standing (three or more) makes a name; a lone lord's grievance does not.
+		save_scope_value_as = {
+			name = lam_lg_gain
+			value = {
+				value = 1
+				if = { limit = { has_variable = lam_fac_age_tier } add = var:lam_fac_age_tier }
+				if = { limit = { has_variable = lam_fac_share } add = { value = var:lam_fac_share divide = 20 } }
+			}
+		}
+		if = {
+			limit = { lam_fac_standing_trigger = yes }
+			if = {
+				limit = { scope:lam_pw_lord = { has_variable = lam_fac_fast } }
+				change_variable = { name = lam_fac_renown add = { value = scope:lam_lg_gain multiply = 0.25 } }
+			}
+			else = { change_variable = { name = lam_fac_renown add = scope:lam_lg_gain } }
+		}
+		# Traditions grow out of its history.
+		lam_fac_traditions_effect = yes
+		# Tier lists: is there anyone in each?
+		lam_fac_tier_flag_effect = { LIST = lam_fac_core }
+		lam_fac_tier_flag_effect = { LIST = lam_fac_clients }
+		lam_fac_tier_flag_effect = { LIST = lam_fac_sym }
+		# Relations: everyone else at court, for the faction's window.
+		clear_variable_list = lam_fac_rel_list
+		scope:lam_pw_lord = {
+			every_in_list = {
+				variable = lam_bloc_leads
+				limit = { is_alive = yes NOT = { this = scope:lam_lg_lead } }
+				scope:lam_lg_lead = { add_to_variable_list = { name = lam_fac_rel_list target = prev } }
+			}
+		}
+		lam_fac_amity_lapse_effect = yes
+		# Allies are friends, never foes; an alliance with someone no longer leading lapses.
+		every_in_list = {
+			variable = lam_fac_allies
+			limit = {
+				OR = {
+					is_alive = no
+					NOT = { has_variable = lam_bloc_lead }
+				}
+			}
+			save_scope_as = lam_lg_gone
+			scope:lam_lg_lead = { remove_list_variable = { name = lam_fac_allies target = scope:lam_lg_gone } }
+		}
+		every_in_list = {
+			variable = lam_fac_allies
+			save_scope_as = lam_lg_ally
+			scope:lam_lg_lead = {
+				if = {
+					limit = { is_target_in_variable_list = { name = lam_fac_foes target = scope:lam_lg_ally } }
+					remove_list_variable = { name = lam_fac_foes target = scope:lam_lg_ally }
+				}
+				if = {
+					limit = { NOT = { is_target_in_variable_list = { name = lam_fac_friends target = scope:lam_lg_ally } } }
+					add_to_variable_list = { name = lam_fac_friends target = scope:lam_lg_ally }
+				}
+			}
+		}
+	}
+}
+
+lam_fac_tier_flag_effect = {
+	if = {
+		limit = { any_in_list = { variable = $LIST$ } }
+		set_variable = { name = $LIST$_any value = yes }
+	}
+	else_if = {
+		limit = { has_variable = $LIST$_any }
+		remove_variable = $LIST$_any
+	}
+}
+
+# Root = a faction's head: renown from a turn in its history (called through lam_fac_hist_add_effect).
+lam_fac_renown_add_effect = {
+	if = { limit = { NOT = { has_variable = lam_fac_renown } } set_variable = { name = lam_fac_renown value = 0 } }
+	if = {
+		limit = { lam_fac_standing_trigger = yes }
+		change_variable = { name = lam_fac_renown add = $ADD$ }
+	}
+}
+lam_fac_renown_for_rise_effect = { lam_fac_renown_add_effect = { ADD = 5 } }
+lam_fac_renown_for_purge_effect = { lam_fac_renown_add_effect = { ADD = 3 } }
+lam_fac_renown_for_crown_effect = { lam_fac_renown_add_effect = { ADD = 10 } }
+lam_fac_renown_for_betray_effect = { lam_fac_renown_add_effect = { ADD = 1 } }
+lam_fac_renown_for_kept_effect = { lam_fac_renown_add_effect = { ADD = 3 } }
+lam_fac_renown_for_won_effect = { lam_fac_renown_add_effect = { ADD = 2 } }
+lam_fac_renown_for_lost_effect = { lam_fac_renown_add_effect = { ADD = 0 } }
+lam_fac_renown_for_deals_effect = { lam_fac_renown_add_effect = { ADD = 2 } }
+
+############################
+# Traditions (once bought with renown): earned from the faction's own history, never lost.
+# Root = the faction's head. Only a faction of standing (three or more) grows them.
+############################
+lam_fac_traditions_effect = {
+	set_variable = { name = lam_fac_tr_org value = lam_fac_tr_org_value }
+	set_variable = { name = lam_fac_tr_ties value = lam_fac_tr_ties_value }
+	set_variable = { name = lam_fac_tr_purse value = lam_fac_tr_purse_value }
+	set_variable = { name = lam_fac_tr_arms value = lam_fac_tr_arms_value }
+	set_variable = { name = lam_fac_tr_cause value = lam_fac_tr_cause_value }
+	if = {
+		limit = { lam_fac_standing_trigger = yes }
+		lam_fac_tradition_level_effect = { KIND = org }
+		lam_fac_tradition_level_effect = { KIND = ties }
+		lam_fac_tradition_level_effect = { KIND = purse }
+		lam_fac_tradition_level_effect = { KIND = arms }
+		lam_fac_tradition_level_effect = { KIND = cause }
+		# The will to outlive itself: an old faction has it - once in its whole line.
+		if = {
+			limit = {
+				has_variable = lam_fac_age_tier
+				var:lam_fac_age_tier >= 2
+				NOT = { has_variable = lam_fac_leg_will }
+				NOT = { has_variable = lam_fac_will_spent }
+			}
+			set_variable = { name = lam_fac_leg_will value = 1 }
+			lam_fac_timeline_add_effect = { KEY = legacy }
+		}
+	}
+}
+lam_fac_tradition_level_effect = {
+	if = { limit = { NOT = { has_variable = lam_fac_leg_$KIND$ } } set_variable = { name = lam_fac_leg_$KIND$ value = 0 } }
+	if = {
+		limit = {
+			OR = {
+				AND = { var:lam_fac_tr_$KIND$ >= 7 var:lam_fac_leg_$KIND$ < 3 }
+				AND = { var:lam_fac_tr_$KIND$ >= 4 var:lam_fac_leg_$KIND$ < 2 }
+				AND = { var:lam_fac_tr_$KIND$ >= 2 var:lam_fac_leg_$KIND$ < 1 }
+			}
+		}
+		change_variable = { name = lam_fac_leg_$KIND$ add = 1 }
+		lam_fac_timeline_add_effect = { KEY = legacy }
+	}
+}
+
+############################
+# Heritage: what survives a faction's end. Root = the old head (alive, or at the moment of death);
+# scope:lam_hk_lord = the court. With the legacy 'will' (lam_fac_leg_will), everything is kept for
+# twenty years, once; without it, a quarter of the renown for ten.
+############################
+lam_fac_heritage_keep_effect = {
+	save_scope_as = lam_hk_old
+	clear_saved_scope = lam_hk_keeper
+	if = {
+		limit = { is_alive = yes }
+		save_scope_as = lam_hk_keeper
+	}
+	else = {
+		ordered_in_list = {
+			variable = lam_fac_members
+			limit = { is_alive = yes var:lam_fac_tier ?= 1 }
+			order_by = max_military_strength
+			save_scope_as = lam_hk_keeper
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:lam_hk_keeper
+			has_variable = lam_fac_renown
+			OR = {
+				has_variable = lam_fac_leg_will
+				var:lam_fac_renown >= 8
+			}
+		}
+		scope:lam_hk_keeper = {
+			if = {
+				limit = { scope:lam_hk_old = { has_variable = lam_fac_leg_will } }
+				set_variable = { name = lam_her value = yes years = 20 }
+				set_variable = { name = lam_her_full value = yes years = 20 }
+				set_variable = { name = lam_her_renown value = scope:lam_hk_old.var:lam_fac_renown }
+				lam_fac_heritage_copy_legacy_effect = { KIND = org }
+				lam_fac_heritage_copy_legacy_effect = { KIND = ties }
+				lam_fac_heritage_copy_legacy_effect = { KIND = purse }
+				lam_fac_heritage_copy_legacy_effect = { KIND = arms }
+				lam_fac_heritage_copy_legacy_effect = { KIND = cause }
+				if = { limit = { scope:lam_hk_old = { has_variable = lam_fac_founded } } set_variable = { name = lam_her_founded value = scope:lam_hk_old.var:lam_fac_founded } }
+				if = { limit = { scope:lam_hk_old = { has_variable = lam_fac_gen } } set_variable = { name = lam_her_gen value = scope:lam_hk_old.var:lam_fac_gen } }
+				if = { limit = { scope:lam_hk_old = { has_variable = lam_fac_nmv } } set_variable = { name = lam_her_nmv value = scope:lam_hk_old.var:lam_fac_nmv } }
+			}
+			else = {
+				set_variable = { name = lam_her value = yes years = 10 }
+				set_variable = { name = lam_her_renown value = { value = scope:lam_hk_old.var:lam_fac_renown multiply = 0.25 } }
+			}
+			set_variable = { name = lam_her_from value = scope:lam_hk_old }
+			# Which record of the book it was, so a revival can point back to it.
+			if = {
+				limit = { scope:lam_hk_old = { has_variable = lam_fac_rec has_variable = lam_fac_rec_title } }
+				set_variable = { name = lam_her_rec value = scope:lam_hk_old.var:lam_fac_rec }
+				set_variable = { name = lam_her_rec_title value = scope:lam_hk_old.var:lam_fac_rec_title }
+				var:lam_her_rec_title = { lam_gn_hold_effect = { WHO = scope:lam_hk_keeper } }
+			}
+		}
+		# Kept in the court the keeper now lives in (or the old one).
+		clear_saved_scope = lam_hk_court
+		scope:lam_hk_keeper = { liege ?= { save_scope_as = lam_hk_court } }
+		if = { limit = { NOT = { exists = scope:lam_hk_court } } scope:lam_hk_lord ?= { save_scope_as = lam_hk_court } }
+		scope:lam_hk_court ?= {
+			if = {
+				limit = { NOT = { is_target_in_variable_list = { name = lam_fac_heritage_keepers target = scope:lam_hk_keeper } } }
+				add_to_variable_list = { name = lam_fac_heritage_keepers target = scope:lam_hk_keeper }
+			}
+		}
+	}
+}
+lam_fac_heritage_copy_legacy_effect = {
+	if = {
+		limit = { scope:lam_hk_old = { has_variable = lam_fac_leg_$KIND$ } }
+		set_variable = { name = lam_her_leg_$KIND$ value = scope:lam_hk_old.var:lam_fac_leg_$KIND$ }
+	}
+}
+
+# Root = a new faction's head: take up a heritage they are heir to (their own, their house's, kin's or a friend's).
+# (A wing that has just split off is what it is - not the revival of another faction.)
+lam_fac_heritage_claim_effect = {
+	if = { limit = { NOT = { var:lam_gn_why ?= flag:split } } lam_fac_heritage_claim_body_effect = yes }
+}
+lam_fac_heritage_claim_body_effect = {
+	save_scope_as = lam_hc_new
+	clear_saved_scope = lam_hc_keeper
+	if = {
+		limit = { has_variable = lam_her }
+		save_scope_as = lam_hc_keeper
+	}
+	else = {
+		liege ?= {
+			random_in_list = {
+				variable = lam_fac_heritage_keepers
+				limit = {
+					is_alive = yes
+					has_variable = lam_her
+					OR = {
+						AND = { exists = house exists = scope:lam_hc_new.house house = scope:lam_hc_new.house }
+						is_close_family_of = scope:lam_hc_new
+						has_relation_friend = scope:lam_hc_new
+						has_relation_best_friend = scope:lam_hc_new
+					}
+				}
+				save_scope_as = lam_hc_keeper
+			}
+		}
+	}
+	if = {
+		limit = { exists = scope:lam_hc_keeper }
+		if = { limit = { NOT = { has_variable = lam_fac_renown } } set_variable = { name = lam_fac_renown value = 0 } }
+		change_variable = { name = lam_fac_renown add = scope:lam_hc_keeper.var:lam_her_renown }
+		if = {
+			limit = { scope:lam_hc_keeper = { has_variable = lam_her_full } }
+			# The will is spent: it carried the faction across its fall, and does not come again.
+			set_variable = { name = lam_fac_will_spent value = yes }
+			lam_fac_heritage_take_legacy_effect = { KIND = org }
+			lam_fac_heritage_take_legacy_effect = { KIND = ties }
+			lam_fac_heritage_take_legacy_effect = { KIND = purse }
+			lam_fac_heritage_take_legacy_effect = { KIND = arms }
+			lam_fac_heritage_take_legacy_effect = { KIND = cause }
+			if = { limit = { scope:lam_hc_keeper = { has_variable = lam_her_founded } } set_variable = { name = lam_fac_founded value = scope:lam_hc_keeper.var:lam_her_founded } }
+			if = {
+				limit = { scope:lam_hc_keeper = { has_variable = lam_her_gen } }
+				set_variable = { name = lam_fac_gen value = scope:lam_hc_keeper.var:lam_her_gen }
+				change_variable = { name = lam_fac_gen add = 1 }
+			}
+			if = { limit = { scope:lam_hc_keeper = { has_variable = lam_her_nmv } } set_variable = { name = lam_fac_nmv value = scope:lam_hc_keeper.var:lam_her_nmv } }
+			scope:lam_hc_keeper.var:lam_her_from ?= { scope:lam_hc_new = { add_to_variable_list = { name = lam_fac_lineage target = prev } } }
+		}
+		set_variable = { name = lam_fac_revived value = yes }
+		# The book: a revival, beneath the record it revives when that is in this realm's book.
+		set_variable = { name = lam_gn_why value = flag:revived }
+		if = { limit = { has_variable = lam_gn_from } remove_variable = lam_gn_from }
+		# (Beneath its old record only in the book the new record goes into - the court's book.)
+		liege ?= { lam_gn_book_ensure_effect = yes }
+		if = {
+			limit = {
+				exists = liege.var:lam_gn_book
+				scope:lam_hc_keeper = { has_variable = lam_her_rec var:lam_her_rec_title ?= scope:lam_hc_new.liege.var:lam_gn_book }
+			}
+			set_variable = { name = lam_gn_from value = scope:lam_hc_keeper.var:lam_her_rec }
+			set_variable = { name = lam_gn_from_book value = scope:lam_hc_keeper.var:lam_her_rec_title }
+		}
+		lam_fac_timeline_add_effect = { KEY = revived }
+		scope:lam_hc_keeper = { lam_fac_heritage_clear_effect = yes }
+		liege ?= { remove_list_variable = { name = lam_fac_heritage_keepers target = scope:lam_hc_keeper } }
+	}
+}
+lam_fac_heritage_take_legacy_effect = {
+	if = {
+		limit = { scope:lam_hc_keeper = { has_variable = lam_her_leg_$KIND$ } }
+		set_variable = { name = lam_fac_leg_$KIND$ value = scope:lam_hc_keeper.var:lam_her_leg_$KIND$ }
+	}
+}
+lam_fac_heritage_clear_effect = {
+	remove_variable = lam_her
+	if = { limit = { has_variable = lam_her_full } remove_variable = lam_her_full }
+	if = { limit = { has_variable = lam_her_renown } remove_variable = lam_her_renown }
+	if = { limit = { has_variable = lam_her_founded } remove_variable = lam_her_founded }
+	if = { limit = { has_variable = lam_her_gen } remove_variable = lam_her_gen }
+	if = { limit = { has_variable = lam_her_nmv } remove_variable = lam_her_nmv }
+	if = { limit = { has_variable = lam_her_from } remove_variable = lam_her_from }
+	if = { limit = { has_variable = lam_her_rec } remove_variable = lam_her_rec }
+	if = { limit = { has_variable = lam_her_rec_title } remove_variable = lam_her_rec_title }
+	if = { limit = { has_variable = lam_her_leg_org } remove_variable = lam_her_leg_org }
+	if = { limit = { has_variable = lam_her_leg_ties } remove_variable = lam_her_leg_ties }
+	if = { limit = { has_variable = lam_her_leg_purse } remove_variable = lam_her_leg_purse }
+	if = { limit = { has_variable = lam_her_leg_arms } remove_variable = lam_her_leg_arms }
+	if = { limit = { has_variable = lam_her_leg_cause } remove_variable = lam_her_leg_cause }
+}
+############################
+# Heads under a new ruler. Root = a lord, before the update: a faction head now in this court who is not on its
+# list (the crown went to another house, a title was lost to its holder, a realm shrank or fell).
+# A faction whose people and land remain goes on here; one left with nothing breaks up, and what it built
+# survives only as a heritage, to be taken up if they or theirs found a faction anew.
+############################
+lam_fac_adopt_orphans_effect = {
+	save_scope_as = lam_ao_lord
+	every_vassal = {
+		limit = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+			NOT = { scope:lam_ao_lord = { is_target_in_variable_list = { name = lam_bloc_leads target = prev } } }
+			# Their base remains: land of their own, and one of their people here too - or a lone faction from the start.
+			is_ruler = yes
+			scope:lam_ao_lord = { NOT = { has_variable = lam_fac_ban } }
+			OR = {
+				any_in_list = { variable = lam_fac_members is_alive = yes NOT = { this = prev } liege ?= scope:lam_ao_lord }
+				NOT = { any_in_list = { variable = lam_fac_members is_alive = yes NOT = { this = prev } } }
+			}
+		}
+		lam_fac_adopt_effect = yes
+	}
+	every_vassal = {
+		limit = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+			NOT = { scope:lam_ao_lord = { is_target_in_variable_list = { name = lam_bloc_leads target = prev } } }
+		}
+		scope:lam_ao_lord = { save_scope_as = lam_hk_lord }
+		lam_fac_heritage_keep_effect = yes
+		set_variable = { name = lam_fac_end_why value = flag:fall }
+		lam_fac_drop_identity_effect = yes
+		if = { limit = { scope:lam_ao_lord = { is_ai = no } } scope:lam_ao_lord = { lam_fac_digest_add_effect = { KEY = ends WHO = prev } } }
+	}
+}
+
+# Root = a faction head whose faction goes on under a new ruler (scope:lam_ao_lord). Kept: its founding, lineage,
+# history, traditions and record. Re-judged: court party standing, favour, the old ruler's oath and betrayal.
+lam_fac_adopt_effect = {
+	scope:lam_ao_lord = { add_to_variable_list = { name = lam_bloc_leads target = prev } }
+	set_variable = { name = lam_bloc value = this }
+	lam_fac_new_ruler_effect = yes
+	lam_fac_timeline_add_effect = { KEY = migrated }
+	# Its book stays where it was kept; the new court can open it from the lineage window.
+	if = {
+		limit = { has_variable = lam_fac_rec_title }
+		scope:lam_ao_lord = {
+			lam_gn_book_ensure_effect = yes
+			if = {
+				limit = {
+					NOT = { var:lam_gn_book ?= prev.var:lam_fac_rec_title }
+					NOT = { is_target_in_variable_list = { name = lam_gn_books_old target = prev.var:lam_fac_rec_title } }
+				}
+				add_to_variable_list = { name = lam_gn_books_old target = prev.var:lam_fac_rec_title }
+				set_variable = { name = lam_gn_has_old value = yes }
+			}
+		}
+	}
+}
+# Root = a faction head under a ruler they have not served before: what was the old ruler's is not the new one's.
+lam_fac_new_ruler_effect = {
+	if = { limit = { has_variable = lam_fac_courtparty } remove_variable = lam_fac_courtparty }
+	if = { limit = { has_variable = lam_fac_ban_cp } remove_variable = lam_fac_ban_cp }
+	if = { limit = { has_variable = lam_fac_cp_broken_m } remove_variable = lam_fac_cp_broken_m }
+	lam_fac_timer_drop_effect = { NAME = lam_fac_oath }
+	if = { limit = { has_variable = lam_fac_betrayed } remove_variable = lam_fac_betrayed }
+	if = { limit = { has_variable = lam_fac_appeased } remove_variable = lam_fac_appeased }
+	if = { limit = { has_variable = lam_fac_favour } change_variable = { name = lam_fac_favour multiply = 0.5 } }
+	if = { limit = { has_variable = lam_fac_ult_done } remove_variable = lam_fac_ult_done }
+	# Six months to find their feet in the new court before anything comes to a head.
+	set_variable = { name = lam_fac_settling value = yes months = 6 }
+}

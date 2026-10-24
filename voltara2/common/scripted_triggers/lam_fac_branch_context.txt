@@ -1,0 +1,163 @@
+﻿lam_bp_meeting_trigger = {
+	has_variable = lam_bp_meeting_id
+	var:lam_bp_meeting_id = var:lam_cr_id
+	has_variable = lam_bp_meeting_topic
+}
+lam_bp_same_position_trigger = {
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_bp_position_topic
+			}
+			$OTHER$ = {
+				NOT = {
+					has_variable = lam_bp_position_topic
+				}
+			}
+		}
+		AND = {
+			has_variable = lam_bp_position_topic
+			$OTHER$ = {
+				has_variable = lam_bp_position_topic
+			}
+			var:lam_bp_position_topic = $OTHER$.var:lam_bp_position_topic
+		}
+	}
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_bp_position_side
+			}
+			$OTHER$ = {
+				NOT = {
+					has_variable = lam_bp_position_side
+				}
+			}
+		}
+		AND = {
+			has_variable = lam_bp_position_side
+			$OTHER$ = {
+				has_variable = lam_bp_position_side
+			}
+			var:lam_bp_position_side = $OTHER$.var:lam_bp_position_side
+		}
+	}
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_bp_position_target
+			}
+			$OTHER$ = {
+				NOT = {
+					has_variable = lam_bp_position_target
+				}
+			}
+		}
+		AND = {
+			has_variable = lam_bp_position_target
+			$OTHER$ = {
+				has_variable = lam_bp_position_target
+			}
+			var:lam_bp_position_target = $OTHER$.var:lam_bp_position_target
+		}
+	}
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_bp_position_alternative
+			}
+			$OTHER$ = {
+				NOT = {
+					has_variable = lam_bp_position_alternative
+				}
+			}
+		}
+		AND = {
+			has_variable = lam_bp_position_alternative
+			$OTHER$ = {
+				has_variable = lam_bp_position_alternative
+			}
+			var:lam_bp_position_alternative = $OTHER$.var:lam_bp_position_alternative
+		}
+	}
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_bp_position_lord
+			}
+			$OTHER$ = {
+				NOT = {
+					has_variable = lam_bp_position_lord
+				}
+			}
+		}
+		AND = {
+			has_variable = lam_bp_position_lord
+			$OTHER$ = {
+				has_variable = lam_bp_position_lord
+			}
+			var:lam_bp_position_lord = $OTHER$.var:lam_bp_position_lord
+		}
+	}
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_bp_position_object
+			}
+			$OTHER$ = {
+				NOT = {
+					has_variable = lam_bp_position_object
+				}
+			}
+		}
+		AND = {
+			has_variable = lam_bp_position_object
+			$OTHER$ = {
+				has_variable = lam_bp_position_object
+			}
+			var:lam_bp_position_object = $OTHER$.var:lam_bp_position_object
+		}
+	}
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_bp_position_detail
+			}
+			$OTHER$ = {
+				NOT = {
+					has_variable = lam_bp_position_detail
+				}
+			}
+		}
+		AND = {
+			has_variable = lam_bp_position_detail
+			$OTHER$ = {
+				has_variable = lam_bp_position_detail
+			}
+			var:lam_bp_position_detail = $OTHER$.var:lam_bp_position_detail
+		}
+	}
+}
+lam_bp_position_current_trigger = {
+	var:lam_bp_position_head ?= scope:lam_cr_head
+	var:lam_bp_position_lord ?= liege
+	has_variable = lam_bp_position_until
+	var:lam_bp_position_until > lam_now_m
+	var:lam_bp_position_id ?= scope:lam_cr_head.var:lam_cr_id
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_bp_position_record
+			}
+			scope:lam_cr_head = {
+				NOT = {
+					has_variable = lam_fac_rec
+				}
+			}
+		}
+		AND = {
+			has_variable = lam_bp_position_record
+			var:lam_bp_position_record ?= scope:lam_cr_head.var:lam_fac_rec
+		}
+	}
+}

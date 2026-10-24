@@ -1,0 +1,41 @@
+﻿l_french:
+  nickname_interaction:0 "Accorder un surnom"
+  NICKNAME_PROPOSAL:0 "Accorder un surnom de votre choix"
+  nickname_interaction_desc:0 "Ouvre une fenêtre dans laquelle vous pouvez attribuer un nouveau surnom."
+  
+ nickname_event.1.t:0 "Accorder un surnom"
+ nickname_event.1.desc:0 "Vous allez choisir comment [recipient.GetShortUINameNoTooltip] sera connu[Select_CString( recipient.IsFemale, 'e', '' )] dans les annales."
+ nickname.1.a:0 "Continuer..."
+ nickname.1.a.tt:0 "Passer à la description du surnom"
+ nickname.1.b:0 "Annuler"
+ nickname.1.b.tt:0 "Abandonner sans attribuer de surnom"
+ 
+ mod_nickname_widget_intro:0 "Étape 1 sur 2 — Choisissez le surnom."
+ mod_nickname_name_label:0 "Surnom"
+ 
+ nickname_event.2.t:0 "Description du surnom"
+ nickname_event.2.desc:0 "Comment ce surnom doit-il être compris pour [recipient.GetShortUINameNoTooltip] ?"
+ nickname.2.a:0 "Accorder ce surnom"
+ nickname.2.a.tt:0 "Le surnom et sa description seront enregistrés"
+ nickname.2.b:0 "Annuler"
+ nickname.2.b.tt:0 "Abandonner ; le surnom ne sera pas attribué"
+ 
+ mod_nickname_desc_widget_intro:0 "Étape 2 sur 2 — Décrivez la signification ou l'origine du surnom."
+ mod_nickname_desc_label:0 "Description"
+ mod_nickname_desc_hint:0 "Cette phrase apparaît dans l'infobulle du surnom sur la fiche du personnage."
+  
+  remove_nickname_interaction:0 "Supprimer le surnom"
+  REMOVE_NICKNAME_PROPOSAL:0 "Supprimer le surnom"
+  remove_nickname_interaction_desc:0 "Supprimer le surnom"
+  
+  nickname_1:0 "[ROOT.Char.GetLocalizedText('nickname_text')]"
+  nickname_2:0 "[CHARACTER.Custom('Nicknamelocalization')]"
+  nickname_1_desc:0 "[ROOT.Char.GetLocalizedText('nickname_desc_text')]"
+  nickname_2_desc:0 "[CHARACTER.Custom('NicknameDesclocalization')]"
+  
+  game_rule_category_mod:0 "Mod"
+  rule_give_a_nickname_conditions:0 "Accorder un surnom"
+  setting_nickname_conditions_default:0 "Par défault"
+  setting_nickname_conditions_default_desc:0 "Les surnoms peuvent être attribués à votre cour, à vos vassaux directs et à vous-même."
+  setting_nickname_conditions_free:0 "Sans limite"
+  setting_nickname_conditions_free_desc:0 "Il n'y a aucune restriction quant à l'attribution de surnoms"

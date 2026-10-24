@@ -1,0 +1,65 @@
+﻿lam_cs_weight_value = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = lam_cr_share
+		}
+		value = var:lam_cr_share
+	}
+}
+lam_cs_join_bonus_value = {
+	value = 0
+	scope:lam_cs_join_head = {
+		if = {
+			limit = {
+				has_variable = lam_cs_weight
+			}
+			add = {
+				value = var:lam_cs_weight
+				multiply = 0.3
+				max = 12
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_cs_success
+			}
+			add = 4
+		}
+	}
+	max = 16
+}
+lam_cs_rank_value = {
+	value = lam_cs_weight_value
+	if = {
+		limit = {
+			has_variable = lam_fac_age
+		}
+		add = {
+			value = var:lam_fac_age
+			multiply = 0.01
+			max = 0.99
+		}
+	}
+}
+lam_cs_merge_wait_value = {
+	value = 18
+}
+lam_cs_found_wait_value = {
+	value = 24
+}
+lam_cs_small_size_value = {
+	value = 6
+}
+lam_cs_small_share_value = {
+	value = 30
+}
+lam_cs_ambitious_share_value = {
+	value = 15
+}
+lam_cs_opinion_value = {
+	value = 10
+}
+lam_cs_alignment_gap_value = {
+	value = 35
+}

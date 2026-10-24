@@ -1,0 +1,204 @@
+﻿# Living Factions - the faction council chamber (tools/claude_fixes/council_ui.py)
+lam_cv_open = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	effect = {
+		set_variable = {
+			name = lam_cr_view
+			value = scope:target
+		}
+	}
+}
+lam_cv_close = {
+	scope = character
+	effect = {
+		remove_variable = lam_cr_view
+	}
+}
+lam_cv_vote_yes = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		var:lam_cr_ballot_head ?= scope:target
+		var:lam_cr_choice ?= flag:pending
+		scope:target = {
+			has_variable = lam_cr_active
+		}
+	}
+	effect = {
+		scope:target = {
+			lam_cr_restore_context_effect = yes
+		}
+		lam_cr_cast_effect = {
+			CHOICE = yes
+		}
+	}
+}
+lam_cv_vote_no = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		var:lam_cr_ballot_head ?= scope:target
+		var:lam_cr_choice ?= flag:pending
+		scope:target = {
+			has_variable = lam_cr_active
+		}
+	}
+	effect = {
+		scope:target = {
+			lam_cr_restore_context_effect = yes
+		}
+		lam_cr_cast_effect = {
+			CHOICE = no
+		}
+	}
+}
+lam_cv_vote_abstain = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		var:lam_cr_ballot_head ?= scope:target
+		var:lam_cr_choice ?= flag:pending
+		scope:target = {
+			has_variable = lam_cr_active
+		}
+	}
+	effect = {
+		scope:target = {
+			lam_cr_restore_context_effect = yes
+		}
+		lam_cr_cast_effect = {
+			CHOICE = abstain
+		}
+	}
+}
+lam_cv_finish = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		this = scope:target
+		scope:target = {
+			has_variable = lam_cr_active
+			var:lam_cr_pending ?= 0
+		}
+	}
+	effect = {
+		scope:target = {
+			lam_cr_restore_context_effect = yes
+			lam_cr_recount_effect = yes
+			if = {
+				limit = {
+					var:lam_cr_pending = 0
+				}
+				lam_cr_resolve_effect = yes
+			}
+		}
+	}
+}
+lam_cv_sway = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		exists = var:lam_cr_view
+		var:lam_cr_view = {
+			has_variable = lam_cr_active
+		}
+		scope:target = {
+			is_ai = yes
+			var:lam_cr_ballot_head ?= root.var:lam_cr_view
+		}
+		OR = {
+			this = var:lam_cr_view
+			var:lam_cr_ballot_head ?= var:lam_cr_view
+		}
+	}
+	is_valid = {
+		prestige >= 50
+		custom_description = {
+			text = lam_cv_sway_first_tt
+			OR = {
+				this = var:lam_cr_view
+				var:lam_cr_choice ?= flag:yes
+				var:lam_cr_choice ?= flag:no
+			}
+		}
+		custom_description = {
+			text = lam_cv_sway_done_tt
+			scope:target = {
+				NOT = {
+					var:lam_cv_sway_head ?= root.var:lam_cr_view
+				}
+			}
+		}
+		custom_description = {
+			text = lam_cv_sway_same_tt
+			OR = {
+				AND = {
+					OR = {
+					var:lam_cr_choice ?= flag:yes
+					AND = {
+						this = var:lam_cr_view
+						NOT = {
+							var:lam_cr_view = {
+								var:lam_cr_issue ?= flag:confidence
+							}
+						}
+						NOT = {
+							var:lam_cr_choice ?= flag:no
+						}
+						NOT = {
+							var:lam_cr_choice ?= flag:abstain
+						}
+					}
+				}
+					scope:target = {
+						NOT = {
+							var:lam_cr_choice ?= flag:yes
+						}
+					}
+				}
+				AND = {
+					NOT = {
+						OR = {
+					var:lam_cr_choice ?= flag:yes
+					AND = {
+						this = var:lam_cr_view
+						NOT = {
+							var:lam_cr_view = {
+								var:lam_cr_issue ?= flag:confidence
+							}
+						}
+						NOT = {
+							var:lam_cr_choice ?= flag:no
+						}
+						NOT = {
+							var:lam_cr_choice ?= flag:abstain
+						}
+					}
+				}
+					}
+					scope:target = {
+						NOT = {
+							var:lam_cr_choice ?= flag:no
+						}
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		lam_cv_sway_effect = yes
+	}
+}

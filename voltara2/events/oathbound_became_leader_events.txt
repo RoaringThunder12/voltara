@@ -1,0 +1,25 @@
+﻿namespace = oathbound_became_leader_events
+
+oathbound_became_leader_events.0001 = {
+    type = character_event
+    title = oathbound_became_leader_events.0001.t
+    desc = oathbound_became_leader_events.0001.desc
+    theme = crown
+
+    override_background = {
+        reference = bp1_bonfire
+    }
+
+    left_portrait = {
+        character = root
+        animation = marshal
+    }
+
+    # OPTION A: Victory
+    option = {
+        name = oathbound_became_leader_events.0001.a
+        custom_tooltip = {
+            text = oathbound_became_leader_events.0001.a.desc
+        }
+    }
+}

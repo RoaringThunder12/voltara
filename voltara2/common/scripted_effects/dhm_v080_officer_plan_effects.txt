@@ -1,0 +1,234 @@
+﻿# =============================================================================
+# DHM v0.8.0 — earned officer tenure and truthful personal-plan outcomes
+# =============================================================================
+
+# Current scope = officer. Keep every immediate loyalty receipt and ledger value
+# honest rather than waiting for the next yearly maintenance pass.
+dhm_v080_clamp_officer_loyalty_effect = {
+	if = { limit = { has_variable = dhm_officer_loyalty var:dhm_officer_loyalty > 100 } set_variable = { name = dhm_officer_loyalty value = 100 } }
+	else_if = { limit = { has_variable = dhm_officer_loyalty var:dhm_officer_loyalty < 0 } set_variable = { name = dhm_officer_loyalty value = 0 } }
+}
+
+# Current scope = newly appointed officer. Loyalty is deliberately untouched:
+# someone returning to service remembers earlier treatment, while continuous
+# tenure starts again from zero.
+dhm_v080_begin_officer_tenure_effect = {
+ # A genuinely new term gets a new review, without resetting loyalty or cooldowns.
+ remove_variable = dhm090_reviewed_by
+ remove_variable = dhm090_last_review_role
+	set_variable = { name = dhm_v080_officer_service_years value = 0 }
+}
+
+# Natural vacancies (departure, imprisonment, hostage status, or incapacity)
+# end continuous tenure without treating the officer as deliberately dismissed.
+# Loyalty and lifetime milestone flags remain personal history.
+dhm_v080_close_officer_tenure_effect = {
+	remove_variable = dhm_v080_officer_service_years
+}
+
+# Current scope = outgoing officer; manager scope required. Lifetime service
+# milestones remain, preventing dismissal and reappointment from farming them.
+dhm_v080_end_officer_tenure_effect = {
+	dhm_v071_initialize_officer_loyalty_effect = yes
+	if = {
+		limit = { has_variable = dhm_v080_officer_service_years var:dhm_v080_officer_service_years >= 3 }
+		change_variable = { name = dhm_officer_loyalty subtract = 10 }
+		add_opinion = { target = scope:dhm_manager modifier = dhm_v080_officer_long_service_ended_opinion }
+	}
+	else = {
+		change_variable = { name = dhm_officer_loyalty subtract = 5 }
+		add_opinion = { target = scope:dhm_manager modifier = dhm_v080_officer_brief_service_ended_opinion }
+	}
+	dhm_v080_clamp_officer_loyalty_effect = yes
+	remove_variable = dhm_v080_officer_service_years
+}
+
+# Current scope = a validated serving officer; manager scope required.
+dhm_v080_advance_officer_tenure_effect = {
+	if = {
+		limit = { NOT = { has_variable = dhm_v080_officer_service_years } }
+		set_variable = { name = dhm_v080_officer_service_years value = 0 }
+	}
+	change_variable = { name = dhm_v080_officer_service_years add = 1 }
+
+	# These rewards are earned once per character, not once per appointment.
+	if = {
+		limit = {
+			var:dhm_v080_officer_service_years >= 3
+			NOT = { has_character_flag = dhm_v080_officer_three_year_rewarded }
+		}
+		add_character_flag = dhm_v080_officer_three_year_rewarded
+		change_variable = { name = dhm_officer_loyalty add = 5 }
+		add_opinion = { target = scope:dhm_manager modifier = dhm_v080_officer_service_proven_opinion }
+		create_character_memory = {
+			type = dhm_household_service_memory
+			participants = { house_head = scope:dhm_manager }
+		}
+	}
+	if = {
+		limit = {
+			var:dhm_v080_officer_service_years >= 8
+			NOT = { has_character_flag = dhm_v080_officer_eight_year_rewarded }
+		}
+		add_character_flag = dhm_v080_officer_eight_year_rewarded
+		change_variable = { name = dhm_officer_loyalty add = 5 }
+		add_opinion = { target = scope:dhm_manager modifier = dhm_v080_officer_long_service_opinion }
+	}
+	dhm_v080_clamp_officer_loyalty_effect = yes
+}
+
+# Current scope = manager. Stored appointments are already reconciled by the
+# caller, so this touches at most four known characters and performs no scan.
+dhm_v080_maintain_officer_tenures_effect = {
+	save_scope_as = dhm_manager
+	if = { limit = { has_variable = dhm_officer_steward } var:dhm_officer_steward = { dhm_v080_advance_officer_tenure_effect = yes } }
+	if = { limit = { has_variable = dhm_officer_matchmaker } var:dhm_officer_matchmaker = { dhm_v080_advance_officer_tenure_effect = yes } }
+	if = { limit = { has_variable = dhm_officer_tutor } var:dhm_officer_tutor = { dhm_v080_advance_officer_tenure_effect = yes } }
+	if = { limit = { has_variable = dhm_officer_chronicler } var:dhm_officer_chronicler = { dhm_v080_advance_officer_tenure_effect = yes } }
+}
+
+dhm_v080_clear_career_plan_progress_effect = {
+	remove_variable = dhm_v080_career_plan_years
+	remove_character_flag = dhm_v080_career_plan_achieved
+	remove_character_flag = dhm_v080_career_plan_redirected
+	remove_character_flag = dhm_v080_career_plan_missed
+}
+
+dhm_v080_begin_career_plan_effect = {
+	dhm_v080_clear_career_plan_progress_effect = yes
+	set_variable = { name = dhm_v080_career_plan_years value = 0 }
+}
+
+dhm_v080_clear_child_plan_outcome_effect = {
+	remove_character_flag = dhm_v080_child_plan_achieved
+	remove_character_flag = dhm_v080_child_plan_redirected
+	remove_character_flag = dhm_v080_child_plan_missed
+}
+
+# Current scope = adult with a career plan; manager scope required. This refresh
+# never advances time, so repeatedly opening a profile cannot age or finish a plan.
+dhm_v080_refresh_career_plan_status_effect = {
+	if = {
+		limit = { dhm_v080_career_plan_currently_achieved_trigger = yes }
+		add_character_flag = dhm_v080_career_plan_achieved
+		remove_character_flag = dhm_v080_career_plan_redirected
+		remove_character_flag = dhm_v080_career_plan_missed
+	}
+	else_if = {
+		limit = {
+			NOT = { has_character_flag = dhm_v080_career_plan_achieved }
+			dhm_v080_has_other_household_role_trigger = yes
+		}
+		add_character_flag = dhm_v080_career_plan_redirected
+		remove_character_flag = dhm_v080_career_plan_missed
+	}
+	else_if = {
+		limit = { dhm_v080_career_plan_ready_trigger = yes }
+		remove_character_flag = dhm_v080_career_plan_missed
+	}
+}
+
+# Current scope = same-court adult with a plan; manager scope required.
+dhm_v080_advance_career_plan_effect = {
+	if = {
+		limit = { NOT = { has_variable = dhm_v080_career_plan_years } }
+		set_variable = { name = dhm_v080_career_plan_years value = 0 }
+	}
+	dhm_v080_refresh_career_plan_status_effect = yes
+	if = {
+		limit = {
+			NOR = {
+				has_character_flag = dhm_v080_career_plan_achieved
+				has_character_flag = dhm_v080_career_plan_redirected
+			}
+			NOT = { dhm_v080_career_plan_blocked_trigger = yes }
+		}
+		change_variable = { name = dhm_v080_career_plan_years add = 1 }
+		if = {
+			limit = {
+				var:dhm_v080_career_plan_years >= 8
+				NOT = { dhm_v080_career_plan_ready_trigger = yes }
+			}
+			add_character_flag = dhm_v080_career_plan_missed
+		}
+	}
+}
+
+# Current scope = manager. Personal career plans can only be assigned to people
+# in this court, so the annual update remains a single bounded court iterator.
+dhm_v080_maintain_career_plans_effect = {
+	save_scope_as = dhm_manager
+	every_courtier = {
+		limit = {
+			is_alive = yes
+			is_adult = yes
+			dhm_v080_has_career_plan_trigger = yes
+		}
+		dhm_v080_advance_career_plan_effect = yes
+	}
+}
+
+# Current scope = manager. This is opened on demand with the existing Talent
+# Ledger. One court-bounded pass reports real plan states without changing time.
+dhm_v080_refresh_personal_plan_report_effect = {
+	save_scope_as = dhm_manager
+	set_variable = { name = dhm_v080_report_career_total value = 0 }
+	set_variable = { name = dhm_v080_report_career_achieved value = 0 }
+	set_variable = { name = dhm_v080_report_career_redirected value = 0 }
+	set_variable = { name = dhm_v080_report_career_ready value = 0 }
+	set_variable = { name = dhm_v080_report_career_blocked value = 0 }
+	set_variable = { name = dhm_v080_report_career_missed value = 0 }
+	set_variable = { name = dhm_v080_report_child_active value = 0 }
+	set_variable = { name = dhm_v080_report_child_achieved value = 0 }
+	set_variable = { name = dhm_v080_report_child_redirected value = 0 }
+	set_variable = { name = dhm_v080_report_child_missed value = 0 }
+
+	every_courtier = {
+		if = {
+			limit = { is_alive = yes is_adult = yes dhm_v080_has_career_plan_trigger = yes }
+			dhm_v080_refresh_career_plan_status_effect = yes
+			scope:dhm_manager = { change_variable = { name = dhm_v080_report_career_total add = 1 } }
+			if = { limit = { has_character_flag = dhm_v080_career_plan_achieved } scope:dhm_manager = { change_variable = { name = dhm_v080_report_career_achieved add = 1 } } }
+			else_if = { limit = { has_character_flag = dhm_v080_career_plan_redirected } scope:dhm_manager = { change_variable = { name = dhm_v080_report_career_redirected add = 1 } } }
+			else_if = { limit = { dhm_v080_career_plan_blocked_trigger = yes } scope:dhm_manager = { change_variable = { name = dhm_v080_report_career_blocked add = 1 } } }
+			else_if = { limit = { dhm_v080_career_plan_ready_trigger = yes } scope:dhm_manager = { change_variable = { name = dhm_v080_report_career_ready add = 1 } } }
+			else_if = { limit = { has_character_flag = dhm_v080_career_plan_missed } scope:dhm_manager = { change_variable = { name = dhm_v080_report_career_missed add = 1 } } }
+		}
+		if = {
+			limit = { is_alive = yes dhm_has_child_development_plan_trigger = yes }
+			if = {
+				limit = {
+					is_adult = yes
+					NOR = {
+						has_character_flag = dhm_v080_child_plan_achieved
+						has_character_flag = dhm_v080_child_plan_redirected
+						has_character_flag = dhm_v080_child_plan_missed
+					}
+				}
+				dhm_v080_finalize_child_plan_effect = yes
+			}
+			if = { limit = { is_adult = no } scope:dhm_manager = { change_variable = { name = dhm_v080_report_child_active add = 1 } } }
+			else_if = { limit = { has_character_flag = dhm_v080_child_plan_achieved } scope:dhm_manager = { change_variable = { name = dhm_v080_report_child_achieved add = 1 } } }
+			else_if = { limit = { has_character_flag = dhm_v080_child_plan_redirected } scope:dhm_manager = { change_variable = { name = dhm_v080_report_child_redirected add = 1 } } }
+			else_if = { limit = { has_character_flag = dhm_v080_child_plan_missed } scope:dhm_manager = { change_variable = { name = dhm_v080_report_child_missed add = 1 } } }
+		}
+	}
+}
+
+# Current scope = a character who has reached adulthood. The outcome records
+# what vanilla education actually produced; it never adds a trait or skill.
+dhm_v080_finalize_child_plan_effect = {
+	if = {
+		limit = { dhm_has_child_development_plan_trigger = yes }
+		dhm_v080_clear_child_plan_outcome_effect = yes
+		if = {
+			limit = { dhm_v080_child_plan_matching_education_achieved_trigger = yes }
+			add_character_flag = dhm_v080_child_plan_achieved
+		}
+		else_if = {
+			limit = { dhm_v080_child_plan_different_education_trigger = yes }
+			add_character_flag = dhm_v080_child_plan_redirected
+		}
+		else = { add_character_flag = dhm_v080_child_plan_missed }
+	}
+}

@@ -1,0 +1,119 @@
+﻿lam_lf_office_pool_trigger = {
+	save_temporary_scope_as = lam_lf_head
+	OR = {
+		lam_lf_office_person_trigger = yes
+		any_in_list = {
+			variable = lam_fac_members
+			lam_lf_office_person_trigger = yes
+		}
+	}
+}
+lam_lf_campaign_current_trigger = {
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	has_variable = lam_bloc_lead
+	var:lam_bloc ?= this
+	var:lam_st_campaign_lord ?= liege
+	has_variable = lam_st_campaign_until
+	var:lam_st_campaign_until > lam_now_m
+	NOT = {
+		has_variable = lam_fac_disband
+	}
+	OR = {
+		AND = {
+			NOT = {
+				has_variable = lam_fac_rec
+			}
+			NOT = {
+				has_variable = lam_st_campaign_record
+			}
+		}
+		var:lam_st_campaign_record ?= var:lam_fac_rec
+	}
+	OR = {
+		var:lam_st_campaign_kind ?= flag:council
+		var:lam_st_campaign_kind ?= flag:heir
+		var:lam_st_campaign_kind ?= flag:gold
+		var:lam_st_campaign_kind ?= flag:land
+		var:lam_st_campaign_kind ?= flag:release
+		var:lam_st_campaign_kind ?= flag:law
+	}
+	trigger_if = {
+		limit = {
+			var:lam_st_campaign_kind ?= flag:council
+		}
+		OR = {
+			lam_lf_office_pool_trigger = yes
+			AND = {
+				lam_lf_exchange_current_trigger = yes
+				var:lam_lf_exchange_role ?= flag:sponsor
+				var:lam_lf_exchange_stage ?= 2
+				var:lam_lf_exchange_person = {
+					lam_st_office_available_trigger = yes
+					NOT = {
+						is_councillor_of = liege
+					}
+				}
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_st_campaign_kind ?= flag:heir
+		}
+		var:lam_st_campaign_target ?= var:lam_fac_heir
+		save_temporary_scope_as = lam_lf_head
+		liege = {
+			lam_nc_heir_trigger = {
+				CANDIDATE = scope:lam_lf_head.var:lam_st_campaign_target
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_st_campaign_kind ?= flag:release
+		}
+		any_in_list = {
+			variable = lam_fac_members
+			is_alive = yes
+			var:lam_bloc ?= prev
+			is_imprisoned_by = prev.liege
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_st_campaign_kind ?= flag:law
+		}
+		liege = {
+			OR = {
+				has_realm_law = crown_authority_1
+				has_realm_law = crown_authority_2
+				has_realm_law = crown_authority_3
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_st_campaign_kind ?= flag:land
+		}
+		save_temporary_scope_as = lam_lf_head
+		OR = {
+			liege = {
+				lam_nc_county_available_trigger = {
+					RECIPIENT = scope:lam_lf_head
+				}
+			}
+			any_in_list = {
+				variable = lam_fac_members
+				lam_lf_member_trigger = yes
+				save_temporary_scope_as = lam_lf_land_person
+				liege = {
+					lam_nc_county_available_trigger = {
+						RECIPIENT = scope:lam_lf_land_person
+					}
+				}
+			}
+		}
+	}
+}

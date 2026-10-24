@@ -1,0 +1,24 @@
+﻿random_yearly_everyone_pulse = {
+	on_actions = {
+		lam_ob_membership_yearly
+	}
+}
+lam_ob_membership_yearly = {
+	trigger = {
+		trigger_if = {
+			limit = {
+				is_alive = yes
+			}
+			OR = {
+				has_variable = lam_bloc
+				has_variable = lam_bloc_lead
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	effect = {
+		lam_ob_person_membership_effect = yes
+	}
+}

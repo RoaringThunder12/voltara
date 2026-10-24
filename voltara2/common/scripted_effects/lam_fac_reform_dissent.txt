@@ -1,0 +1,397 @@
+﻿lam_cr_dissent_effect = {
+	lam_st_dissent_topic_effect = yes
+	lam_bp_remember_voters_effect = yes
+	if = {
+		limit = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+			NOT = {
+				has_variable = lam_fac_disband
+			}
+			NOT = {
+				var:lam_cr_issue ?= flag:confidence
+			}
+			NOT = {
+				var:lam_cr_issue ?= flag:ban
+			}
+			NOT = {
+				var:lam_cr_issue ?= flag:dissolve
+			}
+		}
+		save_scope_as = lam_cr_head
+		every_in_list = {
+			variable = lam_cr_voters
+			limit = {
+				lam_cr_saved_voter_trigger = yes
+				NOT = {
+					this = scope:lam_cr_head
+				}
+			}
+			if = {
+				limit = {
+					var:lam_cr_choice ?= flag:no
+					NOT = {
+						has_variable = lam_er_kept_primary
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							var:lam_cr_unrest_head ?= scope:lam_cr_head
+						}
+					}
+					set_variable = {
+						name = lam_cr_unrest_head
+						value = scope:lam_cr_head
+						years = 3
+					}
+					set_variable = {
+						name = lam_cr_unrest
+						value = 0
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_variable = lam_cr_unrest
+						}
+					}
+					set_variable = {
+						name = lam_cr_unrest
+						value = 0
+					}
+				}
+				change_variable = {
+					name = lam_cr_unrest
+					add = 1
+				}
+				set_variable = {
+					name = lam_cr_unrest
+					value = var:lam_cr_unrest
+					years = 5
+				}
+				set_variable = {
+					name = lam_fac_sulk
+					value = scope:lam_cr_head
+					years = 1
+				}
+				lam_fac_timer_set_effect = {
+					NAME = lam_fac_sulk
+					YEARS = 1
+				}
+			}
+			else_if = {
+				limit = {
+					var:lam_cr_choice ?= flag:yes
+					has_variable = lam_cr_unrest
+					AND = {
+						trigger_if = {
+							limit = {
+								scope:lam_cr_head = {
+									has_variable = lam_bp_meeting_topic
+								}
+							}
+							var:lam_bp_position_topic ?= scope:lam_cr_head.var:lam_bp_meeting_topic
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+				}
+				change_variable = {
+					name = lam_cr_unrest
+					add = -1
+				}
+				clamp_variable = {
+					name = lam_cr_unrest
+					min = 0
+					max = 5
+				}
+			}
+		}
+		lam_lf_caucus_build_effect = yes
+		if = {
+			limit = {
+				var:lam_cr_no >= {
+					value = var:lam_cr_total
+					multiply = 0.4
+				}
+				OR = {
+					var:lam_fac_cohesion < 40
+					has_variable = lam_fac_betrayed
+					has_variable = lam_fac_disgraced
+				}
+				lam_fac_can_split_trigger = yes
+				AND = {
+					trigger_if = {
+						limit = {
+							has_variable = lam_lf_split_grace
+						}
+						NOT = {
+							var:lam_lf_split_grace > lam_now_m
+						}
+					}
+				}
+				NOT = {
+					lam_bp_meeting_trigger = yes
+				}
+			}
+			save_scope_as = lam_vt_head
+			clear_saved_scope = lam_vt_lead
+			ordered_in_list = {
+				variable = lam_cr_voters
+				max = 1
+				check_range_bounds = no
+				limit = {
+					lam_cr_saved_voter_trigger = yes
+					is_ai = yes
+					var:lam_cr_choice ?= flag:no
+					var:lam_cr_unrest_head ?= scope:lam_cr_head
+					has_variable = lam_cr_unrest
+					var:lam_cr_unrest >= 3
+					is_ruler = yes
+					NOT = {
+						has_variable = lam_bloc_lead
+					}
+					opinion = {
+						target = scope:lam_cr_head
+						value <= -20
+					}
+				}
+				order_by = lam_cr_influence_value
+				save_scope_as = lam_vt_lead
+			}
+			if = {
+				limit = {
+					exists = scope:lam_vt_lead
+				}
+				every_in_list = {
+					variable = lam_cr_voters
+					limit = {
+						lam_cr_saved_voter_trigger = yes
+						is_ai = yes
+						var:lam_cr_choice ?= flag:no
+					}
+					set_variable = {
+						name = lam_vt_against
+						value = yes
+					}
+				}
+				var:lam_cr_old ?= {
+					save_scope_as = lam_vt_old
+				}
+				if = {
+					limit = {
+						var:lam_cr_issue ?= flag:court
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = court
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_cr_issue ?= flag:heir
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = heir
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_cr_issue ?= flag:crown
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = crown
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_cr_issue ?= flag:rise
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = rise
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_cr_issue ?= flag:deal
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = deal
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_cr_issue ?= flag:merge
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = merge
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_cr_issue ?= flag:loyal
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = court
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_cr_issue ?= flag:oppose
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = rise
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_cr_issue ?= flag:arm
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = rise
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_cr_issue ?= flag:watch
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = court
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_cr_issue ?= flag:quiet
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = court
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_cr_issue ?= flag:people
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = court
+					}
+				}
+				else_if = {
+					limit = {
+						var:lam_cr_issue ?= flag:withdraw
+					}
+					lam_fac_council_split_effect = {
+						ISSUE = court
+					}
+				}
+				if = {
+					limit = {
+						scope:lam_vt_lead = {
+							has_variable = lam_bloc_lead
+						}
+					}
+					scope:lam_vt_lead = {
+						save_scope_as = lam_cr_split_head
+					}
+					save_scope_as = lam_cr_original_head
+					save_scope_value_as = {
+						name = lam_cr_split_token
+						value = var:lam_cr_id
+					}
+					every_in_list = {
+						variable = lam_cr_voters
+						limit = {
+							is_alive = yes
+							is_ai = no
+							var:lam_cr_choice ?= flag:no
+							var:lam_bloc ?= scope:lam_cr_original_head
+							NOT = {
+								has_variable = lam_bloc_lead
+							}
+						}
+						set_variable = {
+							name = lam_cr_split_offer
+							value = scope:lam_cr_split_token
+							months = 2
+						}
+						trigger_event = lam_cr.0012
+					}
+				}
+				else = {
+					if = {
+						limit = {
+							is_ai = no
+						}
+						send_interface_message = {
+							type = event_generic_neutral
+							title = lam_cr_split_no_seat
+						}
+					}
+				}
+				every_in_list = {
+					variable = lam_cr_voters
+					limit = {
+						has_variable = lam_vt_against
+					}
+					remove_variable = lam_vt_against
+				}
+			}
+		}
+	}
+	lam_ev_refresh_dissent_effect = yes
+	lam_bp_try_split_effect = yes
+}
+lam_cr_defeat_memory_effect = {
+	save_scope_as = lam_cr_account_head
+	every_in_list = {
+		variable = lam_fac_members
+		limit = {
+			is_alive = yes
+			var:lam_bloc ?= scope:lam_cr_account_head
+		}
+		if = {
+			limit = {
+				var:lam_cr_backed_head ?= scope:lam_cr_account_head
+				var:lam_cr_backed_issue ?= flag:rise
+			}
+			lam_cr_service_add_effect = {
+				ADD = -2
+			}
+			remove_variable = lam_cr_backed_head
+			remove_variable = lam_cr_backed_issue
+		}
+		else_if = {
+			limit = {
+				var:lam_cr_dissent_head ?= scope:lam_cr_account_head
+				var:lam_cr_dissent_issue ?= flag:rise
+			}
+			lam_cr_service_add_effect = {
+				ADD = 2
+			}
+			remove_variable = lam_cr_dissent_head
+			remove_variable = lam_cr_dissent_issue
+		}
+	}
+}
+lam_cr_success_memory_effect = {
+	save_scope_as = lam_cr_account_head
+	every_in_list = {
+		variable = lam_fac_members
+		limit = {
+			is_alive = yes
+			var:lam_bloc ?= scope:lam_cr_account_head
+			var:lam_cr_backed_head ?= scope:lam_cr_account_head
+		}
+		lam_cr_service_add_effect = {
+			ADD = 2
+		}
+		remove_variable = lam_cr_backed_head
+		if = {
+			limit = {
+				has_variable = lam_cr_backed_issue
+			}
+			remove_variable = lam_cr_backed_issue
+		}
+	}
+	lam_cs_success_effect = yes
+}

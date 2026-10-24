@@ -1,0 +1,779 @@
+﻿#Events run from the yearly_pulse on_action
+namespace = bp2_yearly
+
+#####################################
+# Bulgarian Blood  	   				#
+# by Jason Cantalini				#
+# 6080							 	#
+#####################################
+
+scripted_trigger bp2_yearly_6080_vassal = {
+	is_imprisoned = no
+	age > 13
+	is_at_war = no
+	opinion = {
+		target = root
+		value < 0
+	}
+	is_ai = yes
+}
+
+# You are about to get some sweet foreign mercenary bodyguards... and it's a breaking point for your resentful nobility
+bp2_yearly.6080 = {
+	type = character_event
+	content_source = dlc_009
+	title = bp2_yearly.6080.t
+	desc = bp2_yearly.6080.desc
+
+	# kCAFG override : low priority, it's okay if this event is replaced
+	id_override_priority = 1
+			
+	theme = war
+	override_background = {
+		reference = courtyard
+	}
+	left_portrait = {
+		character = root
+		animation = disbelief
+	}
+
+	right_portrait = {
+		character = scope:angry_vassal
+		animation = anger
+	}
+
+	lower_right_portrait = {
+		character = scope:foreign_mercenary_1
+	}
+
+	lower_left_portrait = {
+		character = scope:foreign_mercenary_2
+	}
+
+	trigger = {
+		has_bp2_dlc_trigger = yes
+		basic_is_valid_for_yearly_events_trigger = yes
+
+		NOT = { has_character_flag = had_event_bp2_yearly_6080 }
+		var:advanced_culture = {
+			save_temporary_scope_as = temp_advanced_culture
+		}
+		any_vassal = {
+			bp2_yearly_6080_vassal = yes
+			culture != scope:temp_advanced_culture
+		}
+	}
+
+	weight_multiplier = {
+		base = 1
+		#If you got this event before and chose to delay it for later, this should pretty much ensure you will get the event again
+		modifier = {
+			factor = 2
+			culture = {
+				OR = {
+					has_cultural_pillar = ethos_communal
+					has_cultural_pillar = ethos_stoic
+				}
+			}
+		}
+		modifier = {
+			factor = 0.5
+			NOT = {
+				any_targeting_faction = {
+					faction_power = halved_faction_power_threshold
+				}
+			}
+		}
+		modifier = {
+			factor = 1.5
+			var:advanced_culture = {
+				OR = {
+					has_cultural_pillar = ethos_bellicose
+					has_cultural_pillar = ethos_stoic
+					has_cultural_pillar = ethos_bureaucratic
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			culture = {
+				OR = {
+					has_cultural_pillar = ethos_bellicose
+					has_cultural_pillar = ethos_bureaucratic
+				}
+			}
+		}
+	}
+
+	immediate = {
+		add_character_flag = had_event_bp2_yearly_6080
+		save_scope_as = root_scope
+		var:advanced_culture = {
+			save_scope_as = advanced_culture
+		}
+		if = {
+			limit = {
+			   any_powerful_vassal = {
+					bp2_yearly_6080_vassal = yes
+					opinion = {
+						target = root 
+						value <= -40
+					}
+					culture != scope:advanced_culture
+			   }
+			}
+			random_powerful_vassal = {
+				limit = {
+					bp2_yearly_6080_vassal = yes
+					opinion = {
+						target = root 
+						value <= -40
+					}
+					culture != scope:advanced_culture
+				}
+				save_scope_as = angry_vassal
+			}
+		}
+		else_if = {
+			limit = {
+			   any_powerful_vassal = {
+					bp2_yearly_6080_vassal = yes
+					culture != scope:advanced_culture
+			   }
+			}
+			random_powerful_vassal = {
+				limit = {
+					bp2_yearly_6080_vassal = yes
+					culture != scope:advanced_culture
+				}
+				save_scope_as = angry_vassal
+			}
+		}
+		else_if = {
+			limit = {
+			   any_vassal = {
+					bp2_yearly_6080_vassal = yes
+					opinion = {
+						target = root 
+						value <= -40
+					}
+					culture != scope:advanced_culture
+			   }
+			}
+			random_vassal = {
+				limit = {
+					bp2_yearly_6080_vassal = yes
+					opinion = {
+						target = root 
+						value <= -40
+					}
+					culture != scope:advanced_culture
+				}
+				save_scope_as = angry_vassal
+			}
+		}
+		else = {
+			random_vassal = {
+				limit = {
+					bp2_yearly_6080_vassal = yes
+					culture != scope:advanced_culture
+				}
+				save_scope_as = angry_vassal
+			}
+		}
+		
+		#Create two foreign fighting dudes
+		create_character = {
+			template = foreign_mercenary_template
+			culture = scope:advanced_culture
+			faith = scope:advanced_culture.culture_head.faith
+			rite = scope:advanced_culture.culture_head.rite
+			location = root.location
+			gender_female_chance = root_soldier_female_chance
+			save_scope_as = foreign_mercenary_1
+		}
+		scope:foreign_mercenary_1 = {
+			add_character_flag = wear_armor
+		}
+		create_character = {
+			template = foreign_mercenary_template
+			culture = scope:advanced_culture
+			faith = scope:advanced_culture.culture_head.faith
+			rite = scope:advanced_culture.culture_head.rite
+			location = root.location
+			gender_female_chance = root_soldier_female_chance
+			save_scope_as = foreign_mercenary_2
+		}
+		scope:foreign_mercenary_2 = {
+			add_character_flag = wear_armor
+		}
+		#save a province to resettle them, if any available
+		#One to build things in
+		if = {
+			limit = {
+				any_held_title = {
+					title_tier = county
+					this != root.capital_county
+					any_county_province = {
+						has_holding = no
+						NOR = {
+							has_construction_with_flag = temple
+							has_construction_with_flag = castle
+							has_construction_with_flag = city
+							has_construction_with_flag = tribe
+						}
+					}
+				}
+			}
+			random_held_title = {
+				title_tier = county
+				limit = {
+					this != root.capital_county
+					any_county_province = {
+						has_holding = no
+						NOR = {
+							has_construction_with_flag = temple
+							has_construction_with_flag = castle
+							has_construction_with_flag = city
+							has_construction_with_flag = tribe
+						}
+					}
+				}
+				save_scope_as = resettlement_county
+			}
+		}
+		#One that things can't be built in
+		else_if = {
+			limit = {
+				any_held_title = {
+					title_tier = county
+					this != root.capital_county
+				}
+			}
+			random_held_title = {
+				title_tier = county
+				limit = {
+					this != root.capital_county
+				}
+				save_scope_as = resettlement_county
+			}
+		}
+	}
+
+	#Try to find a compromise that still lets you keep these skilled Greeks
+	option = {
+		trigger = {
+			OR = {
+				diplomacy >= high_skill_rating
+				intrigue >= high_skill_rating
+			}
+		}
+		name =  bp2_yearly.6080.a
+		flavor = bp2_yearly.6080.a.tt
+		if = {
+			limit = {
+				exists = scope:resettlement_county
+				scope:resettlement_county = {
+					any_county_province = {
+						has_holding = no
+						NOR = {
+							has_construction_with_flag = temple
+							has_construction_with_flag = castle
+							has_construction_with_flag = city
+							has_construction_with_flag = tribe
+						}
+					}
+				}
+			}
+			scope:resettlement_county = {
+				random_county_province = { 
+					limit = {
+						has_holding = no
+						NOR = {
+							has_construction_with_flag = temple
+							has_construction_with_flag = castle
+							has_construction_with_flag = city
+							has_construction_with_flag = tribe
+						}
+					}
+					if = {
+						limit = {
+							scope:advanced_culture.culture_head ?= {
+								government_has_flag = government_is_tribal
+							}
+						}
+						begin_create_holding = {
+							type = tribal_holding
+							refund_cost = { gold = hold_court_holding_cost_half_value }
+						}
+					}
+					else_if = {
+						limit = {
+							scope:advanced_culture = {
+								has_cultural_pillar = ethos_spiritual
+							}
+						}
+						begin_create_holding = {
+							type = church_holding
+							refund_cost = { gold = hold_court_holding_cost_half_value }
+						}
+					}
+					else_if = {
+						limit = {
+							scope:advanced_culture = {
+								OR = {
+									has_cultural_pillar = ethos_bellicose
+									has_cultural_pillar = ethos_courtly
+									has_cultural_pillar = ethos_stoic
+								}
+							}
+						}
+						begin_create_holding = {
+							type = castle_holding
+							refund_cost = { gold = hold_court_holding_cost_half_value }
+						}
+					}
+					else = {
+						begin_create_holding = {
+							type = city_holding
+						}
+					}
+				}
+				change_development_level = 1
+				E_kCAFG_convert_culture_in_all_county_provinces = {
+					FACTOR = 0.65
+					VARIANCE = 0.4
+					CULTURE = scope:advanced_culture
+					MAX = 0.85
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				exists = scope:resettlement_county
+			}
+			scope:resettlement_county = {
+				change_development_level = 2
+				change_county_control = major_county_control_gain
+				E_kCAFG_convert_culture_in_all_county_provinces = {
+					FACTOR = 0.75
+					VARIANCE = 0.3
+					CULTURE = scope:advanced_culture
+					MAX = 0.9
+				}
+			}
+		}
+		else = {
+			capital_county = {
+				change_development_level = 1
+			}
+			capital_county = {
+				change_county_control = major_county_control_gain
+			}
+		}
+		custom_tooltip = bp2_yearly.6080.pop_opinion_modifier
+		hidden_effect = {
+			if = {
+				limit = {
+					exists = scope:resettlement_county
+				}
+				scope:resettlement_county.duchy = {
+					every_de_jure_county = {
+						limit = {
+							NOR = {
+								culture = scope:advanced_culture
+								this = scope:resettlement_county
+							}
+							holder.top_liege = root
+						}
+						add_county_modifier = {
+							modifier = forcible_resettlement_modifier
+							years = 10
+						}
+					}
+				}
+			}
+			else = {
+				capital_county.duchy = {
+					every_de_jure_county = {
+						limit = {
+							NOR = {
+								culture = scope:advanced_culture
+								this = root.capital_county
+							}
+							holder.top_liege = root
+						}
+						add_county_modifier = {
+							modifier = forcible_resettlement_modifier
+							years = 10
+						}
+					}
+				}
+			}
+		}
+
+		add_tyranny = medium_tyranny_gain
+
+		# make it possible to get new maa traditions in the tradition event
+		add_character_flag = foreign_maa_reforms
+
+		custom_tooltip = bp2_yearly.6050.reform_path
+		random_owned_story = {
+			type = story_foreign_raised_reformer
+			change_variable = {
+				name = reform_counter
+				add = 1
+			}
+		}
+
+		stress_and_fulfillment_impact = {
+			stubborn = medium_stress_impact_gain
+			wrathful = medium_stress_impact_gain
+			vengeful = medium_stress_impact_gain
+		}
+
+		ai_chance = {
+			base = 0
+		}
+	}
+
+	#Try to capture the noble and disrupt the nascent rebellion
+	option = {
+		name = bp2_yearly.6080.b
+		flavor = bp2_yearly.6080.b.tt
+
+		if = {
+			limit = {
+				can_increase_government_authority = yes
+			}
+			change_authority_effect = { CHANGE = 1 }
+		}
+		else = {
+			add_dread = major_dread_gain
+		}
+		capital_province = {
+			add_province_modifier = {
+				modifier = elite_foreign_guard_modifier
+			}
+		}
+
+		custom_tooltip = bp2_yearly.6080.add_both_courtiers
+		hidden_effect = {
+			add_courtier = scope:foreign_mercenary_1
+			add_courtier = scope:foreign_mercenary_2
+		}
+		
+		if = {
+			limit = {
+				can_set_relation_rival_trigger = { CHARACTER = scope:angry_vassal }
+			}
+			scope:angry_vassal = {
+				set_relation_rival = {
+					target = root
+					reason = rival_attacked_dissent
+				}
+			}
+		}
+		else = {
+			scope:angry_vassal = {
+				add_opinion = {
+					target = root
+					opinion = -40
+					modifier = hate_opinion
+				}
+			}
+		}
+
+		random_owned_story = {
+			type = story_foreign_raised_reformer
+			change_variable = {
+				name = reform_counter
+				add = 1
+			}
+		}
+
+		duel = {
+			skills = { martial prowess }
+			target = scope:angry_vassal
+			55 = { #It works well
+				desc = bp2_yearly.6080.b.success
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 3
+				}
+				
+				send_interface_toast = {
+					title = bp2_yearly.6080.b.success
+					left_icon = root
+					right_icon = scope:angry_vassal
+					rightfully_imprison_character_less_verbose_effect = {
+						TARGET = scope:angry_vassal
+						IMPRISONER = root
+					}
+					every_vassal = {
+						limit = {
+							culture != scope:advanced_culture
+						}
+						custom = custom.every_non_advanced_culture_vassal
+						add_opinion = {
+							target = root
+							modifier = angry_opinion
+							opinion = -10
+						}
+					}
+				}
+			}
+			45 = { #It doesn't go well
+				desc = bp2_yearly.6080.b.failure
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -3
+					min = -40
+				}
+				send_interface_toast = {
+					title = bp2_yearly.6080.b.failure
+					left_icon = root
+					right_icon = scope:angry_vassal
+					
+					scope:angry_vassal = {
+						start_war = {
+							casus_belli = refused_liege_demand_war
+							target = root
+						}
+					}
+					if = {
+						limit = {
+							any_targeting_faction = {
+								NOT = { exists = faction_war }
+							}
+						}
+						add_targeting_factions_discontent = major_discontent_gain
+					}
+					add_tyranny = massive_tyranny_gain
+					add_legitimacy = minor_legitimacy_loss
+				}
+			}
+		}
+
+		custom_tooltip = bp2_yearly.6050.reform_path
+
+		 # make it possible to get new maa traditions in the tradition event
+		add_character_flag = foreign_maa_reforms
+
+		stress_and_fulfillment_impact = {
+			forgiving = major_stress_impact_gain
+			calm = medium_stress_impact_gain
+			patient = medium_stress_impact_gain
+			trusting = medium_stress_impact_gain
+			compassionate = medium_stress_impact_gain
+		}
+
+		ai_chance = {
+			base = 10
+			ai_value_modifier = {
+				ai_vengefulness = 1
+				ai_energy = 1
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_trait = forgiving
+					has_trait = calm
+					has_trait = patient
+					has_trait = trusting
+					has_trait = compassionate
+				}
+			}
+		}
+	}
+
+	#I am unstoppable. I am changing things.
+	option = {
+		name = bp2_yearly.6080.c
+		flavor = bp2_yearly.6080.c.tt
+
+		if = {
+			limit = {
+				can_increase_government_authority = yes
+			}
+			change_authority_effect = { CHANGE = 1 }
+		}
+		else = {
+			add_dread = major_dread_gain
+		}
+		capital_province = {
+			add_province_modifier = {
+				modifier = elite_foreign_guard_modifier
+			}
+		}
+		custom_tooltip = bp2_yearly.6080.add_both_courtiers
+		hidden_effect = {
+			add_courtier = scope:foreign_mercenary_1
+			add_courtier = scope:foreign_mercenary_2
+		}
+		custom_tooltip = bp2_yearly.6080.hook_removal_vassals
+		custom_tooltip = bp2_yearly.6080.hook_removal
+		custom_tooltip = bp2_yearly.6080.truce_removal
+		hidden_effect = {
+			every_vassal = {
+				limit = {
+					has_hook = root
+					is_ai = yes
+					culture != scope:advanced_culture
+				}
+				remove_hook = { target = root }
+			}
+			every_vassal = {
+				limit = {
+					root = {
+						has_hook = prev
+					}
+					culture != scope:advanced_culture
+					is_ai = yes
+				}
+				root = {
+					remove_hook = { target = prev}
+				}
+			}
+	
+			every_vassal = {
+				limit = {
+					has_truce = root
+					culture != scope:advanced_culture
+					is_ai = yes
+				}
+				cancel_truce_both_ways = root
+			}
+	
+			every_vassal = {
+				limit = {
+					root = {
+						has_truce = prev
+					}
+					culture != scope:advanced_culture
+					is_ai = yes
+				}
+				root = {
+					cancel_truce_both_ways = prev
+				}
+			}
+		}
+		add_legitimacy = major_legitimacy_loss
+		
+		custom_tooltip = bp2_yearly.6050.reform_path
+		random_owned_story = {
+			type = story_foreign_raised_reformer
+			change_variable = {
+				name = reform_counter
+				add = 1
+			}
+		}
+
+		# make it possible to get new maa traditions in the tradition event
+		add_character_flag = foreign_maa_reforms
+
+		stress_and_fulfillment_impact = {
+			just = major_stress_impact_gain
+			fickle = medium_stress_impact_gain
+			content = medium_stress_impact_gain
+			craven = medium_stress_impact_gain
+			humble = medium_stress_impact_gain
+		}
+
+		ai_chance = {
+			base = 10
+			ai_value_modifier = {
+				ai_boldness = 1
+				ai_honor = -1
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_trait = just
+					has_trait = fickle
+					has_trait = content
+					has_trait = craven
+					has_trait = humble
+				}
+			}
+		}
+	}
+
+	#I don't want to see violence break out between my people
+	option = {
+		name = bp2_yearly.6080.d
+		flavor = bp2_yearly.6080.d.tt
+
+		add_character_modifier = {
+			modifier = common_noble_cause_modifier
+			years = 30
+		}
+		add_prestige = medium_prestige_gain
+
+		custom_tooltip = bp2_yearly.6050.reaffirmation_path
+		random_owned_story = {
+			type = story_foreign_raised_reformer
+			change_variable = {
+				name = reaffirmation_counter
+				add = 1
+			}
+		}
+
+		add_character_flag = rejecting_foreign_maa_reforms
+
+		stress_and_fulfillment_impact = {
+			vengeful = major_stress_impact_gain
+			sadistic = medium_stress_impact_gain
+			arbitrary = medium_stress_impact_gain
+			ambitious = medium_stress_impact_gain
+			wrathful = medium_stress_impact_gain
+		}
+
+		ai_chance = {
+			base = 10
+			ai_value_modifier = {
+				ai_compassion = 1
+				ai_honor = 1
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_trait = vengeful
+					has_trait = sadistic
+					has_trait = arbitrary
+					has_trait = ambitious
+					has_trait = wrathful
+				}
+			}
+		}
+	}
+
+	after = {
+		if = {
+			limit = {
+				NOR = {
+					scope:foreign_mercenary_1 ?= {
+						is_courtier_of = root
+					}
+					scope:foreign_mercenary_2 ?= {
+						is_courtier_of = root
+					}
+				}
+			}
+			scope:foreign_mercenary_1 = {
+				silent_disappearance_effect = yes
+			}
+			scope:foreign_mercenary_2 = {
+				silent_disappearance_effect = yes
+			}
+		}
+		else = {
+			scope:foreign_mercenary_1 = {
+				remove_character_flag = wear_armor
+			}
+			scope:foreign_mercenary_2 = {
+				remove_character_flag = wear_armor
+			}
+		}
+	}
+}

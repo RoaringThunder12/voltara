@@ -17,10 +17,8 @@ on_killed = {
 			every_in_list = {
 				variable = killed_house_members
 				limit = {
-					OR = {
-						killer = { is_alive = no }
-						killer = { house = PREV.house }
-					}
+					trigger_if = { limit = { is_alive = no } OR = { killer = { is_alive = no } killer = { house = PREV.house } } }
+ trigger_else = { always = no }
 				}
 				PREV = {
 					remove_list_variable = {

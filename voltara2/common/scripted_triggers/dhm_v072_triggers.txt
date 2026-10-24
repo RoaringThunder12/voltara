@@ -1,0 +1,20 @@
+﻿# Childhood lessons remain available from age eight; adult duties use the
+# adult-only v0.7.1 gate. Both are rooted on the human manager.
+dhm_v072_heir_lesson_available_trigger = {
+	is_alive = yes
+	age >= 8
+	is_imprisoned = no
+	is_hostage = no
+	NOT = { has_trait = incapable }
+	is_in_the_same_court_as = root
+	this = root.player_heir
+}
+
+dhm_v072_dispute_unresolved_trigger = {
+	exists = scope:dhm072_dispute_result
+	OR = {
+		scope:dhm072_dispute_result = flag:grievance_first
+		scope:dhm072_dispute_result = flag:grievance_second
+		scope:dhm072_dispute_result = flag:grievance_both
+	}
+}

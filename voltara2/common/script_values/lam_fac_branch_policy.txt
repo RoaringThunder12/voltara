@@ -1,0 +1,115 @@
+﻿lam_bp_line_vote_value = {
+	value = 0
+	if = {
+		limit = {
+			scope:lam_cr_head = {
+				lam_bp_policy_trigger = yes
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_bp_origin_side ?= flag:restraint
+					OR = {
+						var:lam_cr_issue ?= flag:rise
+						var:lam_cr_issue ?= flag:arm
+						var:lam_cr_issue ?= flag:oppose
+					}
+				}
+			}
+			add = -15
+		}
+		else_if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_bp_origin_side ?= flag:restraint
+					OR = {
+						var:lam_cr_issue ?= flag:deal
+						var:lam_cr_issue ?= flag:quiet
+					}
+				}
+			}
+			add = 10
+		}
+		else_if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_bp_origin_side ?= flag:pressure
+					OR = {
+						var:lam_cr_issue ?= flag:deal
+						var:lam_cr_issue ?= flag:quiet
+					}
+				}
+			}
+			add = -12
+		}
+		else_if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_bp_origin_side ?= flag:pressure
+					var:lam_cr_issue ?= flag:rise
+				}
+			}
+			add = 8
+		}
+		else_if = {
+			limit = {
+				scope:lam_cr_head = {
+					var:lam_bp_origin_side ?= flag:retain
+					var:lam_cr_issue ?= flag:heir
+				}
+			}
+			if = {
+				limit = {
+					scope:lam_cr_head.var:lam_cr_target ?= scope:lam_cr_head.var:lam_bp_origin_alternative
+				}
+				add = 15
+			}
+			else = {
+				add = -15
+			}
+		}
+	}
+}
+lam_bp_fair_merit_value = {
+	value = 0
+	if = {
+		limit = {
+			scope:lam_lf_head = {
+				lam_bp_policy_trigger = yes
+				var:lam_bp_origin_side ?= flag:fair
+			}
+		}
+		if = {
+			limit = {
+				this = scope:lam_lf_head
+			}
+			add = -15
+		}
+		else_if = {
+			limit = {
+				has_variable = lam_st_overlooked
+			}
+			if = {
+				limit = {
+					var:lam_st_overlooked >= 1
+					OR = {
+						var:lam_st_reward_head ?= scope:lam_lf_head
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = scope:lam_lf_head.var:lam_bp_origin_parent
+								}
+								var:lam_st_reward_head ?= scope:lam_lf_head.var:lam_bp_origin_parent
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+				}
+				add = 20
+			}
+		}
+	}
+}

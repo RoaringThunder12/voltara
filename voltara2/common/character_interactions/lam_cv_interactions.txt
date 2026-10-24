@@ -1,0 +1,254 @@
+﻿# Living Factions - agendas a player head puts to the faction council (tools/claude_fixes/council_ui.py)
+lam_cv_seat_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	common_interaction = no
+	desc = lam_cv_seat_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			var:lam_bloc ?= this
+			liege ?= scope:recipient
+		}
+		scope:recipient = {
+			is_target_in_variable_list = {
+				name = lam_bloc_leads
+				target = scope:actor
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			NOT = {
+				has_variable = lam_cr_active
+			}
+				custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+			custom_description = {
+				text = lam_cv_committed_tt
+				NOT = {
+					lam_wc_committed_trigger = yes
+				}
+			}
+			custom_description = {
+				text = lam_cv_call_retry_tt
+				NOT = {
+					has_variable = lam_cr_retry_goal
+				}
+			}
+		}
+	}
+	populate_recipient_list = {
+		scope:actor = {
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					is_adult = yes
+					is_imprisoned = no
+					var:lam_bloc ?= scope:actor
+					NOT = {
+						this = scope:actor
+					}
+					NOT = {
+						scope:actor = {
+							var:lam_fac_seat_pick ?= prev
+						}
+					}
+					liege ?= scope:actor.liege
+					NOT = {
+						is_councillor_of = scope:actor.liege
+					}
+					OR = {
+						can_be_marshal_trigger = {
+							COURT_OWNER = scope:actor.liege
+						}
+						can_be_steward_trigger = {
+							COURT_OWNER = scope:actor.liege
+						}
+						can_be_spymaster_trigger = {
+							COURT_OWNER = scope:actor.liege
+						}
+						can_be_chancellor_trigger = {
+							COURT_OWNER = scope:actor.liege
+						}
+					}
+				}
+				add_to_list = characters
+			}
+		}
+	}
+	on_accept = {
+		scope:actor = {
+			custom_tooltip = lam_cv_call_tt
+			hidden_effect = {
+				set_variable = {
+					name = lam_cr_view
+					value = this
+				}
+				set_variable = {
+					name = lam_cr_goal_n
+					value = 5
+				}
+				set_variable = {
+					name = lam_cr_goal_person
+					value = scope:secondary_recipient
+				}
+				lam_cr_start_effect = {
+					ISSUE = goal
+					ACTION = goal
+					TARGET = scope:secondary_recipient
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+lam_cv_heir_interaction = {
+	category = interaction_category_diplomacy
+	icon = lam_ic_terms
+	common_interaction = no
+	desc = lam_cv_heir_interaction_desc
+	auto_accept = yes
+	is_shown = {
+		scope:actor = {
+			is_ai = no
+			has_variable = lam_bloc_lead
+			var:lam_bloc ?= this
+			liege ?= scope:recipient
+		}
+		scope:recipient = {
+			is_target_in_variable_list = {
+				name = lam_bloc_leads
+				target = scope:actor
+			}
+		}
+	}
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			NOT = {
+				has_variable = lam_cr_active
+			}
+				custom_description = {
+				text = lam_pt_head_available_tt
+				lam_pt_head_ready_trigger = yes
+			}
+			custom_description = {
+				text = lam_cv_committed_tt
+				NOT = {
+					lam_wc_committed_trigger = yes
+				}
+			}
+			custom_description = {
+				text = lam_fac_back_heir_locked_tt
+				NOT = {
+					has_variable = lam_fac_heir_locked
+				}
+			}
+			custom_description = {
+				text = lam_cv_call_retry_tt
+				NOT = {
+					has_variable = lam_cr_retry_heir
+				}
+			}
+		}
+	}
+	can_send = {
+		custom_description = {
+			text = lam_cv_invalid_heir_tt
+			scope:actor = {
+				liege ?= scope:recipient
+			}
+			exists = scope:secondary_recipient
+			scope:secondary_recipient ?= {
+				lam_cv_heir_candidate_trigger = {
+					HEAD = scope:actor
+					LORD = scope:recipient
+				}
+			}
+		}
+	}
+	populate_recipient_list = {
+		scope:recipient = {
+			every_child = {
+				limit = {
+					lam_cv_heir_candidate_trigger = {
+						HEAD = scope:actor
+						LORD = scope:recipient
+					}
+					NOT = {
+						is_in_list = characters
+					}
+				}
+				add_to_list = characters
+			}
+			primary_heir ?= {
+				if = {
+					limit = {
+						lam_cv_heir_candidate_trigger = {
+							HEAD = scope:actor
+							LORD = scope:recipient
+						}
+						NOT = {
+							is_in_list = characters
+						}
+					}
+					add_to_list = characters
+				}
+			}
+			primary_title ?= {
+				every_claimant = {
+					limit = {
+						lam_cv_heir_candidate_trigger = {
+							HEAD = scope:actor
+							LORD = scope:recipient
+						}
+						NOT = {
+							is_in_list = characters
+						}
+					}
+					add_to_list = characters
+				}
+			}
+		}
+	}
+	on_accept = {
+		scope:actor = {
+			custom_tooltip = lam_cv_call_tt
+			hidden_effect = {
+				set_variable = {
+					name = lam_cr_view
+					value = this
+				}
+				if = {
+					limit = {
+						scope:actor = {
+							liege ?= scope:recipient
+						}
+						exists = scope:secondary_recipient
+						scope:secondary_recipient ?= {
+							lam_cv_heir_candidate_trigger = {
+								HEAD = scope:actor
+								LORD = scope:recipient
+							}
+						}
+					}
+					lam_cr_start_effect = {
+						ISSUE = heir
+						ACTION = heir
+						TARGET = scope:secondary_recipient
+					}
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}

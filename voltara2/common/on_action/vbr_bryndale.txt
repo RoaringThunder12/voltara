@@ -1,0 +1,4 @@
+﻿on_travel_plan_movement = { on_actions = { vbr_movement } }
+vbr_movement = { effect = { vbr_encounter = yes } }
+yearly_playable_pulse = { on_actions = { vbr_yearly } }
+vbr_yearly = { trigger = { vbr_ruler = yes NOT = { has_character_flag = vbr_incident_cooldown } } effect = { random = { chance = 35 vbr_incident = yes } } }

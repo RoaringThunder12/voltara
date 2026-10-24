@@ -1,0 +1,306 @@
+﻿# Living Factions - sworn amity between factions (tools/claude_fixes/amity.py)
+# Two faction heads of one court who may pledge amity: not already sworn, not rivals.
+lam_fac_amity_pair_trigger = {
+	$A$ = {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		exists = liege
+		NOT = {
+			has_variable = lam_fac_disband
+		}
+	}
+	$B$ = {
+		is_alive = yes
+		has_variable = lam_bloc_lead
+		liege ?= $A$.liege
+		NOT = {
+			this = $A$
+		}
+		NOT = {
+			has_variable = lam_fac_disband
+		}
+		NOT = {
+			has_relation_rival = $A$
+		}
+		NOT = {
+			has_relation_nemesis = $A$
+		}
+	}
+	NOT = {
+		$A$ = {
+			is_target_in_variable_list = {
+				name = lam_fac_allies
+				target = $B$
+			}
+		}
+	}
+}
+# On an open court issue the two heads stand on the same side (that side is their coalition) / opposite sides.
+lam_fac_issue_same_side_trigger = {
+	OR = {
+		AND = {
+			$A$ = {
+				var:lam_is_lk_crown ?= flag:x
+				var:lam_is_lk_crown_lord ?= liege
+				liege = {
+					has_variable = lam_is_crown_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_crown ?= flag:x
+				var:lam_is_lk_crown_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_crown ?= flag:y
+				var:lam_is_lk_crown_lord ?= liege
+				liege = {
+					has_variable = lam_is_crown_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_crown ?= flag:y
+				var:lam_is_lk_crown_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_council ?= flag:x
+				var:lam_is_lk_council_lord ?= liege
+				liege = {
+					has_variable = lam_is_council_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_council ?= flag:x
+				var:lam_is_lk_council_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_council ?= flag:y
+				var:lam_is_lk_council_lord ?= liege
+				liege = {
+					has_variable = lam_is_council_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_council ?= flag:y
+				var:lam_is_lk_council_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_faith ?= flag:x
+				var:lam_is_lk_faith_lord ?= liege
+				liege = {
+					has_variable = lam_is_faith_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_faith ?= flag:x
+				var:lam_is_lk_faith_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_faith ?= flag:y
+				var:lam_is_lk_faith_lord ?= liege
+				liege = {
+					has_variable = lam_is_faith_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_faith ?= flag:y
+				var:lam_is_lk_faith_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_tax ?= flag:x
+				var:lam_is_lk_tax_lord ?= liege
+				liege = {
+					has_variable = lam_is_tax_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_tax ?= flag:x
+				var:lam_is_lk_tax_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_tax ?= flag:y
+				var:lam_is_lk_tax_lord ?= liege
+				liege = {
+					has_variable = lam_is_tax_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_tax ?= flag:y
+				var:lam_is_lk_tax_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_war ?= flag:x
+				var:lam_is_lk_war_lord ?= liege
+				liege = {
+					has_variable = lam_is_war_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_war ?= flag:x
+				var:lam_is_lk_war_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_war ?= flag:y
+				var:lam_is_lk_war_lord ?= liege
+				liege = {
+					has_variable = lam_is_war_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_war ?= flag:y
+				var:lam_is_lk_war_lord ?= $A$.liege
+			}
+		}
+	}
+}
+lam_fac_issue_opposite_side_trigger = {
+	OR = {
+		AND = {
+			$A$ = {
+				var:lam_is_lk_crown ?= flag:x
+				var:lam_is_lk_crown_lord ?= liege
+				liege = {
+					has_variable = lam_is_crown_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_crown ?= flag:y
+				var:lam_is_lk_crown_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_crown ?= flag:y
+				var:lam_is_lk_crown_lord ?= liege
+				liege = {
+					has_variable = lam_is_crown_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_crown ?= flag:x
+				var:lam_is_lk_crown_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_council ?= flag:x
+				var:lam_is_lk_council_lord ?= liege
+				liege = {
+					has_variable = lam_is_council_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_council ?= flag:y
+				var:lam_is_lk_council_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_council ?= flag:y
+				var:lam_is_lk_council_lord ?= liege
+				liege = {
+					has_variable = lam_is_council_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_council ?= flag:x
+				var:lam_is_lk_council_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_faith ?= flag:x
+				var:lam_is_lk_faith_lord ?= liege
+				liege = {
+					has_variable = lam_is_faith_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_faith ?= flag:y
+				var:lam_is_lk_faith_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_faith ?= flag:y
+				var:lam_is_lk_faith_lord ?= liege
+				liege = {
+					has_variable = lam_is_faith_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_faith ?= flag:x
+				var:lam_is_lk_faith_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_tax ?= flag:x
+				var:lam_is_lk_tax_lord ?= liege
+				liege = {
+					has_variable = lam_is_tax_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_tax ?= flag:y
+				var:lam_is_lk_tax_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_tax ?= flag:y
+				var:lam_is_lk_tax_lord ?= liege
+				liege = {
+					has_variable = lam_is_tax_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_tax ?= flag:x
+				var:lam_is_lk_tax_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_war ?= flag:x
+				var:lam_is_lk_war_lord ?= liege
+				liege = {
+					has_variable = lam_is_war_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_war ?= flag:y
+				var:lam_is_lk_war_lord ?= $A$.liege
+			}
+		}
+		AND = {
+			$A$ = {
+				var:lam_is_lk_war ?= flag:y
+				var:lam_is_lk_war_lord ?= liege
+				liege = {
+					has_variable = lam_is_war_open
+				}
+			}
+			$B$ = {
+				var:lam_is_lk_war ?= flag:x
+				var:lam_is_lk_war_lord ?= $A$.liege
+			}
+		}
+	}
+}

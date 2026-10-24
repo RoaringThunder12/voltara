@@ -1,0 +1,191 @@
+﻿lam_pd_proposal_current_trigger = {
+	NOT = {
+		lam_wc_committed_trigger = yes
+	}
+	has_variable = lam_pd_active
+	is_alive = yes
+	is_adult = yes
+	is_imprisoned = no
+	has_variable = lam_bloc_lead
+	var:lam_bloc ?= this
+	NOT = {
+		has_variable = lam_fac_disband
+	}
+	has_variable = lam_pd_lord
+	has_variable = lam_pd_deadline
+	trigger_if = {
+		limit = {
+			has_variable = lam_pd_lord
+			has_variable = lam_pd_deadline
+		}
+		var:lam_pd_lord = {
+			is_alive = yes
+			is_ruler = yes
+		}
+		liege ?= var:lam_pd_lord
+		var:lam_pd_deadline > lam_now_m
+	}
+	trigger_if = {
+		limit = {
+			has_variable = lam_pd_record
+		}
+		has_variable = lam_fac_rec
+		trigger_if = {
+			limit = {
+				has_variable = lam_fac_rec
+			}
+			var:lam_pd_record = var:lam_fac_rec
+		}
+	}
+	trigger_else = {
+		NOT = {
+			has_variable = lam_fac_rec
+		}
+	}
+}
+lam_pd_window_current_trigger = {
+	this = scope:lam_pd_lord
+	scope:lam_pd_head ?= {
+		lam_pd_proposal_current_trigger = yes
+		var:lam_pd_id ?= scope:lam_pd_token
+		has_variable = lam_pd_pending
+	}
+}
+lam_pd_petition_valid_trigger = {
+	lam_pd_proposal_current_trigger = yes
+	OR = {
+		var:lam_pd_kind ?= flag:law
+		var:lam_pd_kind ?= flag:heir
+		var:lam_pd_kind ?= flag:tolerance
+		var:lam_pd_kind ?= flag:gold
+		var:lam_pd_kind ?= flag:amnesty
+		var:lam_pd_kind ?= flag:council
+		var:lam_pd_kind ?= flag:taxes
+		var:lam_pd_kind ?= flag:release
+		var:lam_pd_kind ?= flag:faith
+		var:lam_pd_kind ?= flag:no_revoke
+		var:lam_pd_kind ?= flag:campaign
+		var:lam_pd_kind ?= flag:land
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:law
+		}
+		OR = {
+			AND = {
+				var:lam_pd_law_old ?= flag:crown_authority_1
+				var:lam_pd_lord = {
+					has_realm_law = crown_authority_1
+				}
+			}
+			AND = {
+				var:lam_pd_law_old ?= flag:crown_authority_2
+				var:lam_pd_lord = {
+					has_realm_law = crown_authority_2
+				}
+			}
+			AND = {
+				var:lam_pd_law_old ?= flag:crown_authority_3
+				var:lam_pd_lord = {
+					has_realm_law = crown_authority_3
+				}
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:heir
+		}
+		save_temporary_scope_as = lam_nc_petition_head
+		var:lam_pd_lord = {
+			lam_nc_heir_trigger = {
+				CANDIDATE = scope:lam_nc_petition_head.var:lam_pd_target
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:tolerance
+		}
+		NOT = {
+			culture = var:lam_pd_lord.culture
+		}
+		var:lam_pd_lord = {
+			prestige >= 75
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:gold
+		}
+		var:lam_pd_lord = {
+			gold >= prev.var:lam_pd_gold
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:amnesty
+		}
+		NOT = {
+			has_variable = lam_fac_pardoned
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:taxes
+		}
+		has_government = feudal_government
+		vassal_contract_obligation_level:feudal_government_taxes > 0
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:release
+		}
+		any_in_list = {
+			variable = lam_fac_members
+			is_alive = yes
+			var:lam_bloc ?= prev
+			is_imprisoned_by = prev.var:lam_pd_lord
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:faith
+		}
+		var:lam_pd_lord = {
+			government_allows = council
+		}
+		NOT = {
+			has_variable = lam_fac_promise
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:no_revoke
+		}
+		NOT = {
+			has_variable = lam_fac_promise
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:campaign
+		}
+		exists = var:lam_pd_goal_title
+		NOT = {
+			has_variable = lam_fac_promise
+		}
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:council
+		}
+		lam_lf_office_valid_trigger = yes
+	}
+	trigger_if = {
+		limit = {
+			var:lam_pd_kind ?= flag:land
+		}
+		lam_lf_land_valid_trigger = yes
+	}
+}

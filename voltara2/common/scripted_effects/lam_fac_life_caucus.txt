@@ -1,0 +1,553 @@
+﻿lam_lf_caucus_clear_effect = {
+	remove_variable = lam_lf_caucus_rep
+	remove_variable = lam_lf_caucus_topic
+	remove_variable = lam_lf_caucus_until
+	remove_variable = lam_lf_caucus_lord
+	remove_variable = lam_lf_caucus_record
+	remove_variable = lam_lf_caucus_open
+	remove_variable = lam_lf_pledged_member
+	remove_variable = lam_lf_pledge_until
+	remove_variable = lam_lf_split_grace
+	clear_variable_list = lam_lf_caucus_members
+}
+lam_lf_caucus_build_effect = {
+	lam_bp_caucus_anchor_effect = yes
+	if = {
+		limit = {
+			has_variable = lam_bloc_lead
+			is_alive = yes
+			var:lam_cr_total > 0
+			var:lam_cr_no >= {
+				value = var:lam_cr_total
+				multiply = 0.25
+			}
+			NOT = {
+				var:lam_cr_issue ?= flag:confidence
+			}
+			NOT = {
+				var:lam_cr_issue ?= flag:dissolve
+			}
+			NOT = {
+				var:lam_cr_issue ?= flag:ban
+			}
+		}
+		save_scope_as = lam_lf_head
+		if = {
+			limit = {
+				NOT = {
+					lam_lf_caucus_current_trigger = yes
+				}
+			}
+			lam_lf_caucus_clear_effect = yes
+		}
+		if = {
+			limit = {
+				OR = {
+					NOT = {
+						has_variable = lam_lf_caucus_rep
+					}
+					var:lam_lf_caucus_topic ?= scope:lam_st_issue
+				}
+			}
+			clear_variable_list = lam_lf_caucus_members
+			every_in_list = {
+				variable = lam_cr_voters
+				limit = {
+					lam_cr_saved_voter_trigger = yes
+					NOT = {
+						this = scope:lam_lf_head
+					}
+					NOT = {
+						has_variable = lam_bloc_lead
+					}
+					var:lam_cr_choice ?= flag:no
+					var:lam_cr_unrest_head ?= scope:lam_lf_head
+					var:lam_cr_unrest >= 2
+					var:lam_st_dissent_issue ?= scope:lam_st_issue
+					OR = {
+						scope:lam_cr_head = {
+							NOT = {
+								lam_bp_meeting_trigger = yes
+							}
+						}
+						AND = {
+							exists = scope:lam_bp_caucus_anchor
+							lam_bp_same_position_trigger = {
+								OTHER = scope:lam_bp_caucus_anchor
+							}
+						}
+					}
+				}
+				scope:lam_lf_head = {
+					add_to_variable_list = {
+						name = lam_lf_caucus_members
+						target = prev
+					}
+				}
+			}
+			set_variable = {
+				name = lam_lf_caucus_count
+				value = 0
+			}
+			every_in_list = {
+				variable = lam_lf_caucus_members
+				scope:lam_lf_head = {
+					change_variable = {
+						name = lam_lf_caucus_count
+						add = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					var:lam_lf_caucus_count >= 2
+					OR = {
+						NOT = {
+							lam_bp_meeting_trigger = yes
+						}
+						lam_bp_caucus_weight_value >= {
+							value = var:lam_cr_total
+							multiply = 0.25
+						}
+					}
+				}
+				if = {
+					limit = {
+						lam_lf_pledge_current_trigger = yes
+					}
+					var:lam_lf_caucus_rep = {
+						save_scope_as = lam_lf_representative
+					}
+				}
+				else = {
+					ordered_in_list = {
+						variable = lam_lf_caucus_members
+						max = 1
+						check_range_bounds = no
+						order_by = lam_cr_influence_value
+						save_scope_as = lam_lf_representative
+					}
+				}
+				set_variable = {
+					name = lam_lf_caucus_rep
+					value = scope:lam_lf_representative
+				}
+				set_variable = {
+					name = lam_lf_caucus_topic
+					value = scope:lam_st_issue
+				}
+				set_variable = {
+					name = lam_lf_caucus_until
+					value = {
+						value = lam_now_m
+						add = 36
+					}
+				}
+				set_variable = {
+					name = lam_lf_caucus_lord
+					value = liege
+				}
+				if = {
+					limit = {
+						has_variable = lam_fac_rec
+					}
+					set_variable = {
+						name = lam_lf_caucus_record
+						value = var:lam_fac_rec
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_variable = lam_lf_caucus_cd
+						}
+						OR = {
+							var:lam_cr_issue ?= flag:deal
+							var:lam_cr_issue ?= flag:court
+							var:lam_cr_issue ?= flag:quiet
+							var:lam_cr_issue ?= flag:watch
+							var:lam_cr_issue ?= flag:people
+							AND = {
+								var:lam_cr_issue ?= flag:petition
+								OR = {
+									scope:lam_st_issue ?= flag:council
+									scope:lam_st_issue ?= flag:land
+									scope:lam_st_issue ?= flag:gold
+									scope:lam_st_issue ?= flag:taxes
+								}
+							}
+						}
+					}
+					set_variable = {
+						name = lam_lf_caucus_cd
+						value = yes
+						years = 2
+					}
+					set_variable = {
+						name = lam_lf_caucus_open
+						value = yes
+						months = 2
+					}
+					set_variable = {
+						name = lam_lf_caucus_token
+						value = var:lam_cr_id
+					}
+					save_scope_value_as = {
+						name = lam_lf_caucus_token
+						value = var:lam_cr_id
+					}
+					set_variable = {
+						name = lam_lf_split_grace
+						value = {
+							value = lam_now_m
+							add = 2
+						}
+					}
+					if = {
+						limit = {
+							is_ai = no
+						}
+						trigger_event = lam_lf.0100
+					}
+					else_if = {
+						limit = {
+							NOT = {
+								has_trait = arrogant
+							}
+							var:lam_lf_caucus_rep = {
+								lam_st_office_available_trigger = yes
+								NOT = {
+									is_councillor_of = liege
+								}
+							}
+							OR = {
+								var:lam_fac_cohesion < 50
+								has_trait = just
+								has_trait = humble
+							}
+						}
+						lam_lf_pledge_effect = yes
+					}
+					else_if = {
+						limit = {
+							prestige >= 150
+							NOT = {
+								has_trait = arrogant
+							}
+						}
+						lam_lf_honor_caucus_effect = yes
+					}
+					else = {
+						remove_variable = lam_lf_caucus_open
+						remove_variable = lam_lf_split_grace
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = {
+						has_variable = lam_lf_pledged_member
+					}
+				}
+				lam_lf_caucus_clear_effect = yes
+			}
+		}
+	}
+}
+lam_lf_pledge_effect = {
+	if = {
+		limit = {
+			lam_lf_caucus_window_trigger = yes
+			var:lam_lf_caucus_rep = {
+				lam_st_office_available_trigger = yes
+				NOT = {
+					is_councillor_of = liege
+				}
+			}
+		}
+		set_variable = {
+			name = lam_lf_pledged_member
+			value = var:lam_lf_caucus_rep
+		}
+		set_variable = {
+			name = lam_lf_pledge_until
+			value = {
+				value = lam_now_m
+				add = 24
+			}
+		}
+		set_variable = {
+			name = lam_lf_split_grace
+			value = {
+				value = lam_now_m
+				add = 6
+			}
+		}
+		remove_variable = lam_lf_caucus_open
+		lam_st_campaign_clear_effect = yes
+		lam_st_record_effect = {
+			KEY = office_compromise
+		}
+	}
+}
+lam_lf_honor_caucus_effect = {
+	if = {
+		limit = {
+			lam_lf_caucus_window_trigger = yes
+			prestige >= 150
+		}
+		add_prestige = -150
+		save_scope_as = lam_lf_head
+		every_in_list = {
+			variable = lam_lf_caucus_members
+			limit = {
+				var:lam_bloc ?= scope:lam_lf_head
+				liege ?= scope:lam_lf_head.liege
+				is_alive = yes
+				var:lam_cr_unrest_head ?= scope:lam_lf_head
+				var:lam_cr_unrest >= 1
+			}
+			change_variable = {
+				name = lam_cr_unrest
+				add = -1
+			}
+			add_opinion = {
+				target = scope:lam_lf_head
+				modifier = lam_fac_fair_share_opinion
+			}
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = 5
+		}
+		lam_st_record_effect = {
+			KEY = accommodated
+		}
+		lam_lf_caucus_clear_effect = yes
+		lam_ev_conciliate_effect = yes
+	}
+}
+lam_lf_pledge_kept_effect = {
+	if = {
+		limit = {
+			has_variable = lam_lf_pledged_member
+		}
+		save_scope_as = lam_lf_head
+		var:lam_lf_pledged_member = {
+			if = {
+				limit = {
+					var:lam_cr_unrest_head ?= scope:lam_lf_head
+				}
+				remove_variable = lam_cr_unrest
+			}
+			lam_cr_service_add_effect = {
+				ADD = 2
+			}
+		}
+		lam_st_record_effect = {
+			KEY = office_promise_kept
+		}
+		lam_lf_caucus_clear_effect = yes
+	}
+}
+lam_lf_caucus_pulse_effect = {
+	if = {
+		limit = {
+			has_variable = lam_lf_caucus_rep
+		}
+		if = {
+			limit = {
+				NOT = {
+					lam_lf_caucus_current_trigger = yes
+				}
+			}
+			lam_lf_caucus_clear_effect = yes
+		}
+		else_if = {
+			limit = {
+				has_variable = lam_lf_pledged_member
+				var:lam_lf_pledged_member = {
+					is_councillor_of = liege
+				}
+			}
+			lam_lf_pledge_kept_effect = yes
+		}
+		else_if = {
+			limit = {
+				has_variable = lam_lf_pledge_until
+				var:lam_lf_pledge_until <= lam_now_m
+			}
+			save_scope_as = lam_lf_head
+			if = {
+				limit = {
+					var:lam_lf_pledged_member = {
+						lam_st_office_available_trigger = yes
+					}
+				}
+				var:lam_lf_pledged_member = {
+					if = {
+						limit = {
+							NOT = {
+								var:lam_cr_unrest_head ?= scope:lam_lf_head
+							}
+						}
+						set_variable = {
+							name = lam_cr_unrest
+							value = 0
+						}
+					}
+					set_variable = {
+						name = lam_cr_unrest_head
+						value = scope:lam_lf_head
+						years = 3
+					}
+					if = {
+						limit = {
+							NOT = {
+								has_variable = lam_cr_unrest
+							}
+						}
+						set_variable = {
+							name = lam_cr_unrest
+							value = 0
+						}
+					}
+					change_variable = {
+						name = lam_cr_unrest
+						add = 2
+					}
+					clamp_variable = {
+						name = lam_cr_unrest
+						min = 0
+						max = 5
+					}
+					add_opinion = {
+						target = scope:lam_lf_head
+						modifier = lam_lf_broken_word_opinion
+					}
+				}
+				lam_fac_cohesion_add_effect = {
+					ADD = -8
+				}
+				lam_st_record_effect = {
+					KEY = office_promise_broken
+				}
+			}
+			remove_variable = lam_lf_pledged_member
+			remove_variable = lam_lf_pledge_until
+			remove_variable = lam_lf_split_grace
+		}
+	}
+}
+lam_lf_caucus_challenge_effect = {
+	if = {
+		limit = {
+			lam_lf_caucus_current_trigger = yes
+			is_imprisoned = no
+			var:lam_fac_cohesion < 40
+			NOT = {
+				lam_lf_pledge_current_trigger = yes
+			}
+			NOT = {
+				has_variable = lam_lf_caucus_open
+			}
+			NOT = {
+				AND = {
+					has_variable = lam_lf_split_grace
+					var:lam_lf_split_grace > lam_now_m
+				}
+			}
+			NOT = {
+				has_variable = lam_fac_conf_cd
+			}
+			NOT = {
+				has_variable = lam_cr_active
+			}
+			NOT = {
+				has_variable = lam_pd_active
+			}
+			NOT = {
+				has_variable = lam_cr_contract_pending
+			}
+			NOT = {
+				has_variable = lam_cr_retry_confidence
+			}
+			var:lam_lf_caucus_rep = {
+				is_ai = yes
+				is_ruler = yes
+				var:lam_cr_unrest_head ?= prev
+				var:lam_cr_unrest >= 3
+				opinion = {
+					target = prev
+					value <= -20
+				}
+			}
+		}
+		save_scope_as = lam_lf_head
+		set_variable = {
+			name = lam_lf_caucus_weight
+			value = 0
+		}
+		set_variable = {
+			name = lam_lf_faction_weight
+			value = lam_cr_influence_value
+		}
+		every_in_list = {
+			variable = lam_fac_members
+			limit = {
+				lam_lf_member_trigger = yes
+				NOT = {
+					this = scope:lam_lf_head
+				}
+			}
+			save_scope_value_as = {
+				name = lam_lf_weight
+				value = lam_cr_influence_value
+			}
+			scope:lam_lf_head = {
+				change_variable = {
+					name = lam_lf_faction_weight
+					add = scope:lam_lf_weight
+				}
+			}
+			if = {
+				limit = {
+					var:lam_cr_unrest_head ?= scope:lam_lf_head
+					var:lam_cr_unrest >= 2
+					scope:lam_lf_head = {
+						is_target_in_variable_list = {
+							name = lam_lf_caucus_members
+							target = prev
+						}
+					}
+				}
+				scope:lam_lf_head = {
+					change_variable = {
+						name = lam_lf_caucus_weight
+						add = scope:lam_lf_weight
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				var:lam_lf_faction_weight > 0
+				var:lam_lf_caucus_weight >= {
+					value = var:lam_lf_faction_weight
+					multiply = 0.4
+				}
+			}
+			set_variable = {
+				name = lam_fac_conf_cd
+				value = yes
+				years = 5
+			}
+			lam_cr_start_effect = {
+				ISSUE = confidence
+				ACTION = confidence
+				TARGET = var:lam_lf_caucus_rep
+			}
+		}
+		remove_variable = lam_lf_caucus_weight
+		remove_variable = lam_lf_faction_weight
+	}
+}

@@ -5,6 +5,8 @@
 
 norman_conquest_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -253,13 +255,11 @@ valid_to_start = {
 					VALUE = yes
 				}
 			}
-			if = {
-				limit = {
+			if = { limit = {
 					is_ai = yes
-					has_title = title:c_middlesex
-				}
-				set_realm_capital = title:c_middlesex
-			}
+					always = no
+				} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 		}
 
 		modify_all_participants_fame_values = {
@@ -502,6 +502,8 @@ valid_to_start = {
 ##########
 norwegian_invasion_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -722,64 +724,55 @@ allowed_for_character = {
 
 		#If Tostig is still alive, and in Harold's court, give him back his northern lands, and give Hardrada a reward.
 		scope:attacker = {
-			if = {
-				limit = {
-					character:124 = {
-						is_alive = yes
-						is_pool_character = no
-						liege ?= scope:attacker
-					}
-				}
-
-				#Grab the appropriate titles.
-				title:d_northumberland = {
-					every_in_de_jure_hierarchy = {
-						continue = { tier >= tier_duchy }
-						add_to_list = tostig_reward_titles
-					}
-				}
-				title:d_york = {
-					every_in_de_jure_hierarchy = {
-						continue = { tier >= tier_duchy }
-						add_to_list = tostig_reward_titles
-					}
-				}
-				title:d_lancaster = {
-					every_in_de_jure_hierarchy = {
-						continue = { tier >= tier_duchy }
-						add_to_list = tostig_reward_titles
-					}
-				}
-
-				#Adjust titles.
-				hidden_effect = {
-					create_title_and_vassal_change = {
-						type = granted
-						save_scope_as = change
-						add_claim_on_loss = no
-					}
-					every_in_list = {
-						list = tostig_reward_titles
-						limit = { holder = scope:attacker }
-						change_title_holder = {
-							holder = character:124
-							change = scope:change
-						}
-					}
-					resolve_title_and_vassal_change = scope:change
-				
-					#A hook for Harold.
-					add_hook = {
-						type = loyalty_hook
-						target = character:124
-					}
-					#And some opinion.
-					reverse_add_opinion = {
-						target = character:124
-						modifier = loyal_servant
-					}
-				}
-			}
+			if = { limit = {
+					always = no
+				} # Proven unreachable; original effects retained below.
+# title:d_northumberland = {
+# 					every_in_de_jure_hierarchy = {
+# 						continue = { tier >= tier_duchy }
+# 						add_to_list = tostig_reward_titles
+# 					}
+# 				}
+# title:d_york = {
+# 					every_in_de_jure_hierarchy = {
+# 						continue = { tier >= tier_duchy }
+# 						add_to_list = tostig_reward_titles
+# 					}
+# 				}
+# title:d_lancaster = {
+# 					every_in_de_jure_hierarchy = {
+# 						continue = { tier >= tier_duchy }
+# 						add_to_list = tostig_reward_titles
+# 					}
+# 				}
+# hidden_effect = {
+# 					create_title_and_vassal_change = {
+# 						type = granted
+# 						save_scope_as = change
+# 						add_claim_on_loss = no
+# 					}
+# 					every_in_list = {
+# 						list = tostig_reward_titles
+# 						limit = { holder = scope:attacker }
+# 						change_title_holder = {
+# 							holder = character:124
+# 							change = scope:change
+# 						}
+# 					}
+# 					resolve_title_and_vassal_change = scope:change
+# 				
+# 					#A hook for Harold.
+# 					add_hook = {
+# 						type = loyalty_hook
+# 						target = character:124
+# 					}
+# 					#And some opinion.
+# 					reverse_add_opinion = {
+# 						target = character:124
+# 						modifier = loyal_servant
+# 					}
+# 				}
+}
 		}
 
 		#If William already won the conquest, loose Normandy back into the continent.
@@ -787,11 +780,11 @@ allowed_for_character = {
 			if = {
 				limit = {
 					any_vassal = {
-						primary_title = title:d_normandy
+						always = no
 					}
 				}
 				random_vassal = {
-					limit = { primary_title = title:d_normandy }
+					limit = { always = no }
 					save_scope_as = free_william	#Harald Hardrada & William the Bastard? A friendship you could never imagine!
 				}
 				scope:free_william = {
@@ -804,14 +797,12 @@ allowed_for_character = {
 					becomes_independent = { change = scope:change }
 					resolve_title_and_vassal_change = scope:change
 					#Take away his "Conqueror" title. Clearly he does not deserve it.
-					if = {
-						#William goes back to being the Bastard.
-						limit = {
-							this = character:140
+					if = { limit = {
+							always = no
 							has_nickname = nick_the_conqueror
-						}
-						give_nickname = nick_the_bastard
-					}
+						} # Proven unreachable; original effects retained below.
+# give_nickname = nick_the_bastard
+}
 					else = {
 						#Anyone else will be mocked forever for their brief victory.
 						give_nickname = nick_the_unready
@@ -819,39 +810,37 @@ allowed_for_character = {
 				}
 			}
 			#And give him Maine & Sable too.
-			if = {
-				limit = { title:c_maine.holder.liege = scope:attacker }
-				create_title_and_vassal_change = {
-					type = revoked
-					save_scope_as = change
-					add_claim_on_loss = no
-				}
-				title:c_maine.holder = {
-					change_liege = {
-						liege = scope:free_william
-						change = scope:change
-					}
-				}
-				resolve_title_and_vassal_change = scope:change
-			}
-			if = {
-				limit = {
-					NOT = { title:c_sable.holder = title:c_maine.holder }
-					title:c_sable.holder.liege = scope:attacker
-				}
-				create_title_and_vassal_change = {
-					type = revoked
-					save_scope_as = change
-					add_claim_on_loss = no
-				}
-				title:c_sable.holder = {
-					change_liege = {
-						liege = scope:free_william
-						change = scope:change
-					}
-				}
-				resolve_title_and_vassal_change = scope:change
-			}
+			if = { limit = { always = no } # Proven unreachable; original effects retained below.
+# create_title_and_vassal_change = {
+# 					type = revoked
+# 					save_scope_as = change
+# 					add_claim_on_loss = no
+# 				}
+# title:c_maine.holder = {
+# 					change_liege = {
+# 						liege = scope:free_william
+# 						change = scope:change
+# 					}
+# 				}
+# resolve_title_and_vassal_change = scope:change
+}
+			if = { limit = {
+					NOT = { always = no }
+					always = no
+				} # Proven unreachable; original effects retained below.
+# create_title_and_vassal_change = {
+# 					type = revoked
+# 					save_scope_as = change
+# 					add_claim_on_loss = no
+# 				}
+# title:c_sable.holder = {
+# 					change_liege = {
+# 						liege = scope:free_william
+# 						change = scope:change
+# 					}
+# 				}
+# resolve_title_and_vassal_change = scope:change
+}
 		}
 
 		modify_all_participants_fame_values = {
@@ -1123,6 +1112,8 @@ sons_of_lothbrok_invasion_cb = {
 	allow_hostages = no
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -1490,6 +1481,8 @@ hungarian_migration_cb = {
 	attacker_capital_gives_war_score = no
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -2023,6 +2016,8 @@ azariqa_rebellion_cb = {
 	ignore_effect = change_title_holder
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -2316,6 +2311,8 @@ raiktor_claim_cb = {
 	ignore_effect = change_title_holder
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -2741,6 +2738,8 @@ raiktor_conquest_cb = {
 	ignore_effect = change_title_holder
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -3055,6 +3054,8 @@ fp1_scandi_adventurer_conquest = {
 	ignore_effect = change_title_holder
 
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -3432,6 +3433,8 @@ fp1_scandi_adventurer_conquest = {
 
 diarch_vassalisation_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -3709,6 +3712,8 @@ remove_regent_cb = {
 
 	ignore_effect = change_title_holder
 	valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }

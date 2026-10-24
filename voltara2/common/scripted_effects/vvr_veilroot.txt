@@ -1,0 +1,67 @@
+﻿vvr_seed = { if = { limit = { NOT = { has_variable = vvr_lore } } set_variable = { name = vvr_lore value = 0 } } }
+vvr_found = { if = { limit = { vvr_ithren = yes NOT = { has_character_flag = vvr_cult } }
+ add_character_flag = vvr_cult set_character_rite = rite:voltara_veilroot_cult vvr_seed = yes
+ title:c_voltara_barelvar_sanctum = { if = { limit = { holder = root } set_county_rite = rite:voltara_veilroot_cult } }
+ add_character_modifier = { modifier = vvr_inner_circle } trigger_event = { id = vvr.2 days = 20 }
+} }
+vvr_ascend = { if = { limit = { vvr_cult_leader = yes NOT = { has_trait = vt_ek_lich_character } has_character_flag = vvr_phylactery }
+ give_lich_trait_effect = yes add_character_flag = vvr_ascended add_prestige = 500
+ trigger_event = { id = vvr.6 days = 7 }
+ every_independent_ruler = { limit = { vvr_human_target = yes NOT = { has_character_flag = vvr_warned } }
+ add_character_flag = vvr_warned trigger_event = { id = vvr.20 days = 10 } }
+} }
+vvr_raise_host = { if = { limit = { vvr_lich = yes NOT = { has_character_flag = vvr_host } }
+ add_character_flag = vvr_host add_character_modifier = { modifier = vvr_dread_host }
+ spawn_army = { men_at_arms = { type = vvr_bone_legion stacks = 12 } men_at_arms = { type = vvr_bound_fiends stacks = 6 } men_at_arms = { type = vvr_blood_cavalry stacks = 6 } men_at_arms = { type = vvr_coven_archers stacks = 6 } location = capital_province name = vvr_host_name inheritable = no uses_supply = yes }
+ every_independent_ruler = { limit = { vvr_human_target = yes NOT = { has_character_flag = vvr_host_warned } } add_character_flag = vvr_host_warned trigger_event = { id = vvr.21 days = 7 } }
+} }
+
+vvr_pact_dead = { if = { limit = { vvr_lich = yes NOT = { has_character_flag = vvr_pact_dead } }
+ add_character_flag = vvr_pact_dead
+ create_character = { age = 35 gender = male employer = root culture = root.culture faith = root.faith trait = vt_ek_undead_character trait = education_martial_3 martial = 18 learning = 16 save_scope_as = vvr_envoy }
+ scope:vvr_envoy = { set_character_rite = rite:voltara_veilroot_cult  }
+ spawn_army = { men_at_arms = { type = vvr_bone_legion stacks = 4 } location = capital_province name = vvr_host_name inheritable = no uses_supply = yes }
+ 
+ } }
+vvr_pact_fiends = { if = { limit = { vvr_lich = yes NOT = { has_character_flag = vvr_pact_fiends } }
+ add_character_flag = vvr_pact_fiends
+ create_character = { age = 35 gender = male employer = root culture = root.culture faith = root.faith trait = demon1 trait = education_martial_3 martial = 18 learning = 16 save_scope_as = vvr_envoy }
+ scope:vvr_envoy = { set_character_rite = rite:voltara_veilroot_cult  }
+ spawn_army = { men_at_arms = { type = vvr_bound_fiends stacks = 4 } location = capital_province name = vvr_host_name inheritable = no uses_supply = yes }
+ add_character_modifier = { modifier = vvr_fiend_tithe }
+ } }
+vvr_pact_blood = { if = { limit = { vvr_lich = yes NOT = { has_character_flag = vvr_pact_blood } }
+ add_character_flag = vvr_pact_blood
+ create_character = { age = 35 gender = female employer = root culture = root.culture faith = root.faith trait = supernatural_vampire trait = education_martial_3 martial = 18 learning = 16 save_scope_as = vvr_envoy }
+ scope:vvr_envoy = { set_character_rite = rite:voltara_veilroot_cult  }
+ spawn_army = { men_at_arms = { type = vvr_blood_cavalry stacks = 4 } location = capital_province name = vvr_host_name inheritable = no uses_supply = yes }
+ 
+ } }
+vvr_pact_covens = { if = { limit = { vvr_lich = yes NOT = { has_character_flag = vvr_pact_covens } }
+ add_character_flag = vvr_pact_covens
+ create_character = { age = 35 gender = female employer = root culture = root.culture faith = root.faith trait = witch trait = education_martial_3 martial = 18 learning = 16 save_scope_as = vvr_envoy }
+ scope:vvr_envoy = { set_character_rite = rite:voltara_veilroot_cult add_trait = vt_ek_education_magic_3 voltara_initialize_threadbinder = yes }
+ spawn_army = { men_at_arms = { type = vvr_coven_archers stacks = 4 } location = capital_province name = vvr_host_name inheritable = no uses_supply = yes }
+ 
+ } }
+vvr_pulse = {
+ if = { limit = { vvr_ithren = yes } vvr_seed = yes
+  if = { limit = { NOT = { has_character_flag = vvr_intro_queued } NOT = { has_character_flag = vvr_intro_seen } } add_character_flag = vvr_intro_queued trigger_event = { id = vvr.1 days = 15 } }
+  if = { limit = { vvr_cult_leader = yes var:vvr_lore < 100 } change_variable = { name = vvr_lore add = 5 } }
+  if = { limit = { vvr_cult_leader = yes vvr_restored_site = yes NOT = { has_character_flag = vvr_ruin_lore } NOT = { has_character_flag = vvr_ruin_queued } } add_character_flag = vvr_ruin_queued trigger_event = { id = vvr.40 days = 10 } }
+ }
+}
+vvr_take_target = {
+ create_title_and_vassal_change = { type = conquest save_scope_as = vvr_transfer add_claim_on_loss = yes }
+ every_in_list = { list = target_titles
+  if = { limit = { tier = tier_county holder = { OR = { this = scope:defender target_is_liege_or_above = scope:defender } } }
+   change_title_holder_include_vassals = { holder = scope:attacker change = scope:vvr_transfer } }
+  else_if = { limit = { tier = tier_duchy }
+   every_in_de_jure_hierarchy = { continue = { tier > tier_county }
+    limit = { tier = tier_county holder = { OR = { this = scope:defender target_is_liege_or_above = scope:defender } } }
+    change_title_holder_include_vassals = { holder = scope:attacker change = scope:vvr_transfer }
+   }
+  }
+ }
+ resolve_title_and_vassal_change = scope:vvr_transfer
+}

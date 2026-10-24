@@ -1,0 +1,40 @@
+﻿vvr_begin = { picture = { reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds" }
+ desc = vvr_begin_desc selection_tooltip = vvr_begin_tooltip confirm_text = vvr_begin_confirm
+ is_shown = { vvr_ithren = yes NOT = { has_character_flag = vvr_cult } } is_valid = { is_imprisoned = no is_incapable = no  }
+ effect = { trigger_event = vvr.1 } cooldown = { months = 1 } ai_check_interval = 12 ai_will_do = { base = 80 } }
+vvr_study = { picture = { reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds" }
+ desc = vvr_study_desc selection_tooltip = vvr_study_tooltip confirm_text = vvr_study_confirm
+ is_shown = { vvr_cult_leader = yes NOT = { has_character_flag = vvr_host } } is_valid = { is_imprisoned = no is_incapable = no gold >= 100 var:magicka >= 30 }
+ effect = { remove_short_term_gold = 100 change_variable = { name = magicka subtract = 30 } trigger_event = vvr.3 } cooldown = { months = 12 } ai_check_interval = 12 ai_will_do = { base = 80 } }
+vvr_vessel = { picture = { reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds" }
+ desc = vvr_vessel_desc selection_tooltip = vvr_vessel_tooltip confirm_text = vvr_vessel_confirm
+ is_shown = { vvr_cult_leader = yes NOR = { has_character_flag = vvr_phylactery has_character_flag = vvr_vessel_pending } } is_valid = { is_imprisoned = no is_incapable = no gold >= 350 piety >= 200 var:vvr_lore >= 40 }
+ effect = { remove_short_term_gold = 350 add_piety = -200 add_character_flag = { flag = vvr_vessel_pending days = 366 } trigger_event = { id = vvr.5 days = 365 } } cooldown = { months = 12 } ai_check_interval = 12 ai_will_do = { base = 80 } }
+vvr_ascension = { picture = { reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds" }
+ desc = vvr_ascension_desc selection_tooltip = vvr_ascension_tooltip confirm_text = vvr_ascension_confirm
+ is_shown = { vvr_cult_leader = yes NOT = { has_trait = vt_ek_lich_character } } is_valid = { is_imprisoned = no is_incapable = no has_character_flag = vvr_phylactery var:vvr_lore >= 80 piety >= 500 var:magicka >= 100 }
+ effect = { add_piety = -500 change_variable = { name = magicka subtract = 100 } vvr_ascend = yes } cooldown = { months = 12 } ai_check_interval = 12 ai_will_do = { base = 100 } }
+vvr_seek_dead = { picture = { reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds" }
+ desc = vvr_seek_dead_desc selection_tooltip = vvr_seek_dead_tooltip confirm_text = vvr_seek_dead_confirm
+ is_shown = { vvr_lich = yes NOT = { has_character_flag = vvr_pact_dead } } is_valid = { is_imprisoned = no is_incapable = no gold >= 200 var:magicka >= 40 }
+ effect = { remove_short_term_gold = 200 change_variable = { name = magicka subtract = 40 } trigger_event = vvr.10 } cooldown = { months = 12 } ai_check_interval = 12 ai_will_do = { base = 70 } }
+vvr_seek_fiends = { picture = { reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds" }
+ desc = vvr_seek_fiends_desc selection_tooltip = vvr_seek_fiends_tooltip confirm_text = vvr_seek_fiends_confirm
+ is_shown = { vvr_lich = yes NOT = { has_character_flag = vvr_pact_fiends } } is_valid = { is_imprisoned = no is_incapable = no gold >= 300 var:magicka >= 80 }
+ effect = { remove_short_term_gold = 300 change_variable = { name = magicka subtract = 80 } trigger_event = vvr.11 } cooldown = { months = 12 } ai_check_interval = 12 ai_will_do = { base = 70 } }
+vvr_seek_blood = { picture = { reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds" }
+ desc = vvr_seek_blood_desc selection_tooltip = vvr_seek_blood_tooltip confirm_text = vvr_seek_blood_confirm
+ is_shown = { vvr_lich = yes NOT = { has_character_flag = vvr_pact_blood } } is_valid = { is_imprisoned = no is_incapable = no gold >= 250 var:magicka >= 50 }
+ effect = { remove_short_term_gold = 250 change_variable = { name = magicka subtract = 50 } trigger_event = vvr.12 } cooldown = { months = 12 } ai_check_interval = 12 ai_will_do = { base = 70 } }
+vvr_seek_covens = { picture = { reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds" }
+ desc = vvr_seek_covens_desc selection_tooltip = vvr_seek_covens_tooltip confirm_text = vvr_seek_covens_confirm
+ is_shown = { vvr_lich = yes NOT = { has_character_flag = vvr_pact_covens } } is_valid = { is_imprisoned = no is_incapable = no gold >= 200 var:magicka >= 50 }
+ effect = { remove_short_term_gold = 200 change_variable = { name = magicka subtract = 50 } trigger_event = vvr.13 } cooldown = { months = 12 } ai_check_interval = 12 ai_will_do = { base = 70 } }
+vvr_muster = { picture = { reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds" }
+ desc = vvr_muster_desc selection_tooltip = vvr_muster_tooltip confirm_text = vvr_muster_confirm
+ is_shown = { vvr_lich = yes NOT = { has_character_flag = vvr_host } } is_valid = { is_imprisoned = no is_incapable = no has_character_flag = vvr_pact_dead has_character_flag = vvr_pact_fiends has_character_flag = vvr_pact_blood has_character_flag = vvr_pact_covens gold >= 600 prestige >= 1000 }
+ effect = { remove_short_term_gold = 600 add_prestige = -1000 vvr_raise_host = yes trigger_event = vvr.14 } cooldown = { months = 12 } ai_check_interval = 12 ai_will_do = { base = 100 } }
+vvr_defend = { picture = { reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds" }
+ desc = vvr_defend_desc selection_tooltip = vvr_defend_tooltip confirm_text = vvr_defend_confirm
+ is_shown = { vvr_human_target = yes character:9999401 = { vvr_lich = yes } } is_valid = { is_imprisoned = no is_incapable = no gold >= 150 piety >= 150 NOT = { has_character_modifier = vvr_grave_wards } }
+ effect = { remove_short_term_gold = 150 add_piety = -150 add_character_modifier = { modifier = vvr_grave_wards years = 5 } } cooldown = { months = 60 } ai_check_interval = 12 ai_will_do = { base = 40 } }

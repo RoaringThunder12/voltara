@@ -1,0 +1,63 @@
+﻿vbox = {
+	name = "mod_event_window_widget_enter_nickname_desc"
+	layoutpolicy_horizontal = expanding
+	margin = { 10 0 }
+	spacing = 10
+
+	text_single = {
+		layoutpolicy_horizontal = expanding
+		text = mod_nickname_desc_widget_intro
+		autoresize = yes
+		max_width = 400
+		using = Font_Size_Small
+		default_format = "#low"
+	}
+
+	editbox_standard_with_label = {
+		layoutpolicy_horizontal = expanding
+		blockoverride "editbox_properties"
+		{
+			name = "enter_text"
+			ontextedited = "[EventWindowWidgetEnterText.OnEdit]"
+		}
+
+		blockoverride "editbox_label"
+		{
+			text = mod_nickname_desc_label
+		}
+	}
+
+	text_multi = {
+		layoutpolicy_horizontal = expanding
+		text = mod_nickname_desc_hint
+		autoresize = yes
+		max_width = 400
+		using = Font_Size_Small
+		default_format = "#low"
+	}
+
+	vbox = {
+		name = "default_entries"
+		datamodel = "[EventWindowWidgetEnterText.AccessDefaultEntries]"
+		visible = no
+
+		item = {
+			button_standard_list = {
+				name = "entry"
+
+				size = { 400 34 }
+				background = {
+					using = Background_Area
+				}
+
+				text = "[EventWindowWidgetEnterTextDefaultEntry.GetText]"
+				using = Font_Size_Small
+
+				onclick = "[EventWindowWidgetEnterTextDefaultEntry.Select]"
+				down = "[EventWindowWidgetEnterTextDefaultEntry.IsSelected]"
+			}
+		}
+	}
+
+	expand = {}
+}

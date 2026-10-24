@@ -1,0 +1,1578 @@
+﻿lam_fac_ban_obey_effect = {
+	lam_cr_start_effect = {
+		ISSUE = dissolve
+		ACTION = ban_obey
+		TARGET = liege
+	}
+}
+lam_fac_ban_defy_effect = {
+	lam_cr_start_effect = {
+		ISSUE = ban
+		ACTION = ban
+		TARGET = liege
+	}
+}
+lam_fac_ban_ai_answer_effect = {
+	random_list = {
+		40 = {
+			modifier = {
+				add = 30
+				has_variable = lam_fac_att
+				var:lam_fac_att >= 0
+			}
+			modifier = {
+				add = 25
+				has_trait = craven
+			}
+			modifier = {
+				add = 20
+				has_trait = content
+			}
+			modifier = {
+				add = 10
+				has_trait = trusting
+			}
+			modifier = {
+				add = 20
+				OR = {
+					NOT = {
+						has_variable = lam_fac_age_tier
+					}
+					var:lam_fac_age_tier ?= 0
+				}
+			}
+			modifier = {
+				add = 15
+				OR = {
+					NOT = {
+						has_variable = lam_fac_cohesion
+					}
+					var:lam_fac_cohesion < 40
+				}
+			}
+			modifier = {
+				add = 20
+				scope:lam_ban_lord = {
+					dread >= 60
+				}
+			}
+			modifier = {
+				add = 30
+				scope:lam_ban_lord = {
+					has_variable = lam_crown
+					var:lam_crown >= 50
+				}
+			}
+			modifier = {
+				add = 30
+				scope:lam_ban_lord = {
+					has_variable = lam_crown
+					var:lam_crown >= 70
+				}
+			}
+			modifier = {
+				add = 20
+				scope:lam_ban_lord = {
+					dread >= 90
+				}
+			}
+			lam_fac_ban_obey_effect = yes
+		}
+		30 = {
+			modifier = {
+				add = 30
+				has_variable = lam_fac_att
+				var:lam_fac_att <= -15
+			}
+			modifier = {
+				add = 25
+				has_trait = ambitious
+			}
+			modifier = {
+				add = 20
+				has_trait = vengeful
+			}
+			modifier = {
+				add = 15
+				has_trait = zealous
+			}
+			modifier = {
+				add = 15
+				has_trait = stubborn
+			}
+			modifier = {
+				add = 20
+				has_variable = lam_fac_age_tier
+				var:lam_fac_age_tier >= 2
+			}
+			modifier = {
+				add = 20
+				has_variable = lam_fac_cohesion
+				var:lam_fac_cohesion >= 60
+			}
+			modifier = {
+				add = 15
+				has_variable = lam_fac_grievance
+			}
+			modifier = {
+				add = 40
+				scope:lam_ban_lord = {
+					has_variable = lam_crown
+					var:lam_crown < 35
+				}
+			}
+			lam_fac_ban_defy_effect = yes
+		}
+	}
+}
+lam_fac_ban_tell_members_effect = {
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_cr_active
+			}
+		}
+		save_scope_as = lam_tm_head
+		every_in_list = {
+			variable = lam_fac_members
+			limit = {
+				is_alive = yes
+				is_ai = no
+			}
+			if = {
+				limit = {
+					scope:lam_tm_head = {
+						has_variable = lam_fac_disband
+					}
+				}
+				send_interface_message = {
+					type = event_generic_neutral
+					title = lam_fac_ban_obeyed_member_title
+					right_icon = scope:lam_tm_head
+				}
+			}
+			else_if = {
+				limit = {
+					var:lam_bloc ?= scope:lam_tm_head
+				}
+				send_interface_message = {
+					type = event_generic_neutral
+					title = lam_fac_ban_stay_member_title
+					right_icon = scope:lam_tm_head
+				}
+			}
+			else = {
+				send_interface_message = {
+					type = event_generic_neutral
+					title = lam_fac_ban_cut_member_title
+					right_icon = scope:lam_tm_head
+				}
+			}
+		}
+	}
+}
+lam_fac_ug_mark_effect = {
+	set_variable = {
+		name = lam_fac_ug
+		value = yes
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_fac_intel
+			}
+		}
+		set_variable = {
+			name = lam_fac_intel
+			value = $INTEL$
+		}
+	}
+}
+lam_fac_ug_start_effect = {
+	save_scope_as = lam_us_head
+	lam_fac_ug_mark_effect = {
+		INTEL = 0
+	}
+	set_variable = {
+		name = lam_fac_stage
+		value = 9
+	}
+	lam_pd_grievance_add_effect = {
+		KIND = repression
+		AMOUNT = 10
+		MONTHS = 60
+	}
+	lam_fac_timeline_add_effect = {
+		KEY = underground
+	}
+	if = {
+		limit = {
+			is_ai = no
+		}
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_fac_ug_born_title
+		}
+	}
+	scope:lam_ff_founder ?= {
+		if = {
+			limit = {
+				is_ai = no
+				NOT = {
+					this = scope:lam_us_head
+				}
+			}
+			send_interface_message = {
+				type = event_generic_neutral
+				title = lam_fac_ug_born_founder_title
+				right_icon = scope:lam_us_head
+			}
+		}
+	}
+}
+lam_fac_ug_join_effect = {
+	set_variable = {
+		name = lam_bloc
+		value = $HEAD$
+	}
+	set_variable = {
+		name = lam_fac_tier
+		value = $TIER$
+	}
+	set_variable = {
+		name = lam_fac_pinned
+		value = yes
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_unbound
+		}
+		remove_variable = lam_fac_unbound
+	}
+	lam_fac_outlaw_mark_effect = yes
+}
+lam_fac_surface_effect = {
+	save_scope_as = lam_sf_head
+	remove_variable = lam_fac_ug
+	if = {
+		limit = {
+			has_variable = lam_fac_intel
+		}
+		remove_variable = lam_fac_intel
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_covered
+		}
+		remove_variable = lam_fac_covered
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_vh
+		}
+		remove_variable = lam_fac_vh
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_vl
+		}
+		remove_variable = lam_fac_vl
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_hide
+		}
+		remove_variable = lam_fac_hide
+	}
+	if = {
+		limit = {
+			has_character_modifier = lam_fac_ug_network_modifier
+		}
+		remove_character_modifier = lam_fac_ug_network_modifier
+	}
+	lam_fac_unoutlaw_effect = yes
+	set_variable = {
+		name = lam_fac_endured
+		value = yes
+		years = 5
+	}
+	lam_fac_cohesion_add_effect = {
+		ADD = 15
+	}
+	add_prestige = medium_prestige_gain
+	lam_fac_renown_add_effect = {
+		ADD = 5
+	}
+	lam_fac_timeline_add_effect = {
+		KEY = surfaced
+	}
+	every_in_list = {
+		variable = lam_fac_members
+		limit = {
+			is_alive = yes
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_vq
+			}
+			remove_variable = lam_fac_vq
+		}
+		lam_fac_unoutlaw_effect = yes
+		if = {
+			limit = {
+				var:lam_bloc ?= scope:lam_sf_head
+			}
+			add_opinion = {
+				target = scope:lam_sf_head
+				modifier = lam_fac_endured_opinion
+			}
+			if = {
+				limit = {
+					is_ai = no
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_fac_surfaced_member_title
+					right_icon = scope:lam_sf_head
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			is_ai = no
+		}
+		send_interface_message = {
+			type = event_generic_good
+			title = lam_fac_surfaced_head_title
+		}
+	}
+	liege ?= {
+		if = {
+			limit = {
+				is_ai = no
+			}
+			send_interface_message = {
+				type = event_generic_neutral
+				title = lam_fac_surfaced_lord_title
+				right_icon = scope:lam_sf_head
+			}
+		}
+	}
+}
+lam_fac_unoutlaw_effect = {
+	if = {
+		limit = {
+			has_variable = lam_fac_outlaw
+		}
+		remove_variable = lam_fac_outlaw
+	}
+	if = {
+		limit = {
+			has_character_modifier = lam_fac_outlaw_modifier
+		}
+		remove_character_modifier = lam_fac_outlaw_modifier
+	}
+	every_secret = {
+		limit = {
+			secret_type = lam_secret_outlaw_faction
+		}
+		remove_secret = yes
+	}
+}
+lam_fac_veil_effect = {
+	save_scope_as = lam_vl_lord
+	lam_fac_unseated_clean_effect = yes
+	lam_fac_strong_regard_effect = yes
+	lam_fac_wing_names_effect = yes
+	if = {
+		limit = {
+			lam_fac_awe_trigger = yes
+		}
+		set_variable = {
+			name = lam_fac_awe
+			value = yes
+		}
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_fac_awe
+		}
+		remove_variable = lam_fac_awe
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_ban
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_fac_veiling
+				}
+			}
+			set_variable = {
+				name = lam_fac_veiling
+				value = yes
+			}
+		}
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_ug
+				NOT = {
+					lam_fac_legal_trigger = {
+						LORD = scope:lam_vl_lord
+					}
+				}
+			}
+			lam_fac_intel_learn_effect = yes
+			if = {
+				limit = {
+					NOT = {
+						has_character_modifier = lam_fac_ug_network_modifier
+					}
+				}
+				add_character_modifier = {
+					modifier = lam_fac_ug_network_modifier
+					months = 13
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_fac_viewonly
+				}
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					NOT = {
+						has_variable = lam_fac_dig_cd
+					}
+				}
+				random = {
+					chance = 35
+					lam_fac_dig_effect = yes
+				}
+			}
+			lam_fac_ug_found_ai_effect = yes
+		}
+	}
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			has_variable = lam_fac_ug
+			lam_fac_legal_trigger = {
+				LORD = scope:lam_vl_lord
+			}
+		}
+		lam_fac_surface_effect = yes
+	}
+	lam_fac_veil_refresh_effect = yes
+}
+lam_fac_veil_refresh_effect = {
+	save_scope_as = lam_vl_lord
+	if = {
+		limit = {
+			OR = {
+				has_variable = lam_fac_ban
+				has_variable = lam_fac_veiling
+			}
+		}
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+			}
+			lam_fac_veil_flags_effect = yes
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_fac_ban
+				}
+			}
+			remove_variable = lam_fac_veiling
+		}
+	}
+}
+lam_fac_intel_learn_effect = {
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_fac_intel
+			}
+		}
+		set_variable = {
+			name = lam_fac_intel
+			value = 0
+		}
+	}
+	if = {
+		limit = {
+			var:lam_fac_stage ?= 4
+		}
+		set_variable = {
+			name = lam_fac_intel
+			value = 4
+		}
+	}
+	else_if = {
+		limit = {
+			NOT = {
+				has_variable = lam_fac_covered
+			}
+		}
+		if = {
+			limit = {
+				var:lam_fac_intel < 3
+				OR = {
+					has_variable = lam_fac_exposed
+					any_in_list = {
+						variable = lam_fac_members
+						count >= 2
+						var:lam_fac_tier ?= 1
+						any_secret = {
+							secret_type = lam_secret_outlaw_faction
+							is_known_by = scope:lam_vl_lord
+						}
+					}
+				}
+			}
+			set_variable = {
+				name = lam_fac_intel
+				value = 3
+			}
+		}
+		if = {
+			limit = {
+				var:lam_fac_intel < 2
+				any_secret = {
+					secret_type = lam_secret_outlaw_faction
+					is_known_by = scope:lam_vl_lord
+				}
+			}
+			set_variable = {
+				name = lam_fac_intel
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				var:lam_fac_intel < 1
+				any_in_list = {
+					variable = lam_fac_members
+					any_secret = {
+						secret_type = lam_secret_outlaw_faction
+						is_known_by = scope:lam_vl_lord
+					}
+				}
+			}
+			set_variable = {
+				name = lam_fac_intel
+				value = 1
+			}
+		}
+	}
+}
+lam_fac_veil_flags_effect = {
+	save_scope_value_as = {
+		name = lam_vl_s
+		value = 4
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_ug
+			scope:lam_vl_lord = {
+				has_variable = lam_fac_ban
+			}
+			NOT = {
+				var:lam_fac_stage ?= 4
+			}
+		}
+		set_variable = {
+			name = lam_fac_hide
+			value = yes
+		}
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_fac_hide
+		}
+		remove_variable = lam_fac_hide
+	}
+	if = {
+		limit = {
+			has_variable = lam_fac_hide
+			has_variable = lam_fac_intel
+			is_ai = yes
+			NOT = {
+				any_in_list = {
+					variable = lam_fac_members
+					is_ai = no
+				}
+			}
+		}
+		save_scope_value_as = {
+			name = lam_vl_s
+			value = var:lam_fac_intel
+		}
+	}
+	if = {
+		limit = {
+			scope:lam_vl_s < 1
+		}
+		set_variable = {
+			name = lam_fac_vh
+			value = yes
+		}
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_fac_vh
+		}
+		remove_variable = lam_fac_vh
+	}
+	if = {
+		limit = {
+			scope:lam_vl_s < 2
+		}
+		set_variable = {
+			name = lam_fac_vl
+			value = yes
+		}
+	}
+	else_if = {
+		limit = {
+			has_variable = lam_fac_vl
+		}
+		remove_variable = lam_fac_vl
+	}
+	every_in_list = {
+		variable = lam_fac_members
+		if = {
+			limit = {
+				OR = {
+					scope:lam_vl_s < 3
+					AND = {
+						scope:lam_vl_s < 4
+						NOT = {
+							var:lam_fac_tier ?= 1
+						}
+					}
+				}
+			}
+			set_variable = {
+				name = lam_fac_vq
+				value = yes
+			}
+		}
+		else_if = {
+			limit = {
+				has_variable = lam_fac_vq
+			}
+			remove_variable = lam_fac_vq
+		}
+	}
+}
+lam_fac_dig_effect = {
+	save_scope_as = lam_dig_lord
+	set_variable = {
+		name = lam_fac_dig_cd
+		value = yes
+		years = 1
+	}
+	clear_saved_scope = lam_dig_lead
+	random_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			has_variable = lam_fac_ug
+			has_variable = lam_fac_intel
+			var:lam_fac_intel < 4
+		}
+		save_scope_as = lam_dig_lead
+	}
+	if = {
+		limit = {
+			exists = scope:lam_dig_lead
+		}
+		random_list = {
+			0 = {
+				modifier = {
+					add = lam_fac_dig_chance_value
+				}
+				modifier = {
+					factor = 0.5
+					scope:lam_dig_lead = {
+						has_variable = lam_fac_covered
+					}
+				}
+				scope:lam_dig_lead = {
+					change_variable = {
+						name = lam_fac_intel
+						add = 1
+					}
+					if = {
+						limit = {
+							var:lam_fac_intel >= 2
+						}
+						random_secret = {
+							limit = {
+								secret_type = lam_secret_outlaw_faction
+								NOT = {
+									is_known_by = scope:lam_dig_lord
+								}
+							}
+							reveal_to = scope:lam_dig_lord
+						}
+					}
+					if = {
+						limit = {
+							var:lam_fac_intel >= 3
+						}
+						every_in_list = {
+							variable = lam_fac_members
+							limit = {
+								is_alive = yes
+								var:lam_fac_tier ?= 1
+							}
+							random_secret = {
+								limit = {
+									secret_type = lam_secret_outlaw_faction
+									NOT = {
+										is_known_by = scope:lam_dig_lord
+									}
+								}
+								reveal_to = scope:lam_dig_lord
+							}
+						}
+					}
+					if = {
+						limit = {
+							is_ai = no
+						}
+						send_interface_message = {
+							type = event_generic_bad
+							title = lam_fac_dig_watched_title
+						}
+					}
+				}
+				if = {
+					limit = {
+						is_ai = no
+					}
+					if = {
+						limit = {
+							scope:lam_dig_lead = {
+								var:lam_fac_intel >= 2
+							}
+						}
+						send_interface_message = {
+							type = event_generic_good
+							title = lam_fac_dig_named_title
+							right_icon = scope:lam_dig_lead
+						}
+					}
+					else = {
+						send_interface_message = {
+							type = event_generic_good
+							title = lam_fac_dig_rumour_title
+						}
+					}
+				}
+			}
+			0 = {
+				modifier = {
+					add = {
+						value = 100
+						subtract = lam_fac_dig_chance_value
+					}
+				}
+				if = {
+					limit = {
+						is_ai = no
+					}
+					send_interface_message = {
+						type = event_generic_neutral
+						title = lam_fac_dig_none_title
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			is_ai = no
+		}
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_fac_dig_none_title
+		}
+	}
+	lam_fac_veil_refresh_effect = yes
+}
+lam_fac_ug_found_ai_effect = {
+	if = {
+		limit = {
+			NOT = {
+				has_variable = lam_fac_ugf_cd
+			}
+		}
+		random = {
+			chance = {
+				value = 25
+				if = {
+					limit = {
+						is_ai = no
+					}
+					subtract = 17
+				}
+			}
+			set_variable = {
+				name = lam_fac_ugf_cd
+				value = yes
+				years = 2
+			}
+			save_scope_as = lam_ugf_lord
+			clear_saved_scope = lam_ugf_new
+			lam_fac_seat_open_effect = yes
+			if = {
+				limit = {
+					has_variable = lam_fac_seat_open
+				}
+				ordered_vassal = {
+					limit = {
+						lam_fac_ug_founder_trigger = {
+							LORD = scope:lam_ugf_lord
+						}
+					}
+					order_by = var:lam_fac_engage
+					save_scope_as = lam_ugf_new
+				}
+			}
+			if = {
+				limit = {
+					has_variable = lam_fac_seat_open
+				}
+				remove_variable = lam_fac_seat_open
+			}
+			if = {
+				limit = {
+					exists = scope:lam_ugf_new
+					any_vassal = {
+						lam_fac_ug_recruitable_trigger = {
+							HEAD = scope:lam_ugf_new
+						}
+					}
+				}
+				lam_fac_install_effect = {
+					NEW = scope:lam_ugf_new
+					FAVOUR = -20
+				}
+				ordered_vassal = {
+					limit = {
+						lam_fac_ug_recruitable_trigger = {
+							HEAD = scope:lam_ugf_new
+						}
+					}
+					order_by = {
+						value = "opinion(scope:lam_ugf_new)"
+					}
+					max = 2
+					check_range_bounds = no
+					lam_fac_ug_join_effect = {
+						HEAD = scope:lam_ugf_new
+						TIER = 1
+					}
+				}
+			}
+		}
+	}
+}
+lam_fac_ug_confess_effect = {
+	scope:actor.var:lam_bloc = {
+		save_scope_as = lam_cf_head
+	}
+	scope:lam_cf_head = {
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_fac_intel
+				}
+			}
+			set_variable = {
+				name = lam_fac_intel
+				value = 0
+			}
+		}
+		if = {
+			limit = {
+				scope:actor = {
+					var:lam_fac_tier ?= 1
+				}
+			}
+			set_variable = {
+				name = lam_fac_intel
+				value = 4
+			}
+		}
+		else_if = {
+			limit = {
+				var:lam_fac_intel < 3
+			}
+			set_variable = {
+				name = lam_fac_intel
+				value = 3
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_covered
+			}
+			remove_variable = lam_fac_covered
+		}
+		random_secret = {
+			limit = {
+				secret_type = lam_secret_outlaw_faction
+				NOT = {
+					is_known_by = scope:recipient
+				}
+			}
+			reveal_to = scope:recipient
+		}
+		add_opinion = {
+			target = scope:actor
+			modifier = lam_fac_betrayed_opinion
+		}
+	}
+	scope:recipient = {
+		add_opinion = {
+			target = scope:actor
+			modifier = lam_fac_informer_opinion
+		}
+		lam_fac_veil_refresh_effect = yes
+	}
+	scope:actor = {
+		remove_variable = lam_bloc
+		if = {
+			limit = {
+				has_variable = lam_fac_tier
+			}
+			remove_variable = lam_fac_tier
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_pinned
+			}
+			remove_variable = lam_fac_pinned
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_vq
+			}
+			remove_variable = lam_fac_vq
+		}
+		set_variable = {
+			name = lam_fac_unbound
+			value = yes
+			years = 3
+		}
+		lam_fac_unoutlaw_effect = yes
+		if = {
+			limit = {
+				NOT = {
+					any_secret = {
+						secret_type = lam_secret_informer
+					}
+				}
+			}
+			add_secret = {
+				type = lam_secret_informer
+				target = scope:lam_cf_head
+			}
+		}
+	}
+}
+lam_fac_ug_recruit_effect = {
+	scope:recipient = {
+		lam_fac_ug_join_effect = {
+			HEAD = scope:actor.var:lam_bloc
+			TIER = 2
+		}
+	}
+	random = {
+		chance = 10
+		scope:actor = {
+			random_secret = {
+				limit = {
+					secret_type = lam_secret_outlaw_faction
+				}
+				reveal_to = scope:actor.liege
+			}
+		}
+	}
+}
+lam_fac_ug_betray_effect = {
+	if = {
+		limit = {
+			scope:recipient = {
+				opinion = {
+					target = scope:actor.liege
+					value >= 20
+				}
+			}
+		}
+		random_list = {
+			50 = {
+				scope:actor.var:lam_bloc = {
+					if = {
+						limit = {
+							NOT = {
+								has_variable = lam_fac_intel
+							}
+						}
+						set_variable = {
+							name = lam_fac_intel
+							value = 0
+						}
+					}
+					if = {
+						limit = {
+							var:lam_fac_intel < 4
+						}
+						change_variable = {
+							name = lam_fac_intel
+							add = 1
+						}
+					}
+				}
+				scope:actor = {
+					random_secret = {
+						limit = {
+							secret_type = lam_secret_outlaw_faction
+						}
+						reveal_to = scope:actor.liege
+					}
+					send_interface_message = {
+						type = event_generic_bad
+						title = lam_fac_ug_told_title
+						right_icon = scope:recipient
+					}
+				}
+				scope:actor.liege = {
+					add_opinion = {
+						target = scope:recipient
+						modifier = lam_fac_informer_opinion
+					}
+					lam_fac_veil_refresh_effect = yes
+				}
+			}
+			50 = {
+				scope:actor = {
+					send_interface_message = {
+						type = event_generic_neutral
+						title = lam_fac_ug_silent_title
+						right_icon = scope:recipient
+					}
+				}
+			}
+		}
+	}
+	else = {
+		scope:actor = {
+			send_interface_message = {
+				type = event_generic_neutral
+				title = lam_fac_ug_silent_title
+				right_icon = scope:recipient
+			}
+		}
+	}
+}
+lam_fac_ug_crush_effect = {
+	save_scope_as = lam_cr_head
+	set_variable = {
+		name = lam_fac_disband
+		value = yes
+	}
+	set_variable = {
+		name = lam_fac_end_why
+		value = flag:crushed
+	}
+	every_in_list = {
+		variable = lam_fac_members
+		limit = {
+			is_alive = yes
+			var:lam_bloc ?= scope:lam_cr_head
+		}
+		set_variable = {
+			name = lam_fac_fear
+			value = yes
+			years = 3
+		}
+		remove_variable = lam_bloc
+		if = {
+			limit = {
+				has_variable = lam_fac_tier
+			}
+			remove_variable = lam_fac_tier
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_pinned
+			}
+			remove_variable = lam_fac_pinned
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_vq
+			}
+			remove_variable = lam_fac_vq
+		}
+		set_variable = {
+			name = lam_fac_unbound
+			value = yes
+			years = 2
+		}
+		if = {
+			limit = {
+				is_ai = no
+			}
+			send_interface_message = {
+				type = event_generic_bad
+				title = lam_fac_crushed_member_title
+				right_icon = scope:lam_cr_head
+			}
+		}
+	}
+	scope:imprisoner = {
+		add_prestige = medium_prestige_gain
+		add_dread = minor_dread_gain
+		every_in_list = {
+			variable = lam_bloc_leads
+			limit = {
+				is_alive = yes
+				has_variable = lam_fac_hide
+				NOT = {
+					this = scope:lam_cr_head
+				}
+			}
+			set_variable = {
+				name = lam_fac_fear
+				value = yes
+				years = 2
+			}
+			lam_fac_cohesion_add_effect = {
+				ADD = -10
+			}
+		}
+		if = {
+			limit = {
+				is_ai = no
+			}
+			send_interface_message = {
+				type = event_generic_good
+				title = lam_fac_crushed_lord_title
+				right_icon = scope:lam_cr_head
+			}
+		}
+	}
+}
+lam_fac_rising_failed_effect = {
+	lam_cr_defeat_memory_effect = yes
+	save_scope_as = lam_rf_lord
+	every_in_list = {
+		variable = lam_bloc_leads
+		limit = {
+			is_alive = yes
+			var:lam_fac_stage ?= 4
+			NOT = {
+				has_variable = lam_fac_defeated
+			}
+			OR = {
+				this = scope:attacker
+				scope:attacker = {
+					var:lam_bloc ?= prev
+				}
+			}
+		}
+		save_scope_as = lam_rf_lead
+		save_scope_as = lam_rf_rebel
+		if = {
+			limit = {
+				has_variable = lam_cp_turned
+			}
+			give_nickname = nick_the_traitor
+		}
+		set_variable = {
+			name = lam_fac_defeated
+			value = yes
+			years = 5
+		}
+		lam_fac_timer_set_effect = {
+			NAME = lam_fac_defeated
+			YEARS = 5
+		}
+		lam_fac_stat_add_effect = {
+			KEY = rising_failed
+		}
+		lam_fac_hist_add_effect = {
+			KEY = lost
+		}
+		lam_fac_cohesion_add_effect = {
+			ADD = -15
+		}
+		lam_fac_rebel_mark_effect = yes
+		every_in_list = {
+			variable = lam_fac_members
+			limit = {
+				is_alive = yes
+				var:lam_bloc ?= scope:lam_rf_lead
+				var:lam_fac_rose_vs ?= scope:lam_rf_lord
+				var:lam_fac_rose_head ?= {
+					save_temporary_scope_as = lam_rf_rh
+				}
+				OR = {
+					scope:lam_rf_rh = scope:lam_rf_lead
+					scope:lam_rf_lead = {
+						is_target_in_variable_list = {
+							name = lam_fac_lineage
+							target = scope:lam_rf_rh
+						}
+					}
+				}
+			}
+			lam_fac_rebel_mark_effect = yes
+			remove_variable = lam_fac_rose_head
+			remove_variable = lam_fac_rose_vs
+		}
+		lam_fac_confidence_effect = yes
+		save_scope_as = lam_rf_cur
+		if = {
+			limit = {
+				NOT = {
+					has_variable = lam_bloc_lead
+				}
+				scope:lam_vt_lead ?= {
+					has_variable = lam_bloc_lead
+					is_target_in_variable_list = {
+						name = lam_fac_lineage
+						target = scope:lam_rf_lead
+					}
+				}
+			}
+			scope:lam_vt_lead = {
+				save_scope_as = lam_rf_cur
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_rf_lord = {
+					is_ai = yes
+				}
+				scope:lam_rf_cur = {
+					has_variable = lam_bloc_lead
+				}
+			}
+			random = {
+				chance = 50
+				scope:lam_rf_cur = {
+					lam_fac_dissolve_effect = yes
+				}
+			}
+		}
+		scope:lam_rf_lord = {
+			if = {
+				limit = {
+					is_ai = no
+					scope:lam_rf_cur = {
+						is_alive = yes
+						has_variable = lam_bloc_lead
+					}
+				}
+				trigger_event = lam_faction.3030
+			}
+			else_if = {
+				limit = {
+					is_ai = no
+				}
+				send_interface_message = {
+					type = event_generic_good
+					title = lam_fac_rising_failed_title
+					right_icon = scope:lam_rf_lead
+				}
+			}
+		}
+	}
+}
+lam_fac_rebel_mark_effect = {
+	set_variable = {
+		name = lam_fac_rebel_guilty
+		value = yes
+		years = 10
+	}
+	if = {
+		limit = {
+			NOT = {
+				any_secret = {
+					secret_type = lam_secret_rebel
+				}
+			}
+		}
+		add_secret = {
+			type = lam_secret_rebel
+		}
+	}
+	random_secret = {
+		limit = {
+			secret_type = lam_secret_rebel
+			NOT = {
+				is_known_by = scope:lam_rf_lord
+			}
+		}
+		reveal_to = scope:lam_rf_lord
+	}
+}
+lam_fac_dissolve_effect = {
+	save_scope_as = lam_ds_head
+	set_variable = {
+		name = lam_fac_disband
+		value = yes
+	}
+	set_variable = {
+		name = lam_fac_end_why
+		value = flag:decreed
+	}
+	every_in_list = {
+		variable = lam_fac_members
+		limit = {
+			is_alive = yes
+			var:lam_bloc ?= scope:lam_ds_head
+		}
+		remove_variable = lam_bloc
+		if = {
+			limit = {
+				has_variable = lam_fac_tier
+			}
+			remove_variable = lam_fac_tier
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_pinned
+			}
+			remove_variable = lam_fac_pinned
+		}
+		set_variable = {
+			name = lam_fac_unbound
+			value = yes
+			years = 2
+		}
+		if = {
+			limit = {
+				exists = liege
+			}
+			add_opinion = {
+				target = liege
+				modifier = lam_fac_dissolved_opinion
+			}
+		}
+	}
+}
+lam_fac_unseated_clean_effect = {
+	lam_wc_sync_effect = yes
+	lam_pb_validate_member_effect = yes
+	if = {
+		limit = {
+			NOT = {
+				lam_wc_wartime_trigger = yes
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = liege
+				}
+				OR = {
+					has_variable = lam_bloc_lead
+					has_variable = lam_bloc
+				}
+			}
+			save_scope_as = lam_uc_me
+			if = {
+				limit = {
+					has_variable = lam_bloc_lead
+				}
+				if = {
+					limit = {
+						any_in_list = {
+							variable = lam_fac_members
+							is_alive = yes
+							NOT = {
+								this = scope:lam_uc_me
+							}
+							liege ?= scope:lam_uc_me
+						}
+					}
+					lam_fac_crowned_head_effect = {
+						LORD = scope:lam_uc_me
+					}
+				}
+				else = {
+					clear_saved_scope = lam_uc_court
+					random_in_list = {
+						variable = lam_fac_members
+						limit = {
+							is_alive = yes
+							liege ?= {
+								is_target_in_variable_list = {
+									name = lam_bloc_leads
+									target = scope:lam_uc_me
+								}
+							}
+						}
+						liege = {
+							save_scope_as = lam_uc_court
+						}
+					}
+					if = {
+						limit = {
+							exists = scope:lam_uc_court
+						}
+						scope:lam_uc_court = {
+							remove_list_variable = {
+								name = lam_bloc_leads
+								target = scope:lam_uc_me
+							}
+						}
+						clear_saved_scope = lam_succ
+						clear_saved_scope = lam_ps_dying
+						lam_fac_pick_successor_effect = {
+							LORD = scope:lam_uc_court
+						}
+						if = {
+							limit = {
+								exists = scope:lam_succ
+								scope:lam_succ = {
+									lam_fac_succ_eligible_trigger = {
+										LORD = scope:lam_uc_court
+									}
+								}
+							}
+							lam_fac_pass_identity_effect = {
+								FROM = scope:lam_uc_me
+								TO = scope:lam_succ
+							}
+							scope:lam_uc_court = {
+								add_to_variable_list = {
+									name = lam_bloc_leads
+									target = scope:lam_succ
+								}
+							}
+						}
+						clear_saved_scope = lam_succ
+					}
+					if = {
+						limit = {
+							NOT = {
+								has_variable = lam_fac_end_why
+							}
+						}
+						set_variable = {
+							name = lam_fac_end_why
+							value = flag:left
+						}
+					}
+					lam_fac_drop_identity_effect = yes
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_bloc_lead
+					}
+				}
+				if = {
+					limit = {
+						has_variable = lam_bloc
+					}
+					remove_variable = lam_bloc
+				}
+				if = {
+					limit = {
+						has_variable = lam_fac_tier
+					}
+					remove_variable = lam_fac_tier
+				}
+				if = {
+					limit = {
+						has_variable = lam_fac_pinned
+					}
+					remove_variable = lam_fac_pinned
+				}
+			}
+		}
+	}
+}
+lam_fac_stale_clean_effect = {
+	lam_wc_sync_effect = yes
+	lam_pb_validate_member_effect = yes
+	if = {
+		limit = {
+			NOT = {
+				lam_wc_wartime_trigger = yes
+			}
+		}
+		save_scope_as = lam_sc_me
+		if = {
+			limit = {
+				always = no
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_bloc_lead
+				exists = liege
+				liege = {
+					NOT = {
+						lam_fac_realm_in_scope_trigger = yes
+					}
+				}
+				NOT = {
+					liege = {
+						is_target_in_variable_list = {
+							name = lam_bloc_leads
+							target = scope:lam_sc_me
+						}
+					}
+				}
+				NOT = {
+					any_in_list = {
+						variable = lam_fac_members
+						is_alive = yes
+						liege ?= {
+							is_target_in_variable_list = {
+								name = lam_bloc_leads
+								target = scope:lam_sc_me
+							}
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_end_why
+					}
+				}
+				set_variable = {
+					name = lam_fac_end_why
+					value = flag:fall
+				}
+			}
+			lam_fac_drop_identity_effect = yes
+		}
+	}
+}

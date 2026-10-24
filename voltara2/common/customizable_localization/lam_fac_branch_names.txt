@@ -1,0 +1,4903 @@
+﻿LamBpStem = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_bp_origin_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_bp_origin_stem_nm
+						}
+						var:lam_bp_origin_stem_nm ?= 0
+					}
+					var:lam_bp_origin_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_bp_origin_stem_hs
+		}
+		localization_key = lam_bp_stem_house
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_nm ?= 6
+			has_variable = lam_bp_origin_stem_person
+		}
+		localization_key = lam_bp_stem_person
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:zealot
+			has_variable = lam_bp_origin_stem_fa
+		}
+		localization_key = lam_bp_stem_faith
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:minority
+			has_variable = lam_bp_origin_stem_cu
+		}
+		localization_key = lam_bp_stem_culture
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:loyalist
+			has_variable = lam_bp_origin_stem_rg
+		}
+		localization_key = lam_bp_stem_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:courtly
+			has_variable = lam_bp_origin_stem_rg
+		}
+		localization_key = lam_bp_stem_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:glory_hound
+			has_variable = lam_bp_origin_stem_rg
+		}
+		localization_key = lam_bp_stem_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:belligerent
+			has_variable = lam_bp_origin_stem_rg
+		}
+		localization_key = lam_bp_stem_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:parochial
+			has_variable = lam_bp_origin_stem_rg
+		}
+		localization_key = lam_bp_stem_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_bp_origin_stem_rg
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:dynastic
+			has_variable = lam_bp_origin_stem_rg
+		}
+		localization_key = lam_bp_stem_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem_default
+		fallback = yes
+	}
+}
+LamBpSuffix = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_bp_origin_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName = {
+	type = character
+	text = {
+		localization_key = lam_bp_name
+		fallback = yes
+	}
+}
+LamBpStem1 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn1_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn1_bp_stem_nm
+						}
+						var:lam_gn1_bp_stem_nm ?= 0
+					}
+					var:lam_gn1_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn1_bp_stem_hs
+		}
+		localization_key = lam_bp_stem1_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_nm ?= 6
+			has_variable = lam_gn1_bp_stem_person
+		}
+		localization_key = lam_bp_stem1_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn1_bp_stem_fa
+		}
+		localization_key = lam_bp_stem1_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn1_bp_stem_cu
+		}
+		localization_key = lam_bp_stem1_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn1_bp_stem_rg
+		}
+		localization_key = lam_bp_stem1_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn1_bp_stem_rg
+		}
+		localization_key = lam_bp_stem1_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn1_bp_stem_rg
+		}
+		localization_key = lam_bp_stem1_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn1_bp_stem_rg
+		}
+		localization_key = lam_bp_stem1_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn1_bp_stem_rg
+		}
+		localization_key = lam_bp_stem1_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn1_bp_stem_rg
+		}
+		localization_key = lam_bp_stem1_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn1_bp_stem_rg
+		}
+		localization_key = lam_bp_stem1_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem1_default
+		fallback = yes
+	}
+}
+LamBpSuffix1 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn1_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn1_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName1 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name1
+		fallback = yes
+	}
+}
+LamBpStem2 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn2_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn2_bp_stem_nm
+						}
+						var:lam_gn2_bp_stem_nm ?= 0
+					}
+					var:lam_gn2_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn2_bp_stem_hs
+		}
+		localization_key = lam_bp_stem2_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_nm ?= 6
+			has_variable = lam_gn2_bp_stem_person
+		}
+		localization_key = lam_bp_stem2_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn2_bp_stem_fa
+		}
+		localization_key = lam_bp_stem2_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn2_bp_stem_cu
+		}
+		localization_key = lam_bp_stem2_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn2_bp_stem_rg
+		}
+		localization_key = lam_bp_stem2_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn2_bp_stem_rg
+		}
+		localization_key = lam_bp_stem2_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn2_bp_stem_rg
+		}
+		localization_key = lam_bp_stem2_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn2_bp_stem_rg
+		}
+		localization_key = lam_bp_stem2_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn2_bp_stem_rg
+		}
+		localization_key = lam_bp_stem2_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn2_bp_stem_rg
+		}
+		localization_key = lam_bp_stem2_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn2_bp_stem_rg
+		}
+		localization_key = lam_bp_stem2_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem2_default
+		fallback = yes
+	}
+}
+LamBpSuffix2 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn2_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn2_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName2 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name2
+		fallback = yes
+	}
+}
+LamBpStem3 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn3_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn3_bp_stem_nm
+						}
+						var:lam_gn3_bp_stem_nm ?= 0
+					}
+					var:lam_gn3_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn3_bp_stem_hs
+		}
+		localization_key = lam_bp_stem3_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_nm ?= 6
+			has_variable = lam_gn3_bp_stem_person
+		}
+		localization_key = lam_bp_stem3_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn3_bp_stem_fa
+		}
+		localization_key = lam_bp_stem3_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn3_bp_stem_cu
+		}
+		localization_key = lam_bp_stem3_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn3_bp_stem_rg
+		}
+		localization_key = lam_bp_stem3_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn3_bp_stem_rg
+		}
+		localization_key = lam_bp_stem3_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn3_bp_stem_rg
+		}
+		localization_key = lam_bp_stem3_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn3_bp_stem_rg
+		}
+		localization_key = lam_bp_stem3_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn3_bp_stem_rg
+		}
+		localization_key = lam_bp_stem3_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn3_bp_stem_rg
+		}
+		localization_key = lam_bp_stem3_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn3_bp_stem_rg
+		}
+		localization_key = lam_bp_stem3_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem3_default
+		fallback = yes
+	}
+}
+LamBpSuffix3 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn3_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn3_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName3 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name3
+		fallback = yes
+	}
+}
+LamBpStem4 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn4_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn4_bp_stem_nm
+						}
+						var:lam_gn4_bp_stem_nm ?= 0
+					}
+					var:lam_gn4_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn4_bp_stem_hs
+		}
+		localization_key = lam_bp_stem4_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_nm ?= 6
+			has_variable = lam_gn4_bp_stem_person
+		}
+		localization_key = lam_bp_stem4_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn4_bp_stem_fa
+		}
+		localization_key = lam_bp_stem4_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn4_bp_stem_cu
+		}
+		localization_key = lam_bp_stem4_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn4_bp_stem_rg
+		}
+		localization_key = lam_bp_stem4_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn4_bp_stem_rg
+		}
+		localization_key = lam_bp_stem4_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn4_bp_stem_rg
+		}
+		localization_key = lam_bp_stem4_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn4_bp_stem_rg
+		}
+		localization_key = lam_bp_stem4_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn4_bp_stem_rg
+		}
+		localization_key = lam_bp_stem4_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn4_bp_stem_rg
+		}
+		localization_key = lam_bp_stem4_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn4_bp_stem_rg
+		}
+		localization_key = lam_bp_stem4_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem4_default
+		fallback = yes
+	}
+}
+LamBpSuffix4 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn4_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn4_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName4 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name4
+		fallback = yes
+	}
+}
+LamBpStem5 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn5_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn5_bp_stem_nm
+						}
+						var:lam_gn5_bp_stem_nm ?= 0
+					}
+					var:lam_gn5_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn5_bp_stem_hs
+		}
+		localization_key = lam_bp_stem5_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_nm ?= 6
+			has_variable = lam_gn5_bp_stem_person
+		}
+		localization_key = lam_bp_stem5_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn5_bp_stem_fa
+		}
+		localization_key = lam_bp_stem5_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn5_bp_stem_cu
+		}
+		localization_key = lam_bp_stem5_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn5_bp_stem_rg
+		}
+		localization_key = lam_bp_stem5_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn5_bp_stem_rg
+		}
+		localization_key = lam_bp_stem5_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn5_bp_stem_rg
+		}
+		localization_key = lam_bp_stem5_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn5_bp_stem_rg
+		}
+		localization_key = lam_bp_stem5_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn5_bp_stem_rg
+		}
+		localization_key = lam_bp_stem5_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn5_bp_stem_rg
+		}
+		localization_key = lam_bp_stem5_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn5_bp_stem_rg
+		}
+		localization_key = lam_bp_stem5_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem5_default
+		fallback = yes
+	}
+}
+LamBpSuffix5 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn5_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn5_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName5 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name5
+		fallback = yes
+	}
+}
+LamBpStem6 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn6_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn6_bp_stem_nm
+						}
+						var:lam_gn6_bp_stem_nm ?= 0
+					}
+					var:lam_gn6_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn6_bp_stem_hs
+		}
+		localization_key = lam_bp_stem6_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_nm ?= 6
+			has_variable = lam_gn6_bp_stem_person
+		}
+		localization_key = lam_bp_stem6_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn6_bp_stem_fa
+		}
+		localization_key = lam_bp_stem6_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn6_bp_stem_cu
+		}
+		localization_key = lam_bp_stem6_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn6_bp_stem_rg
+		}
+		localization_key = lam_bp_stem6_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn6_bp_stem_rg
+		}
+		localization_key = lam_bp_stem6_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn6_bp_stem_rg
+		}
+		localization_key = lam_bp_stem6_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn6_bp_stem_rg
+		}
+		localization_key = lam_bp_stem6_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn6_bp_stem_rg
+		}
+		localization_key = lam_bp_stem6_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn6_bp_stem_rg
+		}
+		localization_key = lam_bp_stem6_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn6_bp_stem_rg
+		}
+		localization_key = lam_bp_stem6_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem6_default
+		fallback = yes
+	}
+}
+LamBpSuffix6 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn6_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn6_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName6 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name6
+		fallback = yes
+	}
+}
+LamBpStem7 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn7_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn7_bp_stem_nm
+						}
+						var:lam_gn7_bp_stem_nm ?= 0
+					}
+					var:lam_gn7_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn7_bp_stem_hs
+		}
+		localization_key = lam_bp_stem7_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_nm ?= 6
+			has_variable = lam_gn7_bp_stem_person
+		}
+		localization_key = lam_bp_stem7_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn7_bp_stem_fa
+		}
+		localization_key = lam_bp_stem7_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn7_bp_stem_cu
+		}
+		localization_key = lam_bp_stem7_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn7_bp_stem_rg
+		}
+		localization_key = lam_bp_stem7_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn7_bp_stem_rg
+		}
+		localization_key = lam_bp_stem7_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn7_bp_stem_rg
+		}
+		localization_key = lam_bp_stem7_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn7_bp_stem_rg
+		}
+		localization_key = lam_bp_stem7_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn7_bp_stem_rg
+		}
+		localization_key = lam_bp_stem7_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn7_bp_stem_rg
+		}
+		localization_key = lam_bp_stem7_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn7_bp_stem_rg
+		}
+		localization_key = lam_bp_stem7_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem7_default
+		fallback = yes
+	}
+}
+LamBpSuffix7 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn7_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn7_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName7 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name7
+		fallback = yes
+	}
+}
+LamBpStem8 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn8_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn8_bp_stem_nm
+						}
+						var:lam_gn8_bp_stem_nm ?= 0
+					}
+					var:lam_gn8_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn8_bp_stem_hs
+		}
+		localization_key = lam_bp_stem8_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_nm ?= 6
+			has_variable = lam_gn8_bp_stem_person
+		}
+		localization_key = lam_bp_stem8_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn8_bp_stem_fa
+		}
+		localization_key = lam_bp_stem8_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn8_bp_stem_cu
+		}
+		localization_key = lam_bp_stem8_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn8_bp_stem_rg
+		}
+		localization_key = lam_bp_stem8_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn8_bp_stem_rg
+		}
+		localization_key = lam_bp_stem8_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn8_bp_stem_rg
+		}
+		localization_key = lam_bp_stem8_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn8_bp_stem_rg
+		}
+		localization_key = lam_bp_stem8_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn8_bp_stem_rg
+		}
+		localization_key = lam_bp_stem8_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn8_bp_stem_rg
+		}
+		localization_key = lam_bp_stem8_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn8_bp_stem_rg
+		}
+		localization_key = lam_bp_stem8_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem8_default
+		fallback = yes
+	}
+}
+LamBpSuffix8 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn8_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn8_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName8 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name8
+		fallback = yes
+	}
+}
+LamBpStem9 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn9_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn9_bp_stem_nm
+						}
+						var:lam_gn9_bp_stem_nm ?= 0
+					}
+					var:lam_gn9_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn9_bp_stem_hs
+		}
+		localization_key = lam_bp_stem9_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_nm ?= 6
+			has_variable = lam_gn9_bp_stem_person
+		}
+		localization_key = lam_bp_stem9_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn9_bp_stem_fa
+		}
+		localization_key = lam_bp_stem9_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn9_bp_stem_cu
+		}
+		localization_key = lam_bp_stem9_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn9_bp_stem_rg
+		}
+		localization_key = lam_bp_stem9_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn9_bp_stem_rg
+		}
+		localization_key = lam_bp_stem9_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn9_bp_stem_rg
+		}
+		localization_key = lam_bp_stem9_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn9_bp_stem_rg
+		}
+		localization_key = lam_bp_stem9_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn9_bp_stem_rg
+		}
+		localization_key = lam_bp_stem9_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn9_bp_stem_rg
+		}
+		localization_key = lam_bp_stem9_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn9_bp_stem_rg
+		}
+		localization_key = lam_bp_stem9_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem9_default
+		fallback = yes
+	}
+}
+LamBpSuffix9 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn9_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn9_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName9 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name9
+		fallback = yes
+	}
+}
+LamBpStem10 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn10_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn10_bp_stem_nm
+						}
+						var:lam_gn10_bp_stem_nm ?= 0
+					}
+					var:lam_gn10_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn10_bp_stem_hs
+		}
+		localization_key = lam_bp_stem10_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_nm ?= 6
+			has_variable = lam_gn10_bp_stem_person
+		}
+		localization_key = lam_bp_stem10_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn10_bp_stem_fa
+		}
+		localization_key = lam_bp_stem10_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn10_bp_stem_cu
+		}
+		localization_key = lam_bp_stem10_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn10_bp_stem_rg
+		}
+		localization_key = lam_bp_stem10_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn10_bp_stem_rg
+		}
+		localization_key = lam_bp_stem10_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn10_bp_stem_rg
+		}
+		localization_key = lam_bp_stem10_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn10_bp_stem_rg
+		}
+		localization_key = lam_bp_stem10_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn10_bp_stem_rg
+		}
+		localization_key = lam_bp_stem10_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn10_bp_stem_rg
+		}
+		localization_key = lam_bp_stem10_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn10_bp_stem_rg
+		}
+		localization_key = lam_bp_stem10_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem10_default
+		fallback = yes
+	}
+}
+LamBpSuffix10 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn10_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn10_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName10 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name10
+		fallback = yes
+	}
+}
+LamBpStem11 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn11_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn11_bp_stem_nm
+						}
+						var:lam_gn11_bp_stem_nm ?= 0
+					}
+					var:lam_gn11_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn11_bp_stem_hs
+		}
+		localization_key = lam_bp_stem11_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_nm ?= 6
+			has_variable = lam_gn11_bp_stem_person
+		}
+		localization_key = lam_bp_stem11_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn11_bp_stem_fa
+		}
+		localization_key = lam_bp_stem11_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn11_bp_stem_cu
+		}
+		localization_key = lam_bp_stem11_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn11_bp_stem_rg
+		}
+		localization_key = lam_bp_stem11_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn11_bp_stem_rg
+		}
+		localization_key = lam_bp_stem11_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn11_bp_stem_rg
+		}
+		localization_key = lam_bp_stem11_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn11_bp_stem_rg
+		}
+		localization_key = lam_bp_stem11_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn11_bp_stem_rg
+		}
+		localization_key = lam_bp_stem11_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn11_bp_stem_rg
+		}
+		localization_key = lam_bp_stem11_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn11_bp_stem_rg
+		}
+		localization_key = lam_bp_stem11_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem11_default
+		fallback = yes
+	}
+}
+LamBpSuffix11 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn11_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn11_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName11 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name11
+		fallback = yes
+	}
+}
+LamBpStem12 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn12_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn12_bp_stem_nm
+						}
+						var:lam_gn12_bp_stem_nm ?= 0
+					}
+					var:lam_gn12_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn12_bp_stem_hs
+		}
+		localization_key = lam_bp_stem12_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_nm ?= 6
+			has_variable = lam_gn12_bp_stem_person
+		}
+		localization_key = lam_bp_stem12_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn12_bp_stem_fa
+		}
+		localization_key = lam_bp_stem12_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn12_bp_stem_cu
+		}
+		localization_key = lam_bp_stem12_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn12_bp_stem_rg
+		}
+		localization_key = lam_bp_stem12_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn12_bp_stem_rg
+		}
+		localization_key = lam_bp_stem12_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn12_bp_stem_rg
+		}
+		localization_key = lam_bp_stem12_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn12_bp_stem_rg
+		}
+		localization_key = lam_bp_stem12_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn12_bp_stem_rg
+		}
+		localization_key = lam_bp_stem12_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn12_bp_stem_rg
+		}
+		localization_key = lam_bp_stem12_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn12_bp_stem_rg
+		}
+		localization_key = lam_bp_stem12_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem12_default
+		fallback = yes
+	}
+}
+LamBpSuffix12 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn12_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn12_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName12 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name12
+		fallback = yes
+	}
+}
+LamBpStem13 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn13_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn13_bp_stem_nm
+						}
+						var:lam_gn13_bp_stem_nm ?= 0
+					}
+					var:lam_gn13_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn13_bp_stem_hs
+		}
+		localization_key = lam_bp_stem13_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_nm ?= 6
+			has_variable = lam_gn13_bp_stem_person
+		}
+		localization_key = lam_bp_stem13_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn13_bp_stem_fa
+		}
+		localization_key = lam_bp_stem13_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn13_bp_stem_cu
+		}
+		localization_key = lam_bp_stem13_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn13_bp_stem_rg
+		}
+		localization_key = lam_bp_stem13_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn13_bp_stem_rg
+		}
+		localization_key = lam_bp_stem13_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn13_bp_stem_rg
+		}
+		localization_key = lam_bp_stem13_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn13_bp_stem_rg
+		}
+		localization_key = lam_bp_stem13_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn13_bp_stem_rg
+		}
+		localization_key = lam_bp_stem13_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn13_bp_stem_rg
+		}
+		localization_key = lam_bp_stem13_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn13_bp_stem_rg
+		}
+		localization_key = lam_bp_stem13_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem13_default
+		fallback = yes
+	}
+}
+LamBpSuffix13 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn13_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn13_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName13 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name13
+		fallback = yes
+	}
+}
+LamBpStem14 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn14_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn14_bp_stem_nm
+						}
+						var:lam_gn14_bp_stem_nm ?= 0
+					}
+					var:lam_gn14_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn14_bp_stem_hs
+		}
+		localization_key = lam_bp_stem14_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_nm ?= 6
+			has_variable = lam_gn14_bp_stem_person
+		}
+		localization_key = lam_bp_stem14_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn14_bp_stem_fa
+		}
+		localization_key = lam_bp_stem14_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn14_bp_stem_cu
+		}
+		localization_key = lam_bp_stem14_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn14_bp_stem_rg
+		}
+		localization_key = lam_bp_stem14_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn14_bp_stem_rg
+		}
+		localization_key = lam_bp_stem14_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn14_bp_stem_rg
+		}
+		localization_key = lam_bp_stem14_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn14_bp_stem_rg
+		}
+		localization_key = lam_bp_stem14_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn14_bp_stem_rg
+		}
+		localization_key = lam_bp_stem14_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn14_bp_stem_rg
+		}
+		localization_key = lam_bp_stem14_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn14_bp_stem_rg
+		}
+		localization_key = lam_bp_stem14_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem14_default
+		fallback = yes
+	}
+}
+LamBpSuffix14 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn14_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn14_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName14 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name14
+		fallback = yes
+	}
+}
+LamBpStem15 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn15_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn15_bp_stem_nm
+						}
+						var:lam_gn15_bp_stem_nm ?= 0
+					}
+					var:lam_gn15_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn15_bp_stem_hs
+		}
+		localization_key = lam_bp_stem15_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_nm ?= 6
+			has_variable = lam_gn15_bp_stem_person
+		}
+		localization_key = lam_bp_stem15_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn15_bp_stem_fa
+		}
+		localization_key = lam_bp_stem15_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn15_bp_stem_cu
+		}
+		localization_key = lam_bp_stem15_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn15_bp_stem_rg
+		}
+		localization_key = lam_bp_stem15_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn15_bp_stem_rg
+		}
+		localization_key = lam_bp_stem15_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn15_bp_stem_rg
+		}
+		localization_key = lam_bp_stem15_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn15_bp_stem_rg
+		}
+		localization_key = lam_bp_stem15_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn15_bp_stem_rg
+		}
+		localization_key = lam_bp_stem15_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn15_bp_stem_rg
+		}
+		localization_key = lam_bp_stem15_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn15_bp_stem_rg
+		}
+		localization_key = lam_bp_stem15_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem15_default
+		fallback = yes
+	}
+}
+LamBpSuffix15 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn15_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn15_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName15 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name15
+		fallback = yes
+	}
+}
+LamBpStem16 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn16_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn16_bp_stem_nm
+						}
+						var:lam_gn16_bp_stem_nm ?= 0
+					}
+					var:lam_gn16_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn16_bp_stem_hs
+		}
+		localization_key = lam_bp_stem16_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_nm ?= 6
+			has_variable = lam_gn16_bp_stem_person
+		}
+		localization_key = lam_bp_stem16_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn16_bp_stem_fa
+		}
+		localization_key = lam_bp_stem16_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn16_bp_stem_cu
+		}
+		localization_key = lam_bp_stem16_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn16_bp_stem_rg
+		}
+		localization_key = lam_bp_stem16_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn16_bp_stem_rg
+		}
+		localization_key = lam_bp_stem16_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn16_bp_stem_rg
+		}
+		localization_key = lam_bp_stem16_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn16_bp_stem_rg
+		}
+		localization_key = lam_bp_stem16_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn16_bp_stem_rg
+		}
+		localization_key = lam_bp_stem16_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn16_bp_stem_rg
+		}
+		localization_key = lam_bp_stem16_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn16_bp_stem_rg
+		}
+		localization_key = lam_bp_stem16_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem16_default
+		fallback = yes
+	}
+}
+LamBpSuffix16 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn16_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn16_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName16 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name16
+		fallback = yes
+	}
+}
+LamBpStem17 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn17_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn17_bp_stem_nm
+						}
+						var:lam_gn17_bp_stem_nm ?= 0
+					}
+					var:lam_gn17_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn17_bp_stem_hs
+		}
+		localization_key = lam_bp_stem17_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_nm ?= 6
+			has_variable = lam_gn17_bp_stem_person
+		}
+		localization_key = lam_bp_stem17_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn17_bp_stem_fa
+		}
+		localization_key = lam_bp_stem17_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn17_bp_stem_cu
+		}
+		localization_key = lam_bp_stem17_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn17_bp_stem_rg
+		}
+		localization_key = lam_bp_stem17_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn17_bp_stem_rg
+		}
+		localization_key = lam_bp_stem17_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn17_bp_stem_rg
+		}
+		localization_key = lam_bp_stem17_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn17_bp_stem_rg
+		}
+		localization_key = lam_bp_stem17_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn17_bp_stem_rg
+		}
+		localization_key = lam_bp_stem17_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn17_bp_stem_rg
+		}
+		localization_key = lam_bp_stem17_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn17_bp_stem_rg
+		}
+		localization_key = lam_bp_stem17_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem17_default
+		fallback = yes
+	}
+}
+LamBpSuffix17 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn17_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn17_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName17 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name17
+		fallback = yes
+	}
+}
+LamBpStem18 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn18_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn18_bp_stem_nm
+						}
+						var:lam_gn18_bp_stem_nm ?= 0
+					}
+					var:lam_gn18_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn18_bp_stem_hs
+		}
+		localization_key = lam_bp_stem18_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_nm ?= 6
+			has_variable = lam_gn18_bp_stem_person
+		}
+		localization_key = lam_bp_stem18_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn18_bp_stem_fa
+		}
+		localization_key = lam_bp_stem18_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn18_bp_stem_cu
+		}
+		localization_key = lam_bp_stem18_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn18_bp_stem_rg
+		}
+		localization_key = lam_bp_stem18_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn18_bp_stem_rg
+		}
+		localization_key = lam_bp_stem18_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn18_bp_stem_rg
+		}
+		localization_key = lam_bp_stem18_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn18_bp_stem_rg
+		}
+		localization_key = lam_bp_stem18_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn18_bp_stem_rg
+		}
+		localization_key = lam_bp_stem18_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn18_bp_stem_rg
+		}
+		localization_key = lam_bp_stem18_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn18_bp_stem_rg
+		}
+		localization_key = lam_bp_stem18_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem18_default
+		fallback = yes
+	}
+}
+LamBpSuffix18 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn18_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn18_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName18 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name18
+		fallback = yes
+	}
+}
+LamBpStem19 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn19_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn19_bp_stem_nm
+						}
+						var:lam_gn19_bp_stem_nm ?= 0
+					}
+					var:lam_gn19_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn19_bp_stem_hs
+		}
+		localization_key = lam_bp_stem19_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_nm ?= 6
+			has_variable = lam_gn19_bp_stem_person
+		}
+		localization_key = lam_bp_stem19_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn19_bp_stem_fa
+		}
+		localization_key = lam_bp_stem19_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn19_bp_stem_cu
+		}
+		localization_key = lam_bp_stem19_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn19_bp_stem_rg
+		}
+		localization_key = lam_bp_stem19_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn19_bp_stem_rg
+		}
+		localization_key = lam_bp_stem19_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn19_bp_stem_rg
+		}
+		localization_key = lam_bp_stem19_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn19_bp_stem_rg
+		}
+		localization_key = lam_bp_stem19_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn19_bp_stem_rg
+		}
+		localization_key = lam_bp_stem19_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn19_bp_stem_rg
+		}
+		localization_key = lam_bp_stem19_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn19_bp_stem_rg
+		}
+		localization_key = lam_bp_stem19_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem19_default
+		fallback = yes
+	}
+}
+LamBpSuffix19 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn19_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn19_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName19 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name19
+		fallback = yes
+	}
+}
+LamBpStem20 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_nm ?= 2
+		}
+		localization_key = lam_fac_nm_black
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_nm ?= 3
+		}
+		localization_key = lam_fac_nm_white
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_nm ?= 4
+		}
+		localization_key = lam_fac_nm_blue
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_nm ?= 5
+		}
+		localization_key = lam_fac_nm_red
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:lam_gn20_bp_stem_nm ?= 1
+				AND = {
+					OR = {
+						NOT = {
+							has_variable = lam_gn20_bp_stem_nm
+						}
+						var:lam_gn20_bp_stem_nm ?= 0
+					}
+					var:lam_gn20_bp_stem_ag ?= flag:inlaw
+				}
+			}
+			has_variable = lam_gn20_bp_stem_hs
+		}
+		localization_key = lam_bp_stem20_house
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_nm ?= 6
+			has_variable = lam_gn20_bp_stem_person
+		}
+		localization_key = lam_bp_stem20_person
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:zealot
+			has_variable = lam_gn20_bp_stem_fa
+		}
+		localization_key = lam_bp_stem20_faith
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:minority
+			has_variable = lam_gn20_bp_stem_cu
+		}
+		localization_key = lam_bp_stem20_culture
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:loyalist
+			has_variable = lam_gn20_bp_stem_rg
+		}
+		localization_key = lam_bp_stem20_loyalist_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:loyalist
+		}
+		localization_key = lam_bp_stem_loyalist
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:courtly
+			has_variable = lam_gn20_bp_stem_rg
+		}
+		localization_key = lam_bp_stem20_courtly_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:courtly
+		}
+		localization_key = lam_bp_stem_courtly
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:glory_hound
+			has_variable = lam_gn20_bp_stem_rg
+		}
+		localization_key = lam_bp_stem20_glory_hound_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:glory_hound
+		}
+		localization_key = lam_bp_stem_glory_hound
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:belligerent
+			has_variable = lam_gn20_bp_stem_rg
+		}
+		localization_key = lam_bp_stem20_belligerent_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:belligerent
+		}
+		localization_key = lam_bp_stem_belligerent
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:parochial
+			has_variable = lam_gn20_bp_stem_rg
+		}
+		localization_key = lam_bp_stem20_parochial_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:parochial
+		}
+		localization_key = lam_bp_stem_parochial
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:barons_and_minor_landholders
+			has_variable = lam_gn20_bp_stem_rg
+		}
+		localization_key = lam_bp_stem20_barons_and_minor_landholders_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:barons_and_minor_landholders
+		}
+		localization_key = lam_bp_stem_barons_and_minor_landholders
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:dynastic
+			has_variable = lam_gn20_bp_stem_rg
+		}
+		localization_key = lam_bp_stem20_dynastic_region
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_stem_ag ?= flag:dynastic
+		}
+		localization_key = lam_bp_stem_dynastic
+	}
+	text = {
+		localization_key = lam_bp_stem20_default
+		fallback = yes
+	}
+}
+LamBpSuffix20 = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_gn20_bp_side ?= flag:retain
+		}
+		localization_key = lam_bp_suffix_retain
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_side ?= flag:restraint
+		}
+		localization_key = lam_bp_suffix_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_side ?= flag:pressure
+		}
+		localization_key = lam_bp_suffix_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_side ?= flag:fair
+		}
+		localization_key = lam_bp_suffix_fair
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_topic ?= flag:heir
+		}
+		localization_key = lam_bp_suffix_heir
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_topic ?= flag:council
+		}
+		localization_key = lam_bp_suffix_council
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_topic ?= flag:land
+		}
+		localization_key = lam_bp_suffix_land
+	}
+	text = {
+		trigger = {
+			var:lam_gn20_bp_topic ?= flag:law
+		}
+		localization_key = lam_bp_suffix_law
+	}
+	text = {
+		localization_key = lam_bp_suffix_policy
+		fallback = yes
+	}
+}
+LamBpName20 = {
+	type = landed_title
+	text = {
+		localization_key = lam_bp_name20
+		fallback = yes
+	}
+}
+LamBpOriginCause = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_bp_origin_side ?= flag:retain
+			exists = var:lam_bp_origin_alternative
+			exists = var:lam_bp_origin_target
+		}
+		localization_key = lam_bp_origin_retain
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_topic ?= flag:heir
+			exists = var:lam_bp_origin_target
+		}
+		localization_key = lam_bp_origin_heir
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_side ?= flag:restraint
+		}
+		localization_key = lam_bp_origin_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_side ?= flag:pressure
+		}
+		localization_key = lam_bp_origin_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_side ?= flag:fair
+			var:lam_bp_origin_topic ?= flag:council
+			exists = var:lam_bp_origin_target
+		}
+		localization_key = lam_bp_origin_fair_office
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_side ?= flag:fair
+			var:lam_bp_origin_topic ?= flag:land
+			exists = var:lam_bp_origin_target
+		}
+		localization_key = lam_bp_origin_fair_land
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_topic ?= flag:council
+			exists = var:lam_bp_origin_target
+		}
+		localization_key = lam_bp_origin_council
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_topic ?= flag:land
+			exists = var:lam_bp_origin_target
+		}
+		localization_key = lam_bp_origin_land
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_topic ?= flag:law
+		}
+		localization_key = lam_bp_origin_law
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_topic ?= flag:crown
+		}
+		localization_key = lam_bp_origin_crown
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_side ?= flag:participate
+		}
+		localization_key = lam_bp_origin_participate
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_topic ?= flag:court
+		}
+		localization_key = lam_bp_origin_court
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_topic ?= flag:merge
+		}
+		localization_key = lam_bp_origin_merge
+	}
+	text = {
+		trigger = {
+			var:lam_bp_origin_side ?= flag:fair
+		}
+		localization_key = lam_gg_origin_fair
+	}
+	text = {
+		localization_key = lam_bp_cause_unknown
+		fallback = yes
+	}
+}
+LamBpOrigin = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_bp_origin_topic
+		}
+		localization_key = lam_bp_origin_detail
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}
+LamBpArchiveCause = {
+	type = landed_title
+	text = {
+		trigger = {
+			var:lam_bp_selected_side ?= flag:retain
+			exists = var:lam_bp_selected_alternative
+			exists = var:lam_bp_selected_target
+		}
+		localization_key = lam_bp_archive_retain
+	}
+	text = {
+		trigger = {
+			var:lam_bp_selected_topic ?= flag:heir
+			exists = var:lam_bp_selected_target
+		}
+		localization_key = lam_bp_archive_heir
+	}
+	text = {
+		trigger = {
+			var:lam_bp_selected_side ?= flag:restraint
+		}
+		localization_key = lam_bp_archive_restraint
+	}
+	text = {
+		trigger = {
+			var:lam_bp_selected_side ?= flag:pressure
+		}
+		localization_key = lam_bp_archive_pressure
+	}
+	text = {
+		trigger = {
+			var:lam_bp_selected_side ?= flag:fair
+			var:lam_bp_selected_topic ?= flag:council
+			exists = var:lam_bp_selected_target
+		}
+		localization_key = lam_bp_archive_fair_office
+	}
+	text = {
+		trigger = {
+			var:lam_bp_selected_side ?= flag:fair
+			var:lam_bp_selected_topic ?= flag:land
+			exists = var:lam_bp_selected_target
+		}
+		localization_key = lam_bp_archive_fair_land
+	}
+	text = {
+		trigger = {
+			var:lam_bp_selected_topic ?= flag:council
+			exists = var:lam_bp_selected_target
+		}
+		localization_key = lam_bp_archive_council
+	}
+	text = {
+		trigger = {
+			var:lam_bp_selected_topic ?= flag:land
+			exists = var:lam_bp_selected_target
+		}
+		localization_key = lam_bp_archive_land
+	}
+	text = {
+		trigger = {
+			var:lam_bp_selected_topic ?= flag:law
+		}
+		localization_key = lam_bp_archive_law
+	}
+	text = {
+		trigger = {
+			var:lam_bp_selected_topic ?= flag:crown
+		}
+		localization_key = lam_bp_archive_crown
+	}
+	text = {
+		trigger = {
+			var:lam_bp_selected_side ?= flag:participate
+		}
+		localization_key = lam_bp_archive_participate
+	}
+	text = {
+		trigger = {
+			var:lam_bp_selected_topic ?= flag:court
+		}
+		localization_key = lam_bp_archive_court
+	}
+	text = {
+		trigger = {
+			var:lam_bp_selected_topic ?= flag:merge
+		}
+		localization_key = lam_bp_archive_merge
+	}
+	text = {
+		localization_key = lam_bp_cause_unknown
+		fallback = yes
+	}
+}
+LamBpArchive = {
+	type = landed_title
+	text = {
+		trigger = {
+			has_variable = lam_bp_selected_topic
+		}
+		localization_key = lam_bp_archive_detail
+	}
+	text = {
+		localization_key = lam_fac_empty
+		fallback = yes
+	}
+}

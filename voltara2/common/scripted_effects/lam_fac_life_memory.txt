@@ -1,0 +1,490 @@
+﻿lam_lf_incident_effect = {
+	if = {
+		limit = {
+			has_variable = lam_bloc_lead
+			exists = $ACTOR$
+			exists = $VICTIM$
+			NOT = {
+				AND = {
+					var:lam_lf_mem1_kind ?= flag:$KIND$
+					var:lam_lf_mem1_actor ?= $ACTOR$
+					var:lam_lf_mem1_victim ?= $VICTIM$
+					var:lam_lf_mem1_month ?= lam_now_m
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_lf_mem2_kind
+			}
+			set_variable = {
+				name = lam_lf_mem3_kind
+				value = var:lam_lf_mem2_kind
+			}
+		}
+		else = {
+			remove_variable = lam_lf_mem3_kind
+		}
+		if = {
+			limit = {
+				has_variable = lam_lf_mem2_actor
+			}
+			set_variable = {
+				name = lam_lf_mem3_actor
+				value = var:lam_lf_mem2_actor
+			}
+		}
+		else = {
+			remove_variable = lam_lf_mem3_actor
+		}
+		if = {
+			limit = {
+				has_variable = lam_lf_mem2_victim
+			}
+			set_variable = {
+				name = lam_lf_mem3_victim
+				value = var:lam_lf_mem2_victim
+			}
+		}
+		else = {
+			remove_variable = lam_lf_mem3_victim
+		}
+		if = {
+			limit = {
+				has_variable = lam_lf_mem2_month
+			}
+			set_variable = {
+				name = lam_lf_mem3_month
+				value = var:lam_lf_mem2_month
+			}
+		}
+		else = {
+			remove_variable = lam_lf_mem3_month
+		}
+		if = {
+			limit = {
+				has_variable = lam_lf_mem2_until
+			}
+			set_variable = {
+				name = lam_lf_mem3_until
+				value = var:lam_lf_mem2_until
+			}
+		}
+		else = {
+			remove_variable = lam_lf_mem3_until
+		}
+		if = {
+			limit = {
+				has_variable = lam_lf_mem1_kind
+			}
+			set_variable = {
+				name = lam_lf_mem2_kind
+				value = var:lam_lf_mem1_kind
+			}
+		}
+		else = {
+			remove_variable = lam_lf_mem2_kind
+		}
+		if = {
+			limit = {
+				has_variable = lam_lf_mem1_actor
+			}
+			set_variable = {
+				name = lam_lf_mem2_actor
+				value = var:lam_lf_mem1_actor
+			}
+		}
+		else = {
+			remove_variable = lam_lf_mem2_actor
+		}
+		if = {
+			limit = {
+				has_variable = lam_lf_mem1_victim
+			}
+			set_variable = {
+				name = lam_lf_mem2_victim
+				value = var:lam_lf_mem1_victim
+			}
+		}
+		else = {
+			remove_variable = lam_lf_mem2_victim
+		}
+		if = {
+			limit = {
+				has_variable = lam_lf_mem1_month
+			}
+			set_variable = {
+				name = lam_lf_mem2_month
+				value = var:lam_lf_mem1_month
+			}
+		}
+		else = {
+			remove_variable = lam_lf_mem2_month
+		}
+		if = {
+			limit = {
+				has_variable = lam_lf_mem1_until
+			}
+			set_variable = {
+				name = lam_lf_mem2_until
+				value = var:lam_lf_mem1_until
+			}
+		}
+		else = {
+			remove_variable = lam_lf_mem2_until
+		}
+		set_variable = {
+			name = lam_lf_mem1_kind
+			value = flag:$KIND$
+		}
+		set_variable = {
+			name = lam_lf_mem1_actor
+			value = $ACTOR$
+		}
+		set_variable = {
+			name = lam_lf_mem1_victim
+			value = $VICTIM$
+		}
+		set_variable = {
+			name = lam_lf_mem1_month
+			value = lam_now_m
+		}
+		set_variable = {
+			name = lam_lf_mem1_until
+			value = {
+				value = lam_now_m
+				add = $MONTHS$
+			}
+		}
+	}
+}
+lam_lf_incidents_clear_effect = {
+	remove_variable = lam_lf_mem1_kind
+	remove_variable = lam_lf_mem1_actor
+	remove_variable = lam_lf_mem1_victim
+	remove_variable = lam_lf_mem1_month
+	remove_variable = lam_lf_mem1_until
+	remove_variable = lam_lf_mem2_kind
+	remove_variable = lam_lf_mem2_actor
+	remove_variable = lam_lf_mem2_victim
+	remove_variable = lam_lf_mem2_month
+	remove_variable = lam_lf_mem2_until
+	remove_variable = lam_lf_mem3_kind
+	remove_variable = lam_lf_mem3_actor
+	remove_variable = lam_lf_mem3_victim
+	remove_variable = lam_lf_mem3_month
+	remove_variable = lam_lf_mem3_until
+}
+lam_lf_incidents_pass_effect = {
+	$TO$ = {
+		lam_lf_incidents_clear_effect = yes
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem1_kind
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem1_kind
+					value = $FROM$.var:lam_lf_mem1_kind
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem1_actor
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem1_actor
+					value = $FROM$.var:lam_lf_mem1_actor
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem1_victim
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem1_victim
+					value = $FROM$.var:lam_lf_mem1_victim
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem1_month
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem1_month
+					value = $FROM$.var:lam_lf_mem1_month
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem1_until
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem1_until
+					value = $FROM$.var:lam_lf_mem1_until
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem2_kind
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem2_kind
+					value = $FROM$.var:lam_lf_mem2_kind
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem2_actor
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem2_actor
+					value = $FROM$.var:lam_lf_mem2_actor
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem2_victim
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem2_victim
+					value = $FROM$.var:lam_lf_mem2_victim
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem2_month
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem2_month
+					value = $FROM$.var:lam_lf_mem2_month
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem2_until
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem2_until
+					value = $FROM$.var:lam_lf_mem2_until
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem3_kind
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem3_kind
+					value = $FROM$.var:lam_lf_mem3_kind
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem3_actor
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem3_actor
+					value = $FROM$.var:lam_lf_mem3_actor
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem3_victim
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem3_victim
+					value = $FROM$.var:lam_lf_mem3_victim
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem3_month
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem3_month
+					value = $FROM$.var:lam_lf_mem3_month
+				}
+			}
+		}
+	}
+	$FROM$ = {
+		if = {
+			limit = {
+				has_variable = lam_lf_mem3_until
+			}
+			$TO$ = {
+				set_variable = {
+					name = lam_lf_mem3_until
+					value = $FROM$.var:lam_lf_mem3_until
+				}
+			}
+		}
+	}
+}
+lam_lf_repair_incidents_effect = {
+	if = {
+		limit = {
+			var:lam_lf_mem1_actor ?= liege
+			OR = {
+				AND = {
+					var:lam_lf_mem1_kind ?= flag:arrest
+					var:lam_lf_mem1_victim ?= {
+						is_alive = yes
+						is_imprisoned = no
+					}
+				}
+				AND = {
+					var:lam_lf_mem1_kind ?= flag:dismissal
+					var:lam_lf_mem1_victim ?= {
+						is_alive = yes
+						is_councillor_of = prev.liege
+					}
+				}
+			}
+		}
+		set_variable = {
+			name = lam_lf_mem1_until
+			value = lam_now_m
+		}
+	}
+	if = {
+		limit = {
+			var:lam_lf_mem2_actor ?= liege
+			OR = {
+				AND = {
+					var:lam_lf_mem2_kind ?= flag:arrest
+					var:lam_lf_mem2_victim ?= {
+						is_alive = yes
+						is_imprisoned = no
+					}
+				}
+				AND = {
+					var:lam_lf_mem2_kind ?= flag:dismissal
+					var:lam_lf_mem2_victim ?= {
+						is_alive = yes
+						is_councillor_of = prev.liege
+					}
+				}
+			}
+		}
+		set_variable = {
+			name = lam_lf_mem2_until
+			value = lam_now_m
+		}
+	}
+	if = {
+		limit = {
+			var:lam_lf_mem3_actor ?= liege
+			OR = {
+				AND = {
+					var:lam_lf_mem3_kind ?= flag:arrest
+					var:lam_lf_mem3_victim ?= {
+						is_alive = yes
+						is_imprisoned = no
+					}
+				}
+				AND = {
+					var:lam_lf_mem3_kind ?= flag:dismissal
+					var:lam_lf_mem3_victim ?= {
+						is_alive = yes
+						is_councillor_of = prev.liege
+					}
+				}
+			}
+		}
+		set_variable = {
+			name = lam_lf_mem3_until
+			value = lam_now_m
+		}
+	}
+}
+lam_lf_imprison_memory_effect = {
+	save_scope_as = lam_lf_harmed
+	if = {
+		limit = {
+			exists = imprisoner
+			var:lam_bloc ?= {
+				has_variable = lam_bloc_lead
+				liege ?= scope:lam_lf_harmed.imprisoner
+			}
+		}
+		var:lam_bloc = {
+			lam_lf_incident_effect = {
+				KIND = arrest
+				ACTOR = scope:lam_lf_harmed.imprisoner
+				VICTIM = scope:lam_lf_harmed
+				MONTHS = 60
+			}
+		}
+	}
+}
+lam_lf_revoke_memory_effect = {
+	save_scope_as = lam_lf_harmed
+	var:lam_bloc ?= {
+		if = {
+			limit = {
+				has_variable = lam_bloc_lead
+			}
+			lam_lf_incident_effect = {
+				KIND = revocation
+				ACTOR = scope:new_holder
+				VICTIM = scope:lam_lf_harmed
+				MONTHS = 60
+			}
+		}
+	}
+}

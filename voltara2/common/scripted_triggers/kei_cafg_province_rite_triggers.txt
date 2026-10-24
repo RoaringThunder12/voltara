@@ -1,0 +1,38 @@
+﻿# RITE
+T_kCAFG_does_province_contain_rite = {
+	has_variable_list = kCAFG_province_rites
+    is_target_in_variable_list = {
+        name = kCAFG_province_rites
+        target = $RITE$
+    }
+}
+
+T_kCAFG_does_province_contain_any_rite = {
+	has_variable_list = kCAFG_province_rites
+    variable_list_size = {
+        name = kCAFG_province_rites
+        value > 0
+    }
+}
+
+# VALUE
+T_kCAFG_province_rites_count_at_least = {
+	has_variable_list = kCAFG_province_rites
+    variable_list_size = {
+        name = kCAFG_province_rites
+        value >= $VALUE$
+    }
+}
+
+# Only rite in province
+# RITE
+T_kCAFG_province_only_rite = {
+    variable_list_size = {
+        name = kCAFG_province_rites
+        value = 1
+    }
+    is_target_in_variable_list = {
+        name = kCAFG_province_rites
+        target = $RITE$
+    }
+}

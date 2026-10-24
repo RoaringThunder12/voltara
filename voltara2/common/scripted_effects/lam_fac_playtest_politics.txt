@@ -1,0 +1,48 @@
+﻿lam_pt_ally_join_effect = {
+	clear_saved_scope = lam_pt_restore_block
+	if = {
+		limit = {
+			has_variable = lam_fac_blocked
+		}
+		save_scope_value_as = {
+			name = lam_pt_restore_block
+			value = yes
+		}
+	}
+	lam_fac_unblock_effect = yes
+	if = {
+		limit = {
+			can_join_faction = scope:lam_abs_vf
+			lam_wc_join_named_faction_trigger = {
+				FACTION = scope:lam_abs_vf
+			}
+		}
+		join_faction = scope:lam_abs_vf
+	}
+	if = {
+		limit = {
+			joined_faction ?= scope:lam_abs_vf
+		}
+		set_variable = {
+			name = lam_fac_armed
+			value = yes
+			years = 5
+		}
+		set_variable = {
+			name = lam_fac_rose_head
+			value = scope:lam_abs_lead
+			years = 5
+		}
+		set_variable = {
+			name = lam_fac_rose_vs
+			value = scope:lam_abs_lord
+			years = 5
+		}
+	}
+	else_if = {
+		limit = {
+			exists = scope:lam_pt_restore_block
+		}
+		lam_fac_block_effect = yes
+	}
+}

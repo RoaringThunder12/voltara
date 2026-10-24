@@ -1,0 +1,348 @@
+﻿lam_sgui_factions_open = {
+	scope = character
+	is_valid = { vip_actor = yes 
+		is_ai = no
+	}
+	effect = {
+		hidden_effect = {
+			lam_fac_default_view_effect = yes
+			lam_factions_refresh_effect = yes
+			set_variable = {
+				name = lam_factions_open
+				value = yes
+			}
+		}
+	 lam_fac_default_view_effect = yes }
+}
+lam_sgui_factions_close = {
+	scope = character
+	effect = {
+		hidden_effect = {
+			if = {
+				limit = {
+					has_variable = lam_fac_lineage_open
+				}
+				remove_variable = lam_fac_lineage_open
+			}
+			lam_fac_default_view_effect = yes
+			if = {
+				limit = {
+					has_variable = lam_factions_open
+				}
+				remove_variable = lam_factions_open
+			}
+		}
+	}
+}
+lam_sgui_factions_view_up = { scope = character is_shown = { always = no } is_valid = { always = no } }
+lam_sgui_factions_view_self = {
+	scope = character
+	effect = {
+		hidden_effect = {
+			lam_fac_default_view_effect = yes
+			lam_gn_view_main_effect = yes
+			lam_factions_refresh_effect = yes
+		}
+	}
+}
+lam_sgui_fac_favour = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_valid = {
+		scope:target = {
+			liege ?= root
+			has_variable = lam_fac_favour
+			NOT = {
+				has_variable = lam_fac_favour_cd
+			}
+			is_alive = yes
+			has_variable = lam_bloc_lead
+			NOT = {
+				has_variable = lam_fac_disband
+			}
+		}
+		prestige >= minor_prestige_value
+	}
+	effect = {
+		if = {
+			limit = {
+				scope:target = {
+					liege ?= root
+					has_variable = lam_fac_favour
+					NOT = {
+						has_variable = lam_fac_favour_cd
+					}
+					is_alive = yes
+					has_variable = lam_bloc_lead
+					NOT = {
+						has_variable = lam_fac_disband
+					}
+				}
+				prestige >= minor_prestige_value
+			}
+			add_prestige = {
+				value = minor_prestige_value
+				multiply = -1
+			}
+			lam_fac_favour_effect = {
+				ADD = 15
+			}
+			lam_is_favour_effect = {
+				DIR = 1
+				KIND = favour
+			}
+			scope:target = {
+				add_opinion = {
+					target = root
+					modifier = lam_fac_granted_opinion
+				}
+			}
+		}
+	}
+}
+lam_sgui_fac_slight = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_valid = {
+		scope:target = {
+			liege ?= root
+			has_variable = lam_fac_favour
+			NOT = {
+				has_variable = lam_fac_favour_cd
+			}
+			is_alive = yes
+			has_variable = lam_bloc_lead
+			NOT = {
+				has_variable = lam_fac_disband
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = {
+				scope:target = {
+					liege ?= root
+					has_variable = lam_fac_favour
+					NOT = {
+						has_variable = lam_fac_favour_cd
+					}
+					is_alive = yes
+					has_variable = lam_bloc_lead
+					NOT = {
+						has_variable = lam_fac_disband
+					}
+				}
+			}
+			lam_fac_favour_effect = {
+				ADD = -15
+			}
+			lam_is_favour_effect = {
+				DIR = -1
+				KIND = slight
+			}
+			scope:target = {
+				add_opinion = {
+					target = root
+					modifier = lam_fac_refused_opinion
+				}
+			}
+		}
+	}
+}
+lam_sgui_factions_toggle = {
+	scope = character
+	effect = {
+		hidden_effect = {
+			if = {
+				limit = {
+					has_variable = lam_factions_open
+				}
+				remove_variable = lam_factions_open
+			}
+			else = {
+				lam_fac_default_view_effect = yes
+				lam_factions_refresh_effect = yes
+				set_variable = {
+					name = lam_factions_open
+					value = yes
+				}
+			}
+		}
+	}
+}
+lam_sgui_fac_view_court = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	effect = {
+		hidden_effect = {
+			set_variable = {
+				name = lam_fac_view
+				value = scope:target
+			}
+			lam_factions_refresh_effect = yes
+		}
+	 lam_fac_default_view_effect = yes }
+ is_valid = { vip_actor = yes } }
+lam_sgui_fac_join = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		is_independent_ruler = no
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+		scope:target = {
+			is_alive = yes
+			has_variable = lam_bloc_lead
+			liege ?= root.liege
+			NOT = {
+				this = root
+			}
+		}
+		NOT = {
+			var:lam_bloc ?= scope:target
+		}
+	}
+	is_valid = {
+		NOT = {
+			has_variable = lam_fac_left_cd
+		}
+		scope:target = {
+			opinion = {
+				target = root
+				value >= 0
+			}
+		}
+	}
+	effect = {
+		set_variable = {
+			name = lam_bloc
+			value = scope:target
+		}
+		set_variable = {
+			name = lam_fac_pinned
+			value = yes
+		}
+		scope:target = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_granted_opinion
+			}
+		}
+	}
+}
+lam_sgui_fac_leave = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	is_shown = {
+		var:lam_bloc ?= scope:target
+		NOT = {
+			has_variable = lam_bloc_lead
+		}
+	}
+	effect = {
+		scope:target = {
+			add_opinion = {
+				target = root
+				modifier = lam_fac_left_opinion
+			}
+		}
+		remove_variable = lam_bloc
+		if = {
+			limit = {
+				has_variable = lam_fac_pinned
+			}
+			remove_variable = lam_fac_pinned
+		}
+		set_variable = {
+			name = lam_fac_left_cd
+			value = yes
+			years = 1
+		}
+	}
+}
+lam_sgui_fac_detail = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	effect = {
+		set_variable = {
+			name = lam_fac_detail
+			value = scope:target
+		}
+	}
+}
+lam_sgui_fac_detail_close = {
+	scope = character
+	effect = {
+		if = {
+			limit = {
+				has_variable = lam_fac_detail
+			}
+			remove_variable = lam_fac_detail
+		}
+	}
+}
+lam_sgui_fac_lineage_toggle = {
+	scope = character
+	effect = {
+		hidden_effect = {
+			if = {
+				limit = {
+					has_variable = lam_fac_lineage_open
+				}
+				remove_variable = lam_fac_lineage_open
+			}
+			else = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = lam_fac_view
+						}
+					}
+					lam_fac_default_view_effect = yes
+				}
+				var:lam_fac_view = {
+					lam_gn_book_ensure_effect = yes
+				}
+				lam_gn_view_main_effect = yes
+				set_variable = {
+					name = lam_fac_lineage_open
+					value = yes
+				}
+			}
+		}
+	}
+}
+lam_sgui_gn_view_book = {
+	scope = character
+	saved_scopes = {
+		target
+	}
+	effect = {
+		set_variable = {
+			name = lam_gn_view
+			value = scope:target
+		}
+		scope:target = {
+			lam_gn_tree_effect = yes
+		}
+	}
+}
+lam_sgui_gn_view_main = {
+	scope = character
+	effect = {
+		lam_gn_view_main_effect = yes
+	}
+}

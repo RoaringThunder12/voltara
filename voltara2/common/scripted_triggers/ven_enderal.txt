@@ -1,0 +1,7 @@
+﻿ven_northerner = { OR = { culture = culture:voltara_culture_30 culture = { any_parent_culture_or_above = { this = culture:voltara_culture_30 } } rite = rite:voltara_order_rite_26 } }
+ven_subject = { is_alive = yes is_landed = yes NOT = { has_trait = voltara_ruins_keeper } OR = { has_title = title:e_voltara_enderal target_is_liege_or_above = title:e_voltara_enderal.holder } }
+ven_member = { ven_subject = yes ven_northerner = yes has_character_flag = ven_lodge_member }
+ven_candidate = { ven_northerner = yes is_alive = yes is_adult = yes is_imprisoned = no is_incapable = no NOR = { has_trait = maester has_trait = silent_sister has_trait = voltara_ruins_keeper is_theocratic_lessee = yes } }
+ven_challenger = { ven_member = yes ven_candidate = yes has_trait = supernatural_werewolf prestige >= 250 is_at_war = no can_start_single_combat_trigger = yes
+ NOR = { has_title = title:e_voltara_enderal has_character_flag = ven_challenge_cooldown } }
+ven_duel_valid = { exists = scope:ven_challenger exists = scope:ven_incumbent scope:ven_challenger = { ven_member = yes has_trait = supernatural_werewolf is_alive = yes is_landed = yes is_imprisoned = no is_at_war = no } scope:ven_incumbent = { is_alive = yes is_imprisoned = no is_at_war = no has_title = title:e_voltara_enderal } }

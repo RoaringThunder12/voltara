@@ -1,0 +1,57 @@
+﻿# Native-derived influence score, current scope = actual selected educator.
+# Reference: CK3 1.19.0.6, 05_bp2_interactions.txt / ai_accept.
+# The arithmetic is retained, including a -50 fourth-trait penalty. DHM extends
+# this calculation to its specialist tutor; it does not send the DLC interaction.
+dhm_v091_personality_chance_value = {
+    value = 0
+    scope:dhm_v091_pupil = {
+        add = { value = "opinion(scope:dhm_v091_mentor)" multiply = 0.5 }
+    }
+    if = { limit = { has_perk = groomed_to_rule_perk } add = groomed_to_rule_value }
+    if = {
+        limit = { number_of_personality_traits_in_common = { target = scope:dhm_v091_pupil value >= 1 } }
+        add = {
+            value = 5
+            if = { limit = { number_of_personality_traits_in_common = { target = scope:dhm_v091_pupil value = 2 } } multiply = 2 }
+            else_if = { limit = { number_of_personality_traits_in_common = { target = scope:dhm_v091_pupil value = 3 } } multiply = 3 }
+        }
+    }
+    if = {
+        limit = { scope:dhm_v091_pupil = { number_of_opposing_personality_traits = { target = scope:dhm_v091_mentor value >= 1 } } }
+        add = {
+            value = -5
+            if = { limit = { scope:dhm_v091_pupil = { number_of_opposing_personality_traits = { target = scope:dhm_v091_mentor value = 2 } } } multiply = 2 }
+            else_if = { limit = { scope:dhm_v091_pupil = { number_of_opposing_personality_traits = { target = scope:dhm_v091_mentor value = 3 } } } multiply = 3 }
+        }
+    }
+    add = { value = learning multiply = 0.5 }
+    add = { value = diplomacy multiply = 0.5 }
+    if = { limit = { exists = court_position:wet_nurse_court_position } add = 10 }
+    if = { limit = { scope:dhm_v091_pupil.faith = { trait_is_virtue = scope:dhm_v091_trait } } add = 10 }
+    if = { limit = { scope:dhm_v091_pupil = { dhm_v091_compatible_lesson_trigger = yes } } add = 15 }
+    else = { add = -15 }
+    if = { limit = { scope:dhm_v091_pupil.faith = { trait_is_sin = scope:dhm_v091_trait } } add = -10 }
+    if = {
+        limit = {
+            scope:dhm_v091_pupil = {
+                target_is_liege_or_above = scope:dhm_v091_mentor
+                has_dread_level_towards = { target = scope:dhm_v091_mentor level = 1 }
+            }
+        }
+        add = 25
+        if = { limit = { dynasty ?= { has_dynasty_perk = guile_legacy_5 } } add = 25 }
+    }
+    if = {
+        limit = {
+            scope:dhm_v091_pupil = {
+                target_is_liege_or_above = scope:dhm_v091_mentor
+                has_dread_level_towards = { target = scope:dhm_v091_mentor level = 2 }
+            }
+        }
+        add = 50
+        if = { limit = { dynasty ?= { has_dynasty_perk = guile_legacy_5 } } add = 50 }
+    }
+    if = { limit = { scope:dhm_v091_pupil = { number_of_personality_traits = 3 } } add = -50 }
+    min = 0
+    max = 100
+}

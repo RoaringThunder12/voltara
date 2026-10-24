@@ -1,0 +1,120 @@
+﻿lam_bp_unaligned_effect = {
+	var:lam_bloc ?= {
+		remove_list_variable = {
+			name = lam_fac_members
+			target = prev
+		}
+	}
+	remove_variable = lam_bloc
+	remove_variable = lam_fac_tier
+	remove_variable = lam_fac_pinned
+	set_variable = {
+		name = lam_fac_unbound
+		value = yes
+		years = 3
+	}
+	lam_fac_quick_refresh_court_effect = yes
+}
+lam_bp_offer_record_effect = {
+	lam_hi_watch_offer_effect = yes
+	set_variable = {
+		name = lam_cr_split_offer
+		value = scope:lam_cr_split_token
+		months = 2
+	}
+	set_variable = {
+		name = lam_bp_offer_until
+		value = {
+			value = lam_now_m
+			add = 2
+		}
+	}
+	remove_variable = lam_bp_offer_old_record
+	remove_variable = lam_bp_offer_new_record
+	if = {
+		limit = {
+			scope:lam_cr_original_head = {
+				has_variable = lam_fac_rec
+			}
+		}
+		set_variable = {
+			name = lam_bp_offer_old_record
+			value = scope:lam_cr_original_head.var:lam_fac_rec
+		}
+	}
+	if = {
+		limit = {
+			scope:lam_cr_split_head = {
+				has_variable = lam_fac_rec
+			}
+		}
+		set_variable = {
+			name = lam_bp_offer_new_record
+			value = scope:lam_cr_split_head.var:lam_fac_rec
+		}
+	}
+	trigger_event = lam_bp.0012
+}
+lam_bp_choose_effect = {
+	if = {
+		limit = {
+			lam_bp_offer_valid_trigger = yes
+		}
+		set_variable = {
+			name = lam_bp_choice
+			value = $CHOICE$
+		}
+		remove_variable = lam_cr_split_offer
+		remove_variable = lam_bp_offer_until
+		if = {
+			limit = {
+				var:lam_bp_choice = flag:follow
+			}
+			var:lam_bloc = {
+				remove_list_variable = {
+					name = lam_fac_members
+					target = prev
+				}
+			}
+			set_variable = {
+				name = lam_bloc
+				value = scope:lam_cr_split_head
+			}
+			set_variable = {
+				name = lam_fac_tier
+				value = 1
+			}
+			set_variable = {
+				name = lam_fac_pinned
+				value = yes
+			}
+			scope:lam_cr_split_head = {
+				if = {
+					limit = {
+						NOT = {
+							is_target_in_variable_list = {
+								name = lam_fac_members
+								target = prev
+							}
+						}
+					}
+					add_to_variable_list = {
+						name = lam_fac_members
+						target = prev
+					}
+				}
+			}
+			lam_fac_quick_refresh_court_effect = yes
+		}
+		else_if = {
+			limit = {
+				var:lam_bp_choice = flag:unaligned
+			}
+			lam_bp_unaligned_effect = yes
+		}
+		remove_variable = lam_bp_choice
+	}
+}
+lam_bp_try_split_effect = {
+	lam_ev_evaluate_effect = yes
+}

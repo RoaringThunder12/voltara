@@ -1,0 +1,47 @@
+﻿LamPbCouncilDemand = {
+	type = character
+	text = {
+		trigger = {
+			var:lam_pb_council_kind ?= flag:liberty_faction
+		}
+		localization_key = lam_pb_goal_liberty_faction
+	}
+	text = {
+		trigger = {
+			var:lam_pb_council_kind ?= flag:independence_faction
+		}
+		localization_key = lam_pb_goal_independence_faction
+	}
+	text = {
+		trigger = {
+			var:lam_pb_council_kind ?= flag:claimant_faction
+		}
+		localization_key = lam_pb_goal_claimant_faction
+	}
+	text = {
+		trigger = {
+			var:lam_pb_council_kind ?= flag:nation_fracturing_faction
+		}
+		localization_key = lam_pb_goal_nation_fracturing_faction
+	}
+	text = {
+		fallback = yes
+		localization_key = lam_fac_empty
+	}
+}
+LamPbCouncilText = {
+	type = character
+	text = {
+		trigger = {
+			has_variable = lam_pb_council_kind
+			liege ?= {
+				lam_pb_managed_court_trigger = yes
+			}
+		}
+		localization_key = lam_pb_council_text
+	}
+	text = {
+		fallback = yes
+		localization_key = lam_pb_council_legacy
+	}
+}

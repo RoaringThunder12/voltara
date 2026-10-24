@@ -1,0 +1,15 @@
+﻿ven_challenge_crown_interaction = { category = interaction_category_hostile icon = icon_duel common_interaction = yes ai_frequency = 36 auto_accept = yes
+ desc = ven_challenge_crown_interaction_desc
+ is_shown = { scope:actor = { ven_member = yes has_trait = supernatural_werewolf NOT = { has_title = title:e_voltara_enderal } } scope:recipient = { has_title = title:e_voltara_enderal } }
+ is_valid_showing_failures_only = { scope:actor = { ven_challenger = yes } title:e_voltara_enderal = { NOT = { has_variable = ven_ring_cooldown } } scope:recipient = { is_adult = yes is_at_war = no is_imprisoned = no is_incapable = no can_start_single_combat_trigger = yes NOR = { has_character_flag = ven_duel_pending has_character_flag = ven_ring_cooldown } } }
+ on_accept = { title:e_voltara_enderal = { set_variable = { name = ven_ring_cooldown value = yes days = 365 } } scope:actor = { save_scope_as = ven_challenger add_prestige = -250 add_character_flag = { flag = ven_challenge_cooldown years = 5 } }
+ scope:recipient = { save_scope_as = ven_incumbent add_character_flag = { flag = ven_duel_pending days = 90 } add_character_flag = { flag = ven_ring_cooldown years = 1 } trigger_event = ven.10 } }
+ ai_targets = { ai_recipients = liege } ai_potential = { OR = { has_trait = ambitious has_trait = brave } }
+ ai_will_do = { base = 0 modifier = { add = 10 scope:actor = { prowess >= 22 opinion = { target = scope:recipient value < -10 } } } } }
+
+ven_seek_lodge_support_interaction = { category = interaction_category_friendly icon = icon_offer_vassalization common_interaction = yes ai_frequency = 24 desc = ven_seek_lodge_support_interaction_desc
+ is_shown = { scope:actor = { ven_member = yes ven_candidate = yes } scope:recipient = { ven_member = yes is_adult = yes NOT = { this = scope:actor } } }
+ is_valid_showing_failures_only = { scope:actor = { prestige >= 50 } scope:recipient = { NOT = { has_character_flag = ven_pledge_cooldown } } }
+ ai_accept = { base = -10 modifier = { add = 35 scope:actor = { has_trait = supernatural_werewolf } } modifier = { add = 20 scope:actor = { has_character_modifier = ven_hearth_service } } modifier = { add = 20 scope:recipient = { opinion = { target = scope:actor value >= 25 } } } modifier = { add = -100 scope:actor = { has_character_modifier = ven_oathbreaker } } }
+ on_accept = { scope:actor = { add_prestige = -50 add_opinion = { target = scope:recipient modifier = ven_lodge_friend } } scope:recipient = { set_variable = { name = ven_endorsed_candidate value = scope:actor days = 1825 } add_character_flag = { flag = ven_pledge_cooldown years = 5 } } }
+ ai_targets = { ai_recipients = peer_vassals ai_recipients = liege } ai_potential = { has_trait = ambitious } ai_will_do = { base = 5 } }

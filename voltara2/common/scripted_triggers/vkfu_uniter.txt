@@ -1,0 +1,11 @@
+﻿
+vkfu_candidate = { vkf_chief = yes has_character_flag = vkfu_candidate NOT = { exists = title:e_voltara_sixth_southron_invasion.holder } }
+vkfu_council_host = { OR = { vkf_leader = yes vkfu_candidate = yes } }
+vkfu_foundation_ready = { vkfu_candidate = yes has_character_flag = vkfu_council_completed prestige >= 500 gold >= 100 any_independent_ruler = { count >= 2 vkf_chief = yes var:vkf_patron ?= prev var:vkfu_endorsed_host ?= prev } }
+vkfu_human_southron = { vkf_southron_culture = yes }
+vkfu_vow_active = { vkf_leader = yes has_variable = vkfu_promise NOT = { has_character_flag = vkfu_promise_resolved } }
+vkfu_promise_fulfilled = { vkfu_vow_active = yes OR = {
+ AND = { var:vkfu_promise = 1 title:c_voltara_471.holder.top_liege = this }
+ AND = { var:vkfu_promise = 2 NOT = { any_county = { title_province = { geographical_region = world_voltara_southorion } vkf_southron_culture = yes NOT = { holder.top_liege = prev } } } }
+ AND = { var:vkfu_promise = 3 has_government = feudal_government any_vassal = { count >= 2 vkfu_human_southron = yes } NOT = { any_vassal_or_below = { vkfu_human_southron = yes OR = { has_government = tribal_government has_government = nomad_government } } } }
+} }

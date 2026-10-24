@@ -1,0 +1,8 @@
+﻿namespace = vic_heirs
+vic_heirs.1 = { type = character_event title = vic_heirs.1.t desc = vic_heirs.1.desc theme = family
+ trigger = { this = character:19060003 is_alive = yes has_title = title:h_voltara_severos has_character_flag = vic_heirs_pending NOT = { has_character_flag = vic_heirs_resolved } }
+ immediate = { character:19060001 = { every_child = { limit = { is_alive = yes } add_to_list = vic_cassian_heirs } } }
+ option = { name = vic_heirs.1.a custom_tooltip = vic_heirs.1.a.tt hidden_effect = { vic_resolve_heirs = { POLICY = 1 } } ai_chance = { base = 35 } }
+ option = { name = vic_heirs.1.b custom_tooltip = vic_heirs.1.b.tt hidden_effect = { vic_resolve_heirs = { POLICY = 2 } } ai_chance = { base = 50 } }
+ option = { name = vic_heirs.1.c custom_tooltip = vic_heirs.1.c.tt hidden_effect = { vic_resolve_heirs = { POLICY = 3 } } ai_chance = { base = 15 } }
+}

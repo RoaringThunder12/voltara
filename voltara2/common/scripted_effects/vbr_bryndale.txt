@@ -1,0 +1,24 @@
+﻿vbr_delay = { current_travel_plan ?= { delay_travel_plan = { days = $DAYS$ } } }
+vbr_hurt = { add_stress = 15 add_character_modifier = { modifier = vbr_battered days = 90 } }
+vbr_clear_bandits = { scope:vbr_site = { remove_county_modifier = vbr_bandits every_county_province = { remove_province_modifier = vbr_unsafe_roads } } }
+vbr_bandit_damage = { scope:vbr_site = { add_county_modifier = { modifier = vbr_bandits years = 3 } every_county_province = { add_province_modifier = { modifier = vbr_unsafe_roads years = 3 } } } }
+vbr_patrol = { remove_short_term_gold = 60 random_held_title = { limit = { vbr_county = yes NOT = { has_county_modifier = vbr_patrolled } } save_scope_as = vbr_site add_county_modifier = { modifier = vbr_patrolled years = 3 } every_county_province = { add_province_modifier = { modifier = vbr_road_watch years = 3 } } } vbr_clear_bandits = yes }
+vbr_beacons = { remove_short_term_gold = 75 random_held_title = { limit = { vbr_county = yes any_county_province = { is_coastal = yes } NOT = { has_county_modifier = vbr_beacons } } save_scope_as = vbr_site add_county_modifier = { modifier = vbr_beacons years = 3 } } }
+vbr_fair = { remove_short_term_gold = 75 random_held_title = { limit = { vbr_county = yes NOT = { has_county_modifier = vbr_fair } NOT = { has_county_modifier = vbr_bandits } NOT = { has_county_modifier = vbr_plundered } } save_scope_as = vbr_site add_county_modifier = { modifier = vbr_fair years = 3 } } }
+vbr_send_convoy = { remove_short_term_gold = 40 add_character_flag = { flag = vbr_convoy_cooldown years = 2 } random_held_title = { limit = { vbr_county = yes } save_scope_as = vbr_site } trigger_event = { id = vbr.15 days = 60 } }
+vbr_encounter = { if = { limit = { vbr_traveller = yes } random = { chance = 25
+ add_character_flag = { flag = vbr_travel_cooldown days = 60 }
+ random_list = { 25 = { trigger_event = vbr.1 } 20 = { trigger_event = vbr.2 } 20 = { trigger_event = vbr.3 } 20 = { trigger_event = vbr.4 } 15 = { modifier = { factor = 0 NOT = { location = { is_coastal = yes } } } trigger_event = vbr.5 } }
+} } }
+vbr_incident = { add_character_flag = { flag = vbr_incident_cooldown years = 2 }
+random_list = {
+ 45 = { random_held_title = { limit = { vbr_county = yes } save_scope_as = vbr_site }
+  if = { limit = { scope:vbr_site = { has_county_modifier = vbr_patrolled } } random_list = { 20 = { trigger_event = vbr.10 } 80 = { trigger_event = vbr.14 } } } else = { trigger_event = vbr.10 } }
+ 30 = { random_held_title = { limit = { vbr_county = yes } save_scope_as = vbr_site } trigger_event = vbr.12 }
+ 25 = { modifier = { factor = 0 NOT = { any_held_title = { vbr_county = yes any_county_province = { is_coastal = yes } } } }
+ random_held_title = { limit = { vbr_county = yes any_county_province = { is_coastal = yes } } save_scope_as = vbr_site }
+ if = { limit = { scope:vbr_site = { has_county_modifier = vbr_beacons } } random_list = { 20 = { trigger_event = vbr.13 } 80 = { trigger_event = vbr.14 } } } else = { trigger_event = vbr.13 } }
+} }
+vbr_convoy_success = { add_gold = 85 add_prestige = 10 trigger_event = vbr.20 }
+vbr_convoy_partial = { add_gold = 45 trigger_event = vbr.21 }
+vbr_convoy_loss = { add_stress = 10 trigger_event = vbr.22 }

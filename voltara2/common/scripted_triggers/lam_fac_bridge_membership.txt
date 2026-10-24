@@ -1,0 +1,91 @@
+﻿lam_pb_member_current_trigger = {
+ OR = {
+ AND = { is_alive = yes voltara_in_hegemony = yes var:lam_bloc ?= { is_alive = yes has_variable = vip_imperial_bloc_head has_variable = lam_bloc_lead NOT = { has_variable = lam_fac_disband } voltara_in_hegemony = yes } }
+ AND = {
+
+	trigger_if = {
+		limit = {
+			is_alive = yes
+		}
+		save_temporary_scope_as = lam_pb_member
+		trigger_if = {
+			limit = {
+				exists = var:lam_bloc
+			}
+			var:lam_bloc = {
+				trigger_if = {
+					limit = {
+						is_alive = yes
+					}
+					has_variable = lam_bloc_lead
+					NOT = {
+						has_variable = lam_fac_disband
+					}
+					NOT = {
+						liege ?= scope:lam_pb_member
+					}
+					OR = {
+						this = scope:lam_pb_member
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = liege
+								}
+								OR = {
+									scope:lam_pb_member = {
+										liege ?= prev.liege
+									}
+									scope:lam_pb_member = {
+										is_courtier_of = prev.liege
+									}
+								}
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+						AND = {
+							trigger_if = {
+								limit = {
+									exists = var:lam_wc_home
+									exists = var:lam_wc_war
+								}
+								var:lam_wc_war = {
+									is_participant = prev
+								}
+								NOT = {
+									var:lam_wc_home ?= scope:lam_pb_member
+								}
+								OR = {
+									var:lam_wc_war = {
+										is_participant = scope:lam_pb_member
+									}
+									scope:lam_pb_member = {
+										liege ?= prev.var:lam_wc_home
+									}
+									scope:lam_pb_member = {
+										is_courtier_of = prev.var:lam_wc_home
+									}
+								}
+							}
+							trigger_else = {
+								always = no
+							}
+						}
+					}
+				}
+				trigger_else = {
+					always = no
+				}
+			}
+		}
+		trigger_else = {
+			always = no
+		}
+	}
+	trigger_else = {
+		always = no
+	}
+
+} }
+}

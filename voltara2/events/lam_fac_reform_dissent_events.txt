@@ -1,0 +1,23 @@
+﻿namespace = lam_cr
+lam_cr.0012 = {
+type = character_event
+title = lam_cr_split_title
+desc = lam_cr_split_desc
+theme = realm
+left_portrait = { character = scope:lam_cr_original_head }
+right_portrait = { character = scope:lam_cr_split_head }
+option = { name = lam_cr_split_follow
+ trigger = { lam_cr_split_offer_valid_trigger = yes }
+ hidden_effect = { if = { limit = { lam_cr_split_offer_valid_trigger = yes }
+   remove_variable = lam_cr_split_offer
+   set_variable = { name = lam_bloc value = scope:lam_cr_split_head }
+   set_variable = { name = lam_fac_tier value = 1 }
+   set_variable = { name = lam_fac_pinned value = yes }
+   lam_fac_quick_refresh_court_effect = yes
+ } }
+}
+option = { name = lam_cr_split_stay
+ hidden_effect = { if = { limit = { var:lam_cr_split_offer ?= scope:lam_cr_split_token } remove_variable = lam_cr_split_offer } }
+}
+
+}

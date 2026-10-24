@@ -1,0 +1,99 @@
+﻿lam_nc_heir_commit_effect = {
+	clear_saved_scope = lam_nc_heir_done
+	if = {
+		limit = {
+			lam_nc_heir_trigger = {
+				CANDIDATE = $CANDIDATE$
+			}
+		}
+		set_designated_heir = $CANDIDATE$
+		if = {
+			limit = {
+				designated_heir ?= $CANDIDATE$
+			}
+			add_prestige = {
+				value = lam_nc_heir_prestige_value
+				multiply = -1
+			}
+			if = {
+				limit = {
+					government_has_mechanic = administrative
+					government_has_flag = government_has_influence
+				}
+				change_influence = {
+					value = designate_heir_admin_influence_cost
+					multiply = -1
+				}
+			}
+			if = {
+				limit = {
+					government_has_flag = government_is_mandala
+				}
+				add_piety = {
+					value = designate_heir_cost
+					multiply = -1
+				}
+			}
+			save_scope_value_as = {
+				name = lam_nc_heir_done
+				value = yes
+			}
+		}
+	}
+}
+lam_nc_appoint_effect = {
+	clear_saved_scope = lam_nc_appointed
+	if = {
+		limit = {
+			lam_nc_appoint_trigger = {
+				SEAT = $SEAT$
+				CANDIDATE = $CANDIDATE$
+			}
+		}
+		assign_councillor_type = {
+			type = councillor_$SEAT$
+			target = $CANDIDATE$
+			remove_existing_councillor = yes
+		}
+		if = {
+			limit = {
+				cp:councillor_$SEAT$ ?= $CANDIDATE$
+			}
+			save_scope_value_as = {
+				name = lam_nc_appointed
+				value = yes
+			}
+		}
+	}
+}
+lam_nc_arrest_effect = {
+	save_scope_as = lam_nc_arrest_lord
+	if = {
+		limit = {
+			$MASTER$ = {
+				lam_nc_control_trigger = {
+					LORD = scope:lam_nc_arrest_lord
+				}
+			}
+			$TARGET$ ?= {
+				lam_nc_arrest_target_trigger = {
+					LORD = scope:lam_nc_arrest_lord
+					MASTER = $MASTER$
+				}
+			}
+		}
+		save_scope_as = lam_nc_arrest_lord
+		if = {
+			limit = {
+				NOT = {
+					has_imprisonment_reason = $TARGET$
+				}
+			}
+			add_tyranny = 20
+		}
+		imprison = {
+			target = $TARGET$
+			type = $TYPE$
+		}
+	}
+}

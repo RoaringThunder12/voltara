@@ -1,0 +1,163 @@
+﻿# Living Factions - what a faction is bound by, kept with the faction (GPT bug review 2, 2026-10-10).
+# Timed states also keep their end to the month (NAME_m, against lam_now_m), so that they can go to a new head with
+# only the time that is left. Root = a faction head unless said otherwise.
+
+# NAME runs out in YEARS (set next to the timed variable itself).
+lam_fac_timer_set_effect = {
+	set_variable = { name = $NAME$_m value = { value = $YEARS$ multiply = 12 add = lam_now_m } }
+}
+# FROM -> TO: NAME goes on, ending when it would have.
+lam_fac_timer_pass_effect = {
+	if = {
+		limit = { $FROM$ = { has_variable = $NAME$ has_variable = $NAME$_m var:$NAME$_m > lam_now_m } }
+		$TO$ = {
+			set_variable = { name = $NAME$ value = yes }
+			set_variable = { name = $NAME$_m value = $FROM$.var:$NAME$_m }
+		}
+	}
+}
+# A carried-over state (no timer of its own) ends at its month.
+lam_fac_timer_expire_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+		}
+		if = {
+			limit = {
+				has_variable = $NAME$_m
+				var:$NAME$_m <= lam_now_m
+			}
+			if = {
+				limit = {
+					has_variable = $NAME$
+				}
+				remove_variable = $NAME$
+			}
+			remove_variable = $NAME$_m
+		}
+	}
+}
+lam_fac_timer_drop_effect = {
+	if = { limit = { has_variable = $NAME$ } remove_variable = $NAME$ }
+	if = { limit = { has_variable = $NAME$_m } remove_variable = $NAME$_m }
+}
+
+# FROM -> TO (lam_fac_pass_identity_effect): an oath sworn, open defiance, the bar on rising, a promise owed.
+lam_fac_bonds_pass_effect = {
+	# Those who stood with the old head stand with the new one.
+	$FROM$ = {
+		every_in_list = {
+			variable = lam_fac_members
+			limit = { is_alive = yes var:lam_bloc ?= $FROM$ NOT = { this = $TO$ } }
+			set_variable = { name = lam_bloc value = $TO$ }
+			$TO$ = { if = { limit = { NOT = { is_target_in_variable_list = { name = lam_fac_members target = prev } } } add_to_variable_list = { name = lam_fac_members target = prev } } }
+		}
+	}
+	# (A head who stepped out alive: the member list was emptied for the count - those of the last count, still here.)
+	if = {
+		limit = { $FROM$ = { NOT = { any_in_list = { variable = lam_fac_members } } } }
+		$FROM$ = {
+			every_in_list = {
+				variable = lam_fac_prev_members
+				limit = { is_alive = yes var:lam_bloc ?= $FROM$ NOT = { this = $TO$ } liege ?= $TO$.liege }
+				set_variable = { name = lam_bloc value = $TO$ }
+				$TO$ = { if = { limit = { NOT = { is_target_in_variable_list = { name = lam_fac_members target = prev } } } add_to_variable_list = { name = lam_fac_members target = prev } } }
+			}
+		}
+	}
+	if = { limit = { $FROM$ = { has_variable = lam_fac_kings_own } } $TO$ = { set_variable = { name = lam_fac_kings_own value = yes } } }
+	# (A player's course and aim are their own: a successor sets their own.)
+	# The heir it backs, and what binds it to them.
+	if = { limit = { $FROM$ = { has_variable = lam_fac_heir } } $TO$ = { set_variable = { name = lam_fac_heir value = $FROM$.var:lam_fac_heir } } }
+	lam_fac_timer_pass_effect = { NAME = lam_fac_split_cd FROM = $FROM$ TO = $TO$ }
+	lam_fac_timer_pass_effect = { NAME = lam_fac_defeated FROM = $FROM$ TO = $TO$ }
+	lam_fac_timer_pass_effect = { NAME = lam_fac_heir_locked FROM = $FROM$ TO = $TO$ }
+	lam_fac_timer_pass_effect = { NAME = lam_fac_spurned FROM = $FROM$ TO = $TO$ }
+	lam_fac_timer_pass_effect = { NAME = lam_fac_oath FROM = $FROM$ TO = $TO$ }
+	lam_fac_timer_pass_effect = { NAME = lam_fac_defiant FROM = $FROM$ TO = $TO$ }
+	lam_fac_timer_pass_effect = { NAME = lam_fac_rebel_cd FROM = $FROM$ TO = $TO$ }
+	if = {
+		limit = { $FROM$ = { has_variable = lam_fac_promise } }
+		$TO$ = {
+			set_variable = { name = lam_fac_promise value = $FROM$.var:lam_fac_promise }
+			if = { limit = { $FROM$ = { has_variable = lam_fac_promise_by } } set_variable = { name = lam_fac_promise_by value = $FROM$.var:lam_fac_promise_by } }
+			if = { limit = { $FROM$ = { has_variable = lam_fac_promise_base } } set_variable = { name = lam_fac_promise_base value = $FROM$.var:lam_fac_promise_base } }
+			if = { limit = { $FROM$ = { has_variable = lam_fac_campaign_begun } } set_variable = { name = lam_fac_campaign_begun value = yes } }
+			else = { remove_variable = lam_fac_campaign_begun }
+		}
+		if = {
+			limit = { $FROM$ = { has_variable = lam_fac_promise_time has_variable = lam_fac_promise_time_m } }
+			lam_fac_timer_pass_effect = { NAME = lam_fac_promise_time FROM = $FROM$ TO = $TO$ }
+		}
+		else_if = {
+			# A promise made before its end was kept to the month: half a year more to keep it.
+			limit = { $FROM$ = { has_variable = lam_fac_promise_time } }
+			$TO$ = {
+				set_variable = { name = lam_fac_promise_time value = yes }
+				set_variable = { name = lam_fac_promise_time_m value = { value = lam_now_m add = 6 } }
+			}
+		}
+	}
+	# Underground: and what the crown knows of it.
+	if = {
+		limit = { $FROM$ = { has_variable = lam_fac_ug } }
+		$TO$ = {
+			set_variable = { name = lam_fac_ug value = yes }
+			if = { limit = { $FROM$ = { has_variable = lam_fac_intel } } set_variable = { name = lam_fac_intel value = $FROM$.var:lam_fac_intel } }
+			if = { limit = { $FROM$ = { has_variable = lam_fac_vh } } set_variable = { name = lam_fac_vh value = yes } }
+			if = { limit = { $FROM$ = { has_variable = lam_fac_vl } } set_variable = { name = lam_fac_vl value = yes } }
+		}
+	}
+	if = { limit = { $FROM$ = { has_variable = lam_fac_endured } } $TO$ = { set_variable = { name = lam_fac_endured value = yes years = 2 } } }
+	if = { limit = { $FROM$ = { has_variable = lam_fac_wing } } $TO$ = { set_variable = { name = lam_fac_wing value = $FROM$.var:lam_fac_wing } } }
+	if = { limit = { $FROM$ = { has_variable = lam_fac_branched } } $TO$ = { set_variable = { name = lam_fac_branched value = $FROM$.var:lam_fac_branched } } }
+	lam_fac_review_state_pass_effect = { FROM = $FROM$ TO = $TO$ }
+}
+# The old head lets go of them (lam_fac_drop_identity_effect).
+lam_fac_bonds_drop_effect = {
+	lam_fac_review_state_drop_effect = yes
+	if = { limit = { has_variable = lam_fac_succ_pick } remove_variable = lam_fac_succ_pick }
+	if = { limit = { has_variable = lam_fac_posture } remove_variable = lam_fac_posture }
+	if = { limit = { has_variable = lam_fac_goal_pick } remove_variable = lam_fac_goal_pick }
+	if = { limit = { has_variable = lam_fac_heir_pick } remove_variable = lam_fac_heir_pick }
+	clear_variable_list = lam_fac_prev_members
+	if = { limit = { has_variable = lam_fac_twin_fn } remove_variable = lam_fac_twin_fn }
+	if = { limit = { has_variable = lam_fac_kings_own } remove_variable = lam_fac_kings_own }
+	lam_fac_timer_drop_effect = { NAME = lam_fac_split_cd }
+	lam_fac_timer_drop_effect = { NAME = lam_fac_defeated }
+	lam_fac_timer_drop_effect = { NAME = lam_fac_heir_locked }
+	lam_fac_timer_drop_effect = { NAME = lam_fac_spurned }
+	if = { limit = { has_variable = lam_fac_heir } remove_variable = lam_fac_heir }
+	if = { limit = { has_variable = lam_gn_from_book } remove_variable = lam_gn_from_book }
+	lam_fac_timer_drop_effect = { NAME = lam_fac_oath }
+	lam_fac_timer_drop_effect = { NAME = lam_fac_defiant }
+	lam_fac_timer_drop_effect = { NAME = lam_fac_rebel_cd }
+	lam_fac_timer_drop_effect = { NAME = lam_fac_promise_time }
+	if = { limit = { has_variable = lam_fac_promise } remove_variable = lam_fac_promise }
+	if = { limit = { has_variable = lam_fac_promise_by } remove_variable = lam_fac_promise_by }
+	if = { limit = { has_variable = lam_fac_promise_base } remove_variable = lam_fac_promise_base }
+	if = { limit = { has_variable = lam_fac_ug } remove_variable = lam_fac_ug }
+	if = { limit = { has_variable = lam_fac_intel } remove_variable = lam_fac_intel }
+	if = { limit = { has_variable = lam_fac_covered } remove_variable = lam_fac_covered }
+	if = { limit = { has_variable = lam_fac_vh } remove_variable = lam_fac_vh }
+	if = { limit = { has_variable = lam_fac_vl } remove_variable = lam_fac_vl }
+	if = { limit = { has_variable = lam_fac_hide } remove_variable = lam_fac_hide }
+	if = { limit = { has_variable = lam_fac_endured } remove_variable = lam_fac_endured }
+	if = { limit = { has_variable = lam_fac_wing } remove_variable = lam_fac_wing }
+	if = { limit = { has_variable = lam_fac_branched } remove_variable = lam_fac_branched }
+	if = { limit = { has_variable = lam_fac_frail } remove_variable = lam_fac_frail }
+	if = { limit = { has_variable = lam_fac_twin } remove_variable = lam_fac_twin }
+	if = { limit = { has_character_modifier = lam_fac_ug_network_modifier } remove_character_modifier = lam_fac_ug_network_modifier }
+}
+# Each pulse, before the promises are judged.
+lam_fac_bonds_expire_effect = {
+	lam_fac_review_state_expire_effect = yes
+	lam_fac_timer_expire_effect = { NAME = lam_fac_split_cd }
+	lam_fac_timer_expire_effect = { NAME = lam_fac_defeated }
+	lam_fac_timer_expire_effect = { NAME = lam_fac_heir_locked }
+	lam_fac_timer_expire_effect = { NAME = lam_fac_spurned }
+	lam_fac_timer_expire_effect = { NAME = lam_fac_oath }
+	lam_fac_timer_expire_effect = { NAME = lam_fac_defiant }
+	lam_fac_timer_expire_effect = { NAME = lam_fac_rebel_cd }
+	lam_fac_timer_expire_effect = { NAME = lam_fac_promise_time }
+}

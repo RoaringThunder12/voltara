@@ -1,0 +1,8 @@
+﻿vip_open_politics = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" }
+ desc = vip_open_politics_desc selection_tooltip = vip_open_politics_tooltip
+ is_shown = { is_ai = no vip_actor = yes }
+ is_valid = { vip_actor = yes }
+ effect = { custom_tooltip = vip_open_politics_tooltip hidden_effect = {  lam_fac_default_view_effect = yes lam_factions_refresh_effect = yes set_variable = { name = lam_factions_open value = yes }  } }
+ ai_check_interval = 0
+}

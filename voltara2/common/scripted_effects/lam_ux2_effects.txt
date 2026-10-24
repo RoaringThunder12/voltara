@@ -1,0 +1,42 @@
+﻿# Living Factions - the faction window's order (tools/claude_fixes/gui_redesign.py)
+# This = the player refreshing the window: the viewed court's factions by power, each one's members by influence.
+lam_ux2_sort_effect = {
+	var:lam_fac_view ?= {
+		save_scope_as = lam_ux2_lord
+		clear_variable_list = lam_bloc_leads_sorted
+		ordered_in_list = {
+			variable = lam_bloc_leads
+			order_by = {
+				value = 0
+				if = {
+					limit = {
+						has_variable = lam_fac_share
+					}
+					add = var:lam_fac_share
+				}
+			}
+			max = 99
+			check_range_bounds = no
+			save_scope_as = lam_ux2_head
+			scope:lam_ux2_lord = {
+				add_to_variable_list = {
+					name = lam_bloc_leads_sorted
+					target = scope:lam_ux2_head
+				}
+			}
+			clear_variable_list = lam_fac_members_sorted
+			ordered_in_list = {
+				variable = lam_fac_members
+				order_by = lam_cr_influence_value
+				max = 500
+				check_range_bounds = no
+				scope:lam_ux2_head = {
+					add_to_variable_list = {
+						name = lam_fac_members_sorted
+						target = prev
+					}
+				}
+			}
+		}
+	}
+}

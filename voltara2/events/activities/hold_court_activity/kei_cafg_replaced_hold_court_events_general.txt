@@ -1,0 +1,721 @@
+﻿namespace = hold_court
+
+##################################################
+# A Holy Tomb
+# by Claudia Baldassi
+# 6050 - 6051
+##################################################
+
+# The tomb of a local saint has been growing in popularity. The devotees of the saint are now asking for a land grant to support the growing religious establishment there. #
+
+scripted_trigger hold_court_6050_religion_trigger = {
+	OR = {
+		religion = religion:christianity_religion
+		religion = religion:islam_religion
+		religion = religion:buddhism_religion
+		religion = religion:hinduism_religion
+	}
+}
+
+hold_court.6050 = {
+	type = court_event
+	title = hold_court.6050.t
+	desc = {
+		desc = hold_court.6050.desc
+		triggered_desc = {
+			trigger = {
+				exists = scope:6050_pop.faith.religious_head
+				scope:6050_pop.faith.religious_head = root
+			}
+			desc = hold_court.6050.desc_hof
+		}
+	}
+	theme = court
+	lower_left_portrait = scope:6050_holy
+	court_scene = {
+		button_position_character = scope:6050_pop
+		court_event_force_open = yes
+		show_timeout_info = no
+		should_pause_time = yes
+		roles = {
+			scope:6050_pop = {
+				group = petitioners_group
+				animation = ecstasy
+			}
+			scope:chaplain = {
+				group = petitioners_group
+				animation = ecstasy
+			}
+		}
+	}
+
+	widget = {
+		gui = "event_window_widget_event_chain_progress"
+		container = "custom_widgets_container"
+		controller = event_chain_progress
+	}
+
+	# kCAFG override : low priority, it's okay if this event is replaced
+	id_override_priority = 1
+
+	#Note: This event is triggered by hold_court.6051 and cannot have any triggers of its own. All triggers must be in hold_court.6051 or the queue can get stuck here forever.
+
+	weight_multiplier = {
+		base = 1
+
+		# Court weightings.
+		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_administrative }
+		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_scholarly }
+	}
+
+	immediate = {
+		create_character = {
+			location = root.capital_province
+			template = servant_character
+			faith = scope:6050_tomb.faith
+			rite = scope:6050_tomb.rite
+			culture = scope:6050_tomb.culture
+			save_scope_as = 6050_pop
+		}
+		scope:6050_pop = {
+			court_event_character_flag_effect = yes
+		}
+		cp:councillor_court_chaplain = {
+			save_scope_as = chaplain
+			court_event_character_flag_effect = yes
+		}
+		if = {
+			limit = {
+				exists = scope:6050_pop.faith.religious_head
+				scope:6050_pop.faith.religious_head != root
+			}
+			random = {
+				chance = 20
+				add_character_flag = {
+					flag = 6050_church_approves
+					days = 10
+				}
+			}
+		}
+		# Trigger next event in chain.
+		hold_court_queue_next_event_effect = yes
+	}
+
+	#Option A: create a temple on the tomb
+	option = {
+		name = hold_court.6050.a
+		trigger = {
+			NOT = { has_trait = lifestyle_mystic }
+		}
+		scope:6050_tomb = {
+			set_holding_type = church_holding
+		}
+		if = {
+			limit = {
+				OR = {
+					has_character_flag = 6050_church_approves
+					AND = {
+						exists = scope:6050_pop.faith.religious_head
+						scope:6050_pop.faith.religious_head = root
+					}
+				}
+			}
+			add_piety = major_piety_gain
+		}
+		else = {
+			add_piety = major_piety_loss
+		}
+		scope:6050_tomb.county = {
+			add_county_modifier = {
+				modifier = tougher_to_convert
+				years = 10
+			}
+		}
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+				ai_zeal = 1
+			}
+		}
+	}
+
+	#Option B: limited to mystic: relic
+	option = {
+		name = hold_court.6050.b
+		trigger = { has_trait = lifestyle_mystic }
+		religion = { save_scope_as = statue_religion }
+		create_artifact = {	
+			name = artifact_pedestal_reliquary_6050_saint_name
+			description = artifact_pedestal_reliquary_6050_saint_desc
+			type = pedestal
+			template = 6050_relic_template
+			visuals = reliquary
+			modifier = artifact_monthly_piety_3_modifier
+			save_scope_as = 6050_relic
+		}
+		scope:6050_relic = {
+			set_variable = { # required to track equipability in template
+				name = statue_religion
+				value = root.religion
+			}
+		}
+		scope:6050_tomb = {
+			set_holding_type = church_holding
+		}
+		if = {
+			limit = {
+				OR = {
+					has_character_flag = 6050_church_approves
+					AND = {
+						exists = scope:6050_pop.faith.religious_head
+						scope:6050_pop.faith.religious_head = root
+					}
+				}
+			}
+			add_piety = major_piety_gain
+		}
+		else = {
+			add_piety = major_piety_loss
+		}
+		scope:6050_tomb.county = {
+			add_county_modifier = {
+				modifier = tougher_to_convert
+				years = 10
+			}
+		}
+		ai_chance = {
+			base = 200
+		}
+	}
+
+	#Option C: persecute the local cult
+	option = {
+		name = hold_court.6050.c
+		add_dread = medium_dread_gain
+		if = {
+			limit = {
+				OR = {
+					NOT = {
+						has_character_flag = 6050_church_approves
+					}
+					AND = {
+						exists = scope:6050_pop.faith.religious_head
+						scope:6050_pop.faith.religious_head = root
+					}
+				}
+			}
+			add_piety = major_piety_gain
+		}
+		if = {
+			limit = {
+				scope:6050_tomb.county.faith != root.faith
+			}
+			scope:6050_tomb.county = {
+				E_kCAFG_convert_rite_in_all_county_provinces = {
+					FACTOR = 0.4
+					VARIANCE = 0.3
+					RITE = root.rite
+					MAX = 0.8
+				}
+			}
+		}
+		scope:6050_tomb.county = {
+			change_county_control = 50
+		}
+		stress_and_fulfillment_impact = {
+			lifestyle_mystic = medium_stress_impact_gain
+			trusting = minor_stress_impact_gain
+			compassionate = major_stress_impact_gain
+			forgiving = major_stress_impact_gain
+		}
+		if = {
+			limit = {
+				has_character_flag = 6050_church_approves
+			}
+			stress_and_fulfillment_impact = {
+				zealous = major_stress_impact_gain
+			}
+		}
+		else = {
+			stress_and_fulfillment_impact = {
+				zealous = major_stress_impact_loss
+			}
+		}
+		ai_chance = {
+			base = 100
+			modifier = {
+				has_trait = trusting
+				add = -25
+			}
+			modifier = {
+				has_trait = lifestyle_mystic
+				add = -50
+			}
+			modifier = {
+				has_trait = compassionate
+				add = -75
+			}
+			modifier = {
+				has_trait = forgiving
+				add = -75
+			}
+		}
+	}
+	#Option D: ignore them
+	option = {
+		name = hold_court.6050.d
+		ai_chance = {
+			base = 100
+			modifier = {
+				has_trait = lazy
+				add = 50
+			}
+		}
+	}
+
+	after = {
+		scope:6050_pop = {
+			clear_court_event_participation = yes
+			silent_disappearance_effect = yes
+		}
+		scope:chaplain = {
+			clear_court_event_participation = yes
+		}
+		# Finish up the chain if relevant.
+		hold_court_queue_post_event_effect = yes
+	}
+}
+
+##################################################
+# Nomadic Neighbors
+# by Joe Parkin
+# 8280
+##################################################
+
+scripted_trigger nomadic_cultural_traditions_trigger = {
+	culture = {
+		OR = {
+			has_cultural_tradition = tradition_horse_lords
+			has_cultural_tradition = tradition_pastoralists
+		}
+	}
+}
+
+scripted_trigger hold_court_8280_nomad_county_trigger = {
+	nomadic_cultural_traditions_trigger = yes
+	holder = {
+		government_has_flag = government_is_tribal
+		this != root
+		nomadic_cultural_traditions_trigger = yes
+		trigger_if = {
+			limit = { top_liege = root }
+			is_available_ai_adult = yes
+		}
+	}
+}
+
+scripted_trigger hold_court_8280_feudal_county_trigger = {
+	nomadic_cultural_traditions_trigger = no
+	holder = {
+		has_court_event_flag = no
+		is_available_ai_adult = yes
+		nomadic_cultural_traditions_trigger = no
+		this != root
+		OR = {
+			government_has_flag = government_is_feudal
+			government_has_flag = government_is_clan
+		}
+	}
+	any_neighboring_county = { hold_court_8280_nomad_county_trigger = yes }
+}
+
+hold_court.8280 = {
+	type = court_event
+	title = hold_court.8280.t
+	desc = {
+		first_valid = { #
+			triggered_desc = {
+				trigger = {
+					scope:nomad.top_liege != root
+				}
+				desc = hold_court.8280.desc.foreign
+			}
+			triggered_desc = {
+				trigger = { always = yes }
+				desc = hold_court.8280.desc.local
+			}
+		}
+	}
+	theme = court
+	override_background = { reference = throne_room }
+	cooldown = { years = 15 }
+	lower_right_portrait = {
+		character = scope:nomad.top_liege
+		trigger = {
+			scope:nomad.top_liege != root
+		}
+	}
+
+	court_scene = {
+		button_position_character = scope:feudal_vassal
+		court_event_force_open = yes
+		show_timeout_info = no
+		should_pause_time = yes
+		roles = {
+			scope:feudal_vassal = {
+				group = petitioners_group
+				animation = worry
+			}
+			scope:nomad_same_liege = {
+				group = petitioners_group
+				animation = dismissal
+			}
+		}
+	}
+
+	widget = {
+		gui = "event_window_widget_event_chain_progress"
+		container = "custom_widgets_container"
+		controller = event_chain_progress
+	}
+
+	# kCAFG override : low priority, it's okay if this event is replaced
+	id_override_priority = 1
+
+	trigger = {
+		nomadic_cultural_traditions_trigger = no
+		any_realm_county = { hold_court_8280_feudal_county_trigger = yes }
+	}
+
+	weight_multiplier = {
+		base = 1
+
+		# Court weightings.
+		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_warlike }
+		ep1_weight_up_for_court_type_modifier = { COURT_TYPE = court_administrative }
+	}
+
+	immediate = {
+		random_realm_county = {
+			limit = {
+				holder = { is_vassal_of = root }
+				hold_court_8280_feudal_county_trigger = yes
+			}
+			alternative_limit = { hold_court_8280_feudal_county_trigger = yes }
+			holder = {
+				save_scope_as = feudal_vassal
+				court_event_character_flag_effect = yes
+			}
+			save_scope_as = feudal_county
+			ordered_neighboring_county = {
+				limit = {
+					holder.top_liege = {
+						this != root
+						government_has_flag = government_is_tribal
+						culture = { has_cultural_tradition = tradition_horse_lords }
+					}
+					hold_court_8280_nomad_county_trigger = yes
+				}
+				alternative_limit = {
+					holder.top_liege != root
+					hold_court_8280_nomad_county_trigger = yes
+				}
+				alternative_limit = { hold_court_8280_nomad_county_trigger = yes }
+				order_by = {
+					value = 0
+					subtract = development_level
+				}
+				save_scope_as = nomad_county
+				culture = { save_scope_as = nomad_culture }
+				holder = { save_scope_as = nomad }
+				# Set up portrait groups.
+				scope:nomad = {
+					if = {
+						limit = { top_liege = root }
+						save_scope_as = nomad_same_liege
+						court_event_character_flag_effect = yes
+					}
+				}
+			}
+		}
+		# Trigger next event in chain.
+		hold_court_queue_next_event_effect = yes
+	}
+
+	option = { # Kick nomads out
+		trigger = {
+			trigger_if = {
+				limit = {
+					is_ai = yes
+				}
+				short_term_treasury_or_gold >= minor_treasury_or_gold_value
+			}
+		}
+		name = {
+			trigger = { scope:nomad.top_liege = root }
+			text = hold_court.8280.a.local
+		}
+		name = {
+			trigger = { always = yes }
+			text = hold_court.8280.a.foreign
+		}
+		add_prestige = medium_prestige_gain
+		remove_treasury_or_gold = tiny_treasury_or_gold_value
+		scope:feudal_vassal = {
+			add_opinion = {
+				target = root
+				modifier = grateful_opinion
+				opinion = 10
+			}
+		}
+		scope:nomad = {
+			if = {
+				limit = {
+					top_liege != root
+				}
+				top_liege = {
+					add_opinion = {
+						target = root
+						modifier = angry_opinion
+						opinion = -10
+					}
+				}
+			}
+			else = {
+				add_opinion = {
+					target = root
+					modifier = angry_opinion
+					opinion = -10
+				}
+			}
+			culture = {
+				if = {
+					limit = {
+						this != root.culture
+					}
+					change_cultural_acceptance = {
+						target = root.culture
+						value = -10
+						desc = cultural_intolerance_tt
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				scope:feudal_vassal.culture != root.culture
+			}
+
+			scope:feudal_vassal.culture = {
+				if = {
+					limit = {
+						this != scope:nomad_culture
+					}
+					change_cultural_acceptance = {
+						target = scope:nomad_culture
+						value = -10
+						desc = cultural_intolerance_tt
+					}
+				}
+			}
+		}
+		stress_and_fulfillment_impact = {
+			compassionate = medium_stress_impact_gain
+			generous = medium_stress_impact_gain
+		}
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+   				ai_greed = 1
+   				ai_compassion = -1
+			}
+			modifier = {	#Weight down for stress.
+				add = -15
+				has_trait = compassionate
+			}
+			modifier = {	#Weight down for stress.
+				add = -15
+				has_trait = generous
+			}
+		}
+	}
+
+	option = { # Recruit them
+		name = hold_court.8280.b
+		trigger = {
+			trigger_if = {
+				limit = {
+					is_ai = yes
+				}
+				short_term_treasury_or_gold >= massive_treasury_or_gold_value
+			}
+		}
+		remove_treasury_or_gold = major_treasury_or_gold_value
+		culture = {
+			if = {
+				limit = {
+					this != scope:nomad_culture
+				}
+				change_cultural_acceptance = {
+					target = scope:nomad.culture
+					value = 10
+					desc = cultural_intolerance_tt
+				}
+			}
+		}
+		scope:feudal_vassal = {
+			add_opinion = {
+				target = root
+				modifier = grateful_opinion
+				opinion = 10
+			}
+		}
+		scope:nomad = {
+			if = {
+				limit = {
+					top_liege != root
+				}
+				top_liege = {
+					add_opinion = {
+						target = root
+						modifier = respect_opinion
+						opinion = 10
+					}
+				}
+			}
+			else = {
+				add_opinion = {
+					target = root
+					modifier = respect_opinion
+					opinion = 10
+				}
+			}
+		}
+		add_character_modifier = {
+			modifier = hold_court_8280_nomadic_guard
+			years = 5
+		}
+		if = {
+			limit = {
+				culture != scope:nomad_culture
+			}
+			stress_and_fulfillment_impact = {
+				paranoid = medium_stress_impact_gain
+				arrogant = medium_stress_impact_gain
+			}
+		}
+		stress_and_fulfillment_impact = {
+			greedy = medium_stress_impact_gain
+		}
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+   				ai_greed = -2
+   				ai_energy = 2
+			}
+			modifier = {	#Weight down for stress.
+				add = -15
+				has_trait = greedy
+			}
+			modifier = {	#Weight down for stress.
+				add = -15
+				culture != scope:nomad_culture
+				has_trait = paranoid
+			}
+			modifier = {	#Weight down for stress.
+				add = -15
+				culture != scope:nomad_culture
+				has_trait = arrogant
+			}
+		}
+	}
+
+	option = { # Dismiss
+		name = hold_court.8280.c
+		scope:feudal_vassal = {
+			add_opinion = {
+				target = root
+				modifier = disappointed_opinion
+				opinion = -10
+			}
+		}
+		scope:nomad = {
+			if = {
+				limit = { top_liege = root }
+				add_opinion = {
+					target = root
+					modifier = respect_opinion
+					opinion = 10
+				}
+			}
+		}
+		scope:feudal_county = {
+			E_kCAFG_convert_culture_in_all_county_provinces = {
+				FACTOR = 0.5
+				VARIANCE = 0.3
+				CULTURE = scope:nomad_culture
+				MAX = 0.85
+			}
+		}
+		culture = {
+			if = {
+				limit = {
+					this != scope:nomad_culture
+				}
+				change_cultural_acceptance = {
+					target = scope:nomad_culture
+					value = 5
+					desc = cultural_intolerance_tt
+				}
+			}
+		}
+		if = {
+			limit = {
+				culture != scope:nomad_culture
+			}
+			stress_and_fulfillment_impact = {
+				diligent = medium_stress_impact_gain
+				paranoid = medium_stress_impact_gain
+			}
+		}
+		stress_and_fulfillment_impact = {
+			just = medium_stress_impact_gain
+		}
+		ai_chance = {
+			base = 100
+			ai_value_modifier = {
+   				ai_boldness = 2
+   				ai_energy = 1
+   				ai_honor = -1
+			}
+			modifier = {	#Weight down for stress.
+				add = -15
+				has_trait = just
+			}
+			modifier = {	#Weight down for stress.
+				add = -15
+				culture != scope:nomad_culture
+				has_trait = diligent
+			}
+			modifier = {	#Weight down for stress.
+				add = -15
+				culture != scope:nomad_culture
+				has_trait = paranoid
+			}
+		}
+	}
+
+	after = {
+		scope:feudal_vassal = {
+			clear_court_event_participation = yes
+		}
+		if = {
+			limit = { exists = scope:nomad_same_liege }
+			scope:nomad_same_liege = {
+				clear_court_event_participation = yes
+			}
+		}
+		# Finish up the chain if relevant.
+		hold_court_queue_post_event_effect = yes
+	}
+}

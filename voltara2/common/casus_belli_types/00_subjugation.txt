@@ -1,5 +1,7 @@
 ﻿tribal_subjugation_cb = {
 valid_to_start = {
+ voltara_keeper_war_permitted = yes
+
  # Voltara: ruins are colonized through the county panel, not character diplomacy.
  scope:attacker = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
  scope:defender = { NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government has_title = title:e_voltara_ruins } }
@@ -261,7 +263,7 @@ valid_to_start = {
 			if = {
 				limit = {
 					scope:attacker = {
-						has_title = title:d_sunni
+						always = no
 						# We scope directly to the struggle because e_arabia might not actually be _in_ the struggle.
 						struggle:persian_struggle ?= { has_struggle_phase_parameter = fp3_caliph_gets_cheaper_subjugation_cb }
 					}

@@ -1,0 +1,43 @@
+﻿lam_bp_campaign_effect = {
+	if = {
+		limit = {
+			is_ai = yes
+			lam_bp_policy_trigger = yes
+			NOT = {
+				lam_lf_pledge_current_trigger = yes
+			}
+			NOT = {
+				lam_lf_exchange_current_trigger = yes
+			}
+		}
+		if = {
+			limit = {
+				var:lam_bp_origin_side ?= flag:retain
+				save_temporary_scope_as = lam_bp_head
+				liege = {
+					lam_nc_heir_trigger = {
+						CANDIDATE = scope:lam_bp_head.var:lam_bp_origin_alternative
+					}
+				}
+			}
+			set_variable = {
+				name = lam_st_campaign_kind
+				value = flag:heir
+			}
+			set_variable = {
+				name = lam_st_campaign_target
+				value = var:lam_bp_origin_alternative
+			}
+		}
+		else_if = {
+			limit = {
+				var:lam_bp_origin_side ?= flag:fair
+				lam_lf_office_pool_trigger = yes
+			}
+			set_variable = {
+				name = lam_st_campaign_kind
+				value = flag:council
+			}
+		}
+	}
+}

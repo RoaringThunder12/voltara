@@ -1,0 +1,1159 @@
+﻿lam_pd_restore_effect = {
+	save_scope_as = lam_pd_head
+	var:lam_pd_lord ?= {
+		save_scope_as = lam_pd_lord
+	}
+	save_scope_value_as = {
+		name = lam_pd_token
+		value = var:lam_pd_id
+	}
+}
+lam_pd_clear_effect = {
+	if = {
+		limit = {
+			has_variable = lam_pd_active
+		}
+		remove_variable = lam_pd_active
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_pending
+		}
+		remove_variable = lam_pd_pending
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_kind
+		}
+		remove_variable = lam_pd_kind
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_lord
+		}
+		remove_variable = lam_pd_lord
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_record
+		}
+		remove_variable = lam_pd_record
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_target
+		}
+		remove_variable = lam_pd_target
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_incumbent
+		}
+		remove_variable = lam_pd_incumbent
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_seat
+		}
+		remove_variable = lam_pd_seat
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_gold
+		}
+		remove_variable = lam_pd_gold
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_prestige
+		}
+		remove_variable = lam_pd_prestige
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_deadline
+		}
+		remove_variable = lam_pd_deadline
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_law_old
+		}
+		remove_variable = lam_pd_law_old
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_law_new
+		}
+		remove_variable = lam_pd_law_new
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_counter
+		}
+		remove_variable = lam_pd_counter
+	}
+	if = {
+		limit = {
+			has_variable = lam_pd_deferred
+		}
+		remove_variable = lam_pd_deferred
+	}
+	lam_lf_clear_petition_effect = yes
+}
+lam_pd_cancel_effect = {
+	set_variable = {
+		name = lam_pd_last_result
+		value = flag:void
+	}
+	lam_pd_clear_effect = yes
+}
+lam_pd_begin_effect = {
+	if = {
+		limit = {
+			is_alive = yes
+			is_adult = yes
+			is_imprisoned = no
+			has_variable = lam_bloc_lead
+			var:lam_bloc ?= this
+			exists = liege
+			NOT = {
+				has_variable = lam_fac_disband
+			}
+			NOT = {
+				has_variable = lam_pd_active
+			}
+			NOT = {
+				has_variable = lam_cr_active
+			}
+			NOT = {
+				has_variable = lam_cr_contract_pending
+			}
+			NOT = {
+				has_variable = lam_head_demand_cd
+			}
+			NOT = {
+				has_variable = lam_cr_retry_petition
+			}
+		}
+		lam_pd_clear_effect = yes
+		set_variable = {
+			name = lam_pd_kind
+			value = flag:$KIND$
+		}
+		set_variable = {
+			name = lam_pd_active
+			value = yes
+		}
+		set_variable = {
+			name = lam_pd_deadline
+			value = {
+				value = lam_now_m
+				add = 4
+			}
+		}
+		set_variable = {
+			name = lam_pd_lord
+			value = liege
+		}
+		set_variable = {
+			name = lam_pd_gold
+			value = medium_gold_value
+		}
+		set_variable = {
+			name = lam_pd_prestige
+			value = designate_heir_cost
+		}
+		if = {
+			limit = {
+				liege = {
+					government_has_mechanic = administrative
+					government_has_flag = government_has_influence
+				}
+			}
+			set_variable = {
+				name = lam_pd_prestige
+				value = designate_heir_admin_prestige_cost
+			}
+		}
+		if = {
+			limit = {
+				liege = {
+					OR = {
+						government_has_flag = government_is_mandala
+						government_has_flag = government_is_landless_adventurer
+					}
+				}
+			}
+			set_variable = {
+				name = lam_pd_prestige
+				value = 0
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_fac_rec
+			}
+			set_variable = {
+				name = lam_pd_record
+				value = var:lam_fac_rec
+			}
+		}
+		if = {
+			limit = {
+				var:lam_fac_heir ?= {
+					is_alive = yes
+				}
+			}
+			set_variable = {
+				name = lam_pd_target
+				value = var:lam_fac_heir
+			}
+		}
+		if = {
+			limit = {
+				liege = {
+					has_realm_law = crown_authority_3
+				}
+			}
+			set_variable = {
+				name = lam_pd_law_old
+				value = flag:crown_authority_3
+			}
+			set_variable = {
+				name = lam_pd_law_new
+				value = flag:crown_authority_2
+			}
+		}
+		else_if = {
+			limit = {
+				liege = {
+					has_realm_law = crown_authority_2
+				}
+			}
+			set_variable = {
+				name = lam_pd_law_old
+				value = flag:crown_authority_2
+			}
+			set_variable = {
+				name = lam_pd_law_new
+				value = flag:crown_authority_1
+			}
+		}
+		else_if = {
+			limit = {
+				liege = {
+					has_realm_law = crown_authority_1
+				}
+			}
+			set_variable = {
+				name = lam_pd_law_old
+				value = flag:crown_authority_1
+			}
+			set_variable = {
+				name = lam_pd_law_new
+				value = flag:crown_authority_0
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					NOT = {
+						can_be_steward_trigger = {
+							COURT_OWNER = liege
+						}
+					}
+					martial >= stewardship
+				}
+				OR = {
+					NOT = {
+						can_be_spymaster_trigger = {
+							COURT_OWNER = liege
+						}
+					}
+					martial >= intrigue
+				}
+				OR = {
+					NOT = {
+						can_be_chancellor_trigger = {
+							COURT_OWNER = liege
+						}
+					}
+					martial >= diplomacy
+				}
+				can_be_marshal_trigger = {
+					COURT_OWNER = liege
+				}
+			}
+			set_variable = {
+				name = lam_pd_seat
+				value = flag:marshal
+			}
+			if = {
+				limit = {
+					exists = liege.cp:councillor_marshal
+				}
+				set_variable = {
+					name = lam_pd_incumbent
+					value = liege.cp:councillor_marshal
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					NOT = {
+						can_be_marshal_trigger = {
+							COURT_OWNER = liege
+						}
+					}
+					stewardship >= martial
+				}
+				OR = {
+					NOT = {
+						can_be_spymaster_trigger = {
+							COURT_OWNER = liege
+						}
+					}
+					stewardship >= intrigue
+				}
+				OR = {
+					NOT = {
+						can_be_chancellor_trigger = {
+							COURT_OWNER = liege
+						}
+					}
+					stewardship >= diplomacy
+				}
+				can_be_steward_trigger = {
+					COURT_OWNER = liege
+				}
+			}
+			set_variable = {
+				name = lam_pd_seat
+				value = flag:steward
+			}
+			if = {
+				limit = {
+					exists = liege.cp:councillor_steward
+				}
+				set_variable = {
+					name = lam_pd_incumbent
+					value = liege.cp:councillor_steward
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					NOT = {
+						can_be_marshal_trigger = {
+							COURT_OWNER = liege
+						}
+					}
+					intrigue >= martial
+				}
+				OR = {
+					NOT = {
+						can_be_steward_trigger = {
+							COURT_OWNER = liege
+						}
+					}
+					intrigue >= stewardship
+				}
+				OR = {
+					NOT = {
+						can_be_chancellor_trigger = {
+							COURT_OWNER = liege
+						}
+					}
+					intrigue >= diplomacy
+				}
+				can_be_spymaster_trigger = {
+					COURT_OWNER = liege
+				}
+			}
+			set_variable = {
+				name = lam_pd_seat
+				value = flag:spymaster
+			}
+			if = {
+				limit = {
+					exists = liege.cp:councillor_spymaster
+				}
+				set_variable = {
+					name = lam_pd_incumbent
+					value = liege.cp:councillor_spymaster
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					NOT = {
+						can_be_marshal_trigger = {
+							COURT_OWNER = liege
+						}
+					}
+					diplomacy >= martial
+				}
+				OR = {
+					NOT = {
+						can_be_steward_trigger = {
+							COURT_OWNER = liege
+						}
+					}
+					diplomacy >= stewardship
+				}
+				OR = {
+					NOT = {
+						can_be_spymaster_trigger = {
+							COURT_OWNER = liege
+						}
+					}
+					diplomacy >= intrigue
+				}
+				can_be_chancellor_trigger = {
+					COURT_OWNER = liege
+				}
+			}
+			set_variable = {
+				name = lam_pd_seat
+				value = flag:chancellor
+			}
+			if = {
+				limit = {
+					exists = liege.cp:councillor_chancellor
+				}
+				set_variable = {
+					name = lam_pd_incumbent
+					value = liege.cp:councillor_chancellor
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_global_variable = lam_pd_serial
+				}
+			}
+			set_global_variable = {
+				name = lam_pd_serial
+				value = 0
+			}
+		}
+		change_global_variable = {
+			name = lam_pd_serial
+			add = 1
+		}
+		set_variable = {
+			name = lam_pd_id
+			value = global_var:lam_pd_serial
+		}
+		lam_lf_pick_beneficiary_effect = yes
+		lam_pd_restore_effect = yes
+		if = {
+			limit = {
+				lam_pd_petition_valid_trigger = yes
+			}
+			set_variable = {
+				name = lam_head_demand_cd
+				value = yes
+				months = 12
+			}
+			set_variable = {
+				name = lam_head_demand_cd_m
+				value = {
+					value = lam_now_m
+					add = 12
+				}
+			}
+			if = {
+				limit = {
+					var:lam_pd_kind ?= flag:gold
+				}
+				lam_pd_send_effect = yes
+			}
+			else = {
+				lam_cr_start_effect = {
+					ISSUE = petition
+					ACTION = petition
+					TARGET = liege
+				}
+			}
+		}
+		else = {
+			lam_pd_cancel_effect = yes
+			if = {
+				limit = {
+					is_ai = no
+				}
+				send_interface_message = {
+					type = event_generic_neutral
+					title = lam_pt_action_lapsed
+					desc = lam_pt_demand_lapsed
+				}
+			}
+		}
+	}
+}
+lam_pd_send_effect = {
+	if = {
+		limit = {
+			lam_pd_petition_valid_trigger = yes
+		}
+		lam_pd_restore_effect = yes
+		set_variable = {
+			name = lam_pd_pending
+			value = var:lam_pd_id
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_counter
+			}
+			lam_pd_commit_effect = yes
+		}
+		else_if = {
+			limit = {
+				var:lam_pd_lord = {
+					is_ai = no
+				}
+			}
+			var:lam_pd_lord = {
+				trigger_event = lam_pd.0100
+			}
+		}
+		else = {
+			var:lam_pd_lord = {
+				lam_pd_ai_answer_effect = yes
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_pd_pending
+			}
+			trigger_event = {
+				id = lam_pd.0102
+				days = 60
+			}
+		}
+	}
+	else = {
+		lam_pd_cancel_effect = yes
+	}
+}
+lam_pd_ai_answer_effect = {
+	if = {
+		limit = {
+			lam_pd_window_current_trigger = yes
+		}
+		if = {
+			limit = {
+				scope:lam_pd_head = {
+					lam_pd_petition_valid_trigger = yes
+				}
+				lam_pd_petition_accept_value >= 25
+			}
+			scope:lam_pd_head = {
+				lam_pd_commit_effect = yes
+			}
+		}
+		else_if = {
+			limit = {
+				gold >= scope:lam_pd_head.var:lam_pd_gold
+				NOT = {
+					scope:lam_pd_head = {
+						var:lam_pd_kind ?= flag:gold
+					}
+				}
+			}
+			scope:lam_pd_head = {
+				lam_pd_counter_effect = yes
+			}
+		}
+		else = {
+			scope:lam_pd_head = {
+				lam_pd_refuse_effect = yes
+			}
+		}
+	}
+}
+lam_pd_refuse_effect = {
+	if = {
+		limit = {
+			lam_pd_proposal_current_trigger = yes
+			has_variable = lam_pd_pending
+		}
+		set_variable = {
+			name = lam_pd_last_result
+			value = flag:refused
+		}
+		lam_is_petition_effect = {
+			RESULT = refused
+		}
+		lam_pd_grievance_add_effect = {
+			KIND = policy
+			AMOUNT = 5
+			MONTHS = 24
+		}
+		lam_pd_notify_effect = yes
+		lam_lf_incident_effect = {
+			KIND = refused
+			ACTOR = var:lam_pd_lord
+			VICTIM = this
+			MONTHS = 24
+		}
+		lam_lf_campaign_refused_effect = yes
+		lam_pd_clear_effect = yes
+	}
+}
+lam_pd_counter_effect = {
+	if = {
+		limit = {
+			lam_pd_proposal_current_trigger = yes
+			has_variable = lam_pd_pending
+			NOT = {
+				has_variable = lam_pd_counter
+			}
+			var:lam_pd_lord = {
+				gold >= prev.var:lam_pd_gold
+			}
+		}
+		set_variable = {
+			name = lam_pd_counter
+			value = var:lam_pd_kind
+		}
+		set_variable = {
+			name = lam_pd_kind
+			value = flag:gold
+		}
+		remove_variable = lam_pd_pending
+		if = {
+			limit = {
+				has_variable = lam_cr_retry_petition
+			}
+			remove_variable = lam_cr_retry_petition
+		}
+		trigger_event = {
+			id = lam_pd.0103
+			days = 1
+		}
+	}
+}
+lam_pd_notify_effect = {
+	lam_pd_restore_effect = yes
+	if = {
+		limit = {
+			is_ai = no
+		}
+		send_interface_message = {
+			type = event_generic_neutral
+			title = lam_pd_result_title
+			desc = lam_pd_result_desc
+			right_icon = scope:lam_pd_lord
+		}
+	}
+	var:lam_pd_lord = {
+		if = {
+			limit = {
+				is_ai = no
+			}
+			send_interface_message = {
+				type = event_generic_neutral
+				title = lam_pd_result_title
+				desc = lam_pd_result_desc
+				right_icon = scope:lam_pd_head
+			}
+		}
+	}
+}
+lam_pd_commit_effect = {
+	if = {
+		limit = {
+			lam_pd_petition_valid_trigger = yes
+			has_variable = lam_pd_pending
+			var:lam_pd_id ?= scope:lam_pd_token
+		}
+		lam_pd_restore_effect = yes
+		remove_variable = lam_pd_pending
+		lam_is_petition_effect = {
+			RESULT = granted
+		}
+		if = {
+			limit = {
+				var:lam_pd_kind ?= flag:law
+			}
+			if = {
+				limit = {
+					var:lam_pd_law_old ?= flag:crown_authority_1
+				}
+				var:lam_pd_lord = {
+					add_realm_law_skip_effects = crown_authority_0
+				}
+			}
+			else_if = {
+				limit = {
+					var:lam_pd_law_old ?= flag:crown_authority_2
+				}
+				var:lam_pd_lord = {
+					add_realm_law_skip_effects = crown_authority_1
+				}
+			}
+			else_if = {
+				limit = {
+					var:lam_pd_law_old ?= flag:crown_authority_3
+				}
+				var:lam_pd_lord = {
+					add_realm_law_skip_effects = crown_authority_2
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:lam_pd_kind ?= flag:gold
+			}
+			var:lam_pd_lord = {
+				remove_short_term_gold = scope:lam_pd_head.var:lam_pd_gold
+			}
+			lam_fac_share_gold_effect = {
+				GOLD = var:lam_pd_gold
+			}
+			lam_pd_grievance_relieve_effect = {
+				KIND = wealth
+				AMOUNT = -10
+			}
+		}
+		else_if = {
+			limit = {
+				var:lam_pd_kind ?= flag:heir
+			}
+			var:lam_pd_lord = {
+				lam_nc_heir_commit_effect = {
+					CANDIDATE = scope:lam_pd_head.var:lam_pd_target
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:lam_nc_heir_done
+				}
+				lam_pd_grievance_relieve_effect = {
+					KIND = succession
+					AMOUNT = -10
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:lam_pd_kind ?= flag:tolerance
+			}
+			var:lam_pd_lord = {
+				add_prestige = -75
+			}
+			if = {
+				limit = {
+					NOT = {
+						culture = scope:lam_pd_lord.culture
+					}
+					scope:lam_pd_lord = {
+						NOT = {
+							is_target_in_variable_list = {
+								name = lam_rv_acc_given
+								target = prev.culture
+							}
+						}
+					}
+				}
+				scope:lam_pd_lord = {
+					add_to_variable_list = {
+						name = lam_rv_acc_given
+						target = prev.culture
+					}
+				}
+				culture = {
+					change_cultural_acceptance = {
+						target = scope:lam_pd_lord.culture
+						value = minor_cultural_acceptance_gain
+						desc = lam_fac_tolerance_desc
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:lam_pd_kind ?= flag:amnesty
+			}
+			set_variable = {
+				name = lam_fac_pardoned
+				value = yes
+			}
+			lam_pd_grievance_relieve_effect = {
+				KIND = repression
+				AMOUNT = -5
+			}
+		}
+		else_if = {
+			limit = {
+				var:lam_pd_kind ?= flag:taxes
+			}
+			vassal_contract_set_obligation_level = {
+				type = feudal_government_taxes
+				level = 0
+			}
+			lam_pd_grievance_relieve_effect = {
+				KIND = wealth
+				AMOUNT = -10
+			}
+		}
+		else_if = {
+			limit = {
+				var:lam_pd_kind ?= flag:release
+			}
+			every_in_list = {
+				variable = lam_fac_members
+				limit = {
+					is_alive = yes
+					var:lam_bloc ?= scope:lam_pd_head
+					is_imprisoned_by = scope:lam_pd_lord
+				}
+				release_from_prison = yes
+			}
+			lam_pd_grievance_relieve_effect = {
+				KIND = repression
+				AMOUNT = -10
+			}
+		}
+		else_if = {
+			limit = {
+				var:lam_pd_kind ?= flag:council
+			}
+			lam_lf_office_commit_effect = yes
+		}
+		else_if = {
+			limit = {
+				var:lam_pd_kind ?= flag:land
+			}
+			lam_lf_land_commit_effect = yes
+		}
+		else_if = {
+			limit = {
+				var:lam_pd_kind ?= flag:faith
+			}
+			var:lam_pd_lord = {
+				save_scope_as = lam_pet_lord
+			}
+			lam_fac_make_promise_effect = {
+				TYPE = faith
+				YEARS = 1
+			}
+		}
+		else_if = {
+			limit = {
+				var:lam_pd_kind ?= flag:no_revoke
+			}
+			var:lam_pd_lord = {
+				save_scope_as = lam_pet_lord
+			}
+			lam_fac_make_promise_effect = {
+				TYPE = no_revoke
+				YEARS = 5
+			}
+		}
+		else_if = {
+			limit = {
+				var:lam_pd_kind ?= flag:campaign
+			}
+			var:lam_pd_lord = {
+				save_scope_as = lam_pet_lord
+			}
+			lam_fac_make_promise_effect = {
+				TYPE = campaign
+				YEARS = 2
+			}
+			set_variable = {
+				name = lam_pd_promised_title
+				value = var:lam_pd_goal_title
+			}
+			set_variable = {
+				name = lam_pd_promised_owner
+				value = this
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					NOT = {
+						var:lam_pd_kind ?= flag:heir
+					}
+					exists = scope:lam_nc_heir_done
+				}
+				OR = {
+					AND = {
+						NOT = {
+							var:lam_pd_kind ?= flag:council
+						}
+						NOT = {
+							var:lam_pd_kind ?= flag:land
+						}
+					}
+					exists = scope:lam_lf_reward_done
+				}
+			}
+			set_variable = {
+				name = lam_pd_last_result
+				value = flag:kept
+			}
+			set_variable = {
+				name = lam_pd_last_kind
+				value = var:lam_pd_kind
+			}
+			set_variable = {
+				name = lam_pd_last_m
+				value = lam_now_m
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = lam_fac_favour
+					}
+				}
+				set_variable = {
+					name = lam_fac_favour
+					value = 0
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						var:lam_pd_kind ?= flag:faith
+						var:lam_pd_kind ?= flag:no_revoke
+						var:lam_pd_kind ?= flag:campaign
+					}
+				}
+				set_variable = {
+					name = lam_pd_last_result
+					value = flag:promised
+				}
+			}
+			else = {
+				change_variable = {
+					name = lam_fac_favour
+					add = 8
+				}
+				lam_fac_hist_add_effect = {
+					KEY = kept
+				}
+			}
+			clamp_variable = {
+				name = lam_fac_favour
+				min = -100
+				max = 100
+			}
+			lam_st_petition_record_effect = yes
+			lam_pd_notify_effect = yes
+			lam_pd_clear_effect = yes
+		}
+		else = {
+			lam_pd_cancel_effect = yes
+			send_interface_message = {
+				type = event_generic_neutral
+				title = lam_nc_terms_changed
+			}
+		}
+	}
+}
+lam_pd_begin_selected_effect = {
+	if = {
+		limit = {
+			var:lam_hd_ask ?= flag:law
+		}
+		lam_pd_begin_effect = {
+			KIND = law
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_hd_ask ?= flag:heir
+		}
+		lam_pd_begin_effect = {
+			KIND = heir
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_hd_ask ?= flag:tolerance
+		}
+		lam_pd_begin_effect = {
+			KIND = tolerance
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_hd_ask ?= flag:gold
+		}
+		lam_pd_begin_effect = {
+			KIND = gold
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_hd_ask ?= flag:amnesty
+		}
+		lam_pd_begin_effect = {
+			KIND = amnesty
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_hd_ask ?= flag:council
+		}
+		lam_pd_begin_effect = {
+			KIND = council
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_hd_ask ?= flag:taxes
+		}
+		lam_pd_begin_effect = {
+			KIND = taxes
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_hd_ask ?= flag:release
+		}
+		lam_pd_begin_effect = {
+			KIND = release
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_hd_ask ?= flag:faith
+		}
+		lam_pd_begin_effect = {
+			KIND = faith
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_hd_ask ?= flag:no_revoke
+		}
+		lam_pd_begin_effect = {
+			KIND = no_revoke
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_hd_ask ?= flag:campaign
+		}
+		lam_pd_begin_effect = {
+			KIND = campaign
+		}
+	}
+}
+lam_pd_begin_demand_effect = {
+	if = {
+		limit = {
+			var:lam_fac_demand ?= flag:law
+		}
+		lam_pd_begin_effect = {
+			KIND = law
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_demand ?= flag:heir
+		}
+		lam_pd_begin_effect = {
+			KIND = heir
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_demand ?= flag:tolerance
+		}
+		lam_pd_begin_effect = {
+			KIND = tolerance
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_demand ?= flag:gold
+		}
+		lam_pd_begin_effect = {
+			KIND = gold
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_demand ?= flag:amnesty
+		}
+		lam_pd_begin_effect = {
+			KIND = amnesty
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_demand ?= flag:council
+		}
+		lam_pd_begin_effect = {
+			KIND = council
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_demand ?= flag:taxes
+		}
+		lam_pd_begin_effect = {
+			KIND = taxes
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_demand ?= flag:release
+		}
+		lam_pd_begin_effect = {
+			KIND = release
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_demand ?= flag:faith
+		}
+		lam_pd_begin_effect = {
+			KIND = faith
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_demand ?= flag:no_revoke
+		}
+		lam_pd_begin_effect = {
+			KIND = no_revoke
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_demand ?= flag:campaign
+		}
+		lam_pd_begin_effect = {
+			KIND = campaign
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_demand ?= flag:reward
+		}
+		lam_pd_begin_effect = {
+			KIND = gold
+		}
+	}
+	else_if = {
+		limit = {
+			var:lam_fac_demand ?= flag:redress
+		}
+		lam_pd_begin_effect = {
+			KIND = gold
+		}
+	}
+}

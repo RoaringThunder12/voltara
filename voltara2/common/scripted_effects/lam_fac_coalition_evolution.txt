@@ -1,0 +1,307 @@
+﻿lam_cu_mark_support_effect = {
+	set_variable = {
+		name = lam_vt_against
+		value = yes
+	}
+	save_scope_value_as = {
+		name = lam_ev_weight
+		value = {
+			value = lam_cr_influence_value
+			if = {
+				limit = {
+					has_variable = lam_sy_support
+				}
+				multiply = 0.5
+			}
+		}
+	}
+	scope:lam_ev_head = {
+		add_to_variable_list = {
+			name = lam_cu_supporters
+			target = prev
+		}
+		change_variable = {
+			name = lam_ev_group_count
+			add = 1
+		}
+		change_variable = {
+			name = lam_ev_group_weight
+			add = scope:lam_ev_weight
+		}
+	}
+}
+lam_cu_collect_support_effect = {
+	clear_variable_list = lam_cu_supporters
+	clear_saved_scope = lam_cu_cause
+	every_in_list = {
+		variable = lam_fac_members
+		limit = {
+			lam_ev_member_trigger = yes
+		}
+		scope:lam_ev_head = {
+			add_to_variable_list = {
+				name = lam_ev_split_members
+				target = prev
+			}
+		}
+		remove_variable = lam_vt_against
+		if = {
+			limit = {
+				lam_ev_position_trigger = yes
+				lam_cu_group_trigger = yes
+			}
+			scope:lam_ev_head = {
+				change_variable = {
+					name = lam_ev_visible_count
+					add = 1
+				}
+			}
+		}
+		remove_variable = lam_sy_support
+	}
+	scope:lam_vt_lead = {
+		if = {
+			limit = {
+				lam_co_organizer_trigger = yes
+			}
+			lam_cu_mark_support_effect = yes
+		}
+	}
+	if = {
+		limit = {
+			scope:lam_vt_lead = {
+				lam_co_organizer_trigger = yes
+			}
+		}
+		ordered_in_list = {
+			variable = lam_fac_members
+			order_by = lam_cr_influence_value
+			max = 1000
+			check_range_bounds = no
+			limit = {
+				lam_ev_member_trigger = yes
+				is_ai = yes
+				NOT = {
+					this = scope:lam_vt_lead
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						lam_co_supporter_trigger = yes
+						lam_sy_supporter_trigger = yes
+					}
+				}
+				if = {
+					limit = {
+						lam_sy_supporter_trigger = yes
+					}
+					set_variable = {
+						name = lam_sy_support
+						value = yes
+					}
+				}
+				save_scope_as = lam_cu_person
+				if = {
+					limit = {
+						NOT = {
+							scope:lam_ev_head = {
+								any_in_list = {
+									variable = lam_cu_supporters
+									NOT = {
+										lam_sy_pair_trigger = {
+											OTHER = scope:lam_cu_person
+										}
+									}
+								}
+							}
+						}
+					}
+					lam_cu_mark_support_effect = yes
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_variable = lam_vt_against
+						}
+					}
+					remove_variable = lam_sy_support
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			var:lam_ev_group_count > var:lam_cu_best_count
+		}
+		set_variable = {
+			name = lam_cu_best_count
+			value = var:lam_ev_group_count
+		}
+		set_variable = {
+			name = lam_cu_best_mixed
+			value = 0
+		}
+		every_in_list = {
+			variable = lam_cu_supporters
+			limit = {
+				NOT = {
+					lam_ev_same_wing_trigger = {
+						OTHER = scope:lam_vt_lead
+					}
+				}
+			}
+			scope:lam_ev_head = {
+				change_variable = {
+					name = lam_cu_best_mixed
+					add = 1
+				}
+			}
+		}
+		set_variable = {
+			name = lam_sy_best_count
+			value = 0
+		}
+		every_in_list = {
+			variable = lam_cu_supporters
+			limit = {
+				has_variable = lam_sy_support
+			}
+			scope:lam_ev_head = {
+				change_variable = {
+					name = lam_sy_best_count
+					add = 1
+				}
+			}
+		}
+	}
+}
+lam_cu_pick_cause_effect = {
+	clear_saved_scope = lam_cu_cause
+	save_scope_value_as = {
+		name = lam_cu_cause_weight
+		value = -1
+	}
+	ordered_in_list = {
+		variable = lam_cu_supporters
+		limit = {
+			lam_ev_position_trigger = yes
+			NOT = {
+				has_variable = lam_sy_support
+			}
+		}
+		order_by = lam_cr_influence_value
+		max = 1000
+		check_range_bounds = no
+		save_scope_as = lam_cu_subject
+		save_scope_value_as = {
+			name = lam_cu_subject_weight
+			value = 0
+		}
+		scope:lam_ev_head = {
+			every_in_list = {
+				variable = lam_cu_supporters
+				limit = {
+					lam_ev_same_wing_trigger = {
+						OTHER = scope:lam_cu_subject
+					}
+					NOT = {
+						has_variable = lam_sy_support
+					}
+				}
+				save_scope_value_as = {
+					name = lam_cu_subject_weight
+					value = {
+						value = scope:lam_cu_subject_weight
+						add = lam_cr_influence_value
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				scope:lam_cu_subject_weight > scope:lam_cu_cause_weight
+			}
+			save_scope_as = lam_cu_cause
+			save_scope_value_as = {
+				name = lam_cu_cause_weight
+				value = scope:lam_cu_subject_weight
+			}
+		}
+	}
+}
+lam_cu_foundation_heir_effect = {
+	if = {
+		limit = {
+			exists = scope:lam_cu_cause
+			exists = scope:lam_ev_head
+			exists = scope:lam_vt_head
+		}
+		if = {
+			limit = {
+				scope:lam_ev_head = scope:lam_vt_head
+			}
+			scope:lam_ev_head = {
+				ordered_in_list = {
+					variable = lam_cu_supporters
+					max = 1
+					order_by = lam_cr_influence_value
+					check_range_bounds = no
+					limit = {
+						trigger_if = {
+							limit = {
+								is_alive = yes
+							}
+							var:lam_bp_position_topic ?= flag:heir
+							var:lam_bp_position_alternative ?= {
+								is_alive = yes
+							}
+						}
+						trigger_else = {
+							always = no
+						}
+					}
+					scope:lam_vt_lead = {
+						set_variable = {
+							name = lam_fac_heir
+							value = prev.var:lam_bp_position_alternative
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+lam_cu_foundation_cause_effect = {
+ if = { limit = { exists = scope:lam_cu_cause exists = scope:lam_ev_head exists = scope:lam_vt_head }
+  if = { limit = { scope:lam_cu_cause = { is_alive = yes } }
+   if = { limit = { scope:lam_ev_head = scope:lam_vt_head
+     scope:lam_cu_cause = { has_variable = lam_vt_against var:lam_bp_position_head ?= scope:lam_vt_head }
+   }
+if = { limit = { scope:lam_cu_cause = { has_variable = lam_bp_position_topic } }
+ set_variable = { name = lam_bp_origin_topic value = scope:lam_cu_cause.var:lam_bp_position_topic }
+} else = { remove_variable = lam_bp_origin_topic }
+if = { limit = { scope:lam_cu_cause = { has_variable = lam_bp_position_side } }
+ set_variable = { name = lam_bp_origin_side value = scope:lam_cu_cause.var:lam_bp_position_side }
+} else = { remove_variable = lam_bp_origin_side }
+if = { limit = { scope:lam_cu_cause = { has_variable = lam_bp_position_target } }
+ set_variable = { name = lam_bp_origin_target value = scope:lam_cu_cause.var:lam_bp_position_target }
+} else = { remove_variable = lam_bp_origin_target }
+if = { limit = { scope:lam_cu_cause = { has_variable = lam_bp_position_alternative } }
+ set_variable = { name = lam_bp_origin_alternative value = scope:lam_cu_cause.var:lam_bp_position_alternative }
+} else = { remove_variable = lam_bp_origin_alternative }
+if = { limit = { scope:lam_cu_cause = { has_variable = lam_bp_position_lord } }
+ set_variable = { name = lam_bp_origin_lord value = scope:lam_cu_cause.var:lam_bp_position_lord }
+} else = { remove_variable = lam_bp_origin_lord }
+if = { limit = { scope:lam_cu_cause = { has_variable = lam_bp_position_object } }
+ set_variable = { name = lam_bp_origin_object value = scope:lam_cu_cause.var:lam_bp_position_object }
+} else = { remove_variable = lam_bp_origin_object }
+if = { limit = { scope:lam_cu_cause = { has_variable = lam_bp_position_detail } }
+ set_variable = { name = lam_bp_origin_detail value = scope:lam_cu_cause.var:lam_bp_position_detail }
+} else = { remove_variable = lam_bp_origin_detail }
+
+   }
+  }
+ }
+}

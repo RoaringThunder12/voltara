@@ -2082,7 +2082,7 @@ is_valid = {
 				has_truce = title:e_byzantium.holder
 			}
 
-			exists = title:e_byzantium.holder
+			always = no
 			is_at_war = no
 		}
 	}
@@ -2102,12 +2102,12 @@ is_valid = {
 				has_dynasty_perk = fp1_adventure_legacy_1
 			}
 			
-			exists = title:e_byzantium.holder
+			always = no
 			NOR = {
 				faith ?= {
 					has_doctrine_parameter = pacifist
 				}
-				this = title:e_byzantium.holder
+				always = no
 				is_at_war_with = title:e_byzantium.holder
 				has_truce = title:e_byzantium.holder
 			}
@@ -2173,13 +2173,12 @@ is_valid = {
 	on_accept = {
 		title:e_byzantium.holder = {
 			save_scope_as = emperor
-			if = {
-				limit = { capital_county = title:c_byzantion }
-				set_local_variable = {
-					name = to_miklagard
-					value = yes
-				}
-			}
+			if = { limit = { always = no } # Proven unreachable; original effects retained below.
+# set_local_variable = {
+# 					name = to_miklagard
+# 					value = yes
+# 				}
+}
 		}
 		
 		scope:puppet_or_actor = {

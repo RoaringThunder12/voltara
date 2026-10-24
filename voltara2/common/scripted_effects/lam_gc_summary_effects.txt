@@ -1,0 +1,1669 @@
+﻿# Lineage window summary (tools/step_lineage_ux.py). Root = a book (title). Records whose head the viewer has never
+# heard of (lam_fac_vh) are left out, as in the tree.
+lam_gc_summary_effect = {
+	set_variable = {
+		name = lam_gc_n_all
+		value = 0
+	}
+	set_variable = {
+		name = lam_gc_n_live
+		value = 0
+	}
+	set_variable = {
+		name = lam_gc_n_end
+		value = 0
+	}
+	if = {
+		limit = {
+			has_variable = lam_gc_old_n
+		}
+		remove_variable = lam_gc_old_n
+	}
+	if = {
+		limit = {
+			has_variable = lam_gc_old_y
+		}
+		remove_variable = lam_gc_old_y
+	}
+	if = {
+		limit = {
+			has_variable = lam_gc_last_n
+		}
+		remove_variable = lam_gc_last_n
+	}
+	if = {
+		limit = {
+			has_variable = lam_gc_last_y
+		}
+		remove_variable = lam_gc_last_y
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn1_y0
+			NOT = {
+				var:lam_gn1_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn1_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn1_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn1_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn1_evy
+				has_variable = lam_gn1_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn1_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn1_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn2_y0
+			NOT = {
+				var:lam_gn2_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn2_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn2_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn2_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 2
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn2_evy
+				has_variable = lam_gn2_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn2_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn2_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 2
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn3_y0
+			NOT = {
+				var:lam_gn3_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn3_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn3_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn3_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 3
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn3_evy
+				has_variable = lam_gn3_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn3_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn3_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 3
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn4_y0
+			NOT = {
+				var:lam_gn4_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn4_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn4_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn4_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 4
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn4_evy
+				has_variable = lam_gn4_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn4_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn4_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 4
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn5_y0
+			NOT = {
+				var:lam_gn5_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn5_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn5_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn5_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 5
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn5_evy
+				has_variable = lam_gn5_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn5_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn5_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 5
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn6_y0
+			NOT = {
+				var:lam_gn6_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn6_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn6_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn6_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 6
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn6_evy
+				has_variable = lam_gn6_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn6_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn6_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 6
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn7_y0
+			NOT = {
+				var:lam_gn7_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn7_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn7_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn7_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 7
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn7_evy
+				has_variable = lam_gn7_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn7_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn7_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 7
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn8_y0
+			NOT = {
+				var:lam_gn8_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn8_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn8_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn8_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 8
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn8_evy
+				has_variable = lam_gn8_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn8_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn8_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 8
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn9_y0
+			NOT = {
+				var:lam_gn9_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn9_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn9_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn9_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 9
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn9_evy
+				has_variable = lam_gn9_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn9_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn9_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 9
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn10_y0
+			NOT = {
+				var:lam_gn10_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn10_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn10_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn10_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 10
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn10_evy
+				has_variable = lam_gn10_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn10_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn10_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 10
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn11_y0
+			NOT = {
+				var:lam_gn11_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn11_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn11_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn11_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 11
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn11_evy
+				has_variable = lam_gn11_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn11_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn11_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 11
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn12_y0
+			NOT = {
+				var:lam_gn12_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn12_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn12_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn12_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 12
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn12_evy
+				has_variable = lam_gn12_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn12_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn12_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 12
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn13_y0
+			NOT = {
+				var:lam_gn13_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn13_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn13_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn13_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 13
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn13_evy
+				has_variable = lam_gn13_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn13_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn13_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 13
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn14_y0
+			NOT = {
+				var:lam_gn14_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn14_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn14_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn14_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 14
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn14_evy
+				has_variable = lam_gn14_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn14_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn14_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 14
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn15_y0
+			NOT = {
+				var:lam_gn15_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn15_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn15_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn15_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 15
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn15_evy
+				has_variable = lam_gn15_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn15_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn15_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 15
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn16_y0
+			NOT = {
+				var:lam_gn16_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn16_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn16_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn16_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 16
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn16_evy
+				has_variable = lam_gn16_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn16_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn16_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 16
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn17_y0
+			NOT = {
+				var:lam_gn17_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn17_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn17_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn17_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 17
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn17_evy
+				has_variable = lam_gn17_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn17_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn17_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 17
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn18_y0
+			NOT = {
+				var:lam_gn18_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn18_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn18_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn18_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 18
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn18_evy
+				has_variable = lam_gn18_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn18_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn18_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 18
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn19_y0
+			NOT = {
+				var:lam_gn19_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn19_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn19_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn19_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 19
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn19_evy
+				has_variable = lam_gn19_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn19_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn19_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 19
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = lam_gn20_y0
+			NOT = {
+				var:lam_gn20_hd ?= {
+					trigger_if = {
+						limit = {
+							is_alive = yes
+						}
+						has_variable = lam_fac_vh
+					}
+					trigger_else = {
+						always = no
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = lam_gc_n_all
+			add = 1
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn20_end
+			}
+			change_variable = {
+				name = lam_gc_n_end
+				add = 1
+			}
+		}
+		else = {
+			change_variable = {
+				name = lam_gc_n_live
+				add = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_variable = lam_gc_old_y
+						}
+						AND = {
+							has_variable = lam_gc_old_y
+							var:lam_gn20_y0 < var:lam_gc_old_y
+						}
+					}
+				}
+				set_variable = {
+					name = lam_gc_old_y
+					value = var:lam_gn20_y0
+				}
+				set_variable = {
+					name = lam_gc_old_n
+					value = 20
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = lam_gn20_evy
+				has_variable = lam_gn20_ev
+				OR = {
+					NOT = {
+						has_variable = lam_gc_last_y
+					}
+					AND = {
+						has_variable = lam_gc_last_y
+						var:lam_gn20_evy >= var:lam_gc_last_y
+					}
+				}
+			}
+			set_variable = {
+				name = lam_gc_last_y
+				value = var:lam_gn20_evy
+			}
+			set_variable = {
+				name = lam_gc_last_n
+				value = 20
+			}
+		}
+	}
+	if = {
+		limit = {
+			always = no
+			has_variable = lam_gc_n_live
+			has_variable = lam_gc_n_end
+			has_variable = lam_gc_old_n
+			has_variable = lam_gc_last_n
+		}
+	}
+}

@@ -1,0 +1,123 @@
+﻿lam_pd_fabricate_begin_effect = {
+	scope:actor = {
+		if = {
+			limit = {
+				is_alive = yes
+				is_adult = yes
+				is_imprisoned = no
+				prestige >= 100
+				NOT = {
+					has_variable = lam_pd_fabricate_target
+				}
+				NOT = {
+					has_variable = lam_pd_fabricate_cd
+				}
+				scope:recipient = {
+					is_alive = yes
+					has_variable = lam_bloc_lead
+					liege ?= scope:actor.liege
+					NOT = {
+						this = scope:actor
+					}
+				}
+			}
+			add_prestige = -100
+			set_variable = {
+				name = lam_pd_fabricate_target
+				value = scope:recipient
+			}
+			set_variable = {
+				name = lam_pd_fabricate_lord
+				value = liege
+			}
+			set_variable = {
+				name = lam_pd_fabricate_record
+				value = scope:recipient.var:lam_fac_rec
+			}
+			set_variable = {
+				name = lam_pd_fabricate_cd
+				value = yes
+				years = 5
+			}
+			trigger_event = {
+				id = lam_pd.0300
+				days = 90
+			}
+		}
+	}
+}
+lam_pd_fabricate_resolve_effect = {
+	if = {
+		limit = {
+			has_variable = lam_pd_fabricate_target
+		}
+		save_scope_as = lam_pd_forger
+		if = {
+			limit = {
+				is_alive = yes
+				is_imprisoned = no
+				liege ?= var:lam_pd_fabricate_lord
+				var:lam_pd_fabricate_target = {
+					is_alive = yes
+					has_variable = lam_bloc_lead
+					liege ?= scope:lam_pd_forger.liege
+					var:lam_fac_rec ?= scope:lam_pd_forger.var:lam_pd_fabricate_record
+				}
+			}
+			if = {
+				limit = {
+					intrigue > {
+						value = var:lam_pd_fabricate_target.intrigue
+						add = 5
+					}
+				}
+				var:lam_pd_fabricate_target = {
+					set_variable = {
+						name = lam_pd_unverified_rumor
+						value = scope:lam_pd_forger
+						months = 6
+					}
+				}
+				liege = {
+					if = {
+						limit = {
+							is_ai = no
+						}
+						send_interface_message = {
+							type = event_generic_neutral
+							title = lam_pd_rumor_title
+							desc = lam_pd_rumor_desc
+							right_icon = scope:lam_pd_forger.var:lam_pd_fabricate_target
+						}
+					}
+				}
+			}
+			else = {
+				add_prestige = -150
+				liege = {
+					add_opinion = {
+						target = scope:lam_pd_forger
+						modifier = lam_pd_false_report_opinion
+					}
+				}
+				var:lam_pd_fabricate_target = {
+					add_opinion = {
+						target = scope:lam_pd_forger
+						modifier = lam_pd_false_report_opinion
+					}
+				}
+				if = {
+					limit = {
+						is_ai = no
+					}
+					send_interface_message = {
+						type = event_generic_bad
+						title = lam_pd_forgery_exposed
+						right_icon = var:lam_pd_fabricate_target
+					}
+				}
+			}
+		}
+		remove_variable = lam_pd_fabricate_target
+	}
+}

@@ -1,0 +1,30 @@
+﻿# v0.8.2: run on the pupil. Only the saved lesson determines a new-chain reward.
+# Old queued stories lack that evidence and keep their original documented reward.
+dhm_v082_school_conclusion_reward_effect = {
+	if = {
+		limit = { exists = scope:dhm082_school_focus scope:dhm082_school_focus = flag:diplomacy }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_diplomacy_lesson_modifier YEARS = 3 RENEWAL_TT = dhm082_diplomacy_lesson_renewed_3_tt }
+	}
+	else_if = {
+		limit = { exists = scope:dhm082_school_focus scope:dhm082_school_focus = flag:martial }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_martial_lesson_modifier YEARS = 3 RENEWAL_TT = dhm082_martial_lesson_renewed_3_tt }
+	}
+	else_if = {
+		limit = { exists = scope:dhm082_school_focus scope:dhm082_school_focus = flag:stewardship }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_stewardship_lesson_modifier YEARS = 3 RENEWAL_TT = dhm082_stewardship_lesson_renewed_3_tt }
+	}
+	else_if = {
+		limit = { exists = scope:dhm082_school_focus scope:dhm082_school_focus = flag:intrigue }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_intrigue_lesson_modifier YEARS = 3 RENEWAL_TT = dhm082_intrigue_lesson_renewed_3_tt }
+	}
+	else_if = {
+		limit = { exists = scope:dhm082_school_focus scope:dhm082_school_focus = flag:learning }
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm081_learning_lesson_modifier YEARS = 3 RENEWAL_TT = dhm082_learning_lesson_renewed_3_tt }
+	}
+	else_if = {
+		limit = { NOT = { exists = scope:dhm082_school_focus } }
+		custom_tooltip = dhm082_school_legacy_tt
+		dhm_v040_apply_or_renew_reward_effect = { MODIFIER = $LEGACY_MODIFIER$ YEARS = 3 RENEWAL_TT = $LEGACY_RENEWAL_TT$ }
+	}
+	else = { custom_tooltip = dhm082_school_unknown_focus_tt }
+}

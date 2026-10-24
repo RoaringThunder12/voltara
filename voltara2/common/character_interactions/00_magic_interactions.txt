@@ -6442,12 +6442,10 @@ is_valid = {
 				stress_and_fulfillment_impact = {
 					compassionate = medium_stress_impact_gain
 				}
-				if = {
-					limit = {
+				if = { limit = {
 						always = no
-					}
-					custom_tooltip = plague_spell_ct	#just to avoid notifications in error log...
-				}
+					} # Unreachable effects archived in debug-dead-branches/audit.json.
+}
 				execute_or_counter_spell_effect = { SID = 13 }
 			}
 			metamagic_effect = yes
@@ -11668,7 +11666,7 @@ is_valid = {
 		localization = body_adaptation_giant
 	}
 	auto_accept = yes
-	ai_frequency = 0
+	# No AI targets: this interaction is manually invoked. AI scheduling omitted.
 }
 
 demon_annihilation = {
@@ -12702,7 +12700,7 @@ is_valid = {
 			}
 		}
 	}
-	ai_frequency = 0
+	# No AI targets: this interaction is manually invoked. AI scheduling omitted.
 	ai_will_do = {
 		base = 0
 		modifier = {
@@ -15576,8 +15574,7 @@ is_valid = {
 	
 	auto_accept = yes
 
-	ai_frequency = 0
-
+	# No AI targets: this interaction is manually invoked. AI scheduling omitted.
 	ai_will_do = {
 		base = 0
 	}
@@ -15669,8 +15666,7 @@ is_valid = {
 	
 	auto_accept = yes
 
-	ai_frequency = 0
-
+	# No AI targets: this interaction is manually invoked. AI scheduling omitted.
 	ai_will_do = {
 		base = 0
 	}
@@ -15728,8 +15724,7 @@ is_valid = {
 	
 	auto_accept = yes
 
-	ai_frequency = 0
-
+	# No AI targets: this interaction is manually invoked. AI scheduling omitted.
 	ai_will_do = {
 		base = 0
 	}
