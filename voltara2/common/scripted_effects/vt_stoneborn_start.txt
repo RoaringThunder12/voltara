@@ -1,0 +1,15 @@
+﻿vt_stoneborn_start_army = {
+ if = {
+  limit = { vt_stoneborn_start_eligible = yes NOT = { has_character_flag = vt_stoneborn_start_army_done } }
+  add_character_flag = vt_stoneborn_start_army_done
+  # Preserve existing armies; only fill completely empty starting rosters.
+  if = {
+   limit = { maa_regiments_count = 0 maa_regiments_count < maa_regiments_max_count }
+   create_maa_regiment = { type = vta_stoneborn_scouts size = 1 }
+   if = {
+    limit = { maa_regiments_count < maa_regiments_max_count }
+    create_maa_regiment = { type = vta_stoneborn_bows size = 1 }
+   }
+  }
+ }
+}

@@ -3,7 +3,7 @@
   has_trait = supernatural_vampire
   has_trait = supernatural_werewolf
   has_trait = supernatural_hybrid
-  has_trait = lycan_character
+  always = no
   has_trait = necromancer
   has_trait = vt_ek_necromancer
   has_trait = vt_ek_experimentalist_necromancer
@@ -13,7 +13,7 @@
  }
 }
 vt_inquisitor_mortal_trigger = {
- faith.religion = religion:voltara_religion
+ vae_institutional_authority = yes
  is_adult = yes
  NOT = { has_trait = dragon }
  vt_inquisitor_monster_trigger = no

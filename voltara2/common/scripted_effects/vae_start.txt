@@ -1,0 +1,13 @@
+﻿vae_start_army = {
+ if = { limit = { is_alive = yes is_landed = yes highest_held_title_tier >= tier_county
+ capital_province = { geographical_region = world_vae_aesaryos }
+ NOT = { has_government = voltara_ruins_government }
+ NOT = { has_character_flag = vae_start_army }
+ }
+ add_character_flag = vae_start_army
+ if = { limit = { maa_regiments_count = 0 maa_regiments_count < maa_regiments_max_count }
+ if = { limit = { culture = { has_cultural_pillar = heritage_vae_aesaryos } } create_maa_regiment = { type = vta_aesaryos_scouts size = 2 } }
+ else_if = { limit = { culture = { has_cultural_pillar = heritage_voltara_giants } } create_maa_regiment = { type = vta_giants_scouts size = 4 } if = { limit = { maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_giants_bows size = 3 } } }
+ }
+ }
+}

@@ -1,0 +1,10 @@
+﻿namespace = vic_liberation
+vic_liberation.1 = {
+ hidden = yes
+ immediate = {
+  if = { limit = { has_global_variable = vic_liberation_scheduled NOT = { has_global_variable = vic_liberation_due } }
+   set_global_variable = { name = vic_liberation_due value = yes }
+   vic_resolve_liberation_due = yes
+  }
+ }
+}

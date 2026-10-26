@@ -1,0 +1,22 @@
+﻿vt_atrophy_arcana_penalty = {
+ value = 0
+ if = { limit = { has_trait = vt_magic_atrophy has_trait_xp = { trait = vt_magic_atrophy value >= 75 } } add = -10 }
+ else_if = { limit = { has_trait = vt_magic_atrophy has_trait_xp = { trait = vt_magic_atrophy value >= 50 } } add = -8 }
+ else_if = { limit = { has_trait = vt_magic_atrophy has_trait_xp = { trait = vt_magic_atrophy value >= 25 } } add = -4 }
+ else_if = { limit = { has_trait = vt_magic_atrophy has_trait_xp = { trait = vt_magic_atrophy value >= 0 } } add = -2 }
+}
+vt_atrophy_regen_penalty = {
+ value = 0
+ if = { limit = { has_trait = vt_magic_atrophy has_trait_xp = { trait = vt_magic_atrophy value >= 75 } } add = 0.5 }
+ else_if = { limit = { has_trait = vt_magic_atrophy has_trait_xp = { trait = vt_magic_atrophy value >= 50 } } add = 0.3 }
+ else_if = { limit = { has_trait = vt_magic_atrophy has_trait_xp = { trait = vt_magic_atrophy value >= 25 } } add = 0.2 }
+ else_if = { limit = { has_trait = vt_magic_atrophy has_trait_xp = { trait = vt_magic_atrophy value >= 0 } } add = 0.1 }
+}
+vt_atrophy_monthly_progress = {
+ value = magicka_monthly
+ subtract = 10
+ divide = 10
+ add = 1
+ min = 0
+ max = 4
+}

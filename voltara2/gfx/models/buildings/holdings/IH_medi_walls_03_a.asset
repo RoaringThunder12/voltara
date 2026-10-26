@@ -1,0 +1,19 @@
+pdxmesh = {
+	name = "IH_medi_walls_03_a_mesh"
+	file = "IH_medi_walls_03_a.mesh"
+	
+	meshsettings = {
+		name = "IH_medi_walls_03_a"
+		index = 0
+		texture_diffuse = "IH_medi_atlas_diffuse.dds"
+		texture_normal = "IH_medi_atlas_normal.dds"
+		texture_specular = "IH_medi_atlas_properties.dds"
+		shader = "snap_to_terrain"
+		shader_file = "gfx/FX/pdxmesh.shader"
+	}
+}
+
+entity = {
+	name = "IH_medi_walls_03_a_entity"
+	pdxmesh = "IH_medi_walls_03_a_mesh"
+}

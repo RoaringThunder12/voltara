@@ -7,7 +7,7 @@ NOT = { has_game_rule = vt_elven_ruins_off }
   AND = {
    is_landed = yes
    exists = capital_county
-   capital_county = { target_is_de_jure_liege_or_above = title:h_voltara_severos }
+   capital_county = { OR = { target_is_de_jure_liege_or_above = title:h_voltara_severos title_province = { geographical_region = world_vae_aesaryos } } }
   }
  }
 }

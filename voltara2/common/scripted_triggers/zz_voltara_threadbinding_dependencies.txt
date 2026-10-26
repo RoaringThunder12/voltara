@@ -82,7 +82,7 @@ is_losing_defensive_war_trigger = {
 	}
 }
 
-is_lycan = { OR = { has_trait = supernatural_werewolf has_trait = lycan_character has_trait = irritable_lycan } }
+is_lycan = { OR = { has_trait = supernatural_werewolf always = no has_trait = irritable_lycan } }
 
 is_mindless_character = { #Note: when changing this one, also change the setup in 00_rules.txt, as using this scripted trigged there caused errors
 	has_trait_with_flag = mindless_character
@@ -267,87 +267,87 @@ trait_is_criminal_in_faith_trigger = {
 		}
 		# LYCAN
 		AND = {
-			$TRAIT$ = trait:lycan_character
+			always = no
 			$FAITH$ = { has_doctrine_parameter = lycanthropy_criminal }
 		}
 		# DAEDRA WORSHIPPER
 		AND = {
-			$TRAIT$ = trait:azura_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_azura_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:boethiah_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_boethiah_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:clavicus_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_clavicus_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:hermaeus_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_hermaeus_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:hircine_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_hircine_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:malacath_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_malacath_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:mehrunes_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_mehrunes_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:mephala_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_mephala_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:meridia_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_meridia_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:molag_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_molag_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:namira_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_namira_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:nocturnal_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_nocturnal_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:peryite_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_peryite_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:sanguine_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_sanguine_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:sheogorath_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_sheogorath_criminal_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:vaermina_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_vaermina_criminal_active has no Voltara doctrine.
  }
 		}
@@ -417,87 +417,87 @@ trait_is_shunned_in_faith_trigger = {
 		}
 		# LYCAN
 		AND = {
-			$TRAIT$ = trait:lycan_character	
+			always = no	
 			$FAITH$ = { has_doctrine_parameter = lycanthropy_shunned }
 		}
 		# DAEDRA WORSHIPPER
 		AND = {
-			$TRAIT$ = trait:azura_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_azura_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:boethiah_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_boethiah_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:clavicus_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_clavicus_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:hermaeus_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_hermaeus_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:hircine_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_hircine_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:malacath_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_malacath_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:mehrunes_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_mehrunes_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:mephala_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_mephala_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:meridia_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_meridia_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:molag_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_molag_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:namira_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_namira_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:nocturnal_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_nocturnal_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:peryite_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_peryite_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:sanguine_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_sanguine_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:sheogorath_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_sheogorath_shunned_active has no Voltara doctrine.
  }
 		}
 		AND = {
-			$TRAIT$ = trait:vaermina_worshipper
+			always = no
 			$FAITH$ = { always = no # Foreign-pantheon policy worship_vaermina_shunned_active has no Voltara doctrine.
  }
 		}

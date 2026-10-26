@@ -1,0 +1,40 @@
+﻿vta_aesaryos_scouts = {
+ type = skirmishers
+ damage = 15
+ toughness = 16
+ pursuit = 19
+ screen = 22
+ stack = 100
+ 
+ buy_cost = { gold = 75 }
+ low_maintenance_cost = { gold = 0.25 }
+ high_maintenance_cost = { gold = 0.80 }
+ provision_cost = 3
+ counters = { heavy_infantry = 1 }
+ terrain_bonus = { steppe = { damage = 3 toughness = 2 } forest = { damage = -2 toughness = -2 } }
+ can_recruit = { culture = { has_cultural_pillar = heritage_vae_aesaryos } NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = yes
+ ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
+ illustration = { reference = vta_3059124362_redguard_skirmishers }
+}
+vta_aesaryos_bows = {
+ type = archers
+ damage = 29
+ toughness = 10
+ pursuit = 7
+ screen = 6
+ stack = 100
+ 
+ buy_cost = { gold = 100 }
+ low_maintenance_cost = { gold = 0.35 }
+ high_maintenance_cost = { gold = 1.15 }
+ provision_cost = 7
+ counters = { skirmishers = 1 }
+ terrain_bonus = { steppe = { damage = 5 toughness = 2 } forest = { damage = -5 toughness = -1 } }
+ can_recruit = { culture = { has_cultural_pillar = heritage_vae_aesaryos } NOT = { has_government = voltara_ruins_government } }
+ access_through_subject = { always = no }
+ allowed_in_hired_troops = yes
+ ai_quality = { value = culture_ai_weight_archers add = 5 }
+ illustration = { reference = vta_3059124362_redguard_bowmen }
+}

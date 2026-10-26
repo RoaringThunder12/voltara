@@ -1,0 +1,6 @@
+﻿vt_lake_tribes_exchange = {
+ if = { limit = { NOT = { has_global_variable = vt_lake_tribes_exchange_done } }
+  set_global_variable = vt_lake_tribes_exchange_done
+  culture:vt_forgewater = { change_cultural_acceptance = { target = culture:vt_anvilmere value = 40 desc = vt_forgewater_exchange } }
+ }
+}

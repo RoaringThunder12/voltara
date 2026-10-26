@@ -12,7 +12,7 @@
  provision_cost = 15
  counters = { archers = 1 }
  terrain_bonus = { steppe = { damage = 4 toughness = 3 } }
- can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_highgrass }
+ can_recruit = { NOT = { has_government = voltara_ruins_government } OR = { culture = culture:voltara_southron_highgrass culture = culture:vus_windplain culture = culture:vus_reedstride culture = culture:vus_sunmeadow } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
@@ -32,7 +32,7 @@ vsr_highgrass_elite = {
  provision_cost = 21
  counters = { archers = 1 }
  terrain_bonus = { steppe = { damage = 6 toughness = 4 } }
- can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_highgrass culture = { has_innovation = innovation_vt_human_warfare_2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government } OR = { culture = culture:voltara_southron_highgrass culture = culture:vus_windplain culture = culture:vus_reedstride culture = culture:vus_sunmeadow } culture = { has_innovation = innovation_vt_human_warfare_2 } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = culture_ai_weight_heavy_cavalry add = 5 }
@@ -172,7 +172,7 @@ vsr_ashroad_levy = {
  provision_cost = 3
  counters = { heavy_infantry = 1 }
  terrain_bonus = { plains = { damage = 4 toughness = 3 } }
- can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_ashroad }
+ can_recruit = { NOT = { has_government = voltara_ruins_government } OR = { culture = culture:voltara_southron_ashroad culture = culture:vus_embertrail } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
@@ -192,7 +192,7 @@ vsr_ashroad_elite = {
  provision_cost = 7
  counters = { light_cavalry = 1 heavy_cavalry = 1 }
  terrain_bonus = { plains = { damage = 6 toughness = 4 } }
- can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_ashroad culture = { has_innovation = innovation_vt_human_warfare_2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government } OR = { culture = culture:voltara_southron_ashroad culture = culture:vus_embertrail } culture = { has_innovation = innovation_vt_human_warfare_2 } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = culture_ai_weight_pikemen add = 5 }
@@ -212,7 +212,7 @@ vsr_thornwood_levy = {
  provision_cost = 3
  counters = { heavy_infantry = 1 }
  terrain_bonus = { forest = { damage = 4 toughness = 3 } }
- can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_thornwood }
+ can_recruit = { NOT = { has_government = voltara_ruins_government } OR = { culture = culture:voltara_southron_thornwood culture = culture:vus_briarwake culture = culture:vus_mistbough culture = culture:vus_duskgrove } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
@@ -232,7 +232,7 @@ vsr_thornwood_elite = {
  provision_cost = 8
  counters = { pikemen = 1 }
  terrain_bonus = { forest = { damage = 6 toughness = 4 } }
- can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_thornwood culture = { has_innovation = innovation_vt_human_warfare_2 } }
+ can_recruit = { NOT = { has_government = voltara_ruins_government } OR = { culture = culture:voltara_southron_thornwood culture = culture:vus_briarwake culture = culture:vus_mistbough culture = culture:vus_duskgrove } culture = { has_innovation = innovation_vt_human_warfare_2 } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }

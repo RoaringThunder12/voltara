@@ -1,0 +1,302 @@
+﻿namespace = siege_resolution
+
+# Step 1: The Breach
+siege_resolution.0001 = {
+    type = character_event
+    theme = war
+    title = siege_resolution.0001.t
+    desc = siege_resolution.0001.desc
+    
+    override_background = "mpo_raid_burning_asian" 
+    override_effect_2d = {reference = smoke} 
+    
+    left_portrait = {
+        character = root
+        animation = random_weapon_coup_degrace
+    }
+
+    trigger = {
+        is_commanding_army = yes
+        is_at_location = scope:target_barony.title_province
+    }
+
+    immediate = {
+        # Silently grant 10 XP to the Military Engineer trait track upon siege completion.
+        hidden_effect = {
+            add_trait_xp = {
+                trait = military_engineer
+                value = 10
+            }
+        }
+    }
+
+    option = {
+        name = siege_resolution.0001.a
+        add_prestige = 50
+        if = { limit = { exists = dynasty } dynasty = { add_dynasty_prestige = 25 } }
+        stress_impact = {
+            compassionate = -30
+            forgiving = -30
+            just = -30
+            sadistic = 30
+            callous = 30
+            vengeful = 30
+            wrathful = 30
+        }
+    }
+
+    option = {
+        name = siege_resolution.0001.b
+        add_gold = 20
+        scope:target_barony.county = {
+            change_development_level = -3
+            
+            add_county_modifier = {
+                modifier = recently_sacked_modifier
+                years = 3
+            }
+        }
+        stress_impact = {
+            greedy = -15
+            just = 15
+            compassionate = 15
+        }
+    }
+
+    option = {
+        name = siege_resolution.0001.c
+        add_gold = 50
+        
+        # Evil Action: Looting heavily
+        if = {
+            limit = { exists = scope:defeated_ruler faith.religion = scope:defeated_ruler.faith.religion }
+            add_piety = -100
+        }
+        else = {
+            add_piety = 100
+        }
+        
+        scope:target_barony.county = {
+            change_development_level = -10
+            
+            add_county_modifier = {
+                modifier = recently_looted_modifier
+                years = 3
+            }
+        }
+        stress_impact = {
+            sadistic = -30
+            callous = -30
+            wrathful = -30
+            vengeful = -30
+            compassionate = 30
+            just = 30
+            forgiving = 30
+        }
+    }
+
+    after = {
+        if = {
+            limit = {
+                exists = scope:defeated_ruler
+                
+                # Checks if any courtiers/guests are physically at the besieged barony
+                scope:defeated_ruler = {
+                    any_courtier_or_guest = {
+                        is_at_location = scope:target_barony.title_province
+                        is_imprisoned = no
+                    NOT = { vt_siege_story_protected = yes }
+                    }
+                }
+            }
+            trigger_event = siege_resolution.0002
+        }
+        else_if = {
+            limit = {
+                exists = scope:defeated_ruler
+                
+                # Checks if the ruler is physically present at the saved barony
+                scope:defeated_ruler = {
+                    is_at_location = scope:target_barony.title_province
+                    is_alive = yes
+                    is_commanding_army = no
+                    is_imprisoned = no
+                    NOT = { vt_siege_story_protected = yes }
+                }
+            }
+            trigger_event = siege_resolution.0003
+        }
+    }
+}
+
+# Step 2: The Court
+siege_resolution.0002 = {
+    type = character_event
+    theme = war
+    title = siege_resolution.0002.t
+    desc = siege_resolution.0002.desc
+    
+    override_background = "mpo_raid_burning_asian" 
+    override_effect_2d = {reference = smoke} 
+     
+    left_portrait = {
+        character = root
+        animation = marshal
+    }
+
+    option = {
+        name = siege_resolution.0002.a
+        
+        # Good Action: Sparing the court
+        if = {
+            limit = { exists = scope:defeated_ruler faith.religion = scope:defeated_ruler.faith.religion }
+            add_piety = 100
+        }
+        else = {
+            add_piety = -100
+        }
+        
+        stress_impact = {
+            compassionate = -30
+            forgiving = -30
+            just = -30
+            sadistic = 30
+            callous = 30
+            vengeful = 30
+            wrathful = 30
+        }
+    }
+
+    option = {
+        name = siege_resolution.0002.b
+        add_dread = 20
+        
+        # Evil Action: Executing the court
+        if = {
+            limit = { exists = scope:defeated_ruler faith.religion = scope:defeated_ruler.faith.religion }
+            add_piety = -100
+        }
+        else = {
+            add_piety = 100
+        }
+        
+        scope:defeated_ruler = {
+            every_courtier_or_guest = {
+                limit = { 
+                    is_at_location = scope:target_barony.title_province
+                    is_imprisoned = no
+                    NOT = { vt_siege_story_protected = yes }
+                }
+                death = { death_reason = death_execution killer = root }
+            }
+        }
+        stress_impact = {
+            sadistic = -30
+            callous = -30
+            wrathful = -30
+            vengeful = -30
+            compassionate = 30
+            just = 30
+            forgiving = 30
+        }
+    }
+
+    option = {
+        name = siege_resolution.0002.c
+        scope:defeated_ruler = {
+            every_courtier_or_guest = {
+                limit = { 
+                    is_at_location = scope:target_barony.title_province
+                    is_imprisoned = no
+                    NOT = { vt_siege_story_protected = yes }
+                }
+                save_temporary_scope_as = siege_victim
+                root = { 
+                    imprison = { target = scope:siege_victim type = dungeon }
+                }
+            }
+        }
+        stress_impact = {
+            greedy = -15
+            compassionate = 15
+        }
+    }
+
+    after = {
+        if = {
+            limit = {
+                exists = scope:defeated_ruler
+                
+                # Ensures the ruler is physically present at the saved barony
+                scope:defeated_ruler = {
+                    is_at_location = scope:target_barony.title_province
+                    is_alive = yes
+                    is_commanding_army = no
+                    is_imprisoned = no
+                    NOT = { vt_siege_story_protected = yes }
+                }
+            }
+            trigger_event = siege_resolution.0003
+        }
+    }
+}
+
+# Step 3: The Ruler
+siege_resolution.0003 = {
+    trigger = { exists = scope:defeated_ruler scope:defeated_ruler = { is_alive = yes NOT = { vt_siege_story_protected = yes } } }
+    type = character_event
+    theme = war
+    title = siege_resolution.0003.t
+    desc = siege_resolution.0003.desc
+    
+    override_background = "mpo_raid_burning_asian" 
+    override_effect_2d = {reference = smoke} 
+    
+    left_portrait = {
+        character = root
+        animation = menacing
+    }
+    right_portrait = {
+        character = scope:defeated_ruler
+        animation = beg
+    }
+
+    option = {
+        name = siege_resolution.0003.a
+        add_dread = 100
+        
+        # Evil Action: Executing the ruler
+        if = {
+            limit = { exists = scope:defeated_ruler faith.religion = scope:defeated_ruler.faith.religion }
+            add_piety = -100
+        }
+        else = {
+            add_piety = 100
+        }
+        
+        scope:defeated_ruler = {
+            death = { death_reason = death_execution killer = root }
+        }
+        stress_impact = {
+            sadistic = -30
+            callous = -30
+            wrathful = -30
+            vengeful = -30
+            compassionate = 30
+            just = 30
+            forgiving = 30
+        }
+    }
+
+    option = {
+        name = siege_resolution.0003.b
+        add_prestige = 100
+        root = {
+            imprison = { target = scope:defeated_ruler type = dungeon }
+        }
+        stress_impact = {
+            compassionate = 15
+            vengeful = 15
+        }
+    }
+}

@@ -204,6 +204,7 @@ arcana_base = {
 
 arcana = {
 	value = arcana_base
+ add = { value = vt_atrophy_arcana_penalty desc = trait_vt_magic_atrophy }
     if = { limit = { has_trait = supernatural_vampire } add = { value = 5 desc = vt_arcana_vampire } }
 	if = {
 		limit = { has_trait = vt_ek_education_magic_1 }
@@ -352,7 +353,7 @@ arcana = {
 		}
 	}
 	if = {
-		limit = { has_trait = skooma_drinker }
+		limit = { always = no }
 		add = {
 			value = arcana_trait_skooma_drinker
 			desc = arcana_skooma_drinker
@@ -828,28 +829,28 @@ arcana = {
 	}
 	# Furstocks
 	if = {
-		limit = { has_trait = furstock_dagi }
+		limit = { always = no }
 		add = {
 			value = arcana_trait_dagi
 			desc = arcana_dagi
 		}
 	}
 	if = {
-		limit = { has_trait = furstock_dagi_raht }
+		limit = { always = no }
 		add = {
 			value = arcana_trait_dagi_raht
 			desc = arcana_dagi_raht
 		}
 	}
 	if = {
-		limit = { has_trait = furstock_tojay }
+		limit = { always = no }
 		add = {
 			value = arcana_trait_tojay
 			desc = arcana_tojay
 		}
 	}
 	if = {
-		limit = { has_trait = furstock_tojay_raht }
+		limit = { always = no }
 		add = {
 			value = arcana_trait_tojay_raht
 			desc = arcana_tojay_raht
@@ -1611,6 +1612,8 @@ magicka_regen = {
 	multiply = magicka_mult
 	# Flat recovery after multipliers: exactly five per equipped crystal.
 	add = { value = vt_weave_crystal_recovery desc = vt_weave_crystal_recovery }
+
+ multiply = { value = 1 subtract = vt_atrophy_regen_penalty }
 }
 
 magicka_upkeep = {

@@ -1,0 +1,5 @@
+﻿on_game_start_after_lobby = { on_actions = { vt_magic_atrophy_start } }
+vt_magic_atrophy_start = { effect = { every_living_character = { limit = { vt_magic_atrophy_eligible = yes } vt_magic_atrophy_schedule = yes } } }
+random_yearly_everyone_pulse = { on_actions = { vt_magic_atrophy_recruit } }
+quarterly_playable_pulse = { on_actions = { vt_magic_atrophy_recruit } }
+vt_magic_atrophy_recruit = { trigger = { vt_magic_atrophy_eligible = yes } effect = { vt_magic_atrophy_schedule = yes } }

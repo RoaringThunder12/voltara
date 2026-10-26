@@ -1,0 +1,9 @@
+﻿on_siege_completion = { on_actions = { vt_siege_aftermath_victory } }
+vt_siege_aftermath_victory = { effect = { if = { limit = { is_ai = no exists = scope:barony scope:barony = { exists = holder } }
+ scope:barony = { save_scope_as = target_barony holder = { save_scope_as = defeated_ruler } }
+ trigger_event = siege_resolution.0001
+} } }
+on_county_occupied = { on_actions = { vt_siege_aftermath_escape } }
+vt_siege_aftermath_escape = { effect = { if = { limit = { exists = scope:barony scope:barony = { exists = holder } scope:barony.holder = { is_ai = no NOT = { vt_siege_story_protected = yes } capital_barony = scope:barony is_at_location = scope:barony.title_province } }
+ save_scope_as = attacker_ruler scope:barony.holder = { trigger_event = player_escape.0001 }
+} } }

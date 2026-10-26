@@ -486,7 +486,7 @@ pam_seed_cardinals_effect = {
 		limit = {
 			has_pam_dlc_trigger = yes
 			has_doctrine_parameter = has_clerical_electors
-			any_clerical_elector_title = { count < 10 }
+			NOT = { any_clerical_elector_title = { count >= 30 } }
 			OR = {
 				exists = religious_head
 				always = no
@@ -526,12 +526,12 @@ pam_seed_cardinals_effect = {
 				}
 			}
 			order_by = holder.piety_level
-			max = 10
+			max = 30
 			check_range_bounds = no
 			holder = {
 				if = {
 					limit = {
-						scope:pam_seed_faith = { any_clerical_elector_title = { count < 10 } }
+						scope:pam_seed_faith = { NOT = { any_clerical_elector_title = { count >= 30 } } }
 					}
 					grant_cardinal_title_effect = {
 						CARDINAL_COUNTY = capital_county
@@ -548,12 +548,12 @@ pam_seed_cardinals_effect = {
 				}
 			}
 		}
-		# Mint only what the promotion pass could not fill (count = 10 is a hard bound)
+		# Mint only what the promotion pass could not fill (count = 30 is a hard bound)
 		scope:pam_seed_hof = {
 			while = {
-				count = 10
+				count = 30
 				limit = {
-					scope:pam_seed_faith = { any_clerical_elector_title = { count < 10 } }
+					scope:pam_seed_faith = { NOT = { any_clerical_elector_title = { count >= 30 } } }
 				}
 				pam_create_seed_cardinal_effect = {
 					HOF = scope:pam_seed_hof

@@ -2,7 +2,7 @@
  is_shown = { NOT = { scope:actor = scope:recipient } scope:actor = { has_perk = necromancy_master_perk NOT = { has_trait = voltara_ruins_keeper } }
  scope:recipient = { is_adult = yes is_alive = yes in_diplomatic_range = scope:actor NOT = { has_trait = voltara_ruins_keeper }
  NOT = { has_trait = vt_ek_undead_character }
- NOR = { has_trait = vt_ek_lich_character has_trait = supernatural_vampire has_trait = supernatural_hybrid has_trait = lycan_character has_trait = demon1 has_trait = demon2 is_pregnant = yes } } }
+ NOR = { has_trait = vt_ek_lich_character has_trait = supernatural_vampire has_trait = supernatural_hybrid always = no has_trait = demon1 has_trait = demon2 is_pregnant = yes } } }
  is_valid_showing_failures_only = { scope:actor = { is_imprisoned = no var:magicka >= 100 } scope:recipient = { NOT = { has_opinion_modifier = { modifier = cof_ekue_lich_blessing_rejection_opinion target = scope:actor } } } }
  ai_potential = { always = no } ai_will_do = { base = 0 }
  ai_accept = { base = -20 modifier = { add = 60 scope:recipient = { faith = faith:voltara_khaotism } }
@@ -16,7 +16,7 @@ cof_ekue_ascend_lich_interaction = { category = interaction_category_magic commo
  is_shown = { NOT = { scope:actor = scope:recipient } scope:actor = { has_perk = necromancy_master_perk NOT = { has_trait = voltara_ruins_keeper } }
  scope:recipient = { is_adult = yes is_alive = yes in_diplomatic_range = scope:actor NOT = { has_trait = voltara_ruins_keeper }
  has_trait = vt_ek_undead_character
- NOR = { has_trait = vt_ek_lich_character has_trait = supernatural_vampire has_trait = supernatural_hybrid has_trait = lycan_character has_trait = demon1 has_trait = demon2 is_pregnant = yes } } }
+ NOR = { has_trait = vt_ek_lich_character has_trait = supernatural_vampire has_trait = supernatural_hybrid always = no has_trait = demon1 has_trait = demon2 is_pregnant = yes } } }
  is_valid_showing_failures_only = { scope:actor = { is_imprisoned = no var:magicka >= 60 } scope:recipient = { NOT = { has_opinion_modifier = { modifier = cof_ekue_lich_blessing_rejection_opinion target = scope:actor } } } }
  ai_potential = { always = no } ai_will_do = { base = 0 }
  ai_accept = { base = -20 modifier = { add = 60 scope:recipient = { faith = faith:voltara_khaotism } }

@@ -1,0 +1,21 @@
+﻿# Family estates belong to eligible house heads, as in the native governments.
+vt_estate_startup_government = {
+ OR = {
+  has_government = administrative_government
+  has_government = celestial_government
+  has_government = meritocratic_government
+  has_government = steppe_admin_government
+ }
+}
+vt_estate_startup_eligible = {
+ vt_estate_startup_government = yes
+ is_alive = yes
+ is_house_head = yes
+ exists = capital_province
+ government_allows = noble_families
+ trigger_if = {
+  limit = { government_has_flag = government_has_county_tier_noble_families }
+  highest_held_title_tier >= tier_county
+ }
+ trigger_else = { highest_held_title_tier >= tier_duchy }
+}

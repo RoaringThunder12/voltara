@@ -1,7 +1,7 @@
 ﻿vvr_ithren = { this = character:9999401 is_alive = yes is_landed = yes }
 vvr_cult_leader = { vvr_ithren = yes rite = rite:voltara_veilroot_cult has_character_flag = vvr_cult }
 vvr_lich = { vvr_cult_leader = yes has_trait = vt_ek_lich_character }
-vvr_human_target = { is_landed = yes faith.religion = religion:voltara_religion culture = { has_cultural_pillar = heritage_voltara_human } }
+vvr_human_target = { is_landed = yes faith.religion = religion:voltara_religion culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } } }
 vvr_host_ready = { vvr_lich = yes has_character_flag = vvr_host NOT = { has_character_flag = vvr_defeated } }
 vvr_restored_site = { OR = {
  any_held_title = { tier = tier_barony title_province = { OR = { has_building = vvr_archive_restored has_building = vvr_wards_restored has_building = vvr_observatory_restored has_building = vvr_garden_restored has_building = vvr_library_restored has_building = vvr_gate_restored } } }

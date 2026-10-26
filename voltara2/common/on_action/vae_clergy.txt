@@ -1,0 +1,11 @@
+﻿on_game_start_after_lobby = { on_actions = { vae_clergy_start } }
+yearly_global_pulse = { on_actions = { vae_clergy_start } }
+on_title_gain = { on_actions = { vae_clergy_succession } }
+vae_clergy_start = { effect = { vae_clergy_refresh = yes vae_shrine_refresh = yes } }
+vae_clergy_succession = { trigger = { has_title = title:k_voltara_luminous_see } effect = { if = { limit = { vt_citadel_open = yes NOT = { has_trait = archmaester } } vt_citadel_luminary_effect = yes } } }
+
+on_death = { on_actions = { vae_clergy_death } }
+vae_clergy_death = {
+ trigger = { faith = faith:voltara_aeluinist OR = { has_trait = archmaester exists = clerical_elector_title } }
+ effect = { faith.religious_head ?= { trigger_event = { id = vae_clergy.1 days = 3 } } }
+}

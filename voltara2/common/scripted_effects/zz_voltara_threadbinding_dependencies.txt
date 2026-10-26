@@ -1759,33 +1759,8 @@ cl_save_stats_var_effect = {
 	}
 }
 
-give_lycan_secret_or_trait_effect = {
-	save_temporary_scope_as = lycan_character
-	if = {
-		limit = { #Not already a Lycan
-			NOR = {
-				has_trait = lycan_character
-				any_secret = { secret_type = secret_lycan }
-				has_character_flag = race_daedra # daedra cant become lycan??
-			}	
-		}
-		if = {
-			limit = {
-				trait_is_shunned_or_criminal_in_my_or_lieges_faith_trigger = { TRAIT = trait:lycan_character GENDER_CHARACTER = scope:lycan_character }
-			}
-			add_secret = {
-				type = secret_lycan
-			}
-			add_character_flag = lycan
-			add_trait = irritable_lycan
-			add_character_modifier = secret_lycan_modifier
-		}
-		else = {
-			add_trait = lycan_character
-			add_character_flag = lycan
-		}
-	}	
-}
+give_lycan_secret_or_trait_effect = { # Retired imported lycanthropy.
+ }
 
 remove_birthsign = {
 	if = {

@@ -47,7 +47,7 @@ vip_refresh_public = {
  title:h_voltara_severos.holder = {
  save_scope_as = vip_crown
  set_variable = { name = vip_crown_leader value = this }
- if = { limit = { character:19060003 = { is_alive = yes NOT = { has_title = title:h_voltara_severos } } }
+ if = { limit = { global_var:vic_stage < 6 character:19060003 = { vic_octavian_viable = yes } }
  set_variable = { name = vip_challenger value = character:19060003 } }
  else = { remove_variable = vip_challenger }
 

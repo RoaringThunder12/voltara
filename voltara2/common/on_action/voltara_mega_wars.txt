@@ -4,7 +4,7 @@ voltara_mw_start = {
   exists = title:h_voltara_severos.holder
   OR = { scope:attacker = title:h_voltara_severos.holder scope:defender = title:h_voltara_severos.holder }
   # Great Empire Wars already has its own realm-wide participation mechanism.
-  scope:war = { NOT = { using_cb = vsr_reconquest } NOT = { using_cb = vic_warrant_independence } NOT = { using_cb = great_empire_cb } NOT = { using_cb = voltara_slave_liberation_war } }
+  scope:war = { NOT = { using_cb = vsr_reconquest } NOT = { using_cb = great_empire_cb } NOT = { using_cb = voltara_slave_liberation_war } }
   title:h_voltara_severos = { NOT = { has_variable = voltara_mw_active } }
  }
  effect = {

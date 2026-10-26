@@ -3795,7 +3795,7 @@ vta_southorion_scouts = {
  can_recruit = { NOT = { has_government = voltara_ruins_government }
  OR = { culture = { OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
  illustration = { reference = vta_3059124362_redguard_skirmishers }
 }
@@ -3817,7 +3817,7 @@ vta_southorion_bows = {
  can_recruit = { NOT = { has_government = voltara_ruins_government }
  OR = { culture = { OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_archers add = 5 }
  illustration = { reference = vta_3059124362_redguard_bowmen }
 }
@@ -3973,7 +3973,7 @@ vta_human_free_scouts = {
  counters = { heavy_infantry = 1 }
  terrain_bonus = { plains = { damage = 3 toughness = 3 } mountains = { damage = -2 toughness = -2 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government }
- culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } } }
+ culture = { OR = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
@@ -3995,7 +3995,7 @@ vta_human_free_bows = {
  counters = { skirmishers = 1 }
  terrain_bonus = { plains = { damage = 5 toughness = 2 } mountains = { damage = -5 toughness = -1 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government }
- culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } } }
+ culture = { OR = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = culture_ai_weight_archers add = 5 }
@@ -4017,7 +4017,7 @@ vta_human_free_spears = {
  counters = { light_cavalry = 1 heavy_cavalry = 1 }
  terrain_bonus = { plains = { damage = 4 toughness = 4 } mountains = { damage = -4 toughness = -3 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government }
- culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } }  culture = { has_innovation = innovation_vt_human_warfare_1 } }
+ culture = { OR = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } }  culture = { has_innovation = innovation_vt_human_warfare_1 } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = culture_ai_weight_pikemen add = 5 }
@@ -4039,7 +4039,7 @@ vta_human_free_guard = {
  counters = { pikemen = 1 }
  terrain_bonus = { plains = { damage = 6 toughness = 4 } mountains = { damage = -5 toughness = -3 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government }
- culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } }  culture = { has_innovation = innovation_quilted_armor } }
+ culture = { OR = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } }  culture = { has_innovation = innovation_quilted_armor } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
@@ -4061,7 +4061,7 @@ vta_human_free_pursuit = {
  counters = { archers = 1 }
  terrain_bonus = { plains = { damage = 4 toughness = 3 } mountains = { damage = -4 toughness = -2 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government }
- culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } }  culture = { has_innovation = innovation_vt_human_warfare_1 } }
+ culture = { OR = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } }  culture = { has_innovation = innovation_vt_human_warfare_1 } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
@@ -4085,7 +4085,7 @@ vta_human_free_siege = {
  counters = {  }
  
  can_recruit = { NOT = { has_government = voltara_ruins_government }
- culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } } }
+ culture = { OR = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
  ai_quality = { value = 10 }
@@ -4107,7 +4107,7 @@ vta_human_free_elite = {
  counters = { pikemen = 1 skirmishers = 0.5 }
  terrain_bonus = { plains = { damage = 8 toughness = 5 } mountains = { damage = -7 toughness = -4 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government }
- culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } }
+ culture = { OR = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } }
  culture = { has_innovation = innovation_vt_human_warfare_2 } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
@@ -4130,7 +4130,7 @@ vta_human_free_lancers = {
  counters = { archers = 1 }
  terrain_bonus = { plains = { damage = 20 } drylands = { damage = 15 } mountains = { damage = -65 toughness = -10 } desert_mountains = { damage = -65 toughness = -10 } wetlands = { damage = -60 toughness = -10 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government }
- culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } }
+ culture = { OR = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } has_cultural_pillar = heritage_voltara_southron } NOR = { this = culture:voltara_culture_19 this = culture:voltara_culture_22 this = culture:voltara_culture_24 this = culture:voltara_culture_25 this = culture:voltara_culture_26 this = culture:voltara_culture_27 this = culture:voltara_culture_30 this = culture:voltara_culture_31 this = culture:voltara_culture_33 this = culture:voltara_culture_35 this = culture:voltara_culture_36 this = culture:voltara_culture_43 this = culture:voltara_culture_44 this = culture:voltara_culture_45 this = culture:voltara_culture_46 this = culture:voltara_culture_47 this = culture:voltara_culture_48 this = culture:voltara_western_corsairs this = culture:voltara_island_freebooters this = culture:voltara_rhaullan this = culture:voltara_desert_southron OR = { this = culture:voltara_southorion has_cultural_pillar = heritage_voltara_southron } } }
  culture = { has_innovation = innovation_arched_saddle } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
@@ -4153,7 +4153,7 @@ vta_human_marksmen = {
  counters = { heavy_infantry = 1 heavy_cavalry = 1 }
  terrain_bonus = { farmlands = { damage = 8 toughness = 3 } mountains = { damage = -7 toughness = -3 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government }
- culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_voltara_southron } }
+ culture = { OR = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } has_cultural_pillar = heritage_voltara_southron } }
  culture = { has_innovation = innovation_vt_human_warfare_3 } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
@@ -4178,7 +4178,7 @@ vta_human_siege_2 = {
  counters = {  }
  
  can_recruit = { NOT = { has_government = voltara_ruins_government }
- culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_voltara_southron } }
+ culture = { OR = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } has_cultural_pillar = heritage_voltara_southron } }
  culture = { has_innovation = innovation_mangonel } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
@@ -4203,7 +4203,7 @@ vta_human_siege_3 = {
  counters = {  }
  
  can_recruit = { NOT = { has_government = voltara_ruins_government }
- culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_voltara_southron } }
+ culture = { OR = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } has_cultural_pillar = heritage_voltara_southron } }
  culture = { has_innovation = innovation_trebuchet } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no
@@ -4228,7 +4228,7 @@ vta_human_siege_4 = {
  counters = {  }
  
  can_recruit = { NOT = { has_government = voltara_ruins_government }
- culture = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_voltara_southron } }
+ culture = { OR = { OR = { has_cultural_pillar = heritage_voltara_human has_cultural_pillar = heritage_vae_aesaryos } has_cultural_pillar = heritage_voltara_southron } }
    culture = { has_innovation = innovation_vt_human_warfare_4 } }
  access_through_subject = { always = no }
  allowed_in_hired_troops = no

@@ -1,0 +1,132 @@
+﻿namespace = player_escape
+
+# The Initial Siege Event
+player_escape.0001 = {
+    type = character_event
+    title = player_escape.0001.t
+    desc = player_escape.0001.desc
+    theme = war
+    trigger = { exists = scope:attacker_ruler NOT = { vt_siege_story_protected = yes } }
+    
+    override_background = "bedchamber"
+    
+    
+    left_portrait = {
+        character = root
+        animation = fear
+    }
+    right_portrait = {
+        character = scope:attacker_ruler
+        animation = menacing
+    }
+
+    # Option A: Fight your way out (Prowess)
+    option = {
+        name = player_escape.0001.a 
+        
+        random_list = {
+            10 = {
+                modifier = {
+                    add = {
+                        value = prowess
+                        multiply = 4 
+                    }
+                }
+                custom_tooltip = player_escape_success_prowess_tt
+                trigger_event = player_escape.0002
+            }
+            50 = {
+                # The raw imprison command using your scope
+                scope:attacker_ruler = {
+                    imprison = { target = root type = dungeon }
+                }
+                trigger_event = player_escape.0003
+            }
+        }
+    }
+
+    # Option B: Sneak away (Intrigue)
+    option = {
+        name = player_escape.0001.b 
+        
+        random_list = {
+            10 = {
+                modifier = {
+                    add = {
+                        value = intrigue
+                        multiply = 4 
+                    }
+                }
+                custom_tooltip = player_escape_success_intrigue_tt
+                trigger_event = player_escape.0002
+            }
+            50 = {
+                scope:attacker_ruler = {
+                    imprison = { target = root type = dungeon }
+                }
+                trigger_event = player_escape.0003
+            }
+        }
+    }
+
+    # Option C: Blind Luck (Random)
+    option = {
+        name = player_escape.0001.c 
+        
+        random_list = {
+            50 = {
+                custom_tooltip = player_escape_success_luck_tt
+                trigger_event = player_escape.0002
+            }
+            50 = {
+                scope:attacker_ruler = {
+                    imprison = { target = root type = dungeon }
+                }
+                trigger_event = player_escape.0003
+            }
+        }
+    }
+}
+
+# The Escape Event (Success)
+player_escape.0002 = {
+    immediate = { if = { limit = { is_imprisoned = yes imprisoner = scope:attacker_ruler } release_from_prison = yes } }
+    type = character_event
+    title = player_escape.0002.t
+    desc = player_escape.0002.desc
+    theme = war
+
+    override_background = "wilderness_forest"
+    
+    left_portrait = {
+        character = root
+        animation = disapproval
+    }
+
+    option = {
+        name = player_escape.0002.a
+    }
+}
+
+# The Capture Event (Failure)
+player_escape.0003 = {
+    type = character_event
+    title = player_escape.0003.t
+    desc = player_escape.0003.desc
+    theme = prison
+ 
+    override_background = "dungeon"
+    
+    left_portrait = {
+        character = root
+        animation = war_over_loss
+    }
+    right_portrait = {
+        character = scope:attacker_ruler
+        animation = menacing
+    }
+
+    option = {
+        name = player_escape.0003.a
+    }
+}

@@ -1,0 +1,22 @@
+﻿vae_clergy_refresh = {
+ if = { limit = { vt_citadel_open = yes }
+  title:k_voltara_luminous_see.holder = {
+ if = { limit = { NOT = { has_realm_law = theocratic_elective_succession_law } } add_realm_law = theocratic_elective_succession_law }
+   if = { limit = { NOT = { has_trait = archmaester } } vt_citadel_luminary_effect = yes }
+  }
+  every_living_character = {
+   limit = { vae_college_candidate = yes NOT = { exists = clerical_elector_title }
+    faith = { NOT = { any_clerical_elector_title = { count >= 30 } } }
+    NOT = { has_title = title:k_voltara_luminous_see }
+   }
+   if = { limit = { faith = { NOT = { any_clerical_elector_title = { count >= 30 } } } } if = { limit = { faith = { NOT = { any_clerical_elector_title = { count >= 30 } } } } grant_cardinal_title_effect = { CARDINAL_COUNTY = title:c_voltara_4435 } } }
+  }
+  faith:voltara_aeluinist = { pam_seed_cardinals_effect = yes }
+ vae_college_affinities = yes
+ }
+}
+
+vae_college_affinities = { faith:voltara_aeluinist = { every_clerical_elector_title = { holder = { if = { limit = { NOR = { has_character_flag = vae_populist has_character_flag = vae_powerful has_character_flag = vae_pious } }
+if = { limit = { faith = { NOT = { any_clerical_elector_title = { count >= 10 holder = { has_character_flag = vae_populist } } } } } add_character_flag = vae_populist }
+else_if = { limit = { faith = { NOT = { any_clerical_elector_title = { count >= 10 holder = { has_character_flag = vae_powerful } } } } } add_character_flag = vae_powerful }
+else = { add_character_flag = vae_pious } } } } } }

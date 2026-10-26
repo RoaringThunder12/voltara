@@ -1,0 +1,28 @@
+﻿vic_schedule_liberation = {
+ if = { limit = {
+  this = character:19060003 is_alive = yes has_title = title:h_voltara_severos
+  global_var:vic_war_result = 1
+  NOT = { has_game_rule = vic_liberation_disabled }
+  NOT = { has_global_variable = vic_liberation_scheduled }
+  NOT = { has_global_variable = voltara_cassian_crisis_revolt }
+ }
+  set_global_variable = { name = vic_liberation_scheduled value = yes }
+  trigger_event = { id = vic_liberation.1 months = 36 }
+ }
+}
+vic_resolve_liberation_due = {
+ if = { limit = {
+  has_global_variable = vic_liberation_due
+  NOT = { has_game_rule = vic_liberation_disabled }
+  NOT = { has_global_variable = voltara_cassian_crisis_revolt }
+  this = character:19060003 is_alive = yes has_title = title:h_voltara_severos
+  has_realm_law = voltara_slavery_legal
+  exists = title:e_voltara_thornfall.holder
+  title:e_voltara_thornfall.holder = { is_alive = yes NOT = { this = character:19060003 } }
+ }
+  # A captured Thornfall leader escapes to lead the existing liberation chain.
+  title:e_voltara_thornfall.holder = { if = { limit = { is_imprisoned = yes } release_from_prison = yes } }
+  voltara_begin_slave_revolt = yes
+  vip_refresh_public = yes
+ }
+}

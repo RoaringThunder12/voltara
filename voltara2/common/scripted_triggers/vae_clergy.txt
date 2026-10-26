@@ -1,0 +1,16 @@
+﻿vae_college_candidate = {
+ vt_aeliunist_clergy_eligible = yes is_alive = yes is_adult = yes is_imprisoned = no is_incapable = no
+ NOT = { has_trait = excommunicated } NOT = { has_trait = disgraced_maester }
+ pam_can_receive_cardinalate_trigger = yes
+ OR = { has_trait = archmaester has_trait = maester government_has_flag = government_is_theocracy }
+ rite = { NOT = { rite_has_doctrine = doctrine_no_head } }
+}
+
+
+
+vae_institutional_authority = {
+ vt_aeliunist_clergy_eligible = yes
+ vt_citadel_open = yes
+ rite = { NOT = { rite_has_doctrine = doctrine_no_head } }
+ exists = faith.religious_head
+}

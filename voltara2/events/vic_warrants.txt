@@ -1,17 +1,1 @@
-﻿namespace = vic_warrants
-vic_warrants.1 = { hidden = yes
- trigger = { this = character:19060003 is_alive = yes has_title = title:h_voltara_severos global_var:vic_war_result = 1 }
- immediate = { vic_issue_warrants = yes }
-}
-vic_warrants.2 = { type = character_event theme = intrigue title = vic_warrants.2.t desc = vic_warrants.2.desc
- left_portrait = { character = character:19060003 }
- trigger = { vic_warrant_pending = yes }
- option = { name = vic_warrants.2.accept custom_tooltip = vic_warrants.2.accept.tt
-  hidden_effect = { vic_accept_warrant = yes }
-  ai_chance = { base = 40 modifier = { factor = 3 has_trait = craven } }
- }
- option = { name = vic_warrants.2.refuse custom_tooltip = vic_warrants.2.refuse.tt
-  hidden_effect = { vic_refuse_warrant = yes }
-  ai_chance = { base = 60 modifier = { factor = 2 has_trait = brave } }
- }
-}
+﻿# Imperial warrant chain removed by request.

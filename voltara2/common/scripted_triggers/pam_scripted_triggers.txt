@@ -3069,6 +3069,8 @@ pam_is_western_christian_trigger = {
 
 # Character scope. The College is a faith-locked doctrine (Catholicism).
 pam_can_hold_cardinalate_trigger = {
+ trigger_if = { limit = { faith = faith:voltara_aeluinist } rite = { NOT = { rite_has_doctrine = doctrine_no_head } } NOT = { has_trait = disgraced_maester } }
+
 	faith ?= { has_doctrine_parameter = has_clerical_electors }
 	trigger_if = {
 		limit = { NOT = { has_global_variable = pam_great_schism_decision_taken } }
@@ -5435,11 +5437,10 @@ pam_leads_college_of_cardinals_trigger = {
 }
 
 pam_pope_is_head_of_faith_or_rite_trigger = {
-	OR = {
-		rite.head_of_rite ?= { always = no }
-		faith.main_rite.head_of_rite ?= { always = no }
-		faith.religious_head ?= { always = no }
-	}
+ OR = {
+  rite.head_of_rite ?= { has_doctrine_parameter = has_clerical_electors }
+  faith.religious_head ?= { has_doctrine_parameter = has_clerical_electors }
+ }
 }
 
 # Cardinal scope needs $POPE$ here

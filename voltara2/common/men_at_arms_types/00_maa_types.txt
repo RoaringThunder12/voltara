@@ -37,7 +37,7 @@ light_footmen = {
 		heavy_infantry = 1
 	}
 
-	can_recruit = {
+	can_recruit = { always = no 
  vt_generic_human_maa_access = yes
 
 		NOT = { government_has_flag = government_is_in_steppe }
@@ -92,7 +92,7 @@ bowmen = {
 		skirmishers = 1
 	}
 
-	can_recruit = {
+	can_recruit = { always = no 
  vt_generic_human_maa_access = yes
 
 		NOT = { government_has_flag = government_is_in_steppe }
@@ -154,7 +154,7 @@ light_horsemen = {
 		gunpowder = 1
 	}
 
-	can_recruit = {
+	can_recruit = { always = no 
  vt_generic_human_maa_access = yes
 
 		NOT = { government_has_flag = government_is_in_steppe }
@@ -224,7 +224,7 @@ pikemen_unit = {
 		elephant_cavalry = 1
 	}
 
-	can_recruit = {
+	can_recruit = { always = no 
  vt_generic_human_maa_access = yes
 
 		NOT = { government_has_flag = government_is_in_steppe }
@@ -278,7 +278,7 @@ armored_footmen = {
 		peasant_militia = 2
 	}
 
-	can_recruit = {
+	can_recruit = { always = no 
  vt_generic_human_maa_access = yes
 
 		culture = {
@@ -384,7 +384,7 @@ armored_horsemen = {
 		gunpowder = 1
 	}
 
-	can_recruit = {
+	can_recruit = { always = no 
  vt_generic_human_maa_access = yes
 
 		culture = {
@@ -496,7 +496,7 @@ crossbowmen = {
 		archer_cavalry = 0.5
 	}
 
-	can_recruit = {
+	can_recruit = { always = no 
  vt_generic_human_maa_access = yes
 
 		culture = {
@@ -625,7 +625,7 @@ handgunners = {
 	pursuit = 0
 	screen = 5
 
-	can_recruit = {
+	can_recruit = { always = no 
  vt_generic_human_maa_access = yes
 
 		gunpowder_raise_limit_existing_gunpowder_units < gunpowder_raise_limit_existing_gunpowder_buildings	# one powder magazine must be owned to support three handgunner regiments, regardless of maa size
@@ -661,7 +661,7 @@ handgunners = {
 # Special
 house_guard = {
 	type = heavy_infantry
-	can_recruit = {
+	can_recruit = { always = no 
  vt_generic_human_maa_access = yes
 
 		dynasty ?= {
@@ -752,7 +752,7 @@ pikemen_militia = {
 		reference = pikemen_militia
 	}
 
- can_recruit = { vt_generic_human_maa_access = yes }
+ can_recruit = { always = no  vt_generic_human_maa_access = yes }
 
  access_through_subject = { vt_generic_human_maa_access = yes }
 }

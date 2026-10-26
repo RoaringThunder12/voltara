@@ -244,7 +244,7 @@ life_extension.0290 = {
 			}	
 			#triggered_desc = {
 				#trigger = { uncomment when alternative desc exists
-				#	faith = { has_doctrine = tenet_necromancy_worship }
+				#	rite = { rite_has_tenet = tenet_voltara_unbound_souls }
 				#}
 				#desc = life_extension.0290.desc2
 			#}	
@@ -264,7 +264,7 @@ life_extension.0290 = {
                     factor = arcana
                 }
                 modifier = {
-                    faith = { has_doctrine = tenet_necromancy_worship }
+                    rite = { rite_has_tenet = tenet_voltara_unbound_souls }
                     add = 10
                 }
                 modifier = {
@@ -293,7 +293,7 @@ life_extension.0290 = {
                     add = 10
                 }
                 modifier = {
-                    faith = { has_doctrine = tenet_necromancy_worship }
+                    rite = { rite_has_tenet = tenet_voltara_unbound_souls }
                     add = -5
                 }
                 custom_tooltip = {
@@ -1657,7 +1657,7 @@ life_extension.0251 = { # Fails - Half-alive Clone
 						limit = {
 							NOT = {
 								scope:clone.culture ?= {
-									has_cultural_pillar = heritage_argonian
+									always = no
 									NOT = {
 										this = culture:ojel
 										any_parent_culture_or_above = {
@@ -2003,7 +2003,7 @@ life_extension.0200 = { # Cloning Project Succeeds
 			limit = {
 				NOT = {
 					scope:clone.culture ?= {
-						has_cultural_pillar = heritage_argonian
+						always = no
 						NOT = {
 							this = culture:ojel
 							any_parent_culture_or_above = {
@@ -2219,8 +2219,8 @@ life_extension.0158 = { # Lycanthrope
 		if = {
 			limit = {
 				OR = {
-					faith = { has_doctrine = doctrine_hircine_pantheon }
-					secret_faith ?= { has_doctrine = doctrine_hircine_pantheon }
+					faith = { always = no }
+					secret_faith ?= { always = no }
 				}
 			}
 			add_piety = -300
@@ -2230,135 +2230,7 @@ life_extension.0158 = { # Lycanthrope
 		}
 	}
 
-	option = { # Make the clone a Werewolf using hircine worship
-		name = life_extension.0158.b
-		flavor = life_extension.0158.b.flavor
-		trait = lycan_character
-		trait = irritable_lycan
-
-		# This should probably give daedric ardor with hircine
-		fake_duel = {
-			skill = arcana
-			target = this
-			value = mediocre_skill_rating
-		}
-		random_list = {
-			30 = { # Success - Clone will be Werewolf
-				compare_modifier = {
-					value = scope:fake_duel_value
-					multiplier = 3.5
-					min = -49
-				}
-				desc = life_extension.cloning_duel.tt_win
-				send_interface_toast = {
-					title = life_extension.cloning_duel.tt_win
-					type = event_toast_effect_good
-					left_icon = root
-					custom_tooltip = life_extension.0158.werewolf
-					scope:story = { set_variable = cl_werewolf }
-				}
-
-				#Modifiers
-				min = 10
-				modifier = { # Easier through Cloning Insights
-					has_variable = cl_cloning_insights
-					add = {
-						value = var:cl_cloning_insights
-						multiply = 1
-					}
-				}
-				modifier = {
-					is_lycan = yes
-					add = 17
-				}
-			}
-			65 = { # Failure - Decreased Success Chance
-				compare_modifier = {
-					value = scope:fake_duel_value
-					multiplier = -3.5
-					min = -49
-				}
-				desc = life_extension.cloning_duel.tt_fail
-				send_interface_toast = {
-					title = life_extension.cloning_duel.tt_fail
-					type = event_toast_effect_bad
-					left_icon = root
-					# Unforeseen Consequences
-					custom_tooltip = life_extension.cloning_duel.negative_traits
-					scope:story = {
-						change_variable = { #Chance of Negative Traits at conclusion
-							name = cl_negative_traits
-							add = 1
-						}
-					}
-					# Reduce Cloning Success Chance
-					cl_change_success_chance_effect = { VALUE = -1 }
-				}
-
-				#Modifiers
-				min = 20
-				modifier = { # Easier through Cloning Insights
-					has_variable = cl_cloning_insights
-					add = {
-						value = var:cl_cloning_insights
-						multiply = -0.6
-					}
-				}
-				modifier = {
-					is_lycan = yes
-					add = -12
-				}
-			}
-			30 = { # Critical Failure - Project fails instantly
-				compare_modifier = {
-					value = scope:fake_duel_value
-					multiplier = -3.5
-					min = -49
-				}
-				desc = life_extension.cloning_duel.tt_critical_fail
-				send_interface_toast = {
-					title = life_extension.cloning_duel.tt_critical_fail
-					type = event_toast_effect_bad
-					left_icon = root
-					custom_tooltip = life_extension.cloning_duel.clone_dies
-					# Make sure no cloning events trigger in the meantime
-					scope:story = {
-						set_variable = { #Number of Events
-							name = cl_num_of_events
-							value = 10
-						}
-					}
-					trigger_event = { # Project Fails
-						id = life_extension.0250
-						days = 5
-					}
-				}
-
-				#Modifiers
-				min = 6
-				modifier = { # Easier through Cloning Insights
-					has_variable = cl_cloning_insights
-					add = {
-						value = var:cl_cloning_insights
-						multiply = -0.4
-					}
-				}
-				modifier = {
-					is_lycan = yes
-					add = -5
-				}
-			}
-		}
-		
-		ai_chance = {
-			base = 0
-			modifier = {
-				has_arcana = { VALUE >= high_skill_rating }
-				is_lycan = yes
-				add = 200
-			}
-		}
-	}
+	
 }
 
 life_extension.0157 = { # Twins
@@ -3442,7 +3314,7 @@ life_extension.0154 = { # Gender
 		flavor = life_extension.0154.b.tt
 		trigger = {
 			is_female = yes
-			NOT = { culture = { has_cultural_pillar = heritage_argonian } }
+			NOT = { culture = { always = no } }
 		}
 
 		fake_duel = {
@@ -3519,7 +3391,7 @@ life_extension.0154 = { # Gender
 		flavor = life_extension.0154.c.tt
 		trigger = {
 			is_male = yes
-			NOT = { culture = { has_cultural_pillar = heritage_argonian } }
+			NOT = { culture = { always = no } }
 		}
 
 		fake_duel = {
@@ -3597,7 +3469,7 @@ life_extension.0154 = { # Gender
 		flavor = life_extension.0154.d.tt
 		trigger = {
 			is_female = yes
-			culture = { has_cultural_pillar = heritage_argonian }
+			culture = { always = no }
 		}
 		custom_tooltip = life_extension.0154.male
 		scope:story = { set_variable = cl_switch_gender }
@@ -3610,7 +3482,7 @@ life_extension.0154 = { # Gender
 		flavor = life_extension.0154.e.tt
 		trigger = {
 			is_male = yes
-			culture = { has_cultural_pillar = heritage_argonian }
+			culture = { always = no }
 		}
 		custom_tooltip = life_extension.0154.female
 		scope:story = { set_variable = cl_switch_gender }
@@ -4503,7 +4375,7 @@ life_extension.0151 = { # Improve Success Chance by dedicating more Resources
 		name = life_extension.0151.f
 		trigger = {
 			OR = {
-				secret_faith ?= { has_doctrine = doctrine_pantheon_hermaeus }
+				secret_faith ?= { always = no }
 				has_trait = p_ob_hermaeus
 			}
 		}

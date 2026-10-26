@@ -1,0 +1,17 @@
+﻿vt_magic_atrophy_tick = {
+ if = {
+  limit = { vt_magic_atrophy_eligible = yes magicka_monthly > 10 }
+  # Snapshot income before applying the new trait's own debuffs.
+  save_scope_value_as = { name = vt_atrophy_gain value = vt_atrophy_monthly_progress }
+  if = { limit = { NOT = { has_trait = vt_magic_atrophy } } add_trait = vt_magic_atrophy }
+  add_trait_xp = { trait = vt_magic_atrophy value = scope:vt_atrophy_gain }
+  if = { limit = { has_trait_xp = { trait = vt_magic_atrophy value >= 100 } NOT = { has_trait = incapable } } add_trait = incapable }
+ }
+}
+vt_magic_atrophy_schedule = {
+ if = {
+  limit = { vt_magic_atrophy_eligible = yes OR = { has_variable = magicka has_trait = vt_magic_atrophy magicka_monthly > 10 } NOT = { has_character_flag = vt_atrophy_tick_scheduled } NOT = { has_trait_xp = { trait = vt_magic_atrophy value >= 100 } } }
+  add_character_flag = vt_atrophy_tick_scheduled
+  trigger_event = { id = vt_magic_atrophy.1 days = 30 }
+ }
+}

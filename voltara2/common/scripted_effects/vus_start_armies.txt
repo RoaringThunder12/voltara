@@ -1,0 +1,17 @@
+﻿vus_start_army = {
+ if = { limit = { is_alive = yes is_landed = yes highest_held_title_tier >= tier_county
+  OR = { culture = { has_cultural_pillar = heritage_voltara_southron } vkf_southron = yes }
+  OR = { has_government = tribal_government has_government = nomad_government has_government = herder_government }
+  NOT = { has_character_flag = vus_start_army_done }
+ }
+ add_character_flag = vus_start_army_done
+ if = { limit = { maa_regiments_count = 0 maa_regiments_count < maa_regiments_max_count }
+if = { limit = { culture = { has_cultural_pillar = heritage_voltara_giants } } create_maa_regiment = { type = vta_giants_scouts size = 1 } if = { limit = { maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_giants_bows size = 1 } } }
+else_if = { limit = { culture = { has_cultural_pillar = heritage_voltara_gorilla } } create_maa_regiment = { type = vta_gorilla_scouts size = 1 } if = { limit = { maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_gorilla_bows size = 1 } } }
+else_if = { limit = { culture = { has_cultural_pillar = heritage_voltara_goblin } } create_maa_regiment = { type = vta_goblin_scouts size = 1 } if = { limit = { maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_goblin_bows size = 1 } } }
+else_if = { limit = { culture = { has_cultural_pillar = heritage_voltara_orc } } create_maa_regiment = { type = vta_orc_scouts size = 1 } if = { limit = { maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_orc_bows size = 1 } } }
+else_if = { limit = { culture = { has_cultural_pillar = heritage_voltara_stoneborn } } create_maa_regiment = { type = vta_stoneborn_scouts size = 1 } if = { limit = { maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_stoneborn_bows size = 1 } } }
+else = { create_maa_regiment = { type = vta_southorion_scouts size = 1 } if = { limit = { maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_southorion_bows size = 1 } } }
+ }
+ }
+}

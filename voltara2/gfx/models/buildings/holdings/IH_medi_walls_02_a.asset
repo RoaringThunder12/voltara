@@ -1,0 +1,28 @@
+pdxmesh = {
+	name = "IH_medi_walls_02_a_mesh"
+	file = "IH_medi_walls_02_a.mesh"
+	
+	meshsettings = {
+		name = "IH_medi_walls_02_a"
+		index = 0
+		texture_diffuse = "IH_western_walls_diffuse.dds"
+		texture_normal = "IH_western_walls_normal.dds"
+		texture_specular = "IH_western_walls_properties.dds"
+		shader = "snap_to_terrain"
+		shader_file = "gfx/FX/pdxmesh.shader"
+	}
+	meshsettings = {
+		name = "IH_medi_walls_02_a_atlas"
+		index = 0
+		texture_diffuse = "IH_medi_atlas_diffuse.dds"
+		texture_normal = "IH_medi_atlas_normal.dds"
+		texture_specular = "IH_medi_atlas_properties.dds"
+		shader = "snap_to_terrain"
+		shader_file = "gfx/FX/pdxmesh.shader"
+	}
+}
+
+entity = {
+	name = "IH_medi_walls_02_a_entity"
+	pdxmesh = "IH_medi_walls_02_a_mesh"
+}

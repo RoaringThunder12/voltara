@@ -1,6 +1,7 @@
 ﻿vip_story_public_consequences = {
  if = { limit = { exists = title:h_voltara_severos.holder }
  title:h_voltara_severos.holder = {
+ save_scope_as = vip_story_crown
  every_vassal_or_below = { limit = { vip_public_lord = yes }
  if = { limit = { global_var:vic_settlement ?= 1 NOT = { has_character_flag = vip_peace_received } }
  add_character_flag = vip_peace_received
@@ -15,7 +16,7 @@
  add_character_flag = vip_public_case_received
  lam_pd_grievance_relieve_effect = { KIND = repression AMOUNT = -10 }
  }
- if = { limit = { character:19060001 = { has_realm_law = voltara_slavery_banned has_character_modifier = vic_reform_legacy }
+ if = { limit = { scope:vip_story_crown = { vic_abolitionist_ruler = yes has_realm_law = voltara_slavery_banned }
  NOT = { has_character_flag = vip_abolition_received } }
  add_character_flag = vip_abolition_received
  if = { limit = { has_trait = voltara_slaver }

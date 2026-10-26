@@ -3,7 +3,7 @@
  set_variable = { name = voltara_ruins_named value = yes }
 }
 voltara_refresh_ruins_region_name = {
- if = { limit = { any_de_jure_county = { always = yes } NOT = { any_de_jure_county = { NOT = { has_variable = voltara_ruin_state } } } }
+ if = { limit = { trigger_if = { limit = { exists = holder } holder = { has_government = voltara_ruins_government } } any_de_jure_county = { always = yes } NOT = { any_de_jure_county = { NOT = { has_variable = voltara_ruin_state } } } }
   voltara_mark_ruins_name = yes
  }
  else_if = { limit = { has_variable = voltara_ruins_named }

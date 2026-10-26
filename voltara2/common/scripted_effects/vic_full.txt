@@ -145,7 +145,7 @@ title:c_voltara_323 = { if = { limit = { holder = scope:vic_former_emperor } cha
 vic_war_end = {
 set_global_variable = { name = vic_war_result value = $RESULT$ }
  vic_restore_war_realms = yes
- if = { limit = { global_var:vic_war_result = 1 } character:19060003 = { trigger_event = { id = vic_warrants.1 days = 2 } } }
+ if = { limit = { global_var:vic_war_result = 1 } character:19060003 = { vic_schedule_liberation = yes } }
  set_global_variable = { name = vic_stage value = 6 } set_global_variable = { name = vic_aftermath_age value = 0 } 
  if = { limit = { global_var:vic_war_result = 2 } vic_loyalist_victory = yes }
  remove_global_variable = vic_war
@@ -500,13 +500,8 @@ if = { limit = { global_var:vic_stage = 6 NOT = { has_global_variable = vic_afte
  vic_family_aftermath = yes
  trigger_event = { id = vic_story.81 days = 10 }
  character:19060042 ?= { if = { limit = { is_alive = yes } trigger_event = { id = vic_story.52 days = 15 } } }
- if = { limit = { this = character:19060003 has_realm_law = voltara_slavery_legal global_var:vic_popular_unrest >= 60
- NOT = { has_global_variable = voltara_cassian_crisis_revolt }
- exists = title:e_voltara_thornfall.holder title:e_voltara_thornfall.holder = { is_alive = yes NOT = { this = root } }
- NOT = { has_game_rule = vic_liberation_disabled }
- }
- voltara_begin_slave_revolt = yes
- }
+ # Liberation aftermath is scheduled from the war victory, not this settlement.
+
  set_global_variable = { name = vic_stage value = 7 } 
  }
 }
