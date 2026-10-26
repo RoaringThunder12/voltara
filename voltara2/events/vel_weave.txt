@@ -1,0 +1,54 @@
+﻿namespace = vel
+vel.10 = { type = character_event theme = learning title = vel.10.t desc = vel.10.desc trigger = { vel_eligible = yes vel_high_elf = yes }
+option = { name = vel.10.a custom_tooltip = vel_shift_aeliun_3 vt_weave_shift = { VALUE = -3 }add_character_modifier = { modifier = vel_dawn_anchor years = 5 }capital_county = { add_county_modifier = { modifier = vel_sheltered_county years = 5 } } trigger_event = { id = vel.11 days = 30 } ai_chance = { base = 20 } }
+option = { name = vel.10.b custom_tooltip = vel_shift_aeliun_5 vt_weave_shift = { VALUE = -5 }add_character_modifier = { modifier = vel_rigid_order years = 5 } capital_county = { change_county_control = 15 } add_stress = 30 ai_chance = { base = 20 } }
+option = { name = vel.10.c trigger = { can_magic_trigger = yes has_variable = magicka var:magicka >= 30 } change_variable = { name = magicka subtract = 30 } custom_tooltip = vel_shift_aeliun_3 vt_weave_shift = { VALUE = -3 }add_character_modifier = { modifier = vel_dawn_anchor years = 5 }capital_county = { add_county_modifier = { modifier = vel_sheltered_county years = 5 } } add_learning_lifestyle_xp = 150 trigger_event = { id = vel.11 days = 30 } ai_chance = { base = 20 } }
+}
+vel.11 = { type = character_event theme = learning title = vel.11.t desc = vel.11.desc trigger = { vel_eligible = yes vel_high_elf = yes }
+option = { name = vel.11.a add_piety = 100 add_learning_lifestyle_xp = 150 ai_chance = { base = 20 } }
+option = { name = vel.11.b trigger = { can_magic_trigger = yes } if = { limit = { NOT = { has_perk = restoration_novice_perk } } add_perk = restoration_novice_perk } add_learning_lifestyle_xp = 100 ai_chance = { base = 20 } }
+option = { name = vel.11.c add_prestige = 100 ai_chance = { base = 20 } }
+}
+vel.20 = { type = character_event theme = learning title = vel.20.t desc = vel.20.desc trigger = { vel_eligible = yes vel_high_elf = yes }
+option = { name = vel.20.a custom_tooltip = vel_shift_aeliun_2 vt_weave_shift = { VALUE = -2 }add_character_modifier = { modifier = vel_dawn_anchor years = 5 } trigger_event = { id = vel.21 days = 21 } ai_chance = { base = 20 } }
+option = { name = vel.20.b custom_tooltip = vel_shift_aeliun_1 vt_weave_shift = { VALUE = -1 }capital_county = { add_county_modifier = { modifier = vel_pattern_school years = 5 } } add_learning_lifestyle_xp = 250 ai_chance = { base = 20 } }
+option = { name = vel.20.c trigger = { can_magic_trigger = yes } custom_tooltip = vel_shift_aeliun_2 vt_weave_shift = { VALUE = -2 } add_arcana_skill = { VALUE = 1 } add_stress = 15 ai_chance = { base = 20 } }
+}
+vel.21 = { type = character_event theme = learning title = vel.21.t desc = vel.21.desc trigger = { vel_eligible = yes vel_high_elf = yes }
+option = { name = vel.21.a custom_tooltip = vel_shift_aeliun_1 vt_weave_shift = { VALUE = -1 }capital_county = { add_county_modifier = { modifier = vel_sheltered_county years = 5 } } add_piety = 100 ai_chance = { base = 20 } }
+option = { name = vel.21.b custom_tooltip = vel_shift_aeliun_2 vt_weave_shift = { VALUE = -2 } capital_county = { change_county_control = -10 } add_dread = 10 ai_chance = { base = 20 } }
+}
+vel.30 = { type = character_event theme = learning title = vel.30.t desc = vel.30.desc trigger = { vel_eligible = yes vel_deep_elf = yes }
+option = { name = vel.30.a custom_tooltip = vel_shift_khaos_3 vt_weave_shift = { VALUE = 3 }add_character_modifier = { modifier = vel_khaos_anchor years = 5 }capital_county = { add_county_modifier = { modifier = vel_living_patterns years = 5 } } trigger_event = { id = vel.31 days = 30 } ai_chance = { base = 20 } }
+option = { name = vel.30.b trigger = { can_magic_trigger = yes has_variable = magicka } custom_tooltip = vel_shift_khaos_5 vt_weave_shift = { VALUE = 5 }add_character_modifier = { modifier = vel_khaos_anchor years = 5 }add_character_modifier = { modifier = vel_open_current years = 3 } custom_tooltip = vel_atrophy_warning trigger_event = { id = vel.31 days = 30 } ai_chance = { base = 20 } }
+option = { name = vel.30.c custom_tooltip = vel_shift_khaos_2 vt_weave_shift = { VALUE = 2 } add_learning_lifestyle_xp = 200 add_piety = 100 ai_chance = { base = 20 } }
+}
+vel.31 = { type = character_event theme = learning title = vel.31.t desc = vel.31.desc trigger = { vel_eligible = yes vel_deep_elf = yes }
+option = { name = vel.31.a capital_county = { add_county_modifier = { modifier = vel_living_patterns years = 5 } } add_learning_lifestyle_xp = 200 ai_chance = { base = 20 } }
+option = { name = vel.31.b trigger = { can_magic_trigger = yes } if = { limit = { NOT = { has_perk = alteration_novice_perk } } add_perk = alteration_novice_perk } add_learning_lifestyle_xp = 100 ai_chance = { base = 20 } }
+option = { name = vel.31.c add_prestige = 100 custom_tooltip = vel_shift_khaos_1 vt_weave_shift = { VALUE = 1 } ai_chance = { base = 20 } }
+}
+vel.40 = { type = character_event theme = learning title = vel.40.t desc = vel.40.desc trigger = { vel_eligible = yes vel_deep_elf = yes }
+option = { name = vel.40.a custom_tooltip = vel_shift_khaos_2 vt_weave_shift = { VALUE = 2 } add_learning_lifestyle_xp = 200 trigger_event = { id = vel.41 days = 21 } ai_chance = { base = 20 } }
+option = { name = vel.40.b custom_tooltip = vel_shift_khaos_5 vt_weave_shift = { VALUE = 5 } random_list = { 60 = { add_gold = 80 trigger_event = { id = vel.41 days = 7 } } 40 = { trigger_event = { id = vel.42 days = 7 } } } ai_chance = { base = 20 } }
+option = { name = vel.40.c trigger = { can_magic_trigger = yes has_variable = magicka var:magicka >= 25 } custom_tooltip = vel_shift_khaos_3 vt_weave_shift = { VALUE = 3 } change_variable = { name = magicka subtract = 25 } add_character_modifier = { modifier = vel_khaos_anchor years = 5 } add_learning_lifestyle_xp = 150 ai_chance = { base = 20 } }
+}
+vel.41 = { type = character_event theme = learning title = vel.41.t desc = vel.41.desc trigger = { vel_eligible = yes vel_deep_elf = yes }
+option = { name = vel.41.a capital_county = { add_county_modifier = { modifier = vel_living_patterns years = 5 } } add_prestige = 100 ai_chance = { base = 20 } }
+option = { name = vel.41.b trigger = { can_magic_trigger = yes } add_arcana_skill = { VALUE = 1 } add_stress = 15 ai_chance = { base = 20 } }
+option = { name = vel.41.c custom_tooltip = vel_shift_khaos_2 vt_weave_shift = { VALUE = 2 } add_piety = 150 ai_chance = { base = 20 } }
+}
+vel.42 = { type = character_event theme = learning title = vel.42.t desc = vel.42.desc trigger = { vel_eligible = yes vel_deep_elf = yes }
+option = { name = vel.42.a capital_county = { change_county_control = -15 add_county_modifier = { modifier = vel_frayed_county years = 2 } } add_stress = 20 add_learning_lifestyle_xp = 150 ai_chance = { base = 20 } }
+option = { name = vel.42.b trigger = { can_magic_trigger = yes has_variable = magicka var:magicka >= 30 } change_variable = { name = magicka subtract = 30 } add_stress = 35 add_prestige = 100 ai_chance = { base = 20 } }
+}
+vel.50 = { type = character_event theme = learning title = vel.50.t desc = vel.50.desc trigger = { vel_eligible = yes vel_high_elf = yes }
+option = { name = vel.50.a custom_tooltip = vel_shift_aeliun_2 vt_weave_shift = { VALUE = -2 } add_stress = 15 ai_chance = { base = 20 } }
+option = { name = vel.50.b trigger = { can_magic_trigger = yes has_variable = magicka var:magicka >= 20 } custom_tooltip = vel_shift_aeliun_3 vt_weave_shift = { VALUE = -3 } change_variable = { name = magicka subtract = 20 } ai_chance = { base = 20 } }
+option = { name = vel.50.c add_piety = 75 ai_chance = { base = 20 } }
+}
+vel.51 = { type = character_event theme = learning title = vel.51.t desc = vel.51.desc trigger = { vel_eligible = yes vel_deep_elf = yes }
+option = { name = vel.51.a custom_tooltip = vel_shift_khaos_2 vt_weave_shift = { VALUE = 2 } add_stress = 15 ai_chance = { base = 20 } }
+option = { name = vel.51.b trigger = { can_magic_trigger = yes has_variable = magicka var:magicka >= 20 } custom_tooltip = vel_shift_khaos_3 vt_weave_shift = { VALUE = 3 } change_variable = { name = magicka subtract = 20 } ai_chance = { base = 20 } }
+option = { name = vel.51.c add_learning_lifestyle_xp = 100 ai_chance = { base = 20 } }
+}

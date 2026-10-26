@@ -1115,7 +1115,7 @@ cl_create_clone_effect = {
 		if = {
 			limit = {
 				culture = {
-					has_cultural_pillar = heritage_argonian
+					has_cultural_pillar = heritage_voltara_naga
 					NOT = {
 						this = culture:ojel
 						any_parent_culture_or_above = {
@@ -1134,7 +1134,7 @@ cl_create_clone_effect = {
 		every_character_trait = {
 			limit = {
 				OR = {
-					has_trait_flag = furstock
+					# Voltara physiology is inherited through appearance and culture.
 					this = trait:lifespan_1
 					this = trait:lifespan_2
 					this = trait:lifespan_3
@@ -1210,7 +1210,7 @@ cl_create_clone_effect = {
 		every_character_trait = {
 			limit = {
 				OR = {
-					has_trait_flag = furstock
+					# Voltara physiology is inherited through appearance and culture.
 
 					this = trait:vt_ek_arcana_bad_1
 					this = trait:vt_ek_arcana_bad_2

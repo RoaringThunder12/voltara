@@ -4,7 +4,7 @@
  NOT = { has_trait = vt_ek_undead_character }
  NOR = { has_trait = vt_ek_lich_character has_trait = supernatural_vampire has_trait = supernatural_hybrid always = no has_trait = demon1 has_trait = demon2 is_pregnant = yes } } }
  is_valid_showing_failures_only = { scope:actor = { is_imprisoned = no var:magicka >= 100 } scope:recipient = { NOT = { has_opinion_modifier = { modifier = cof_ekue_lich_blessing_rejection_opinion target = scope:actor } } } }
- ai_potential = { always = no } ai_will_do = { base = 0 }
+  ai_will_do = { base = 0 }
  ai_accept = { base = -20 modifier = { add = 60 scope:recipient = { faith = faith:voltara_khaotism } }
  modifier = { add = 30 scope:recipient = { has_trait = ambitious } } modifier = { add = 40 scope:recipient = { OR = { has_trait = necromancer has_trait = vt_ek_necromancer } } }
  modifier = { add = -150 scope:recipient = { faith.religion = religion:voltara_religion } }
@@ -18,7 +18,7 @@ cof_ekue_ascend_lich_interaction = { category = interaction_category_magic commo
  has_trait = vt_ek_undead_character
  NOR = { has_trait = vt_ek_lich_character has_trait = supernatural_vampire has_trait = supernatural_hybrid always = no has_trait = demon1 has_trait = demon2 is_pregnant = yes } } }
  is_valid_showing_failures_only = { scope:actor = { is_imprisoned = no var:magicka >= 60 } scope:recipient = { NOT = { has_opinion_modifier = { modifier = cof_ekue_lich_blessing_rejection_opinion target = scope:actor } } } }
- ai_potential = { always = no } ai_will_do = { base = 0 }
+  ai_will_do = { base = 0 }
  ai_accept = { base = -20 modifier = { add = 60 scope:recipient = { faith = faith:voltara_khaotism } }
  modifier = { add = 30 scope:recipient = { has_trait = ambitious } } modifier = { add = 40 scope:recipient = { OR = { has_trait = necromancer has_trait = vt_ek_necromancer } } }
  modifier = { add = -150 scope:recipient = { faith.religion = religion:voltara_religion } }

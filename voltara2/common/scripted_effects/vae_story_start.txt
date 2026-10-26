@@ -1,0 +1,44 @@
+﻿vae_stoneborn_clan_effect = {
+ if = { limit = { is_alive = yes is_landed = yes highest_held_title_tier >= tier_county
+ culture = { has_cultural_pillar = heritage_voltara_stoneborn }
+ NOT = { has_government = voltara_ruins_government } NOT = { has_government = clan_government }
+ } change_government = clan_government }
+}
+vae_story_starts_effect = {
+ every_ruler = { vae_stoneborn_clan_effect = yes }
+character:19881000 = { if = { limit = { is_alive = yes is_landed = yes NOT = { has_character_flag = vae_story_start_done } }
+ add_character_flag = vae_story_start_done add_gold = 100 add_prestige = 250
+ if = { limit = { maa_regiments_count = 0 maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_stoneborn_scouts size = 2 } }
+ 
+ } }
+character:19881010 = { if = { limit = { is_alive = yes is_landed = yes NOT = { has_character_flag = vae_story_start_done } }
+ add_character_flag = vae_story_start_done add_gold = 100 add_prestige = 250
+ if = { limit = { maa_regiments_count = 0 maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_stoneborn_scouts size = 2 } }
+ 
+ } }
+character:19881020 = { if = { limit = { is_alive = yes is_landed = yes NOT = { has_character_flag = vae_story_start_done } }
+ add_character_flag = vae_story_start_done add_gold = 100 add_prestige = 250
+ if = { limit = { maa_regiments_count = 0 maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_naga_scouts size = 2 } }
+ 
+ } }
+character:19881030 = { if = { limit = { is_alive = yes is_landed = yes NOT = { has_character_flag = vae_story_start_done } }
+ add_character_flag = vae_story_start_done add_gold = 100 add_prestige = 250
+ if = { limit = { maa_regiments_count = 0 maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_naga_scouts size = 2 } }
+ 
+ } }
+character:19881040 = { if = { limit = { is_alive = yes is_landed = yes NOT = { has_character_flag = vae_story_start_done } }
+ add_character_flag = vae_story_start_done add_gold = 100 add_prestige = 250
+ if = { limit = { maa_regiments_count = 0 maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_aesaryos_scouts size = 2 } }
+ add_character_flag = vae_red_lantern
+ } }
+character:19881050 = { if = { limit = { is_alive = yes is_landed = yes NOT = { has_character_flag = vae_story_start_done } }
+ add_character_flag = vae_story_start_done add_gold = 100 add_prestige = 250
+ if = { limit = { maa_regiments_count = 0 maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_giants_scouts size = 2 } }
+ 
+ } }
+character:19881060 = { if = { limit = { is_alive = yes is_landed = yes NOT = { has_character_flag = vae_story_start_done } }
+ add_character_flag = vae_story_start_done add_gold = 100 add_prestige = 250
+ if = { limit = { maa_regiments_count = 0 maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_aesaryos_scouts size = 2 } }
+ 
+ } }
+}

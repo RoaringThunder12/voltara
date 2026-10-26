@@ -1,0 +1,19 @@
+﻿namespace = vgblood
+vgblood.1 = {
+ type = character_event title = vgblood.1.t desc = vgblood.1.desc theme = martial
+ left_portrait = { character = scope:vbr_challenger } right_portrait = { character = scope:vbr_defender }
+ immediate = { if = { limit = { NOT = { vbr_stakes_valid = yes } } vbr_clear = yes } }
+ option = { name = vgblood.1.a trigger = { vbr_stakes_valid = yes }
+  configure_start_single_combat_effect = { SC_INITIATOR = scope:vbr_challenger SC_ATTACKER = scope:vbr_challenger SC_DEFENDER = scope:vbr_defender FATALITY = always FIXED = no LOCALE = courtyard OUTPUT_EVENT = vgblood.2 INVALIDATION_EVENT = vgblood.3 }
+ }
+ option = { name = vgblood.1.b trigger = { NOT = { vbr_stakes_valid = yes } } }
+}
+vgblood.2 = { hidden = yes immediate = {
+ if = { limit = { exists = scope:sc_victor scope:sc_victor = { is_alive = yes } }
+  scope:sc_victor = { add_prestige = 200 add_character_modifier = { modifier = vbr_blood_victor years = 5 } vbr_install_government = yes trigger_event = vgblood.4 }
+ }
+ vbr_clear = yes
+} }
+vgblood.3 = { hidden = yes immediate = { vbr_clear = yes scope:vbr_challenger ?= { if = { limit = { is_alive = yes } trigger_event = vgblood.5 } } scope:vbr_defender ?= { if = { limit = { is_alive = yes } trigger_event = vgblood.5 } } } }
+vgblood.4 = { type = character_event title = vgblood.4.t desc = vgblood.4.desc theme = martial left_portrait = { character = root } option = { name = vgblood.4.a } }
+vgblood.5 = { type = character_event title = vgblood.5.t desc = vgblood.5.desc theme = martial option = { name = vgblood.5.a } }

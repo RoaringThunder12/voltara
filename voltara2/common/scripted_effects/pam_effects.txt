@@ -4653,7 +4653,7 @@ pam_the_christian_church_appointed_cardinal_catalyst_effect = {
 	}
 }
 
-# A non-Catholic ruler holds the de jure capital county of k_papal_state
+# A non-Catholic ruler holds the de jure capital county of k_voltara_luminous_see
 pam_the_christian_church_catholic_hof_weak_papal_state_control_catalyst_effect = {
 	if = {
 		limit = {
@@ -7330,14 +7330,14 @@ pam_copy_chalcedonian_added_holy_sites_to_schism_faiths_effect = {
 		every_holy_site = {
 			limit = {
 				NOR = {
-					this = holy_site:jerusalem
-					this = holy_site:rome
-					this = holy_site:constantinople
-					this = holy_site:santiago
-					this = holy_site:antioch
-					this = holy_site:alexandria
-					this = holy_site:cologne
-					this = holy_site:kent
+					this = holy_site:voltara_first_measure
+					this = holy_site:voltara_titania
+					this = holy_site:vae_alutor_light
+					this = holy_site:voltara_kartholos
+					this = holy_site:vae_citadel_inquiry
+					this = holy_site:vae_southern_hearth
+					this = holy_site:voltara_enderal
+					this = holy_site:voltara_thornfall
 				}
 			}
 			save_temporary_scope_as = chalcedonian_added_holy_site
@@ -7392,7 +7392,7 @@ pam_apply_great_schism_creation_effect = {
 			}
 		}
 		faith:catholic = { 
-			set_religious_head_title = title:k_papal_state
+			set_religious_head_title = title:k_voltara_luminous_see
 		}
 		faith:orthodox = { 
 			set_religious_head_title = title:k_orthodox
@@ -7491,7 +7491,7 @@ pam_apply_great_schism_creation_effect = {
 		}
 	}
 	show_as_tooltip = {
-		faith:catholic = { set_religious_head_title = title:k_papal_state }
+		faith:catholic = { set_religious_head_title = title:k_voltara_luminous_see }
 	}
 	hidden_effect = {
 		if = {
@@ -7532,7 +7532,7 @@ pam_apply_great_schism_creation_effect = {
 			}
 		}
 		# Native-world scope has no target in Voltara; original follows.
-# title:k_papal_state.holder ?= {
+# title:k_voltara_luminous_see.holder ?= {
 # 			if = {
 # 				limit = { NOT = { faith = faith:catholic } }
 # 				set_character_faith = faith:catholic
@@ -13533,7 +13533,7 @@ pam_cardinal_vacancy_on_death_effect = {
 		}
 		else = {
 			# Native-world scope has no target in Voltara; original follows.
-# title:k_papal_state.holder = { save_scope_as = head_of_faith }
+# title:k_voltara_luminous_see.holder = { save_scope_as = head_of_faith }
 
 		}
 		if = {

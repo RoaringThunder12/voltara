@@ -13,6 +13,7 @@ life_extension.0410 = {
 
     # Ascend
     option = {
+        trigger = { piety >= 1000 is_alive = yes is_imprisoned = no }
         name = life_extension.0410a
         flavor = life_extension.0410a.tt
         add_piety = -1000
@@ -117,6 +118,7 @@ life_extension.0400 = {
 
     # Ascend
     option = {
+        trigger = { piety >= 1000 has_magicka >= { VALUE = 100 } is_alive = yes is_imprisoned = no }
         name = life_extension.0400a
         flavor = life_extension.0400a.tt
         add_piety = -1000
@@ -223,13 +225,13 @@ life_extension.0290 = {
 		first_valid = {
             triggered_desc = {
 				trigger = {
-					root = character:mannimarco_1000
+					always = no
 				}
 				desc = life_extension.0290.desc_mannimarco
 			}
             triggered_desc = {
 				trigger = {
-					root = character:sosildor_100
+					always = no
 					root = {
 						has_character_flag = flag_tsaesci_act_passed
 					}
@@ -238,7 +240,7 @@ life_extension.0290 = {
 			}	
             triggered_desc = {
 				trigger = {
-					root = character:rilis_100
+					always = no
 				}
 				desc = life_extension.0290.desc_rilis_xii
 			}	

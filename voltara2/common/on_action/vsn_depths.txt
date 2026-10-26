@@ -1,0 +1,5 @@
+﻿yearly_playable_pulse = { on_actions = { vsn_old_depths_pulse } }
+vsn_old_depths_pulse = {
+ trigger = { vsn_ruler = yes is_at_war = no OR = { vsn_stoneborn = yes vsn_first_cavern = yes } NOT = { has_character_flag = vsn_busy } NOT = { has_character_flag = vsn_sealed_depths } }
+ effect = { random = { chance = 8 add_character_flag = { flag = vsn_busy years = 5 } trigger_event = vsn.13 } }
+}

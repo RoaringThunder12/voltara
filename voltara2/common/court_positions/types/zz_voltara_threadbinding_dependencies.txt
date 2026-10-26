@@ -7,7 +7,7 @@
 	court_position_asset = { #Nords get Clever Man
 		trigger = {
 			root.culture ?= {
-				has_cultural_tradition = tradition_nord_core
+				has_cultural_pillar = heritage_voltara_human
 			}
 		}
 		animation = holding_staff
@@ -21,7 +21,7 @@
 			# landless nords can keep their Clever Man
 			NOT = {
 				root.culture ?= {
-					has_cultural_tradition = tradition_nord_core
+					has_cultural_pillar = heritage_voltara_human
 				}
 			}
 		}
@@ -65,7 +65,7 @@
 		if = {
 			limit = {
 				liege = {
-					has_realm_law = outright_crossroads_magecrafting_murder_encouraged_law
+					faith = { has_doctrine = voltara_necromancy_accepted }
 				}
 			}
 			add = {
@@ -77,7 +77,7 @@
 		if = {
 			limit = {
 				liege = {
-					has_realm_law = wayfarers_protected_law
+					faith = { has_doctrine = voltara_necromancy_crime }
 				}
 			}
 			add = {

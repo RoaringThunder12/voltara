@@ -1,0 +1,9 @@
+﻿vae_recruit_circle_mage = {
+ create_character = { age = 25 gender_female_chance = 50 culture = culture:$CULTURE$ faith = root.faith rite = root.rite employer = root
+ learning = 16 trait = patient trait = education_learning_3 trait = vt_ek_education_magic_2 save_scope_as = vae_new_mage }
+ scope:vae_new_mage = {
+ set_variable = { name = arcana_base value = 12 } add_perk = alteration_novice_perk
+ if = { limit = { culture = { has_cultural_pillar = heritage_voltara_stoneborn } } add_trait = voltara_lifespan_1 }
+ voltara_initialize_threadbinder = yes
+ }
+}

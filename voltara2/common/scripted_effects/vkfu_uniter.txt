@@ -20,6 +20,7 @@ vkfu_found_empire = {
  create_title_and_vassal_change = { type = created save_scope_as = vkfu_creation add_claim_on_loss = no }
  title:e_voltara_sixth_southron_invasion = { change_title_holder = { holder = scope:vkfu_founder change = scope:vkfu_creation } }
  resolve_title_and_vassal_change = scope:vkfu_creation set_primary_title_to = title:e_voltara_sixth_southron_invasion
+ add_character_modifier = { modifier = voltara_coalition_modifier years = 20 }
  remove_character_flag = vkfu_candidate remove_character_flag = vkfu_council_completed remove_character_flag = vkf_council_concluded add_character_flag = vkf_recognized_leader
  set_variable = { name = vkfu_promise value = $VOW$ } add_character_flag = { flag = vkfu_promise_deadline days = 7300 }
  set_global_variable = { name = vkfu_founder value = this } set_global_variable = { name = vkfu_founding_promise value = $VOW$ }
@@ -29,16 +30,16 @@ vkfu_found_empire = {
  }
 }
 vkfu_heralds = {
- if = { limit = { this = character:9999100 vkf_chief = yes NOT = { has_character_flag = vkfu_riders_pending } }
+ if = { limit = { vkf_chief = yes NOT = { exists = title:e_voltara_sixth_southron_invasion.holder } NOT = { has_character_flag = vkfu_riders_pending } }
  save_scope_as = vkfu_uniter add_character_flag = { flag = vkfu_riders_pending days = 120 } add_character_flag = vkfu_ambition
  ordered_independent_ruler = { order_by = diplomacy max = 5 check_range_bounds = no limit = { vkf_chief = yes NOT = { this = scope:vkfu_uniter } NOT = { has_variable = vkf_patron } NOT = { has_character_flag = vkfu_herald_answered } }
  set_variable = { name = vkfu_inviter value = scope:vkfu_uniter days = 120 } trigger_event = { id = vkfu.2 days = 3 } }
- trigger_event = { id = vkfu.3 days = 90 }
+ if = { limit = { this = character:9999100 } trigger_event = { id = vkfu.3 days = 90 } } else = { trigger_event = { id = vksc.2 days = 90 } }
  }
 }
 vkfu_recognize = {
  if = { limit = { vkf_chief = yes has_variable = vkfu_inviter var:vkfu_inviter = { vkf_chief = yes } NOT = { has_variable = vkf_patron } }
- set_variable = { name = vkf_patron value = var:vkfu_inviter days = 1825 } set_variable = { name = vkf_oath value = $OATH$ days = 1825 }
+ set_variable = { name = vkf_patron value = var:vkfu_inviter days = 1825 } set_variable = { name = vkf_oath value = $OATH$ days = 1825 } vks_record_blood_oath = yes
  add_character_flag = { flag = vkfu_herald_answered days = 730 } remove_variable = vkfu_inviter }
 }
 vkfu_seek_submission = {

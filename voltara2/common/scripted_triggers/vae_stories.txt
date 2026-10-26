@@ -1,0 +1,9 @@
+﻿vae_regional_story_eligible = {
+ is_alive = yes is_available_adult = yes is_landed = yes highest_held_title_tier >= tier_county
+ exists = capital_province capital_province = { geographical_region = world_vae_aesaryos }
+ NOT = { has_government = voltara_ruins_government }
+}
+vae_mountain_partner = {
+ vae_regional_story_eligible = yes
+ OR = { culture = { has_cultural_pillar = heritage_voltara_stoneborn } culture = { has_cultural_pillar = heritage_voltara_naga } }
+}

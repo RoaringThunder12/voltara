@@ -299,464 +299,20 @@ grab_appropriate_bard_effect = {
 }
 
 grab_mythical_founder_effect = {
-	hidden_effect = {
-		if = {
-			limit = {
-				NOT = { exists = var:mythical_ancestor_var }
-			}
-			random_list = {
-				10 = { # Charles Martell
-					trigger = {
-						AND = { 
-							OR = {
-								root.primary_title = title:k_france
-								root.primary_title = title:e_france
-							}
-							current_date > 1000.1.1
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:charles_martell }
-				}
-				10 = { # Alexander the Great
-					trigger = {
-						OR = {			
-							root.primary_title = title:k_thessalonika
-							root.primary_title = title:k_hellas
-							root.primary_title = title:k_egypt
-							AND = {
-								OR = {
-									root.primary_title = title:k_persia
-									root.primary_title = title:e_persia
-								}
-								NOR = {
-									root.faith.religion = religion:islam_religion
-									root.faith.religion = religion:zoroastrianism_religion
-								}
-							}
-							root.primary_title = title:k_anatolia
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:alexander }
-				}
-				10 = { # Lech
-					trigger = {
-						root.primary_title = title:k_poland
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:lech }
-				}
-				10 = { # Czech
-					trigger = {
-						OR = {
-							root.primary_title = title:k_bohemia
-							root.primary_title = title:d_bohemia
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:czech }
-				}
-				10 = { # Rus
-					trigger = {
-						OR = {
-							root.primary_title = title:k_white_rus
-							root.primary_title = title:k_ruthenia
-							root.primary_title = title:e_russia
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:rus }
-				}
-				10 = { # King Arthur
-					trigger = {
-						OR = {
-							root.primary_title = title:k_wales
-							root.primary_title = title:k_cornwall
-							root.primary_title = title:k_england
-							root.primary_title = title:e_britannia
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:arthur }
-				}
-				10 = { # Corineus
-					trigger = {
-						root.primary_title = title:k_cornwall
-					}
-					modifier = {
-						current_date < 1000.1.1
-						factor = 3
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:corineus }
-				}
-				10 = { # Magnus Maximus
-					trigger = {
-						root.primary_title = title:k_wales
-					}
-					modifier = {
-						current_date < 1000.1.1
-						factor = 3
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:magnus_maximus }
-				}
-				30 = { # Brutus of Troy, we want this to be the default for the Brits
-					trigger = {
-						OR = {
-							root.primary_title = title:k_england
-							root.primary_title = title:e_britannia
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:brutus }
-				}
-				10 = { # Aeneas of Troy
-					trigger = {
-						 OR = {
-							#Used in the Roman de Brut
-							root.primary_title = title:k_england
-							root.primary_title = title:e_britannia
-							#Also used by the house of Tosny
-							root.primary_title = title:d_normandy
-							capital_province = { geographical_region = world_europe_west_britannia }
-							#And of course used in Rome
-							root.primary_title = title:k_italy
-							root.primary_title = title:k_romagna
-							root.primary_title = title:k_sardinia
-							root.primary_title = title:e_italy
-							root = {
-								is_roman_emperor_primary_title_excluding_byzantium_trigger = yes
-							}
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:aeneas }
-				}
-				10 = { # Scota
-					trigger = {
-						OR = { # Gaels
-							root.primary_title = title:k_scotland
-							root.primary_title = title:k_ireland
-						}
-						current_date > 1100.1.1
-					}
-					modifier = {
-						root.primary_title = title:k_scotland
-						factor = 3
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:scota }
-				}
-				10 = { # Romulus
-					trigger = {
-						OR = {
-							root.primary_title = title:k_italy
-							root.primary_title = title:k_romagna
-							root.primary_title = title:k_sardinia
-							root.primary_title = title:e_italy
-							root = { is_roman_emperor_primary_title_excluding_byzantium_trigger = yes }
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:romulus }
-				}
-				10 = { # Numa Pompilius
-					trigger = {
-						OR = { 
-							root.primary_title = title:k_italy
-							root.primary_title = title:k_romagna
-							root.primary_title = title:k_sardinia
-							root.primary_title = title:e_italy
-							root = { is_roman_emperor_primary_title_excluding_byzantium_trigger = yes }
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:numa }
-				}
-				10 = { # Belisarius
-					trigger = {
-						OR = { 
-							root.primary_title = title:k_italy
-							root.primary_title = title:k_romagna
-							root.primary_title = title:k_sardinia
-							root.primary_title = title:e_italy
-							root = { is_roman_emperor_primary_title_excluding_byzantium_trigger = yes }
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:belisarius }
-				}
-				10 = { # Ardashir
-					trigger = {
-						OR = { 
-							root.primary_title = title:k_persia
-							root.primary_title = title:e_persia
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:ardashir }
-				}
-				10 = { # Pharaohs
-					trigger = {
-						root.primary_title = title:k_egypt
-						NOT = { religion = religion:islam_religion }
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:pharaohs }
-				}
-				10 = { # Visigothic Kings
-					trigger = {
-						OR = {
-							root.primary_title = title:k_castille
-							root.primary_title = title:k_leon
-							root.primary_title = title:d_galicia
-							root.primary_title = title:k_aragon
-							root.primary_title = title:k_navarra
-							root.primary_title = title:k_andalusia
-							root.primary_title = title:k_portugal
-							root.primary_title = title:e_spain
-						}
-						NOT = { religion = religion:islam_religion }
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:visigothic_kings }
-				}
-				10 = { # Abd al-Rahman
-					trigger = {
-						OR = {
-							root.primary_title = title:k_castille
-							root.primary_title = title:k_aragon
-							root.primary_title = title:k_navarra
-							root.primary_title = title:k_andalusia
-							root.primary_title = title:k_portugal
-							root.primary_title = title:e_spain
-						}
-						religion = religion:islam_religion
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:abd_al_rahman }
-				}
-				10 = { # Zenobia
-					trigger = {
-						OR = {
-							root.primary_title = title:k_syria
-							root.primary_title = title:k_mesopotamia
-						}
-						NOT = { religion = religion:islam_religion }
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:zenobia }
-				}
-				10 = { # King Solomon
-					trigger = {
-						root.primary_title.title_capital_county.title_province = {
-							geographical_region = ghw_region_ethiopia
-						}
-						root.faith.religion = religion:christianity_religion
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:solomon }
-				}
-				10 = { # Conan Meriadoc
-					trigger = {
-						root.culture = culture:breton
-						NOR = { # used to distinguish themselves from the French
-							root.primary_title = title:k_france
-							root.primary_title = title:e_france
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:conan_meriadoc }
-				}
-				10 = { # Pishdadian Dynasty
-					trigger = {
-						OR = {
-							root.primary_title = title:k_persia
-							root.primary_title = title:e_persia
-						}
-						OR = {
-							root.faith.religion = religion:islam_religion
-							root.faith.religion = religion:zoroastrianism_religion
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:pishdadian }
-				}
-				10 = { # Chościsko
-					trigger = {
-						OR = {
-							root.primary_title = title:k_poland
-							root.primary_title = title:d_lesser_poland
-							AND = {
-								root.primary_title.title_capital_county.title_province = {
-									geographical_region = ghw_region_poland
-								}
-								faith.religion = faith:slavic_pagan.religion
-							}
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:choscisko }
-				}
-				10 = { # Arsacids
-					trigger = {
-						OR = {
-							root.primary_title = title:k_armenia
-							root.primary_title = title:k_armenian_principality
-							root.primary_title = title:e_armenia
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:arsacids }
-				}
-				10 = { # King David
-					trigger = {
-						OR = {
-							root.primary_title = title:k_georgia
-							root.primary_title = title:d_georgia
-						}
-						root.faith.religion = religion:christianity_religion
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:david }
-				}
-				10 = { # Karkota Naga
-					trigger = {
-						root.primary_title = title:k_kashmir
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:naga }
-				}
-				10 = { # God Brahman
-					trigger = {
-						root.culture = culture:tamil
-						OR = { #Lands held by the Pallavas
-							root.primary_title = title:d_tondai_nadu
-							root.primary_title = title:c_kanchipuram
-							root.primary_title = title:k_tamilakam
-							root.primary_title = title:c_muluvagil
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:brahman }
-				}
-				10 = { # Odin
-					trigger = {
-						root.faith = faith:norse_pagan
-						OR = {
-							root.primary_title = title:k_norway
-							root.primary_title = title:k_sweden
-							root.primary_title = title:d_iceland
-							root.primary_title = title:k_denmark
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:odin }
-				}
-				10 = { # Ragnar Lodbrok
-					trigger = {
-						OR = {
-							root.primary_title = title:k_norway
-							root.primary_title = title:k_sweden
-							root.primary_title = title:d_iceland
-							root.primary_title = title:k_denmark
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:ragnar }
-				}
-				10 = { # Brunhild
-					trigger = {
-						OR = {
-							root.primary_title = title:k_norway
-							root.primary_title = title:k_sweden
-							root.primary_title = title:d_iceland
-							root.primary_title = title:k_denmark
-						}
-					}
-					modifier = {
-						is_female = yes
-						factor = 5
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:brunhild }
-				}
-				10 = { # Eremon
-					trigger = {
-						OR = {
-							root.primary_title = title:k_ireland
-							root.primary_title = title:d_connacht
-							root.primary_title = title:d_ulster
-							root.primary_title = title:c_ailech
-							root.primary_title = title:c_oriel
-							root.primary_title = title:c_breifne
-							root.primary_title = title:c_athlone
-						}
-					}
-					modifier = {
-						OR = {
-							root.primary_title = title:d_connacht
-							root.primary_title = title:d_ulster
-							root.primary_title = title:c_ailech
-							root.primary_title = title:c_oriel
-							root.primary_title = title:c_breifne
-							root.primary_title = title:c_athlone
-						}
-						factor = 3
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:eremon }
-				}
-				10 = { # Eber
-					trigger = {
-						OR = {
-							root.primary_title = title:k_ireland                
-							root.primary_title = title:d_munster
-							root.primary_title = title:c_ossory             
-							root.primary_title = title:d_leinster               
-							root.primary_title = title:c_desmond
-						}
-					}
-					modifier = {
-						OR = {
-							root.primary_title = title:d_munster
-							root.primary_title = title:c_ossory             
-							root.primary_title = title:d_leinster               
-							root.primary_title = title:c_desmond
-						}
-						factor = 3
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:eber }
-				}
-				10 = { # Genghis Khan
-					trigger = {
-						root.culture = { has_cultural_pillar = heritage_mongolic }
-						current_date > 1228.1.1
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:genghis }
-				}
-				10 = { # Emperor Constantine
-					trigger = {
-						OR = {
-							root.capital_county = title:c_byzantion
-							root = { is_roman_emperor_primary_title_trigger = yes }
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:constantine }
-				}
-				10 = { # Emperor Justinian
-					trigger = {
-						OR = {
-							root.capital_county = title:c_byzantion
-							root = { is_roman_emperor_primary_title_trigger = yes }
-						}
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:justinian }
-				}
-				5 = { # Melusine
-					trigger = {
-						OR = {
-							AND = {
-								has_trait = eccentric
-								capital_province = { geographical_region = world_europe_west }
-							}
-							#Used by the house of Anjou/Plantagenet
-							root.primary_title = title:c_anjou
-							root.primary_title = title:d_anjou
-							#Started in Lusignan
-							root.primary_title = title:d_poitou
-						}
-						current_date > 1060.1.1
-					}
-					modifier = { #The first Plantagenets go crazy over her
-						OR = {
-							root.primary_title = title:c_anjou
-							root.primary_title = title:d_anjou
-							root.primary_title = title:d_poitou
-						}
-						current_date > 1060.1.1
-						current_date < 1200.1.1
-						factor = 5
-					}
-					set_variable = { name = mythical_ancestor_var value = flag:melusine }
-				}
-				1 = { # Fallback, only triggered when necessary
-					set_variable = { name = mythical_ancestor_var value = flag:fallback }
-				}
-			}
-		}
-	}
+ hidden_effect = {
+  if = { limit = { NOT = { exists = var:mythical_ancestor_var } }
+   if = { limit = { exists = capital_province capital_province = { geographical_region = world_vae_aesaryos } }
+    random_list = {
+     50 = { set_variable = { name = mythical_ancestor_var value = flag:vt_ancestor_talruun } }
+     50 = { set_variable = { name = mythical_ancestor_var value = flag:vt_ancestor_aithbor } }
+    }
+   }
+   else_if = { limit = { culture = { has_cultural_pillar = heritage_voltara_stoneborn } }
+    set_variable = { name = mythical_ancestor_var value = flag:vt_ancestor_first_forger }
+   }
+   else = { set_variable = { name = mythical_ancestor_var value = flag:vt_ancestor_first_weaver } }
+  }
+ }
 }
 
 disburse_hunt_legend_seeds = {
@@ -2514,7 +2070,7 @@ mark_historical_legend_as_done = {
 	}
 	if = { # Arthur
 		limit = {
-			legend_property:ancestor ?= character:159835
+			always = no
 			legend_property:title ?= title:k_england
 		}
 		set_global_variable = {
@@ -2524,7 +2080,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # Carolingian
 		limit = {
-			legend_property:ancestor ?= character:6392
+			always = no
 			legend_property:title ?= title:e_france
 		}
 		set_global_variable = {
@@ -2534,7 +2090,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # the_wheelwright
 		limit = {
-			legend_property:ancestor ?= character:82233
+			always = no
 		}
 		set_global_variable = {
 			name = the_wheelwright_legend
@@ -2543,7 +2099,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # cadell
 		limit = {
-			legend_property:ancestor ?= character:159058
+			always = no
 		}
 		set_global_variable = {
 			name = cadell_legend
@@ -2552,7 +2108,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # sons_of_rurik
 		limit = {
-			legend_property:ancestor ?= character:40605
+			always = no
 		}
 		set_global_variable = {
 			name = sons_of_rurik_legend
@@ -2561,7 +2117,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # el_cid
 		limit = {
-			legend_property:ancestor ?= character:107590
+			always = no
 		}
 		set_global_variable = {
 			name = el_cid_legend
@@ -2570,7 +2126,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # peasant_emperor
 		limit = {
-			legend_property:ancestor ?= character:1700
+			always = no
 		}
 		set_global_variable = {
 			name = peasant_emperor_legend
@@ -2579,7 +2135,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # premysl
 		limit = {
-			legend_property:ancestor ?= character:168345
+			always = no
 		}
 		set_global_variable = {
 			name = premysl_legend
@@ -2588,7 +2144,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # borjigin
 		limit = {
-			legend_property:ancestor ?= character:303250
+			always = no
 		}
 		set_global_variable = {
 			name = borjigin_legend
@@ -2597,7 +2153,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # the_red_hand
 		limit = {
-			legend_property:ancestor ?= character:7255
+			always = no
 		}
 		set_global_variable = {
 			name = the_red_hand_legend
@@ -2606,7 +2162,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # yazdagird_iii
 		limit = {
-			legend_property:ancestor ?= character:180637
+			always = no
 		}
 		set_global_variable = {
 			name = yazdagird_iii_legend
@@ -2615,7 +2171,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # bahram_gur
 		limit = {
-			legend_property:ancestor ?= character:180645
+			always = no
 		}
 		set_global_variable = {
 			name = bahram_gur_legend
@@ -2624,7 +2180,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # saman_khudah
 		limit = {
-			legend_property:ancestor ?= character:188637
+			always = no
 		}
 		set_global_variable = {
 			name = saman_khudah_legend
@@ -2633,7 +2189,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = { # saman_khudah
 		limit = {
-			legend_property:ancestor ?= character:163109
+			always = no
 		}
 		set_global_variable = {
 			name = ragnarr_legend
@@ -2767,7 +2323,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = {
 		limit = {
-			legend_property:ancestor ?= character:7627
+			always = no
 		}
 		set_global_variable = {
 			name = alfred_of_wessex_legend
@@ -2776,7 +2332,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = {
 		limit = {
-			legend_property:ancestor ?= character:168130
+			always = no
 		}
 		set_global_variable = {
 			name = william_gellones_legend
@@ -2785,7 +2341,7 @@ mark_historical_legend_as_done = {
 	}
 	else_if = {
 		limit = {
-			legend_property:ancestor ?= character:99
+			always = no
 		}
 		set_global_variable = {
 			name = edward_the_martyr_legend

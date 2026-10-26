@@ -2977,7 +2977,7 @@ pam_ai_mountain_capital_actor_trigger = {
 	}
 }
 
-# title_preferred_capital_county is the de jure capital even if k_papal_state is uncreated
+# title_preferred_capital_county is the de jure capital even if k_voltara_luminous_see is uncreated
 pam_catholic_hof_weak_papal_state_control_trigger = {
 	has_pam_dlc_trigger = yes
 	always = no
@@ -5425,7 +5425,7 @@ pam_evangelize_personal_tenet_send_option_valid_trigger = {
 pam_college_of_cardinals_election_active_trigger = {
 	always = no
 	# Optional native title is absent on the Voltara map.
-# title:k_papal_state.holder ?= {
+# title:k_voltara_luminous_see.holder ?= {
 # 		has_realm_law = theocratic_elective_succession_law
 # 	}
 always = no
@@ -5438,8 +5438,8 @@ pam_leads_college_of_cardinals_trigger = {
 
 pam_pope_is_head_of_faith_or_rite_trigger = {
  OR = {
-  rite.head_of_rite ?= { has_doctrine_parameter = has_clerical_electors }
-  faith.religious_head ?= { has_doctrine_parameter = has_clerical_electors }
+  rite.head_of_rite ?= { faith = { has_doctrine_parameter = has_clerical_electors } }
+  faith.religious_head ?= { faith = { has_doctrine_parameter = has_clerical_electors } }
  }
 }
 
@@ -5461,7 +5461,7 @@ pam_cardinal_is_nepotistic_appointment_trigger = {
 # Rome is named directly: headless Chalcedonianism has no religious_head_title to compare
 pam_title_is_church_seat_trigger = {
 	OR = {
-		$TITLE$ = title:k_papal_state
+		$TITLE$ = title:k_voltara_luminous_see
 		AND = {
 			exists = faith.religious_head_title
 			$TITLE$ = faith.religious_head_title
@@ -5507,7 +5507,7 @@ pam_college_election_title_is_theocratic_elective_trigger = {
 	}
 	trigger_else = {
 		# Optional native title is absent on the Voltara map.
-# title:k_papal_state.holder ?= { has_realm_law = theocratic_elective_succession_law }
+# title:k_voltara_luminous_see.holder ?= { has_realm_law = theocratic_elective_succession_law }
 always = no
 	}
 }
@@ -5531,7 +5531,7 @@ pam_is_college_election_candidate_trigger = {
 		}
 		trigger_else = {
 			is_candidate_from_set = {
-				title = title:k_papal_state
+				title = title:k_voltara_luminous_see
 				source = $SOURCE$
 			}
 		}
@@ -7018,7 +7018,7 @@ pam_papal_ruling_rite_has_parameter_trigger = {
 		faith.religious_head_title.holder.rite ?= { rite_has_parameter = $PARAMETER$ }
 	}
 	trigger_else = {
-		title:k_papal_state.holder.rite ?= { rite_has_parameter = $PARAMETER$ }
+		title:k_voltara_luminous_see.holder.rite ?= { rite_has_parameter = $PARAMETER$ }
 	}
 }
 

@@ -1,13 +1,6 @@
 ﻿namespace = lam_faction
-lam_faction.0100 = {
-	type = character_event
-	title = lam_pd_result_title
-	desc = lam_pd_old_request
-	theme = realm
-	option = {
-		name = lam_cr_close
-	}
-}
+# Archived unreachable event lam_faction.0100; see orphan-events audit.
+
 lam_faction.0200 = {
 	type = character_event
 	title = lam_faction.0200.t
@@ -3025,24 +3018,10 @@ lam_faction.0801 = {
 		}
 	}
 }
-lam_faction.1900 = {
-	type = character_event
-	title = lam_cr_result_title
-	desc = lam_cr_legacy_closed
-	theme = realm
-	option = {
-		name = lam_cr_close
-	}
-}
-lam_faction.1910 = {
-	type = character_event
-	title = lam_cr_result_title
-	desc = lam_cr_legacy_closed
-	theme = realm
-	option = {
-		name = lam_cr_close
-	}
-}
+# Archived unreachable event lam_faction.1900; see orphan-events audit.
+
+# Archived unreachable event lam_faction.1910; see orphan-events audit.
+
 lam_faction.2000 = {
 	type = character_event
 	title = lam_faction.2000.t
@@ -3243,173 +3222,8 @@ lam_faction.2100 = {
 		name = lam_faction.2100.x
 	}
 }
-lam_faction.2110 = {
-	type = character_event
-	title = lam_faction.2110.t
-	desc = lam_faction.2110.desc
-	theme = realm
-	override_background = {
-		reference = council_chamber
-	}
-	left_portrait = {
-		character = root
-		animation = personality_rational
-	}
-	option = {
-		name = lam_faction.2110.g1
-		trigger = {
-			NOT = {
-				var:lam_fac_goal_pick ?= 1
-			}
-		}
-		set_variable = {
-			name = lam_fac_goal_pick
-			value = 1
-		}
-		set_variable = {
-			name = lam_fac_goal
-			value = 1
-		}
-	}
-	option = {
-		name = lam_faction.2110.g2
-		trigger = {
-			NOT = {
-				var:lam_fac_goal_pick ?= 2
-			}
-		}
-		set_variable = {
-			name = lam_fac_goal_pick
-			value = 2
-		}
-		set_variable = {
-			name = lam_fac_goal
-			value = 2
-		}
-	}
-	option = {
-		name = lam_faction.2110.g3
-		trigger = {
-			NOT = {
-				var:lam_fac_goal_pick ?= 3
-			}
-		}
-		set_variable = {
-			name = lam_fac_goal_pick
-			value = 3
-		}
-		set_variable = {
-			name = lam_fac_goal
-			value = 3
-		}
-	}
-	option = {
-		name = lam_faction.2110.g4
-		trigger = {
-			NOT = {
-				var:lam_fac_goal_pick ?= 4
-			}
-		}
-		set_variable = {
-			name = lam_fac_goal_pick
-			value = 4
-		}
-		set_variable = {
-			name = lam_fac_goal
-			value = 4
-		}
-	}
-	option = {
-		name = lam_faction.2110.g5
-		trigger = {
-			NOT = {
-				var:lam_fac_goal_pick ?= 5
-			}
-		}
-		set_variable = {
-			name = lam_fac_goal_pick
-			value = 5
-		}
-		set_variable = {
-			name = lam_fac_goal
-			value = 5
-		}
-	}
-	option = {
-		name = lam_faction.2110.g6
-		trigger = {
-			NOT = {
-				var:lam_fac_goal_pick ?= 6
-			}
-		}
-		set_variable = {
-			name = lam_fac_goal_pick
-			value = 6
-		}
-		set_variable = {
-			name = lam_fac_goal
-			value = 6
-		}
-	}
-	option = {
-		name = lam_faction.2110.g7
-		trigger = {
-			NOT = {
-				var:lam_fac_goal_pick ?= 7
-			}
-		}
-		set_variable = {
-			name = lam_fac_goal_pick
-			value = 7
-		}
-		set_variable = {
-			name = lam_fac_goal
-			value = 7
-		}
-	}
-	option = {
-		name = lam_faction.2110.g8
-		trigger = {
-			NOT = {
-				var:lam_fac_goal_pick ?= 8
-			}
-		}
-		set_variable = {
-			name = lam_fac_goal_pick
-			value = 8
-		}
-		set_variable = {
-			name = lam_fac_goal
-			value = 8
-		}
-	}
-	option = {
-		name = lam_faction.2110.g9
-		trigger = {
-			NOT = {
-				var:lam_fac_goal_pick ?= 9
-			}
-		}
-		set_variable = {
-			name = lam_fac_goal_pick
-			value = 9
-		}
-		set_variable = {
-			name = lam_fac_goal
-			value = 9
-		}
-	}
-	option = {
-		name = lam_faction.2110.auto
-		trigger = {
-			has_variable = lam_fac_goal_pick
-		}
-		remove_variable = lam_fac_goal_pick
-	}
-	option = {
-		name = lam_faction.2100.x
-	}
-}
+# Archived unreachable event lam_faction.2110; see orphan-events audit.
+
 lam_faction.2200 = {
 	type = character_event
 	title = lam_faction.2200.t
@@ -3546,73 +3360,8 @@ lam_faction.2300 = {
 		}
 	}
 }
-lam_faction.2310 = {
-	type = character_event
-	title = lam_faction.2310.t
-	desc = lam_pd_story_contact_desc
-	theme = intrigue
-	left_portrait = {
-		character = scope:lam_st_a
-		animation = scheme
-	}
-	right_portrait = {
-		character = scope:lam_st_head
-		animation = personality_rational
-	}
-	trigger = {
-		NOT = {
-			has_variable = lam_bloc_lead
-		}
-		var:lam_bloc ?= scope:lam_st_head
-		liege ?= scope:lam_st_lord
-		exists = scope:lam_st_a
-		scope:lam_st_a = {
-			is_alive = yes
-			has_variable = lam_bloc_lead
-		}
-	}
-	option = {
-		name = lam_pd_story_contact
-		scope:lam_st_a = {
-			save_scope_as = lam_rc_head
-		}
-		lam_pd_recruit_begin_effect = yes
-	}
-	option = {
-		name = lam_faction.2310.b
-		scope:lam_st_head = {
-			add_opinion = {
-				target = root
-				modifier = lam_fac_reported_opinion
-			}
-		}
-		scope:lam_st_a = {
-			add_opinion = {
-				target = root
-				modifier = lam_fac_sided_against_opinion
-			}
-		}
-		scope:lam_st_head = {
-			if = {
-				limit = {
-					NOT = {
-						is_target_in_variable_list = {
-							name = lam_fac_foes
-							target = scope:lam_st_a
-						}
-					}
-				}
-				add_to_variable_list = {
-					name = lam_fac_foes
-					target = scope:lam_st_a
-				}
-			}
-		}
-	}
-	option = {
-		name = lam_faction.2310.c
-	}
-}
+# Archived unreachable event lam_faction.2310; see orphan-events audit.
+
 lam_faction.2320 = {
 	type = character_event
 	title = lam_faction.2320.t
@@ -4288,28 +4037,8 @@ lam_faction.2410 = {
 		}
 	}
 }
-lam_faction.2420 = {
-	type = character_event
-	title = lam_pd_petition_title
-	desc = lam_pd_submit_desc
-	theme = diplomacy
-	trigger = {
-		has_variable = lam_bloc_lead
-		liege ?= scope:lam_st_lord
-		NOT = {
-			has_variable = lam_pd_active
-		}
-	}
-	option = {
-		name = lam_pd_story_gold
-		lam_pd_begin_effect = {
-			KIND = gold
-		}
-	}
-	option = {
-		name = lam_cr_close
-	}
-}
+# Archived unreachable event lam_faction.2420; see orphan-events audit.
+
 lam_faction.2500 = {
 	type = character_event
 	title = lam_faction.2500.t
@@ -6271,127 +6000,8 @@ lam_faction.2430 = {
 		}
 	}
 }
-lam_faction.2440 = {
-	type = character_event
-	title = lam_faction.2440.t
-	trigger = {
-		has_variable = lam_bloc_lead
-		liege ?= scope:lam_st_lord
-	}
-	desc = lam_faction.2440.desc
-	theme = diplomacy
-	left_portrait = {
-		character = scope:lam_st_lord
-		animation = personality_rational
-	}
-	option = {
-		name = lam_faction.2440.a
-		trigger = {
-			gold >= medium_gold_value
-		}
-		pay_short_term_gold = {
-			target = scope:lam_st_lord
-			gold = medium_gold_value
-		}
-		scope:lam_st_lord = {
-			add_opinion = {
-				target = root
-				modifier = lam_fac_proved_loyal_opinion
-			}
-		}
-		if = {
-			limit = {
-				NOT = {
-					has_variable = lam_fac_favour
-				}
-			}
-			set_variable = {
-				name = lam_fac_favour
-				value = 0
-			}
-		}
-		change_variable = {
-			name = lam_fac_favour
-			add = 15
-		}
-		clamp_variable = {
-			name = lam_fac_favour
-			min = -100
-			max = 100
-		}
-		lam_fac_cohesion_add_effect = {
-			ADD = -4
-		}
-	}
-	option = {
-		name = lam_faction.2440.b
-		add_prestige = {
-			value = minor_prestige_value
-			multiply = -1
-		}
-		set_variable = {
-			name = lam_fac_oath
-			value = yes
-			years = 2
-		}
-		lam_fac_timer_set_effect = {
-			NAME = lam_fac_oath
-			YEARS = 2
-		}
-		if = {
-			limit = {
-				NOT = {
-					has_variable = lam_fac_favour
-				}
-			}
-			set_variable = {
-				name = lam_fac_favour
-				value = 0
-			}
-		}
-		change_variable = {
-			name = lam_fac_favour
-			add = 10
-		}
-		clamp_variable = {
-			name = lam_fac_favour
-			min = -100
-			max = 100
-		}
-	}
-	option = {
-		name = lam_faction.2440.c
-		scope:lam_st_lord = {
-			add_opinion = {
-				target = root
-				modifier = lam_fac_spurned_test_opinion
-			}
-		}
-		if = {
-			limit = {
-				NOT = {
-					has_variable = lam_fac_favour
-				}
-			}
-			set_variable = {
-				name = lam_fac_favour
-				value = 0
-			}
-		}
-		change_variable = {
-			name = lam_fac_favour
-			add = -10
-		}
-		clamp_variable = {
-			name = lam_fac_favour
-			min = -100
-			max = 100
-		}
-		lam_fac_cohesion_add_effect = {
-			ADD = 5
-		}
-	}
-}
+# Archived unreachable event lam_faction.2440; see orphan-events audit.
+
 lam_faction.2450 = {
 	type = character_event
 	title = lam_faction.2450.t
@@ -6864,41 +6474,8 @@ lam_faction.2460 = {
 		add_dread = minor_dread_gain
 	}
 }
-lam_faction.2470 = {
-	type = character_event
-	title = lam_faction.2470.t
-	trigger = {
-		has_variable = lam_bloc_lead
-		liege ?= scope:lam_st_lord
-	}
-	desc = lam_faction.2470.desc
-	theme = intrigue
-	left_portrait = {
-		character = scope:lam_st_rival
-		animation = scheme
-	}
-	option = {
-		name = lam_faction.2470.a
-		trigger = {
-			lam_fac_amity_pair_trigger = {
-				A = root
-				B = scope:lam_st_rival
-			}
-		}
-		hidden_effect = {
-			lam_fac_ally_effect = {
-				A = root
-				B = scope:lam_st_rival
-			}
-		}
-	}
-	option = {
-		name = lam_pd_public_information
-	}
-	option = {
-		name = lam_faction.2470.c
-	}
-}
+# Archived unreachable event lam_faction.2470; see orphan-events audit.
+
 lam_faction.2480 = {
 	type = character_event
 	title = lam_faction.2480.t
@@ -7382,116 +6959,8 @@ lam_faction.2710 = {
 		}
 	}
 }
-lam_faction.2720 = {
-	type = character_event
-	title = lam_faction.2720.t
-	desc = lam_faction.2720.desc
-	theme = intrigue
-	left_portrait = {
-		character = scope:lam_lo_plot
-		animation = scheme
-	}
-	option = {
-		name = lam_faction.2720.a
-		add_tyranny = medium_tyranny_gain
-		imprison = {
-			target = scope:lam_lo_plot
-			type = dungeon
-		}
-	}
-	option = {
-		name = lam_faction.2720.b
-		trigger = {
-			gold >= medium_gold_value
-		}
-		pay_short_term_gold = {
-			target = scope:lam_lo_plot
-			gold = medium_gold_value
-		}
-		scope:lam_lo_plot = {
-			set_variable = {
-				name = lam_fac_oath
-				value = yes
-				years = 3
-			}
-			lam_fac_timer_set_effect = {
-				NAME = lam_fac_oath
-				YEARS = 3
-			}
-			lam_fac_cohesion_add_effect = {
-				ADD = -10
-			}
-			if = {
-				limit = {
-					NOT = {
-						has_variable = lam_fac_favour
-					}
-				}
-				set_variable = {
-					name = lam_fac_favour
-					value = 0
-				}
-			}
-			change_variable = {
-				name = lam_fac_favour
-				add = 15
-			}
-			clamp_variable = {
-				name = lam_fac_favour
-				min = -100
-				max = 100
-			}
-		}
-	}
-	option = {
-		name = lam_faction.2720.c
-		random_list = {
-			0 = {
-				modifier = {
-					add = {
-						value = 25
-						add = {
-							value = root.intrigue
-							multiply = 3
-						}
-					}
-				}
-				scope:lam_lo_plot = {
-					lam_fac_cohesion_add_effect = {
-						ADD = -15
-					}
-				}
-				send_interface_message = {
-					type = event_generic_good
-					title = lam_faction.2720.c_yes
-				}
-			}
-			0 = {
-				modifier = {
-					add = 45
-				}
-				scope:lam_lo_plot = {
-					add_opinion = {
-						target = root
-						modifier = lam_fac_threatened_opinion
-					}
-					lam_pd_grievance_add_effect = {
-						KIND = policy
-						AMOUNT = 10
-						MONTHS = 24
-					}
-				}
-				send_interface_message = {
-					type = event_generic_bad
-					title = lam_faction.2720.c_no
-				}
-			}
-		}
-	}
-	option = {
-		name = lam_faction.2720.d
-	}
-}
+# Archived unreachable event lam_faction.2720; see orphan-events audit.
+
 lam_faction.2730 = {
 	type = character_event
 	title = lam_faction.2730.t

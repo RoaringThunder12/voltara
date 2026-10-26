@@ -2371,10 +2371,10 @@ marriage_ai_accept_modifier = { ###MARRIAGE SCRIPTED MODIFIERS###
 		add = -5000
 		years_from_game_start <= 5
 		OR = {
-			scope:puppet_or_actor = character:122
-			scope:recipient = character:122
-			scope:secondary_actor = character:122
-			scope:secondary_recipient = character:122
+			always = no
+			always = no
+			always = no
+			always = no
 		}
 		scope:puppet_or_actor = {
 			is_ai = yes

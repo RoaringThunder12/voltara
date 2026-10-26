@@ -1,0 +1,18 @@
+﻿yearly_playable_pulse = { on_actions = { vt_refresh_tribute_destination } }
+on_game_start = { on_actions = { vt_initialize_tribute_destinations } }
+vt_initialize_tribute_destinations = { effect = { every_independent_ruler = { trigger_event = { on_action = vt_refresh_tribute_destination } } } }
+vt_refresh_tribute_destination = {
+ trigger = { is_ai = yes is_landed = yes }
+ effect = {
+  remove_variable = vt_tribute_destination
+  if = { limit = { is_tributary = yes suzerain = { vt_tribute_sovereign = yes } }
+   set_variable = { name = vt_tribute_destination value = suzerain }
+  }
+  else_if = { limit = { is_tributary = no is_independent_ruler = yes }
+   random_neighboring_and_across_water_top_liege_realm_owner = {
+    limit = { vt_tribute_sovereign = yes NOT = { is_at_war_with = prev } }
+    prev = { set_variable = { name = vt_tribute_destination value = prev } }
+   }
+  }
+ }
+}

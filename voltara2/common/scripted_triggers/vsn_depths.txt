@@ -1,0 +1,12 @@
+﻿vsn_stoneborn = { culture = { has_cultural_pillar = heritage_voltara_stoneborn } }
+vsn_first_cavern = { culture = { has_cultural_pillar = heritage_voltara_naga } rite = rite:voltara_first_cavern }
+vsn_ruler = { is_alive = yes is_available_adult = yes is_landed = yes highest_held_title_tier >= tier_county exists = capital_county NOT = { has_government = voltara_ruins_government } }
+vsn_opponent = {
+ vsn_ruler = yes NOT = { this = $ACTOR$ } NOT = { is_at_war_with = $ACTOR$ }
+ NOT = { has_character_flag = vsn_sealed_depths }
+ OR = {
+  AND = { vsn_first_cavern = yes $ACTOR$ = { vsn_stoneborn = yes } }
+  AND = { vsn_stoneborn = yes $ACTOR$ = { vsn_first_cavern = yes } }
+ }
+}
+vsn_has_border = { any_realm_county = { any_neighboring_county = { exists = holder holder = { vsn_opponent = { ACTOR = root } } } } }

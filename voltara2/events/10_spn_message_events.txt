@@ -1,5 +1,5 @@
 ﻿namespace = spn_message
-spn_message.0001 { #Send confer vampirism acceptance message
+spn_message.0001 = { #Send confer vampirism acceptance message
 	type = character_event
 	hidden = yes
 
@@ -35,7 +35,7 @@ spn_message.0001 { #Send confer vampirism acceptance message
 	}
 }
 
-spn_message.1001 { #Send confer lycanthropy acceptance message
+spn_message.1001 = { #Send confer lycanthropy acceptance message
 	type = character_event
 	hidden = yes
 
@@ -77,7 +77,7 @@ spn_message.1001 { #Send confer lycanthropy acceptance message
 	}
 }
 
-spn_message.2001 { #Send confer hybrid acceptance message
+spn_message.2001 = { #Send confer hybrid acceptance message
 	type = character_event
 	hidden = yes
 
@@ -113,7 +113,7 @@ spn_message.2001 { #Send confer hybrid acceptance message
 	}
 }
 
-spn_message.3001 { #Send Hunter training acceptance message
+spn_message.3001 = { #Send Hunter training acceptance message
 	type = character_event
 	hidden = yes
 
@@ -149,7 +149,7 @@ spn_message.3001 { #Send Hunter training acceptance message
 	}
 }
 
-spn_message.4001 { # Compulsion: success (notify both sides)
+spn_message.4001 = { # Compulsion: success (notify both sides)
     type = character_event
     hidden = yes
 
@@ -178,7 +178,7 @@ spn_message.4001 { # Compulsion: success (notify both sides)
     }
 }
 
-spn_message.4002 { # Compulsion: resisted (notify both sides)
+spn_message.4002 = { # Compulsion: resisted (notify both sides)
     type = character_event
     hidden = yes
 
@@ -210,7 +210,7 @@ spn_message.4002 { # Compulsion: resisted (notify both sides)
 }
 
 
-spn_message.9000 { #Send genertic confer death message
+spn_message.9000 = { #Send genertic confer death message
 	type = character_event
 	hidden = yes
 
@@ -246,38 +246,4 @@ spn_message.9000 { #Send genertic confer death message
 	}
 }
 
-spn_message.9001 { #Send hunter training death message
-	type = character_event
-	hidden = yes
-
-	immediate = {
-		scope:recipient = {
-			send_interface_message = {
-				type = event_generic_neutral
-				title = spn_while_training_death
-				
-				right_icon = scope:actor
-
-				show_as_tooltip = {
-					scope:actor = {
-						custom_tooltip = spn_msg_while_training_death_message
-					}
-				}
-			}
-		}
-		scope:actor = {
-			send_interface_message = {
-				type = event_generic_neutral
-				title = spn_being_trained_death
-				
-				right_icon = scope:recipient
-
-				show_as_tooltip = {
-					scope:recipient = {
-						custom_tooltip = spn_msg_being_trained_death_message
-					}
-				}
-			}
-		}
-	}
-}
+# Archived unreachable event spn_message.9001; see orphan-events audit.

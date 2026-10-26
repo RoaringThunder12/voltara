@@ -20,5 +20,5 @@ voltara_study_dragonlore = {
  is_shown = { is_landed = yes NOT = { has_trait = dragon } }
  is_valid = { is_adult = yes is_imprisoned = no }
  cost = { gold = 100 } cooldown = { years = 2 } ai_check_interval = 0
- effect = { if = { limit = { NOT = { has_variable = dragonlore } } set_variable = { name = dragonlore value = 0 } } change_variable = { name = dragonlore add = 2 max = 12 } add_learning_lifestyle_xp = 100 }
+ effect = { if = { limit = { NOT = { has_variable = dragonlore } } set_variable = { name = dragonlore value = 0 } } change_variable = { name = dragonlore add = 2 max = 12 } add_learning_lifestyle_xp = 100 add_character_modifier = { modifier = voltara_dragonkeeper_guidance years = 2 } }
 }

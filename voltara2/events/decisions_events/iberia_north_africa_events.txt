@@ -1442,31 +1442,8 @@ iberia_north_africa.0131 = {
 # No notification event for this'un, as it's a small decision.
 
 # Secure the Mediterranean notif
-iberia_north_africa.2105 = {
-	type = character_event
-	title = iberia_north_africa.2105.t
-	desc = iberia_north_africa.2105.desc
-	theme = crown
-	override_background = { reference = throne_room_mediterranean }
-	left_portrait = root
+# Archived unreachable event iberia_north_africa.2105; see orphan-events audit.
 
-	immediate = {
-		show_as_tooltip = {
-			house = {
-				add_house_modifier = {
-					modifier = fp2_controls_the_mediterranean_house_modifier
-					years = 100
-				}
-			}
-			dynasty = { add_dynasty_prestige = major_prestige_gain }
-		}
-	}
-
-	option = {
-		name = iberia_north_africa.2105.a
-		custom_tooltip = secure_mediterranean_decision.a
-	}
-}
 
 ########################################################
 # golden_age_jewish_science_in_iberia_decision events

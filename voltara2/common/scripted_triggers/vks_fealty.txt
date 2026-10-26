@@ -1,0 +1,18 @@
+﻿vks_fealty_parties_valid = {
+ scope:actor = { vkf_leader = yes is_independent_ruler = yes is_at_war = no }
+ scope:recipient = {
+  vkf_available = yes vks_de_jure_ruler = yes is_independent_ruler = yes
+  highest_held_title_tier < tier_empire is_at_war = no is_tributary = no is_confederation_member = no
+  NOT = { voltara_is_ruins_placeholder = yes }
+ }
+}
+vks_fealty_payment_valid = { OR = {
+ AND = { scope:vks_gold ?= yes scope:actor = { gold >= 150 } }
+ AND = { scope:vks_prestige ?= yes scope:actor = { prestige >= 500 } }
+ AND = { scope:vks_piety ?= yes scope:actor = { piety >= 500 } }
+ AND = { scope:vks_hook ?= yes scope:actor = { has_usable_hook = scope:recipient } }
+ AND = { scope:vks_herd ?= yes
+ scope:actor = { exists = domicile government_has_flag = government_has_herd domicile.herd >= 500 }
+ scope:recipient = { exists = domicile government_has_flag = government_has_herd }
+ }
+} }

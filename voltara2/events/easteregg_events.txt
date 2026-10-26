@@ -34,29 +34,5 @@ easteregg_event.0001 = {
 	}
 }
 
-easteregg_event.0002 = {
-	hidden = yes
+# Archived unreachable event easteregg_event.0002; see orphan-events audit.
 
-	immediate = {
-		#	If Jakub wins, he takes back his beloved rock. Charna will not forget that.
-		if = { limit = { always = no } # Proven unreachable; original effects retained below.
-# scope:sc_victor = {
-# 				add_character_modifier = prison_pet_stone_modifier
-# 				set_relation_rival = {
-# 					target = scope:sc_loser
-# 					reason = rival_rock
-# 				}
-# 			}
-# scope:sc_loser = {remove_character_modifier = prison_pet_stone_modifier}
-}
-		#	Otherwise, Charna won, and Jakub will never, ever forgive her.
-		else = {
-			scope:sc_victor = {
-				set_relation_rival = {
-					target = scope:sc_loser
-					reason = rival_rock
-				}
-			}
-		}
-	}
-}

@@ -6,13 +6,13 @@ option = { name = vkfu.1.1 custom_tooltip = vkfu.1.1_tt hidden_effect = { if = {
 
 vkfu.2 = { type = character_event theme = realm title = vkfu.2.t desc = vkfu.2.desc trigger = { vkf_chief = yes has_variable = vkfu_inviter var:vkfu_inviter = { vkf_chief = yes } NOT = { has_variable = vkf_patron } }
 option = { name = vkfu.2.0 custom_tooltip = vkfu.2.0_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_inviter var:vkfu_inviter = { vkf_chief = yes } NOT = { has_variable = vkf_patron }  } vkfu_recognize = { OATH = 1 } } } ai_chance = { base = 55 } }
-option = { name = vkfu.2.1 custom_tooltip = vkfu.2.1_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_inviter var:vkfu_inviter = { vkf_chief = yes } NOT = { has_variable = vkf_patron }  } vkfu_recognize = { OATH = 2 } } } ai_chance = { base = 35 } }
+option = { name = vkfu.2.1 custom_tooltip = vks_oath_contribution_tt custom_tooltip = vkfu.2.1_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_inviter var:vkfu_inviter = { vkf_chief = yes } NOT = { has_variable = vkf_patron }  } vkfu_recognize = { OATH = 2 } } } ai_chance = { base = 35 } }
 option = { name = vkfu.2.2 custom_tooltip = vkfu.2.2_tt hidden_effect = { if = { limit = { vkf_chief = yes has_variable = vkfu_inviter var:vkfu_inviter = { vkf_chief = yes } NOT = { has_variable = vkf_patron }  } add_character_flag = { flag = vkfu_herald_answered days = 730 } remove_variable = vkfu_inviter } } ai_chance = { base = 10 } }
 }
 
 vkfu.3 = { type = character_event theme = realm title = vkfu.3.t desc = vkfu.3.desc trigger = { this = character:9999100 vkf_chief = yes }
 immediate = { remove_character_flag = vkfu_riders_pending vkf_count_support = yes }
-option = { name = vkfu.3.0 trigger = { var:vkf_support >= 2 NOT = { has_character_flag = vkfu_renown_awarded } } custom_tooltip = vkfu.3.0_tt hidden_effect = { if = { limit = { this = character:9999100 vkf_chief = yes var:vkf_support >= 2 NOT = { has_character_flag = vkfu_renown_awarded } } add_character_flag = vkfu_renown_awarded add_trait = conqueror add_character_modifier = { modifier = vkfu_uniter_renown years = 20 } add_prestige = 1000 add_gold = 200 add_character_flag = vkf_council_concluded vkfu_authorize = yes } } ai_chance = { base = 90 } }
+option = { name = vkfu.3.0 trigger = { var:vkf_support >= 2 NOT = { has_character_flag = vkfu_renown_awarded } } custom_tooltip = vkfu.3.0_tt hidden_effect = { if = { limit = { this = character:9999100 vkf_chief = yes var:vkf_support >= 2 NOT = { has_character_flag = vkfu_renown_awarded } } add_character_flag = vkfu_renown_awarded add_trait = conqueror vks_schedule_council = yes add_character_modifier = { modifier = vkfu_uniter_renown years = 20 } add_prestige = 1000 add_gold = 200 add_character_flag = vkf_council_concluded vkfu_authorize = yes } } ai_chance = { base = 90 } }
 option = { name = vkfu.3.1 custom_tooltip = vkfu.3.1_tt hidden_effect = { if = { limit = { this = character:9999100 vkf_chief = yes  }  } } ai_chance = { base = 10 } }
 }
 

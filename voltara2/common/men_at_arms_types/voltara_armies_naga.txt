@@ -59,7 +59,7 @@ vta_naga_spears = {
  can_recruit = { NOT = { has_government = voltara_ruins_government }
  culture = { has_cultural_pillar = heritage_voltara_naga }  culture = { has_innovation = innovation_vt_naga_warfare_1 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_pikemen add = 5 }
  illustration = { reference = vta_3059124362_argonian_spear_infantry }
 }
@@ -81,7 +81,7 @@ vta_naga_guard = {
  can_recruit = { NOT = { has_government = voltara_ruins_government }
  culture = { has_cultural_pillar = heritage_voltara_naga }  culture = { has_innovation = innovation_quilted_armor } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
  illustration = { reference = vta_3059124362_argonian_heavy_infantry }
 }
@@ -103,7 +103,7 @@ vta_naga_pursuit = {
  can_recruit = { NOT = { has_government = voltara_ruins_government }
  culture = { has_cultural_pillar = heritage_voltara_naga }  culture = { has_innovation = innovation_vt_naga_warfare_1 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
  illustration = { reference = vta_3059124362_argonian_skirmishers }
 }
@@ -127,7 +127,7 @@ vta_naga_siege = {
  can_recruit = { NOT = { has_government = voltara_ruins_government }
  culture = { has_cultural_pillar = heritage_voltara_naga } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = 10 }
  illustration = { reference = vta_3059124362_argonian_onager }
 }
@@ -150,7 +150,7 @@ vta_naga_elite = {
  culture = { has_cultural_pillar = heritage_voltara_naga }
  culture = { has_innovation = innovation_vt_naga_warfare_2 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
  illustration = { reference = vta_3059124362_argonian_house_guard }
 }
@@ -173,7 +173,7 @@ vta_ironcoil_naga_spears = {
  OR = { culture = culture:voltara_ironcoil_naga culture = culture:voltara_local_ironcoil_voltara_test_10113 culture = culture:voltara_local_ironcoil_voltara_test_10395 culture = culture:voltara_local_ironcoil_voltara_test_10504 culture = culture:voltara_local_ironcoil_voltara_test_10627 culture = culture:voltara_local_ironcoil_voltara_test_10833 culture = culture:voltara_local_ironcoil_voltara_test_11098 }
  culture = { has_innovation = innovation_vt_naga_warfare_2 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_pikemen add = 5 }
  illustration = { reference = vta_3059124362_argonian_spear_infantry }
 }
@@ -196,7 +196,7 @@ vta_ironcoil_naga_guard = {
  OR = { culture = culture:voltara_ironcoil_naga culture = culture:voltara_local_ironcoil_voltara_test_10113 culture = culture:voltara_local_ironcoil_voltara_test_10395 culture = culture:voltara_local_ironcoil_voltara_test_10504 culture = culture:voltara_local_ironcoil_voltara_test_10627 culture = culture:voltara_local_ironcoil_voltara_test_10833 culture = culture:voltara_local_ironcoil_voltara_test_11098 }
  culture = { has_innovation = innovation_vt_naga_warfare_2 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
  illustration = { reference = vta_3059124362_argonian_heavy_infantry }
 }
@@ -219,7 +219,7 @@ vta_seaborn_naga_spears = {
  OR = { culture = culture:voltara_merfolk culture = culture:voltara_culture_41 }
  culture = { has_innovation = innovation_vt_naga_warfare_2 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_pikemen add = 5 }
  illustration = { reference = vta_3059124362_argonian_spear_infantry }
 }
@@ -242,7 +242,7 @@ vta_seaborn_naga_bows = {
  OR = { culture = culture:voltara_merfolk culture = culture:voltara_culture_41 }
  culture = { has_innovation = innovation_vt_naga_warfare_2 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_archers add = 5 }
  illustration = { reference = vta_3059124362_argonian_archers }
 }
@@ -265,7 +265,7 @@ vta_naga_marksmen = {
  culture = { has_cultural_pillar = heritage_voltara_naga }
  culture = { has_innovation = innovation_vt_naga_warfare_3 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_crossbowmen add = 5 }
  illustration = { reference = vta_3059124362_argonian_crossbowmen }
 }
@@ -290,7 +290,7 @@ vta_naga_siege_2 = {
  culture = { has_cultural_pillar = heritage_voltara_naga }
  culture = { has_innovation = innovation_mangonel } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = 10 }
  illustration = { reference = vta_3059124362_argonian_onager }
 }
@@ -315,7 +315,7 @@ vta_naga_siege_3 = {
  culture = { has_cultural_pillar = heritage_voltara_naga }
  culture = { has_innovation = innovation_trebuchet } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = 10 }
  illustration = { reference = vta_3059124362_argonian_onager }
 }
@@ -340,7 +340,7 @@ vta_naga_siege_4 = {
  culture = { has_cultural_pillar = heritage_voltara_naga }
    culture = { has_innovation = innovation_vt_naga_warfare_4 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = 10 }
  illustration = { reference = vta_3059124362_argonian_onager }
 }

@@ -2933,26 +2933,8 @@ roman_restoration.0160 = {
 }
 
 # HRE notified.
-roman_restoration.0161 = {
-	type = character_event
-	title = roman_restoration.0161.t
-	desc = roman_restoration.0161.desc
-	theme = war
-	left_portrait = {
-		character = scope:byz_emperor
-		animation = disgust
-	}
-	right_portrait = {
-		character = scope:hre_emperor
-		animation = anger
-	}
+# Archived unreachable event roman_restoration.0161; see orphan-events audit.
 
-	immediate = { play_music_cue = "mx_cue_combat_2" }
-
-	option = {
-		name = roman_restoration.0161.a
-	}
-}
 
 # War is over:
 # Byz is victorious. Byz notified.
@@ -3092,26 +3074,8 @@ roman_restoration.0170 = {
 }
 
 # HRE notified.
-roman_restoration.0171 = {
-	type = character_event
-	title = roman_restoration.0171.t
-	desc = roman_restoration.0171.desc
-	theme = war
-	left_portrait = {
-		character = scope:hre_emperor
-		animation = disgust
-	}
-	right_portrait = {
-		character = scope:byz_emperor
-		animation = anger
-	}
+# Archived unreachable event roman_restoration.0171; see orphan-events audit.
 
-	immediate = { play_music_cue = "mx_cue_combat_2" }
-
-	option = {
-		name = roman_restoration.0171.a
-	}
-}
 
 # War is over:
 # HRE is victorious. HRE notified.
@@ -3213,86 +3177,8 @@ roman_restoration.0175 = {
 # by Joe Parkin
 ############################
 
-roman_restoration.1200 = {
-	type = character_event
-	title = roman_restoration.1200.t
-	desc = roman_restoration.1200.desc
-	theme = realm
-	left_portrait = {
-		character = root
-		animation = personality_bold
-	}
-	override_background = { reference = ep3_constantinople }
-	override_effect_2d = legend_glow
+# Archived unreachable event roman_restoration.1200; see orphan-events audit.
 
-	cooldown = { years = 10 }
-
-	trigger = {
-		has_ep3_dlc_trigger = yes
-		is_roman_emperor_trigger = yes
-		scope:county = {
-			# Constantinople only
-			always = no
-			previous_holder = {
-				NOR = {
-					root.primary_title.previous_holder ?= this
-					root.top_liege.primary_title.previous_holder ?= this
-				}
-			}
-		}
-	}
-
-	immediate = {
-		play_music_cue = "mx_cue_epic_sacral_moment"
-		add_prestige = major_prestige_gain
-		if = {
-			limit = {
-				culture = { has_cultural_parameter = holds_triumphs }
-			}
-			custom_tooltip = {
-				text = free_triumph_tooltip
-				add_character_flag = free_triumph_flag
-			}
-		}
-		if = {
-			limit = {
-				culture = { has_cultural_parameter = hosts_chariot_races }
-			}
-			custom_tooltip = {
-				text = half_price_chariot_race_tooltip
-				add_character_flag = half_price_chariot_race_flag
-			}
-		}
-	}
-
-	option = {
-		name = roman_restoration.1200.a
-		trigger = {
-			NOT = { always = no }
-		}
-		if = {
-			limit = { government_has_flag = government_has_influence }
-			change_influence = medium_influence_gain
-		}
-		add_legitimacy = minor_legitimacy_gain
-		set_realm_capital = title:c_byzantion
-	}
-
-	option = {
-		name = {
-			text = roman_restoration.1200.b.rome
-			trigger = {
-				is_roman_emperor_excluding_byzantium_trigger = yes
-			}
-		}
-		name = {
-			text = roman_restoration.1200.b
-			trigger = {
-				is_roman_emperor_excluding_byzantium_trigger = no
-			}
-		}
-	}
-}
 
 #################################################
 # Byz Emp reclaims Constantinople from you (you wretched boy!) by Isabella Welch

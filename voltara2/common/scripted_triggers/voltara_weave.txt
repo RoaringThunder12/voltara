@@ -1,6 +1,6 @@
 ﻿
-vt_weave_order = { faith.religion = religion:voltara_religion }
-vt_weave_khaos = { faith.religion = religion:voltara_khaos_religion }
+vt_weave_order = { OR = { faith.religion = religion:voltara_religion rite = rite:voltara_weavers_aeliunist } }
+vt_weave_khaos = { OR = { faith.religion = religion:voltara_khaos_religion rite = rite:voltara_weavers_khaotist } }
 vt_weave_necromancer = { OR = { has_trait = necromancer has_trait = vt_ek_necromancer has_trait = vt_ek_experimentalist_necromancer } }
 vt_weave_mortal = { is_adult = yes is_alive = yes NOT = { has_trait = dragon } NOT = { voltara_is_ruins_placeholder = yes } }
 vt_weave_eligible_county = {

@@ -1,0 +1,36 @@
+﻿vae_seek_titan_archive = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" }
+ desc = vae_seek_titan_archive_desc selection_tooltip = vae_seek_titan_archive_tooltip confirm_text = vae_seek_titan_archive_confirm
+ decision_group_type = major ai_check_interval = 36
+ is_shown = { vae_regional_story_eligible = yes  }
+ is_valid = { is_at_war = no } cost = { gold = 60 } cooldown = { years = 5 }
+ effect = { trigger_event = vae_story.100 }
+ ai_will_do = { base = 15 }
+}
+vae_negotiate_passes = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" }
+ desc = vae_negotiate_passes_desc selection_tooltip = vae_negotiate_passes_tooltip confirm_text = vae_negotiate_passes_confirm
+ decision_group_type = major ai_check_interval = 36
+ is_shown = { vae_regional_story_eligible = yes any_neighboring_and_across_water_top_liege_realm_owner = { vae_mountain_partner = yes NOT = { is_at_war_with = prev } } }
+ is_valid = { is_at_war = no } cost = { gold = 40 } cooldown = { years = 3 }
+ effect = { trigger_event = vae_story.200 }
+ ai_will_do = { base = 15 }
+}
+vae_lantern_roads = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" }
+ desc = vae_lantern_roads_desc selection_tooltip = vae_lantern_roads_tooltip confirm_text = vae_lantern_roads_confirm
+ decision_group_type = major ai_check_interval = 36
+ is_shown = { vae_regional_story_eligible = yes  }
+ is_valid = { is_at_war = no } cost = { gold = 35 } cooldown = { years = 3 }
+ effect = { trigger_event = vae_story.300 }
+ ai_will_do = { base = 15 }
+}
+vae_gather_threadbinders = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" }
+ desc = vae_gather_threadbinders_desc selection_tooltip = vae_gather_threadbinders_tooltip confirm_text = vae_gather_threadbinders_confirm
+ decision_group_type = major ai_check_interval = 36
+ is_shown = { vae_regional_story_eligible = yes can_magic_trigger = yes }
+ is_valid = { is_at_war = no } cost = { gold = 80 } cooldown = { years = 5 }
+ effect = { trigger_event = vae_story.400 }
+ ai_will_do = { base = 15 }
+}

@@ -1566,50 +1566,23 @@ always = no
 
 			# Plus remove all the generated opinions.
 			## King Philippe of France & Duke Boudewijn of Flanders
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:364
-				LIEGE = character:214
-			}
+			
 			## Count Bouchard of Vendome & Guy de Bachaumont
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:40376
-				LIEGE = character:40905
-			}
+			
 			## Caliph al-Mustansir & Rasad
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:additional_fatimids_1
-				LIEGE = character:3096
-			}
+			
 			## Count Ermengol of Urgell & Infanta Sancha of Aragon
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:110514
-				LIEGE = character:110550
-			}
+			
 			## Duke Dirk of Holland & Count Robrecht of Zeeland
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:368
-				LIEGE = character:106520
-			}
+			
 			## Duke Sven of Ostergotland & Kol Sverker
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:100529
-				LIEGE = character:100530
-			}
+			
 			## King Salamon of Hungary & Queen Mother Anastasia
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:637
-				LIEGE = character:476
-			}
+			
 			## Prince Demetre of Georgia & Alda Oseti
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:9956
-				LIEGE = character:9957
-			}
+			
 			## Sultan al-Muazzam Alp Arslan and Hassan "the Order of the Realm".
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:3050
-				LIEGE = character:3040
-			}
+			
 		}
 		else_if = {
 			limit = { game_start_date = 1178.10.1 }
@@ -1670,40 +1643,19 @@ always = no
 
 			# Plus remove all the generated opinions.
 			## Richard I and Eleanor of Aquitaine
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:204510
-				LIEGE = character:205730
-			}
+			
 			## Muhammad Jahan Pahlavan and Togrul
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:144052
-				LIEGE = character:144056
-			}
+			
 			## Manuel Komnenos and Alexios
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:215531
-				LIEGE = character:215530
-			}
+			
 			## Henry II and Young Henry
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:204508
-				LIEGE = character:204500
-			}
+			
 			## Teresa and Afonso
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:209510
-				LIEGE = character:209503
-			}
+			
 			## Wolila and Zhilugu
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:188909
-				LIEGE = character:188912
-			}
+			
 			## Long Trat Vuong and To Hien Thanh
-			remove_generated_diarch_consequences_effect = {
-				NEW_DIARCH = character:viet_to_1
-				LIEGE = character:viet_ly_2
-			}
+			
 		}
 		if = {
 			limit = { has_tgp_dlc_trigger = no }
@@ -3177,7 +3129,7 @@ on_game_start_after_lobby = {
 			situation:the_great_steppe ?= {
 				expanding_steppe_add_region_effect = {
 					SUB_REGION = east
-					REGION = dlc_mpo_steppe_north_east_asia_expansion
+					REGION = vt_southron_steppe_frontier
 				}
 			}
 			# Native-world scope has no target in Voltara; original follows.
@@ -4415,7 +4367,7 @@ always = no
 
 			random_player = {
 				limit = { always = no }
-				set_player_character = character:906
+				
 			}
 		}
 
@@ -4910,7 +4862,7 @@ always = no
 				##12 Turkish Eagle
 				if = {
 					limit = {
-						this != character:3040 # Not Alp Arslan
+						always = yes # Not Alp Arslan
 						house = house:house_seljuk # Seljuk
 						game_start_date < 1067.1.1 # 1066 only, and no Seljuks in 867
 					}
@@ -5184,7 +5136,7 @@ always = no
 		every_player = {
 			if = {
 				limit = {
-					dynasty = character:73683.dynasty
+					always = no
 					location = { geographical_region = world_europe_west_iberia }
 				}
 				set_global_variable = fp3_the_umma_strikes_back_achievement_tracker # Is not removed (sad!)

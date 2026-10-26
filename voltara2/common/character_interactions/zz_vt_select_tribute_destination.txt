@@ -1,0 +1,23 @@
+﻿vt_select_tribute_destination = {
+ category = interaction_category_diplomacy
+ icon = send_gift_interaction
+ auto_accept = yes
+ is_shown = {
+  scope:actor = { is_landed = yes }
+  scope:recipient = { vt_tribute_sovereign = yes }
+  NOT = { scope:actor = scope:recipient }
+ }
+ is_valid = {
+  scope:actor = {
+   is_available_adult = yes NOT = { is_at_war_with = scope:recipient }
+   OR = {
+    AND = { is_tributary = yes suzerain = scope:recipient }
+    AND = { is_tributary = no is_independent_ruler = yes
+     any_neighboring_and_across_water_top_liege_realm_owner = { this = scope:recipient }
+    }
+   }
+  }
+ }
+ on_accept = { scope:actor = { set_variable = { name = vt_tribute_destination value = scope:recipient } } }
+ ai_will_do = { base = 0 }
+}

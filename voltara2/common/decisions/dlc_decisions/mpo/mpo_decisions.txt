@@ -2302,7 +2302,7 @@ mpo_decision_introduce_heir = {
 #	dlc_mpo_steppe_hexi_tarim_expansion
 #	dlc_mpo_steppe_north_china_expansion
 #	dlc_mpo_steppe_central_china_expansion
-#	dlc_mpo_steppe_north_east_asia_expansion
+#	vt_southron_steppe_frontier
 #	world_asia_korea
 #	world_asia_japan
 
@@ -2791,15 +2791,15 @@ expand_the_steppe_decision = {
 			}
 		}
 		item = {
-			value = dlc_mpo_steppe_north_east_asia_expansion
+			value = vt_southron_steppe_frontier
 			is_shown = {
 	            situation:the_great_steppe ?= {
 	            	any_situation_sub_region = {
-	                	region_is_adjacent = geographical_region:dlc_mpo_steppe_north_east_asia_expansion
+	                	region_is_adjacent = geographical_region:vt_southron_steppe_frontier
 	                }
 	            }
 			}
-			localization = dlc_mpo_steppe_north_east_asia_expansion
+			localization = vt_southron_steppe_frontier
 			icon = "gfx/interface/icons/message_feed/banner.dds"
 			ai_chance = {
 				value = 100
@@ -2888,7 +2888,7 @@ expand_the_steppe_decision = {
 			great_steppe_not_in_sub_region_trigger = { REGION = dlc_mpo_steppe_hexi_tarim_expansion }
 			great_steppe_not_in_sub_region_trigger = { REGION = dlc_mpo_steppe_north_china_expansion }
 			great_steppe_not_in_sub_region_trigger = { REGION = dlc_mpo_steppe_central_china_expansion }
-			great_steppe_not_in_sub_region_trigger = { REGION = dlc_mpo_steppe_north_east_asia_expansion }
+			great_steppe_not_in_sub_region_trigger = { REGION = vt_southron_steppe_frontier }
 			great_steppe_not_in_sub_region_trigger = { REGION = world_asia_korea }
 			great_steppe_not_in_sub_region_trigger = { REGION = world_asia_japan }
 			great_steppe_not_in_sub_region_trigger = { REGION = ghw_region_southern_russia }
@@ -2995,9 +2995,9 @@ expand_the_steppe_decision = {
 		}
         trigger_else_if = {
         	limit = {
-	    		scope:dlc_mpo_steppe_north_east_asia_expansion = yes
+	    		scope:vt_southron_steppe_frontier = yes
 	    	}
-		    completely_controls_region = dlc_mpo_steppe_north_east_asia_expansion
+		    completely_controls_region = vt_southron_steppe_frontier
 		}
         trigger_else_if = {
         	limit = {

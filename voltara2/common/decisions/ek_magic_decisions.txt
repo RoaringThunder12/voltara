@@ -411,7 +411,7 @@ life_extension_decision_ai = { #computer time B-)
 			has_perk = necromancy_master_perk
 		}
 		is_ai = yes
-		NOT = {	this = character:mannimarco_1000 } # we want Mannimarco to go for lichdom, not immortality
+		NOT = {	always = no } # we want Mannimarco to go for lichdom, not immortality
 	}
 	is_valid = {
 		valid_increase_lifespan_trigger = yes
@@ -525,7 +525,7 @@ study_cloning_decision = { #Study Cloning (The Learning Process)
 			is_immortal = yes
 		}
 		OR = {
-			this = character:fyr_100 #Divayth Fyr
+			always = no #Divayth Fyr
 			is_important_lore_character = no
 		}
 		has_trait = eccentric
@@ -597,7 +597,7 @@ make_a_clone_decision = { #Create A Clone! (Repeatable, practical Application)
 			is_immortal = yes
 		}
 		OR = {
-			this = character:fyr_100 #Divayth Fyr
+			always = no #Divayth Fyr
 			is_important_lore_character = no
 		}
 		has_trait = eccentric

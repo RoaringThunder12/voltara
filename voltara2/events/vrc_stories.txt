@@ -1,0 +1,80 @@
+﻿namespace = vrc
+vrc.100 = { type = character_event theme = learning title = vrc.100.t desc = vrc.100.desc trigger = { vsn_ruler = yes culture = { vrc_high_culture = yes } }
+option = { name = vrc.100.a culture = { if = { limit = { NOT = { has_innovation = innovation_vrc_high_1 } } add_innovation_progress = { target = culture_innovation:innovation_vrc_high_1 value = 10 } } } trigger_event = { id = vrc.101 days = 30 } ai_chance = { base = 20 } }
+option = { name = vrc.100.b capital_county = { add_county_modifier = { modifier = vrc_shared_harvest years = 3 } } add_piety = 100 if = { limit = { has_global_variable = vt_weave_ready } vt_weave_shift = { VALUE = -1 } custom_tooltip = vel_shift_aeliun_1 } ai_chance = { base = 20 } }
+option = { name = vrc.100.c if = { limit = { has_global_variable = vt_weave_ready } vt_weave_shift = { VALUE = -2 } custom_tooltip = vel_shift_aeliun_2 } add_stress = 20 capital_county = { change_county_control = -5 } ai_chance = { base = 20 } }
+}
+vrc.101 = { type = character_event theme = learning title = vrc.101.t desc = vrc.101.desc trigger = { vsn_ruler = yes culture = { vrc_high_culture = yes } }
+option = { name = vrc.101.a trigger = { gold >= 30 } remove_short_term_gold = 30 capital_county = { add_county_modifier = { modifier = vrc_shared_harvest years = 3 } }if = { limit = { has_global_variable = vt_weave_ready } vt_weave_shift = { VALUE = -2 } custom_tooltip = vel_shift_aeliun_2 } add_learning_lifestyle_xp = 150 ai_chance = { base = 20 } }
+option = { name = vrc.101.b trigger = { can_magic_trigger = yes has_variable = magicka var:magicka >= 20 } change_variable = { name = magicka subtract = 20 } capital_county = { add_county_modifier = { modifier = vrc_shared_harvest years = 3 } }if = { limit = { has_global_variable = vt_weave_ready } vt_weave_shift = { VALUE = -2 } custom_tooltip = vel_shift_aeliun_2 } ai_chance = { base = 20 } }
+option = { name = vrc.101.c add_piety = 50 add_learning_lifestyle_xp = 75 ai_chance = { base = 20 } }
+}
+vrc.102 = { type = character_event theme = learning title = vrc.102.t desc = vrc.102.desc trigger = { vsn_ruler = yes culture = { vrc_high_culture = yes } }
+option = { name = vrc.102.a add_learning_lifestyle_xp = 150 add_piety = 75 ai_chance = { base = 20 } }
+option = { name = vrc.102.b trigger = { capital_county = { any_county_province = { has_building_or_higher = vrc_high_01 } } } culture = { if = { limit = { NOT = { has_innovation = innovation_vrc_high_1 } } add_innovation_progress = { target = culture_innovation:innovation_vrc_high_1 value = 10 } } }capital_county = { add_county_modifier = { modifier = vrc_preserved_knowledge years = 3 } } ai_chance = { base = 20 } }
+option = { name = vrc.102.c add_prestige = 75 add_stress = 20 ai_chance = { base = 20 } }
+}
+vrc.103 = { type = character_event theme = learning title = vrc.103.t desc = vrc.103.desc trigger = { vsn_ruler = yes culture = { vrc_high_culture = yes } }
+option = { name = vrc.103.a if = { limit = { has_global_variable = vt_weave_ready } vt_weave_shift = { VALUE = -1 } custom_tooltip = vel_shift_aeliun_1 } add_learning_lifestyle_xp = 150 ai_chance = { base = 20 } }
+option = { name = vrc.103.b remove_character_modifier = vel_dawn_anchor add_stress = -15 ai_chance = { base = 20 } }
+option = { name = vrc.103.c add_stress = 25 capital_county = { change_county_control = 5 } ai_chance = { base = 20 } }
+}
+vrc.200 = { type = character_event theme = learning title = vrc.200.t desc = vrc.200.desc trigger = { vsn_ruler = yes culture = { vrc_deep_culture = yes } }
+option = { name = vrc.200.a culture = { if = { limit = { NOT = { has_innovation = innovation_vrc_deep_1 } } add_innovation_progress = { target = culture_innovation:innovation_vrc_deep_1 value = 10 } } } trigger_event = { id = vrc.201 days = 21 } ai_chance = { base = 20 } }
+option = { name = vrc.200.b if = { limit = { has_global_variable = vt_weave_ready } vt_weave_shift = { VALUE = 1 } custom_tooltip = vel_shift_khaos_1 } add_piety = 75 add_learning_lifestyle_xp = 100 ai_chance = { base = 20 } }
+option = { name = vrc.200.c add_gold = 50 add_stress = 10 ai_chance = { base = 20 } }
+}
+vrc.201 = { type = character_event theme = learning title = vrc.201.t desc = vrc.201.desc trigger = { vsn_ruler = yes culture = { vrc_deep_culture = yes } }
+option = { name = vrc.201.a capital_county = { add_county_modifier = { modifier = vrc_preserved_knowledge years = 3 } }if = { limit = { has_global_variable = vt_weave_ready } vt_weave_shift = { VALUE = 2 } custom_tooltip = vel_shift_khaos_2 } add_learning_lifestyle_xp = 150 ai_chance = { base = 20 } }
+option = { name = vrc.201.b trigger = { can_magic_trigger = yes has_variable = magicka var:magicka >= 25 } change_variable = { name = magicka subtract = 25 } add_gold = 60 if = { limit = { has_global_variable = vt_weave_ready } vt_weave_shift = { VALUE = 2 } custom_tooltip = vel_shift_khaos_2 } ai_chance = { base = 20 } }
+option = { name = vrc.201.c add_piety = 75 add_stress = -10 ai_chance = { base = 20 } }
+}
+vrc.202 = { type = character_event theme = learning title = vrc.202.t desc = vrc.202.desc trigger = { vsn_ruler = yes culture = { vrc_deep_culture = yes } }
+option = { name = vrc.202.a if = { limit = { has_global_variable = vt_weave_ready } vt_weave_shift = { VALUE = 1 } custom_tooltip = vel_shift_khaos_1 }culture = { if = { limit = { NOT = { has_innovation = innovation_vrc_deep_1 } } add_innovation_progress = { target = culture_innovation:innovation_vrc_deep_1 value = 10 } } } add_stress = 10 ai_chance = { base = 20 } }
+option = { name = vrc.202.b capital_county = { add_county_modifier = { modifier = vrc_preserved_knowledge years = 3 } } add_learning_lifestyle_xp = 100 ai_chance = { base = 20 } }
+option = { name = vrc.202.c add_prestige = 75 add_piety = -50 ai_chance = { base = 20 } }
+}
+vrc.203 = { type = character_event theme = learning title = vrc.203.t desc = vrc.203.desc trigger = { vsn_ruler = yes culture = { vrc_deep_culture = yes } }
+option = { name = vrc.203.a remove_character_modifier = vel_open_current add_stress = -15 add_learning_lifestyle_xp = 100 ai_chance = { base = 20 } }
+option = { name = vrc.203.b add_learning_lifestyle_xp = 200 add_stress = 20 custom_tooltip = vrc_current_risk ai_chance = { base = 20 } }
+}
+vrc.300 = { type = character_event theme = learning title = vrc.300.t desc = vrc.300.desc trigger = { vsn_ruler = yes culture = { vrc_naga_culture = yes } }
+option = { name = vrc.300.a culture = { if = { limit = { NOT = { has_innovation = innovation_vrc_naga_1 } } add_innovation_progress = { target = culture_innovation:innovation_vrc_naga_1 value = 10 } } } trigger_event = { id = vrc.301 days = 21 } ai_chance = { base = 20 } }
+option = { name = vrc.300.b capital_county = { add_county_modifier = { modifier = vrc_shared_water years = 3 } } add_piety = 100 ai_chance = { base = 20 } }
+option = { name = vrc.300.c trigger = { rite = rite:voltara_first_cavern } add_prestige = 100 capital_county = { change_county_control = -5 } ai_chance = { base = 20 } }
+}
+vrc.301 = { type = character_event theme = learning title = vrc.301.t desc = vrc.301.desc trigger = { vsn_ruler = yes culture = { vrc_naga_culture = yes } }
+option = { name = vrc.301.a trigger = { gold >= 30 } remove_short_term_gold = 30 capital_county = { add_county_modifier = { modifier = vrc_shared_water years = 3 } } add_learning_lifestyle_xp = 100 ai_chance = { base = 20 } }
+option = { name = vrc.301.b trigger = { capital_county = { any_county_province = { has_building_or_higher = vrc_naga_01 } } } capital_county = { add_county_modifier = { modifier = vrc_shared_water years = 3 } } add_prestige = 75 ai_chance = { base = 20 } }
+option = { name = vrc.301.c capital_county = { change_county_control = -5 } add_stress = 10 ai_chance = { base = 20 } }
+}
+vrc.302 = { type = character_event theme = learning title = vrc.302.t desc = vrc.302.desc trigger = { vsn_ruler = yes culture = { vrc_naga_culture = yes } }
+option = { name = vrc.302.a add_piety = 100 add_learning_lifestyle_xp = 100 ai_chance = { base = 20 } }
+option = { name = vrc.302.b culture = { if = { limit = { NOT = { has_innovation = innovation_vrc_naga_1 } } add_innovation_progress = { target = culture_innovation:innovation_vrc_naga_1 value = 10 } } }capital_county = { add_county_modifier = { modifier = vrc_preserved_knowledge years = 3 } } ai_chance = { base = 20 } }
+option = { name = vrc.302.c add_prestige = 75 add_stress = 10 ai_chance = { base = 20 } }
+}
+vrc.303 = { type = character_event theme = learning title = vrc.303.t desc = vrc.303.desc trigger = { vsn_ruler = yes culture = { vrc_naga_culture = yes } }
+option = { name = vrc.303.a add_learning_lifestyle_xp = 125 add_piety = 50 ai_chance = { base = 20 } }
+option = { name = vrc.303.b trigger = { has_character_flag = vsn_sealed_depths } add_prestige = 100 capital_county = { add_county_modifier = { modifier = vrc_shared_water years = 3 } } ai_chance = { base = 20 } }
+option = { name = vrc.303.c trigger = { vsn_first_cavern = yes vsn_has_border = yes NOT = { has_character_flag = vsn_sealed_depths } } trigger_event = vsn.30 ai_chance = { base = 20 } }
+}
+vrc.400 = { type = character_event theme = learning title = vrc.400.t desc = vrc.400.desc trigger = { vsn_ruler = yes culture = { vrc_stone_culture = yes } }
+option = { name = vrc.400.a culture = { if = { limit = { NOT = { has_innovation = innovation_vrc_stone_1 } } add_innovation_progress = { target = culture_innovation:innovation_vrc_stone_1 value = 10 } } } trigger_event = { id = vrc.401 days = 30 } ai_chance = { base = 20 } }
+option = { name = vrc.400.b add_prestige = 75 add_learning_lifestyle_xp = 100 ai_chance = { base = 20 } }
+option = { name = vrc.400.c add_gold = 30 add_stress = 10 ai_chance = { base = 20 } }
+}
+vrc.401 = { type = character_event theme = learning title = vrc.401.t desc = vrc.401.desc trigger = { vsn_ruler = yes culture = { vrc_stone_culture = yes } }
+option = { name = vrc.401.a capital_county = { add_county_modifier = { modifier = vrc_safe_workshops years = 3 } } add_piety = 75 add_learning_lifestyle_xp = 125 ai_chance = { base = 20 } }
+option = { name = vrc.401.b trigger = { capital_county = { any_county_province = { has_building_or_higher = vrc_stone_01 } } } capital_county = { add_county_modifier = { modifier = vrc_safe_workshops years = 3 } } add_gold = 50 ai_chance = { base = 20 } }
+option = { name = vrc.401.c random_list = { 60 = { add_gold = 80 add_prestige = 75 } 40 = { add_stress = 35 capital_county = { change_county_control = -10 } } } ai_chance = { base = 20 } }
+}
+vrc.402 = { type = character_event theme = learning title = vrc.402.t desc = vrc.402.desc trigger = { vsn_ruler = yes culture = { vrc_stone_culture = yes } }
+option = { name = vrc.402.a trigger = { gold >= 25 } remove_short_term_gold = 25 capital_county = { add_county_modifier = { modifier = vrc_safe_workshops years = 3 } } add_piety = 100 ai_chance = { base = 20 } }
+option = { name = vrc.402.b culture = { if = { limit = { NOT = { has_innovation = innovation_vrc_stone_1 } } add_innovation_progress = { target = culture_innovation:innovation_vrc_stone_1 value = 10 } } } add_learning_lifestyle_xp = 75 ai_chance = { base = 20 } }
+option = { name = vrc.402.c add_prestige = 75 add_stress = 10 ai_chance = { base = 20 } }
+}
+vrc.403 = { type = character_event theme = learning title = vrc.403.t desc = vrc.403.desc trigger = { vsn_ruler = yes culture = { vrc_stone_culture = yes } }
+option = { name = vrc.403.a capital_county = { add_county_modifier = { modifier = vrc_preserved_knowledge years = 3 } } add_learning_lifestyle_xp = 150 ai_chance = { base = 20 } }
+option = { name = vrc.403.b trigger = { vsn_has_border = yes NOT = { has_character_flag = vsn_sealed_depths } } trigger_event = vsn.30 ai_chance = { base = 20 } }
+option = { name = vrc.403.c add_piety = 100 ai_chance = { base = 20 } }
+}

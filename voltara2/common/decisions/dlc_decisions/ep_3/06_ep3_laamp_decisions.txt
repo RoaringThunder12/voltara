@@ -248,7 +248,7 @@ become_landless_adventurer_decision = {
 			limit = {
 				always = no
 			}
-			NOT = { this = character:125501 }
+			NOT = { always = no }
 		}
 	}
 
@@ -267,7 +267,7 @@ become_landless_adventurer_decision = {
 			factor = 0
 			OR = {
 				#Stahp it, John de Courcy
-				this = character:214000
+				always = no
 				#No adventurer should want to be one again... right?
 				has_variable = adventurer_creation_reason
 			}

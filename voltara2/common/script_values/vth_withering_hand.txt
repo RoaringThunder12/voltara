@@ -1,0 +1,7 @@
+﻿vth_khaos_income = {
+ value = 0
+ if = { limit = { has_character_flag = vth_founded var:vth_power = 1 } add = 6 }
+ else_if = { limit = { has_character_flag = vth_founded var:vth_power = 2 } add = 14 }
+ else_if = { limit = { has_character_flag = vth_founded var:vth_power >= 3 } add = 24 }
+}
+vth_khaos_arcana = { value = 0 if = { limit = { has_character_flag = vth_founded } add = var:vth_power multiply = 8 } }

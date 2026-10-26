@@ -5,76 +5,11 @@
 ##########################################
 
 # Choose Papal name
-pam_clergy_events.0001 = {
-	theme = christian
-	type = character_event
-	title = pam_clergy_events.0001.t
-	window = big_event_window
-	desc = pam_clergy_events.0001.desc
+# Archived unreachable continuation pam_clergy_events.0001.
 
-	override_background = pam_gothic_cathedral_interior
-	override_sound = { reference = "event:/DLC/CE3/SFX/Stingers/ce3_mx_sting_ElectPope" }
 
-	trigger = {
-		is_ai = no
-		always = no
-		exists = cp:councillor_court_chaplain
-	}
+# Archived unreachable event pam_clergy_events.0002; see orphan-events audit.
 
-	left_portrait = {
-		character = root
-		animation = acknowledging_crozier
-		camera = camera_event_left
-	}
-
-	right_portrait = {
-		character = scope:chaplain
-		animation = happy_teacher
-		camera = camera_event_very_right
-	}
-
-	immediate = {
-		cp:councillor_court_chaplain = {
-			save_scope_as = chaplain
-		}
-	}
-
-	# naming widget
-	widgets = {
-		widget = {
-			gui = event_window_widget_vfx_stained_glass
-			container = background_shader_vfx_container
-		}
-		widget = {
-			gui = "event_window_widget_name_pope"
-			container = "dynamic_birth_name"
-			controller = name_character
-			setup_scope = { root = { save_scope_as = name_character_target } }
-		}
-	}
-
-	option = {
-		name = pam_clergy_events.0001.a
-	}
-}
-
-pam_clergy_events.0002 = {
-	hidden = yes
-	immediate = {
-		# Just became pope? choose your papal name!
-		if = {
-			limit = {
-				is_ai = no
-			}
-			trigger_event = pam_clergy_events.0001
-			remove_variable = has_edited_a_rite
-		}
-		# Just became AI pope? choose your favorite tenet!
-		else = {
-			head_of_faith_change_core_tenet_effect = yes
-		}
-	}
-}
 
 ##########################################
 ## 0003 - AI pope changed a core tenet  ##

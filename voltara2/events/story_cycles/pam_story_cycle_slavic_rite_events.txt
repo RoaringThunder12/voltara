@@ -165,8 +165,8 @@ slavic_rite.0001 = { # The brothers inform you of their journey to Rome to seek 
 	}
 	immediate = {
 		hidden_effect = {
-			add_visiting_courtier = character:slavic_rite_cyril_1
-			add_visiting_courtier = character:slavic_rite_methodius_1
+			
+			
 			# Native historical character does not exist in Voltara; original follows.
 # character:slavic_rite_cyril_1 = {
 # 				save_scope_as = cyril_scope
@@ -257,8 +257,8 @@ slavic_rite.0001 = { # The brothers inform you of their journey to Rome to seek 
 		send_interface_toast = {
 			type = event_toast_effect_neutral
 			title = slavic_rite_travel_toast_title
-			left_icon = character:slavic_rite_cyril_1
-			right_icon = character:slavic_rite_methodius_1
+			
+			
 			custom_tooltip = slavic_rite.0001.a_tt
 		}
 	}
@@ -282,53 +282,8 @@ slavic_rite.0002 = { # Cyril dies in Rome
 	}
 }
 
-slavic_rite.0003 = { # You get informed of the Cyril and Methodius' mission as the holder of the Archdiocese of Salzburg
-	type = character_event
-	title = slavic_rite.0003.t
-	desc = slavic_rite.0003.desc
-	theme = christian
-	right_portrait = {
-		character = root
-		camera = camera_event_center_very_large
-		animation = personality_rational
-	}
-	lower_left_portrait = {
-		character = scope:methodius_scope
-	}
-	lower_center_portrait = {
-		character = scope:moravia_liege_scope
-	}
-	lower_right_portrait = {
-		character = scope:pope_scope
-	}
-	immediate = {
-		# Native historical character does not exist in Voltara; original follows.
-# character:slavic_rite_methodius_1 = {
-# 			save_scope_as = methodius_scope
-# 		}
+# Archived unreachable event slavic_rite.0003; see orphan-events audit.
 
-		# Native-world scope has no target in Voltara; original follows.
-# title:k_moravia.holder ?= {
-# 			save_scope_as = moravia_liege_scope
-# 		}
-
-		# Native-world scope has no target in Voltara; original follows.
-# title:k_papal_state.holder = {
-# 			save_scope_as = pope_scope
-# 		}
-
-	}
-
-	option = { # So be it.
-		name = slavic_rite.0003.a
-		custom_tooltip = slavic_rite_mass_conversion_tooltip
-		custom_tooltip = slavic_rite_ecclesiastical_title_creation_tooltip
-	}
-
-	after = {
-
-	}
-}
 
 slavic_rite.0004 = { # You get informed of the Cyril and Methodius' mission as the vassal of Moravia's Holder
 	type = character_event
@@ -464,14 +419,8 @@ slavic_rite.0005 = { # Methodius is back from Rome, and the Slavic Rite is final
 		camera = camera_event_center_pointing_very_left
 		animation = personality_rational
 	}
-	center_portrait = {
-		character = character:slavic_rite_methodius_1
-		camera = camera_event_left_to_the_left_pointing_in
-		animation = holding_scrolls
-	}
-	lower_left_portrait = {
-		character = character:slavic_rite_cyril_1
-	}
+	
+	
 	immediate = {
 		# Native historical character does not exist in Voltara; original follows.
 # character:slavic_rite_methodius_1 = {
@@ -702,12 +651,8 @@ slavic_rite.0006 = { # The story is invalidated
 		camera = camera_event_center_very_large
 		animation = pondering
 	}
-	lower_right_portrait = {
-		character = character:slavic_rite_methodius_1
-	}
-	lower_left_portrait = {
-		character = character:slavic_rite_cyril_1
-	}
+	
+	
 	immediate = {
 		# Native historical character does not exist in Voltara; original follows.
 # character:slavic_rite_methodius_1 = {

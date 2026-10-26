@@ -1,0 +1,54 @@
+﻿namespace = vth
+
+vth.1 = { type = character_event theme = learning title = vth.1.t desc = vth.1.desc trigger = { vth_active = yes }
+option = { name = vth.1.0 trigger = { always = yes } custom_tooltip = vth.1.0_tt hidden_effect = { if = { limit = { vth_active = yes always = yes } vth_choose_mercy = yes remove_character_flag = vth_event_pending } } ai_chance = { base = 50 } }
+option = { name = vth.1.1 trigger = { always = yes } custom_tooltip = vth.1.1_tt hidden_effect = { if = { limit = { vth_active = yes always = yes } vth_choose_dominion = yes remove_character_flag = vth_event_pending } } ai_chance = { base = 25 } }
+}
+
+vth.10 = { type = character_event theme = learning title = vth.10.t desc = vth.10.desc trigger = { vth_active = yes }
+option = { name = vth.10.0 trigger = { gold >= 50 } custom_tooltip = vth.10.0_tt hidden_effect = { if = { limit = { vth_active = yes gold >= 50 } remove_short_term_gold = 50 vth_grow = { AMOUNT = 15 } vth_raise_followers = yes vth_choose_mercy = yes remove_character_flag = vth_event_pending } } ai_chance = { base = 50 } }
+option = { name = vth.10.1 trigger = { gold >= 50 } custom_tooltip = vth.10.1_tt hidden_effect = { if = { limit = { vth_active = yes gold >= 50 } remove_short_term_gold = 50 vth_grow = { AMOUNT = 25 } vth_raise_followers = yes vth_choose_dominion = yes remove_character_flag = vth_event_pending } } ai_chance = { base = 25 } }
+option = { name = vth.10.2 trigger = { always = yes } custom_tooltip = vth.10.2_tt hidden_effect = { if = { limit = { vth_active = yes always = yes } remove_character_flag = vth_event_pending } } ai_chance = { base = 25 } }
+}
+
+vth.20 = { type = character_event theme = learning title = vth.20.t desc = vth.20.desc trigger = { vth_active = yes vth_jakar_present = yes }
+option = { name = vth.20.0 trigger = { always = yes } custom_tooltip = vth.20.0_tt hidden_effect = { if = { limit = { vth_active = yes vth_jakar_present = yes always = yes } vth_choose_mercy = yes vth_grow = { AMOUNT = 5 } remove_character_flag = vth_event_pending } } ai_chance = { base = 50 } }
+option = { name = vth.20.1 trigger = { always = yes } custom_tooltip = vth.20.1_tt hidden_effect = { if = { limit = { vth_active = yes vth_jakar_present = yes always = yes } vth_choose_mercy = yes add_prestige = 100 remove_character_flag = vth_event_pending } } ai_chance = { base = 25 } }
+option = { name = vth.20.2 trigger = { always = yes } custom_tooltip = vth.20.2_tt hidden_effect = { if = { limit = { vth_active = yes vth_jakar_present = yes always = yes } vth_choose_dominion = yes vth_grow = { AMOUNT = 10 } remove_character_flag = vth_event_pending } } ai_chance = { base = 25 } }
+}
+
+vth.30 = { type = character_event theme = learning title = vth.30.t desc = vth.30.desc trigger = { vth_active = yes }
+option = { name = vth.30.0 trigger = { piety >= 250 var:vth_devotion >= 30 any_courtier = { has_character_flag = vth_disciple } var:vth_power < 3 OR = { var:vth_path = 2 var:vth_power < 1 } } custom_tooltip = vth.30.0_tt hidden_effect = { if = { limit = { vth_active = yes piety >= 250 var:vth_devotion >= 30 any_courtier = { has_character_flag = vth_disciple } var:vth_power < 3 OR = { var:vth_path = 2 var:vth_power < 1 } } add_piety = -250 if = { limit = { NOT = { exists = rite:voltara_unbound_weave } } create_rite_from_type = { type = voltara_unbound_weave convert = yes } } set_character_rite = rite:voltara_unbound_weave change_variable = { name = vth_power add = 1 } add_magicka = { VALUE = 100 } add_stress = 35 add_character_modifier = { modifier = vth_exhausted_circle years = 2 } vt_magic_atrophy_schedule = yes if = { limit = { var:vth_power >= 3 vth_jakar_present = yes } trigger_event = { id = vth.31 days = 7 } } remove_character_flag = vth_event_pending } } ai_chance = { base = 50 } }
+option = { name = vth.30.1 trigger = { always = yes } custom_tooltip = vth.30.1_tt hidden_effect = { if = { limit = { vth_active = yes always = yes } add_stress = -10 remove_character_flag = vth_event_pending } } ai_chance = { base = 25 } }
+}
+
+vth.31 = { type = character_event theme = learning title = vth.31.t desc = vth.31.desc trigger = { vth_active = yes vth_jakar_present = yes var:vth_power >= 3 }
+option = { name = vth.31.0 trigger = { always = yes } custom_tooltip = vth.31.0_tt hidden_effect = { if = { limit = { vth_active = yes vth_jakar_present = yes var:vth_power >= 3 always = yes } vth_choose_mercy = yes vth_grow = { AMOUNT = -15 } } } ai_chance = { base = 50 } }
+option = { name = vth.31.1 trigger = { always = yes } custom_tooltip = vth.31.1_tt hidden_effect = { if = { limit = { vth_active = yes vth_jakar_present = yes var:vth_power >= 3 always = yes } add_character_flag = vth_jakar_estranged vth_choose_dominion = yes character:19064034 = { move_to_pool = yes } } } ai_chance = { base = 25 } }
+}
+
+vth.40 = { type = character_event theme = learning title = vth.40.t desc = vth.40.desc trigger = { vth_active = yes }
+option = { name = vth.40.0 trigger = { gold >= 100 var:vth_devotion >= 20 var:vth_path = 1 vth_army_room = yes } custom_tooltip = vth.40.0_tt hidden_effect = { if = { limit = { vth_active = yes gold >= 100 var:vth_devotion >= 20 var:vth_path = 1 vth_army_room = yes } remove_short_term_gold = 100 create_maa_regiment = { type = vth_wardens size = 2 } remove_character_flag = vth_event_pending } } ai_chance = { base = 50 } }
+option = { name = vth.40.1 trigger = { gold >= 100 var:vth_devotion >= 40 vth_army_room = yes } custom_tooltip = vth.40.1_tt hidden_effect = { if = { limit = { vth_active = yes gold >= 100 var:vth_devotion >= 40 vth_army_room = yes } remove_short_term_gold = 100 create_maa_regiment = { type = vth_cantors size = 2 } remove_character_flag = vth_event_pending } } ai_chance = { base = 25 } }
+option = { name = vth.40.2 trigger = { gold >= 100 var:vth_path = 2 var:vth_power >= 2 vth_army_room = yes } custom_tooltip = vth.40.2_tt hidden_effect = { if = { limit = { vth_active = yes gold >= 100 var:vth_path = 2 var:vth_power >= 2 vth_army_room = yes } remove_short_term_gold = 100 create_maa_regiment = { type = vth_unbound size = 2 } remove_character_flag = vth_event_pending } } ai_chance = { base = 25 } }
+option = { name = vth.40.3 trigger = { always = yes } custom_tooltip = vth.40.3_tt hidden_effect = { if = { limit = { vth_active = yes always = yes } remove_character_flag = vth_event_pending } } ai_chance = { base = 25 } }
+}
+
+vth.50 = { type = character_event theme = learning title = vth.50.t desc = vth.50.desc trigger = { vth_active = yes }
+option = { name = vth.50.0 trigger = { exists = title:e_voltara_sixth_southron_invasion.holder title:e_voltara_sixth_southron_invasion.holder = { vkf_leader = yes } } custom_tooltip = vth.50.0_tt hidden_effect = { if = { limit = { vth_active = yes exists = title:e_voltara_sixth_southron_invasion.holder title:e_voltara_sixth_southron_invasion.holder = { vkf_leader = yes } } title:e_voltara_sixth_southron_invasion.holder = { set_variable = { name = vth_offer_from value = root days = 90 } trigger_event = { id = vth.51 days = 3 } } remove_character_flag = vth_event_pending } } ai_chance = { base = 50 } }
+option = { name = vth.50.1 trigger = { always = yes } custom_tooltip = vth.50.1_tt hidden_effect = { if = { limit = { vth_active = yes always = yes } remove_character_flag = vth_event_pending } } ai_chance = { base = 25 } }
+}
+
+vth.51 = { type = character_event theme = learning title = vth.51.t desc = vth.51.desc trigger = { vkf_leader = yes var:vth_offer_from ?= character:19060042 character:19060042 = { vth_active = yes } }
+option = { name = vth.51.0 trigger = { always = yes } custom_tooltip = vth.51.0_tt hidden_effect = { if = { limit = { vkf_leader = yes var:vth_offer_from ?= character:19060042 character:19060042 = { vth_active = yes } always = yes } vth_accept_pact = yes remove_variable = vth_offer_from } } ai_chance = { base = 50 } }
+option = { name = vth.51.1 trigger = { always = yes } custom_tooltip = vth.51.1_tt hidden_effect = { if = { limit = { vkf_leader = yes var:vth_offer_from ?= character:19060042 character:19060042 = { vth_active = yes } always = yes } remove_variable = vth_offer_from } } ai_chance = { base = 25 } }
+}
+
+vth.52 = { type = character_event theme = learning title = vth.52.t desc = vth.52.desc trigger = { vth_active = yes }
+option = { name = vth.52.0 trigger = { always = yes } custom_tooltip = vth.52.0_tt hidden_effect = { if = { limit = { vth_active = yes always = yes } add_prestige = 50 } } ai_chance = { base = 50 } }
+}
+
+vth.60 = { type = character_event theme = learning title = vth.60.t desc = vth.60.desc trigger = { vth_active = yes }
+option = { name = vth.60.0 trigger = { vth_joinable_war = yes } custom_tooltip = vth.60.0_tt hidden_effect = { if = { limit = { vth_active = yes vth_joinable_war = yes } vth_join_invasion = yes remove_character_flag = vth_event_pending } } ai_chance = { base = 50 } }
+option = { name = vth.60.1 trigger = { always = yes } custom_tooltip = vth.60.1_tt hidden_effect = { if = { limit = { vth_active = yes always = yes } remove_character_flag = vth_event_pending } } ai_chance = { base = 25 } }
+}

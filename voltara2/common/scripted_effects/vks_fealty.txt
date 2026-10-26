@@ -1,0 +1,19 @@
+﻿vks_accept_fealty = {
+ if = { limit = { scope:vks_gold ?= yes } scope:actor = { pay_short_term_gold = { target = scope:recipient gold = 150 } } }
+ if = { limit = { scope:vks_prestige ?= yes } scope:actor = { add_prestige = -500 } }
+ if = { limit = { scope:vks_piety ?= yes } scope:actor = { add_piety = -500 } }
+ if = { limit = { scope:vks_herd ?= yes } scope:actor = { pay_herd = { target = scope:recipient value = 500 } } }
+ if = { limit = { scope:vks_hook ?= yes } scope:actor = { use_hook = scope:recipient } }
+ scope:recipient = {
+ create_title_and_vassal_change = { type = swear_fealty save_scope_as = vks_submission }
+ change_liege = { liege = scope:actor change = scope:vks_submission }
+ resolve_title_and_vassal_change = scope:vks_submission
+ set_variable = { name = vkf_obligation_holder value = scope:actor days = 1825 }
+ set_variable = { name = vkf_promised_by value = scope:actor days = 1825 }
+ add_character_modifier = { modifier = vkf_promised_autonomy years = 5 }
+ add_character_flag = { flag = vkfu_submission_answered days = 1825 }
+ remove_variable = vkfu_submission_offer remove_variable = vkf_patron remove_variable = vkf_oath
+ remove_character_flag = vkf_fulfillment_pending
+ }
+ scope:actor = { vkf_recount = yes }
+}

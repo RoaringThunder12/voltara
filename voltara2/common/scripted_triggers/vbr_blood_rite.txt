@@ -1,0 +1,28 @@
+﻿vbr_gorilla_culture = { OR = { has_cultural_pillar = heritage_voltara_gorilla any_parent_culture_or_above = { has_cultural_pillar = heritage_voltara_gorilla } } }
+vbr_gorilla = { culture = { vbr_gorilla_culture = yes } }
+vbr_fighter = { vbr_gorilla = yes is_alive = yes is_adult = yes is_imprisoned = no is_incapable = no can_start_single_combat_trigger = yes }
+vbr_challenger = {
+ vbr_fighter = yes culture = { has_cultural_parameter = vbr_blood_challenges }
+ OR = { is_landless_adventurer = yes AND = { is_landed = yes highest_held_title_tier >= tier_county } }
+ NOT = { has_character_flag = vbr_pending }
+}
+vbr_in_reach = {
+ OR = {
+  scope:actor = { exists = liege liege = scope:recipient }
+  scope:actor = { is_landed = yes any_realm_county = { any_neighboring_county = { exists = holder holder = { OR = { this = scope:recipient target_is_liege_or_above = scope:recipient } } } } }
+  scope:actor = { is_landless_adventurer = yes exists = location.county location.county = {
+   OR = {
+    holder = { OR = { this = scope:recipient target_is_liege_or_above = scope:recipient } }
+    any_neighboring_county = { exists = holder holder = { OR = { this = scope:recipient target_is_liege_or_above = scope:recipient } } }
+   }
+  } }
+ }
+}
+vbr_stakes_valid = {
+ exists = scope:vbr_challenger exists = scope:vbr_defender exists = scope:vbr_title
+ scope:vbr_challenger = { is_alive = yes vbr_gorilla = yes }
+ scope:vbr_defender = { is_alive = yes vbr_gorilla = yes }
+ scope:vbr_title = { holder = scope:vbr_defender tier >= tier_county is_landless_type_title = no }
+ NOT = { scope:vbr_challenger = scope:vbr_defender }
+}
+vbr_candidate = { vbr_gorilla = yes is_alive = yes is_adult = yes is_imprisoned = no is_incapable = no }

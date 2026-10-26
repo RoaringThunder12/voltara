@@ -1,0 +1,5 @@
+﻿on_game_start_after_lobby = { on_actions = { vbr_start } }
+vbr_start = { effect = { vbr_initialize = yes } }
+yearly_global_pulse = { on_actions = { vbr_start } }
+yearly_playable_pulse = { on_actions = { vbr_maintain } }
+vbr_maintain = { trigger = { vbr_gorilla = yes } effect = { vbr_install_government = yes } }

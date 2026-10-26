@@ -1,0 +1,37 @@
+﻿# Narrow lifecycle routes for formerly disconnected Voltara events.
+on_title_gain = { on_actions = { vt_guard_training_title_gain } }
+vt_guard_training_title_gain = {
+ trigger = { is_landed = yes highest_held_title_tier >= tier_county }
+ events = { agot_kingsguard.1013 }
+}
+on_release_from_prison = { on_actions = { vt_guard_release_return } }
+vt_guard_release_return = {
+ trigger = { is_alive = yes is_imprisoned = no has_trait = kingsguard exists = top_liege top_liege = { ruler_has_kingsguard_trigger = yes } }
+ events = { agot_kingsguard.9005 }
+}
+yearly_playable_pulse = { on_actions = { vt_guard_family_training_offer } }
+vt_guard_family_training_offer = {
+ trigger = { is_landed = yes is_adult = yes is_imprisoned = no }
+ random_events = { chance_to_happen = 5 100 = agot_kingsguard.3001 }
+}
+on_death = { on_actions = { vt_necromancy_tutor_death } }
+vt_necromancy_tutor_death = {
+ trigger = {
+  has_character_modifier = is_necromancy_tutor
+  exists = liege
+  liege = { is_alive = yes has_character_flag = has_necromancy_tutor any_owned_story = { story_type = story_cycle_learn_necromancy } }
+ }
+ events = { ek_story_cycle_necromancy_events.0010 }
+}
+on_war_started = { on_actions = { vt_republic_defensive_call } }
+vt_republic_defensive_call = {
+ trigger = { exists = scope:war exists = scope:defender exists = scope:attacker scope:defender = { government_has_flag = government_is_active_republic } }
+ effect = {
+  scope:defender = {
+   every_vassal = {
+    limit = { is_alive = yes is_adult = yes is_imprisoned = no government_has_flag = government_is_merchant_republic scope:war = { NOT = { is_defender = prev } NOT = { is_attacker = prev } } }
+    trigger_event = republican_core.1010
+   }
+  }
+ }
+}

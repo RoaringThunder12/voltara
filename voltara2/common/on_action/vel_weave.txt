@@ -1,0 +1,12 @@
+﻿yearly_playable_pulse = { on_actions = { vel_annual_weave } }
+vel_annual_weave = {
+ trigger = { vel_eligible = yes OR = { vel_high_elf = yes vel_deep_elf = yes } }
+ effect = {
+  if = { limit = { vel_high_elf = yes has_character_modifier = vel_dawn_anchor } vt_weave_shift = { VALUE = -1 } }
+  if = { limit = { vel_deep_elf = yes has_character_modifier = vel_khaos_anchor } vt_weave_shift = { VALUE = 1 } }
+  if = { limit = { NOT = { has_character_flag = vel_world_response } }
+   if = { limit = { vel_high_elf = yes global_var:vt_weave_balance >= 30 } random = { chance = 20 add_character_flag = { flag = vel_world_response years = 5 } trigger_event = vel.50 } }
+   else_if = { limit = { vel_deep_elf = yes global_var:vt_weave_balance <= -30 } random = { chance = 20 add_character_flag = { flag = vel_world_response years = 5 } trigger_event = vel.51 } }
+  }
+ }
+}

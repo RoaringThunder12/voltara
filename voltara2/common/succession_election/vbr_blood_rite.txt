@@ -1,0 +1,22 @@
+﻿vbr_blood_elective = {
+ electors = { character_sets = {
+  vbr_holder = { type = holder }
+  vbr_clans = { type = holder_direct_vassals limit = { vbr_candidate = yes highest_held_title_tier >= tier_county } }
+ } }
+ elector_vote_strength = { base = 1 }
+ candidates = { character_sets = {
+  vbr_family = { type = holder_close_or_extended_family limit = { vbr_candidate = yes } }
+  vbr_claimants = { type = title_claimants limit = { vbr_candidate = yes } }
+  vbr_vassals = { type = holder_direct_vassals limit = { vbr_candidate = yes } }
+  vbr_council = { type = holder_council_members limit = { vbr_candidate = yes } }
+ } }
+ candidate_score = {
+  base = 0
+  elector_voting_pattern_opinion_feudal_elective_modifier = yes
+  elector_voting_pattern_prestige_piety_feudal_elective_modifier = yes
+  modifier = { desc = vbr_vote_prowess add = 30 scope:candidate = { prowess >= 15 } }
+  modifier = { desc = vbr_vote_great_prowess add = 30 scope:candidate = { prowess >= 25 } }
+  modifier = { desc = vbr_vote_victor add = 50 scope:candidate = { has_character_modifier = vbr_blood_victor } }
+  modifier = { desc = vbr_vote_bravery add = 15 scope:candidate = { has_trait = brave } }
+ }
+}

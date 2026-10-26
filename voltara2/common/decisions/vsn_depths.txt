@@ -1,0 +1,30 @@
+﻿vsn_deep_dig = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" }
+ desc = vsn_deep_dig_desc selection_tooltip = vsn_deep_dig_tooltip confirm_text = vsn_deep_dig_confirm
+ decision_group_type = major ai_check_interval = 60
+ is_shown = { vsn_ruler = yes vsn_stoneborn = yes }
+ is_valid = { is_at_war = no NOT = { has_character_flag = vsn_sealed_depths } NOT = { has_character_flag = vsn_busy } }
+ cost = { gold = 45 } cooldown = { years = 5 }
+ effect = { add_character_flag = { flag = vsn_busy years = 2 } trigger_event = vsn.10 }
+ ai_will_do = { base = 10 }
+}
+vsn_tunnel_hold = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" }
+ desc = vsn_tunnel_hold_desc selection_tooltip = vsn_tunnel_hold_tooltip confirm_text = vsn_tunnel_hold_confirm
+ decision_group_type = major ai_check_interval = 60
+ is_shown = { vsn_ruler = yes vsn_first_cavern = yes vsn_has_border = yes }
+ is_valid = { is_at_war = no NOT = { has_character_flag = vsn_sealed_depths } NOT = { has_character_flag = vsn_busy } }
+ cost = { gold = 40 } cooldown = { years = 5 }
+ effect = { add_character_flag = { flag = vsn_busy years = 2 } trigger_event = vsn.20 }
+ ai_will_do = { base = 10 }
+}
+vsn_seal_depths = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" }
+ desc = vsn_seal_depths_desc selection_tooltip = vsn_seal_depths_tooltip confirm_text = vsn_seal_depths_confirm
+ decision_group_type = major ai_check_interval = 60
+ is_shown = { vsn_ruler = yes OR = { vsn_stoneborn = yes vsn_first_cavern = yes } vsn_has_border = yes }
+ is_valid = { is_at_war = no NOT = { has_character_flag = vsn_sealed_depths } NOT = { has_character_flag = vsn_busy } }
+ cost = { gold = 25 } cooldown = { years = 5 }
+ effect = { add_character_flag = { flag = vsn_busy years = 2 } trigger_event = vsn.30 }
+ ai_will_do = { base = 10 }
+}

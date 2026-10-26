@@ -1,9 +1,9 @@
 ﻿vkf_available = { is_alive = yes is_adult = yes is_imprisoned = no NOT = { has_trait = incapable } }
-vkf_chief = { vkf_available = yes is_landed = yes is_independent_ruler = yes highest_held_title_tier < tier_empire capital_province = { geographical_region = world_voltara_southron_heartland } vkf_local_culture = yes NOT = { voltara_is_ruins_placeholder = yes } }
+vkf_chief = { vkf_available = yes is_landed = yes is_independent_ruler = yes highest_held_title_tier < tier_empire vks_clan_member = yes }
 vkf_keeper = { vkf_available = yes has_title = title:k_voltara_22 }
 vkf_pending_valid = { vkf_chief = yes has_variable = vkf_inviter var:vkf_inviter = { vkf_chief = yes has_character_flag = vkf_council_open } }
 
-vkf_southron = { vkf_available = yes is_landed = yes capital_province = { geographical_region = world_voltara_southron_heartland } vkf_local_culture = yes NOT = { voltara_is_ruins_placeholder = yes } }
+vkf_southron = { vkf_available = yes is_landed = yes vks_clan_member = yes }
 vkf_leader = { vkf_available = yes has_title = title:e_voltara_sixth_southron_invasion }
 vkf_regional_actor = { OR = { vkf_southron = yes vkf_leader = yes vkf_keeper = yes has_title = title:h_voltara_severos } }
 vkf_war_ready = { vkf_leader = yes is_at_war = no var:vkf_supplies >= 60 var:vkf_intelligence >= 30 var:vkf_cohesion >= 40 var:vkf_strength >= 2 NOT = { has_global_variable = vkf_treaty } NOT = { has_global_variable = vkf_war } }
@@ -14,3 +14,17 @@ vkf_delegate_pending = { vkf_southron = yes has_variable = vkf_council_host var:
 
 vkf_southron_culture = { culture = { NOR = { this = culture:voltara_desert_southron has_cultural_pillar = heritage_vds_desert_southron } OR = { has_cultural_pillar = heritage_voltara_southron this = culture:voltara_southorion any_parent_culture_or_above = { this = culture:voltara_southorion } } } }
 vkf_local_culture = { OR = { vkf_southron_culture = yes culture = { OR = { has_cultural_pillar = heritage_voltara_goblin has_cultural_pillar = heritage_voltara_gorilla has_cultural_pillar = heritage_voltara_giants has_cultural_pillar = heritage_voltara_orc } } AND = { culture = culture:vt_anvilmere capital_province = { geographical_region = world_voltara_southron_heartland } } } }
+
+# Membership is geographic/title-based; culture never excludes a de jure ruler.
+vks_de_jure_ruler = {
+ is_landed = yes highest_held_title_tier >= tier_county
+ any_held_title = { tier = tier_county title:e_voltara_sixth_southron_invasion = { is_de_jure_liege_or_above_target = prev } }
+}
+vks_clan_member = {
+ is_alive = yes is_landed = yes highest_held_title_tier >= tier_county
+ NOT = { voltara_is_ruins_placeholder = yes }
+ OR = {
+  vks_de_jure_ruler = yes
+  AND = { capital_province = { geographical_region = world_voltara_southron_heartland } vkf_local_culture = yes }
+ }
+}

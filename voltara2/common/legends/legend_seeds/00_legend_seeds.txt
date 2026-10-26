@@ -1,61 +1,25 @@
 ﻿# All start dates
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 king_arthur = {
-	type = legitimizing
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = king_arthur_legend
-		}
-		OR = {
-			culture = { has_cultural_pillar = heritage_west_germanic }
-			culture = { has_cultural_pillar = heritage_brythonic }
-		}
-	}
-	is_valid = {
-		prestige_level >= high_prestige_level
-	}
-
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:159835 # "Arthur"
-		title = title:k_england
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = king_arthur_legend } has_title = title:e_voltara_21 }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_voltara_21 }
 }
 
+
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 carolingian = {
-	type = legitimizing
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = carolingian_legend
-		}
-		OR = {
-			culture = { has_cultural_pillar = heritage_central_germanic }
-			culture = { has_cultural_pillar = heritage_frankish }
-			dynasty = dynasty:25061 # Karling
-			dynasty = dynasty:743 # Capet
-		}
-	}
-	is_valid = {
-		custom_tooltip = {
-			text = must_own_france_or_hre_tt
-			OR = {
-				always = no
-				always = no
-				always = no
-			}
-		}
-		prestige_level >= high_prestige_level
-	}
-
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:6392
-		title = title:e_france
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = carolingian_legend } has_title = title:e_voltara_sixth_southron_invasion }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_voltara_sixth_southron_invasion }
 }
+
 
 sons_of_david = {
 	type = legitimizing
@@ -127,28 +91,16 @@ magi_descendant = {
 	}
 }
 
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 the_wheelwright = {
-	type = heroic
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = the_wheelwright_legend
-		}
-		dynasty = dynasty:699
-	}
-	is_valid = {
-		is_playable_character = yes
-		dynasty = dynasty:699
-		prestige_level >= high_prestige_level
-	}
-
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:82233
-		title = title:k_poland
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = the_wheelwright_legend } has_title = title:e_voltara_alutor }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_voltara_alutor }
 }
+
 
 vercingetorix = {
 	type = heroic
@@ -178,85 +130,38 @@ vercingetorix = {
 	}
 }
 
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 saman_khudah = {
-	type = heroic
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = saman_khudah_legend
-		}
-		dynasty = dynasty:1042070
-	}
-	is_valid = {
-		is_playable_character = yes
-		dynasty = dynasty:1042070
-		custom_tooltip = {
-			text = persian_or_zoroastrian_tt
-			OR = { # It has to be cool to be Persian
-				capital_province = { geographical_region = world_middle_east_persia }
-				culture = { has_cultural_pillar = heritage_iranian }
-				religion = religion:zoroastrianism_religion
-			}
-		}
-		prestige_level >= very_high_prestige_level
-	}
-
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:188637
-		title = title:e_persia
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = saman_khudah_legend } has_title = title:e_voltara_kedith }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_voltara_kedith }
 }
 
+
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 bahram_gur = {
-	type = legitimizing
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = bahram_gur_legend
-		}
-		always = no
-		OR = {
-			culture = { has_cultural_pillar = heritage_iranian }
-			religion = religion:zoroastrianism_religion
-		}
-	}
-	is_valid = {
-		is_playable_character = yes
-		prestige_level >= very_high_prestige_level
-	}
-
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:180645
-		title = title:e_persia
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = bahram_gur_legend } has_title = title:e_vae_aithbor }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_vae_aithbor }
 }
 
+
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 cadell = {
-	type = legitimizing
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = cadell_legend
-		}
-		always = no
-		culture = { has_cultural_pillar = heritage_brythonic }
-	}
-	is_valid = {
-		is_playable_character = yes
-		prestige_level >= high_prestige_level
-	}
-
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:159058
-		title = title:d_powys
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = cadell_legend } has_title = title:e_vae_silareph }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_vae_silareph }
 }
+
 
 descendants_of_brahman = {
 	type = legitimizing
@@ -317,30 +222,16 @@ gothic_kings = {
 	}
 }
 
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 sons_of_rurik = {
-	type = legitimizing
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = sons_of_rurik_legend
-		}
-		dynasty = dynasty:705
-		always = no
-		always = no
-	}
-	is_valid = {
-		is_playable_character = yes
-		highest_held_title_tier >= tier_kingdom
-		prestige_level >= medium_prestige_level
-	}
-
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:40605
-		title = title:e_russia
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = sons_of_rurik_legend } has_title = title:e_voltara_enderal }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_voltara_enderal }
 }
+
 
 holy_warrior = { # Generico Crusader legend
 	type = heroic
@@ -394,195 +285,73 @@ holy_site = { # Holy Site
 }
 
 # 867 start date
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 el_cid = {
-	type = heroic
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = el_cid_legend
-		}
-		# Optional native character is absent on the Voltara map.
-# character:107590 ?= { is_alive = yes }
-always = no #El Cid
-		always = no
-	}
-	is_valid = {
-		# Optional native character is absent on the Voltara map.
-# character:107590 ?= { is_alive = yes }
-always = no 
-		always = no
-		is_playable_character = yes
-		highest_held_title_tier >= tier_kingdom
-	}
-
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:107590
-		title = title:e_spain
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = el_cid_legend } has_title = title:e_voltara_rhaulla }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_voltara_rhaulla }
 }
 
+
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 alfred_of_wessex = {
-	type = holy
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = alfred_of_wessex_legend
-		}
-		always = no
-		always = no
-		OR = {
-			always = no
-			dynasty = character:7627.dynasty
-		}
-	}
-	is_valid = {
-		is_playable_character = yes
-		piety_level >= high_piety_level
-		trigger_if = {
-			limit = {
-				always = no
-			}
-			custom_tooltip = {
-				text = no_pagans_in_britannia_tt
-				NOT = {
-					any_county_in_region = {
-						region = world_europe_west_britannia
-						holder.top_liege.religion = { is_in_family = rf_pagan }
-					}
-				}
-			}
-		}
-	}
-
-	chronicle = saintly_deed
-	chronicle_properties = {
-		ancestor = character:7627
-		religion = religion:christianity_religion
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = alfred_of_wessex_legend } has_title = title:e_voltara_halithor }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_voltara_halithor }
 }
 
+
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 peasant_emperor = {
-	type = legitimizing
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = peasant_emperor_legend
-		}
-		always = no
-		always = no # Old Baz
-	}
-	is_valid = {
-		always = no
-		prestige_level >= medium_prestige_level
-	}
-
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:1700
-		title = title:e_byzantium
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = peasant_emperor_legend } has_title = title:e_voltara_southorion_heartlands }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_voltara_southorion_heartlands }
 }
+
 
 
 # 1066 start date
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 william_gellones = {
-	type = holy
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = william_gellones_legend
-		}
-		OR = {
-			any_ancestor = {
-				even_if_dead = yes
-				always = no  #Guillaume Gallones
-			}
-			always = no
-			dynasty = dynasty:100217
-		}
-		religion = religion:christianity_religion
-	}
-	is_valid = {
-		is_playable_character = yes
-		highest_held_title_tier >= tier_duchy
-		custom_tooltip = {
-			text = theologian_or_high_piety_tt
-			OR = {
-				has_trait = theologian
-				piety_level >= high_piety_level
-			}
-		}
-	}
-
-	chronicle = saintly_deed
-	chronicle_properties = {
-		ancestor = character:168130
-		religion = religion:christianity_religion
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = william_gellones_legend } has_title = title:e_vae_itharaz }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_vae_itharaz }
 }
 
+
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 edward_the_martyr = {
-	type = holy
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = edward_the_martyr_legend
-		}
-		dynasty = character:99.dynasty  # Ol' Eddy
-		religion = religion:christianity_religion
-	}
-	is_valid = {
-		is_playable_character = yes
-		highest_held_title_tier >= tier_duchy
-		custom_tooltip = {
-			text = theologian_or_high_piety_tt
-			OR = {
-				has_trait = theologian
-				piety_level >= high_piety_level
-			}
-		}
-	}
-
-	chronicle = saintly_deed
-	chronicle_properties = {
-		ancestor = character:99
-		religion = religion:christianity_religion
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = edward_the_martyr_legend } has_title = title:e_voltara_bryndale }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_voltara_bryndale }
 }
 
+
+# Voltara ancestral legacy; legacy ID retained for compatibility.
 yazdagird_iii = {
-	type = legitimizing
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = yazdagird_iii_legend
-		}
-		dynasty = dynasty:790
-		OR = {
-			capital_province = { geographical_region = world_middle_east_persia }
-			culture = { has_cultural_pillar = heritage_iranian }
-			religion = religion:zoroastrianism_religion
-		}
-	}
-	is_valid = {
-		is_playable_character = yes
-		highest_held_title_tier >= tier_kingdom
-		prestige_level >= high_prestige_level
-	}
-
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:180637
-		title = title:e_persia
-	}
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = yazdagird_iii_legend } has_title = title:e_voltara_maritime_league }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_voltara_maritime_league }
 }
+
 
 afrasiyab = {
 	type = legitimizing
@@ -616,7 +385,7 @@ sceafa = { # Claims to be descended from Noah
 		NOT = {
 			has_global_variable = sceafa_legend
 		}
-		dynasty = character:7627.dynasty
+		always = no
 		religion = { is_in_family = rf_abrahamic }
 	}
 	is_valid = {
@@ -847,51 +616,27 @@ hunnic_heritage = { # MY nomadic people *totally* are the Huns guys
 	}
 }
 
-premysl = { # Descent from Premysl of Bohemia
-	type = legitimizing
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = premysl_legend
-		}
-		dynasty = dynasty:506
-	}
-	is_valid = {
-		is_playable_character = yes
-		highest_held_title_tier >= tier_duchy
-		prestige_level >= high_prestige_level
-	}
-
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:168345
-		title = title:k_bohemia
-	}
+# Voltara ancestral legacy; legacy ID retained for compatibility.
+premysl = {
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = premysl_legend } has_title = title:e_voltara_thornfall }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_voltara_thornfall }
 }
 
-borjigin = { # Alan Gua was impregnated by a ray of light
-	type = legitimizing
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = borjigin_legend
-		}
-		dynasty = dynasty:11100
-	}
-	is_valid = {
-		is_playable_character = yes
-		highest_held_title_tier >= tier_duchy
-		prestige_level >= high_prestige_level
-	}
 
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:303250
-		title = title:e_mongolia
-	}
+# Voltara ancestral legacy; legacy ID retained for compatibility.
+borjigin = {
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = borjigin_legend } has_title = title:e_vae_azramesh }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_vae_azramesh }
 }
+
 
 naga_descent = { # Kashmiri kings claim descent from Naga (divine snake people or "sneople" for short)
 	type = holy
@@ -970,64 +715,27 @@ shibi_chakravarti = { # Chola claiming descent from the legendary king Shibi
 	}
 }
 
-the_red_hand = { # He who first lays hand on Ulster shall be its King
-	type = legitimizing
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = the_red_hand_legend
-		}
-		OR = {
-			culture = culture:irish
-			culture = {
-				any_parent_culture_or_above = {
-					this = culture:irish
-				}
-			}
-		}
-	}
-	is_valid = {
-		is_playable_character = yes
-		always = no
-		prestige_level >= high_prestige_level
-	}
-
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:7255
-		title = title:k_ireland
-	}
+# Voltara ancestral legacy; legacy ID retained for compatibility.
+the_red_hand = {
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = the_red_hand_legend } has_title = title:h_voltara_severos }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:h_voltara_severos }
 }
 
-ragnarr = { # Ol Raggy S
-	type = heroic
-	quality = famed
-	is_shown = {
-		has_dlc_feature = legends
-		NOT = {
-			has_global_variable = ragnarr_legend
-		}
-		dynasty = dynasty:490
-		always = no
-		always = no
-		OR = {
-			religion = { is_in_family = rf_pagan }
-			culture = { has_cultural_parameter = has_access_to_runestones }
-		}
-	}
-	is_valid = {
-		is_landed = yes
-		highest_held_title_tier >= tier_kingdom
-		prestige_level >= high_prestige_level
-	}
 
-	chronicle = ancestral_glory
-	chronicle_properties = {
-		ancestor = character:163109
-		title = title:e_britannia # You could argue Scandinavia but ultimately ehhhhhhh
-	}
+# Voltara ancestral legacy; legacy ID retained for compatibility.
+ragnarr = {
+ type = legitimizing
+ quality = famed
+ is_shown = { has_dlc_feature = legends NOT = { has_global_variable = ragnarr_legend } has_title = title:e_voltara_thonia }
+ is_valid = { exists = house.house_founder prestige_level >= high_prestige_level }
+ chronicle = ancestral_glory
+ chronicle_properties = { ancestor = root.house.house_founder title = title:e_voltara_thonia }
 }
+
 
 #Dynasty perk
 ce1_heroic_legacy_1 = {

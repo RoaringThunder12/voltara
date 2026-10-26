@@ -1,0 +1,27 @@
+﻿vth_found = { picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" } desc = vth_found_desc selection_tooltip = vth_found_tooltip confirm_text = vth_found_confirm decision_group_type = major ai_check_interval = 12
+ is_shown = { vth_thorne = yes NOT = { has_character_flag = vth_founded } } is_valid = { always = yes NOT = { has_character_flag = vth_event_pending } } cooldown = { months = 60 }
+ effect = { vth_initialize = yes add_character_flag = { flag = vth_event_pending days = 90 } trigger_event = { id = vth.1 } } ai_potential = { always = yes } ai_will_do = { base = 20 } }
+
+vth_recruit = { picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" } desc = vth_recruit_desc selection_tooltip = vth_recruit_tooltip confirm_text = vth_recruit_confirm decision_group_type = major ai_check_interval = 12
+ is_shown = { vth_active = yes } is_valid = { OR = { is_landed = yes is_landless_adventurer = yes } gold >= 50 NOT = { has_character_flag = vth_event_pending } } cooldown = { months = 12 }
+ effect = { vth_initialize = yes add_character_flag = { flag = vth_event_pending days = 90 } trigger_event = { id = vth.10 } } ai_potential = { always = yes } ai_will_do = { base = 20 } }
+
+vth_jakar = { picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" } desc = vth_jakar_desc selection_tooltip = vth_jakar_tooltip confirm_text = vth_jakar_confirm decision_group_type = major ai_check_interval = 12
+ is_shown = { vth_active = yes } is_valid = { vth_jakar_present = yes NOT = { has_character_flag = vth_event_pending } } cooldown = { months = 6 }
+ effect = { vth_initialize = yes add_character_flag = { flag = vth_event_pending days = 90 } trigger_event = { id = vth.20 } } ai_potential = { always = yes } ai_will_do = { base = 20 } }
+
+vth_covenant = { picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" } desc = vth_covenant_desc selection_tooltip = vth_covenant_tooltip confirm_text = vth_covenant_confirm decision_group_type = major ai_check_interval = 12
+ is_shown = { vth_active = yes } is_valid = { piety >= 250 var:vth_devotion >= 30 any_courtier = { has_character_flag = vth_disciple } var:vth_power < 3 OR = { var:vth_path = 2 var:vth_power < 1 } NOT = { has_character_flag = vth_event_pending } } cooldown = { months = 24 }
+ effect = { vth_initialize = yes add_character_flag = { flag = vth_event_pending days = 90 } trigger_event = { id = vth.30 } } ai_potential = { always = yes } ai_will_do = { base = 20 } }
+
+vth_host = { picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" } desc = vth_host_desc selection_tooltip = vth_host_tooltip confirm_text = vth_host_confirm decision_group_type = major ai_check_interval = 12
+ is_shown = { vth_active = yes } is_valid = { gold >= 100 var:vth_devotion >= 20 vth_army_room = yes NOT = { has_character_flag = vth_event_pending } } cooldown = { months = 24 }
+ effect = { vth_initialize = yes add_character_flag = { flag = vth_event_pending days = 90 } trigger_event = { id = vth.40 } } ai_potential = { always = yes } ai_will_do = { base = 20 } }
+
+vth_southron = { picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" } desc = vth_southron_desc selection_tooltip = vth_southron_tooltip confirm_text = vth_southron_confirm decision_group_type = major ai_check_interval = 12
+ is_shown = { vth_active = yes } is_valid = { exists = title:e_voltara_sixth_southron_invasion.holder NOT = { has_variable = vth_southron_patron } NOT = { has_character_flag = vth_event_pending } } cooldown = { months = 12 }
+ effect = { vth_initialize = yes add_character_flag = { flag = vth_event_pending days = 90 } trigger_event = { id = vth.50 } } ai_potential = { always = yes } ai_will_do = { base = 20 } }
+
+vth_march = { picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" } desc = vth_march_desc selection_tooltip = vth_march_tooltip confirm_text = vth_march_confirm decision_group_type = major ai_check_interval = 12
+ is_shown = { vth_active = yes } is_valid = { vth_joinable_war = yes NOT = { has_character_flag = vth_event_pending } } cooldown = { months = 1 }
+ effect = { vth_initialize = yes add_character_flag = { flag = vth_event_pending days = 90 } trigger_event = { id = vth.60 } } ai_potential = { always = yes } ai_will_do = { base = 20 } }

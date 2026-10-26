@@ -1,0 +1,12 @@
+﻿vth_thorne = { this = character:19060042 is_alive = yes is_adult = yes is_imprisoned = no NOT = { has_trait = incapable }
+ OR = { has_character_flag = vic_thorne_left_empire rite = rite:voltara_unbound_weave } }
+vth_active = { vth_thorne = yes has_character_flag = vth_founded }
+vth_jakar_present = { NOT = { has_character_flag = vth_jakar_estranged } character:19064034 = { is_alive = yes is_imprisoned = no is_courtier_of = root } }
+vth_army_room = { OR = { is_landed = yes is_landless_adventurer = yes } maa_regiments_count < maa_regiments_max_count }
+vth_joinable_war = {
+ vth_active = yes exists = global_var:vkf_war exists = var:vth_southron_patron
+ var:vth_southron_patron = { vkf_leader = yes }
+ global_var:vkf_war = { primary_attacker = root.var:vth_southron_patron }
+ NOT = { is_participant_in_war = global_var:vkf_war }
+ is_at_war = no OR = { is_independent_ruler = yes is_landless_adventurer = yes }
+}

@@ -1,0 +1,6 @@
+﻿yearly_playable_pulse = { on_actions = { vgoc_clan_pulse } }
+vgoc_clan_pulse = { trigger = { vgoc_ruler = yes is_at_war = no NOT = { has_character_flag = vgoc_busy } culture = { OR = { vgoc_goblin_culture = yes vgoc_orc_culture = yes } } }
+ effect = { random = { chance = 12 add_character_flag = { flag = vgoc_busy years = 3 }
+ if = { limit = { culture = { vgoc_goblin_culture = yes } } random_list = { 50 = { trigger_event = vgoc.120 } 50 = { trigger_event = vgoc.121 } } }
+ else = { random_list = { 50 = { trigger_event = vgoc.220 } 50 = { trigger_event = vgoc.221 } } }
+ } } }

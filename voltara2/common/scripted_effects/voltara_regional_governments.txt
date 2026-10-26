@@ -1,6 +1,8 @@
 ﻿voltara_assign_regional_government = {
+ vae_stoneborn_clan_effect = yes
+ vbr_install_government = yes
  if = {
-  limit = { is_alive = yes is_landed = yes highest_held_title_tier >= tier_county NOT = { voltara_is_ruins_placeholder = yes } NOT = { voltara_keeper_realm = yes } NOT = { has_trait = dragon } }
+  limit = { is_alive = yes is_landed = yes highest_held_title_tier >= tier_county NOT = { voltara_is_ruins_placeholder = yes } NOT = { voltara_keeper_realm = yes } NOT = { has_trait = dragon } NOT = { vbr_gorilla = yes } NOT = { culture = { has_cultural_pillar = heritage_voltara_stoneborn } } }
   if = { limit = { voltara_elven_government_culture = yes } change_government = celestial_government }
   else_if = { limit = { voltara_orc_government_culture = yes } change_government = mandala_government }
   else_if = {

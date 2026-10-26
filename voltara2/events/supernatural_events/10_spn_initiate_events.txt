@@ -1,5 +1,5 @@
 ﻿namespace = spn_initiate
-spn_initiate.0001 { #Initialize Vampire
+spn_initiate.0001 = { #Initialize Vampire
 	hidden = yes
 
 	trigger = {
@@ -77,7 +77,7 @@ spn_initiate.0001 { #Initialize Vampire
 	}
 }
 
-spn_initiate.0002 { #Remove Vampire
+spn_initiate.0002 = { #Remove Vampire
 	hidden = yes
 
 	trigger = {
@@ -110,7 +110,7 @@ spn_initiate.0002 { #Remove Vampire
 	}
 }
 
-spn_initiate.0003 { #Select what level Vampire Trait to add
+spn_initiate.0003 = { #Select what level Vampire Trait to add
 	type = character_event
 	title = spn_initiate.0003.t
 	desc = spn_initiate.0003.desc
@@ -155,7 +155,7 @@ spn_initiate.0003 { #Select what level Vampire Trait to add
 	}
 }
 
-spn_initiate.0005 { #Initialize Vampire from ruler designer
+spn_initiate.0005 = { #Initialize Vampire from ruler designer
 	hidden = yes
 
 	trigger = {
@@ -171,7 +171,7 @@ spn_initiate.0005 { #Initialize Vampire from ruler designer
 	}
 }
 
-spn_initiate.0006 { #Initiate Random Vampire Traits
+spn_initiate.0006 = { #Initiate Random Vampire Traits
 	hidden = yes
 
 	immediate = {
@@ -207,7 +207,7 @@ spn_initiate.0006 { #Initiate Random Vampire Traits
 	}
 }
 
-spn_initiate.1001 { #Initiate Werewolf
+spn_initiate.1001 = { #Initiate Werewolf
 	hidden = yes
 
 	trigger = {
@@ -286,7 +286,7 @@ spn_initiate.1001 { #Initiate Werewolf
 	}
 }
 
-spn_initiate.1002 { #Remove Werewolf
+spn_initiate.1002 = { #Remove Werewolf
 	hidden = yes
 
 	trigger = {
@@ -324,7 +324,7 @@ spn_initiate.1002 { #Remove Werewolf
 	}
 }
 
-spn_initiate.1003 { #Select what level Werewolf Trait to add
+spn_initiate.1003 = { #Select what level Werewolf Trait to add
 	type = character_event
 	title = spn_initiate.1003.t
 	desc = spn_initiate.1003.desc
@@ -369,7 +369,7 @@ spn_initiate.1003 { #Select what level Werewolf Trait to add
 	}
 }
 
-spn_initiate.1005 { #Initialize Werewolf from ruler designer
+spn_initiate.1005 = { #Initialize Werewolf from ruler designer
 	hidden = yes
 
 	trigger = {
@@ -385,7 +385,7 @@ spn_initiate.1005 { #Initialize Werewolf from ruler designer
 	}	
 }
 
-spn_initiate.1006 { #Initiate Random Werewolf Levels
+spn_initiate.1006 = { #Initiate Random Werewolf Levels
 	hidden = yes
 
 	immediate = {
@@ -419,7 +419,7 @@ spn_initiate.1006 { #Initiate Random Werewolf Levels
 	}
 }
 
-spn_initiate.2001 { #Initiate Hybrid
+spn_initiate.2001 = { #Initiate Hybrid
 	hidden = yes
 
 	trigger = {
@@ -535,7 +535,7 @@ spn_initiate.2001 { #Initiate Hybrid
 	}
 }
 
-spn_initiate.2002 { #Remove the Hybrid Trait
+spn_initiate.2002 = { #Remove the Hybrid Trait
 	hidden = yes
 
 	trigger = {
@@ -567,7 +567,7 @@ spn_initiate.2002 { #Remove the Hybrid Trait
 	}
 }
 
-spn_initiate.2003 { #Select what level Hybrid Trait to add
+spn_initiate.2003 = { #Select what level Hybrid Trait to add
 	type = character_event
 	title = spn_initiate.2003.t
 	desc = spn_initiate.2003.desc
@@ -627,7 +627,7 @@ spn_initiate.2003 { #Select what level Hybrid Trait to add
 	}
 }
 
-spn_initiate.2005 { #Initialize Hybrid from Ruler Designer
+spn_initiate.2005 = { #Initialize Hybrid from Ruler Designer
 	hidden = yes
 
 	trigger = {
@@ -643,7 +643,7 @@ spn_initiate.2005 { #Initialize Hybrid from Ruler Designer
 	}	
 }
 
-spn_initiate.3001 { #Initiate Hunter
+spn_initiate.3001 = { #Initiate Hunter
 	hidden = yes
 
 	trigger = {
@@ -692,7 +692,7 @@ spn_initiate.3001 { #Initiate Hunter
 	}
 }
 
-spn_initiate.3002 { #Remove Hunter
+spn_initiate.3002 = { #Remove Hunter
 	hidden = yes
 
 	trigger = {
@@ -717,49 +717,10 @@ spn_initiate.3002 { #Remove Hunter
 	}
 }
 
-spn_initiate.3003 { #Select what level Hunter Trait to add
-	type = character_event
-	title = spn_initiate.3003.t
-	desc = spn_initiate.3003.desc
-	theme = default
+# Archived unreachable event spn_initiate.3003; see orphan-events audit.
 
-	right_portrait = {
-		character = root
-		animation = idle
-	}
 
-	option = {
-		name = spn_initiate.3003.a
-		trigger_event = spn_initiate.3001 #Initiate Hunter
-		add_trait_xp = {
-			trait = supernatural_hunter
-			track = monster_hunting
-			value = 50
-		}
-	}
-
-	option = {
-		name = spn_initiate.3003.b
-		trigger_event = spn_initiate.3001 #Initiate Hunter
-		add_trait_xp = {
-			trait = supernatural_hunter
-			track = monster_hunting
-			value = 75
-		}
-	}
-
-	option = {
-		name = spn_initiate.3003.c
-		trigger_event = spn_initiate.3001 #Initiate Hunter
-		add_trait_xp = {
-			trait = supernatural_hunter
-			track = monster_hunting
-			value = 100
-		}
-	}
-}
-
-spn_initiate.3005 { #Initiate Hunter from Ruler Designer
+spn_initiate.3005 = { #Initiate Hunter from Ruler Designer
 	hidden = yes
 
 	trigger = {
@@ -775,7 +736,7 @@ spn_initiate.3005 { #Initiate Hunter from Ruler Designer
 	}
 }
 
-spn_initiate.3006 { #Initiate Random Hunter Traits
+spn_initiate.3006 = { #Initiate Random Hunter Traits
 	hidden = yes
 
 	immediate = {
@@ -842,7 +803,7 @@ spn_initiate.3006 { #Initiate Random Hunter Traits
 	}
 }
 
-spn_initiate.9000 { #Initiate From Birth, Determines Inheritance Chance
+spn_initiate.9000 = { #Initiate From Birth, Determines Inheritance Chance
 	hidden = yes
 
 	immediate = {
@@ -1479,7 +1440,7 @@ spn_initiate.9000 { #Initiate From Birth, Determines Inheritance Chance
 	}
 }
 
-spn_initiate.9001 { #Hand out Secrets Knowledge for confers
+spn_initiate.9001 = { #Hand out Secrets Knowledge for confers
 	hidden = yes
 
 	immediate = {
@@ -1512,7 +1473,7 @@ spn_initiate.9001 { #Hand out Secrets Knowledge for confers
 	}
 }
 
-spn_initiate.9002 { #Hand out Secrets Knowledge when asking for confer
+spn_initiate.9002 = { #Hand out Secrets Knowledge when asking for confer
 	hidden = yes
 
 	immediate = {

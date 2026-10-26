@@ -1,0 +1,38 @@
+﻿vbr_install_government = {
+ if = { limit = { is_alive = yes vbr_gorilla = yes }
+  culture = { if = { limit = { NOT = { has_cultural_tradition = tradition_vbr_blood_rite } } add_culture_tradition = tradition_vbr_blood_rite } }
+  if = { limit = { is_landed = yes highest_held_title_tier >= tier_county is_landless_adventurer = no NOT = { has_government = voltara_ruins_government } }
+   if = { limit = { NOT = { has_government = vbr_blood_rite_government } } change_government = vbr_blood_rite_government }
+   every_held_title = { limit = { tier >= tier_county is_landless_type_title = no NOT = { has_title_law = vbr_blood_elective_law } } add_title_law = vbr_blood_elective_law }
+  }
+ }
+}
+vbr_initialize = {
+ every_culture_global = { limit = { vbr_gorilla_culture = yes NOT = { has_cultural_tradition = tradition_vbr_blood_rite } } add_culture_tradition = tradition_vbr_blood_rite }
+ every_ruler = { limit = { vbr_gorilla = yes } vbr_install_government = yes }
+}
+vbr_clear = {
+ scope:vbr_challenger ?= { remove_character_flag = vbr_pending }
+ scope:vbr_defender ?= { remove_character_flag = vbr_pending }
+ scope:vbr_title ?= { remove_variable = vbr_contested }
+}
+# This runs in native single combat immediately BEFORE the native fatality effect.
+# Keeping the defender alive until the atomic transfer prevents intervening elections.
+vbr_settle_before_death = {
+ if = { limit = { vbr_stakes_valid = yes exists = scope:sc_victor exists = scope:sc_loser NOT = { exists = scope:vbr_settled } }
+  save_scope_value_as = { name = vbr_settled value = yes }
+  if = { limit = { scope:sc_victor = scope:vbr_challenger scope:sc_loser = scope:vbr_defender }
+   scope:vbr_defender = {
+    every_held_title = { limit = { is_landless_type_title = no is_capital_barony = no OR = { this = scope:vbr_title tier < scope:vbr_title.tier } } add_to_temporary_list = vbr_prize_titles }
+   }
+   create_title_and_vassal_change = { type = conquest save_scope_as = vbr_transfer add_claim_on_loss = no }
+   every_in_list = { list = vbr_prize_titles limit = { tier >= tier_county } change_title_holder_include_vassals = { holder = scope:vbr_challenger change = scope:vbr_transfer government_base = scope:vbr_defender } }
+   resolve_title_and_vassal_change = scope:vbr_transfer
+   # County transfers can vassalize secondary holdings; settle personal baronies afterwards.
+   create_title_and_vassal_change = { type = conquest save_scope_as = vbr_barony_transfer add_claim_on_loss = no }
+   every_in_list = { list = vbr_prize_titles limit = { tier = tier_barony is_capital_barony = no } change_title_holder = { holder = scope:vbr_challenger change = scope:vbr_barony_transfer } }
+   resolve_title_and_vassal_change = scope:vbr_barony_transfer
+   scope:vbr_challenger = { vbr_install_government = yes }
+  }
+ }
+}

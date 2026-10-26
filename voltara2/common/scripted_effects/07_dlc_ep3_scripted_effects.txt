@@ -907,7 +907,7 @@ ep3_become_landed_transfer_effect = {
 	}
 	$TITLE_RECEIVER$ = {
 		if = {
-			limit = { character:90028 ?= this }
+			limit = { always = no }
 			custom_tooltip = ep3_story_cycle_harrying.3053.b.tt
 			add_character_flag = hereward_settled_flag
 		}
@@ -9328,7 +9328,7 @@ ep3_missionary_effect = {
 			OR = {
 				$LOCATION$.religion = $PREACHER$.religion
 				$LOCATION$.faith = { has_doctrine_parameter = unreformed }
-				character:41702 ?= $PREACHER$
+				always = no
 			}
 		}
 		$LOCATION$ = {

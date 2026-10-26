@@ -1,0 +1,30 @@
+﻿vks_offer_united_fealty = {
+ category = interaction_category_vassal icon = icon_vassal common_interaction = yes
+ desc = vks_offer_united_fealty_desc
+ is_shown = { scope:actor = { has_title = title:e_voltara_sixth_southron_invasion } scope:recipient = { vks_de_jure_ruler = yes is_independent_ruler = yes highest_held_title_tier < tier_empire } }
+ is_valid_showing_failures_only = { vks_fealty_parties_valid = yes }
+ can_send = { vks_fealty_payment_valid = yes }
+ send_options_exclusive = yes
+ cooldown_against_recipient = { years = 1 }
+ ai_min_reply_days = 5 ai_max_reply_days = 10
+ send_option = { flag = vks_gold localization = vks_offer_gold is_valid = { scope:actor = { gold >= 150 }  } }
+ send_option = { flag = vks_prestige localization = vks_offer_prestige is_valid = { scope:actor = { prestige >= 500 }  } }
+ send_option = { flag = vks_piety localization = vks_offer_piety is_valid = { scope:actor = { piety >= 500 }  } }
+ send_option = { flag = vks_herd localization = vks_offer_herd is_valid = { scope:actor = { exists = domicile government_has_flag = government_has_herd domicile.herd >= 500 } scope:recipient = { exists = domicile government_has_flag = government_has_herd } } }
+ send_option = { flag = vks_hook localization = vks_offer_hook is_valid = { scope:actor = { has_usable_hook = scope:recipient }  } }
+ on_accept = { if = { limit = { vks_fealty_parties_valid = yes vks_fealty_payment_valid = yes }
+ vks_accept_fealty = yes
+ } }
+ ai_accept = {
+ base = -20
+ modifier = { add = 35 desc = vks_offer_gold scope:vks_gold ?= yes }
+ modifier = { add = 30 desc = vks_offer_prestige scope:vks_prestige ?= yes }
+ modifier = { add = 30 desc = vks_offer_piety scope:vks_piety ?= yes }
+ modifier = { add = 40 desc = vks_offer_herd scope:vks_herd ?= yes }
+ modifier = { add = 60 desc = vks_offer_hook scope:vks_hook ?= yes }
+ modifier = { add = 20 desc = vks_good_relations scope:recipient = { opinion = { target = scope:actor value >= 40 } } }
+ modifier = { add = -30 desc = vks_bad_relations scope:recipient = { opinion = { target = scope:actor value < 0 } } }
+ modifier = { add = -20 desc = vks_ambition scope:recipient = { has_trait = ambitious } }
+ }
+ ai_will_do = { base = 0 }
+}

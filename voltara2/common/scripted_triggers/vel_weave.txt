@@ -1,0 +1,7 @@
+﻿vel_high_elf = { culture = { vrc_high_culture = yes } }
+vel_deep_elf = { culture = { vrc_deep_culture = yes } }
+vel_eligible = {
+ is_alive = yes is_available_adult = yes is_landed = yes highest_held_title_tier >= tier_county
+ exists = capital_county exists = situation:voltara_weave has_global_variable = vt_weave_ready
+ NOT = { has_government = voltara_ruins_government }
+}

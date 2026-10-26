@@ -1,0 +1,32 @@
+﻿vt_request_citadel_acolyte = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" }
+ desc = vt_request_citadel_acolyte_desc selection_tooltip = vt_request_citadel_acolyte_desc confirm_text = vt_request_citadel_acolyte_confirm
+ ai_check_interval = 0 decision_group_type = major cooldown = { months = 12 }
+ is_shown = { is_ai = no is_landed = yes vt_aeliunist_clergy_eligible = yes NOT = { any_court_position_holder = { type = maester_court_position } } }
+ is_valid = { is_capable_adult = yes is_imprisoned = no exists = capital_province vt_citadel_open = yes gold >= low_skill_court_physician_cost }
+ effect = { trigger_event = agot_maester.0008 }
+}
+vt_weave_experiment = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds" }
+ desc = vt_weave_experiment_desc selection_tooltip = vt_weave_experiment_desc confirm_text = vt_weave_experiment_confirm
+ ai_check_interval = 0 decision_group_type = major cooldown = { months = 12 }
+ is_shown = { is_ai = no has_trait = experimentalist can_magic_trigger = yes }
+ is_valid = { is_capable_adult = yes is_imprisoned = no stress >= 20 }
+ effect = { trigger_event = ek_stress_trait_coping_decisions.1151 }
+}
+vt_ascend_ravenbound = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds" }
+ desc = vt_ascend_ravenbound_desc selection_tooltip = vt_ascend_ravenbound_desc confirm_text = vt_ascend_ravenbound_confirm
+ ai_check_interval = 0 decision_group_type = major cooldown = { years = 5 }
+ is_shown = { is_ai = no can_magic_trigger = yes has_perk = necromancy_master_perk vt_ek_is_undead = no NOT = { is_immortal = yes } NOR = { is_briarheart = yes is_hagraven = yes has_character_flag = race_daedra } }
+ is_valid = { is_capable_adult = yes is_available = yes is_imprisoned = no piety >= 1000 NOT = { has_character_modifier = failed_hagraven_ascension } has_magicka >= { VALUE = 100 } }
+ effect = { trigger_event = life_extension.0400 }
+}
+vt_ascend_rootbound = {
+ picture = { reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds" }
+ desc = vt_ascend_rootbound_desc selection_tooltip = vt_ascend_rootbound_desc confirm_text = vt_ascend_rootbound_confirm
+ ai_check_interval = 0 decision_group_type = major cooldown = { years = 5 }
+ is_shown = { is_ai = no can_magic_trigger = yes has_perk = necromancy_master_perk vt_ek_is_undead = no NOT = { is_immortal = yes } NOR = { is_briarheart = yes is_hagraven = yes has_character_flag = race_daedra } }
+ is_valid = { is_capable_adult = yes is_available = yes is_imprisoned = no piety >= 1000 NOT = { has_character_modifier = failed_briarheart_ascension }  }
+ effect = { trigger_event = life_extension.0410 }
+}

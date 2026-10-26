@@ -1,0 +1,18 @@
+﻿vt_tribute_sovereign = {
+ is_alive = yes is_independent_ruler = yes
+ OR = { has_government = celestial_government highest_held_title_tier = tier_hegemony }
+ exists = capital_province
+ NOR = { has_trait = voltara_ruins_keeper has_government = voltara_ruins_government }
+}
+vt_tribute_destination_valid = {
+ is_available_adult = yes
+ exists = var:vt_tribute_destination
+ var:vt_tribute_destination = { vt_tribute_sovereign = yes }
+ NOT = { is_at_war_with = var:vt_tribute_destination }
+ OR = {
+  AND = { is_tributary = yes suzerain = var:vt_tribute_destination }
+  AND = { is_tributary = no is_independent_ruler = yes
+   any_neighboring_and_across_water_top_liege_realm_owner = { this = prev.var:vt_tribute_destination }
+  }
+ }
+}

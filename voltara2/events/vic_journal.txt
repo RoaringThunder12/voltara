@@ -1,11 +1,3 @@
 ﻿namespace = vic_journal
-vic_journal.1 = { type = character_event title = vic_journal.1.t desc = vic_journal.1.desc theme = realm
- trigger = { has_global_variable = vic_initialized vic_principal = yes }
- option = { name = vic_journal.1.ack
- if = { limit = { has_variable = vic_clue_warning } custom_tooltip = vic_journal.warning }
- if = { limit = { has_variable = vic_clue_treasury } custom_tooltip = vic_journal.treasury }
- if = { limit = { var:vic_clue_treasury ?= 3 } custom_tooltip = vic_journal.authenticated }
- if = { limit = { this = character:19060033 has_character_flag = vic_opening_complete } custom_tooltip = vic_journal.preparation }
- if = { limit = { has_character_flag = vic_free_labor_transition } custom_tooltip = vic_journal.transition }
- }
-}
+# Archived unreachable event vic_journal.1; see orphan-events audit.
+

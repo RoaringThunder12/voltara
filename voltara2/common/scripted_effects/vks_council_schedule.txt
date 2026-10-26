@@ -1,0 +1,6 @@
+﻿vks_schedule_council = {
+ if = { limit = { this = character:9999100 NOT = { has_character_flag = vks_council_scheduled } }
+ add_character_flag = vks_council_scheduled
+ trigger_event = { id = vksc.1 months = 3 }
+ }
+}

@@ -1,0 +1,40 @@
+﻿vgoc_market_01 = { construction_time = 540 cost_gold = 150 type_icon = "icon_building_guild_halls.dds"
+  next_building = vgoc_market_02
+  can_construct_potential = { exists = scope:holder scope:holder = { culture = { vgoc_goblin_culture = yes } NOT = { has_government = voltara_ruins_government } } }
+  can_construct = { scope:holder = { culture = { has_innovation = innovation_vgoc_goblin_1 } } } province_modifier = { monthly_income = 0.2 }
+  county_modifier = { development_growth_factor = 0.03 } ai_value = { base = 40 } }
+vgoc_market_02 = { construction_time = 730 cost_gold = 280 type_icon = "icon_building_guild_halls.dds"
+  
+  can_construct_potential = { exists = scope:holder scope:holder = { culture = { vgoc_goblin_culture = yes } NOT = { has_government = voltara_ruins_government } } }
+  can_construct = { scope:holder = { culture = { has_innovation = innovation_vgoc_goblin_2 } } } province_modifier = { monthly_income = 0.4 }
+  county_modifier = { development_growth_factor = 0.06 } ai_value = { base = 40 } }
+vgoc_salvage_01 = { construction_time = 540 cost_gold = 150 type_icon = "icon_building_smiths.dds"
+  next_building = vgoc_salvage_02
+  can_construct_potential = { exists = scope:holder scope:holder = { culture = { vgoc_goblin_culture = yes } NOT = { has_government = voltara_ruins_government } } }
+  can_construct = { scope:holder = { culture = { has_innovation = innovation_vgoc_goblin_1 } } } province_modifier = { monthly_income = 0.15 }
+  county_modifier = { development_growth_factor = 0.04 } ai_value = { base = 40 } }
+vgoc_salvage_02 = { construction_time = 730 cost_gold = 280 type_icon = "icon_building_smiths.dds"
+  
+  can_construct_potential = { exists = scope:holder scope:holder = { culture = { vgoc_goblin_culture = yes } NOT = { has_government = voltara_ruins_government } } }
+  can_construct = { scope:holder = { culture = { has_innovation = innovation_vgoc_goblin_2 } } } province_modifier = { monthly_income = 0.3 }
+  county_modifier = { development_growth_factor = 0.08 } ai_value = { base = 40 } }
+vgoc_muster_01 = { construction_time = 540 cost_gold = 150 type_icon = "icon_building_caravanserai.dds"
+  next_building = vgoc_muster_02
+  can_construct_potential = { exists = scope:holder scope:holder = { culture = { vgoc_orc_culture = yes } NOT = { has_government = voltara_ruins_government } } }
+  can_construct = { scope:holder = { culture = { has_innovation = innovation_vgoc_orc_1 } } } province_modifier = { levy_size = 0.08 supply_limit_mult = 0.05 }
+  county_modifier = { monthly_county_control_growth_add = 0.1 } ai_value = { base = 40 } }
+vgoc_muster_02 = { construction_time = 730 cost_gold = 280 type_icon = "icon_building_caravanserai.dds"
+  
+  can_construct_potential = { exists = scope:holder scope:holder = { culture = { vgoc_orc_culture = yes } NOT = { has_government = voltara_ruins_government } } }
+  can_construct = { scope:holder = { culture = { has_innovation = innovation_vgoc_orc_2 } } } province_modifier = { levy_size = 0.16 supply_limit_mult = 0.1 }
+  county_modifier = { monthly_county_control_growth_add = 0.2 } ai_value = { base = 40 } }
+vgoc_forge_01 = { construction_time = 540 cost_gold = 150 type_icon = "icon_building_smiths.dds"
+  next_building = vgoc_forge_02
+  can_construct_potential = { exists = scope:holder scope:holder = { culture = { vgoc_orc_culture = yes } NOT = { has_government = voltara_ruins_government } } }
+  can_construct = { scope:holder = { culture = { has_innovation = innovation_vgoc_orc_1 } } } province_modifier = { monthly_income = 0.1 levy_size = 0.06 }
+   ai_value = { base = 40 } }
+vgoc_forge_02 = { construction_time = 730 cost_gold = 280 type_icon = "icon_building_smiths.dds"
+  
+  can_construct_potential = { exists = scope:holder scope:holder = { culture = { vgoc_orc_culture = yes } NOT = { has_government = voltara_ruins_government } } }
+  can_construct = { scope:holder = { culture = { has_innovation = innovation_vgoc_orc_2 } } } province_modifier = { monthly_income = 0.2 levy_size = 0.12 }
+   ai_value = { base = 40 } }

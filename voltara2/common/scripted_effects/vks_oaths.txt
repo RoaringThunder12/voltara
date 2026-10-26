@@ -1,0 +1,25 @@
+﻿# Called only inside the guarded, first acceptance of a council blood oath.
+vks_oath_contribution = {
+ if = { limit = {
+  exists = domicile government_has_flag = government_has_herd domicile.herd > 0
+  var:vkf_patron = { exists = domicile government_has_flag = government_has_herd }
+ }
+  pay_herd = { target = var:vkf_patron value = vks_oath_herd }
+ }
+ else_if = { limit = { gold > 0 }
+  pay_short_term_gold = { target = var:vkf_patron gold = vks_oath_gold }
+ }
+}
+
+# Shared by frontier gatherings, heralds, and the activity; no repeated collection for the same active oath.
+vks_record_blood_oath = {
+ if = { limit = { var:vkf_oath >= 2 exists = var:vkf_patron }
+  save_scope_as = vks_sworn_ruler
+  if = { limit = { NOT = { var:vks_oath_paid_to ?= var:vkf_patron } }
+   vks_oath_contribution = yes
+   set_variable = { name = vks_oath_paid_to value = var:vkf_patron days = 1825 }
+   var:vkf_patron = { add_hook = { target = scope:vks_sworn_ruler type = vkf_blood_oath_hook } }
+  }
+ }
+ var:vkf_patron ?= { vkf_recount = yes }
+}

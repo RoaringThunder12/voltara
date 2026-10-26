@@ -1,0 +1,56 @@
+﻿vth_initialize = {
+ if = { limit = { vth_thorne = yes NOT = { has_character_flag = vth_founded } }
+ add_character_flag = vth_founded set_variable = { name = vth_devotion value = 10 }
+ set_variable = { name = vth_path value = 0 } set_variable = { name = vth_power value = 0 }
+ voltara_initialize_threadbinder = yes
+ }
+}
+vth_grow = {
+ change_variable = { name = vth_devotion add = $AMOUNT$ }
+ set_variable = { name = vth_devotion value = { value = var:vth_devotion min = 0 max = 100 } }
+}
+vth_choose_mercy = {
+ set_variable = { name = vth_path value = 1 }
+ remove_character_modifier = vth_dread_prophet
+ add_character_modifier = { modifier = vth_refuge_keeper years = 5 }
+ if = { limit = { var:vth_power > 1 } set_variable = { name = vth_power value = 1 } }
+ add_stress = -30
+}
+vth_choose_dominion = {
+ set_variable = { name = vth_path value = 2 }
+ remove_character_modifier = vth_refuge_keeper
+ add_character_modifier = { modifier = vth_dread_prophet years = 5 }
+ add_dread = 15 add_stress = 25
+}
+vth_raise_followers = {
+ if = { limit = { OR = { is_landed = yes is_landless_adventurer = yes } }
+ save_scope_as = vth_master
+ create_character = { age = 24 gender_female_chance = 50 employer = scope:vth_master culture = root.culture faith = root.faith
+ trait = vt_ek_education_magic_1 trait = diligent save_scope_as = vth_new_acolyte }
+ scope:vth_new_acolyte = { add_character_flag = vth_disciple
+ if = { limit = { exists = scope:vth_master.rite } set_character_rite = scope:vth_master.rite }
+ }
+}}
+vth_accept_pact = {
+ # Executed by the consenting Southron ruler.
+ if = { limit = { vkf_leader = yes character:19060042 = { vth_active = yes } }
+ save_scope_as = vth_patron
+ character:19060042 = {
+ set_variable = { name = vth_southron_patron value = scope:vth_patron days = 1825 }
+ add_character_flag = vkf_thorne_answered remove_variable = vkf_thorne_offer
+ set_variable = { name = vkf_obligation_holder value = scope:vth_patron days = 1825 }
+ add_character_modifier = { modifier = vth_southron_sanctuary years = 5 }
+ vth_grow = { AMOUNT = 10 }
+ if = { limit = { var:vth_path = 1 } scope:vth_patron = { add_character_modifier = { modifier = vth_refuge_supply years = 5 } } }
+ else = { scope:vth_patron = { add_character_modifier = { modifier = vth_war_sorcery years = 5 } } }
+ trigger_event = { id = vth.52 days = 1 }
+ }
+ vkf_seed_leader = yes change_variable = { name = vkf_intelligence add = 20 } vkf_recount = yes
+ }
+}
+vth_join_invasion = {
+ if = { limit = { vth_joinable_war = yes }
+ save_scope_as = vth_war_mage global_var:vkf_war = { add_attacker = scope:vth_war_mage }
+ add_prestige = 150 vth_grow = { AMOUNT = 10 }
+ }
+}

@@ -11,11 +11,12 @@
    if = { limit = { NOT = { exists = rite:voltara_unbound_weave } } create_rite_from_type = { type = voltara_unbound_weave convert = yes } }
    set_character_rite = rite:voltara_unbound_weave
    add_character_flag = vic_thorne_reckoning
+ if = { limit = { NOT = { has_character_flag = vth_founded } } vth_initialize = yes trigger_event = { id = vth.1 days = 7 } }
    add_stress = 60
    if = { limit = { has_dlc_feature = roads_to_power NOT = { is_landless_adventurer = yes } is_landed = no }
     create_adventurer_title = { name = voltara_withering_hand_camp holder = this save_scope_as = voltara_thorne_camp }
     change_government = landless_adventurer_government
-    if = { limit = { NOT = { has_realm_law = landless_adventurer_succession_law } } add_realm_law = landless_adventurer_succession_law }
+    if = { limit = { NOT = { has_realm_law = landless_adventurer_succession_law } } if = { limit = { NOT = { has_realm_law = landless_adventurer_succession_law } } add_realm_law = landless_adventurer_succession_law } }
     add_gold = 250
    }
    if = { limit = { exists = title:e_voltara_bryndale.holder }

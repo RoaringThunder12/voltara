@@ -1,0 +1,10 @@
+﻿yearly_playable_pulse = { on_actions = { vrc_story_pulse } }
+vrc_story_pulse = {
+ trigger = { vrc_eligible = yes NOT = { has_character_flag = vrc_story_busy } culture = { OR = { vrc_high_culture = yes vrc_deep_culture = yes vrc_naga_culture = yes vrc_stone_culture = yes } } }
+ effect = { random = { chance = 12 add_character_flag = { flag = vrc_story_busy years = 4 }
+  if = { limit = { culture = { vrc_high_culture = yes } } if = { limit = { has_character_modifier = vel_dawn_anchor } trigger_event = vrc.103 } else = { trigger_event = vrc.102 } }
+  else_if = { limit = { culture = { vrc_deep_culture = yes } } if = { limit = { has_character_modifier = vel_open_current } trigger_event = vrc.203 } else = { trigger_event = vrc.202 } }
+  else_if = { limit = { culture = { vrc_naga_culture = yes } } if = { limit = { vsn_first_cavern = yes } trigger_event = vrc.303 } else = { trigger_event = vrc.302 } }
+  else = { random_list = { 50 = { trigger_event = vrc.402 } 50 = { trigger_event = vrc.403 } } }
+ } }
+}

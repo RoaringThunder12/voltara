@@ -59,7 +59,7 @@ agot_kingsguard_create_dynamic_white_book_page_join = {
 		}
 		create_dynamic_title = {
 			tier = duchy
-			name = agot_kingsguard_white_book_page_join_paragraph
+			name = vt_white_book_record_title
 		}
 		scope:new_title ?= {
 			set_capital_county = title:c_voltara_323
@@ -67,6 +67,8 @@ agot_kingsguard_create_dynamic_white_book_page_join = {
 			set_delete_on_destroy = no
 			set_coa = b_crownsguard_keep
 			save_scope_as = white_book_page
+            set_variable = { name = vt_book_join_age value = scope:selected_kingsguard.age }
+            set_variable = { name = vt_book_join_ruler value = scope:king }
 			if = {
 				limit = { NOT = { has_variable = kingsguard_member } }
 				set_variable = {
@@ -93,7 +95,11 @@ agot_kingsguard_update_white_book_page_lc = {
 		$KING$ = { save_scope_as = king }
 		agot_kingsguard_get_page_effect = { KINGSGUARD = scope:selected_kingsguard }
 		scope:white_book_page = {
-			set_title_name_dynamic = agot_kingsguard_white_book_page_lc_update
+			# Store facts instead of treating a rendered paragraph as a localization key.
+            if = { limit = { NOT = { has_variable = vt_book_lc_age } }
+                set_variable = { name = vt_book_lc_age value = scope:selected_kingsguard.age }
+                set_variable = { name = vt_book_lc_ruler value = scope:king }
+            }
 		}
 	}
 }
@@ -104,7 +110,11 @@ agot_kingsguard_update_white_book_page_sent_to_nightswatch_update = {
 		$KING$ = { save_scope_as = king }
 		agot_kingsguard_get_page_effect = { KINGSGUARD = scope:selected_kingsguard }
 		scope:white_book_page = {
-			set_title_name_dynamic = agot_kingsguard_white_book_page_sent_to_nightswatch_update
+			# Store facts instead of treating a rendered paragraph as a localization key.
+            if = { limit = { NOT = { has_variable = vt_book_exile_age } }
+                set_variable = { name = vt_book_exile_age value = scope:selected_kingsguard.age }
+                set_variable = { name = vt_book_exile_ruler value = scope:king }
+            }
 		}
 	}
 }
@@ -115,7 +125,11 @@ agot_kingsguard_update_white_book_page_removed_update = {
 		$KING$ = { save_scope_as = king }
 		agot_kingsguard_get_page_effect = { KINGSGUARD = scope:selected_kingsguard }
 		scope:white_book_page = {
-			set_title_name_dynamic = agot_kingsguard_white_book_page_removed_update
+			# Store facts instead of treating a rendered paragraph as a localization key.
+            if = { limit = { NOT = { has_variable = vt_book_removed_age } }
+                set_variable = { name = vt_book_removed_age value = scope:selected_kingsguard.age }
+                set_variable = { name = vt_book_removed_ruler value = scope:king }
+            }
 		}
 	}
 }
@@ -126,7 +140,11 @@ agot_kingsguard_update_white_book_page_died_update = {
 		$KING$ = { save_scope_as = king }
 		agot_kingsguard_get_page_effect = { KINGSGUARD = scope:selected_kingsguard }
 		scope:white_book_page = {
-			set_title_name_dynamic = agot_kingsguard_white_book_page_died_update
+			# Store facts instead of treating a rendered paragraph as a localization key.
+            if = { limit = { NOT = { has_variable = vt_book_died_age } }
+                set_variable = { name = vt_book_died_age value = scope:selected_kingsguard.age }
+                
+            }
 		}
 	}
 }

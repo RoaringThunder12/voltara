@@ -1,0 +1,61 @@
+﻿namespace = vgoc
+vgoc.100 = { type = character_event theme = stewardship title = vgoc.100.t desc = vgoc.100.desc trigger = { vgoc_ruler = yes culture = { vgoc_goblin_culture = yes } }
+option = { name = vgoc.100.a culture = { if = { limit = { NOT = { has_innovation = innovation_vgoc_goblin_1 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_goblin_1 value = 8 } } else_if = { limit = { has_cultural_era_or_later = culture_era_early_medieval NOT = { has_innovation = innovation_vgoc_goblin_2 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_goblin_2 value = 5 } } } trigger_event = { id = vgoc.101 days = 21 } ai_chance = { base = 20 } }
+option = { name = vgoc.100.b add_prestige = 90 capital_county = { change_county_control = -4 } ai_chance = { base = 20 } }
+option = { name = vgoc.100.c trigger = { capital_county = { any_county_province = { has_building_or_higher = vgoc_market_01 } } } capital_county = { add_county_modifier = { modifier = vgoc_fair_measures years = 4 } } add_stewardship_lifestyle_xp = 120 ai_chance = { base = 20 } }
+}
+vgoc.101 = { type = character_event theme = stewardship title = vgoc.101.t desc = vgoc.101.desc trigger = { vgoc_ruler = yes culture = { vgoc_goblin_culture = yes } }
+option = { name = vgoc.101.a capital_county = { add_county_modifier = { modifier = vgoc_fair_measures years = 4 } } add_prestige = 60 ai_chance = { base = 20 } }
+option = { name = vgoc.101.b trigger = { gold >= 25 } remove_short_term_gold = 25 capital_county = { add_county_modifier = { modifier = vgoc_fair_measures years = 4 } } add_stewardship_lifestyle_xp = 150 ai_chance = { base = 20 } }
+option = { name = vgoc.101.c add_prestige = 100 add_stress = 15 ai_chance = { base = 20 } }
+}
+vgoc.110 = { type = character_event theme = stewardship title = vgoc.110.t desc = vgoc.110.desc trigger = { vgoc_ruler = yes culture = { vgoc_goblin_culture = yes } }
+option = { name = vgoc.110.a culture = { if = { limit = { NOT = { has_innovation = innovation_vgoc_goblin_1 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_goblin_1 value = 8 } } else_if = { limit = { has_cultural_era_or_later = culture_era_early_medieval NOT = { has_innovation = innovation_vgoc_goblin_2 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_goblin_2 value = 5 } } } trigger_event = { id = vgoc.111 days = 30 } ai_chance = { base = 20 } }
+option = { name = vgoc.110.b random_list = { 65 = { add_gold = 70 } 35 = { capital_county = { change_county_control = -8 } add_stress = 20 } } ai_chance = { base = 20 } }
+option = { name = vgoc.110.c trigger = { capital_county = { any_county_province = { has_building_or_higher = vgoc_salvage_01 } } } capital_county = { add_county_modifier = { modifier = vgoc_tested_tools years = 4 } } add_gold = 30 ai_chance = { base = 20 } }
+}
+vgoc.111 = { type = character_event theme = stewardship title = vgoc.111.t desc = vgoc.111.desc trigger = { vgoc_ruler = yes culture = { vgoc_goblin_culture = yes } }
+option = { name = vgoc.111.a culture = { if = { limit = { NOT = { has_innovation = innovation_vgoc_goblin_1 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_goblin_1 value = 8 } } else_if = { limit = { has_cultural_era_or_later = culture_era_early_medieval NOT = { has_innovation = innovation_vgoc_goblin_2 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_goblin_2 value = 5 } } } add_learning_lifestyle_xp = 100 ai_chance = { base = 20 } }
+option = { name = vgoc.111.b add_gold = 45 capital_county = { change_county_control = -3 } ai_chance = { base = 20 } }
+option = { name = vgoc.111.c trigger = { capital_county = { any_county_province = { has_building_or_higher = vgoc_salvage_01 } } } capital_county = { add_county_modifier = { modifier = vgoc_tested_tools years = 4 } } add_prestige = 75 ai_chance = { base = 20 } }
+}
+vgoc.120 = { type = character_event theme = stewardship title = vgoc.120.t desc = vgoc.120.desc trigger = { vgoc_ruler = yes culture = { vgoc_goblin_culture = yes } }
+option = { name = vgoc.120.a capital_county = { add_county_modifier = { modifier = vgoc_fair_measures years = 4 } } add_diplomacy_lifestyle_xp = 100 ai_chance = { base = 20 } }
+option = { name = vgoc.120.b trigger = { gold >= 20 } remove_short_term_gold = 20 add_prestige = 80 capital_county = { change_county_control = 4 } ai_chance = { base = 20 } }
+option = { name = vgoc.120.c trigger = { capital_county = { any_county_province = { has_building_or_higher = vgoc_market_01 } } } culture = { if = { limit = { NOT = { has_innovation = innovation_vgoc_goblin_1 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_goblin_1 value = 8 } } else_if = { limit = { has_cultural_era_or_later = culture_era_early_medieval NOT = { has_innovation = innovation_vgoc_goblin_2 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_goblin_2 value = 5 } } } add_stewardship_lifestyle_xp = 100 ai_chance = { base = 20 } }
+}
+vgoc.121 = { type = character_event theme = stewardship title = vgoc.121.t desc = vgoc.121.desc trigger = { vgoc_ruler = yes culture = { vgoc_goblin_culture = yes } }
+option = { name = vgoc.121.a trigger = { gold >= 20 } remove_short_term_gold = 20 capital_county = { add_county_modifier = { modifier = vgoc_tested_tools years = 4 } } ai_chance = { base = 20 } }
+option = { name = vgoc.121.b add_stress = 10 capital_county = { change_county_control = 3 } ai_chance = { base = 20 } }
+option = { name = vgoc.121.c trigger = { capital_county = { any_county_province = { has_building_or_higher = vgoc_salvage_01 } } } culture = { if = { limit = { NOT = { has_innovation = innovation_vgoc_goblin_1 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_goblin_1 value = 8 } } else_if = { limit = { has_cultural_era_or_later = culture_era_early_medieval NOT = { has_innovation = innovation_vgoc_goblin_2 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_goblin_2 value = 5 } } }capital_county = { add_county_modifier = { modifier = vgoc_tested_tools years = 4 } } ai_chance = { base = 20 } }
+}
+vgoc.200 = { type = character_event theme = stewardship title = vgoc.200.t desc = vgoc.200.desc trigger = { vgoc_ruler = yes culture = { vgoc_orc_culture = yes } }
+option = { name = vgoc.200.a culture = { if = { limit = { NOT = { has_innovation = innovation_vgoc_orc_1 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_orc_1 value = 8 } } else_if = { limit = { has_cultural_era_or_later = culture_era_early_medieval NOT = { has_innovation = innovation_vgoc_orc_2 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_orc_2 value = 5 } } } trigger_event = { id = vgoc.201 days = 21 } ai_chance = { base = 20 } }
+option = { name = vgoc.200.b add_prestige = 100 capital_county = { change_county_control = -4 } ai_chance = { base = 20 } }
+option = { name = vgoc.200.c trigger = { capital_county = { any_county_province = { has_building_or_higher = vgoc_muster_01 } } } capital_county = { add_county_modifier = { modifier = vgoc_kept_oaths years = 4 } } add_diplomacy_lifestyle_xp = 120 ai_chance = { base = 20 } }
+}
+vgoc.201 = { type = character_event theme = stewardship title = vgoc.201.t desc = vgoc.201.desc trigger = { vgoc_ruler = yes culture = { vgoc_orc_culture = yes } }
+option = { name = vgoc.201.a capital_county = { add_county_modifier = { modifier = vgoc_kept_oaths years = 4 } } add_prestige = 60 ai_chance = { base = 20 } }
+option = { name = vgoc.201.b trigger = { gold >= 30 } remove_short_term_gold = 30 capital_county = { add_county_modifier = { modifier = vgoc_kept_oaths years = 4 } } add_piety = 90 ai_chance = { base = 20 } }
+option = { name = vgoc.201.c add_stress = -15 add_prestige = 35 ai_chance = { base = 20 } }
+}
+vgoc.210 = { type = character_event theme = stewardship title = vgoc.210.t desc = vgoc.210.desc trigger = { vgoc_ruler = yes culture = { vgoc_orc_culture = yes } }
+option = { name = vgoc.210.a culture = { if = { limit = { NOT = { has_innovation = innovation_vgoc_orc_1 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_orc_1 value = 8 } } else_if = { limit = { has_cultural_era_or_later = culture_era_early_medieval NOT = { has_innovation = innovation_vgoc_orc_2 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_orc_2 value = 5 } } } trigger_event = { id = vgoc.211 days = 30 } ai_chance = { base = 20 } }
+option = { name = vgoc.210.b trigger = { gold >= 25 } remove_short_term_gold = 25 capital_county = { add_county_modifier = { modifier = vgoc_ready_stores years = 4 } } ai_chance = { base = 20 } }
+option = { name = vgoc.210.c trigger = { capital_county = { any_county_province = { has_building_or_higher = vgoc_forge_01 } } } capital_county = { add_county_modifier = { modifier = vgoc_ready_stores years = 4 } } add_martial_lifestyle_xp = 125 ai_chance = { base = 20 } }
+}
+vgoc.211 = { type = character_event theme = stewardship title = vgoc.211.t desc = vgoc.211.desc trigger = { vgoc_ruler = yes culture = { vgoc_orc_culture = yes } }
+option = { name = vgoc.211.a capital_county = { add_county_modifier = { modifier = vgoc_ready_stores years = 4 } } add_prestige = 60 ai_chance = { base = 20 } }
+option = { name = vgoc.211.b trigger = { gold >= 30 } remove_short_term_gold = 30 capital_county = { add_county_modifier = { modifier = vgoc_ready_stores years = 4 } } add_martial_lifestyle_xp = 150 ai_chance = { base = 20 } }
+option = { name = vgoc.211.c trigger = { capital_county = { any_county_province = { has_building_or_higher = vgoc_muster_01 } } } culture = { if = { limit = { NOT = { has_innovation = innovation_vgoc_orc_1 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_orc_1 value = 8 } } else_if = { limit = { has_cultural_era_or_later = culture_era_early_medieval NOT = { has_innovation = innovation_vgoc_orc_2 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_orc_2 value = 5 } } }capital_county = { add_county_modifier = { modifier = vgoc_kept_oaths years = 4 } } ai_chance = { base = 20 } }
+}
+vgoc.220 = { type = character_event theme = stewardship title = vgoc.220.t desc = vgoc.220.desc trigger = { vgoc_ruler = yes culture = { vgoc_orc_culture = yes } }
+option = { name = vgoc.220.a culture = { if = { limit = { NOT = { has_innovation = innovation_vgoc_orc_1 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_orc_1 value = 8 } } else_if = { limit = { has_cultural_era_or_later = culture_era_early_medieval NOT = { has_innovation = innovation_vgoc_orc_2 } } add_innovation_progress = { target = culture_innovation:innovation_vgoc_orc_2 value = 5 } } } add_prestige = 60 ai_chance = { base = 20 } }
+option = { name = vgoc.220.b add_learning_lifestyle_xp = 120 add_stress = -10 ai_chance = { base = 20 } }
+option = { name = vgoc.220.c trigger = { capital_county = { any_county_province = { has_building_or_higher = vgoc_forge_01 } } } capital_county = { add_county_modifier = { modifier = vgoc_tempered_steel years = 4 } } add_prestige = 80 ai_chance = { base = 20 } }
+}
+vgoc.221 = { type = character_event theme = stewardship title = vgoc.221.t desc = vgoc.221.desc trigger = { vgoc_ruler = yes culture = { vgoc_orc_culture = yes } }
+option = { name = vgoc.221.a capital_county = { add_county_modifier = { modifier = vgoc_kept_oaths years = 4 } } add_diplomacy_lifestyle_xp = 120 ai_chance = { base = 20 } }
+option = { name = vgoc.221.b trigger = { gold >= 20 } remove_short_term_gold = 20 add_piety = 80 ai_chance = { base = 20 } }
+option = { name = vgoc.221.c trigger = { capital_county = { any_county_province = { has_building_or_higher = vgoc_muster_01 } } } capital_county = { add_county_modifier = { modifier = vgoc_ready_stores years = 4 } } add_prestige = 75 ai_chance = { base = 20 } }
+}

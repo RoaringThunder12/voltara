@@ -49,7 +49,7 @@ is_briarheart = {
 is_daedric_character = {
 	OR = { 
 		has_character_flag = summoned_daedra
-		culture = { has_cultural_pillar = heritage_dremora }
+		culture = { has_cultural_pillar = heritage_voltara_demon }
 	}
 }
 
@@ -59,18 +59,18 @@ is_hagraven = {
 
 is_important_lore_character = {
 	OR = {
-		this = character:mannimarco_1000 #Mannimarco
-		this = character:galerion_100 #Vanus Galerion
-		this = character:vastarie_100 #Vastarie
-		this = character:fyr_100 #Divayth Fyr
-		this = character:bal_100 #Lamae Bal
-		this = character:volkihar_1000 #Harkon
-		this = character:volkihar_1001 #Valerica
-		this = character:volkihar_1002 #Serana
-		this = character:saran_1000 #Rada "al-Saran" the "Pankratoengineer", inventor of the Pankratobomb
-		this = character:vardengroet_gyron #Vardengroet
-		this = character:bagarn_1000 #Yagrum Bagarn 
-		this = character:dremora_1000 #Velehk Sain
+		always = no #Mannimarco
+		always = no #Vanus Galerion
+		always = no #Vastarie
+		always = no #Divayth Fyr
+		always = no #Lamae Bal
+		always = no #Harkon
+		always = no #Valerica
+		always = no #Serana
+		always = no #Rada "al-Saran" the "Pankratoengineer", inventor of the Pankratobomb
+		always = no #Vardengroet
+		always = no #Yagrum Bagarn 
+		always = no #Velehk Sain
 		#EK TODO: doesn't cover all 440/450 lore characters yet
 	}
 }
@@ -119,29 +119,11 @@ valid_increase_lifespan_trigger = {
 	}
 }
 
-has_dwemer_constellation_names = {
-	culture = { has_cultural_pillar = heritage_dwemeri }
-	NOT = { culture = { has_cultural_tradition = tradition_reach_core }}
-	NOT = { faith = { religion_tag = celestial_religion } }
-}
+has_dwemer_constellation_names = { culture = { has_cultural_pillar = heritage_voltara_stoneborn } }
 
-has_reachfolk_constellation_names = {
-	culture = { has_cultural_tradition = tradition_reach_core }
-	NOT = { culture = { has_cultural_pillar = heritage_dwemeri }}
-	NOT = { faith = { religion_tag = celestial_religion } }
-}
+has_reachfolk_constellation_names = { culture = { has_cultural_pillar = heritage_voltara_southron } }
 
-has_students_magicka_culture = {
-	culture = {
-		OR = {
-			has_innovation = innovation_magical_studies
-			has_innovation_flag = innovation_magical_studies_replacement
-			has_cultural_parameter = unlocks_arcana_education
-			has_cultural_parameter = magic_preference
-			has_cultural_parameter = sorcerer_kings_tradition
-		}
-	}
-}
+has_students_magicka_culture = { culture = { OR = { has_cultural_tradition = mage_rulership_tradition has_cultural_tradition = coven_rule_tradition has_cultural_parameter = mystic_trait_gives_bonuses } } }
 
 is_magic_studies_location = {
 	OR = {
@@ -154,9 +136,7 @@ has_magic_academy_building_trigger = {
 	has_building_or_higher = mage_house
 }
 
-has_magic_special_building_trigger = {	
-	has_building_with_flag = { flag = arcane_education_location }
-}
+has_magic_special_building_trigger = { has_building_with_flag = { flag = special_university } }
 
 has_birthsign = {
 	has_trait = birthsign

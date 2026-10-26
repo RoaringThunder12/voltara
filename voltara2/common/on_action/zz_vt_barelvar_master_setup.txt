@@ -1,0 +1,6 @@
+﻿on_game_start = { on_actions = { vt_barelvar_master_setup } }
+vt_barelvar_master_setup = { effect = {
+ character:9999401 ?= { if = { limit = { is_alive = yes NOT = { has_character_modifier = voltara_barelvar_master_necromancer } }
+ add_character_modifier = { modifier = voltara_barelvar_master_necromancer }
+ } }
+} }

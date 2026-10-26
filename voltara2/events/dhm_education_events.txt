@@ -177,6 +177,9 @@ dhm_education.0003 = {
                 participants = { tutor = scope:dhm_selected_tutor }
             }
             add_opinion = { target = scope:dhm_selected_tutor modifier = dhm_guided_education_opinion }
+            if = { limit = { learning >= 12 }
+                dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_v072_tutor_excellence_modifier YEARS = 2 RENEWAL_TT = dhm_v072_tutor_excellence_modifier_renewed_2_tt }
+            }
         }
         every_relation = {
             type = dhm_specialist_tutor

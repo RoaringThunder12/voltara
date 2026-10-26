@@ -447,7 +447,7 @@ p_ae_magnus = {
 				desc = trait_p_ae_magnus_base
 			}
 			triggered_desc = {
-				trigger = { faith = { has_doctrine = doctrine_pantheon_magna_ge } }
+				trigger = { faith = { has_doctrine = voltara_khaos_hostility } }
 				desc = trait_p_mg_magnus
 			}	
 			desc = trait_p_ae_magnus
@@ -461,7 +461,7 @@ p_ae_magnus = {
 				desc = trait_p_ae_magnus_null
 			}
 			triggered_desc = {
-				trigger = { faith = { has_doctrine = doctrine_pantheon_magna_ge } }
+				trigger = { faith = { has_doctrine = voltara_khaos_hostility } }
 				desc = trait_p_mg_magnus_character_desc
 			}	
 			desc = trait_p_ae_magnus_character_desc
@@ -483,15 +483,15 @@ p_ae_magnus = {
 				}
 			}
 			triggered_desc = {
-				trigger = { faith = { has_doctrine = doctrine_pantheon_riddlethar } }
+				trigger = { faith = { has_doctrine = voltara_order_hostility } }
 				desc = p_rt_magrus.dds
 			}
 			triggered_desc = {
-				trigger = { faith = { has_doctrine = doctrine_pantheon_khajiiti } }
+				trigger = { faith = { has_doctrine = voltara_necromancy_accepted } }
 				desc = p_rt_magrus.dds
 			}
 			triggered_desc = {
-				trigger = { faith = { has_doctrine = doctrine_pantheon_magna_ge } }
+				trigger = { faith = { has_doctrine = voltara_khaos_hostility } }
 				desc = p_mg_magnus.dds
 			}	
 			desc = p_ae_magnus.dds
@@ -754,7 +754,7 @@ p_kw_necromancer = {
 p_ob_hermaeus = {
 
 	learning = 2
-	health = tiny_health_penalty #obssessed with knowledge, losing sense of self
+	health = -0.1 #obssessed with knowledge, losing sense of self
 	flag = add_arcana_1
 	monthly_piety = 0.1
 
@@ -798,12 +798,12 @@ p_ob_hermaeus = {
 				}
 			}
 			triggered_desc = {
-				trigger = { faith = { has_doctrine = doctrine_pantheon_riddlethar } }
+				trigger = { faith = { has_doctrine = voltara_order_hostility } }
 				desc = p_kj_hermora.dds
 			}
 				
 			triggered_desc = {
-				trigger = { faith = { has_doctrine = doctrine_pantheon_khajiiti } }
+				trigger = { faith = { has_doctrine = voltara_necromancy_accepted } }
 				desc = p_kj_hermora.dds
 			}
 			desc = p_ob_hermaeus.dds
@@ -1329,8 +1329,8 @@ sun_blessed_1 = {
 	level = 1
 
 	opposites = {
-		amber_blessed
-		ghost_scale
+		vt_amber_blessed
+		vt_ghost_scale
 	}
 	
 	desc = {
@@ -1357,8 +1357,8 @@ sun_blessed_2 = {
 	level = 2
 
 	opposites = {
-		amber_blessed
-		ghost_scale
+		vt_amber_blessed
+		vt_ghost_scale
 	}
 	
 	desc = {
@@ -1385,8 +1385,8 @@ sun_blessed_3 = {
 	level = 3
 
 	opposites = {
-		amber_blessed
-		ghost_scale
+		vt_amber_blessed
+		vt_ghost_scale
 	}
 	
 	desc = {
@@ -1886,7 +1886,7 @@ clone = { # This character is a clone of another!
 				trigger = {
 					exists = this
 					has_variable = clone_creator
-					culture = { has_cultural_pillar = heritage_argonian }
+					culture = { has_cultural_pillar = heritage_voltara_naga }
 				}
 				desc = trait_clone_character_desc_hatched_creator
 			}
@@ -1901,7 +1901,7 @@ clone = { # This character is a clone of another!
 				trigger = {
 					exists = this
 					has_variable = clone_creator
-					culture = { has_cultural_pillar = heritage_argonian }
+					culture = { has_cultural_pillar = heritage_voltara_naga }
 				}
 				desc = trait_clone_character_desc_hatched
 			}
@@ -2113,7 +2113,7 @@ sign_shadow = {
 			}
 			triggered_desc = {
 				trigger = {
-					culture = { has_cultural_pillar = heritage_argonian }
+					culture = { has_cultural_pillar = heritage_voltara_naga }
 				}
 				desc = trait_sign_shadow
 			}
@@ -2131,7 +2131,7 @@ sign_shadow = {
 			}
 			triggered_desc = {
 				trigger = {
-					culture = { has_cultural_pillar = heritage_argonian }
+					culture = { has_cultural_pillar = heritage_voltara_naga }
 				}
 				desc = trait_sign_shadow_argonian_desc
 			}

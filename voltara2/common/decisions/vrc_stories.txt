@@ -1,0 +1,24 @@
+﻿vrc_gather_high = { picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" } decision_group_type = major
+ desc = vrc_gather_high_desc selection_tooltip = vrc_gather_high_tooltip confirm_text = vrc_gather_high_confirm
+ is_shown = { vsn_ruler = yes culture = { vrc_high_culture = yes } }
+ is_valid = { is_at_war = no NOT = { has_character_flag = vrc_story_busy } }
+ cost = { gold = 40 } cooldown = { years = 5 } ai_check_interval = 60 ai_will_do = { base = 10 }
+ effect = { add_character_flag = { flag = vrc_story_busy years = 3 } trigger_event = vrc.100 } }
+vrc_gather_deep = { picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" } decision_group_type = major
+ desc = vrc_gather_deep_desc selection_tooltip = vrc_gather_deep_tooltip confirm_text = vrc_gather_deep_confirm
+ is_shown = { vsn_ruler = yes culture = { vrc_deep_culture = yes } }
+ is_valid = { is_at_war = no NOT = { has_character_flag = vrc_story_busy } }
+ cost = { gold = 40 } cooldown = { years = 5 } ai_check_interval = 60 ai_will_do = { base = 10 }
+ effect = { add_character_flag = { flag = vrc_story_busy years = 3 } trigger_event = vrc.200 } }
+vrc_gather_naga = { picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" } decision_group_type = major
+ desc = vrc_gather_naga_desc selection_tooltip = vrc_gather_naga_tooltip confirm_text = vrc_gather_naga_confirm
+ is_shown = { vsn_ruler = yes culture = { vrc_naga_culture = yes } }
+ is_valid = { is_at_war = no NOT = { has_character_flag = vrc_story_busy } }
+ cost = { gold = 40 } cooldown = { years = 5 } ai_check_interval = 60 ai_will_do = { base = 10 }
+ effect = { add_character_flag = { flag = vrc_story_busy years = 3 } trigger_event = vrc.300 } }
+vrc_gather_stone = { picture = { reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds" } decision_group_type = major
+ desc = vrc_gather_stone_desc selection_tooltip = vrc_gather_stone_tooltip confirm_text = vrc_gather_stone_confirm
+ is_shown = { vsn_ruler = yes culture = { vrc_stone_culture = yes } }
+ is_valid = { is_at_war = no NOT = { has_character_flag = vrc_story_busy } }
+ cost = { gold = 40 } cooldown = { years = 5 } ai_check_interval = 60 ai_will_do = { base = 10 }
+ effect = { add_character_flag = { flag = vrc_story_busy years = 3 } trigger_event = vrc.400 } }

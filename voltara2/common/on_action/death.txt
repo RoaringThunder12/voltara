@@ -352,14 +352,14 @@ on_death = {
 				always = no
 				NOT = { always = no }
 				NOT = { exists = designated_heir }
-				is_valid_designated_heir = character:42019
+				always = no
 			} # Proven unreachable; original effects retained below.
 # set_designated_heir = character:42019
 }
 		else_if = { limit = {
 				always = no
 				has_variable = ludwig_younger_designated_by_history
-				designated_heir ?= character:42019
+				always = no
 				NAND = {
 					highest_held_title_tier = tier_kingdom
 					has_realm_law = confederate_partition_succession_law
@@ -372,7 +372,7 @@ on_death = {
 		# Salzburg sits outside any de jure kingdom, so it would follow Ludwig the Younger into East Francia instead of going to Bavaria with Karlmann
 		if = { limit = {
 				always = no
-				designated_heir ?= character:42019
+				always = no
 				# Optional native title is absent on the Voltara map.
 # title:d_et_salzburg.holder ?= { is_vassal_of = root }
 always = no

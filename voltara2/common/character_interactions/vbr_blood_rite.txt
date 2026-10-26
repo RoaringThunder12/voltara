@@ -1,0 +1,25 @@
+﻿vbr_challenge_interaction = {
+ category = interaction_category_hostile icon = icon_duel common_interaction = yes
+ desc = vbr_challenge_interaction_desc auto_accept = yes ai_frequency = 36
+ target_type = title target_filter = recipient_domain_titles show_all_targets = no
+ is_shown = {
+  scope:actor = { vbr_gorilla = yes OR = { is_landless_adventurer = yes AND = { is_landed = yes highest_held_title_tier >= tier_county } } }
+  scope:recipient = { vbr_gorilla = yes is_landed = yes highest_held_title_tier >= tier_county NOT = { this = scope:actor } NOT = { has_government = voltara_ruins_government } }
+  vbr_in_reach = yes
+ }
+ can_be_picked_title = { scope:target = { holder = scope:recipient tier >= tier_county is_landless_type_title = no NOT = { has_variable = vbr_contested } } }
+ is_valid_showing_failures_only = {
+  scope:actor = { vbr_challenger = yes }
+  scope:recipient = { vbr_fighter = yes NOT = { has_character_flag = vbr_pending } }
+  vbr_in_reach = yes
+ }
+ on_accept = {
+  scope:actor = { save_scope_as = vbr_challenger add_character_flag = { flag = vbr_pending days = 180 } }
+  scope:recipient = { save_scope_as = vbr_defender add_character_flag = { flag = vbr_pending days = 180 } }
+  scope:target = { save_scope_as = vbr_title set_variable = { name = vbr_contested value = yes days = 180 } }
+  scope:recipient = { trigger_event = vgblood.1 }
+ }
+ ai_targets = { ai_recipients = liege ai_recipients = neighboring_rulers }
+ ai_potential = { is_adult = yes OR = { has_trait = brave has_trait = ambitious } }
+ ai_will_do = { base = 0 modifier = { add = 5 scope:actor = { prowess >= 18 prowess_diff = { target = scope:recipient value >= 5 } } } }
+}

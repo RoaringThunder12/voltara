@@ -1,0 +1,7 @@
+﻿on_game_start_after_lobby = { on_actions = { vae_story_starts } }
+vae_story_starts = { effect = { vae_story_starts_effect = yes } }
+yearly_playable_pulse = { on_actions = { vae_stoneborn_clan_maintenance } }
+vae_stoneborn_clan_maintenance = {
+ trigger = { is_landed = yes highest_held_title_tier >= tier_county culture = { has_cultural_pillar = heritage_voltara_stoneborn } }
+ effect = { vae_stoneborn_clan_effect = yes }
+}

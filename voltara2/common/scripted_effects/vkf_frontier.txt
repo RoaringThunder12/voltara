@@ -32,6 +32,7 @@ if = { limit = { vkf_chief = yes gold >= 50 NOT = { has_character_flag = vkf_cou
 vkf_pledge = {
 if = { limit = { vkf_pending_valid = yes NOT = { has_variable = vkf_patron } }
  set_variable = { name = vkf_patron value = var:vkf_inviter days = 1825 } set_variable = { name = vkf_oath value = $TYPE$ days = 1825 }
+ vks_record_blood_oath = yes
  var:vkf_inviter = { add_prestige = 25 }
  remove_variable = vkf_inviter }
 }
@@ -53,15 +54,22 @@ vkf_seed_leader = {
 if = { limit = { NOT = { has_variable = vkf_supplies } } set_variable = { name = vkf_supplies value = 0 } set_variable = { name = vkf_intelligence value = 0 } set_variable = { name = vkf_cohesion value = 0 } set_variable = { name = vkf_strength value = 0 } set_variable = { name = vkf_strategy value = 0 } }
 }
 vkf_recount = {
+ hidden_effect = {
+
 vkf_seed_leader = yes save_scope_as = vkf_counted_leader set_variable = { name = vkf_strength value = 0 } set_variable = { name = vkf_cohesion value = 0 }
  every_ruler = { limit = { vkf_southron = yes NOT = { this = scope:vkf_counted_leader } OR = { var:vkf_patron ?= scope:vkf_counted_leader var:vkf_obligation_holder ?= scope:vkf_counted_leader } }
  scope:vkf_counted_leader = { change_variable = { name = vkf_strength add = 1 } change_variable = { name = vkf_cohesion add = 15 } }
  if = { limit = { has_character_modifier = vkf_broken_promise } scope:vkf_counted_leader = { change_variable = { name = vkf_cohesion add = -20 } } }
  }
+ if = { limit = { character:19060042 = { vth_active = yes var:vth_southron_patron ?= scope:vkf_counted_leader NOT = { vkf_southron = yes } } }
+ change_variable = { name = vkf_strength add = 1 } change_variable = { name = vkf_cohesion add = 10 }
+ }
  set_variable = { name = vkf_cohesion value = { value = var:vkf_cohesion min = 0 max = 100 } }
  set_variable = { name = vkf_supplies value = { value = var:vkf_supplies min = 0 max = 100 } }
  set_variable = { name = vkf_intelligence value = { value = var:vkf_intelligence min = 0 max = 100 } }
 
+
+ }
 }
 vkf_situation_init = {
 vkf_initialize = yes
@@ -117,7 +125,7 @@ if = { limit = { vkf_delegate_pending = yes }
  set_variable = { name = vkf_patron value = var:vkf_council_host days = 1825 }
  set_variable = { name = vkf_oath value = $TYPE$ days = 1825 }
  add_character_flag = { flag = vkf_council_pledged days = 1095 }
- if = { limit = { var:vkf_oath >= 2 } save_scope_as = vkf_oath_giver var:vkf_patron = { add_hook = { target = scope:vkf_oath_giver type = vkf_blood_oath_hook } } }
+ vks_record_blood_oath = yes
  var:vkf_patron = { vkf_recount = yes }
  }
 }

@@ -13,6 +13,8 @@ dhm_v080_clamp_officer_loyalty_effect = {
 # someone returning to service remembers earlier treatment, while continuous
 # tenure starts again from zero.
 dhm_v080_begin_officer_tenure_effect = {
+add_character_modifier = { modifier = dhm_officer_shared_burden_modifier years = 5 }
+
  # A genuinely new term gets a new review, without resetting loyalty or cooldowns.
  remove_variable = dhm090_reviewed_by
  remove_variable = dhm090_last_review_role
@@ -23,12 +25,16 @@ dhm_v080_begin_officer_tenure_effect = {
 # end continuous tenure without treating the officer as deliberately dismissed.
 # Loyalty and lifetime milestone flags remain personal history.
 dhm_v080_close_officer_tenure_effect = {
+remove_character_modifier = dhm_officer_shared_burden_modifier
+
 	remove_variable = dhm_v080_officer_service_years
 }
 
 # Current scope = outgoing officer; manager scope required. Lifetime service
 # milestones remain, preventing dismissal and reappointment from farming them.
 dhm_v080_end_officer_tenure_effect = {
+remove_character_modifier = dhm_officer_shared_burden_modifier
+
 	dhm_v071_initialize_officer_loyalty_effect = yes
 	if = {
 		limit = { has_variable = dhm_v080_officer_service_years var:dhm_v080_officer_service_years >= 3 }

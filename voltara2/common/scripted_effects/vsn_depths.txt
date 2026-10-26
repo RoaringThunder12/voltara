@@ -1,0 +1,24 @@
+﻿vsn_select_border = {
+ save_scope_as = vsn_digger
+ random_realm_county = {
+  limit = { any_neighboring_county = { exists = holder holder = { vsn_opponent = { ACTOR = scope:vsn_digger } } } }
+  save_scope_as = vsn_home
+  random_neighboring_county = {
+   limit = { exists = holder holder = { vsn_opponent = { ACTOR = scope:vsn_digger } } }
+   save_scope_as = vsn_target
+   holder = { save_scope_as = vsn_warden }
+  }
+ }
+}
+vsn_make_peace = {
+ add_character_flag = { flag = vsn_sealed_depths years = 5 }
+ add_character_modifier = { modifier = vsn_shared_galleries years = 5 }
+ add_opinion = { target = scope:vsn_digger modifier = vsn_depths_peace years = 5 }
+ scope:vsn_digger = {
+  add_character_flag = { flag = vsn_sealed_depths years = 5 }
+  add_character_modifier = { modifier = vsn_shared_galleries years = 5 }
+  add_opinion = { target = scope:vsn_warden modifier = vsn_depths_peace years = 5 }
+  add_truce_both_ways = { character = scope:vsn_warden years = 5 name = vsn_truce }
+  trigger_event = vsn.32
+ }
+}

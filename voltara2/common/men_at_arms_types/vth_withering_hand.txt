@@ -1,0 +1,12 @@
+﻿vth_wardens = { type = heavy_infantry damage = 85 toughness = 80 stack = 200 max_sub_regiments = 8
+ buy_cost = { gold = 180 } low_maintenance_cost = { gold = 0.7 } high_maintenance_cost = { gold = 2 }
+ can_recruit = { vth_active = yes var:vth_path = 1 } allowed_in_hired_troops = no icon = heavy_infantry
+ }
+vth_cantors = { type = archers damage = 110 toughness = 45 stack = 150 max_sub_regiments = 8
+ buy_cost = { gold = 180 } low_maintenance_cost = { gold = 0.7 } high_maintenance_cost = { gold = 2 }
+ can_recruit = { vth_active = yes var:vth_devotion >= 40 } allowed_in_hired_troops = no icon = archers
+ }
+vth_unbound = { type = heavy_infantry damage = 250 toughness = 100 stack = 250 max_sub_regiments = 8
+ buy_cost = { gold = 180 } low_maintenance_cost = { gold = 0.7 } high_maintenance_cost = { gold = 2 }
+ can_recruit = { vth_active = yes var:vth_path = 2 var:vth_power >= 2 } allowed_in_hired_troops = no icon = heavy_infantry
+ }

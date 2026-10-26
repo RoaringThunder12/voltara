@@ -1,0 +1,62 @@
+﻿VTWhiteBookIntroduction = {
+ type = landed_title
+ random_valid = no
+ text = { trigger = { has_variable = vt_book_join_age } localization_key = vt_book_join }
+ text = { trigger = { NOT = { has_variable = vt_book_join_age } } localization_key = vt_book_old_page }
+}
+
+VTWhiteBook_lc = {
+ type = landed_title
+ random_valid = no
+ text = { trigger = { has_variable = vt_book_lc_age } localization_key = vt_book_lc }
+ text = { trigger = { NOT = { has_variable = vt_book_lc_age } } localization_key = vt_book_empty }
+}
+
+VTWhiteBook_exile = {
+ type = landed_title
+ random_valid = no
+ text = { trigger = { has_variable = vt_book_exile_age } localization_key = vt_book_exile }
+ text = { trigger = { NOT = { has_variable = vt_book_exile_age } } localization_key = vt_book_empty }
+}
+
+VTWhiteBook_removed = {
+ type = landed_title
+ random_valid = no
+ text = { trigger = { has_variable = vt_book_removed_age } localization_key = vt_book_removed }
+ text = { trigger = { NOT = { has_variable = vt_book_removed_age } } localization_key = vt_book_empty }
+}
+
+VTWhiteBook_died = {
+ type = landed_title
+ random_valid = no
+ text = { trigger = { has_variable = vt_book_died_age } localization_key = vt_book_died }
+ text = { trigger = { NOT = { has_variable = vt_book_died_age } } localization_key = vt_book_empty }
+}
+
+VTWhiteBookRuler_join = {
+ type = landed_title
+ random_valid = no
+ text = { trigger = { exists = var:vt_book_join_ruler } localization_key = vt_book_ruler_join }
+ text = { localization_key = vt_book_ruler_unknown }
+}
+
+VTWhiteBookRuler_lc = {
+ type = landed_title
+ random_valid = no
+ text = { trigger = { exists = var:vt_book_lc_ruler } localization_key = vt_book_ruler_lc }
+ text = { localization_key = vt_book_ruler_unknown }
+}
+
+VTWhiteBookRuler_exile = {
+ type = landed_title
+ random_valid = no
+ text = { trigger = { exists = var:vt_book_exile_ruler } localization_key = vt_book_ruler_exile }
+ text = { localization_key = vt_book_ruler_unknown }
+}
+
+VTWhiteBookRuler_removed = {
+ type = landed_title
+ random_valid = no
+ text = { trigger = { exists = var:vt_book_removed_ruler } localization_key = vt_book_ruler_removed }
+ text = { localization_key = vt_book_ruler_unknown }
+}

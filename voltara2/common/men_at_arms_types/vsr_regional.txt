@@ -14,7 +14,7 @@
  terrain_bonus = { steppe = { damage = 4 toughness = 3 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } OR = { culture = culture:voltara_southron_highgrass culture = culture:vus_windplain culture = culture:vus_reedstride culture = culture:vus_sunmeadow } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
  illustration = { reference = vta_3059124362_redguard_light_cavalry }
 }
@@ -34,7 +34,7 @@ vsr_highgrass_elite = {
  terrain_bonus = { steppe = { damage = 6 toughness = 4 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } OR = { culture = culture:voltara_southron_highgrass culture = culture:vus_windplain culture = culture:vus_reedstride culture = culture:vus_sunmeadow } culture = { has_innovation = innovation_vt_human_warfare_2 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_heavy_cavalry add = 5 }
  illustration = { reference = vta_3059124362_redguard_heavy_cavalry }
 }
@@ -54,7 +54,7 @@ vsr_stonewake_levy = {
  terrain_bonus = { mountains = { damage = 4 toughness = 3 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_stonewake }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_pikemen add = 5 }
  illustration = { reference = vta_3059124362_redguard_pikemen }
 }
@@ -74,7 +74,7 @@ vsr_stonewake_elite = {
  terrain_bonus = { mountains = { damage = 6 toughness = 4 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_stonewake culture = { has_innovation = innovation_vt_human_warfare_2 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
  illustration = { reference = vta_3059124362_redguard_heavy_infantry }
 }
@@ -94,7 +94,7 @@ vsr_stillwater_levy = {
  terrain_bonus = { wetlands = { damage = 4 toughness = 3 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_stillwater }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_pikemen add = 5 }
  illustration = { reference = vta_3059124362_redguard_pikemen }
 }
@@ -114,7 +114,7 @@ vsr_stillwater_elite = {
  terrain_bonus = { wetlands = { damage = 6 toughness = 4 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_stillwater culture = { has_innovation = innovation_vt_human_warfare_2 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_archers add = 5 }
  illustration = { reference = vta_3059124362_redguard_bowmen }
 }
@@ -134,7 +134,7 @@ vsr_veilward_levy = {
  terrain_bonus = { hills = { damage = 4 toughness = 3 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_veilward }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_archers add = 5 }
  illustration = { reference = vta_3059124362_redguard_bowmen }
 }
@@ -154,7 +154,7 @@ vsr_veilward_elite = {
  terrain_bonus = { hills = { damage = 6 toughness = 4 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_veilward culture = { has_innovation = innovation_vt_human_warfare_2 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
  illustration = { reference = vta_3059124362_redguard_heavy_infantry }
 }
@@ -174,7 +174,7 @@ vsr_ashroad_levy = {
  terrain_bonus = { plains = { damage = 4 toughness = 3 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } OR = { culture = culture:voltara_southron_ashroad culture = culture:vus_embertrail } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
  illustration = { reference = vta_3059124362_redguard_skirmishers }
 }
@@ -194,7 +194,7 @@ vsr_ashroad_elite = {
  terrain_bonus = { plains = { damage = 6 toughness = 4 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } OR = { culture = culture:voltara_southron_ashroad culture = culture:vus_embertrail } culture = { has_innovation = innovation_vt_human_warfare_2 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_pikemen add = 5 }
  illustration = { reference = vta_3059124362_redguard_pikemen }
 }
@@ -214,7 +214,7 @@ vsr_thornwood_levy = {
  terrain_bonus = { forest = { damage = 4 toughness = 3 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } OR = { culture = culture:voltara_southron_thornwood culture = culture:vus_briarwake culture = culture:vus_mistbough culture = culture:vus_duskgrove } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_skirmishers add = 5 }
  illustration = { reference = vta_3059124362_redguard_skirmishers }
 }
@@ -234,7 +234,7 @@ vsr_thornwood_elite = {
  terrain_bonus = { forest = { damage = 6 toughness = 4 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } OR = { culture = culture:voltara_southron_thornwood culture = culture:vus_briarwake culture = culture:vus_mistbough culture = culture:vus_duskgrove } culture = { has_innovation = innovation_vt_human_warfare_2 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_heavy_infantry add = 5 }
  illustration = { reference = vta_3059124362_redguard_heavy_infantry }
 }
@@ -254,7 +254,7 @@ vsr_stormshore_levy = {
  terrain_bonus = { hills = { damage = 4 toughness = 3 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_stormshore }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_archers add = 5 }
  illustration = { reference = vta_3059124362_redguard_bowmen }
 }
@@ -274,7 +274,7 @@ vsr_stormshore_elite = {
  terrain_bonus = { hills = { damage = 6 toughness = 4 } }
  can_recruit = { NOT = { has_government = voltara_ruins_government } culture = culture:voltara_southron_stormshore culture = { has_innovation = innovation_vt_human_warfare_2 } }
  access_through_subject = { always = no }
- allowed_in_hired_troops = no
+ allowed_in_hired_troops = yes
  ai_quality = { value = culture_ai_weight_light_cavalry add = 5 }
  illustration = { reference = vta_3059124362_redguard_light_cavalry }
 }

@@ -7114,115 +7114,8 @@ ep3_laamps.5045 = {
 ##################################################
 
 # Hereward hears of trouble in England
-ep3_laamps.5999 = {
-	type = character_event
-	title = ep3_laamps.5999.t
-	desc = ep3_laamps.5999.desc
-	theme = realm
-	left_portrait = {
-		character = root
-		animation = interested
-	}
-	lower_right_portrait = scope:william
-	lower_center_portrait = scope:harald
-	lower_left_portrait = scope:harold
+# Archived unreachable event ep3_laamps.5999; see orphan-events audit.
 
-	trigger = {
-		has_ep3_dlc_trigger = yes
-	}
-
-	immediate = {
-		# Native historical character does not exist in Voltara; original follows.
-# character:140 = {
-# 			if = {
-# 				limit = {
-# 					is_alive = yes
-# 				}
-# 				save_scope_as = william
-# 			}
-# 		}
-
-		# Native historical character does not exist in Voltara; original follows.
-# character:122 = {
-# 			if = {
-# 				limit = {
-# 					is_alive = yes
-# 				}
-# 				save_scope_as = harold
-# 			}
-# 		}
-
-		# Native historical character does not exist in Voltara; original follows.
-# character:102531 = {
-# 			if = {
-# 				limit = {
-# 					is_alive = yes
-# 				}
-# 				save_scope_as = harald
-# 			}
-# 		}
-
-		# Native historical character does not exist in Voltara; original follows.
-# character:364 = {
-# 			if = {
-# 				limit = {
-# 					is_alive = yes
-# 				}
-# 				save_scope_as = flanders #I can't be bothered spelling Boujewijingjn ok
-# 			}
-# 		}
-
-		# Native historical character does not exist in Voltara; original follows.
-# character:114 = {
-# 			save_scope_as = edward
-# 		}
-
-		location = {
-			save_scope_as = location
-		}
-	}
-
-	option = { #Let's wait and see
-		name = ep3_laamps.5999.a
-
-		add_character_modifier = {
-			modifier = ep3_foreign_affairs_modifier
-			years = 5
-		}
-
-		stress_and_fulfillment_impact = {
-			ambitious = miniscule_stress_impact_loss
-		}
-
-		ai_chance = {
-			base = 100
-			ai_value_modifier = {
-				ai_boldness = 1
-				ai_energy = 1
-			}
-		}
-	}
-
-	option = { #England concerns me no longer
-		name = ep3_laamps.5999.b
-		custom_tooltip = ep3_laamps.5999.b.tt
-		contract_passive_spawn_effect = {
-			SPAWN_CONTRACTS = 1
-		}
-
-		stress_and_fulfillment_impact = {
-			ambitious = minor_stress_impact_gain
-		}
-
-		ai_chance = {
-			base = 25
-			ai_value_modifier = {
-				ai_boldness = -1
-				ai_energy = -1
-			}
-		}
-	}
-}
 
 # Hereward sets off
 ep3_laamps.6000 = {
@@ -7518,12 +7411,7 @@ ep3_laamps.6003 = {
 		character = root
 		animation = grief
 	}
-	lower_right_portrait = {
-		trigger = {
-			always = no
-		}
-		character = character:172
-	}
+	
 
 	trigger = {
 		has_ep3_dlc_trigger = yes

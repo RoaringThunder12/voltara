@@ -279,7 +279,11 @@ republican_core.1010 = { #Defensive War, liege calls merchant families to help
 	lower_center_portrait = { character = scope:attacker }
 
 	trigger = {
-		liege = { is_at_war_as_defender = yes }
+		exists = scope:war
+        exists = scope:defender
+        exists = scope:attacker
+        liege ?= scope:defender
+        scope:war = { is_defender = scope:defender NOT = { is_defender = root } NOT = { is_attacker = root } }
 	}
 
 	option = { #Help your liege

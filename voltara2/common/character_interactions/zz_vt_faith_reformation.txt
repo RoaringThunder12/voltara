@@ -1,0 +1,62 @@
+﻿convert_on_reform_interaction = {
+	category = interaction_category_religion
+	special_interaction = reform_faith
+	icon = icon_rite
+	hidden = yes
+
+	ai_maybe = no
+	popup_on_receive = yes
+	notification_text = sway_ruler_to_my_rite_interaction_notification
+
+	desc = sway_ruler_to_my_rite_interaction_desc
+
+	# Every adherent of the old faith receives this on reform, and anyone failing is_shown is skipped
+	is_shown = {
+		scope:actor.faith != scope:recipient.faith
+	}
+
+	cooldown_against_recipient = { years = 5 }
+
+	on_accept = {
+		scope:recipient = {
+			set_character_rite = scope:actor.rite
+		}
+	}
+
+	on_decline = {
+		pam_sway_to_rite_on_decline_effect = yes
+	}
+
+	ai_accept = {
+		base = 50
+
+		celestial_hierarchy_acceptance_modifier = {
+			ACTOR = scope:actor
+			RECIPIENT = scope:recipient
+		}
+
+		religion_sway_to_rite_default_modifier = yes
+
+		modifier = {
+			desc = ASK_FOR_CONVERSION_REALM_REFORMATION_BONUS
+			add = 500
+			scope:recipient = {
+				OR = {
+					target_is_liege_or_above = scope:actor
+					AND = {
+						exists = superior
+						superior = scope:actor
+					}
+				}
+			}
+		}
+
+		modifier = {
+			desc = ASK_FOR_CONVERSION_RECIPIENT_WILL_NOT_ACCEPT
+			add = -1500
+			scope:recipient = {
+				has_character_flag = ai_will_not_convert
+			}
+		}
+	}
+}

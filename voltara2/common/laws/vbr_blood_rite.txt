@@ -1,0 +1,9 @@
+﻿vbr_blood_elective_law = {
+ law_group_type = title_succession_laws index = 1909
+ can_have = { has_government = vbr_blood_rite_government }
+ can_pass = { has_government = vbr_blood_rite_government }
+ can_title_have = { tier >= tier_county is_landless_type_title = no }
+ succession = { order_of_succession = election election_type = vbr_blood_elective }
+ flag = elective_succession_law title_allegiance_opinion = 5
+ pass_cost = { prestige = 0 } revoke_cost = { prestige = 2000 }
+}

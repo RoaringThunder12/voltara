@@ -1,0 +1,75 @@
+﻿namespace = vae_story
+vae_story.100 = { type = character_event title = vae_story.100.t desc = vae_story.100.desc theme = learning
+trigger = { is_alive = yes is_landed = yes }
+option = { name = vae_story.100.a trigger_event = { id = vae_story.101 days = 30 } ai_chance = { base = 20 } }
+option = { name = vae_story.100.b trigger = { can_magic_trigger = yes has_variable = magicka var:magicka >= 30 } change_variable = { name = magicka subtract = 30 } trigger_event = { id = vae_story.102 days = 30 } ai_chance = { base = 20 } }
+option = { name = vae_story.100.c add_piety = 200 add_prestige = 100 ai_chance = { base = 20 } }
+}
+
+vae_story.101 = { type = character_event title = vae_story.101.t desc = vae_story.101.desc theme = learning
+trigger = { is_alive = yes is_landed = yes }
+option = { name = vae_story.101.a add_learning_lifestyle_xp = 300 add_character_modifier = { modifier = vae_titan_archive years = 5 } ai_chance = { base = 20 } }
+option = { name = vae_story.101.b add_gold = 100 add_prestige = 50 ai_chance = { base = 20 } }
+}
+
+vae_story.102 = { type = character_event title = vae_story.102.t desc = vae_story.102.desc theme = learning
+trigger = { is_alive = yes is_landed = yes }
+option = { name = vae_story.102.a trigger = { can_magic_trigger = yes } random_list = { 65 = { add_arcana_skill = { VALUE = 1 } add_learning_lifestyle_xp = 200 } 35 = { add_stress = 40 add_character_modifier = { modifier = vae_broken_anchor years = 3 } } } ai_chance = { base = 20 } }
+option = { name = vae_story.102.b add_learning_lifestyle_xp = 250 add_piety = 100 ai_chance = { base = 20 } }
+}
+
+vae_story.200 = { type = character_event title = vae_story.200.t desc = vae_story.200.desc theme = learning
+trigger = { is_alive = yes is_landed = yes }
+option = { name = vae_story.200.a trigger = { any_neighboring_and_across_water_top_liege_realm_owner = { vae_mountain_partner = yes NOT = { is_at_war_with = prev } } } save_scope_as = vae_envoy random_neighboring_and_across_water_top_liege_realm_owner = { limit = { vae_mountain_partner = yes NOT = { is_at_war_with = prev } } save_scope_as = vae_partner trigger_event = { id = vae_story.201 days = 7 } } ai_chance = { base = 20 } }
+option = { name = vae_story.200.b add_gold = 20 ai_chance = { base = 20 } }
+}
+
+vae_story.201 = { type = character_event title = vae_story.201.t desc = vae_story.201.desc theme = learning
+trigger = { is_alive = yes is_landed = yes }
+option = { name = vae_story.201.a trigger = { exists = scope:vae_envoy scope:vae_envoy = { is_alive = yes is_landed = yes } is_landed = yes NOT = { is_at_war_with = scope:vae_envoy } } add_character_modifier = { modifier = vae_pass_compact years = 3 } add_opinion = { target = scope:vae_envoy modifier = vae_pass_friend years = 3 } scope:vae_envoy = { add_character_modifier = { modifier = vae_pass_compact years = 3 } add_opinion = { target = scope:vae_partner modifier = vae_pass_friend years = 3 } trigger_event = vae_story.202 } ai_chance = { base = 20 } }
+option = { name = vae_story.201.b if = { limit = { exists = scope:vae_envoy scope:vae_envoy = { is_alive = yes } } scope:vae_envoy = { add_opinion = { target = scope:vae_partner modifier = vae_pass_refused years = 2 } trigger_event = vae_story.203 } } ai_chance = { base = 20 } }
+}
+
+vae_story.202 = { type = character_event title = vae_story.202.t desc = vae_story.202.desc theme = learning
+trigger = { is_alive = yes is_landed = yes }
+option = { name = vae_story.202.a add_prestige = 75 ai_chance = { base = 20 } }
+}
+
+vae_story.203 = { type = character_event title = vae_story.203.t desc = vae_story.203.desc theme = learning
+trigger = { is_alive = yes is_landed = yes }
+option = { name = vae_story.203.a add_stress = 10 ai_chance = { base = 20 } }
+}
+
+vae_story.300 = { type = character_event title = vae_story.300.t desc = vae_story.300.desc theme = learning
+trigger = { is_alive = yes is_landed = yes }
+option = { name = vae_story.300.a random_list = { 70 = { trigger_event = { id = vae_story.301 days = 20 } } 30 = { trigger_event = { id = vae_story.302 days = 20 } } } ai_chance = { base = 20 } }
+option = { name = vae_story.300.b capital_county = { add_county_modifier = { modifier = vae_caravan_watch years = 3 } change_county_control = 10 } remove_character_modifier = vae_outlaw_tolls remove_character_flag = vae_red_lantern ai_chance = { base = 20 } }
+option = { name = vae_story.300.c add_character_flag = vae_red_lantern add_character_modifier = { modifier = vae_outlaw_tolls years = 3 } capital_county = { change_county_control = -15 } add_dread = 15 ai_chance = { base = 20 } }
+}
+
+vae_story.301 = { type = character_event title = vae_story.301.t desc = vae_story.301.desc theme = learning
+trigger = { is_alive = yes is_landed = yes }
+option = { name = vae_story.301.a capital_county = { change_county_control = 15 add_county_modifier = { modifier = vae_caravan_watch years = 3 } } add_prestige = 100 remove_character_flag = vae_red_lantern remove_character_modifier = vae_outlaw_tolls ai_chance = { base = 20 } }
+option = { name = vae_story.301.b trigger = { maa_regiments_count < maa_regiments_max_count } if = { limit = { maa_regiments_count < maa_regiments_max_count } create_maa_regiment = { type = vta_aesaryos_scouts size = 1 } } add_gold = 40 ai_chance = { base = 20 } }
+}
+
+vae_story.302 = { type = character_event title = vae_story.302.t desc = vae_story.302.desc theme = learning
+trigger = { is_alive = yes is_landed = yes }
+option = { name = vae_story.302.a add_stress = 20 add_martial_lifestyle_xp = 150 ai_chance = { base = 20 } }
+option = { name = vae_story.302.b trigger = { gold >= 20 } remove_short_term_gold = 20 add_stress = -10 ai_chance = { base = 20 } }
+}
+
+vae_story.400 = { type = character_event title = vae_story.400.t desc = vae_story.400.desc theme = learning
+trigger = { is_alive = yes is_landed = yes }
+option = { name = vae_story.400.a add_character_modifier = { modifier = vae_shared_weave years = 5 } trigger_event = { id = vae_story.401 days = 14 } ai_chance = { base = 20 } }
+option = { name = vae_story.400.b trigger = { can_magic_trigger = yes } add_character_modifier = { modifier = vae_closed_weave years = 5 } add_arcana_skill = { VALUE = 1 } add_stress = 20 ai_chance = { base = 20 } }
+option = { name = vae_story.400.c if = { limit = { NOT = { has_perk = restoration_novice_perk } } add_perk = restoration_novice_perk } add_learning_lifestyle_xp = 200 ai_chance = { base = 20 } }
+}
+
+vae_story.401 = { type = character_event title = vae_story.401.t desc = vae_story.401.desc theme = learning
+trigger = { is_alive = yes is_landed = yes }
+option = { name = vae_story.401.a trigger = { is_landed = yes } vae_recruit_circle_mage = { CULTURE = vae_azrak_stoneborn } ai_chance = { base = 20 } }
+option = { name = vae_story.401.b trigger = { is_landed = yes } vae_recruit_circle_mage = { CULTURE = vae_sazhir_naga } ai_chance = { base = 20 } }
+option = { name = vae_story.401.c trigger = { is_landed = yes } vae_recruit_circle_mage = { CULTURE = voltara_culture_42 } ai_chance = { base = 20 } }
+option = { name = vae_story.401.d add_prestige = 100 ai_chance = { base = 20 } }
+}

@@ -204,6 +204,7 @@ arcana_base = {
 
 arcana = {
 	value = arcana_base
+ add = { value = vth_khaos_arcana desc = vth_khaos_income_desc }
  add = { value = vt_atrophy_arcana_penalty desc = trait_vt_magic_atrophy }
     if = { limit = { has_trait = supernatural_vampire } add = { value = 5 desc = vt_arcana_vampire } }
 	if = {
@@ -1612,6 +1613,7 @@ magicka_regen = {
 	multiply = magicka_mult
 	# Flat recovery after multipliers: exactly five per equipped crystal.
 	add = { value = vt_weave_crystal_recovery desc = vt_weave_crystal_recovery }
+	add = { value = vel_current_recovery desc = vel_current_recovery }
 
  multiply = { value = 1 subtract = vt_atrophy_regen_penalty }
 }
@@ -1692,6 +1694,7 @@ magicka_upkeep = {
 
 magicka_monthly = {
 	value = magicka_regen
+ add = { value = vth_khaos_income desc = vth_khaos_income_desc }
 	add = magicka_upkeep
 }
 

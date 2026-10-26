@@ -1,0 +1,36 @@
+﻿vel_dawn_lattice = {
+ picture = { reference = "gfx/interface/illustrations/weave/banner.dds" } decision_group_type = major
+ desc = vel_dawn_lattice_desc selection_tooltip = vel_dawn_lattice_tooltip confirm_text = vel_dawn_lattice_confirm
+ is_shown = { vel_eligible = yes vel_high_elf = yes }
+ is_valid = { is_at_war = no NOT = { has_character_flag = vel_rite_busy }  }
+ cost = { gold = 80 piety = 100 } cooldown = { years = 5 }
+ effect = { add_character_flag = { flag = vel_rite_busy days = 90 } trigger_event = vel.10 }
+ ai_check_interval = 60 ai_will_do = { base = 15 }
+}
+vel_first_pattern = {
+ picture = { reference = "gfx/interface/illustrations/weave/banner.dds" } decision_group_type = major
+ desc = vel_first_pattern_desc selection_tooltip = vel_first_pattern_tooltip confirm_text = vel_first_pattern_confirm
+ is_shown = { vel_eligible = yes vel_high_elf = yes }
+ is_valid = { is_at_war = no NOT = { has_character_flag = vel_rite_busy }  }
+ cost = { gold = 60 piety = 100 } cooldown = { years = 5 }
+ effect = { add_character_flag = { flag = vel_rite_busy days = 90 } trigger_event = vel.20 }
+ ai_check_interval = 60 ai_will_do = { base = 15 }
+}
+vel_unwritten_choir = {
+ picture = { reference = "gfx/interface/illustrations/weave/banner.dds" } decision_group_type = major
+ desc = vel_unwritten_choir_desc selection_tooltip = vel_unwritten_choir_tooltip confirm_text = vel_unwritten_choir_confirm
+ is_shown = { vel_eligible = yes vel_deep_elf = yes }
+ is_valid = { is_at_war = no NOT = { has_character_flag = vel_rite_busy }  }
+ cost = { gold = 80 piety = 100 } cooldown = { years = 5 }
+ effect = { add_character_flag = { flag = vel_rite_busy days = 90 } trigger_event = vel.30 }
+ ai_check_interval = 60 ai_will_do = { base = 15 }
+}
+vel_unmake_seal = {
+ picture = { reference = "gfx/interface/illustrations/weave/banner.dds" } decision_group_type = major
+ desc = vel_unmake_seal_desc selection_tooltip = vel_unmake_seal_tooltip confirm_text = vel_unmake_seal_confirm
+ is_shown = { vel_eligible = yes vel_deep_elf = yes }
+ is_valid = { is_at_war = no NOT = { has_character_flag = vel_rite_busy }  }
+ cost = { gold = 60 piety = 100 } cooldown = { years = 5 }
+ effect = { add_character_flag = { flag = vel_rite_busy days = 90 } trigger_event = vel.40 }
+ ai_check_interval = 60 ai_will_do = { base = 15 }
+}

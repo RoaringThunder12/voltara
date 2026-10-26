@@ -15004,7 +15004,7 @@ is_valid = {
 	is_available = {
 		faith ?= { has_doctrine_parameter = has_clerical_electors }
 		pam_pope_is_head_of_faith_or_rite_trigger = yes
-		title:k_papal_state ?= {
+		title:k_voltara_luminous_see ?= {
 			any_elector = {}
 			is_title_created = yes
 		}
@@ -23693,7 +23693,8 @@ is_valid = {
 				text = has_valid_exclave_duchy_tt
 				scope:recipient = {
 					 any_sub_realm_county = {
-    				    kingdom = {
+    				    exists = kingdom
+				kingdom = {
     				        any_direct_de_jure_vassal_title = {
     				            pam_custom_kingdom_can_claim_duchy_exclave_trigger = { NEW_KING = scope:recipient }
     				        }
