@@ -4,4 +4,4 @@ vic_cassian_victorious = {
  global_var:vic_war_result ?= 2
  custom_tooltip = { text = vic_tharn_dealt_with_tt character:19060033 = { OR = { is_alive = no AND = { is_imprisoned = yes imprisoner = title:h_voltara_severos.holder } } } }
 }
-vic_cassian_can_abolish = { vic_cassian_victorious = yes is_at_war = no OR = { NOT = { has_realm_law = voltara_slavery_banned } any_vassal_or_below = { has_realm_law = voltara_slavery_legal } } }
+vic_cassian_can_abolish = { vic_cassian_victorious = yes is_at_war = no OR = { NOT = { has_realm_law = voltara_slavery_banned } any_vassal_or_below = { has_realm_law = voltara_slavery_legal NOT = { vir_local_exception = yes } } } }

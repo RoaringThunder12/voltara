@@ -1,0 +1,18 @@
+﻿vir_restoration = {
+ icon = peasant_war group = civil_war target_titles = none
+ cb_name = vir_restoration war_name = vir_restoration_name
+ allowed_for_character = { has_character_flag = vir_restoration_rebel }
+ allowed_against_character = { has_title = title:h_voltara_severos }
+ valid_to_start = { scope:attacker = { has_character_flag = vir_restoration_rebel has_variable = vir_disputed_title } scope:defender = { vir_crown = yes } }
+ should_invalidate = { OR = { scope:attacker = { is_alive = no } scope:defender = { NOT = { has_title = title:h_voltara_severos } } NOT = { scope:attacker.var:vir_disputed_title.holder = scope:attacker } } }
+ on_primary_attacker_death = invalidate on_primary_defender_death = inherit
+ attacker_capital_gives_war_score = yes max_attacker_score_from_battles = 100 max_defender_score_from_battles = 100
+ on_victory_desc = { desc = vir_restoration_victory }
+ on_defeat_desc = { desc = vir_restoration_defeat }
+ on_white_peace_desc = { desc = vir_restoration_peace }
+ on_invalidated_desc = { desc = vir_restoration_invalid }
+ on_victory = { scope:attacker = { vir_restore_local_slavery = yes } scope:defender = { add_prestige = -300 trigger_event = { id = vir.31 days = 3 } } vir_end_restoration = yes }
+ on_defeat = { scope:attacker = { voltara_abolish_slavery = yes capital_county = { add_county_modifier = { modifier = vir_emancipation_secured years = 10 } } } scope:defender = { add_prestige = 300 trigger_event = { id = vir.30 days = 3 } } vir_end_restoration = yes }
+ on_white_peace = { scope:attacker = { capital_county = { add_county_modifier = { modifier = vir_unsettled years = 5 } } } vir_end_restoration = yes }
+ on_invalidated = { vir_end_restoration = yes }
+}

@@ -12,7 +12,7 @@
 voltara_free_slave_interaction = {
  category = interaction_category_friendly icon = prison common_interaction = yes
  desc = voltara_free_slave_interaction_desc
- is_shown = { scope:actor = { NOT = { voltara_is_ruins_placeholder = yes } } scope:recipient = { NOT = { voltara_is_ruins_placeholder = yes } } scope:recipient = { has_trait = voltara_slave is_courtier_of = scope:actor } }
+ is_shown = { scope:actor = { NOT = { voltara_is_ruins_placeholder = yes } } scope:recipient = { NOT = { voltara_is_ruins_placeholder = yes } } scope:recipient = { has_trait = voltara_slave var:voltara_slave_owner ?= scope:actor } }
  is_valid_showing_failures_only = { scope:recipient = { is_alive = yes is_imprisoned = no } }
  auto_accept = yes
  on_accept = { scope:actor = { save_scope_as = voltara_liberator } scope:recipient = { voltara_free_character = yes } }

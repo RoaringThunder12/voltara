@@ -1,0 +1,14 @@
+﻿
+vca_coastal_duchy = { target_is_de_jure_liege_or_above = title:h_voltara_southorion de_jure_liege = { any_de_jure_county = { any_county_province = { is_coastal = yes } } } }
+vca_actor = { is_alive = yes is_landed = yes NOT = { voltara_is_ruins_placeholder = yes }
+ OR = { has_title = title:e_voltara_alutor has_title = title:h_voltara_severos has_title = title:e_voltara_halithor has_title = title:k_voltara_22
+ any_liege_or_above = { has_title = title:e_voltara_alutor }
+ any_realm_county = { OR = { target_is_de_jure_liege_or_above = title:e_voltara_alutor vca_coastal_duchy = yes } } }
+}
+vca_slaver = { vca_actor = yes voltara_slavery_is_legal = yes }
+vca_liberator = { vca_actor = yes NOT = { voltara_slavery_is_legal = yes } }
+vca_fighter = { is_alive = yes is_adult = yes is_incapable = no is_travelling = no NOT = { has_trait = dragon } NOT = { has_character_flag = vca_duel_pending } }
+vca_camp_in_alutor = { is_landless_adventurer = yes domicile.domicile_location.county ?= { target_is_de_jure_liege_or_above = title:e_voltara_alutor } }
+vca_arena_host = { is_alive = yes is_adult = yes is_imprisoned = no is_incapable = no is_landed = yes
+ any_realm_county = { any_county_province = { has_building = vca_grand_arena_01 } } }
+vca_gladiator_here = { vca_fighter = yes has_trait = vca_gladiator OR = { vca_camp_in_alutor = yes is_courtier_of = title:e_voltara_alutor.holder } }

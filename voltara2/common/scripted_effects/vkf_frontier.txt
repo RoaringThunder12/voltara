@@ -14,7 +14,7 @@ if = { limit = { vkf_keeper = yes NOT = { has_global_variable = vkf_treaty } gol
  var:vkf_target = { set_variable = { name = vkf_aggressor value = scope:vkf_commander days = 730 } add_character_flag = { flag = vkf_raid_cooldown days = 365 } add_character_flag = { flag = vkf_raid_response days = 90 }
  if = { limit = { gold >= 20 } remove_short_term_gold = 20 scope:vkf_commander = { add_gold = 20 } }
  add_character_modifier = { modifier = vkf_disrupted_supplies months = 12 } trigger_event = { id = vkf.10 days = 2 } }
- if = { limit = { var:vkf_policy ?= 3 gold >= 25 } remove_short_term_gold = 25 var:vkf_target = { vkf_seed_leader = yes set_variable = { name = vkf_supplies value = 0 } add_character_modifier = { modifier = vkf_disrupted_supplies years = 2 } } vkf_hostility_change = { VALUE = 8 } } vkf_hostility_change = { VALUE = 8 } remove_variable = vkf_target }
+ if = { limit = { var:vkf_policy ?= 3 gold >= 25 } remove_short_term_gold = 25 var:vkf_target = { vkf_seed_leader = yes set_variable = { name = vkf_supplies value = 0 } add_character_modifier = { modifier = vkf_disrupted_supplies years = 2 } } vkf_hostility_change = { VALUE = 8 } } vkf_hostility_change = { VALUE = 8 } if = { limit = { voltara_slavery_is_legal = yes } vca_trade_backlash = yes } remove_variable = vkf_target }
 }
 vkf_compensate = {
 if = { limit = { vkf_keeper = yes gold >= 40 has_variable = vkf_claimant var:vkf_claimant = { vkf_available = yes has_variable = vkf_aggressor var:vkf_aggressor ?= title:k_voltara_22.holder } }
@@ -64,6 +64,7 @@ vkf_seed_leader = yes save_scope_as = vkf_counted_leader set_variable = { name =
  if = { limit = { character:19060042 = { vth_active = yes var:vth_southron_patron ?= scope:vkf_counted_leader NOT = { vkf_southron = yes } } }
  change_variable = { name = vkf_strength add = 1 } change_variable = { name = vkf_cohesion add = 10 }
  }
+ if = { limit = { has_global_variable = vca_resistance_pressure var:vkf_strength > 0 } change_variable = { name = vkf_cohesion add = global_var:vca_resistance_pressure } }
  set_variable = { name = vkf_cohesion value = { value = var:vkf_cohesion min = 0 max = 100 } }
  set_variable = { name = vkf_supplies value = { value = var:vkf_supplies min = 0 max = 100 } }
  set_variable = { name = vkf_intelligence value = { value = var:vkf_intelligence min = 0 max = 100 } }
@@ -133,6 +134,7 @@ vkf_clear_pledges = {
 save_scope_as = vkf_departing_leader every_ruler = { limit = { OR = { var:vkf_patron ?= scope:vkf_departing_leader var:vkf_obligation_holder ?= scope:vkf_departing_leader } } remove_variable = vkf_patron remove_variable = vkf_oath remove_variable = vkf_obligation_holder remove_character_flag = vkf_council_pledged } vkf_recount = yes
 }
 vkf_campaign_end = {
+ scope:attacker ?= { if = { limit = { has_character_flag = vkf_result_victory } vsa_victory = yes } if = { limit = { has_character_flag = vkf_result_defeat } vsa_defeat = yes } }
 remove_global_variable = vkf_war set_global_variable = { name = vkf_last_outcome value = $RESULT$ }
  scope:attacker ?= { remove_character_flag = vkf_campaign_launched set_variable = { name = vkf_supplies value = 0 } set_variable = { name = vkf_intelligence value = 0 } add_character_flag = { flag = vkf_campaign_recovery days = 1825 } }
  if = { limit = { scope:attacker = { has_character_flag = vkf_result_victory } } scope:attacker ?= { trigger_event = { id = vkf.201 days = 1 } } }

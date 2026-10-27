@@ -1,0 +1,104 @@
+﻿vir_begin = {
+ if = { limit = { vic_abolitionist_ruler = yes has_title = title:h_voltara_severos global_var:vic_war_result ?= 2 NOT = { has_global_variable = vir_reconstruction_started } }
+ set_global_variable = { name = vir_reconstruction_started value = yes }
+ set_global_variable = { name = vir_reconstruction_active value = yes days = 9125 }
+ trigger_event = { id = vir.1 days = 15 }
+ add_character_flag = { flag = vir_petition_pending days = 180 } trigger_event = { id = vir.10 days = 60 }
+ }
+}
+vir_find_dispute = {
+ if = { limit = { vir_crown = yes is_at_war = no NOT = { has_global_variable = vir_restoration_war } NOT = { has_variable = vir_disputant } }
+ save_scope_as = vir_emperor
+ random_vassal_or_below = { limit = { vir_resistant_lord = yes }
+ save_scope_as = vir_lord
+ scope:vir_emperor = { set_variable = { name = vir_disputant value = scope:vir_lord days = 180 } trigger_event = { id = vir.20 days = 15 } }
+ }
+ }
+}
+vir_create_delegate = {
+ clear_saved_scope = vir_delegate save_scope_as = vir_emperor
+ random_courtier = { limit = { has_trait = voltara_former_slave is_adult = yes is_imprisoned = no is_landed = no } save_scope_as = vir_delegate }
+ if = { limit = { NOT = { exists = scope:vir_delegate } }
+ create_character = { age = 30 gender_female_chance = 50 employer = scope:vir_emperor culture = root.culture faith = root.faith trait = voltara_former_slave trait = diligent save_scope_as = vir_delegate }
+ }
+}
+vir_land_community = {
+ clear_saved_scope = vir_land save_scope_as = vir_emperor
+ random_held_title = { limit = { tier = tier_county NOT = { this = scope:vir_emperor.capital_county } } save_scope_as = vir_land }
+ if = { limit = { exists = scope:vir_land }
+ vir_create_delegate = yes
+ create_title_and_vassal_change = { type = granted save_scope_as = vir_land_grant }
+ scope:vir_land = { change_title_holder = { holder = scope:vir_delegate change = scope:vir_land_grant } }
+ scope:vir_delegate = { change_liege = { liege = scope:vir_emperor change = scope:vir_land_grant } }
+ resolve_title_and_vassal_change = scope:vir_land_grant
+ scope:vir_delegate = { if = { limit = { NOT = { has_realm_law = voltara_slavery_banned } } add_realm_law_skip_effects = voltara_slavery_banned } }
+ scope:vir_land = { add_county_modifier = { modifier = vir_freeholders years = 20 } }
+ add_prestige = 150
+ }
+}
+vir_start_restoration = {
+ if = { limit = { vir_revolt_pending = yes NOT = { has_global_variable = vir_restoration_war } }
+ save_scope_as = vir_emperor
+ var:vir_disputant = {
+ save_scope_as = vir_rebel set_variable = { name = vir_original_liege value = liege }
+ set_variable = { name = vir_disputed_title value = primary_title }
+ set_global_variable = { name = vir_restoration_title value = primary_title }
+ primary_title = { set_variable = { name = vir_return_liege value = scope:vir_rebel.liege } }
+ add_character_flag = vir_restoration_rebel
+ create_title_and_vassal_change = { type = independency save_scope_as = vir_departure add_claim_on_loss = no }
+ becomes_independent = { change = scope:vir_departure } resolve_title_and_vassal_change = scope:vir_departure
+ start_war = { casus_belli = vir_restoration target = scope:vir_emperor }
+ clear_saved_scope = vir_new_war
+ random_character_war = { limit = { using_cb = vir_restoration primary_attacker = scope:vir_rebel } save_scope_as = vir_new_war }
+ if = { limit = { exists = scope:vir_new_war }
+ set_global_variable = { name = vir_restoration_war value = scope:vir_new_war }
+ spawn_army = { levies = { value = scope:vir_emperor.max_military_strength multiply = 0.3 min = 2000 max = 12000 } location = capital_province war = scope:vir_new_war name = vir_restoration_host }
+ capital_county = { add_county_modifier = { modifier = vir_rural_revolt years = 5 } }
+ }
+ else = { vir_cleanup_title = yes }
+ }
+ remove_variable = vir_disputant
+ }
+}
+vir_return_to_empire = {
+ if = { limit = { is_alive = yes is_landed = yes exists = title:h_voltara_severos.holder NOT = { this = title:h_voltara_severos.holder } }
+ save_scope_as = vir_returning_lord
+ title:h_voltara_severos.holder = { save_scope_as = vir_return_liege }
+ if = { limit = { exists = global_var:vir_restoration_title.var:vir_return_liege global_var:vir_restoration_title.var:vir_return_liege = { is_alive = yes is_landed = yes top_liege = title:h_voltara_severos.holder highest_held_title_tier > scope:vir_returning_lord.highest_held_title_tier } } global_var:vir_restoration_title.var:vir_return_liege = { save_scope_as = vir_return_liege } }
+
+ if = { limit = { exists = var:vir_original_liege var:vir_original_liege = { is_alive = yes is_landed = yes top_liege = title:h_voltara_severos.holder highest_held_title_tier > scope:vir_returning_lord.highest_held_title_tier } }
+ var:vir_original_liege = { save_scope_as = vir_return_liege }
+ }
+ create_title_and_vassal_change = { type = swear_fealty save_scope_as = vir_return }
+ change_liege = { liege = scope:vir_return_liege change = scope:vir_return }
+ resolve_title_and_vassal_change = scope:vir_return
+ }
+ remove_variable = vir_original_liege
+}
+vir_restore_local_slavery = {
+ # Executed on victorious restoration leader, before returning to the empire.
+ var:vir_disputed_title ?= { set_variable = { name = vir_slavery_restored value = yes } }
+ if = { limit = { NOT = { has_realm_law = voltara_slavery_legal } } add_realm_law_skip_effects = voltara_slavery_legal }
+ every_vassal_or_below = { limit = { NOT = { vtf_protected = yes } NOT = { has_realm_law = voltara_slavery_legal } } add_realm_law_skip_effects = voltara_slavery_legal }
+ add_character_modifier = { modifier = vir_restoration_settlement years = 10 }
+}
+vir_end_restoration = {
+ remove_global_variable = vir_restoration_war
+ vir_cleanup_title = yes
+}
+vir_cleanup_title = {
+ if = { limit = { exists = global_var:vir_restoration_title.holder global_var:vir_restoration_title.holder = { is_alive = yes } NOT = { has_global_variable = vir_restoration_war } }
+ global_var:vir_restoration_title.holder = { vir_return_to_empire = yes remove_character_flag = vir_restoration_rebel remove_variable = vir_disputed_title add_character_flag = { flag = vir_dispute_cooldown years = 10 } }
+ global_var:vir_restoration_title = { remove_variable = vir_return_liege }
+ remove_global_variable = vir_restoration_title
+ }
+}
+vir_buy_back_emancipation = {
+ save_scope_as = vir_emperor
+ random_vassal_or_below = { limit = { primary_title = { has_variable = vir_slavery_restored } is_at_war = no }
+ scope:vir_emperor = { pay_short_term_gold = { target = prev gold = 300 } }
+ primary_title = { remove_variable = vir_slavery_restored }
+ voltara_abolish_slavery = yes
+ add_character_flag = { flag = vir_dispute_cooldown years = 10 }
+ }
+}

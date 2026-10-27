@@ -1,0 +1,11 @@
+﻿vca_challenge_gladiator = {
+ category = interaction_category_hostile icon = icon_duel common_interaction = yes desc = vca_challenge_gladiator_desc auto_accept = yes ai_frequency = 0
+ is_shown = { scope:actor = { vca_gladiator_here = yes is_landless_adventurer = yes } scope:recipient = { vca_gladiator_here = yes NOT = { this = scope:actor } } }
+ is_valid_showing_failures_only = { scope:actor = { is_imprisoned = no } scope:recipient = { is_imprisoned = no } }
+ on_accept = {
+ scope:actor = { save_scope_as = vca_first add_character_flag = { flag = vca_duel_pending days = 90 } }
+ scope:recipient = { save_scope_as = vca_second add_character_flag = { flag = vca_duel_pending days = 90 } }
+ scope:actor = { configure_start_single_combat_effect = { SC_INITIATOR = scope:actor SC_ATTACKER = scope:actor SC_DEFENDER = scope:recipient FATALITY = always FIXED = no LOCALE = courtyard OUTPUT_EVENT = vca.11 INVALIDATION_EVENT = vca.12 } }
+ }
+ ai_targets = { ai_recipients = courtiers } ai_potential = { always = no } ai_will_do = { base = 0 }
+}

@@ -7,7 +7,7 @@
 voltara_slavery_is_legal = {
  NOT = { vtf_protected = yes }
  is_landed = yes NOT = { voltara_is_ruins_placeholder = yes }
- top_liege = { has_realm_law = voltara_slavery_legal }
+ OR = { top_liege = { has_realm_law = voltara_slavery_legal } AND = { has_realm_law = voltara_slavery_legal vir_local_exception = yes } }
 }
 voltara_slave_can_be_sold = {
  has_trait = voltara_slave is_alive = yes is_landed = no is_imprisoned = no

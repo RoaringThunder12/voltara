@@ -24,13 +24,13 @@ voltara_relic_inventory = { picture = { reference = "gfx/interface/illustrations
 }
 voltara_embrace_veiled_balance = { picture = { reference = "gfx/interface/illustrations/decisions/decision_family_tree.dds" }
  desc = voltara_embrace_veiled_balance_desc selection_tooltip = voltara_embrace_veiled_balance_tooltip confirm_text = voltara_embrace_veiled_balance_confirm ai_check_interval = 0 decision_group_type = major
- is_shown = { is_landed = yes faith = faith:voltara_aeluinist piety >= 250 learning >= 12 NOT = { rite = rite:voltara_veiled_balance } }
- is_valid = { is_adult = yes is_imprisoned = no }
+ is_shown = { is_landed = yes faith = faith:voltara_aeluinist NOT = { rite = rite:voltara_veiled_balance } }
+ is_valid = { is_adult = yes is_imprisoned = no is_incapable = no piety >= 250 learning >= 12 }
   cooldown = { years = 5 } effect = { trigger_event = voltara_faith.20 }
 }
 voltara_embrace_uncrowned_light = { picture = { reference = "gfx/interface/illustrations/decisions/decision_family_tree.dds" }
  desc = voltara_embrace_uncrowned_light_desc selection_tooltip = voltara_embrace_uncrowned_light_tooltip confirm_text = voltara_embrace_uncrowned_light_confirm ai_check_interval = 0 decision_group_type = major
- is_shown = { is_landed = yes faith = faith:voltara_aeluinist piety >= 250 learning >= 12 NOT = { rite = rite:voltara_uncrowned_light } }
- is_valid = { is_adult = yes is_imprisoned = no }
+ is_shown = { is_landed = yes faith = faith:voltara_aeluinist NOT = { rite = rite:voltara_uncrowned_light } }
+ is_valid = { is_adult = yes is_imprisoned = no is_incapable = no piety >= 250 learning >= 12 }
   cooldown = { years = 5 } effect = { trigger_event = voltara_faith.21 }
 }

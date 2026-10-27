@@ -37,11 +37,11 @@ option = { name = voltara_faith.12.o2 trigger = { gold >= 30 } remove_short_term
 }
 
 voltara_faith.20 = { type = character_event title = voltara_faith.20.t desc = voltara_faith.20.desc theme = learning override_background = { reference = study }
-option = { name = voltara_faith.20.o0 if = { limit = { NOT = { exists = rite:voltara_veiled_balance } } create_rite_from_type = { type = voltara_veiled_balance convert = yes } } set_character_rite = rite:voltara_veiled_balance add_piety = -250 add_character_flag = voltara_professed_reform }
+option = { name = voltara_faith.20.o0 trigger = { is_adult = yes is_imprisoned = no is_incapable = no piety >= 250 learning >= 12 faith = faith:voltara_aeluinist NOT = { rite = rite:voltara_veiled_balance } } if = { limit = { NOT = { exists = rite:voltara_veiled_balance } } create_rite_from_type = { type = voltara_veiled_balance convert = yes } } set_character_rite = rite:voltara_veiled_balance add_piety = -250 add_character_flag = voltara_professed_reform }
 option = { name = voltara_faith.20.o1  }
 }
 
 voltara_faith.21 = { type = character_event title = voltara_faith.21.t desc = voltara_faith.21.desc theme = learning override_background = { reference = study }
-option = { name = voltara_faith.21.o0 if = { limit = { NOT = { exists = rite:voltara_uncrowned_light } } create_rite_from_type = { type = voltara_uncrowned_light convert = yes } } set_character_rite = rite:voltara_uncrowned_light add_piety = -250 add_character_flag = voltara_professed_reform }
+option = { name = voltara_faith.21.o0 trigger = { is_adult = yes is_imprisoned = no is_incapable = no piety >= 250 learning >= 12 faith = faith:voltara_aeluinist NOT = { rite = rite:voltara_uncrowned_light } } if = { limit = { NOT = { exists = rite:voltara_uncrowned_light } } create_rite_from_type = { type = voltara_uncrowned_light convert = yes } } set_character_rite = rite:voltara_uncrowned_light add_piety = -250 add_character_flag = voltara_professed_reform }
 option = { name = voltara_faith.21.o1  }
 }

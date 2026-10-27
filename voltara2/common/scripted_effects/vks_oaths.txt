@@ -17,6 +17,7 @@ vks_record_blood_oath = {
   save_scope_as = vks_sworn_ruler
   if = { limit = { NOT = { var:vks_oath_paid_to ?= var:vkf_patron } }
    vks_oath_contribution = yes
+   vsa_oath_progress = yes
    set_variable = { name = vks_oath_paid_to value = var:vkf_patron days = 1825 }
    var:vkf_patron = { add_hook = { target = scope:vks_sworn_ruler type = vkf_blood_oath_hook } }
   }

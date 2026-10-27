@@ -1,0 +1,21 @@
+﻿vsa_offer_blood_oath = {
+ category = interaction_category_diplomacy icon = icon_vassal common_interaction = yes desc = vsa_offer_blood_oath_desc
+ is_shown = { scope:actor = { vkf_southron = yes } scope:recipient = { OR = { vkf_chief = yes vkf_leader = yes } } }
+ is_valid_showing_failures_only = { vsa_oath_parties = yes }
+ send_options_exclusive = yes
+ send_option = { flag = vsa_herd localization = vsa_offer_herd is_valid = { vsa_herd_parties = yes } }
+ send_option = { flag = vsa_gold localization = vsa_offer_gold is_valid = { scope:actor = { gold >= 100 } } }
+ can_send = { OR = { AND = { scope:vsa_herd ?= yes vsa_herd_parties = yes } AND = { scope:vsa_gold ?= yes scope:actor = { gold >= 100 } } } }
+ cooldown_against_recipient = { years = 5 }
+ on_accept = { if = { limit = { vsa_oath_parties = yes OR = { AND = { scope:vsa_herd ?= yes vsa_herd_parties = yes } AND = { scope:vsa_gold ?= yes scope:actor = { gold >= 100 } } } }
+ scope:actor = { if = { limit = { scope:vsa_herd ?= yes } pay_herd = { target = scope:recipient value = 500 } } else = { pay_short_term_gold = { target = scope:recipient gold = 100 } }
+ set_variable = { name = vkf_patron value = scope:recipient days = 1825 } set_variable = { name = vkf_oath value = 2 days = 1825 }
+ set_variable = { name = vks_oath_paid_to value = scope:recipient days = 1825 }
+ scope:recipient = { add_hook = { target = scope:actor type = vkf_blood_oath_hook } }
+ vsa_oath_progress = yes
+ }
+ } }
+ ai_accept = { base = 70 }
+ ai_will_do = { base = 15 modifier = { factor = 0 scope:actor = { has_trait = ambitious } } }
+ ai_min_reply_days = 3 ai_max_reply_days = 7
+}

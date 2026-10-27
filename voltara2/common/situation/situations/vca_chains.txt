@@ -1,0 +1,14 @@
+﻿vca_chains_situation = { is_unique = yes situation_group_type = major sort_order = 88 window = situation gui_window_name = window_vca_chains gui_participation_window_name = window_situation_participation
+ illustration = "gfx/interface/illustrations/loading_screens/voltara_kartholos.dds" icon = { reference = "gfx/interface/icons/situations/vkf_frontier.dds" }
+ sub_regions = { vca_coasts = { geographical_regions = { vca_trade_coasts } center_province = 397 } }
+ participant_groups = {
+ vca_slavers = { icon = "gfx/interface/icons/situations/vkf_frontier.dds" is_character_valid = { vca_slaver = yes } require_realm_in_sub_region = no map_color = { 0.7 0.2 0.1 } }
+ vca_liberators = { icon = "gfx/interface/icons/situations/vkf_frontier.dds" is_character_valid = { vca_liberator = yes } require_realm_in_sub_region = no map_color = { 0.2 0.6 0.8 } }
+ }
+ start_phase = vca_contested on_monthly = { vca_monthly = yes }
+ situation_decisions = { vca_finance_trade vca_shelter_fugitives vca_view_pits vct_charter_factors vct_free_port vct_rescue vct_freed_land }
+ phases = {
+vca_contested = { icon = "gfx/interface/icons/situations/vkf_frontier.dds" illustration = "gfx/interface/illustrations/loading_screens/voltara_kartholos.dds" future_phases = { vca_chains_ascendant = {} vca_free_harbors = {} } }
+vca_chains_ascendant = { icon = "gfx/interface/icons/situations/vkf_frontier.dds" illustration = "gfx/interface/illustrations/loading_screens/voltara_kartholos.dds" future_phases = { vca_contested = {} vca_free_harbors = {} } }
+vca_free_harbors = { icon = "gfx/interface/icons/situations/vkf_frontier.dds" illustration = "gfx/interface/illustrations/loading_screens/voltara_kartholos.dds" future_phases = { vca_contested = {} vca_chains_ascendant = {} } }
+} }

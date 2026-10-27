@@ -5,7 +5,7 @@ voltara_enslave_character = {
  set_variable = { name = voltara_last_enslaver value = scope:voltara_owner }
  if = { limit = { is_imprisoned = yes } release_from_prison = yes }
  save_scope_as = voltara_captive
- scope:voltara_owner = { add_trait = voltara_slaver add_courtier = scope:voltara_captive }
+ scope:voltara_owner = { add_trait = voltara_slaver if = { limit = { scope:voltara_captive = { is_landless_adventurer = no NOT = { is_courtier_of = scope:voltara_owner } } } add_courtier = scope:voltara_captive } }
  # One first-enslavement reward per victim; sales and repeat captures give no XP.
  if = {
   limit = { NOT = { has_character_flag = voltara_enslavement_xp_awarded } }
@@ -33,11 +33,12 @@ voltara_free_character = {
  remove_character_flag = voltara_slave_sale_pending
 }
 voltara_abolish_slavery = {
+ primary_title = { remove_variable = vir_slavery_restored }
  if = { limit = { NOT = { has_realm_law = voltara_slavery_banned } } add_realm_law_skip_effects = voltara_slavery_banned }
- every_vassal_or_below = { limit = { NOT = { has_realm_law = voltara_slavery_banned } } add_realm_law_skip_effects = voltara_slavery_banned }
+ every_vassal_or_below = { limit = { NOT = { vir_local_exception = yes } NOT = { has_realm_law = voltara_slavery_banned } } add_realm_law_skip_effects = voltara_slavery_banned }
  save_scope_as = voltara_liberator
  every_living_character = {
-  limit = { has_trait = voltara_slave OR = {
+  limit = { has_trait = voltara_slave NOT = { var:voltara_slave_owner ?= { vir_local_exception = yes has_realm_law = voltara_slavery_legal } } OR = {
    top_liege = scope:voltara_liberator
    is_courtier_of = scope:voltara_liberator
    var:voltara_slave_owner ?= { OR = { this = scope:voltara_liberator is_vassal_or_below_of = scope:voltara_liberator } }
@@ -49,7 +50,7 @@ voltara_abolish_slavery = {
 voltara_report_slavery_crime = {
  if = { limit = { is_landed = yes exists = liege }
   save_scope_as = voltara_slavery_offender
-  if = { limit = { has_realm_law = voltara_slavery_legal top_liege = { has_realm_law = voltara_slavery_banned } }
+  if = { limit = { NOT = { vir_local_exception = yes } has_realm_law = voltara_slavery_legal top_liege = { has_realm_law = voltara_slavery_banned } }
    top_liege = { add_opinion = { target = scope:voltara_slavery_offender modifier = voltara_illegal_slavery_opinion } }
    liege = { add_opinion = { target = scope:voltara_slavery_offender modifier = voltara_illegal_slavery_opinion } }
   }
@@ -63,11 +64,11 @@ voltara_report_slavery_crime = {
 voltara_check_slave_owner = {
  if = { limit = { has_trait = voltara_slave }
   if = { limit = { OR = {
-   is_landed = yes
+   AND = { is_landed = yes is_landless_adventurer = no }
    NOT = { exists = var:voltara_slave_owner }
    var:voltara_slave_owner = { OR = { is_alive = no NOT = { voltara_slavery_is_legal = yes } } }
   } } voltara_free_character = yes }
-  else_if = { limit = { is_imprisoned = no NOT = { is_courtier_of = var:voltara_slave_owner } }
+  else_if = { limit = { is_imprisoned = no is_landless_adventurer = no NOT = { is_courtier_of = var:voltara_slave_owner } }
    save_scope_as = voltara_captive
    var:voltara_slave_owner = { add_courtier = scope:voltara_captive }
   }

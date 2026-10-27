@@ -1,0 +1,22 @@
+﻿namespace = vir
+vir.1 = { type = character_event theme = realm title = vir.1.t desc = vir.1.desc trigger = { vir_crown = yes }
+option = { name = vir.1.0 trigger = { gold >= 300 } custom_tooltip = vir.1.0_tt hidden_effect = { if = { limit = { vir_crown = yes gold >= 300 } remove_short_term_gold = 300 add_character_modifier = { modifier = vir_reconstruction_fund years = 10 } capital_county = { add_county_modifier = { modifier = vir_rebuilt years = 10 } } vir_find_dispute = yes } } ai_chance = { base = 60 } }
+option = { name = vir.1.1 trigger = { always = yes } custom_tooltip = vir.1.1_tt hidden_effect = { if = { limit = { vir_crown = yes always = yes } add_character_modifier = { modifier = vir_noble_resistance years = 5 } vir_find_dispute = yes } } ai_chance = { base = 25 } }
+option = { name = vir.1.2 trigger = { always = yes } custom_tooltip = vir.1.2_tt hidden_effect = { if = { limit = { vir_crown = yes always = yes } capital_county = { add_county_modifier = { modifier = vir_unsettled years = 5 } } vir_find_dispute = yes } } ai_chance = { base = 15 } }
+}
+vir.10 = { type = character_event theme = realm title = vir.10.t desc = vir.10.desc trigger = { vir_crown = yes }
+option = { name = vir.10.0 trigger = { gold >= 100 any_held_title = { tier = tier_county NOT = { this = root.capital_county } } } custom_tooltip = vir.10.0_tt hidden_effect = { if = { limit = { vir_crown = yes gold >= 100 any_held_title = { tier = tier_county NOT = { this = root.capital_county } } } remove_short_term_gold = 100 vir_land_community = yes remove_character_flag = vir_petition_pending } } ai_chance = { base = 25 } }
+option = { name = vir.10.1 trigger = { gold >= 150 } custom_tooltip = vir.10.1_tt hidden_effect = { if = { limit = { vir_crown = yes gold >= 150 } remove_short_term_gold = 150 vir_create_delegate = yes capital_county = { add_county_modifier = { modifier = vir_rebuilt years = 10 } } add_prestige = 100 remove_character_flag = vir_petition_pending } } ai_chance = { base = 60 } }
+option = { name = vir.10.2 trigger = { always = yes } custom_tooltip = vir.10.2_tt hidden_effect = { if = { limit = { vir_crown = yes always = yes } capital_county = { add_county_modifier = { modifier = vir_unsettled years = 5 } } remove_character_flag = vir_petition_pending } } ai_chance = { base = 15 } }
+}
+vir.20 = { type = character_event theme = realm title = vir.20.t desc = vir.20.desc trigger = { vir_revolt_pending = yes }
+option = { name = vir.20.0 trigger = { gold >= 150 } custom_tooltip = vir.20.0_tt hidden_effect = { if = { limit = { vir_revolt_pending = yes gold >= 150 } pay_short_term_gold = { target = var:vir_disputant gold = 150 } var:vir_disputant = { add_character_flag = { flag = vir_dispute_cooldown years = 10 } capital_county = { add_county_modifier = { modifier = vir_rebuilt years = 10 } } } remove_variable = vir_disputant } } ai_chance = { base = 55 } }
+option = { name = vir.20.1 trigger = { NOT = { has_global_variable = vir_restoration_war } is_at_war = no } custom_tooltip = vir.20.1_tt hidden_effect = { if = { limit = { vir_revolt_pending = yes NOT = { has_global_variable = vir_restoration_war } is_at_war = no } vir_start_restoration = yes } } ai_chance = { base = 35 } }
+option = { name = vir.20.2 trigger = { always = yes } custom_tooltip = vir.20.2_tt hidden_effect = { if = { limit = { vir_revolt_pending = yes always = yes } var:vir_disputant = { add_character_flag = { flag = vir_dispute_cooldown years = 2 } capital_county = { add_county_modifier = { modifier = vir_unsettled years = 5 } } } add_character_modifier = { modifier = vir_noble_resistance years = 5 } remove_variable = vir_disputant } } ai_chance = { base = 10 } }
+}
+vir.30 = { type = character_event theme = realm title = vir.30.t desc = vir.30.desc trigger = { vir_crown = yes }
+option = { name = vir.30.0 trigger = { always = yes } custom_tooltip = vir.30.0_tt hidden_effect = { if = { limit = { vir_crown = yes always = yes }  } } ai_chance = { base = 100 } }
+}
+vir.31 = { type = character_event theme = realm title = vir.31.t desc = vir.31.desc trigger = { vir_crown = yes }
+option = { name = vir.31.0 trigger = { always = yes } custom_tooltip = vir.31.0_tt hidden_effect = { if = { limit = { vir_crown = yes always = yes }  } } ai_chance = { base = 100 } }
+}

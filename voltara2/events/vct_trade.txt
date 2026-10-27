@@ -1,0 +1,49 @@
+﻿namespace = vct
+vct.10 = { hidden = yes immediate = {
+ if = { limit = { has_character_flag = vct_convoy_pending }
+ remove_character_flag = vct_convoy_pending
+ if = { limit = { vca_slaver = yes }
+ random_list = { 60 = { modifier = { factor = 1.5 has_character_modifier = vct_chain_charter } modifier = { factor = 0.5 global_var:vca_balance <= 30 } trigger_event = vct.11 }
+ 25 = { trigger_event = vct.12 } 15 = { modifier = { factor = 2 global_var:vca_balance <= 30 } trigger_event = vct.13 } }
+ } else = { trigger_event = vct.14 }
+ }
+} }
+vct.11 = { type = character_event theme = stewardship title = vct.11.t desc = vct.11.desc trigger = { vca_slaver = yes } option = { name = vct.11.0 custom_tooltip = vct.11.0_tt hidden_effect = { vct_convoy_profit = yes } ai_chance = { base = 80 } }
+option = { name = vct.11.1 custom_tooltip = vct.11.1_tt hidden_effect = { add_gold = 45 save_scope_as = voltara_liberator every_courtier = { limit = { has_trait = voltara_slave var:voltara_slave_owner ?= root } voltara_free_character = yes } vca_shift = { VALUE = -4 } } ai_chance = { base = 20 } }
+}
+
+vct.12 = { type = character_event theme = stewardship title = vct.12.t desc = vct.12.desc trigger = { vca_slaver = yes } option = { name = vct.12.0 custom_tooltip = vct.12.0_tt trigger = { gold >= 30 } hidden_effect = { remove_short_term_gold = 30 add_gold = 95 vca_shift = { VALUE = 2 } } ai_chance = { base = 55 } }
+option = { name = vct.12.1 custom_tooltip = vct.12.1_tt hidden_effect = { vkf_hostility_change = { VALUE = 5 } random_list = { 1 = { add_gold = 130 vca_trade_backlash = yes } 1 = { add_prestige = -75 } } } ai_chance = { base = 25 } }
+option = { name = vct.12.2 custom_tooltip = vct.12.2_tt hidden_effect = { vca_shift = { VALUE = -2 } } ai_chance = { base = 20 } }
+}
+
+vct.13 = { type = character_event theme = stewardship title = vct.13.t desc = vct.13.desc trigger = { vca_slaver = yes } option = { name = vct.13.0 custom_tooltip = vct.13.0_tt hidden_effect = { vca_shift = { VALUE = -4 } } ai_chance = { base = 100 } }
+}
+
+vct.14 = { type = character_event theme = stewardship title = vct.14.t desc = vct.14.desc trigger = { is_alive = yes } option = { name = vct.14.0 custom_tooltip = vct.14.0_tt hidden_effect = { add_gold = 50 } ai_chance = { base = 100 } }
+}
+
+vct.20 = { type = character_event theme = stewardship title = vct.20.t desc = vct.20.desc trigger = { vca_liberator = yes exists = scope:vct_owner exists = scope:vct_captive scope:vct_owner = { is_alive = yes } scope:vct_captive = { is_alive = yes has_trait = voltara_slave var:voltara_slave_owner ?= scope:vct_owner } } option = { name = vct.20.0 custom_tooltip = vct.20.0_tt trigger = { gold >= 90 vct_rescue_valid = yes } hidden_effect = { pay_short_term_gold = { target = scope:vct_owner gold = 90 } vct_free_captive = yes } ai_chance = { base = 60 } }
+option = { name = vct.20.1 custom_tooltip = vct.20.1_tt trigger = { gold >= 45 vct_rescue_valid = yes } hidden_effect = { remove_short_term_gold = 45 random_list = { 65 = { vct_free_captive = yes } 35 = { add_prestige = -50 } } } ai_chance = { base = 30 } }
+option = { name = vct.20.2 custom_tooltip = vct.20.2_tt hidden_effect = {  } ai_chance = { base = 10 } }
+}
+
+vct.30 = { type = character_event theme = stewardship title = vct.30.t desc = vct.30.desc trigger = { vct_available = yes } option = { name = vct.30.0 custom_tooltip = vct.30.0_tt trigger = { gold >= 60 } hidden_effect = { remove_short_term_gold = 60 add_piety = 100 vca_shift = { VALUE = -3 } } ai_chance = { base = 50 } }
+option = { name = vct.30.1 custom_tooltip = vct.30.1_tt trigger = { vca_slaver = yes } hidden_effect = { add_gold = 45 capital_county = { add_county_modifier = { modifier = vct_debt_unrest years = 2 } } vca_trade_backlash = yes } ai_chance = { base = 30 } }
+option = { name = vct.30.2 custom_tooltip = vct.30.2_tt hidden_effect = { add_prestige = -50 vca_shift = { VALUE = -1 } } ai_chance = { base = 20 } }
+}
+
+vct.31 = { type = character_event theme = stewardship title = vct.31.t desc = vct.31.desc trigger = { vct_available = yes } option = { name = vct.31.0 custom_tooltip = vct.31.0_tt trigger = { gold >= 75 } hidden_effect = { vct_settle_freed = yes } ai_chance = { base = 70 } }
+option = { name = vct.31.1 custom_tooltip = vct.31.1_tt trigger = { gold >= 25 } hidden_effect = { remove_short_term_gold = 25 capital_county = { add_county_modifier = { modifier = vca_refuge years = 1 } } vca_shift = { VALUE = -1 } } ai_chance = { base = 25 } }
+option = { name = vct.31.2 custom_tooltip = vct.31.2_tt hidden_effect = {  } ai_chance = { base = 5 } }
+}
+
+vct.32 = { type = character_event theme = stewardship title = vct.32.t desc = vct.32.desc trigger = { vct_available = yes vca_slaver = yes } option = { name = vct.32.0 custom_tooltip = vct.32.0_tt trigger = { gold >= 50 } hidden_effect = { remove_short_term_gold = 50 vca_shift = { VALUE = -2 } } ai_chance = { base = 50 } }
+option = { name = vct.32.1 custom_tooltip = vct.32.1_tt hidden_effect = { add_prestige = 75 capital_county = { add_county_modifier = { modifier = vct_debt_unrest years = 2 } } vca_trade_backlash = yes } ai_chance = { base = 25 } }
+option = { name = vct.32.2 custom_tooltip = vct.32.2_tt hidden_effect = { add_character_modifier = { modifier = vct_boycott years = 1 } vca_shift = { VALUE = -4 } } ai_chance = { base = 25 } }
+}
+
+vct.33 = { type = character_event theme = stewardship title = vct.33.t desc = vct.33.desc trigger = { vca_arena_host = yes vct_available = yes any_courtier = { has_trait = voltara_slave has_trait = vca_gladiator var:voltara_slave_owner ?= root } } option = { name = vct.33.0 custom_tooltip = vct.33.0_tt hidden_effect = { save_scope_as = voltara_liberator every_courtier = { limit = { has_trait = voltara_slave has_trait = vca_gladiator var:voltara_slave_owner ?= root } voltara_free_character = yes } add_prestige = 150 vca_shift = { VALUE = -5 } } ai_chance = { base = 35 } }
+option = { name = vct.33.1 custom_tooltip = vct.33.1_tt trigger = { gold >= 40 } hidden_effect = { remove_short_term_gold = 40 add_character_modifier = { modifier = vca_arena_festival months = 6 } } ai_chance = { base = 40 } }
+option = { name = vct.33.2 custom_tooltip = vct.33.2_tt trigger = { vca_slaver = yes } hidden_effect = { capital_county = { add_county_modifier = { modifier = vct_watch years = 1 } } vca_shift = { VALUE = 1 } } ai_chance = { base = 25 } }
+}

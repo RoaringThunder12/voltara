@@ -1,0 +1,4 @@
+﻿on_game_start = { on_actions = { vca_start } }
+vca_start = { effect = { vca_initialize = yes every_ruler = { limit = { vca_arena_host = yes } vca_enroll_court = yes } } }
+yearly_global_pulse = { on_actions = { vca_yearly } }
+vca_yearly = { effect = { vct_yearly_review = yes } }

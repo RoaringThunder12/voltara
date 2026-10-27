@@ -1,0 +1,9 @@
+﻿vsa_oath_parties = {
+ scope:actor = { vkf_southron = yes is_at_war = no NOT = { this = scope:recipient } NOT = { var:vks_oath_paid_to ?= scope:recipient } OR = { NOT = { has_variable = vkf_patron } var:vkf_patron ?= scope:recipient } }
+ scope:recipient = { vkf_available = yes is_at_war = no OR = { vkf_chief = yes vkf_leader = yes } }
+}
+vsa_herd_parties = { scope:actor = { government_has_flag = government_has_herd exists = domicile domicile.herd >= 500 } scope:recipient = { government_has_flag = government_has_herd exists = domicile } }
+vsa_victor = { vkf_leader = yes has_character_flag = vsa_won is_at_war = no }
+vsa_enclave_valid = { vth_active = yes has_variable = vsa_enclave has_variable = vth_southron_patron var:vsa_enclave.holder.top_liege = var:vth_southron_patron var:vth_southron_patron = { is_alive = yes vkf_leader = yes } }
+
+vsa_can_host_council = { vkfu_candidate = yes NOT = { exists = title:e_voltara_sixth_southron_invasion.holder } }

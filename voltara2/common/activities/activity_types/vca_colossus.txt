@@ -1,0 +1,27 @@
+﻿activity_vca_colossus = {
+ is_shown = { vca_arena_host = yes }
+ can_start_showing_failures_only = { is_available = yes is_at_war = no gold >= 250 NOT = { has_character_flag = vca_games_cooldown } NOT = { is_activity_type_on_cooldown = activity_vca_colossus } }
+ is_valid = { scope:host = { vca_arena_host = yes } }
+ province_filter = realm ai_province_filter = capital max_province_icons = 1 allow_zero_guest_invites = yes open_invite = no
+ cost = { gold = { value = 250 } } ui_predicted_cost = { gold = { value = 250 } } cooldown = { years = 3 }
+ province_description = { desc = vca_arena_location } province_score = { value = 50 }
+ max_guests = 20 wait_time_before_start = { days = 7 } max_guest_arrival_delay_time = { days = 30 }
+ can_be_activity_guest = { is_adult = yes is_imprisoned = no }
+ guest_join_chance = { base = 50 }
+ host_intents = { default = vca_spectacle_intent intents = { vca_spectacle_intent } }
+ guest_intents = { default = vca_spectacle_intent intents = { vca_spectacle_intent } }
+ on_start = { scope:host = { add_character_flag = { flag = vca_games_cooldown years = 3 } } }
+ on_complete = { scope:host = { add_prestige = 100 } }
+ header_background = "gfx/interface/illustrations/activity_header_backgrounds/activity_tournament.dds"
+ background = { texture = "gfx/interface/illustrations/activity_header_backgrounds/activity_tournament.dds" environment = "environment_jerusalem" ambience = "event:/DLC/EP2/SFX/Ambience/2D/ep2_amb_2d_tournament_locale" }
+ phases = {
+ vca_opening = { order = 1 is_predefined = yes location_source = scripted select_scripted_location = { if = { limit = { any_realm_county = { this = province:6117.county } } province:6117 = { save_scope_as = province } } else = { province:4499 = { save_scope_as = province } } }
+ ai_will_do = { value = 100 }
+ on_phase_active = { if = { limit = { this = scope:host } scope:activity = { progress_activity_phase_after = { days = 14 } } trigger_event = { id = vca.1 days = 1 } } }
+ }
+ vca_championship = { order = 2 is_predefined = yes location_source = scripted select_scripted_location = { if = { limit = { any_realm_county = { this = province:6117.county } } province:6117 = { save_scope_as = province } } else = { province:4499 = { save_scope_as = province } } }
+ ai_will_do = { value = 100 }
+ on_phase_active = { if = { limit = { this = scope:host } scope:activity = { progress_activity_phase_after = { days = 30 } } trigger_event = { id = vca.40 days = 1 } } }
+ }
+ }
+}

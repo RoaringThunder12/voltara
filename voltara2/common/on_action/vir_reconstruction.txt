@@ -1,0 +1,10 @@
+﻿yearly_global_pulse = { on_actions = { vir_annual } }
+vir_annual = { effect = { title:h_voltara_severos.holder ?= {
+ if = { limit = { vir_crown = yes has_global_variable = vir_reconstruction_active is_at_war = no }
+ if = { limit = { NOT = { has_character_flag = vir_petition_pending } } add_character_flag = { flag = vir_petition_pending days = 180 } trigger_event = { id = vir.10 days = 30 } }
+ vir_find_dispute = yes
+ }
+} } }
+
+monthly_global_pulse = { on_actions = { vir_revolt_watchdog } }
+vir_revolt_watchdog = { effect = { if = { limit = { has_global_variable = vir_restoration_title NOT = { has_global_variable = vir_restoration_war } } vir_cleanup_title = yes } } }

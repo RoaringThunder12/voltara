@@ -32,8 +32,8 @@ vt_slave_escape_success = {
   save_scope_as = vt_escape_refuge
  }
  }
- if = { limit = { exists = scope:vt_escape_refuge } scope:vt_escape_refuge = { add_courtier = scope:vt_fugitive } }
- else = { move_to_pool = yes }
+ if = { limit = { is_landless_adventurer = no } if = { limit = { exists = scope:vt_escape_refuge } scope:vt_escape_refuge = { add_courtier = scope:vt_fugitive } }
+ else = { move_to_pool = yes } }
  if = { limit = { is_ai = no } trigger_event = vt_slave_escape.1 }
  if = { limit = { scope:vt_escape_owner = { is_ai = no } } scope:vt_escape_owner = { trigger_event = vt_slave_escape.4 } }
 }

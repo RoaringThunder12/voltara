@@ -1,0 +1,98 @@
+﻿vsa_count_united = {
+ set_variable = { name = vsa_total value = 0 } set_variable = { name = vsa_united value = 0 }
+ save_scope_as = vsa_uniter
+ every_county = { limit = { title:e_voltara_sixth_southron_invasion = { is_de_jure_liege_or_above_target = prev } }
+ scope:vsa_uniter = { change_variable = { name = vsa_total add = 1 } }
+ if = { limit = { holder.top_liege = scope:vsa_uniter } scope:vsa_uniter = { change_variable = { name = vsa_united add = 1 } } }
+ }
+ set_variable = { name = vsa_target value = { value = var:vsa_total multiply = 0.7 ceiling = yes } }
+}
+vsa_ai_unify = {
+ if = { limit = { this = character:9999100 is_ai = yes is_at_war = no vkf_chief = yes NOT = { exists = title:e_voltara_sixth_southron_invasion.holder } NOT = { has_character_flag = vsa_auto_unified } }
+ add_character_flag = vsa_auto_unifying add_character_flag = vkfu_council_completed
+ add_character_flag = vkfu_intro_seen add_character_flag = vkfu_renown_awarded
+ if = { limit = { NOT = { has_trait = conqueror } } add_trait = conqueror }
+ vkfu_found_empire = { VOW = 1 }
+ if = { limit = { vkf_leader = yes }
+ vsa_count_united = yes save_scope_as = vsa_uniter
+ ordered_independent_ruler = { order_by = sub_realm_size max = 512 check_range_bounds = no
+ limit = { vkf_chief = yes vks_de_jure_ruler = yes is_ai = yes NOT = { any_vassal_or_below = { is_ai = no } } }
+ if = { limit = { scope:vsa_uniter = { var:vsa_united < var:vsa_target } }
+ set_variable = { name = vkf_patron value = scope:vsa_uniter days = 1825 } set_variable = { name = vkf_oath value = 2 days = 1825 }
+ vks_record_blood_oath = yes vkf_submit = yes scope:vsa_uniter = { vsa_count_united = yes }
+ }
+ }
+ add_character_flag = vsa_auto_unified vkf_seed_leader = yes
+ set_variable = { name = vkf_supplies value = 60 } set_variable = { name = vkf_intelligence value = 30 }
+ vkf_recount = yes trigger_event = { id = vsa.1 days = 1 }
+ }
+ remove_character_flag = vsa_auto_unifying remove_character_flag = vkfu_riders_pending
+ }
+}
+vsa_oath_progress = {
+ var:vkf_patron ?= {
+ vkf_seed_leader = yes change_variable = { name = vkf_supplies add = 10 } change_variable = { name = vkf_intelligence add = 5 }
+ set_variable = { name = vkf_supplies value = { value = var:vkf_supplies max = 100 } }
+ set_variable = { name = vkf_intelligence value = { value = var:vkf_intelligence max = 100 } }
+ vkf_count_support = yes
+ if = { limit = { vkf_chief = yes var:vkf_support >= 2 }
+ add_character_flag = { flag = vkf_council_concluded days = 365 } vkfu_authorize = yes
+ if = { limit = { is_ai = yes vsa_can_host_council = yes NOT = { has_character_flag = vsa_council_request } }
+ add_character_flag = { flag = vsa_council_request days = 90 } ai_attempt_to_host_activity = activity_vkf_war_council }
+ }
+ vkf_recount = yes
+ }
+}
+vsa_victory = {
+ add_character_flag = vsa_won remove_character_flag = vsa_lost
+ remove_character_flag = vsa_governed remove_character_flag = vsa_rewarded
+ trigger_event = { id = vsa.10 days = 5 }
+}
+vsa_defeat = {
+ add_character_flag = vsa_lost remove_character_flag = vsa_won
+ save_scope_as = vsa_defeated
+ ordered_ruler = { order_by = martial max = 3 check_range_bounds = no
+ limit = { vkf_southron = yes NOT = { this = scope:vsa_defeated } OR = { var:vkf_patron ?= scope:vsa_defeated var:vkf_obligation_holder ?= scope:vsa_defeated } }
+ set_variable = { name = vsa_rival_of value = scope:vsa_defeated years = 10 }
+ set_variable = { name = vkf_renounced_leader value = scope:vsa_defeated years = 10 }
+ add_character_modifier = { modifier = vsa_rival_chief years = 10 }
+ add_unpressed_claim = title:e_voltara_sixth_southron_invasion
+ trigger_event = { id = vsa.21 days = 5 }
+ }
+ trigger_event = { id = vsa.20 days = 5 }
+}
+vsa_reconcile = {
+ save_scope_as = vsa_rebuilder
+ ordered_ruler = { order_by = martial max = 3 check_range_bounds = no
+ limit = { var:vsa_rival_of ?= scope:vsa_rebuilder is_alive = yes }
+ scope:vsa_rebuilder = { pay_short_term_gold = { target = prev gold = 50 } }
+ remove_variable = vsa_rival_of remove_variable = vkf_renounced_leader remove_character_modifier = vsa_rival_chief
+ set_variable = { name = vkf_patron value = scope:vsa_rebuilder days = 1825 } set_variable = { name = vkf_oath value = 1 days = 1825 }
+ }
+ vkf_seed_leader = yes change_variable = { name = vkf_supplies add = 30 } change_variable = { name = vkf_intelligence add = 15 }
+ remove_character_flag = vkf_campaign_recovery add_character_flag = { flag = vkf_campaign_recovery years = 2 }
+ remove_character_flag = vsa_lost vkf_recount = yes
+}
+vsa_remove_enclave = {
+ var:vsa_enclave ?= { remove_county_modifier = vsa_refuge remove_county_modifier = vsa_dark_enclave }
+ remove_variable = vsa_enclave
+}
+vsa_monthly = {
+ ordered_independent_ruler = { order_by = diplomacy max = 5 check_range_bounds = no
+ limit = { is_ai = yes vsa_can_host_council = yes is_available = yes is_at_war = no gold >= 100 NOT = { has_character_flag = vsa_council_request } NOT = { has_character_flag = vkf_war_council_active } }
+ add_character_flag = { flag = vsa_council_request days = 90 }
+ ai_attempt_to_host_activity = activity_vkf_war_council
+ }
+
+ character:19060042 = {
+ if = { limit = { has_variable = vsa_enclave NOT = { vsa_enclave_valid = yes } } vsa_remove_enclave = yes }
+ if = { limit = { vsa_enclave_valid = yes NOT = { has_character_flag = vsa_enclave_pulse } }
+ add_character_flag = { flag = vsa_enclave_pulse years = 1 }
+ trigger_event = { id = vsa.40 days = 5 }
+ if = { limit = { NOT = { has_game_rule = vt_rule_inquisitor_orders_off } }
+ random_ruler = { limit = { vt_inquisitor_warrior_trigger = yes is_alive = yes }
+ save_scope_as = vsa_inquisitor character:19060042.var:vth_southron_patron = { trigger_event = { id = vsa.42 days = 20 } } }
+ }
+ }
+ }
+}

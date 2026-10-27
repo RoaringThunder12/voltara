@@ -1,0 +1,72 @@
+﻿
+vca_initialize = {
+ if = { limit = { NOT = { has_global_variable = vca_balance } } set_global_variable = { name = vca_balance value = 50 } }
+ set_global_variable = { name = vca_trade_bar value = { value = global_var:vca_balance divide = 100 } }
+ set_global_variable = { name = vca_freedom_bar value = { value = 100 subtract = global_var:vca_balance divide = 100 } }
+ if = { limit = { NOT = { exists = situation:vca_chains_situation } } start_situation = { type = vca_chains_situation } }
+}
+vca_shift = {
+ if = { limit = { NOT = { has_global_variable = vca_balance } } set_global_variable = { name = vca_balance value = 50 } }
+ change_global_variable = { name = vca_balance add = $VALUE$ }
+ set_global_variable = { name = vca_balance value = { value = global_var:vca_balance min = 0 max = 100 } }
+}
+vca_monthly = {
+ set_global_variable = { name = vca_trade_bar value = { value = global_var:vca_balance divide = 100 } }
+ set_global_variable = { name = vca_freedom_bar value = { value = 100 subtract = global_var:vca_balance divide = 100 } }
+ every_situation_sub_region = {
+ if = { limit = { global_var:vca_trade_bar >= 0.7 NOT = { sub_region_current_phase = vca_chains_ascendant } } change_phase = { phase = vca_chains_ascendant } }
+ if = { limit = { global_var:vca_freedom_bar >= 0.7 NOT = { sub_region_current_phase = vca_free_harbors } } change_phase = { phase = vca_free_harbors } }
+ if = { limit = { global_var:vca_balance > 30 global_var:vca_balance < 70 NOT = { sub_region_current_phase = vca_contested } } change_phase = { phase = vca_contested } }
+ }
+}
+vca_trade_backlash = {
+ if = { limit = { NOT = { has_global_variable = vca_resistance_pressure } } set_global_variable = { name = vca_resistance_pressure value = 0 } }
+ change_global_variable = { name = vca_resistance_pressure add = 2 }
+ set_global_variable = { name = vca_resistance_pressure value = { value = global_var:vca_resistance_pressure max = 20 } }
+ vca_shift = { VALUE = 5 } vkf_hostility_change = { VALUE = 5 }
+ every_independent_ruler = { limit = { vkf_chief = yes } vkf_seed_leader = yes change_variable = { name = vkf_supplies add = 3 } }
+}
+vca_win = {
+ if = { limit = { exists = scope:sc_victor scope:sc_victor = { is_alive = yes } }
+ scope:sc_victor = { if = { limit = { NOT = { has_trait = vca_gladiator } } add_trait = vca_gladiator } add_trait_xp = { trait = vca_gladiator value = 10 } add_gold = 15 add_prestige = 50 }
+ }
+ scope:vca_first ?= { remove_character_flag = vca_duel_pending }
+ scope:vca_second ?= { remove_character_flag = vca_duel_pending }
+}
+vca_clear_duel = { scope:vca_first ?= { remove_character_flag = vca_duel_pending } scope:vca_second ?= { remove_character_flag = vca_duel_pending } }
+vca_prepare_bout = {
+ clear_saved_scope = vca_first clear_saved_scope = vca_second save_scope_as = vca_host
+ random_courtier = { limit = { vca_fighter = yes OR = { has_trait = vca_gladiator AND = { has_trait = voltara_slave scope:vca_host = { voltara_slavery_is_legal = yes } } } } save_scope_as = vca_first }
+ random_courtier = { limit = { vca_fighter = yes NOT = { this = scope:vca_first } OR = { has_trait = vca_gladiator AND = { has_trait = voltara_slave scope:vca_host = { voltara_slavery_is_legal = yes } } } } save_scope_as = vca_second }
+ if = { limit = { exists = scope:vca_first exists = scope:vca_second }
+ scope:vca_first = { if = { limit = { NOT = { has_trait = vca_gladiator } } add_trait = vca_gladiator } add_character_flag = { flag = vca_duel_pending days = 90 } }
+ scope:vca_second = { if = { limit = { NOT = { has_trait = vca_gladiator } } add_trait = vca_gladiator } add_character_flag = { flag = vca_duel_pending days = 90 } }
+ trigger_event = vca.10
+ }
+}
+
+vca_finance_venture = {
+ if = { limit = { vca_slaver = yes vct_available = yes gold >= 75 NOT = { has_character_flag = vct_convoy_pending } }
+ remove_short_term_gold = 75 add_character_flag = { flag = vct_convoy_pending days = 120 }
+ trigger_event = { id = vct.10 days = 90 }
+ }
+}
+
+vca_force_abolition = {
+ every_held_title = { remove_variable = vir_slavery_restored }
+ every_vassal_or_below = { every_held_title = { remove_variable = vir_slavery_restored } if = { limit = { NOT = { has_realm_law = voltara_slavery_banned } } add_realm_law_skip_effects = voltara_slavery_banned } }
+ voltara_abolish_slavery = yes
+ vca_shift = { VALUE = -15 }
+}
+vca_force_slavery = {
+ capital_county = { add_county_modifier = { modifier = vca_raided_coast years = 5 } }
+ primary_title = { set_variable = { name = vir_slavery_restored value = yes } }
+ if = { limit = { NOT = { has_realm_law = voltara_slavery_legal } } add_realm_law_skip_effects = voltara_slavery_legal }
+ every_vassal_or_below = { limit = { NOT = { vtf_protected = yes } } if = { limit = { NOT = { has_realm_law = voltara_slavery_legal } } add_realm_law_skip_effects = voltara_slavery_legal } }
+ vca_trade_backlash = yes vca_shift = { VALUE = 10 }
+}
+vca_enroll_court = {
+ if = { limit = { vca_arena_host = yes voltara_slavery_is_legal = yes }
+ ordered_courtier = { order_by = prowess max = 6 check_range_bounds = no limit = { is_adult = yes is_alive = yes has_trait = voltara_slave NOT = { has_trait = vca_gladiator } } add_trait = vca_gladiator }
+ }
+}

@@ -1,0 +1,35 @@
+﻿namespace = vca
+vca.1 = { type = character_event theme = martial title = vca.1.t desc = vca.1.desc trigger = { vca_arena_host = yes } 
+option = { name = vca.1.0 trigger = { any_courtier = { vca_fighter = yes OR = { has_trait = vca_gladiator AND = { has_trait = voltara_slave root = { voltara_slavery_is_legal = yes } } } count >= 2 } } custom_tooltip = vca.1.0_tt hidden_effect = { vca_prepare_bout = yes } ai_chance = { base = 50 } }
+option = { name = vca.1.1 trigger = { gold >= 30 } custom_tooltip = vca.1.1_tt hidden_effect = { remove_short_term_gold = 30 add_character_modifier = { modifier = vca_arena_festival months = 6 } } ai_chance = { base = 50 } }
+option = { name = vca.1.2 trigger = { any_courtier = { has_trait = vca_gladiator has_trait = voltara_slave var:voltara_slave_owner ?= root } } custom_tooltip = vca.1.2_tt hidden_effect = { save_scope_as = voltara_liberator random_courtier = { limit = { has_trait = vca_gladiator has_trait = voltara_slave var:voltara_slave_owner ?= root } voltara_free_character = yes } vca_shift = { VALUE = -3 } } ai_chance = { base = 50 } }
+option = { name = vca_recruit_prisoner trigger = { voltara_slavery_is_legal = yes gold >= 30 any_prisoner = { is_adult = yes is_landed = no is_alive = yes NOT = { has_trait = dragon } } }
+ custom_tooltip = vca_recruit_prisoner_tt hidden_effect = { remove_short_term_gold = 30 save_scope_as = voltara_owner random_prisoner = { limit = { is_adult = yes is_landed = no is_alive = yes NOT = { has_trait = dragon } } voltara_enslave_character = yes add_trait = vca_gladiator } vca_shift = { VALUE = 2 } } ai_chance = { base = 25 } }
+option = { name = vca.1.3 custom_tooltip = vca.1.3_tt hidden_effect = {  } ai_chance = { base = 50 } }
+}
+vca.10 = { type = character_event theme = martial title = vca.10.t desc = vca.10.desc trigger = { exists = scope:vca_first exists = scope:vca_second scope:vca_first = { is_alive = yes } scope:vca_second = { is_alive = yes } } 
+option = { name = vca.10.0 custom_tooltip = vca.10.0_tt hidden_effect = { add_gold = 25 if = { limit = { voltara_slavery_is_legal = yes } vca_shift = { VALUE = 2 } } configure_start_single_combat_effect = { SC_INITIATOR = root SC_ATTACKER = scope:vca_first SC_DEFENDER = scope:vca_second FATALITY = always FIXED = no LOCALE = courtyard OUTPUT_EVENT = vca.11 INVALIDATION_EVENT = vca.12 } } ai_chance = { base = 50 } }
+option = { name = vca.10.1 custom_tooltip = vca.10.1_tt hidden_effect = { add_gold = 10 configure_start_single_combat_effect = { SC_INITIATOR = root SC_ATTACKER = scope:vca_first SC_DEFENDER = scope:vca_second FATALITY = no FIXED = no LOCALE = courtyard OUTPUT_EVENT = vca.11 INVALIDATION_EVENT = vca.12 } } ai_chance = { base = 50 } }
+option = { name = vca.10.2 custom_tooltip = vca.10.2_tt hidden_effect = { vca_clear_duel = yes } ai_chance = { base = 50 } }
+}
+vca.11 = { hidden = yes immediate = { vca_win = yes } }
+vca.12 = { hidden = yes immediate = { vca_clear_duel = yes } }
+vca.20 = { type = character_event theme = martial title = vca.20.t desc = vca.20.desc trigger = { vct_available = yes } 
+option = { name = vca.20.0 trigger = { vca_slaver = yes gold >= 75 NOT = { has_character_flag = vct_convoy_pending } } custom_tooltip = vca.20.0_tt hidden_effect = { vca_finance_venture = yes } ai_chance = { base = 50 } }
+option = { name = vca.20.1 trigger = { gold >= 60 } custom_tooltip = vca.20.1_tt hidden_effect = { remove_short_term_gold = 60 capital_county = { add_county_modifier = { modifier = vca_refuge years = 3 } } vca_shift = { VALUE = -5 } vkf_hostility_change = { VALUE = -2 } } ai_chance = { base = 50 } }
+option = { name = vca.20.2 custom_tooltip = vca.20.2_tt hidden_effect = {  } ai_chance = { base = 50 } }
+}
+vca.30 = { type = character_event theme = martial title = vca.30.t desc = vca.30.desc trigger = { has_trait = voltara_slave vca_camp_in_alutor = yes vca_fighter = yes NOT = { has_trait = vca_gladiator } } 
+option = { name = vca.30.0 custom_tooltip = vca.30.0_tt hidden_effect = { add_trait = vca_gladiator } ai_chance = { base = 50 } }
+option = { name = vca.30.1 custom_tooltip = vca.30.1_tt hidden_effect = {  } ai_chance = { base = 50 } }
+}
+vca.40 = { type = character_event theme = martial title = vca.40.t desc = vca.40.desc trigger = { vca_arena_host = yes } 
+option = { name = vca.40.0 trigger = { any_courtier = { vca_fighter = yes has_trait = vca_gladiator count >= 2 } } custom_tooltip = vca.40.0_tt hidden_effect = { add_character_modifier = { modifier = vca_arena_festival years = 2 } add_gold = 150 vca_prepare_bout = yes } ai_chance = { base = 50 } }
+option = { name = vca.40.1 custom_tooltip = vca.40.1_tt hidden_effect = { add_gold = 100 add_prestige = 200 trigger_event = vca.41 } ai_chance = { base = 50 } }
+option = { name = vca.40.2 trigger = { any_courtier = { has_trait = voltara_slave var:voltara_slave_owner ?= root } } custom_tooltip = vca.40.2_tt hidden_effect = { add_prestige = 300 save_scope_as = voltara_liberator random_courtier = { limit = { has_trait = voltara_slave var:voltara_slave_owner ?= root } voltara_free_character = yes } vca_shift = { VALUE = -5 } } ai_chance = { base = 50 } }
+}
+vca.41 = { type = character_event theme = martial title = vca.41.t desc = vca.41.desc 
+option = { name = vca.41.0 custom_tooltip = vca.41.0_tt hidden_effect = { add_prestige = 75 } ai_chance = { base = 50 } }
+option = { name = vca.41.1 trigger = { gold >= 25 } custom_tooltip = vca.41.1_tt hidden_effect = { remove_short_term_gold = 25 add_piety = 100 } ai_chance = { base = 50 } }
+option = { name = vca.41.2 trigger = { any_courtier = { has_trait = vca_gladiator vca_fighter = yes } } custom_tooltip = vca.41.2_tt hidden_effect = { random_courtier = { limit = { has_trait = vca_gladiator vca_fighter = yes } random_list = { 3 = { add_trait_xp = { trait = vca_gladiator value = 10 } add_prestige = 75 } 1 = { death = { death_reason = death_maimed_by_wild_beast } } } } } ai_chance = { base = 50 } }
+}

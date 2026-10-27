@@ -1,0 +1,4 @@
+﻿vct_rescuable = { is_alive = yes is_adult = yes is_landed = no is_landless_adventurer = no is_imprisoned = no has_trait = voltara_slave NOT = { has_character_flag = voltara_slave_sale_pending } var:voltara_slave_owner ?= prev }
+vct_available = { vca_actor = yes is_adult = yes is_imprisoned = no is_incapable = no }
+
+vct_rescue_valid = { exists = scope:vct_owner exists = scope:vct_captive scope:vct_owner = { is_alive = yes } scope:vct_captive = { is_alive = yes has_trait = voltara_slave is_landed = no is_landless_adventurer = no var:voltara_slave_owner ?= scope:vct_owner } }

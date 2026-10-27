@@ -2,7 +2,7 @@
  picture = { reference = "gfx/interface/illustrations/decisions/decision_realm.dds" }
  desc = vic_cassian_abolish_slavery_desc selection_tooltip = vic_cassian_abolish_slavery_tooltip confirm_text = vic_cassian_abolish_slavery_confirm
  decision_group_type = major ai_check_interval = 12
- is_shown = { vic_cassian_victorious = yes OR = { NOT = { has_realm_law = voltara_slavery_banned } any_vassal_or_below = { has_realm_law = voltara_slavery_legal } } }
+ is_shown = { vic_cassian_victorious = yes OR = { NOT = { has_realm_law = voltara_slavery_banned } any_vassal_or_below = { has_realm_law = voltara_slavery_legal NOT = { vir_local_exception = yes } } } }
  is_valid = { is_at_war = no is_imprisoned = no is_incapable = no }
  effect = { custom_tooltip = vic_cassian_abolish_slavery_effect hidden_effect = { vic_cassian_enact_abolition = yes } }
  ai_potential = { vic_cassian_victorious = yes } ai_will_do = { base = 100 }

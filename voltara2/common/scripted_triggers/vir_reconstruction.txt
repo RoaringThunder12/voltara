@@ -1,0 +1,11 @@
+﻿vir_crown = { is_alive = yes has_title = title:h_voltara_severos has_global_variable = vir_reconstruction_started }
+vir_local_exception = { OR = { primary_title = { has_variable = vir_slavery_restored } any_liege_or_above = { primary_title = { has_variable = vir_slavery_restored } } } }
+vir_resistant_lord = {
+ is_alive = yes is_adult = yes is_landed = yes highest_held_title_tier >= tier_county
+ is_imprisoned = no is_at_war = no NOT = { has_trait = incapable } NOT = { vtf_protected = yes }
+ NOT = { has_title = title:h_voltara_severos } NOT = { voltara_is_ruins_placeholder = yes }
+ NOT = { has_character_flag = vir_dispute_cooldown } NOT = { vir_local_exception = yes }
+ top_liege = { vir_crown = yes }
+ OR = { has_trait = greedy has_trait = callous has_trait = arrogant has_trait = voltara_slaver has_character_flag = vic_anti_abolition }
+}
+vir_revolt_pending = { vir_crown = yes has_variable = vir_disputant var:vir_disputant = { vir_resistant_lord = yes top_liege = root } }

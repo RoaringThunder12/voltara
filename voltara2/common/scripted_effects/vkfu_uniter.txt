@@ -26,7 +26,7 @@ vkfu_found_empire = {
  set_global_variable = { name = vkfu_founder value = this } set_global_variable = { name = vkfu_founding_promise value = $VOW$ }
  if = { limit = { NOT = { has_global_variable = vkfu_world_announced } } set_global_variable = { name = vkfu_world_announced value = yes } every_player = { trigger_event = { id = vkfu.20 days = 2 } } }
  trigger_event = { id = vkfu.21 days = 3650 }
- vkfu_honor_blood_oaths = yes vkfu_seek_submission = yes vkf_recount = yes
+ if = { limit = { NOT = { has_character_flag = vsa_auto_unifying } } vkfu_honor_blood_oaths = yes vkfu_seek_submission = yes } vkf_recount = yes
  }
 }
 vkfu_heralds = {
@@ -57,6 +57,7 @@ vkfu_submit = {
  remove_variable = vkfu_submission_offer }
 }
 vkfu_monthly = {
+ vsa_monthly = yes
  character:9999100 = { if = { limit = { vkf_chief = yes NOT = { has_character_flag = vkfu_intro_seen } NOT = { has_character_flag = vkfu_intro_queued } } add_character_flag = { flag = vkfu_intro_queued days = 60 } trigger_event = { id = vkfu.1 days = 5 } } }
  title:e_voltara_sixth_southron_invasion.holder ?= {
  if = { limit = { vkfu_promise_fulfilled = yes } add_character_flag = vkfu_promise_resolved add_character_flag = vkfu_promise_kept add_prestige = 1500 add_character_modifier = { modifier = vkfu_promise_kept years = 20 } trigger_event = { id = vkfu.22 days = 1 } }

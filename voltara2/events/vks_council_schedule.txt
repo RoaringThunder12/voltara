@@ -1,16 +1,7 @@
 ﻿namespace = vksc
 # The engine hosting request is retried only while the original council remains outstanding.
-vksc.1 = {
- type = character_event hidden = yes
- trigger = { this = character:9999100 is_alive = yes has_character_flag = vks_council_scheduled NOT = { has_character_flag = vks_scheduled_council_started } }
- immediate = {
-  add_character_flag = vks_council_due
-  if = { limit = { vkfu_council_host = yes is_available = yes is_at_war = no }
-   ai_attempt_to_host_activity = activity_vkf_war_council
-  }
-  trigger_event = { id = vksc.1 days = 7 }
- }
-}
+vksc.1 = { type = character_event hidden = yes immediate = {  } }
+
 
 vksc.2 = {
  type = character_event theme = realm title = vks_rally_title desc = vks_rally_desc
