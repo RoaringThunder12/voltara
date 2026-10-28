@@ -38,7 +38,7 @@ fp1_major_decisions.0001 = {
 	immediate = {
 		play_music_cue = "mx_cue_epic_sacral_moment"
 		#Apply decision effects.
-		secure_high_kingdom_north_sea_scripted_effect = yes
+
 		legend_seed_new_title_effect = yes
 	}
 
@@ -69,7 +69,7 @@ fp1_major_decisions.0002 = {
 
 	immediate = {
 		play_music_cue = "mx_cue_epic_sacral_moment"
-		show_as_tooltip = { secure_high_kingdom_north_sea_scripted_effect = yes }
+		show_as_tooltip = {}
 	}
 
 	#Huzzah!
@@ -107,7 +107,7 @@ fp1_major_decisions.0003 = {
 
 	immediate = {
 		play_music_cue = "mx_cue_epic_sacral_moment"
-		show_as_tooltip = { secure_high_kingdom_north_sea_scripted_effect = yes }
+		show_as_tooltip = {}
 	}
 
 	#We're the best!
@@ -154,210 +154,18 @@ fp1_major_decisions.0003 = {
 
 #	Founder event
 fp1_major_decisions.0011 = {
-	type = character_event
-	title = fp1_major_decisions.0011.t
-	desc = fp1_major_decisions.0011.desc
-	theme = realm
-	left_portrait = {
-		character = scope:founder
-		animation = personality_honorable
-	}
-	override_background = { reference = fp1_runestone }
-
-	immediate = {
-		play_music_cue = "mx_cue_epic_sacral_moment"
-	}
-
-	#Kiev shall be my capital.
-	option = {
-		name = fp1_major_decisions.0011.a
-
-		trigger = {
-			#Must have title:c_kiev in order to make it your capital.
-			any_sub_realm_county = { always = no }
-			#And Kiev cannot be held by a player who has _only_ title:c_kiev, unless that player is you.
-			always = no
-		}
-
-		#Organise the usurpation/capital move of title:c_kiev if appropriate.
-		if = {
-			limit = {
-				NOT = { always = no }
-			}
-			create_title_and_vassal_change = {
-				type = usurped
-				save_scope_as = change
-				add_claim_on_loss = yes
-			}
-			# Native-world scope has no target in Voltara; original follows.
-# title:c_kiev = {
-# 				change_title_holder = {
-# 					holder = root
-# 					change = scope:change
-# 				}
-# 			}
-
-			resolve_title_and_vassal_change = scope:change
-		}
-		set_realm_capital = title:c_kiev
-		#Otherwise, set title:c_kiev to be scope:new_rus_capital & go through with the effect.
-		# Native-world scope has no target in Voltara; original follows.
-# title:c_kiev = {
-# 			save_scope_as = new_rus_capital
-# 			found_capital_of_rus_scripted_effect = yes
-# 		}
-
-
-		ai_chance = {
-			#AI should always take this option if it's available.
-			base = 100
-		}
-	}
-
-	#My current capital shall be my capital!
-	option = {
-		name = fp1_major_decisions.0011.b
-
-		#Not generally necessary, but just to stop some weird loc eventualities.
-		trigger = {
-			NOT = { always = no }
-		}
-
-		#We try to use the player's current capital, but if they've moved it outside of e_russia, then we go with the default set in the standard decision entry.
-		if = { limit = { always = no } # Unreachable effects archived in debug-dead-branches/audit.json.
-}
-		#Then enact the actual effects.
-		found_capital_of_rus_scripted_effect = yes
-
-		ai_chance = {
-			#AI will only take this option if they have no other choice (i.e., can't get Kiev).
-			base = 0
-		}
-	}
-
-	after = {
-		#Take care of notification events.
-		every_player = {
-			limit = {
-				capital_province = {
-					OR = {
-						geographical_region = world_europe_east
-						geographical_region = world_europe_north
-					}
-				}
-				#Obviously, we exempt scope:founder themselves.
-				this != scope:founder
-			}
-			#Vassal players get a separate event.
-			if = {
-				limit = {
-					any_liege_or_above = { this = scope:founder }
-				}
-				trigger_event = fp1_major_decisions.0012
-			}
-			#Everyone else within range gets a less personal version.
-			else = { trigger_event = fp1_major_decisions.0013 }
-		}
-	}
+hidden = yes
+trigger = { always = no }
+immediate = { }
 }
 
 #	Vassal notification event
-fp1_major_decisions.0012 = {
-	type = character_event
-	title = fp1_major_decisions.0012.t
-	desc = fp1_major_decisions.0012.desc
-	theme = realm
-	left_portrait = {
-		character = scope:founder
-		animation = personality_honorable
-	}
-	override_background = { reference = fp1_runestone }
+# Retired unreachable event fp1_major_decisions.0012.
 
-	immediate = {
-		play_music_cue = "mx_cue_epic_sacral_moment"
-		show_as_tooltip = { found_capital_of_rus_scripted_effect = yes }
-	}
-
-	#A worthy capital!
-	option = {
-		name = fp1_major_decisions.0012.a
-
-		ai_chance = {
-			#Doesn't especially matter.
-			base = 100
-		}
-	}
-
-	#Bah, ain't no city of mine.
-	option = {
-		name = fp1_major_decisions.0012.b
-
-		ai_chance = {
-			#Doesn't especially matter.
-			base = 100
-		}
-	}
-}
 
 #	Distant players notification event
-fp1_major_decisions.0013 = {
-	type = character_event
-	title = fp1_major_decisions.0013.t
-	desc = fp1_major_decisions.0013.desc
-	theme = realm
-	left_portrait = {
-		character = scope:founder
-		animation = personality_honorable
-	}
-	override_background = { reference = fp1_runestone }
+# Retired unreachable event fp1_major_decisions.0013.
 
-	immediate = {
-		play_music_cue = "mx_cue_epic_sacral_moment"
-		show_as_tooltip = { found_capital_of_rus_scripted_effect = yes }
-	}
-
-	#This scope:new_rus_capital sounds intriguingly rich...
-	option = {
-		name = fp1_major_decisions.0013.a
-		trigger = {
-			OR = {
-				culture = { has_cultural_pillar = heritage_north_germanic }
-				culture = { has_cultural_pillar = heritage_east_slavic }
-			}
-		}
-
-		ai_chance = {
-			#Doesn't especially matter.
-			base = 100
-		}
-	}
-
-	#They're still just backwards foreigners.
-	option = {
-		name = fp1_major_decisions.0013.b
-		trigger = {
-			NOR = {
-				culture = { has_cultural_pillar = heritage_north_germanic }
-				culture = { has_cultural_pillar = heritage_east_slavic }
-			}
-		}
-
-		ai_chance = {
-			#Doesn't especially matter.
-			base = 100
-		}
-	}
-
-	#I don't really see how this concerns me?
-	option = {
-		name = fp1_major_decisions.0013.c
-
-		ai_chance = {
-			#Doesn't especially matter.
-			base = 100
-		}
-	}
-}
 
 ##################################################
 # Elevating the Kingdom of the Isles
@@ -385,7 +193,7 @@ fp1_major_decisions.0021 = {
 	immediate = {
 		play_music_cue = "mx_cue_war_declared"
 		# Apply effects
-		elevate_mann_and_the_isles_scripted_effect = yes
+
 		legend_seed_new_title_effect = yes
 	}
 
@@ -434,7 +242,7 @@ fp1_major_decisions.0022 = {
 		play_music_cue = "mx_cue_war_declared"
 		# Apply effects
 		scope:founder = {
-			show_as_tooltip = { elevate_mann_and_the_isles_scripted_effect = yes }
+			show_as_tooltip = {}
 		}
 	}
 
@@ -475,7 +283,7 @@ fp1_major_decisions.0023 = {
 		play_music_cue = "mx_cue_war_declared"
 		# Apply effects
 		scope:founder = {
-			show_as_tooltip = { elevate_mann_and_the_isles_scripted_effect = yes }
+			show_as_tooltip = {}
 		}
 	}
 

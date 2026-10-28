@@ -6,19 +6,19 @@ dhm_v080_resolve_officer_progress_effect = {
 	if = {
 		limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_officer_choice VALUE_1 = flag:trust VALUE_2 = flag:audit VALUE_3 = flag:credit } }
 		if = {
-			limit = { scope:dhm_story_officer = { dhm_v071_choice_is_trigger = { KEY = dhm071_officer_choice VALUE = flag:trust LEGACY = dhm_officer_trusted_outcome } } }
+			limit = { scope:dhm_story_officer = { dhm_v071_choice_is_trigger = { KEY = dhm071_officer_choice VALUE = flag:trust  } } }
 			dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_reward_trusted_counsel_modifier YEARS = 2 RENEWAL_TT = dhm_reward_trusted_counsel_renewed_2_tt }
 			add_stress = miniscule_stress_gain
 			send_interface_message = { type = event_stewardship_neutral_with_text title = dhm_v080_officer_progress_title desc = dhm_v080_officer_progress_trust_desc left_icon = scope:dhm_story_officer }
 		}
 		else_if = {
-			limit = { scope:dhm_story_officer = { dhm_v071_choice_is_trigger = { KEY = dhm071_officer_choice VALUE = flag:audit LEGACY = dhm_officer_audited_outcome } } }
+			limit = { scope:dhm_story_officer = { dhm_v071_choice_is_trigger = { KEY = dhm071_officer_choice VALUE = flag:audit  } } }
 			add_prestige = minor_prestige_gain
 			scope:dhm_story_officer = { add_stress = minor_stress_gain }
 			send_interface_message = { type = event_stewardship_neutral_with_text title = dhm_v080_officer_progress_title desc = dhm_v080_officer_progress_audit_desc left_icon = scope:dhm_story_officer }
 		}
 		else_if = {
-			limit = { scope:dhm_story_officer = { dhm_v071_choice_is_trigger = { KEY = dhm071_officer_choice VALUE = flag:credit LEGACY = dhm_officer_credited_outcome } } }
+			limit = { scope:dhm_story_officer = { dhm_v071_choice_is_trigger = { KEY = dhm071_officer_choice VALUE = flag:credit  } } }
 			add_prestige = minor_prestige_gain
 			scope:dhm_story_officer = { add_stress = miniscule_stress_loss }
 			send_interface_message = { type = event_stewardship_good_with_text title = dhm_v080_officer_progress_title desc = dhm_v080_officer_progress_credit_desc left_icon = scope:dhm_story_officer }

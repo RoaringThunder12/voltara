@@ -1,33 +1,5 @@
-﻿restore_badd_fortress_scripted_effect = {
-	
-	# Buff Ahar 
-	# Native-world scope has no target in Voltara; original follows.
-# title:b_ahar = {
-# 		# Give it an extra building slot.
-# 		title_province = {
-# 			add_province_modifier = extra_building_slot
-# 			add_province_modifier = { #and a mighty defensive buff
-# 				modifier = fp3_mountain_redoubt_modifier
-# 			}
-# 		}	
-# 	}
-
-	# Native-world scope has no target in Voltara; original follows.
-# title:c_tabriz = { # And a decent development boost.
-# 		change_development_level = minor_development_level_gain
-# 	}
-
-	# Make it your capital if it wasn't already.
-	if = {
-		limit = {
-			NOT = { always = no }
-		}
-		set_realm_capital = title:c_tabriz
-	}
-	# Native-world scope has no target in Voltara; original follows.
-# title:b_ahar = { set_capital_barony = yes }
-		
-}
+﻿restore_badd_fortress_scripted_effect = { # Retired Earth-history feature; intentionally no campaign effects.
+ }
 
 destroy_the_magi_scripted_effect = {
 
@@ -341,79 +313,8 @@ spawn_seljuk_character_effect = {
 	}
 }
 
-try_to_settle_the_seljuk_effect = {
-	# Search for a character who can host the tribe
-	save_scope_as = lead_seljuk
-	
-	if = { # # Attempt to settle them in a duchy within the d_nishapur region, where the conflict historically started. Starting here to save the Seljuks the trip from the Oghuz-Il region to Persia proper, then attempt to settle them in a suitable duchy title
-		limit = {
-			any_county_in_region = {
-				region = world_persian_empire
-				de_jure_liege = {
-					trigger_if = {
-						limit = { exists = holder }
-						holder = { is_ai = yes }
-					}
-					save_temporary_scope_as = duchy_temp
-				}
-				holder.top_liege = { capital_county.de_jure_liege != scope:duchy_temp }
-			}
-		}
-		random_county_in_region = {
-			region = world_persian_empire
-			limit = {
-				de_jure_liege = {
-					always = no
-					trigger_if = {
-						limit = { exists = holder }
-						holder = { is_ai = yes }
-					}
-					save_temporary_scope_as = duchy_temp
-				}
-				holder.top_liege = { capital_county.de_jure_liege != scope:duchy_temp }
-			}
-			alternative_limit = {
-				de_jure_liege = {
-					de_jure_liege = title:k_khorasan
-					trigger_if = {
-						limit = { exists = holder }
-						holder = { is_ai = yes }
-					}
-					save_temporary_scope_as = duchy_temp
-				}
-				holder.top_liege = { capital_county.de_jure_liege != scope:duchy_temp }
-			}
-			alternative_limit = {
-				de_jure_liege = {
-					trigger_if = {
-						limit = { exists = holder }
-						holder = { is_ai = yes }
-					}
-					save_temporary_scope_as = duchy_temp
-				}
-				holder.top_liege = { capital_county.de_jure_liege != scope:duchy_temp }
-			}
-			weight = {
-				base = 1
-				modifier = {
-					holder.top_liege = { save_temporary_scope_as = top_liege_temp }
-					any_neighboring_county = {
-						holder.top_liege != scope:top_liege_temp
-					}
-				}
-			}
-			de_jure_liege = { save_scope_as = fp3_seljuk_settle_target }
-
-			debug_log = "Attempting to settle seljuk in random duchy"
-
-			holder.top_liege = { trigger_event = fp3_story_cycle_seljuks_invasion_events.0002 }
-		}
-	}
-	else = { # nobody to settle, then attack!
-		start_wars_for_seljuk_empire_effect = yes
-		debug_log = "Attempting to settle seljuk by force"
-	}
-}
+try_to_settle_the_seljuk_effect = { # Retired Earth-history feature; intentionally no campaign effects.
+ }
 
 ### Start war of conquest for the Seljuk heartland
 start_wars_for_seljuk_empire_effect = {
@@ -799,137 +700,11 @@ seljuk_request_independence_from_liege_effect = {
 ### Zanj Rebellion Effects
 
 #This is Ali Ibn Muhammad, leader of the Zanj Rebellion
-spawn_zanj_leader_character_effect = {
-	create_character = {
-		age = { 55 65 }
-		name = "Muhammad"
-		gender = male
-		faith = faith:shia
-		rite = rite:zayidi
-		location = title:c_basra.title_province
-		culture = culture:bedouin
+spawn_zanj_leader_character_effect = { # Retired Earth-history feature; intentionally no campaign effects.
+ }
 
-		dynasty = none
-
-		save_scope_as = zanj_leader_father
-	}
-
-	create_character = {
-		age = { 55 65 }
-		gender = female
-		faith = faith:kharijite
-		rite = rite:azariqa
-		location = title:c_basra.title_province
-		culture = culture:bedouin
-
-		dynasty = none
-
-		save_scope_as = zanj_leader_mother
-	}
-
-	create_character = {
-		age = { 25 35 }
-		name = "Ali"
-		gender = male
-		faith = faith:shia
-		rite = rite:zayidi
-		location = title:c_basra.title_province
-		culture = culture:bedouin
-		father = scope:zanj_leader_father
-		mother = scope:zanj_leader_mother
-		dynasty = none
-
-		trait = education_intrigue_3
-		trait = ambitious
-		trait = deceitful
-		trait = just
-		trait = shrewd
-		trait = peasant_leader
-
-		random_traits = no
-		#Skills
-		learning = {
-			min_template_high_skill
-			max_template_high_skill
-		}
-		martial = {
-			min_template_average_skill
-			max_template_average_skill
-		}
-		prowess = {
-			min_template_low_skill
-			max_template_low_skill
-		}
-		diplomacy = {
-			min_template_average_skill
-			max_template_average_skill
-		}
-		intrigue = {
-			min_template_high_skill
-			max_template_high_skill
-		}
-		stewardship = {
-			min_template_low_skill
-			max_template_low_skill
-		}
-		save_scope_as = zanj_leader
-	}
-}
-
-spawn_zanj_representative_character_effect = {
-	create_character = {
-		age = { 30 40 }
-		gender_female_chance = 50
-		faith = faith:kharijite
-		rite = rite:azariqa
-		location = title:c_basra.title_province
-		culture = culture:east_bantu
-
-		dynasty = none
-
-		trait = education_martial_3
-		trait = organizer
-		trait = brave
-		trait = peasant_leader
-		random_traits_list = {
-			count = 2
-			ambitious = {}
-			gregarious = {}
-			trusting = {}
-			wrathful = {}
-			just = {}
-			compassionate = {}
-			honest = {}
-			vengeful = {}
-		}
-		#Skills
-		learning = {
-			min_template_low_skill
-			max_template_average_skill
-		}
-		martial = {
-			min_template_average_skill
-			max_template_average_skill
-		}
-		prowess = {
-			min_template_low_skill
-			max_template_average_skill
-		}
-		diplomacy = {
-			min_template_average_skill
-			max_template_average_skill
-		}
-		intrigue = {
-			min_template_low_skill
-			max_template_average_skill
-		}
-		stewardship = {
-			min_template_low_skill
-			max_template_average_skill
-		}
-		save_scope_as = zanj_representative
-	}
-}
+spawn_zanj_representative_character_effect = { # Retired Earth-history feature; intentionally no campaign effects.
+ }
 
 fp3_start_zanj_rebellion_effect = {
 
@@ -1033,7 +808,7 @@ create_zanj_vassal_effect = {
 
 inherit_zanj_rebellion_effect = {
 	scope:zanj_leader = { save_scope_as = old_zanj_leader }
-	spawn_zanj_representative_character_effect = yes
+
 	scope:zanj_representative = { save_scope_as = zanj_leader }
 
 	scope:zanj_leader = {

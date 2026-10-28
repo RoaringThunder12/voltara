@@ -593,19 +593,8 @@ tgp_silk_road_feudalize_holding_effect = {
 	}
 }
 
-tgp_silk_road_byzantium_destroyed_effect = {
-	situation:silk_road_situation = {
-		if = {
-			limit = { situation_has_catalyst = catalyst_silk_road_byzantium_blew_up }
-			situation_sub_region:region_silk_road_proper_occident = {
-				trigger_sub_region_catalyst = {
-					catalyst = catalyst_silk_road_byzantium_blew_up
-					character = title:e_byzantium.previous_holder
-				}
-			}
-		}
-	}
-}
+tgp_silk_road_byzantium_destroyed_effect = { # Retired Earth-history feature; intentionally no campaign effects.
+ }
 
 tgp_silk_road_phase_message_effect = {
 	every_player = {

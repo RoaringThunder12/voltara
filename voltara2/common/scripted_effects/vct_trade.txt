@@ -40,11 +40,13 @@ vct_settle_freed = {
 vct_yearly_review = {
 
  every_ruler = { limit = { vca_arena_host = yes } vca_enroll_court = yes }
- # One annual policy step per side, not one step per county or vassal.
- if = { limit = { any_ruler = { vca_slaver = yes has_character_modifier = vct_chain_charter } } vca_shift = { VALUE = 2 } }
- if = { limit = { any_ruler = { vca_liberator = yes has_character_modifier = vct_free_charter } } vca_shift = { VALUE = -2 } }
+ # Opposing charters cancel before clamping, including at 0 and 100.
+ if = { limit = { any_ruler = { vca_slaver = yes has_character_modifier = vct_chain_charter }
+ NOT = { any_ruler = { vca_liberator = yes has_character_modifier = vct_free_charter } } } vca_shift = { VALUE = 2 } }
+ if = { limit = { any_ruler = { vca_liberator = yes has_character_modifier = vct_free_charter }
+ NOT = { any_ruler = { vca_slaver = yes has_character_modifier = vct_chain_charter } } } vca_shift = { VALUE = -2 } }
  every_ruler = { limit = { vca_actor = yes } vct_phase_benefits = yes }
- every_ruler = { limit = { vct_available = yes NOT = { has_character_flag = vct_incident_cooldown } }
+ random_ruler = { limit = { vct_available = yes vca_slaver = yes NOT = { has_character_flag = vct_incident_cooldown } }
  random = { chance = 20 add_character_flag = { flag = vct_incident_cooldown months = 18 }
  random_list = { 30 = { trigger_event = { id = vca.20 days = 15 } } 25 = { trigger_event = { id = vct.30 days = 15 } }
  25 = { trigger_event = { id = vct.31 days = 15 } } 20 = { trigger = { vca_slaver = yes } trigger_event = { id = vct.32 days = 15 } }
@@ -52,5 +54,12 @@ vct_yearly_review = {
  }
  }
  }
-
+ random_ruler = { limit = { vct_available = yes vca_liberator = yes NOT = { has_character_flag = vct_incident_cooldown } }
+ random = { chance = 20 add_character_flag = { flag = vct_incident_cooldown months = 18 }
+ random_list = { 30 = { trigger_event = { id = vca.20 days = 15 } } 25 = { trigger_event = { id = vct.30 days = 15 } }
+ 25 = { trigger_event = { id = vct.31 days = 15 } } 20 = { trigger = { vca_slaver = yes } trigger_event = { id = vct.32 days = 15 } }
+ 15 = { trigger = { vca_arena_host = yes any_courtier = { has_trait = voltara_slave has_trait = vca_gladiator var:voltara_slave_owner ?= root } } trigger_event = { id = vct.33 days = 15 } }
+ }
+ }
+ }
 }

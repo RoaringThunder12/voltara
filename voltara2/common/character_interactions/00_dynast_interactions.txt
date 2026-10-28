@@ -2077,9 +2077,9 @@ is_valid = {
 				faith ?= {
 					has_doctrine_parameter = pacifist
 				}
-				this = title:e_byzantium.holder
-				is_at_war_with = title:e_byzantium.holder
-				has_truce = title:e_byzantium.holder
+				always = no
+				always = no
+				always = no
 			}
 
 			always = no
@@ -2108,8 +2108,8 @@ is_valid = {
 					has_doctrine_parameter = pacifist
 				}
 				always = no
-				is_at_war_with = title:e_byzantium.holder
-				has_truce = title:e_byzantium.holder
+				always = no
+				always = no
 			}
 		}
 	}
@@ -2120,7 +2120,7 @@ is_valid = {
 		scope:puppet_or_actor = {
 			is_at_war = no
 			NOT = {
-				has_relation_rival = title:e_byzantium.holder
+				always = no
 			}
 		}
 		scope:recipient = {
@@ -2138,7 +2138,7 @@ is_valid = {
 					is_adult = yes
 					NOT = {
 						can_be_knight_trigger = {
-							ARMY_OWNER = title:e_byzantium.holder
+							ARMY_OWNER = scope:actor.top_liege
 						}
 					}
 				}
@@ -2146,7 +2146,7 @@ is_valid = {
 			custom_description = {
 				scope:recipient = {
 					can_be_knight_trigger = {
-						ARMY_OWNER = title:e_byzantium.holder
+						ARMY_OWNER = scope:actor.top_liege
 					}
 				}
 				text = "not_allowed_in_varangian_guard"
@@ -2171,15 +2171,8 @@ is_valid = {
 	}
 	
 	on_accept = {
-		title:e_byzantium.holder = {
-			save_scope_as = emperor
-			if = { limit = { always = no } # Proven unreachable; original effects retained below.
-# set_local_variable = {
-# 					name = to_miklagard
-# 					value = yes
-# 				}
-}
-		}
+		# Historical title scope excluded.
+
 		
 		scope:puppet_or_actor = {
 			stress_and_fulfillment_impact = {

@@ -6,7 +6,7 @@
 				name = seljuk_invasion_nomad_strength_score
 				value = 10
 			}
-			try_to_settle_the_seljuk_effect = yes
+
 		}
 		set_variable = {
 			name = succession_counter
@@ -155,13 +155,8 @@
 						add_claim_on_loss = no
 					}
 
-					title:e_persia = {
-						change_title_holder = {
-							holder = scope:owner
-							change = scope:title_change
-						}
-						save_scope_as = title_e_persia
-					}
+					# Historical title scope excluded.
+
 
 					resolve_title_and_vassal_change = scope:title_change
 

@@ -1,48 +1,12 @@
 ﻿# v0.7.4: confirmation-time guards. No candidate search or worldwide scan.
 
-dhm_v074_appoint_steward_trigger = {
- OR = {
-  AND = { exists = scope:dhm074_appointment_role scope:dhm074_appointment_role = flag:steward }
-  AND = {
-   NOT = { exists = scope:dhm074_appointment_role }
-   has_character_flag = dhm_appoint_steward_context
-   NOR = { has_character_flag = dhm_appoint_matchmaker_context has_character_flag = dhm_appoint_tutor_context has_character_flag = dhm_appoint_chronicler_context }
-  }
- }
-}
+dhm_v074_appoint_steward_trigger = { exists = scope:dhm074_appointment_role scope:dhm074_appointment_role = flag:steward }
 
-dhm_v074_appoint_matchmaker_trigger = {
- OR = {
-  AND = { exists = scope:dhm074_appointment_role scope:dhm074_appointment_role = flag:matchmaker }
-  AND = {
-   NOT = { exists = scope:dhm074_appointment_role }
-   has_character_flag = dhm_appoint_matchmaker_context
-   NOR = { has_character_flag = dhm_appoint_steward_context has_character_flag = dhm_appoint_tutor_context has_character_flag = dhm_appoint_chronicler_context }
-  }
- }
-}
+dhm_v074_appoint_matchmaker_trigger = { exists = scope:dhm074_appointment_role scope:dhm074_appointment_role = flag:matchmaker }
 
-dhm_v074_appoint_tutor_trigger = {
- OR = {
-  AND = { exists = scope:dhm074_appointment_role scope:dhm074_appointment_role = flag:tutor }
-  AND = {
-   NOT = { exists = scope:dhm074_appointment_role }
-   has_character_flag = dhm_appoint_tutor_context
-   NOR = { has_character_flag = dhm_appoint_steward_context has_character_flag = dhm_appoint_matchmaker_context has_character_flag = dhm_appoint_chronicler_context }
-  }
- }
-}
+dhm_v074_appoint_tutor_trigger = { exists = scope:dhm074_appointment_role scope:dhm074_appointment_role = flag:tutor }
 
-dhm_v074_appoint_chronicler_trigger = {
- OR = {
-  AND = { exists = scope:dhm074_appointment_role scope:dhm074_appointment_role = flag:chronicler }
-  AND = {
-   NOT = { exists = scope:dhm074_appointment_role }
-   has_character_flag = dhm_appoint_chronicler_context
-   NOR = { has_character_flag = dhm_appoint_steward_context has_character_flag = dhm_appoint_matchmaker_context has_character_flag = dhm_appoint_tutor_context }
-  }
- }
-}
+dhm_v074_appoint_chronicler_trigger = { exists = scope:dhm074_appointment_role scope:dhm074_appointment_role = flag:chronicler }
 
 dhm_v074_appointment_role_valid_trigger = {
  OR = { dhm_v074_appoint_steward_trigger = yes dhm_v074_appoint_matchmaker_trigger = yes dhm_v074_appoint_tutor_trigger = yes dhm_v074_appoint_chronicler_trigger = yes }

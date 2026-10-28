@@ -1939,14 +1939,7 @@ always = no
 }
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 1
-		}
+		if = { limit = { always = no } }
 		#Trying to put them here on game start
 		if = { limit = {
 				years_from_game_start < 1
@@ -2090,14 +2083,7 @@ ho_christian_fleurians = {
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		if = { limit = {
 				# Optional native title is absent on the Voltara map.
 # scope:province.county ?= title:c_orleans
@@ -2250,14 +2236,7 @@ always = no
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 5
-		}
+		if = { limit = { always = no } }
 		if = { limit = {
 				# Optional native title is absent on the Voltara map.
 # scope:province.county ?= title:c_arezzo
@@ -2325,14 +2304,7 @@ always = no
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 5
-		}
+		if = { limit = { always = no } }
 		#Trying to put them here on game start
 		if = { limit = {
 				years_from_game_start < 1
@@ -2391,14 +2363,7 @@ always = no
 		value = 20
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 5
-		}
+		if = { limit = { always = no } }
 		#Trying to put them here on game start
 		if = { limit = {
 				years_from_game_start < 1
@@ -2431,15 +2396,9 @@ ho_christian_tironensians = {
 	government = monastic_holy_order_government
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = tironensian_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_angus
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -2460,24 +2419,9 @@ always = no
 		value = 10
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 5
-		}
+		if = { limit = { always = no } }
 		#Trying to put them here on game start
-		if = { limit = {
-				years_from_game_start < 1
-				
-				scope:founder = { has_variable = tironensian_founder }
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_angus
-always = no
-			} # Redundant unreachable effects archived in error-batch/audit.json.
-}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -2529,14 +2473,7 @@ always = no
 		value = 10
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 5
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				scope:leader = {
@@ -2671,17 +2608,7 @@ always = no
 		value = 1
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					OR = {
-						has_variable = benedictine
-						#has_variable = celtic_monk
-					}
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		#Trying to put them here on game start
 		if = { limit = {
 				years_from_game_start < 1
@@ -2736,14 +2663,7 @@ ho_sankt_gallen_benedictines = {
 		value = 50
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			multiply = 2
-		}
+		if = { limit = { always = no } }
 		#Trying to put them here on game start
 		if = { limit = {
 				years_from_game_start < 1
@@ -2793,14 +2713,7 @@ ho_christian_maurian_benedictines = {
 		value = 1
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				scope:province = {
@@ -2877,14 +2790,7 @@ always = no
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			multiply = 2
-		}
+		if = { limit = { always = no } }
 		#More likely if related to Benedictines
 		if = { limit = {
 				OR = {
@@ -2954,14 +2860,7 @@ ho_christian_ottonian_benedictines = {
 		value = 1
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 5
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				scope:province = {
@@ -3035,14 +2934,7 @@ ho_christian_guntherian_benedictines = {
 		value = 1
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 5
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				scope:province = {
@@ -3090,15 +2982,9 @@ ho_christian_hirsau_benedictines = {
 	# Voltara: create the order title dynamically when founded.
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = hirsau_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_kaiserslautern
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -3119,14 +3005,7 @@ always = no
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 5
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				scope:founder.culture = {
@@ -3143,14 +3022,7 @@ always = no
 			} # Redundant unreachable effects archived in error-batch/audit.json.
 }
 		#Trying to put them here on game start
-		if = { limit = {
-				years_from_game_start < 1
-				scope:founder = { has_variable = hirsau_founder }
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_kaiserslautern
-always = no
-			} # Redundant unreachable effects archived in error-batch/audit.json.
-}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -3197,14 +3069,7 @@ ho_christian_princely_benedictines = {
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 5
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				scope:founder.culture = {
@@ -3238,17 +3103,7 @@ ho_christian_eremetic_benedictines = {
 	name = "holy_order_eremetic_benedictines"
 
 	trigger = {
-		trigger_if = {
-			limit = {
-				scope:founder = {
-					has_variable = monastic_game_start_founder
-					has_variable = 867_founder
-				}
-			}
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_burgos
-always = no
-		}
+		trigger_if = { limit = { always = no } }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -3297,14 +3152,7 @@ always = no
 		}
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		#Eremetic tradition was v old
 		if = {
 			limit = {
@@ -3313,17 +3161,7 @@ always = no
 			multiply = 0.2
 		}
 		#Trying to put them here on game start
-		if = { limit = {
-				years_from_game_start < 1
-				
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_burgos
-always = no
-				scope:founder = {
-					has_variable = 867_founder
-				}
-			} # Redundant unreachable effects archived in error-batch/audit.json.
-}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -3385,14 +3223,7 @@ ho_christian_ripollese_benedictines = {
 		}
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		if = { limit = {
 				# Optional native title is absent on the Voltara map.
 # scope:province.county ?= title:c_barcelona
@@ -3421,19 +3252,11 @@ ho_christian_iberian_cluniacs = {
 	# Voltara: create the order title dynamically when founded.
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = {
 					has_variable = monastic_game_start_founder
 				}
-			}
-			scope:founder = {
-				has_variable = iberian_cluniac_founder
-			}
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_burgos
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -3468,14 +3291,7 @@ always = no
 		}
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				current_year < 1000
@@ -3483,17 +3299,7 @@ always = no
 			multiply = 0.2
 		}
 		#Trying to put them here on game start
-		if = { limit = {
-				years_from_game_start < 1
-				
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_burgos
-always = no
-				scope:founder = {
-					has_variable = iberian_cluniac_founder
-				}
-			} # Redundant unreachable effects archived in error-batch/audit.json.
-}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -3553,14 +3359,7 @@ ho_christian_anianian_benedictines = {
 		value = 1
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				scope:province = {
@@ -3628,14 +3427,7 @@ ho_christian_st_denis_benedictines = {
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		#Trying to put them here
 		if = { limit = {
 				# Optional native title is absent on the Voltara map.
@@ -3688,14 +3480,7 @@ ho_christian_corbine_benedictines = {
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		#Trying to put them here
 		if = { limit = {
 				# Optional native title is absent on the Voltara map.
@@ -3748,14 +3533,7 @@ ho_christian_gurloesian_benedictines = {
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		#Trying to put them here on game start
 		if = { limit = {
 				years_from_game_start < 1
@@ -3803,14 +3581,7 @@ ho_christian_gallic_benedictines = {
 		value = 1
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 5
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				scope:province = {
@@ -3872,14 +3643,7 @@ ho_christian_latin_benedictines = {
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				scope:province = {
@@ -3939,14 +3703,7 @@ always = no
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		if = { limit = {
 				# Optional native title is absent on the Voltara map.
 # scope:province.county ?= title:c_roma
@@ -4016,14 +3773,7 @@ ho_christian_glagolitic_benedictines = {
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				scope:province.county ?= {
@@ -4087,14 +3837,7 @@ always = no
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		#Trying to put them here on game start
 		if = { limit = {
 				years_from_game_start < 1
@@ -4150,14 +3893,7 @@ ho_christian_eastern_cluniacs = {
 		value = 5
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				scope:province = {
@@ -4213,14 +3949,7 @@ ho_christian_edgaric_benedictines = {
 	weight = {
 		value = 5
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		if = {
 			limit = {
 				current_year > 900
@@ -4305,14 +4034,7 @@ ho_christian_pastoral_benedictines = {
 		}
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 10
-		}
+		if = { limit = { always = no } }
 		#Trying to put them here on game start
 		if = { limit = {
 				years_from_game_start < 1
@@ -4384,14 +4106,7 @@ always = no
 		}
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 50
-		}
+		if = { limit = { always = no } }
 		#Trying to put them here on game start
 		if = { limit = {
 				years_from_game_start < 1
@@ -4460,14 +4175,7 @@ always = no
 		}
 
 		#More likely if related to Benedictines
-		if = {
-			limit = {
-				scope:founder = {
-					has_variable = benedictine
-				}
-			}
-			add = 1
-		}
+		if = { limit = { always = no } }
 
 		#Trying to put them here on game start
 		if = { limit = {
@@ -5025,22 +4733,9 @@ ho_christian_gaelic_abbeys = {
 	# Voltara: create the order title dynamically when founded.
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = {
-				has_variable = gaelic_founder
-			}
-			OR = {
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_angus
-always = no
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_inner_hebrides
-always = no
-			}
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5064,23 +4759,7 @@ always = no
 			multiply = 2
 		}
 		#Trying to put them here on game start
-		if = { limit = {
-				years_from_game_start < 1
-				
-				
-				scope:founder = {
-					has_variable = gaelic_founder
-				}
-				OR = {
-					# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_angus
-always = no
-					# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_inner_hebrides
-always = no
-				}
-			} # Redundant unreachable effects archived in error-batch/audit.json.
-}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5106,20 +4785,9 @@ ho_christian_studites = {
 	coat_of_arms = "ho_studites"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = studite_founder }
-			OR = {
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_brysis
-always = no
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_prusa
-always = no
-			}
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5140,14 +4808,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = studite_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5172,15 +4833,9 @@ ho_christian_athonite_hermits = {
 	coat_of_arms = "ho_athonite_hermits"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = athonite_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_chalkidike
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5204,14 +4859,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = athonite_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5267,15 +4915,9 @@ ho_christian_bithynians = {
 	coat_of_arms = "ho_bithynians"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = bithynian_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_prusa
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5291,14 +4933,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = bithynian_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5323,15 +4958,9 @@ ho_christian_latros_hesychasts = {
 	coat_of_arms = "ho_latros_hesychasts"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = latros_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_ionia
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5347,14 +4976,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = latros_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5379,15 +5001,9 @@ ho_christian_sumelan_monks = {
 	coat_of_arms = "ho_sumelan_monks"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = sumelan_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_trebizond
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5403,14 +5019,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = sumelan_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5435,20 +5044,9 @@ ho_christian_georgian_monasteries = {
 	coat_of_arms = "ho_georgian_monasteries"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = georgian_monastic_founder }
-			OR = {
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_kakheti
-always = no
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_tao
-always = no
-			}
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5472,14 +5070,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = georgian_monastic_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5504,15 +5095,9 @@ ho_christian_evergetine_cenobites = {
 	coat_of_arms = "ho_evergetine_cenobites"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = evergetine_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_brysis
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5534,14 +5119,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = evergetine_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5566,15 +5144,9 @@ ho_christian_klimentine_monasteries = {
 	coat_of_arms = "ho_klimentine_monasteries"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = klimentine_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_ohrid
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5597,14 +5169,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = klimentine_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5629,15 +5194,9 @@ ho_christian_kyivan_studites = {
 	coat_of_arms = "ho_kyivan_studites"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = kyivan_studite_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_kiev
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5659,14 +5218,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = kyivan_studite_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5691,15 +5243,9 @@ ho_christian_yurievs = {
 	coat_of_arms = "ho_yurievs"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = yuriev_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_novgorod
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5724,14 +5270,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = yuriev_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5756,15 +5295,9 @@ ho_christian_boeotians = {
 	coat_of_arms = "ho_boeotians"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = boeotian_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_boeotia
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5780,14 +5313,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = boeotian_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5812,15 +5338,9 @@ ho_christian_euphrosynians = {
 	coat_of_arms = "ho_euphrosynians"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = euphrosynian_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_polotsk
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5845,14 +5365,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = euphrosynian_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5900,15 +5413,9 @@ ho_christian_sisters_of_the_nativity = {
 	coat_of_arms = "ho_sisters_of_the_nativity"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = nativity_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_vladimir
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = {
@@ -5927,14 +5434,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = nativity_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -5982,20 +5482,9 @@ ho_christian_bahitawi = {
 	coat_of_arms = "ho_bahitawi"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = bahitawi_founder }
-			OR = {
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_serae
-always = no
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_lasta
-always = no
-			}
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = faith:miaphysitism
@@ -6009,14 +5498,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = bahitawi_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -6041,15 +5523,9 @@ ho_christian_desert_fathers = {
 	coat_of_arms = "ho_desert_fathers"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = desert_father_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_alexandria
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = faith:miaphysitism
@@ -6063,14 +5539,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = desert_father_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -6095,20 +5564,9 @@ ho_christian_monks_of_hayk = {
 	coat_of_arms = "ho_monks_of_hayk"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = hayk_monk_founder }
-			OR = {
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_hayk
-always = no
-				# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_khachen
-always = no
-			}
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = faith:miaphysitism
@@ -6130,14 +5588,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = hayk_monk_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -6162,15 +5613,9 @@ ho_christian_eastern_vardapets = {
 	coat_of_arms = "ho_eastern_vardapets"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = vardapet_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_hayk
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = faith:miaphysitism
@@ -6193,14 +5638,7 @@ always = no
 	weight = {
 		value = 5
 		#Trying to put them here on game start
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = vardapet_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -6225,15 +5663,9 @@ ho_christian_sons_of_the_covenant = {
 	coat_of_arms = "ho_sons_of_the_covenant"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = sons_of_the_covenant_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_ninive
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = faith:nestorian
@@ -6246,14 +5678,7 @@ always = no
 
 	weight = {
 		value = 5
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = sons_of_the_covenant_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -6278,15 +5703,9 @@ ho_christian_rightful_dayroye = {
 	coat_of_arms = "ho_rightful_dayroye"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = rightful_dayroye_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_nasibin
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = faith:miaphysitism
@@ -6300,14 +5719,7 @@ always = no
 
 	weight = {
 		value = 5
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = rightful_dayroye_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {
@@ -6332,15 +5744,9 @@ ho_christian_community_of_st_catherine = {
 	coat_of_arms = "ho_community_of_st_catherine"
 
 	trigger = {
-		trigger_if = {
-			limit = {
+		trigger_if = { limit = {
 				scope:founder = { has_variable = monastic_game_start_founder }
-			}
-			scope:founder = { has_variable = community_of_st_catherine_founder }
-			# Optional native title is absent on the Voltara map.
-# scope:province.county ?= title:c_sinai
-always = no
-		}
+			} always = no }
 		trigger_else = {
 			scope:founder = {
 				faith = faith:miaphysitism
@@ -6354,14 +5760,7 @@ always = no
 
 	weight = {
 		value = 5
-		if = {
-			limit = {
-				years_from_game_start < 1
-
-				scope:founder = { has_variable = community_of_st_catherine_founder }
-			}
-			add = 10000
-		}
+		if = { limit = { always = no } }
 	}
 
 	effect = {

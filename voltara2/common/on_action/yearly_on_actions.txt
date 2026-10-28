@@ -19,7 +19,7 @@ yearly_global_pulse = {
 					has_game_rule = no_historical_characters
 				}
 			}
-			spawn_historical_characters_effect = yes
+
 		}
 		# Visigothic culture split
 		## Deprecated; to reenable, remove always = no line & decomment the trigger_event section.
@@ -866,11 +866,11 @@ always = no
 				always = no
 				any_great_project = {
 					great_project_type = grand_campaign_project
-					great_project_owner = title:h_china.holder
+					great_project_owner = root
 					var:grand_campaign_target_kingdom ?= {
 						any_de_jure_county = {
 							count = all
-							holder.top_overlord = title:h_china.holder
+							always = no
 						}
 					}
 				}

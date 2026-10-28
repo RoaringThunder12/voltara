@@ -9,6 +9,8 @@ vca_shift = {
  if = { limit = { NOT = { has_global_variable = vca_balance } } set_global_variable = { name = vca_balance value = 50 } }
  change_global_variable = { name = vca_balance add = $VALUE$ }
  set_global_variable = { name = vca_balance value = { value = global_var:vca_balance min = 0 max = 100 } }
+ set_global_variable = { name = vca_trade_bar value = { value = global_var:vca_balance divide = 100 } }
+ set_global_variable = { name = vca_freedom_bar value = { value = 100 subtract = global_var:vca_balance divide = 100 } }
 }
 vca_monthly = {
  set_global_variable = { name = vca_trade_bar value = { value = global_var:vca_balance divide = 100 } }
@@ -36,8 +38,8 @@ vca_win = {
 vca_clear_duel = { scope:vca_first ?= { remove_character_flag = vca_duel_pending } scope:vca_second ?= { remove_character_flag = vca_duel_pending } }
 vca_prepare_bout = {
  clear_saved_scope = vca_first clear_saved_scope = vca_second save_scope_as = vca_host
- random_courtier = { limit = { vca_fighter = yes OR = { has_trait = vca_gladiator AND = { has_trait = voltara_slave scope:vca_host = { voltara_slavery_is_legal = yes } } } } save_scope_as = vca_first }
- random_courtier = { limit = { vca_fighter = yes NOT = { this = scope:vca_first } OR = { has_trait = vca_gladiator AND = { has_trait = voltara_slave scope:vca_host = { voltara_slavery_is_legal = yes } } } } save_scope_as = vca_second }
+ random_courtier = { limit = { vca_fighter = yes has_trait = vca_gladiator } save_scope_as = vca_first }
+ random_courtier = { limit = { vca_fighter = yes NOT = { this = scope:vca_first } has_trait = vca_gladiator } save_scope_as = vca_second }
  if = { limit = { exists = scope:vca_first exists = scope:vca_second }
  scope:vca_first = { if = { limit = { NOT = { has_trait = vca_gladiator } } add_trait = vca_gladiator } add_character_flag = { flag = vca_duel_pending days = 90 } }
  scope:vca_second = { if = { limit = { NOT = { has_trait = vca_gladiator } } add_trait = vca_gladiator } add_character_flag = { flag = vca_duel_pending days = 90 } }
@@ -65,8 +67,47 @@ vca_force_slavery = {
  every_vassal_or_below = { limit = { NOT = { vtf_protected = yes } } if = { limit = { NOT = { has_realm_law = voltara_slavery_legal } } add_realm_law_skip_effects = voltara_slavery_legal } }
  vca_trade_backlash = yes vca_shift = { VALUE = 10 }
 }
-vca_enroll_court = {
- if = { limit = { vca_arena_host = yes voltara_slavery_is_legal = yes }
- ordered_courtier = { order_by = prowess max = 6 check_range_bounds = no limit = { is_adult = yes is_alive = yes has_trait = voltara_slave NOT = { has_trait = vca_gladiator } } add_trait = vca_gladiator }
+vca_enroll_court = { }
+
+vca_seed_alutor_roster = {
+ character:19064034 ?= { remove_trait = vca_gladiator }
+ if = {
+  limit = { NOT = { has_global_variable = vca_alutor_roster_seeded } exists = title:e_voltara_alutor.holder }
+  title:e_voltara_alutor.holder = {
+   save_scope_as = vca_roster_host
+   create_character = { age = 23 gender_female_chance = 25 culture = scope:vca_roster_host.culture faith = scope:vca_roster_host.faith rite = scope:vca_roster_host.rite employer = scope:vca_roster_host
+    trait = vca_gladiator trait = voltara_slave prowess = 16
+    after_creation = { set_variable = { name = voltara_slave_owner value = scope:vca_roster_host } set_variable = { name = voltara_last_enslaver value = scope:vca_roster_host } add_character_flag = voltara_enslavement_xp_awarded }
+   }
+   create_character = { age = 29 gender_female_chance = 25 culture = scope:vca_roster_host.culture faith = scope:vca_roster_host.faith rite = scope:vca_roster_host.rite employer = scope:vca_roster_host
+    trait = vca_gladiator trait = voltara_slave prowess = 19
+    after_creation = { set_variable = { name = voltara_slave_owner value = scope:vca_roster_host } set_variable = { name = voltara_last_enslaver value = scope:vca_roster_host } add_character_flag = voltara_enslavement_xp_awarded }
+   }
+   create_character = { age = 31 gender_female_chance = 25 culture = scope:vca_roster_host.culture faith = scope:vca_roster_host.faith rite = scope:vca_roster_host.rite employer = scope:vca_roster_host
+    trait = vca_gladiator trait = voltara_slave prowess = 21
+    after_creation = { set_variable = { name = voltara_slave_owner value = scope:vca_roster_host } set_variable = { name = voltara_last_enslaver value = scope:vca_roster_host } add_character_flag = voltara_enslavement_xp_awarded }
+   }
+   create_character = { age = 26 gender_female_chance = 25 culture = scope:vca_roster_host.culture faith = scope:vca_roster_host.faith rite = scope:vca_roster_host.rite employer = scope:vca_roster_host
+    trait = vca_gladiator trait = voltara_slave prowess = 17
+    after_creation = { set_variable = { name = voltara_slave_owner value = scope:vca_roster_host } set_variable = { name = voltara_last_enslaver value = scope:vca_roster_host } add_character_flag = voltara_enslavement_xp_awarded }
+   }
+   create_character = { age = 35 gender_female_chance = 25 culture = scope:vca_roster_host.culture faith = scope:vca_roster_host.faith rite = scope:vca_roster_host.rite employer = scope:vca_roster_host
+    trait = vca_gladiator trait = voltara_slave prowess = 23
+    after_creation = { set_variable = { name = voltara_slave_owner value = scope:vca_roster_host } set_variable = { name = voltara_last_enslaver value = scope:vca_roster_host } add_character_flag = voltara_enslavement_xp_awarded }
+   }
+   create_character = { age = 22 gender_female_chance = 25 culture = scope:vca_roster_host.culture faith = scope:vca_roster_host.faith rite = scope:vca_roster_host.rite employer = scope:vca_roster_host
+    trait = vca_gladiator trait = voltara_slave prowess = 15
+    after_creation = { set_variable = { name = voltara_slave_owner value = scope:vca_roster_host } set_variable = { name = voltara_last_enslaver value = scope:vca_roster_host } add_character_flag = voltara_enslavement_xp_awarded }
+   }
+   create_character = { age = 28 gender_female_chance = 25 culture = scope:vca_roster_host.culture faith = scope:vca_roster_host.faith rite = scope:vca_roster_host.rite employer = scope:vca_roster_host
+    trait = vca_gladiator trait = voltara_slave prowess = 20
+    after_creation = { set_variable = { name = voltara_slave_owner value = scope:vca_roster_host } set_variable = { name = voltara_last_enslaver value = scope:vca_roster_host } add_character_flag = voltara_enslavement_xp_awarded }
+   }
+   create_character = { age = 33 gender_female_chance = 25 culture = scope:vca_roster_host.culture faith = scope:vca_roster_host.faith rite = scope:vca_roster_host.rite employer = scope:vca_roster_host
+    trait = vca_gladiator trait = voltara_slave prowess = 22
+    after_creation = { set_variable = { name = voltara_slave_owner value = scope:vca_roster_host } set_variable = { name = voltara_last_enslaver value = scope:vca_roster_host } add_character_flag = voltara_enslavement_xp_awarded }
+   }
+  }
+  set_global_variable = { name = vca_alutor_roster_seeded value = yes }
  }
 }

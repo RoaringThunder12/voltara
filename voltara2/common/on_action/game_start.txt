@@ -4069,7 +4069,7 @@ always = no
 			if = {
 				limit = {
 					government_has_flag = government_has_merit
-					title:h_china.holder != top_liege
+					always = no
 				}
 				### TGP MERITOCRATIC/STEPPE ADMIN SETUP ON GAME START ###
 				if = {
@@ -4094,7 +4094,7 @@ always = no
 			if = {
 				limit = {
 					government_allows = merit
-					top_overlord != title:h_china.holder
+					always = yes
 				}
 				if = {
 					limit = {
@@ -4684,10 +4684,7 @@ always = no
 						has_religion = religion:islam_religion
 						capital_province = { geographical_region = world_europe_west_iberia }
 					}
-					add_achievement_global_variable_effect = {
-						VARIABLE = started_al_andalus_achievement
-						VALUE = yes
-					}
+					
 				}
 				if = { limit = {
 						always = no
@@ -4728,10 +4725,7 @@ always = no
 					}
 				}
 				## canute_the_greater_achievement
-				add_achievement_global_variable_effect = {
-					VARIABLE = started_canute_the_greater_achievement
-					VALUE = yes
-				}
+				
 				## king_of_all_the_isles_achievement
 				if = {
 					limit = {
@@ -5116,8 +5110,8 @@ always = no
 							is_from_ruler_designer = yes
 						}
 					}
-					add_to_global_unavailable_achievements_list_effect = { FLAG = flag:rd_character_blocked_iberia_or_iberia_achievement }
-					add_to_global_unavailable_achievements_list_effect = { FLAG = flag:rd_character_blocked_el_cid_achievement }
+					
+					
 					add_achievement_global_variable_effect = {
 						VARIABLE = any_ruler_designed_character_achievement
 						VALUE = yes

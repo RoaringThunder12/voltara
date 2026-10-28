@@ -6570,10 +6570,7 @@ settle_the_steppe_decision = {
 		# MPO ACHIEVEMENT Settling In
 		if = {
 			limit = { is_ai = no }
-			add_achievement_global_variable_effect = {
-				VARIABLE = mpo_settling_in_achievement_unlocked
-				VALUE = yes
-			}
+			
 		}
 		save_scope_as = nomad_settling_down
 		domicile.domicile_culture = { save_scope_as = invading_culture }

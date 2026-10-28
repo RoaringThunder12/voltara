@@ -1387,69 +1387,7 @@ tgp_japan_become_a_monk_decision = {
 
 # Restore Chrysanthemum Throne
 ### Restore a Yamato Ten'nō ###
-tgp_japan_restore_japanese_monarchy_decision = {
-	decision_group_type = major
-	title = tgp_japan_restore_japanese_monarchy_decision
-	desc = tgp_japan_restore_japanese_monarchy_decision_desc
-	selection_tooltip = tgp_japan_restore_japanese_monarchy_decision_tooltip
-	picture = { reference = "gfx/interface/illustrations/event_story/tgp_dynastic_cycle_stability.dds" }
-	sort_order = 80
-
-	is_shown = {
-		government_is_japanese_trigger = yes
-		# Chrysanthemum no longer part of Japan or destroyed
-		trigger_if = {
-			limit = { always = no }
-			NOT = { # Optional native title is absent on the Voltara map.
-# title:e_japan.holder ?= title:k_chrysanthemum_throne.holder.top_liege
-always = no }
-		}
-		# Japanese culture
-		culture ?= {
-			OR = {
-				this = culture:japanese
-				any_parent_culture_or_above = { this = culture:japanese }
-			}
-		}
-		has_tgp_dlc_trigger = yes
-	}
-
-	is_valid = {
-		is_independent_ruler = yes
-		always = no
-		always = no # Kyoto
-		custom_tooltip = { # Chrysanthemum destroyed or no longer part of Japan
-			text = tgp_japan_restore_japanese_monarchy_decision_title_tt
-			trigger_if = {
-				limit = { always = no }
-				NOT = { # Optional native title is absent on the Voltara map.
-# title:e_japan.holder ?= title:k_chrysanthemum_throne.holder.top_liege
-always = no }
-			}
-			trigger_else = { always = yes }
-		}
-	}
-
-	is_valid_showing_failures_only = {
-		is_available_adult = yes
-	}
-
-	effect = {
-		tgp_restore_japanese_monarchy_decision_effect = yes
-		trigger_event = tgp_japan_decision.9901
-	}
-
-	ai_check_interval_by_tier = {
-		barony = 0
-		county = 0
-		duchy = 0
-		kingdom = 0
-		empire = 36
-		hegemony = 0
-	}
-	ai_potential = { always = yes }
-	ai_will_do = { base = 100 }
-}
+tgp_japan_restore_japanese_monarchy_decision = { picture = { reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds" } desc = vt_historical_content_disabled selection_tooltip = vt_historical_content_disabled ai_check_interval = 0 is_shown = { always = no } is_valid = { always = no } effect = { } }
 
 # Restore Ritsuryo
 ### Restore Ritsuryō Bureaucracy ###
@@ -1682,87 +1620,7 @@ tgp_japan_assert_regional_dominion_government_decision = {
 
 # Establish New Shogunate Court Decision
 ### Move Shogunate Court Decision ###
-move_shogunate_court_decision = {
-	decision_group_type = major
-	title = tgp_japan_move_shogunate_court_decision
-	desc = tgp_japan_move_shogunate_court_decision_desc
-	selection_tooltip = tgp_japan_move_shogunate_court_decision_tooltip
-	picture = { reference = "gfx/interface/illustrations/event_story/tgp_japanese_shogunate.dds" }
-
-	cost = {
-		gold = {
-			value = massive_gold_value
-		}
-		prestige = {
-			value = massive_prestige_gain
-		}
-	}
-
-	is_shown = {
-		has_global_variable = shogunate_established
-		# Optional native title is absent on the Voltara map.
-# capital_county ?= title:c_yamashiro
-always = no
-		domain_size > 1
-		NOT = { has_variable = moved_shogunate_court }
-		is_landed = yes
-		has_tgp_dlc_trigger = yes
-	}
-
-	is_valid = {
-		always = no
-	}
-
-	is_valid_showing_failures_only = {
-		is_available_adult = yes
-	}
-
-	effect = {
-		set_realm_capital = scope:barony.county
-		# Native-world scope has no target in Voltara; original follows.
-# title:e_japan = { set_capital_county = scope:barony.county }
-
-		scope:barony.county = {
-			change_development_level = medium_development_level_gain
-			add_county_modifier = {
-				modifier = tgp_moved_shogun_court_modifier
-				years = 25
-			}
-		}
-		set_variable = moved_shogunate_court
-	}
-
-	widget = {
-		controller = create_holy_order
-        title_valid = {
-            trigger_if = {
-                limit = { exists = this }
-				is_capital_barony = yes
-				holder = scope:ruler
-				county != title:c_yamashiro
-				is_leased_out = no
-            }
-		}
-	}
-
-	ai_potential = {
-		is_playable_character = yes
-		has_global_variable = shogunate_established
-	}
-
-	ai_check_interval_by_tier = {
-		barony = 0
-		county = 0
-		duchy = 0
-		kingdom = 0
-		empire = 36
-		hegemony = 0
-	}
-
-	ai_will_do = {
-		base = 200
-	}
-}
+move_shogunate_court_decision = { picture = { reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds" } desc = vt_historical_content_disabled selection_tooltip = vt_historical_content_disabled ai_check_interval = 0 is_shown = { always = no } is_valid = { always = no } effect = { } }
 
 # Emperor Starting a Ceremonial Monarch War
 ### Begin the Restoration War ###

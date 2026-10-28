@@ -119,8 +119,8 @@ dhm_saga.0121 = {
 	title = dhm_saga.0121.t
 	desc = {
 		first_valid = {
-			triggered_desc = { trigger = { scope:dhm_officer_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_rivalry_choice VALUE = flag:reconcile LEGACY = dhm_officer_rivalry_reconciled } } } desc = dhm_saga.0121.reconcile }
-			triggered_desc = { trigger = { scope:dhm_officer_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_rivalry_choice VALUE = flag:favor LEGACY = dhm_officer_rivalry_favored } } } desc = dhm_saga.0121.favor }
+			triggered_desc = { trigger = { scope:dhm_officer_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_rivalry_choice VALUE = flag:reconcile  } } } desc = dhm_saga.0121.reconcile }
+			triggered_desc = { trigger = { scope:dhm_officer_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_rivalry_choice VALUE = flag:favor  } } } desc = dhm_saga.0121.favor }
 			triggered_desc = { trigger = { exists = scope:dhm071_rivalry_choice scope:dhm071_rivalry_choice = flag:divide } desc = dhm_saga.0121.divide }
 			desc = dhm_v076_dhm_saga_0121_unknown_desc
 		}
@@ -130,14 +130,14 @@ dhm_saga.0121 = {
 	left_portrait = scope:dhm_officer_first
 	right_portrait = scope:dhm_officer_second
 	trigger = { is_ai = no exists = scope:dhm_officer_first exists = scope:dhm_officer_second scope:dhm_officer_first = { dhm_v060_officer_trigger = yes } scope:dhm_officer_second = { dhm_v060_officer_trigger = yes } }
-	immediate = { scope:dhm_officer_first = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_rivalry_choice FLAG_1 = dhm_officer_rivalry_reconciled VALUE_1 = flag:reconcile FLAG_2 = dhm_officer_rivalry_favored VALUE_2 = flag:favor } } }
+	immediate = { scope:dhm_officer_first = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_rivalry_choice     } } }
 	option = {
 		name = dhm_saga.0121.a
 		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_rivalry_choice VALUE_1 = flag:reconcile VALUE_2 = flag:favor VALUE_3 = flag:divide } }
 		if = {
 			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_rivalry_choice VALUE_1 = flag:reconcile VALUE_2 = flag:favor VALUE_3 = flag:divide } }
-			if = { limit = { scope:dhm_officer_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_rivalry_choice VALUE = flag:reconcile LEGACY = dhm_officer_rivalry_reconciled } } } add_prestige = minor_prestige_gain add_stress = miniscule_stress_gain dhm_v050_cohesion_gain_small_effect = yes }
-			else_if = { limit = { scope:dhm_officer_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_rivalry_choice VALUE = flag:favor LEGACY = dhm_officer_rivalry_favored } } } add_prestige = minor_prestige_gain dhm_v050_cohesion_loss_small_effect = yes }
+			if = { limit = { scope:dhm_officer_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_rivalry_choice VALUE = flag:reconcile  } } } add_prestige = minor_prestige_gain add_stress = miniscule_stress_gain dhm_v050_cohesion_gain_small_effect = yes }
+			else_if = { limit = { scope:dhm_officer_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_rivalry_choice VALUE = flag:favor  } } } add_prestige = minor_prestige_gain dhm_v050_cohesion_loss_small_effect = yes }
 			else = { add_stress = miniscule_stress_loss add_prestige = minor_prestige_loss }
 			scope:dhm_officer_first = { create_character_memory = { type = dhm_officer_rivalry_memory participants = { rival_officer = scope:dhm_officer_second house_head = root } } }
 			scope:dhm_officer_second = { create_character_memory = { type = dhm_officer_rivalry_memory participants = { rival_officer = scope:dhm_officer_first house_head = root } } }
@@ -359,8 +359,8 @@ dhm_saga.3041 = {
 	title = dhm_saga.3041.t
 	desc = {
 		first_valid = {
-			triggered_desc = { trigger = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_parent_choice VALUE = flag:listen LEGACY = dhm_parent_arc_listened } } } desc = dhm_saga.3041.listen }
-			triggered_desc = { trigger = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_parent_choice VALUE = flag:duty LEGACY = dhm_parent_arc_duty } } } desc = dhm_saga.3041.duty }
+			triggered_desc = { trigger = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_parent_choice VALUE = flag:listen  } } } desc = dhm_saga.3041.listen }
+			triggered_desc = { trigger = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_parent_choice VALUE = flag:duty  } } } desc = dhm_saga.3041.duty }
 			triggered_desc = { trigger = { exists = scope:dhm071_parent_choice scope:dhm071_parent_choice = flag:test } desc = dhm_saga.3041.test }
 			desc = dhm_v076_dhm_saga_3041_unknown_desc
 		}
@@ -369,7 +369,7 @@ dhm_saga.3041 = {
 	override_background = { reference = dhm_v050_heir }
 	right_portrait = scope:dhm_arc_first
 	trigger = { is_ai = no exists = player_heir exists = scope:dhm_arc_first scope:dhm_arc_first = { is_alive = yes is_in_the_same_court_as = root this = root.player_heir } }
-	immediate = { scope:dhm_arc_first = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_parent_choice FLAG_1 = dhm_parent_arc_listened VALUE_1 = flag:listen FLAG_2 = dhm_parent_arc_duty VALUE_2 = flag:duty } } }
+	immediate = { scope:dhm_arc_first = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_parent_choice     } } }
 	option = {
 		name = dhm_saga.3041.speak
 		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_parent_choice VALUE_1 = flag:listen VALUE_2 = flag:duty VALUE_3 = flag:test } }
@@ -758,8 +758,8 @@ dhm_saga.4001 = {
 	desc = {
 		first_valid = {
 			triggered_desc = { trigger = { exists = scope:dhm090_child_care scope:dhm090_child_care = yes } desc = dhm090_spouse_child_ending }
-			triggered_desc = { trigger = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_protection_choice VALUE = flag:stand_together LEGACY = dhm_spouse_child_united } } } desc = dhm_saga.4001.united }
-			triggered_desc = { trigger = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_protection_choice VALUE = flag:discipline LEGACY = dhm_spouse_child_overruled } } } desc = dhm_saga.4001.overruled }
+			triggered_desc = { trigger = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_protection_choice VALUE = flag:stand_together  } } } desc = dhm_saga.4001.united }
+			triggered_desc = { trigger = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_protection_choice VALUE = flag:discipline  } } } desc = dhm_saga.4001.overruled }
 			triggered_desc = { trigger = { exists = scope:dhm071_protection_choice scope:dhm071_protection_choice = flag:private } desc = dhm_saga.4001.private }
 			desc = dhm_v076_dhm_saga_4001_unknown_desc
 		}
@@ -769,14 +769,14 @@ dhm_saga.4001 = {
 	left_portrait = scope:dhm_partner_spouse
 	right_portrait = scope:dhm_protected_child
 	trigger = { is_ai = no exists = scope:dhm_partner_spouse exists = scope:dhm_protected_child scope:dhm_partner_spouse = { is_alive = yes is_spouse_of = root } scope:dhm_protected_child = { is_alive = yes is_close_family_of = root } }
-	immediate = { scope:dhm_partner_spouse = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_protection_choice FLAG_1 = dhm_spouse_child_united VALUE_1 = flag:stand_together FLAG_2 = dhm_spouse_child_overruled VALUE_2 = flag:discipline } } }
+	immediate = { scope:dhm_partner_spouse = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_protection_choice     } } }
 	option = {
 		name = dhm_saga.4001.a
 		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_protection_choice VALUE_1 = flag:stand_together VALUE_2 = flag:discipline VALUE_3 = flag:private } }
 		if = {
 			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_protection_choice VALUE_1 = flag:stand_together VALUE_2 = flag:discipline VALUE_3 = flag:private } }
-			if = { limit = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_protection_choice VALUE = flag:stand_together LEGACY = dhm_spouse_child_united } } } add_prestige = minor_prestige_gain add_stress = miniscule_stress_gain dhm_v050_cohesion_gain_small_effect = yes dhm_v071_record_named_chapter_effect = { CHAPTER = dhm_chapter_spouses_stood_together }  }
-			else_if = { limit = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_protection_choice VALUE = flag:discipline LEGACY = dhm_spouse_child_overruled } } } add_prestige = minor_prestige_gain dhm_v050_cohesion_loss_small_effect = yes }
+			if = { limit = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_protection_choice VALUE = flag:stand_together  } } } add_prestige = minor_prestige_gain add_stress = miniscule_stress_gain dhm_v050_cohesion_gain_small_effect = yes dhm_v071_record_named_chapter_effect = { CHAPTER = dhm_chapter_spouses_stood_together }  }
+			else_if = { limit = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_protection_choice VALUE = flag:discipline  } } } add_prestige = minor_prestige_gain dhm_v050_cohesion_loss_small_effect = yes }
 			else = { add_stress = miniscule_stress_loss add_prestige = minor_prestige_loss }
 		}
 		else = { custom_tooltip = dhm_v076_unknown_outcome_tt }
@@ -873,8 +873,8 @@ dhm_saga.4101 = {
 	title = dhm_saga.4101.t
 	desc = {
 		first_valid = {
-			triggered_desc = { trigger = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_policy_choice VALUE = flag:compromise LEGACY = dhm_spouse_policy_compromise } } } desc = dhm_saga.4101.compromise }
-			triggered_desc = { trigger = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_policy_choice VALUE = flag:yield LEGACY = dhm_spouse_policy_yield } } } desc = dhm_saga.4101.yield }
+			triggered_desc = { trigger = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_policy_choice VALUE = flag:compromise  } } } desc = dhm_saga.4101.compromise }
+			triggered_desc = { trigger = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_policy_choice VALUE = flag:yield  } } } desc = dhm_saga.4101.yield }
 			triggered_desc = { trigger = { exists = scope:dhm071_policy_choice scope:dhm071_policy_choice = flag:command } desc = dhm_saga.4101.command }
 			desc = dhm_v076_dhm_saga_4101_unknown_desc
 		}
@@ -883,14 +883,14 @@ dhm_saga.4101 = {
 	override_background = { reference = dhm_v050_family }
 	right_portrait = scope:dhm_partner_spouse
 	trigger = { is_ai = no exists = scope:dhm_partner_spouse scope:dhm_partner_spouse = { is_alive = yes is_spouse_of = root } }
-	immediate = { scope:dhm_partner_spouse = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_policy_choice FLAG_1 = dhm_spouse_policy_compromise VALUE_1 = flag:compromise FLAG_2 = dhm_spouse_policy_yield VALUE_2 = flag:yield } } }
+	immediate = { scope:dhm_partner_spouse = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_policy_choice     } } }
 	option = {
 		name = dhm_saga.4101.a
 		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_policy_choice VALUE_1 = flag:compromise VALUE_2 = flag:yield VALUE_3 = flag:command } }
 		if = {
 			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_policy_choice VALUE_1 = flag:compromise VALUE_2 = flag:yield VALUE_3 = flag:command } }
-			if = { limit = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_policy_choice VALUE = flag:compromise LEGACY = dhm_spouse_policy_compromise } } } add_prestige = minor_prestige_gain add_stress = miniscule_stress_gain dhm_v071_record_named_chapter_effect = { CHAPTER = dhm_chapter_policy_mediated }  }
-			else_if = { limit = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_policy_choice VALUE = flag:yield LEGACY = dhm_spouse_policy_yield } } } add_stress = miniscule_stress_loss add_prestige = minor_prestige_loss }
+			if = { limit = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_policy_choice VALUE = flag:compromise  } } } add_prestige = minor_prestige_gain add_stress = miniscule_stress_gain dhm_v071_record_named_chapter_effect = { CHAPTER = dhm_chapter_policy_mediated }  }
+			else_if = { limit = { scope:dhm_partner_spouse = { dhm_v071_choice_is_trigger = { KEY = dhm071_policy_choice VALUE = flag:yield  } } } add_stress = miniscule_stress_loss add_prestige = minor_prestige_loss }
 			else = { add_prestige = minor_prestige_gain dhm_v050_cohesion_loss_small_effect = yes }
 		}
 		else = { custom_tooltip = dhm_v076_unknown_outcome_tt }
@@ -1304,8 +1304,8 @@ dhm_saga.6001 = {
 	title = dhm_saga.6001.t
 	desc = {
 		first_valid = {
-			triggered_desc = { trigger = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_scandal_choice VALUE = flag:shelter LEGACY = dhm_scandal_sheltered } } } desc = dhm_saga.6001.shelter }
-			triggered_desc = { trigger = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_scandal_choice VALUE = flag:rebuke LEGACY = dhm_scandal_rebuked } } } desc = dhm_saga.6001.rebuke }
+			triggered_desc = { trigger = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_scandal_choice VALUE = flag:shelter  } } } desc = dhm_saga.6001.shelter }
+			triggered_desc = { trigger = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_scandal_choice VALUE = flag:rebuke  } } } desc = dhm_saga.6001.rebuke }
 			triggered_desc = { trigger = { exists = scope:dhm071_scandal_choice scope:dhm071_scandal_choice = flag:restitution } desc = dhm_saga.6001.restitution }
 			desc = dhm_v076_dhm_saga_6001_unknown_desc
 		}
@@ -1314,14 +1314,14 @@ dhm_saga.6001 = {
 	override_background = { reference = dhm_v060_crisis_recovery }
 	right_portrait = scope:dhm_crisis_relative
 	trigger = { is_ai = no exists = scope:dhm_crisis_relative scope:dhm_crisis_relative = { is_alive = yes is_in_the_same_court_as = root } }
-	immediate = { scope:dhm_crisis_relative = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_scandal_choice FLAG_1 = dhm_scandal_sheltered VALUE_1 = flag:shelter FLAG_2 = dhm_scandal_rebuked VALUE_2 = flag:rebuke } } }
+	immediate = { scope:dhm_crisis_relative = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_scandal_choice     } } }
 	option = {
 		name = dhm_saga.6001.a
 		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_scandal_choice VALUE_1 = flag:shelter VALUE_2 = flag:rebuke VALUE_3 = flag:restitution } }
 		if = {
 			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_scandal_choice VALUE_1 = flag:shelter VALUE_2 = flag:rebuke VALUE_3 = flag:restitution } }
-			if = { limit = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_scandal_choice VALUE = flag:shelter LEGACY = dhm_scandal_sheltered } } } add_stress = miniscule_stress_gain add_prestige = minor_prestige_loss dhm_v050_cohesion_gain_small_effect = yes }
-			else_if = { limit = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_scandal_choice VALUE = flag:rebuke LEGACY = dhm_scandal_rebuked } } } add_prestige = minor_prestige_gain dhm_v050_cohesion_loss_small_effect = yes }
+			if = { limit = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_scandal_choice VALUE = flag:shelter  } } } add_stress = miniscule_stress_gain add_prestige = minor_prestige_loss dhm_v050_cohesion_gain_small_effect = yes }
+			else_if = { limit = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_scandal_choice VALUE = flag:rebuke  } } } add_prestige = minor_prestige_gain dhm_v050_cohesion_loss_small_effect = yes }
 			else = { add_prestige = minor_prestige_gain add_stress = miniscule_stress_gain }
 			dhm_v071_record_named_chapter_effect = { CHAPTER = dhm_chapter_scandal_endured }
 
@@ -1380,8 +1380,8 @@ dhm_saga.6101 = {
 	title = dhm_saga.6101.t
 	desc = {
 		first_valid = {
-			triggered_desc = { trigger = { scope:dhm_former_student = { dhm_v071_choice_is_trigger = { KEY = dhm071_study_choice VALUE = flag:study LEGACY = dhm_failed_education_study } } } desc = dhm_saga.6101.study }
-			triggered_desc = { trigger = { scope:dhm_former_student = { dhm_v071_choice_is_trigger = { KEY = dhm071_study_choice VALUE = flag:duty LEGACY = dhm_failed_education_duty } } } desc = dhm_saga.6101.duty }
+			triggered_desc = { trigger = { scope:dhm_former_student = { dhm_v071_choice_is_trigger = { KEY = dhm071_study_choice VALUE = flag:study  } } } desc = dhm_saga.6101.study }
+			triggered_desc = { trigger = { scope:dhm_former_student = { dhm_v071_choice_is_trigger = { KEY = dhm071_study_choice VALUE = flag:duty  } } } desc = dhm_saga.6101.duty }
 			triggered_desc = { trigger = { exists = scope:dhm071_study_choice scope:dhm071_study_choice = flag:accept } desc = dhm_saga.6101.accept }
 			desc = dhm_v076_dhm_saga_6101_unknown_desc
 		}
@@ -1390,14 +1390,14 @@ dhm_saga.6101 = {
 	override_background = { reference = dhm_living_schoolroom }
 	right_portrait = scope:dhm_former_student
 	trigger = { is_ai = no exists = scope:dhm_former_student scope:dhm_former_student = { is_alive = yes is_close_or_extended_family_of = root } }
-	immediate = { scope:dhm_former_student = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_study_choice FLAG_1 = dhm_failed_education_study VALUE_1 = flag:study FLAG_2 = dhm_failed_education_duty VALUE_2 = flag:duty } } }
+	immediate = { scope:dhm_former_student = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_study_choice     } } }
 	option = {
 		name = dhm_saga.6101.a
 		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_study_choice VALUE_1 = flag:study VALUE_2 = flag:duty VALUE_3 = flag:accept } }
 		if = {
 			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_study_choice VALUE_1 = flag:study VALUE_2 = flag:duty VALUE_3 = flag:accept } }
-			if = { limit = { scope:dhm_former_student = { dhm_v071_choice_is_trigger = { KEY = dhm071_study_choice VALUE = flag:study LEGACY = dhm_failed_education_study } } } add_prestige = minor_prestige_gain add_stress = miniscule_stress_gain }
-			else_if = { limit = { scope:dhm_former_student = { dhm_v071_choice_is_trigger = { KEY = dhm071_study_choice VALUE = flag:duty LEGACY = dhm_failed_education_duty } } } add_prestige = minor_prestige_gain dhm_v050_cohesion_loss_small_effect = yes }
+			if = { limit = { scope:dhm_former_student = { dhm_v071_choice_is_trigger = { KEY = dhm071_study_choice VALUE = flag:study  } } } add_prestige = minor_prestige_gain add_stress = miniscule_stress_gain }
+			else_if = { limit = { scope:dhm_former_student = { dhm_v071_choice_is_trigger = { KEY = dhm071_study_choice VALUE = flag:duty  } } } add_prestige = minor_prestige_gain dhm_v050_cohesion_loss_small_effect = yes }
 			else = { add_stress = miniscule_stress_loss add_prestige = minor_prestige_loss }
 			dhm_v071_record_named_chapter_effect = { CHAPTER = dhm_chapter_failed_lesson }
 
@@ -1502,8 +1502,8 @@ dhm_saga.6211 = {
 	title = dhm_saga.6211.t
 	desc = {
 		first_valid = {
-			triggered_desc = { trigger = { scope:dhm_mourner = { dhm_v071_choice_is_trigger = { KEY = dhm071_grief_choice VALUE = flag:funeral LEGACY = dhm_grief_funeral } } } desc = dhm_saga.6211.funeral }
-			triggered_desc = { trigger = { scope:dhm_mourner = { dhm_v071_choice_is_trigger = { KEY = dhm071_grief_choice VALUE = flag:vigil LEGACY = dhm_grief_vigil } } } desc = dhm_saga.6211.vigil }
+			triggered_desc = { trigger = { scope:dhm_mourner = { dhm_v071_choice_is_trigger = { KEY = dhm071_grief_choice VALUE = flag:funeral  } } } desc = dhm_saga.6211.funeral }
+			triggered_desc = { trigger = { scope:dhm_mourner = { dhm_v071_choice_is_trigger = { KEY = dhm071_grief_choice VALUE = flag:vigil  } } } desc = dhm_saga.6211.vigil }
 			triggered_desc = { trigger = { exists = scope:dhm071_grief_choice scope:dhm071_grief_choice = flag:duty } desc = dhm_saga.6211.duty }
 			desc = dhm_v076_dhm_saga_6211_unknown_desc
 		}
@@ -1512,14 +1512,14 @@ dhm_saga.6211 = {
 	override_background = { reference = dhm_v060_crisis_recovery }
 	right_portrait = scope:dhm_mourner
 	trigger = { is_ai = no exists = scope:dhm_mourner scope:dhm_mourner = { is_alive = yes is_in_the_same_court_as = root } }
-	immediate = { scope:dhm_mourner = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_grief_choice FLAG_1 = dhm_grief_funeral VALUE_1 = flag:funeral FLAG_2 = dhm_grief_vigil VALUE_2 = flag:vigil } } }
+	immediate = { scope:dhm_mourner = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_grief_choice     } } }
 	option = {
 		name = dhm_saga.6211.a
 		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_grief_choice VALUE_1 = flag:funeral VALUE_2 = flag:vigil VALUE_3 = flag:duty } }
 		if = {
 			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_grief_choice VALUE_1 = flag:funeral VALUE_2 = flag:vigil VALUE_3 = flag:duty } }
-			if = { limit = { scope:dhm_mourner = { dhm_v071_choice_is_trigger = { KEY = dhm071_grief_choice VALUE = flag:funeral LEGACY = dhm_grief_funeral } } } add_piety = minor_piety_gain add_stress = miniscule_stress_gain }
-			else_if = { limit = { scope:dhm_mourner = { dhm_v071_choice_is_trigger = { KEY = dhm071_grief_choice VALUE = flag:vigil LEGACY = dhm_grief_vigil } } } add_stress = miniscule_stress_loss add_prestige = minor_prestige_loss }
+			if = { limit = { scope:dhm_mourner = { dhm_v071_choice_is_trigger = { KEY = dhm071_grief_choice VALUE = flag:funeral  } } } add_piety = minor_piety_gain add_stress = miniscule_stress_gain }
+			else_if = { limit = { scope:dhm_mourner = { dhm_v071_choice_is_trigger = { KEY = dhm071_grief_choice VALUE = flag:vigil  } } } add_stress = miniscule_stress_loss add_prestige = minor_prestige_loss }
 			else = { add_prestige = minor_prestige_gain dhm_v050_cohesion_loss_small_effect = yes }
 			dhm_v071_record_named_chapter_effect = { CHAPTER = dhm_chapter_shared_grief }
 
@@ -1597,8 +1597,8 @@ dhm_saga.6301 = {
 	title = dhm_saga.6301.t
 	desc = {
 		first_valid = {
-			triggered_desc = { trigger = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_marriage_repair_choice VALUE = flag:mediate LEGACY = dhm_marriage_repair_mediated } } } desc = dhm_saga.6301.mediate }
-			triggered_desc = { trigger = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_marriage_repair_choice VALUE = flag:distance LEGACY = dhm_marriage_repair_distance } } } desc = dhm_saga.6301.distance }
+			triggered_desc = { trigger = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_marriage_repair_choice VALUE = flag:mediate  } } } desc = dhm_saga.6301.mediate }
+			triggered_desc = { trigger = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_marriage_repair_choice VALUE = flag:distance  } } } desc = dhm_saga.6301.distance }
 			triggered_desc = { trigger = { exists = scope:dhm071_marriage_repair_choice scope:dhm071_marriage_repair_choice = flag:duty } desc = dhm_saga.6301.duty }
 			triggered_desc = { trigger = { exists = scope:dhm071_marriage_repair_choice scope:dhm071_marriage_repair_choice = flag:agreement } desc = dhm082_marriage_agreement_desc }
 			desc = dhm_v076_dhm_saga_6301_unknown_desc
@@ -1609,14 +1609,14 @@ dhm_saga.6301 = {
 	left_portrait = scope:dhm_crisis_relative
 	right_portrait = scope:dhm_crisis_spouse
 	trigger = { is_ai = no exists = scope:dhm_crisis_relative exists = scope:dhm_crisis_spouse scope:dhm_crisis_relative = { is_alive = yes is_spouse_of = scope:dhm_crisis_spouse is_in_the_same_court_as = root } scope:dhm_crisis_spouse = { is_alive = yes is_in_the_same_court_as = root } }
-	immediate = { scope:dhm_crisis_relative = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_marriage_repair_choice FLAG_1 = dhm_marriage_repair_mediated VALUE_1 = flag:mediate FLAG_2 = dhm_marriage_repair_distance VALUE_2 = flag:distance } } }
+	immediate = { scope:dhm_crisis_relative = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_marriage_repair_choice     } } }
 	option = {
 		name = dhm_saga.6301.a
 		trigger = { dhm_v082_marriage_repair_known_trigger = yes }
 		if = {
 			limit = { dhm_v082_marriage_repair_known_trigger = yes }
 			if = {
-				limit = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_marriage_repair_choice VALUE = flag:mediate LEGACY = dhm_marriage_repair_mediated } } }
+				limit = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_marriage_repair_choice VALUE = flag:mediate  } } }
 				dhm_v040_apply_or_renew_reward_effect = { MODIFIER = dhm_marriage_saved_modifier YEARS = 5 RENEWAL_TT = dhm_marriage_saved_modifier_renewed_5_tt }
 				scope:dhm_crisis_relative = { add_stress = miniscule_stress_loss }
 				scope:dhm_crisis_spouse = { add_stress = miniscule_stress_loss }
@@ -1628,7 +1628,7 @@ dhm_saga.6301 = {
 
 				dhm_v060_legacy_echo_effect = yes
 			}
-			else_if = { limit = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_marriage_repair_choice VALUE = flag:distance LEGACY = dhm_marriage_repair_distance } } } add_stress = miniscule_stress_loss add_prestige = minor_prestige_loss }
+			else_if = { limit = { scope:dhm_crisis_relative = { dhm_v071_choice_is_trigger = { KEY = dhm071_marriage_repair_choice VALUE = flag:distance  } } } add_stress = miniscule_stress_loss add_prestige = minor_prestige_loss }
 			else_if = {
 				limit = { exists = scope:dhm071_marriage_repair_choice scope:dhm071_marriage_repair_choice = flag:agreement }
 				scope:dhm_crisis_relative = { add_stress = miniscule_stress_loss }
@@ -1794,8 +1794,8 @@ dhm_saga.9001 = {
 	title = dhm_saga.9001.t
 	desc = {
 		first_valid = {
-			triggered_desc = { trigger = { scope:dhm_legacy_critic = { dhm_v071_choice_is_trigger = { KEY = dhm071_legacy_choice VALUE = flag:uphold LEGACY = dhm_legacy_upheld_outcome } } } desc = dhm_saga.9001.upheld }
-			triggered_desc = { trigger = { scope:dhm_legacy_critic = { dhm_v071_choice_is_trigger = { KEY = dhm071_legacy_choice VALUE = flag:reform LEGACY = dhm_legacy_reformed_outcome } } } desc = dhm_saga.9001.reformed }
+			triggered_desc = { trigger = { scope:dhm_legacy_critic = { dhm_v071_choice_is_trigger = { KEY = dhm071_legacy_choice VALUE = flag:uphold  } } } desc = dhm_saga.9001.upheld }
+			triggered_desc = { trigger = { scope:dhm_legacy_critic = { dhm_v071_choice_is_trigger = { KEY = dhm071_legacy_choice VALUE = flag:reform  } } } desc = dhm_saga.9001.reformed }
 			triggered_desc = { trigger = { exists = scope:dhm071_legacy_choice scope:dhm071_legacy_choice = flag:listen } desc = dhm_saga.9001.listened }
 			desc = dhm_v076_dhm_saga_9001_unknown_desc
 		}
@@ -1804,14 +1804,14 @@ dhm_saga.9001 = {
 	override_background = { reference = dhm_v050_legacy }
 	right_portrait = scope:dhm_legacy_critic
 	trigger = { is_ai = no exists = scope:dhm_legacy_critic scope:dhm_legacy_critic = { is_alive = yes is_in_the_same_court_as = root } }
-	immediate = { scope:dhm_legacy_critic = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_legacy_choice FLAG_1 = dhm_legacy_upheld_outcome VALUE_1 = flag:uphold FLAG_2 = dhm_legacy_reformed_outcome VALUE_2 = flag:reform } } }
+	immediate = { scope:dhm_legacy_critic = { dhm_v076_resolve_2_legacy_choices_effect = { KEY = dhm071_legacy_choice     } } }
 	option = {
 		name = dhm_saga.9001.a
 		trigger = { dhm_v076_choice_known_trigger = { KEY = dhm071_legacy_choice VALUE_1 = flag:uphold VALUE_2 = flag:reform VALUE_3 = flag:listen } }
 		if = {
 			limit = { dhm_v076_choice_known_trigger = { KEY = dhm071_legacy_choice VALUE_1 = flag:uphold VALUE_2 = flag:reform VALUE_3 = flag:listen } }
-			if = { limit = { scope:dhm_legacy_critic = { dhm_v071_choice_is_trigger = { KEY = dhm071_legacy_choice VALUE = flag:uphold LEGACY = dhm_legacy_upheld_outcome } } } add_prestige = minor_prestige_gain dhm_v050_cohesion_loss_small_effect = yes }
-			else_if = { limit = { scope:dhm_legacy_critic = { dhm_v071_choice_is_trigger = { KEY = dhm071_legacy_choice VALUE = flag:reform LEGACY = dhm_legacy_reformed_outcome } } } add_stress = miniscule_stress_gain add_prestige = minor_prestige_loss dhm_v050_cohesion_gain_small_effect = yes }
+			if = { limit = { scope:dhm_legacy_critic = { dhm_v071_choice_is_trigger = { KEY = dhm071_legacy_choice VALUE = flag:uphold  } } } add_prestige = minor_prestige_gain dhm_v050_cohesion_loss_small_effect = yes }
+			else_if = { limit = { scope:dhm_legacy_critic = { dhm_v071_choice_is_trigger = { KEY = dhm071_legacy_choice VALUE = flag:reform  } } } add_stress = miniscule_stress_gain add_prestige = minor_prestige_loss dhm_v050_cohesion_gain_small_effect = yes }
 			else = { add_stress = miniscule_stress_loss add_prestige = minor_prestige_loss }
 			dhm_v071_record_named_chapter_effect = { CHAPTER = dhm_chapter_legacy_challenged }
 

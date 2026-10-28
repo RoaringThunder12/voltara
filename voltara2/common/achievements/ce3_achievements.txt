@@ -6,9 +6,7 @@ ce3_04_the_two_swords_achievement = {
 	happened = {
 		custom_description = {
 			text = ce3_04_the_two_swords_achievement_trigger
-			title:e_hre.holder ?= {
-				puppeteer ?= root
-			}
+			always = no
 			title:k_voltara_luminous_see.holder ?= {
 				pam_pope_is_head_of_faith_or_rite_trigger = yes
 				puppeteer ?= root
@@ -18,19 +16,8 @@ ce3_04_the_two_swords_achievement = {
 }
 
 # 02. Guido's Guiding Light
-ce3_02_guidos_guiding_light_achievement = {
-	possible = {
+# Unavailable Earth-history achievement retired: ce3_02_guidos_guiding_light_achievement
 
-	}
-	happened = {
-		custom_description = {
-			text = ce3_02_guidos_guiding_light_achievement_trigger
-			exists = global_var:started_ce3_02_guidos_guiding_light_achievement
-			exists = global_var:ce3_02_guido_declared_antipope
-			faith:catholic.main_rite ?= rite:ambrosian_rite
-		}
-	}
-}
 
 # 03. Servus Servorum Dei
 ce3_11_servus_servorum_dei_achievement = {

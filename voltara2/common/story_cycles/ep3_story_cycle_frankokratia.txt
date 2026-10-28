@@ -364,17 +364,17 @@
 			always = no
 			NOR = {
 				# Optional native title is absent on the Voltara map.
-# var:byz_emperor ?= title:e_byzantium.holder
+# var:byz_emperor ?= story_owner.top_liege
 always = no
 				# Optional native title is absent on the Voltara map.
-# var:byz_claimant ?= title:e_byzantium.holder
+# var:byz_claimant ?= story_owner.top_liege
 always = no
-				global_var:byz_claimant_champion ?= title:e_byzantium.holder
+				always = no
 				# Optional native title is absent on the Voltara map.
-# var:financier_title.holder ?= title:e_byzantium.holder
+# var:financier_title.holder ?= story_owner.top_liege
 always = no
 				# Optional native title is absent on the Voltara map.
-# var:ghw_sponsor ?= title:e_byzantium.holder
+# var:ghw_sponsor ?= story_owner.top_liege
 always = no
 			}
 		}
@@ -384,24 +384,24 @@ always = no
 					always = no
 					NOR = {
 						# Optional native title is absent on the Voltara map.
-# var:byz_emperor ?= title:e_byzantium.holder
+# var:byz_emperor ?= story_owner.top_liege
 always = no
 						# Optional native title is absent on the Voltara map.
-# var:byz_claimant ?= title:e_byzantium.holder
+# var:byz_claimant ?= story_owner.top_liege
 always = no
-						global_var:byz_claimant_champion ?= title:e_byzantium.holder
+						always = no
 						# Optional native title is absent on the Voltara map.
-# var:financier_title.holder ?= title:e_byzantium.holder
+# var:financier_title.holder ?= story_owner.top_liege
 always = no
 						# Optional native title is absent on the Voltara map.
-# var:ghw_sponsor ?= title:e_byzantium.holder
+# var:ghw_sponsor ?= story_owner.top_liege
 always = no
 					}
 				}
 				effect = {
 					set_variable = {
 						name = byz_emperor
-						value = title:e_byzantium.holder
+						value = story_owner.top_liege
 					}
 				}
 			}

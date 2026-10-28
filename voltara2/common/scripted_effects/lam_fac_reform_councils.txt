@@ -118,13 +118,7 @@
 			months = 6
 		}
 		lam_cs_merge_retry_effect = yes
-		set_variable = {
-			name = lam_cr_deadline_m
-			value = {
-				value = lam_now_m
-				add = 1
-			}
-		}
+		
 		clear_variable_list = lam_cr_voters
 		if = {
 			limit = {
@@ -1171,10 +1165,7 @@ lam_cr_notify_result_effect = {
 		name = lam_cr_last_issue
 		value = var:lam_cr_issue
 	}
-	set_variable = {
-		name = lam_cr_last_month
-		value = lam_now_m
-	}
+	
 	set_variable = {
 		name = lam_cr_last_yes
 		value = var:lam_cr_yes

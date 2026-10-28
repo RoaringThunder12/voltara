@@ -660,12 +660,12 @@ dhm_marriage.0295 = {
                 NOT = { has_global_variable = dhm_setting_marriage_stories_off }
                 scope:dhm_union_subject = {
                     NOT = { has_character_flag = dhm_marriage_matter_recent }
-                    NOT = { has_character_flag = dhm_living_marriage_recent }
+                    
                     NOT = { has_character_flag = dhm_marriage_recovery_recent }
                 }
                 scope:dhm_union_spouse = {
                     NOT = { has_character_flag = dhm_marriage_matter_recent }
-                    NOT = { has_character_flag = dhm_living_marriage_recent }
+                    
                     NOT = { has_character_flag = dhm_marriage_recovery_recent }
                 }
                 OR = {
@@ -768,13 +768,13 @@ dhm_marriage.0300 = {
             is_alive = yes
             is_spouse_of = scope:dhm_union_spouse
             NOT = { has_character_flag = dhm_marriage_matter_recent }
-            NOT = { has_character_flag = dhm_living_marriage_recent }
+            
             NOT = { has_character_flag = dhm_marriage_recovery_recent }
         }
         scope:dhm_union_spouse = {
             is_alive = yes
             NOT = { has_character_flag = dhm_marriage_matter_recent }
-            NOT = { has_character_flag = dhm_living_marriage_recent }
+            
             NOT = { has_character_flag = dhm_marriage_recovery_recent }
         }
         OR = {

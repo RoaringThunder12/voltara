@@ -684,12 +684,8 @@ fp2_other_decisions.0700 = {
 		name = fp2_other_decisions.0700.a
 		# Attendees
 		show_as_tooltip = {
-			title:c_toledo = {
-				add_county_modifier = {
-					modifier = fp2_small_council_modifier
-					years = 5
-				}
-			}
+			# Historical title scope excluded.
+
 		}
 		religion = {
 			every_faith = {
@@ -746,26 +742,8 @@ fp2_other_decisions.0700 = {
 			}
 		}
 		show_as_tooltip = {
-			title:c_toledo = {
-				random_list = {
-					1 = {
-						desc = fp2_other_decisions.0700.b.success
-						show_chance = no
-						add_county_modifier = {
-							modifier = fp2_big_council_modifier
-							years = 5
-						}
-					}
-					1 = {
-						desc = fp2_other_decisions.0700.b.failure
-						show_chance = no
-						add_county_modifier = {
-							modifier = fp2_disappointing_council_modifier
-							years = 5
-						}
-					}
-				}
-			}
+			# Historical title scope excluded.
+
 		}
 		stress_and_fulfillment_impact = {
 			zealous = medium_stress_impact_gain
@@ -1964,15 +1942,15 @@ fp2_other_decisions.0703 = {
 		# Native-world scope has no target in Voltara; original follows.
 # title:c_toledo = {
 # 			if = {
-# 				limit = { has_county_modifier = fp2_small_council_modifier }
+# 				limit = { always = no }
 # 				remove_county_modifier = fp2_small_council_modifier
 # 			}
 # 			else_if = {
-# 				limit = { has_county_modifier = fp2_big_council_modifier }
+# 				limit = { always = no }
 # 				remove_county_modifier = fp2_big_council_modifier
 # 			}
 # 			else_if = {
-# 				limit = { has_county_modifier = fp2_disappointing_council_modifier }
+# 				limit = { always = no }
 # 				remove_county_modifier = fp2_disappointing_council_modifier
 # 			}
 # 		}
@@ -2160,123 +2138,7 @@ fp2_other_decisions.0704 = {
 # 1000 Decision taker event
 ##################################################
 
-fp2_other_decisions.1000 = {
-	type = character_event
-	title = fp2_other_decisions.1000.t
-	desc = {
-		first_valid = {
-		    triggered_desc = {
-		        trigger = {
-					religion = {
-						any_faith = {
-							struggle:iberian_struggle = { is_faith_involved_in_struggle = prev }
-						}
-					}
-		        }
-		        desc = fp2_other_decisions.1000.involved_religion
-		    }
-		    desc = fp2_other_decisions.1000.desc
-		}
-		first_valid = {
-		    triggered_desc = {
-		        trigger = {
-					struggle:iberian_struggle = { is_faith_involved_in_struggle = root.faith }
-		        }
-		        desc = fp2_other_decisions.1000.involved_faith
-		    }
-		    triggered_desc = {
-		        trigger = {
-					religion = {
-						any_faith = {
-							struggle:iberian_struggle = { is_faith_involved_in_struggle = prev }
-						}
-					}
-		        }
-		        desc = fp2_other_decisions.1000.uninvolved_faith
-		    }
-		    desc = fp2_other_decisions.1000.closing
-		}
-	}
-	theme = realm
-	left_portrait = {
-		character = root
-		animation = war_over_win
-	}
 
-	trigger = {
-		# DLC checking
-		has_fp2_dlc_trigger = yes
-	}
-
-	immediate = {
-		save_scope_as = iberian_footholder
-		every_sub_realm_kingdom = {
-			limit = {
-				# Any de jure kingdom of Iberia is completely controlled
-				fp2_struggle_secure_iberian_foothold_iberian_kingdom_trigger = yes
-				# That kingdom is mostly my faith
-				fp2_struggle_secure_iberian_foothold_faith_trigger = yes
-				title_held_years >= fp2_struggle_secure_iberian_foothold_years_value
-			}
-			add_to_list = iberian_footholder_list
-		}
-		hidden_effect  = {
-			while = {
-				limit = {
-					any_in_list = {
-						list = iberian_footholder_list
-						# Borders held lands in a non-Iberian kingdom you hold
-						fp2_struggle_secure_iberian_foothold_neighbor_with_outsider_kingdom_trigger = yes
-						NOT = { is_in_list = iberian_footholder_transfer_list }
-					}
-				}
-				random_in_list = {
-					list = iberian_footholder_list
-					limit = {
-						# Borders held lands in a non-Iberian kingdom you hold
-						fp2_struggle_secure_iberian_foothold_neighbor_with_outsider_kingdom_trigger = yes
-						NOT = { is_in_list = iberian_footholder_transfer_list }
-					}
-					random_de_jure_county = {
-						limit = {
-							fp2_struggle_secure_iberian_foothold_neighbor_with_outsider_kingdom_trigger = yes
-						}
-						random_title_to_title_neighboring_and_across_water_county = {
-							limit = { fp2_struggle_secure_iberian_foothold_outsider_kingdom_trigger = yes }
-							empire = { save_scope_as = transfer_empire }
-						}
-					}
-					add_to_list = iberian_footholder_transfer_list
-					set_de_jure_liege_title = scope:transfer_empire
-					custom_tooltip = iberian_footholder_transfer_tt
-				}
-			}
-		}
-	}
-
-	option = {
-		name = fp2_other_decisions.1000.a
-		show_as_tooltip = {
-			every_in_list = {
-				list = iberian_footholder_transfer_list
-				set_de_jure_liege_title = scope:transfer_empire
-			}
-		}
-	}
-
-	after = {
-		struggle:iberian_struggle = {
-			every_involved_ruler = {
-				limit = { is_ai = no }
-				trigger_event = fp2_other_decisions.1001
-			}
-		}
-		# End Struggle
-		struggle:iberian_struggle = {
-			end_struggle = secure_iberian_foothold_decision_title
-		}
-	}
-}
 
 ##################################################
 # Secure Iberian Foothold - Notification
@@ -2284,79 +2146,7 @@ fp2_other_decisions.1000 = {
 # 1001 Info event
 ##################################################
 
-fp2_other_decisions.1001 = {
-	type = character_event
-	title = fp2_other_decisions.1000.t
-	desc = {
-		first_valid = {
-		    triggered_desc = {
-		        trigger = {
-					scope:iberian_footholder.religion = {
-						any_faith = {
-							struggle:iberian_struggle = { is_faith_involved_in_struggle = prev }
-						}
-					}
-		        }
-		        desc = fp2_other_decisions.1001.involved_religion
-		    }
-		    desc = fp2_other_decisions.1001.desc
-		}
-		first_valid = {
-		    triggered_desc = {
-		        trigger = {
-					struggle:iberian_struggle = { is_faith_involved_in_struggle = scope:iberian_footholder.faith }
-		        }
-		        desc = fp2_other_decisions.1001.involved_faith
-		    }
-		    triggered_desc = {
-		        trigger = {
-					scope:iberian_footholder.religion = {
-						any_faith = {
-							struggle:iberian_struggle = { is_faith_involved_in_struggle = prev }
-						}
-					}
-					religion = scope:iberian_footholder.religion
-		        }
-		        desc = fp2_other_decisions.1001.same_uninvolved_faith
-		    }
-		    triggered_desc = {
-		        trigger = {
-					scope:iberian_footholder.religion = {
-						any_faith = {
-							struggle:iberian_struggle = { is_faith_involved_in_struggle = prev }
-						}
-					}
-		        }
-		        desc = fp2_other_decisions.1001.uninvolved_faith
-		    }
-		    desc = fp2_other_decisions.1001.closing
-		}
-	}
-	theme = realm
-	left_portrait = {
-		character = scope:iberian_footholder
-		animation = war_over_win
-	}
 
-	trigger = {
-		# DLC checking
-		has_fp2_dlc_trigger = yes
-	}
-
-	immediate = {
-		show_as_tooltip = {
-			every_in_list = {
-				list = iberian_footholder_transfer_list
-				set_de_jure_liege_title = scope:transfer_empire
-			}
-		}
-	}
-
-	option = {
-		name = fp2_other_decisions.1001.a
-		
-	}
-}
 
 
 ##################################################
@@ -2383,7 +2173,7 @@ fp2_other_decisions.1100 = {
 	}
 
 	immediate = {
-		show_as_tooltip = { fp2_struggle_found_kingdom_toledo_empire_effect = yes }
+		show_as_tooltip = {}
 		hidden_effect = {
 			if = {
 				limit = {
@@ -2429,100 +2219,7 @@ fp2_other_decisions.1100 = {
 }
 
 fp2_other_decisions.1101 = {
-	type = character_event
-	title = fp2_other_decisions.1100.t
-	desc = {
-		desc = fp2_other_decisions.1101.desc
-		first_valid = {
-			triggered_desc = {
-				trigger = {
-					trigger_if = {
-						limit = { exists = scope:de_jure_anger_1 }
-						this = scope:de_jure_anger_1
-					}
-					trigger_else_if = {
-						limit = { exists = scope:de_jure_anger_2 }
-						this = scope:de_jure_anger_2
-					}
-					trigger_else = { always = no }
-				}
-				desc = fp2_other_decisions.1101.stolen
-			}
-			triggered_desc = {
-				trigger = {
-					rite = rite:mozarabic_church
-				}
-				desc = fp2_other_decisions.1101.mozarab
-			}
-		}
-	}
-	theme = realm
-	override_background = { reference = throne_room_scope }
-	left_portrait = {
-		character = scope:toledo_former
-		animation = war_over_win
-	}
-
-	trigger = {
-		# DLC checking
-		has_fp2_dlc_trigger = yes
-	}
-
-	immediate = {
-		scope:toledo_former = { save_scope_as = background_throne_room_scope }
-		show_as_tooltip = {
-			scope:toledo_former = { get_title = title:k_toledo }
-			title:k_toledo = {
-				every_in_de_jure_hierarchy = {
-					limit = { tier = tier_duchy }
-					set_de_jure_liege_title = title:k_toledo
-				}
-			}
-		}
-	}
-
-	option = {
-		name = {
-			trigger = {
-				trigger_if = {
-					limit = { exists = scope:de_jure_anger_1 }
-					this = scope:de_jure_anger_1
-				}
-				trigger_else_if = {
-					limit = { exists = scope:de_jure_anger_2 }
-					this = scope:de_jure_anger_2
-				}
-				trigger_else = { always = no }
-			}
-			text = fp2_other_decisions.1101.a
-		}
-		name = {
-			trigger = {
-				trigger_if = {
-					limit = { exists = scope:de_jure_anger_1 }
-					this != scope:de_jure_anger_1
-				}
-				trigger_if = {
-					limit = { exists = scope:de_jure_anger_2 }
-					this != scope:de_jure_anger_2
-				}
-				rite = rite:mozarabic_church
-			}
-			text = fp2_other_decisions.1101.b
-		}
-		name = {
-			trigger = {
-				trigger_if = {
-					limit = { exists = scope:de_jure_anger_1 }
-					this != scope:de_jure_anger_1
-				}
-				trigger_if = {
-					limit = { exists = scope:de_jure_anger_2 }
-					this != scope:de_jure_anger_2
-				}
-				NOT = { rite = rite:mozarabic_church }
-			}
-			text = fp2_other_decisions.1101.c
-		}
-	}
+hidden = yes
+trigger = { always = no }
+immediate = { }
 }

@@ -83,25 +83,12 @@ tribute_mission_decision_ai_potential_trigger = {
 }
 
 is_tributary_or_independent_neighbor_of_hegemon_trigger = {
-	exists = title:$HEGEMON$.holder
-	OR = {
-		is_tributary_of = title:$HEGEMON$.holder
-		AND = {
-			is_tributary = no
-			is_independent_ruler = yes
-			any_neighboring_and_across_water_top_liege_realm_owner = {
-				highest_held_title_tier = tier_hegemony
-				primary_title = title:$HEGEMON$
-			}
-		}
-		custom_tooltip = { # print nothing, only relevant for AI
-			text = null
-			AND = {
-				always = no
-				has_variable = wants_to_become_tributary_of_china
-			}
-		}
-	}
+exists = $HEGEMON$
+$HEGEMON$ = { highest_held_title_tier = tier_hegemony }
+OR = {
+ is_tributary_of = $HEGEMON$
+ AND = { is_tributary = no is_independent_ruler = yes any_neighboring_and_across_water_top_liege_realm_owner = { this = $HEGEMON$ } }
+}
 }
 
 is_already_tribute_missioning_trigger = {

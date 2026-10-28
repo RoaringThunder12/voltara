@@ -7,8 +7,10 @@ vca_actor = { is_alive = yes is_landed = yes NOT = { voltara_is_ruins_placeholde
 }
 vca_slaver = { vca_actor = yes voltara_slavery_is_legal = yes }
 vca_liberator = { vca_actor = yes NOT = { voltara_slavery_is_legal = yes } }
-vca_fighter = { is_alive = yes is_adult = yes is_incapable = no is_travelling = no NOT = { has_trait = dragon } NOT = { has_character_flag = vca_duel_pending } }
+vca_fighter = { NOT = { this = character:19064034 } is_imprisoned = no  is_alive = yes is_adult = yes is_incapable = no is_travelling = no NOT = { has_trait = dragon } NOT = { has_character_flag = vca_duel_pending } }
 vca_camp_in_alutor = { is_landless_adventurer = yes domicile.domicile_location.county ?= { target_is_de_jure_liege_or_above = title:e_voltara_alutor } }
 vca_arena_host = { is_alive = yes is_adult = yes is_imprisoned = no is_incapable = no is_landed = yes
  any_realm_county = { any_county_province = { has_building = vca_grand_arena_01 } } }
 vca_gladiator_here = { vca_fighter = yes has_trait = vca_gladiator OR = { vca_camp_in_alutor = yes is_courtier_of = title:e_voltara_alutor.holder } }
+
+vca_two_gladiators = { custom_description = { text = vca_two_gladiators_tt any_courtier = { count >= 2 vca_fighter = yes has_trait = vca_gladiator } } }

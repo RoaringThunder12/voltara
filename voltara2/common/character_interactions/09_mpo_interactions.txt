@@ -1346,10 +1346,7 @@ is_valid = {
 					# MPO ACHIEVEMENT Con-Fed-Up
 					if = {
 						limit = { is_ai = no }
-						add_achievement_global_variable_effect = {
-							VARIABLE = mpo_confedup_achievement_unlocked
-							VALUE = yes
-						}
+						
 					}
 				}
 			}
@@ -9061,7 +9058,7 @@ is_valid = {
 		modifier = {
 			factor = 0.1
 			scope:recipient = {
-				primary_title = title:h_china
+				always = no
 				current_military_strength > scope:actor.half_current_military_strength
 			}
 		}

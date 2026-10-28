@@ -283,10 +283,7 @@ on_faith_created = {
 							has_doctrine_parameter = unreformed
 						}
 					}
-					add_achievement_global_variable_effect = {
-						VARIABLE = achievement_mother_of_us_all_siguic
-						VALUE = yes
-					}
+					
 				}
 				if = {
 					limit = {
@@ -295,10 +292,7 @@ on_faith_created = {
 							has_doctrine_parameter = unreformed
 						}
 					}
-					add_achievement_global_variable_effect = {
-						VARIABLE = achievement_mother_of_us_all_orisha
-						VALUE = yes
-					}
+					
 				}
 				if = {
 					limit = {
@@ -307,10 +301,7 @@ on_faith_created = {
 							has_doctrine_parameter = unreformed
 						}
 					}
-					add_achievement_global_variable_effect = {
-						VARIABLE = achievement_mother_of_us_all_bori
-						VALUE = yes
-					}
+					
 				}
 				if = {
 					limit = {
@@ -319,10 +310,7 @@ on_faith_created = {
 							has_doctrine_parameter = unreformed
 						}
 					}
-					add_achievement_global_variable_effect = {
-						VARIABLE = achievement_mother_of_us_all_roog_sene
-						VALUE = yes
-					}
+					
 				}
 				if = {
 					limit = {
@@ -331,10 +319,7 @@ on_faith_created = {
 							has_doctrine_parameter = unreformed
 						}
 					}
-					add_achievement_global_variable_effect = {
-						VARIABLE = achievement_mother_of_us_all_akom
-						VALUE = yes
-					}
+					
 				}
 				if = {
 					limit = {
@@ -343,10 +328,7 @@ on_faith_created = {
 							has_doctrine_parameter = unreformed
 						}
 					}
-					add_achievement_global_variable_effect = {
-						VARIABLE = achievement_mother_of_us_all_kushitism
-						VALUE = yes
-					}
+					
 				}
 				if = {
 					limit = {
@@ -355,10 +337,7 @@ on_faith_created = {
 							has_doctrine_parameter = unreformed
 						}
 					}
-					add_achievement_global_variable_effect = {
-						VARIABLE = achievement_mother_of_us_all_waaqism
-						VALUE = yes
-					}
+					
 				}
 				if = {
 					limit = {
@@ -367,10 +346,7 @@ on_faith_created = {
 							has_doctrine_parameter = unreformed
 						}
 					}
-					add_achievement_global_variable_effect = {
-						VARIABLE = achievement_mother_of_us_all_achamanism
-						VALUE = yes
-					}
+					
 				}
 			}
 		}
@@ -585,10 +561,7 @@ on_rite_created = {
 					has_doctrine_parameter = unreformed
 				}
 			}
-			add_achievement_global_variable_effect = {
-				VARIABLE = achievement_mother_of_us_all_siguic
-				VALUE = yes
-			}
+			
 		}
 		if = {
 			limit = {
@@ -597,10 +570,7 @@ on_rite_created = {
 					has_doctrine_parameter = unreformed
 				}
 			}
-			add_achievement_global_variable_effect = {
-				VARIABLE = achievement_mother_of_us_all_orisha
-				VALUE = yes
-			}
+			
 		}
 		if = {
 			limit = {
@@ -609,10 +579,7 @@ on_rite_created = {
 					has_doctrine_parameter = unreformed
 				}
 			}
-			add_achievement_global_variable_effect = {
-				VARIABLE = achievement_mother_of_us_all_bori
-				VALUE = yes
-			}
+			
 		}
 		if = {
 			limit = {
@@ -621,10 +588,7 @@ on_rite_created = {
 					has_doctrine_parameter = unreformed
 				}
 			}
-			add_achievement_global_variable_effect = {
-				VARIABLE = achievement_mother_of_us_all_roog_sene
-				VALUE = yes
-			}
+			
 		}
 		if = {
 			limit = {
@@ -633,10 +597,7 @@ on_rite_created = {
 					has_doctrine_parameter = unreformed
 				}
 			}
-			add_achievement_global_variable_effect = {
-				VARIABLE = achievement_mother_of_us_all_akom
-				VALUE = yes
-			}
+			
 		}
 		if = {
 			limit = {
@@ -645,10 +606,7 @@ on_rite_created = {
 					has_doctrine_parameter = unreformed
 				}
 			}
-			add_achievement_global_variable_effect = {
-				VARIABLE = achievement_mother_of_us_all_kushitism
-				VALUE = yes
-			}
+			
 		}
 		if = {
 			limit = {
@@ -657,10 +615,7 @@ on_rite_created = {
 					has_doctrine_parameter = unreformed
 				}
 			}
-			add_achievement_global_variable_effect = {
-				VARIABLE = achievement_mother_of_us_all_waaqism
-				VALUE = yes
-			}
+			
 		}
 		if = {
 			limit = {
@@ -669,10 +624,7 @@ on_rite_created = {
 					has_doctrine_parameter = unreformed
 				}
 			}
-			add_achievement_global_variable_effect = {
-				VARIABLE = achievement_mother_of_us_all_achamanism
-				VALUE = yes
-			}
+			
 		}
 		# Catalysts
 		if = {
@@ -1060,7 +1012,7 @@ on_rite_change = {
 				always = no
 				OR = {
 					NOT = { exists = faith.religious_head }
-					NOT = { faith.religious_head = title:d_sunni.holder }
+					NOT = { always = no }
 				}
 			} # Unreachable effects archived in debug-dead-branches/audit.json.
 }
@@ -1143,10 +1095,7 @@ on_rite_change = {
 
 			if = { # FP2 - Basque In My Glory
 				limit = { faith = faith:basque_pagan }
-				add_achievement_global_variable_effect = {
-					VARIABLE = fp2_basque_in_my_glory_achievement_unlocked
-					VALUE = yes
-				}
+				
 			}
 		}
 

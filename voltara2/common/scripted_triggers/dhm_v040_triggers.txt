@@ -37,7 +37,7 @@ dhm_v040_married_relative_trigger = {
 	is_adult = yes
 	is_married = yes
 	is_in_the_same_court_as = scope:dhm_manager
-	NOT = { has_character_flag = dhm_living_marriage_recent }
+	
 	NOT = { has_character_flag = dhm_marriage_matter_recent }
 	any_spouse = { is_alive = yes }
 }

@@ -182,10 +182,7 @@ struggle_iberia_ending_hostility_decision = {
 
 
 		# Achievements
-		add_achievement_global_variable_effect = {
-			VARIABLE = fp2_iberian_hostilities_achievement_unlocked
-			VALUE = yes
-		}
+		
 		fp2_holiday_in_iberia_check = yes
 
 		# Trigger a player facing event as a coda
@@ -390,10 +387,7 @@ struggle_iberia_ending_compromise_decision = {
 		}
 
 		# Achievements
-		add_achievement_global_variable_effect = {
-			VARIABLE = fp2_iberian_compromise_achievement_unlocked
-			VALUE = yes
-		}
+		
 		fp2_holiday_in_iberia_check = yes
 
 		# Trigger a player facing event as a coda
@@ -511,10 +505,7 @@ struggle_iberia_ending_conciliation_decision = {
 		}
 
 		# Achievements
-		add_achievement_global_variable_effect = {
-			VARIABLE = fp2_iberian_conciliation_achievement_unlocked
-			VALUE = yes
-		}
+		
 		fp2_holiday_in_iberia_check = yes
 
 
@@ -908,185 +899,7 @@ council_of_toledo_decision = {
 # by Joe Parkin and Ola Jentzsch
 #############################################
 ### Secure Iberian Foothold Decision ###
-secure_iberian_foothold_decision = {
-	title = secure_iberian_foothold_decision_title
-	picture = {
-		reference = "gfx/interface/illustrations/decisions/decision_destiny_goal.dds"
-	}
-	desc = secure_iberian_foothold_decision_desc
-	selection_tooltip = secure_iberian_foothold_decision_tooltip
-	sort_order = 80
-	decision_group_type = struggle
-
-	is_shown = {
-		# Hold land near Iberia
-		any_sub_realm_county = {
-			title_province = {
-				OR = {
-					geographical_region = world_europe_west_iberia # Iberia
-					geographical_region = ghw_region_southern_france # Aquitaine
-					geographical_region = world_africa_north_west # Maghreb
-				}
-			}
-		}
-		# Not Involved and capital lies outside Iberia
-		custom_tooltip = {
-			text = fp2_struggle_uninvolved_or_external_tt
-			NOR = {
-				any_character_struggle = {
-					involvement = involved
-					is_struggle_type = iberian_struggle
-				}
-			}
-		}
-		NOT = { always = no }
-		# Struggle is active
-		exists = struggle:iberian_struggle
-		# DLC check
-		has_fp2_dlc_trigger = yes
-		is_landless_adventurer = no
-	}
-
-	is_valid = {
-		##### General triggers #####
-		# Struggle phase must be right
-		custom_tooltip = {
-			text = fp2_struggle_uninvolved_or_external_tt
-			NOT = {
-				capital_province = { geographical_region = world_europe_west_iberia }
-			}
-		}
-		custom_tooltip = {
-			text = fp2_struggle_secure_iberian_foothold_empire_tt
-			any_held_title = {
-				title_tier >= empire
-				this != title:e_spain
-			}
-		}
-		# If my religion is involved, I need to own the better portion of those counties
-		trigger_if = {
-			limit = {
-				religion = {
-					any_faith = {
-						struggle:iberian_struggle ?= { is_faith_involved_in_struggle = prev }
-					}
-				}
-			}
-			custom_tooltip = {
-				text = fp2_struggle_secure_iberian_foothold_religion_tt
-				fp2_struggle_secure_iberian_foothold_religion_percent_value >= fp2_struggle_secure_iberian_foothold_religion_target_percent_value
-			}
-		}
-		# Otherwise, I need to own a big chunk of the peninsula
-		trigger_else = {
-			custom_tooltip = {
-				text = fp2_struggle_secure_iberian_foothold_outsider_tt
-				any_county_in_region = {
-					region = world_europe_west_iberia
-					percent >= fp2_struggle_secure_iberian_foothold_outsider_target_percent_decimal_value
-					holder.top_liege = root
-				}
-			}
-		}
-
-		##### Iberian kingdom triggers #####
-		# Real tooltips
-		trigger_if = {
-			limit = {
-				any_sub_realm_kingdom = { fp2_struggle_secure_iberian_foothold_iberian_kingdom_trigger = yes }
-			}
-			# That kingdom is mostly my faith
-			custom_tooltip = {
-				text = fp2_struggle_secure_iberian_foothold_kingdom_faith_tt
-				fp2_struggle_secure_iberian_foothold_faith_trigger = yes
-			}
-			any_sub_realm_kingdom = {
-				# Any de jure kingdom of Iberia is completely controlled
-				custom_tooltip = {
-					text = fp2_struggle_secure_iberian_foothold_kingdom_iberian_tt
-					fp2_struggle_secure_iberian_foothold_iberian_kingdom_trigger = yes
-				}
-				# Borders held lands in a non-Iberian kingdom you hold
-				custom_tooltip = {
-					text = fp2_struggle_secure_iberian_foothold_kingdom_border_tt
-					fp2_struggle_secure_iberian_foothold_neighbor_with_outsider_kingdom_trigger = yes
-				}
-				# Held that kingdom for a while
-				custom_tooltip = {
-					text = fp2_struggle_secure_iberian_foothold_kingdom_held_tt
-					title_held_years >= fp2_struggle_secure_iberian_foothold_years_value
-				}
-			}
-		}
-		# Fake tooltips
-		trigger_else = {
-			custom_tooltip = {
-				text = fp2_struggle_secure_iberian_foothold_kingdom_iberian_tt
-				always = no
-			}
-			custom_tooltip = {
-				text = fp2_struggle_secure_iberian_foothold_kingdom_faith_tt
-				always = no
-			}
-			# Borders held lands in a non-Iberian kingdom you hold
-			custom_tooltip = {
-				text = fp2_struggle_secure_iberian_foothold_kingdom_border_tt
-				always = no
-			}
-			custom_tooltip = {
-				text = fp2_struggle_secure_iberian_foothold_kingdom_held_tt
-				always = no
-			}
-		}
-	}
-
-	is_valid_showing_failures_only = {
-		trigger_if = {
-			limit = { exists = struggle:iberian_struggle }
-			custom_tooltip = {
-				text = fp2_struggle_phase_hostility_or_opportunity_tt
-				struggle:iberian_struggle = {
-					has_struggle_phase_parameter = unlocks_secure_iberian_foothold_decision
-				}
-			}
-		}
-	}
-
-	effect = {
-		legend_seed_struggle_ending_effect = {
-			ENDER = root
-			STRUGGLE = iberian_struggle
-		}
-		if = {
-			limit = { has_ach_dlc_trigger = yes }
-			add_character_flag = ach_ended_struggle
-		}
-		custom_tooltip = fp2_struggle_secure_iberian_foothold_empire_dejure_effect_tt
-
-		trigger_event = {
-			id = fp2_other_decisions.1000
-		}
-
-		custom_tooltip = fp2_struggle_secure_iberian_foothold_ends_the_struggle_tt
-	}
-
-	cost = {}
-
-	ai_check_interval_by_tier = {
-		barony = 0
-		county = 0
-		duchy = 0
-		kingdom = 120
-		empire = 120
-		hegemony = 120
-	}
-
-	ai_potential = {}
-
-	ai_will_do = {
-		base = 100
-	}
-}
+secure_iberian_foothold_decision = { picture = { reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds" } desc = vt_historical_content_disabled selection_tooltip = vt_historical_content_disabled ai_check_interval = 0 is_shown = { always = no } is_valid = { always = no } effect = { } }
 
 ###################################
 # Build Pilgrim Roads
@@ -1349,7 +1162,7 @@ found_kingdom_toledo_decision = {
 	effect = {
 		save_scope_as = toledo_former
 		gain_heroic_legend_seed_tooltip_effect = yes
-		fp2_struggle_found_kingdom_toledo_empire_effect = yes
+
 		save_scope_value_as = {
 			name = has_kingdom_toledo_absorb_list_been_created
 			value = yes

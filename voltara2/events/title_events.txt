@@ -158,7 +158,7 @@ title_event.0011 = {
 			scope:castille_char = { trigger_event = title_event.0015 }
 		}
 		# Finally, execute the effects.
-		asturias_becomes_leon_and_castille_effect = yes
+
 	}
 }
 
@@ -175,7 +175,7 @@ title_event.0012 = {
 	override_background = { reference = terrain_scope }
 
 	immediate = {
-		show_as_tooltip = { asturias_becomes_leon_and_castille_effect = yes }
+		show_as_tooltip = {}
 	}
 
 	# As it should be.
@@ -203,7 +203,7 @@ title_event.0013 = {
 	override_background = { reference = terrain_scope }
 
 	immediate = {
-		show_as_tooltip = { asturias_becomes_leon_and_castille_effect = yes }
+		show_as_tooltip = {}
 	}
 
 	# Two crowns are better than one!
@@ -235,7 +235,7 @@ title_event.0014 = {
 	override_background = { reference = terrain_scope }
 
 	immediate = {
-		show_as_tooltip = { asturias_becomes_leon_and_castille_effect = yes }
+		show_as_tooltip = {}
 	}
 
 	# Splitters!
@@ -305,7 +305,7 @@ title_event.0015 = {
 	override_background = { reference = terrain_scope }
 
 	immediate = {
-		show_as_tooltip = { asturias_becomes_leon_and_castille_effect = yes }
+		show_as_tooltip = {}
 	}
 
 	# Power is back where it should always have been.
@@ -372,46 +372,32 @@ title_event.0021 = {
 			switch = {
 				trigger = has_name_list
 				name_list_irish = {
-					title:e_britannia = {
-						set_title_name = cn_eire_mhor
-						set_title_color = { 6 127 2 }
-					}
+					# Historical title scope excluded.
+
 				}
 				name_list_scottish = {
-					title:e_britannia = {
-						set_title_name = cn_albion
-						set_title_color = { 230 140 0 }
-					}
+					# Historical title scope excluded.
+
 				}
 				name_list_gaelic = {
-					title:e_britannia = {
-						set_title_name = cn_alba_mhor
-						set_title_color = { 20 120 120 }
-					}
+					# Historical title scope excluded.
+
 				}
 				name_list_welsh = {
-					title:e_britannia = {
-						set_title_name = cn_prydain
-						set_title_color = { 135 25 3 }
-					}
+					# Historical title scope excluded.
+
 				}
 				name_list_cornish = {
-					title:e_britannia = {
-						set_title_name = cn_breteni
-						set_title_color = { 204 153 10 }
-					}
+					# Historical title scope excluded.
+
 				}
 				name_list_pictish = {
-					title:e_britannia = {
-						set_title_name = cn_pictavia
-						set_title_color = { 0 95 184 }
-					}
+					# Historical title scope excluded.
+
 				}
 				fallback = {
-					title:e_britannia = {
-						reset_title_name = yes
-						set_title_color = { 172 22 22 }
-					}
+					# Historical title scope excluded.
+
 				}
 			}
 		}

@@ -1,11 +1,8 @@
 ﻿# DHM v0.7.1 — isolated choices, reservations and truthful state.
-# Saved event values travel with that event chain. Old queued events without
-# the new value may still read their original character flag.
+# Saved choices travel with the current event chain. Legacy donor flags are retired.
 dhm_v071_choice_is_trigger = {
-	OR = {
-		AND = { exists = scope:$KEY$ scope:$KEY$ = $VALUE$ }
-		AND = { NOT = { exists = scope:$KEY$ } has_character_flag = $LEGACY$ }
-	}
+ exists = scope:$KEY$
+ scope:$KEY$ = $VALUE$
 }
 
 # Current scope = the human manager. Both participants must still be available.

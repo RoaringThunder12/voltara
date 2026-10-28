@@ -62,10 +62,7 @@ dhm_v072_restore_letter_outcome_effect = {
 			limit = { scope:dhm_story_relative = { has_character_modifier = dhm_letters_from_home_modifier } }
 			save_scope_value_as = { name = dhm072_letter_result value = flag:aid }
 		}
-		else_if = {
-			limit = { scope:dhm_story_relative = { has_character_flag = dhm_letter_counsel_outcome } }
-			save_scope_value_as = { name = dhm072_letter_result value = flag:counsel }
-		}
+		
 	}
 }
 
@@ -76,22 +73,19 @@ dhm_v072_prepare_parent_ending_effect = {
 	if = {
 		limit = { exists = scope:dhm072_parent_reply scope:dhm072_parent_reply = flag:speak }
 		if = {
-			limit = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_parent_choice VALUE = flag:duty LEGACY = dhm_parent_arc_duty } } }
+			limit = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_parent_choice VALUE = flag:duty  } } }
 			save_scope_value_as = { name = dhm072_parent_ending value = flag:repaired }
 		}
 		else_if = {
 			limit = { exists = scope:dhm071_parent_choice OR = { scope:dhm071_parent_choice = flag:listen scope:dhm071_parent_choice = flag:test } }
 			save_scope_value_as = { name = dhm072_parent_ending value = flag:trust }
 		}
-		else_if = {
-			limit = { NOT = { exists = scope:dhm071_parent_choice } scope:dhm_arc_first = { has_character_flag = dhm_parent_arc_listened } }
-			save_scope_value_as = { name = dhm072_parent_ending value = flag:trust }
-		}
+		
 	}
 	else_if = {
 		limit = { exists = scope:dhm072_parent_reply scope:dhm072_parent_reply = flag:silence }
 		if = {
-			limit = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_parent_choice VALUE = flag:duty LEGACY = dhm_parent_arc_duty } } }
+			limit = { scope:dhm_arc_first = { dhm_v071_choice_is_trigger = { KEY = dhm071_parent_choice VALUE = flag:duty  } } }
 			save_scope_value_as = { name = dhm072_parent_ending value = flag:resentment }
 		}
 		else = { save_scope_value_as = { name = dhm072_parent_ending value = flag:distance } }

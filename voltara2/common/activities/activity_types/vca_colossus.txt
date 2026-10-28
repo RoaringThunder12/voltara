@@ -1,6 +1,6 @@
 ﻿activity_vca_colossus = {
  is_shown = { vca_arena_host = yes }
- can_start_showing_failures_only = { is_available = yes is_at_war = no gold >= 250 NOT = { has_character_flag = vca_games_cooldown } NOT = { is_activity_type_on_cooldown = activity_vca_colossus } }
+ can_start_showing_failures_only = { vca_two_gladiators = yes is_available = yes is_at_war = no gold >= 250 NOT = { has_character_flag = vca_games_cooldown } NOT = { is_activity_type_on_cooldown = activity_vca_colossus } }
  is_valid = { scope:host = { vca_arena_host = yes } }
  province_filter = realm ai_province_filter = capital max_province_icons = 1 allow_zero_guest_invites = yes open_invite = no
  cost = { gold = { value = 250 } } ui_predicted_cost = { gold = { value = 250 } } cooldown = { years = 3 }

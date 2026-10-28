@@ -1040,7 +1040,7 @@ action_would_accept_mandala_embrace = {
 action_can_request_treasury = {
 	combine_into_one = yes
 	check_create_action = {
-		title:e_minister_of_revenue.holder ?= {
+		root.top_liege.cp:councillor_steward ?= {
 			if = {
 				limit = {
 					root = {
@@ -1057,7 +1057,7 @@ action_can_request_treasury = {
 				}
 			}
 		}
-		title:e_minister_of_war.holder ?= {
+		root.top_liege.cp:councillor_marshal ?= {
 			if = {
 				limit = {
 					root = {
@@ -1089,7 +1089,7 @@ action_can_request_treasury = {
 action_can_request_examination_support = {
 	combine_into_one = yes
 	check_create_action = {
-		title:e_minister_of_rites.holder ?= {
+		root.top_liege.cp:councillor_court_chaplain ?= {
 			if = {
 				limit = {
 					root = {
@@ -1326,7 +1326,7 @@ action_minister_can_pardon = {
 
 action_can_be_pardoned_by_minister = {
 	check_create_action = {
-		title:e_minister_of_justice.holder ?= {
+		root.top_liege.cp:minister_justice ?= {
 			if = {
 				limit = {
 					root = {
@@ -1379,7 +1379,7 @@ action_pay_governors_treasury_debt = {
 						trigger_if = {
 							limit = {
 								# Optional native title is absent on the Voltara map.
-# title:e_minister_of_revenue.holder ?= root
+# root.top_liege.cp:councillor_steward ?= root
 always = no
 							}
 							NOT = { vassal_contract_has_flag = celestial_military_appointment }
@@ -1415,7 +1415,7 @@ action_minister_can_pay_treasury_debt = {
 				treasury < 0
 				NOT = { vassal_contract_has_flag = celestial_military_appointment }
 				# Optional native title is absent on the Voltara map.
-# title:e_minister_of_revenue.holder ?= {
+# root.top_liege.cp:councillor_steward ?= {
 # 					top_liege = root.top_liege
 # 					has_treasury = yes
 # 					treasury >= {
@@ -1437,7 +1437,7 @@ always = no
 				treasury < 0
 				vassal_contract_has_flag = celestial_military_appointment
 				# Optional native title is absent on the Voltara map.
-# title:e_minister_of_war.holder ?= {
+# root.top_liege.cp:councillor_marshal ?= {
 # 					top_liege = root.top_liege
 # 					has_treasury = yes
 # 					treasury >= {

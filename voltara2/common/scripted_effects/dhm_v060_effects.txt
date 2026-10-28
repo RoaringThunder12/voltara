@@ -257,7 +257,7 @@ dhm_v060_story_pulse_effect = {
 							is_in_the_same_court_as = scope:dhm_manager
 							NOT = { has_character_flag = dhm_marriage_recovery_recent }
 							NOT = { has_character_flag = dhm_marriage_matter_recent }
-							NOT = { has_character_flag = dhm_living_marriage_recent }
+							
 							dhm_v081_marriage_may_reopen_trigger = yes
 							OR = { opinion = { target = prev value <= 0 } stress_level >= 2 prev = { stress_level >= 2 } }
 						}

@@ -27,7 +27,7 @@ scripted_trigger fp3_struggle_0001_valid_ai_struggle_char_trigger = {
 		# If they're gonna become a supporter, it should make sense.
 		AND = {
 			opinion = {
-				target = title:d_sunni.holder
+				target = faith.religious_head
 				value >= low_positive_opinion
 			}
 			OR = {
@@ -42,7 +42,7 @@ scripted_trigger fp3_struggle_0001_valid_ai_struggle_char_trigger = {
 		# If they're gonna become a detractor, that should make sense too.
 		AND = {
 			opinion = {
-				target = title:d_sunni.holder
+				target = faith.religious_head
 				value <= low_negative_opinion
 			}
 			OR = {
@@ -245,7 +245,7 @@ fp3_struggle.0071 = { # Strengthen the Caliphate Ending
 	override_sound = { reference = "event:/DLC/FP2/SFX/UI/fp2_struggle_ui_intro_animate" }
 
 	immediate = {
-		fp3_ending_effects_assertion = yes
+
 		# Native historical character does not exist in Voltara; original follows.
 # character:34014 = { save_scope_as = Mostaza }
 		# Bookmark ruler
@@ -457,7 +457,7 @@ fp3_struggle.0081 = { #
 		name = fp3_struggle.0082.a
 		show_as_tooltip = {
 			struggle:persian_struggle = { end_struggle = yes }
-			fp3_struggle_ending_concession_effects = yes
+
 		}
 		clicksound = "event:/DLC/FP3/SFX/UI/Notifications/Toasts/struggle_end_negative"
 	}
@@ -529,7 +529,7 @@ fp3_struggle.0082 = { # Notification for relevant people
 		}
 		show_as_tooltip = {
 			struggle:persian_struggle ?= { end_struggle = yes }
-			fp3_struggle_ending_concession_effects = yes
+
 		}
 		play_music_cue = struggleend_cue
 	}
@@ -541,110 +541,9 @@ fp3_struggle.0082 = { # Notification for relevant people
 }
 
 ### FOUNDATION ENDINGS ### 0091 = 0180 ###
-fp3_struggle.0091 = { # Rekindle Iran
-	type = character_event
-	window = fullscreen_event
-	queue_icon = "gfx/interface/icons/splash_icons/splash_persia.dds"
-	title = fp3_struggle.0091.t
-	desc = {
-		first_valid = {
-			triggered_desc = {
-				trigger = {
-					has_trait = fp3_struggle_supporter
-				}
-				desc = fp3_struggle.0091.desc.supporter
-			}
-			triggered_desc = {
-				trigger = {
-					has_trait = fp3_struggle_detractor
-				}
-				desc = fp3_struggle.0091.desc.detractor
-			}
-		}
-	}
-	theme = court
-	override_background = { reference = fp3_fullscreen_rekindle }
-	override_sound = { reference = "event:/DLC/FP2/SFX/UI/fp2_struggle_ui_intro_animate" }
 
-	immediate = {
-		save_scope_as = struggle_ender
-		# Save Sunni caliph or previous one as scope:struggle_liege
-		fp3_save_sunni_caliph_or_previous_effect = yes
-		# Native-world scope has no target in Voltara; original follows.
-# title:e_persia = { save_scope_as = persia_loc }
- # Persia gets renamed under clan govs
 
-		fp3_struggle_rekindle_iran_effects = yes
 
-		play_music_cue = struggleend_cue
-
-		dynasty:1029100 = { save_scope_as = sassanid_dynasty }
-	}
-
-	option = {
-		name = fp3_struggle.0091.a
-		
-		show_as_tooltip = { struggle:persian_struggle = { end_struggle = yes } }
-		clicksound = "event:/DLC/FP3/SFX/UI/Notifications/Toasts/struggle_end_positive"
-	}
-
-	after = {
-		fp3_end_persian_struggle_effect = {
-			ENDING = struggle_persia_ending_rekindle_iran_decision
-			EVENT = fp3_struggle.0092
-			FLAG = flag:fp3_struggle_rekindle_iran_ending
-		}
-	}
-}
-
-fp3_struggle.0092 = { # Notification for relevant people
-	type = character_event
-	window = fullscreen_event
-	queue_icon = "gfx/interface/icons/splash_icons/splash_persia.dds"
-	title = fp3_struggle.0091.t
-	desc = {
-		desc = fp3_struggle.0092.intro
-		first_valid = {
-			triggered_desc = {
-				trigger = {
-					culture = { has_cultural_pillar = heritage_iranian }
-				}
-				desc = fp3_struggle.0092.desc.iranian
-			}
-			desc = fp3_struggle.0092.desc.non-iranian
-		}
-	}
-	theme = court
-	override_background = { reference = fp3_fullscreen_rekindle }
-	override_sound = { reference = "event:/DLC/FP2/SFX/UI/fp2_struggle_ui_intro_animate" }
-	# There could, and should, be a event_window_widget_struggle_info widget here
-
-	immediate = {
-		show_as_tooltip = {
-			struggle:persian_struggle = { end_struggle = yes }
-			fp3_struggle_rekindle_iran_effects = yes
-		}
-		play_music_cue = struggleend_cue
-	}
-
-	option = {
-		name = fp3_struggle.0092.a
-		trigger = {
-			culture = { has_cultural_pillar = heritage_iranian }
-		}
-		clicksound = "event:/DLC/FP3/SFX/UI/Notifications/Toasts/struggle_end_positive"
-	}
-
-	option = {
-		name = fp3_struggle.0092.a
-		trigger = {
-			NOT = {
-				culture = { has_cultural_pillar = heritage_iranian }
-			}
-		}
-		clicksound = "event:/DLC/FP3/SFX/UI/Notifications/Toasts/struggle_end_negative"
-	}
-}
 
 fp3_struggle.0095 = { # Temper the Caliphate, Shia Ending
 	type = character_event
@@ -682,12 +581,12 @@ fp3_struggle.0095 = { # Temper the Caliphate, Shia Ending
 	immediate = {
 		root = { save_scope_as = struggle_ender }
 		# Save Sunni caliph or previous one as scope:struggle_liege
-		fp3_save_sunni_caliph_or_previous_effect = yes
+
 		# Native historical character does not exist in Voltara; original follows.
 # character:34005 = { save_scope_as = harun_the_rightly_guided }
 
 
-		fp3_struggle_ending_shia_caliphate_effects = yes
+
 
 		play_music_cue = struggleend_cue
 
@@ -761,7 +660,7 @@ fp3_struggle.0096 = { # Notification for relevant people
 	immediate = {
 		play_music_cue = struggleend_cue
 		show_as_tooltip = {
-			fp3_struggle_ending_shia_caliphate_effects = yes
+
 			struggle:persian_struggle = { end_struggle = yes }
 		}
 	}
@@ -824,9 +723,9 @@ fp3_struggle.0100 = { # Temper the Caliphate, Vassalize Caliphate Ending
 	immediate = {
 		root = { save_scope_as = struggle_ender }
 		# Native-world scope has no target in Voltara; original follows.
-# title:d_sunni.holder = { save_scope_as = struggle_liege }
+# faith.religious_head = { save_scope_as = struggle_liege }
 
-		fp3_struggle_ending_vassalize_caliph_effects = yes
+
 
 		play_music_cue = struggleend_cue
 	}
@@ -921,90 +820,9 @@ fp3_struggle.0101 = { # Notification for relevant people
 }
 
 ### SUNDERING THE CALIPHATE ### 0191 = 0200 ###
-fp3_struggle.0191 = { # Sunder the Caliphate
-	type = character_event
-	title = fp3_struggle.0191.t
-	desc = fp3_struggle.0191.desc
-	theme = court
-	left_portrait = {
-		character = scope:sunderer
-		animation = war_over_win
-	}
-	lower_right_portrait = scope:struggle_liege
 
-	immediate = {
-		# Select the caliph and destroy their title
-		fp3_sundered_caliphate_effects = yes
-	}
 
-	option = {
-		name = fp3_struggle.0191.a
-		clicksound = "event:/DLC/FP3/SFX/UI/Notifications/Toasts/struggle_end_positive"
-	}
-}
 
-fp3_struggle.0192 = { # Notification for relevant people
-	type = character_event
-	title = fp3_struggle.0192.t
-
-	desc = {
-		first_valid = {
-			triggered_desc = {
-				trigger = {
-					fp3_struggle_is_the_caliph = yes
-				}
-				desc = fp3_struggle.0192.desc.caliph
-			}
-			triggered_desc = {
-				trigger = {
-					OR = {
-						has_trait = fp3_struggle_supporter
-						is_vassal_of = scope:struggle_liege
-					}
-				}
-				desc = fp3_struggle.0192.desc.supporter_or_vassal
-			}
-			triggered_desc = {
-				trigger = {
-					has_trait = fp3_struggle_detractor
-				}
-				desc = fp3_struggle.0192.desc.detractor
-			}
-		}
-	}
-
-	
-	theme = court
-	override_background = { reference = fp3_fullscreen_sunder }
-	override_sound = { reference = "event:/DLC/FP2/SFX/UI/fp2_struggle_ui_intro_animate" }
-	left_portrait = {
-		character = scope:sunderer
-		animation = war_over_win
-	}
-	lower_right_portrait = scope:struggle_liege
-
-	option = {
-		name = fp3_struggle.0192.c
-		trigger = {
-			NOR = {
-				fp3_struggle_is_the_caliph = yes
-				has_trait = fp3_struggle_supporter
-			}
-		}
-		clicksound = "event:/DLC/FP3/SFX/UI/Notifications/Toasts/struggle_end_positive"
-	}
-
-	option = {
-		name = fp3_struggle.0192.b
-		trigger = {
-			OR = {
-				fp3_struggle_is_the_caliph = yes
-				has_trait = fp3_struggle_supporter
-			}
-		}
-		clicksound = "event:/DLC/FP3/SFX/UI/Notifications/Toasts/struggle_end_negative"
-	}
-}
 
 ###################################
 # FP3 casus belli events
@@ -1012,149 +830,24 @@ fp3_struggle.0192 = { # Notification for relevant people
 ###################################
 
 # Install loyal puppet - declared puppet ping
-fp3_struggle.8000 = {
-	type = letter_event
-	opening = fp3_struggle.8000.t
-	desc = {
-		desc = fp3_struggle.8000.desc
-	}
-	sender = scope:attacker
 
-	immediate = {
-		send_interface_message = {
-			type = event_struggle_neutral
-			title = install_loyalist_puppet_declared_puppet
-			left_icon = scope:attacker
-			right_icon = scope:defender
-			show_as_tooltip = {
-				scope:attacker = {
-					start_war = {
-						casus_belli = "fp3_install_loyalist_cb"
-						target = scope:defender
-					}
-				}
-			}
-		}
-	}
-
-	# Indeed?
-	option = {
-		name = fp3_struggle.8000.a
-	}
-}
 
 # Install loyal puppet - declared defender ping
-fp3_struggle.8001 = {
-	type = letter_event
-	opening = fp3_struggle.8000.t
-	desc = {
-		desc = fp3_struggle.8001.desc
-	}
-	sender = scope:attacker
 
-	immediate = {
-		send_interface_message = {
-			type = event_struggle_bad
-			title = install_loyalist_puppet_declared_defender
-			left_icon = scope:attacker
-			right_icon = scope:loyalist_puppet
-			show_as_tooltip = {
-				scope:attacker = {
-					start_war = {
-						casus_belli = "fp3_install_loyalist_cb"
-						target = scope:defender
-					}
-				}
-			}
-		}
-	}
-
-	# Outrageous!
-	option = {
-		name = fp3_struggle.8001.a
-	}
-}
 
 # Install loyal puppet - won puppet ping
-fp3_struggle.8002 = {
-	type = letter_event
-	opening = fp3_struggle.8000.t
-	desc = {
-		desc = fp3_struggle.8002.desc
-	}
-	sender = scope:attacker
 
-	immediate = {
-		send_interface_message = {
-			type = event_struggle_good
-			title = install_loyalist_puppet_won_puppet
-			left_icon = scope:attacker
-			right_icon = scope:defender
-			show_as_tooltip = {
-				every_in_list = {
-					list = title_to_steal
-					save_scope_as = stolen_title
-					root = { get_title = scope:stolen_title }
-				}
-				custom_tooltip = fp3_struggle.8002.alliance_tt
-				if = {
-					limit = { scope:defender.imprisoner ?= root }
-					imprison = {
-						target = scope:defender
-						type = house_arrest
-					}
-				}
-			}
-		}
-	}
-
-	# Ok!
-	option = {
-		name = fp3_struggle.8002.a
-	}
-}
 
 
 ###################################
 # Integrity Validation Events
 # By Hugo Cortell
 ###################################
-fp3_struggle.9980 = { # Validation of title
-	type = character_event
-	orphan = yes
-	title = {
-		desc = Hugo
-		desc = game_concept_struggle_struggles
-		desc = number_two
-		desc = debug
-	}
-	desc = {
-		desc = historical_commander_trait.0003.d
-		desc = stress_threshold.3201.depressed.effect
-	}
+# Retired unreachable event fp3_struggle.9980.
 
-	theme = mental_break
-	left_portrait = title:e_arabia.holder
 
-	immediate = { # Native-world scope has no target in Voltara; original follows.
-# title:e_arabia.holder = { add_piety = 30000 }
- } # Hard title validation
+# Retired unreachable event fp3_struggle.9981.
 
-	option = {
-		name = {
-			text = {
-				desc = martial_chivalry.2015.a
-				desc = rivalry.1016.a.exposed
-			}
-		}
-	}
-}
-
-fp3_struggle.9981 = { # Destroy e_arabia (used mostly for checking invalidations)
-	hidden = yes
-	orphan = yes
-	immediate = { destroy_title = title:e_arabia }
-}
 
 fp3_struggle.9982 = { # Revision 2 nav event, to make QA's life easier and avoid unecessary crashes
 	type = character_event
@@ -1266,7 +959,7 @@ fp3_struggle.9984 = { # Ending simulator - Allows you to end the struggle in a c
 
 	immediate = {
 		# Save Sunni caliph or previous one as scope:struggle_liege
-		fp3_save_sunni_caliph_or_previous_effect = yes
+
 	}
 
 	option = { # Concession

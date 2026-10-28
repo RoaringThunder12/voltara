@@ -64,7 +64,7 @@ create_outremer_empire_decision = {
 		custom_tooltip = create_outremer_empire_decision_effect_tooltip
 		gain_heroic_legend_seed_tooltip_effect = yes
 		show_as_tooltip = {
-			form_outremer_scripted_effect = yes
+
 		}
 		trigger_event = {
 			id = middle_east_decisions.0001
@@ -135,7 +135,7 @@ restore_sunni_caliphate_decision = {
 	effect = {
 		custom_tooltip = restore_sunni_caliphate_decision_effect_tooltip
 		show_as_tooltip = {
-			restore_sunni_caliphate_scripted_effect = yes
+
 		}
 		trigger_event = {
 			id = middle_east_decisions.0003
@@ -161,7 +161,7 @@ restore_sunni_caliphate_decision = {
 ### Embrace Outremer Culture ###
 embrace_outremer_culture_decision = {
 	picture = {
-		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+		reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds"
 	}
 	desc = embrace_outremer_culture_decision_desc
 	selection_tooltip = embrace_outremer_culture_decision_tooltip
@@ -337,7 +337,7 @@ create_israel_kingdom_decision = {
 		gain_heroic_legend_seed_tooltip_effect = yes
 		custom_tooltip = create_israel_kingdom_decision_effect_tooltip
 		show_as_tooltip = {
-			create_israel_scripted_effect = yes
+
 		}
 		trigger_event = {
 			id = middle_east_decisions.0005
@@ -586,7 +586,7 @@ become_saoshyant_decision = {
 ### Revive Greater Armenia ###
 create_armenian_empire_decision = {
 	picture = {
-		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+		reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds"
 	}
 	desc = create_armenian_empire_decision_desc
 	selection_tooltip = create_armenian_empire_decision_tooltip
@@ -636,7 +636,7 @@ create_armenian_empire_decision = {
 
 	effect = {
 		show_as_tooltip = {
-			revive_armenian_empire_decision_scripted_effect = yes
+
 		}
 		save_scope_as = founder
 		trigger_event = {
@@ -677,193 +677,7 @@ create_armenian_empire_decision = {
 #################################
 
 ### Found Empire Of Beth Nahrain Decision ###
-found_empire_of_beth_nahrain_decision = {
-	picture = {
-		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
-	}
-	decision_group_type = major
-
-	ai_check_interval_by_tier = {
-		barony = 0
-		county = 0
-		duchy = 0
-		kingdom = 120
-		empire = 0
-		hegemony = 0
-	}
-
-	title = middle_east_major_decisions.1020.t
-	desc = middle_east_major_decisions.1020.desc
-	selection_tooltip = middle_east_major_decisions.1020.tt
-
-	is_shown = {
-		is_ruler = yes
-		is_playable_character = yes
-		any_sub_realm_county = {
-			OR = {
-				faith ?= faith:nestorian
-				culture ?= {
-					OR = {
-						any_parent_culture_or_above = {
-							this = culture:assyrian
-						}
-						this = culture:assyrian
-					}
-				}
-			}
-		}
-
-		capital_province ?= { geographical_region = world_middle_east }
-
-		#Can only do it once
-		NOT = {
-			is_target_in_global_variable_list = {
-				name = unavailable_unique_decisions
-				target = flag:created_beth_nahrain
-			}
-		}
-	}
-	is_valid = {
-		is_independent_ruler = yes
-		highest_held_title_tier = tier_kingdom
-		culture = { has_cultural_pillar = heritage_syriac }
-		custom_tooltip = {
-			text = completely_controls_jazira_mesopotamia_tt
-			always = no
-			always = no
-		}
-		custom_tooltip = {
-			text = has_titles_jazira_mesopotamia_tt
-			always = no
-			always = no
-		}
-		OR = {
-			custom_tooltip = {
-				text = has_title_and_completely_control_jerusalem_tt
-				always = no
-				always = no
-			}
-			custom_tooltip = {
-				text = has_title_and_completely_control_syria_tt
-				always = no
-				always = no
-			}
-		}
-		rule_title_creation_imperial_power_projection_title_creation_trigger = yes
-	}
-
-	is_valid_showing_failures_only = {
-		is_landed = yes
-		is_capable_adult = yes
-		is_imprisoned = no
-		is_at_war = no
-	}
-
-	effect = {
-		hidden_effect = {
-			add_to_global_variable_list = {
-				name = unavailable_unique_decisions
-				target = flag:created_beth_nahrain
-			}
-			create_title_and_vassal_change = {
-				type = created
-				save_scope_as = title_change
-				add_claim_on_loss = no
-			}
-			# Native-world scope has no target in Voltara; original follows.
-# title:k_jazira = {
-# 				set_de_jure_liege_title = title:e_beth_nahrain
-# 			}
-
-			# Native-world scope has no target in Voltara; original follows.
-# title:k_mesopotamia = {
-# 				set_de_jure_liege_title = title:e_beth_nahrain
-# 			}
-
-
-			if = { limit = {
-					always = no
-					always = no
-				} # Unreachable effects archived in debug-dead-branches/audit.json.
-}
-
-			if = { limit = {
-					always = no
-					always = no
-				} # Unreachable effects archived in debug-dead-branches/audit.json.
-}
-		}
-		#Create Beth Nahrain
-		# Native-world scope has no target in Voltara; original follows.
-# title:e_beth_nahrain = {
-# 			change_title_holder = {
-# 				holder = root
-# 				change = scope:title_change
-# 			}
-# 		}
-
-		resolve_title_and_vassal_change = scope:title_change
-
-		dynasty = {
-			add_dynasty_prestige = 1000
-		}
-
-		give_nickname = nick_beth_nahrain
-
-		show_as_tooltip = {
-			promote_culture_beth_nahrain_scripted_effect = yes
-			custom_tooltip = middle_east_major_decisions.1020.promote_culture.tt
-		}
-		save_scope_as = suppress_tooltips
-
-		trigger_event = { id = middle_east_decisions.1020 }
-
-		show_as_tooltip = {
-			random_list = {
-				100 = {
-					show_chance = no
-					desc = middle_east_major_decisions.1020.learning.desc
-					learning_beth_nahrain_scripted_effect = yes
-				}
-				100 = {
-					show_chance = no
-					desc = middle_east_major_decisions.1020.martial.desc
-					martial_beth_nahrain_scripted_effect = yes
-				}
-				100 = {
-					show_chance = no
-					trigger = {
-						faith = faith:nestorian
-					}
-					desc = middle_east_major_decisions.1020.nestorian.desc
-					nestorian_faith_beth_nahrain_scripted_effect = yes
-				}
-				100 = {
-					show_chance = no
-					trigger = {
-						NOT = {
-							faith = faith:nestorian
-						}
-					}
-					desc = middle_east_major_decisions.1020.no_faith.desc
-					no_faith_beth_nahrain_scripted_effect = yes
-				}
-			}
-		}
-	}
-
-	cost = {
-		prestige = 1000
-	}
-
-	ai_potential = {
-		culture = { has_cultural_pillar = heritage_syriac }
-	}
-
-	ai_will_do = {
-		base = 100
-	}
-}
+found_empire_of_beth_nahrain_decision = { picture = { reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds" } desc = vt_historical_content_disabled selection_tooltip = vt_historical_content_disabled ai_check_interval = 0 is_shown = { always = no } is_valid = { always = no } effect = { } }
 
 ##############
 # Dar al-Islam
@@ -923,7 +737,7 @@ create_dar_al_islam_decision = {
 
 	effect = {
 		show_as_tooltip = {
-			create_dar_al_islam_effect = yes
+
 		}
 		save_scope_as = dar_al_islam_ruler
 		# Save all existing islamic head of faiths and their titles

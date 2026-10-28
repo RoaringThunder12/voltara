@@ -19,7 +19,8 @@ scripted_effect save_genpei_scopes_effect = {
 	# Yamato
 	 # Emperor Takakura
 	 # Father of Takakura
-	title:k_chrysanthemum_throne.holder ?= { save_scope_as = current_emperor }
+	# Historical title scope excluded.
+
 	#Get old emperor
 	scope:new_emperor.primary_title.previous_holder ?= {
 		save_scope_as = old_emperor

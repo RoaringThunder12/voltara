@@ -74,6 +74,7 @@ voltara_dragons.61 = { type = character_event title = voltara_dragons.61.t desc 
 }
 voltara_dragons.70 = { hidden = yes immediate = {
  scope:sc_victor ?= { add_prestige = 100 add_character_modifier = { modifier = voltara_battlefield_veteran years = 5 }
+ if = { limit = { NOT = { has_variable = voltara_battlefield_victories } } set_variable = { name = voltara_battlefield_victories value = 0 } }
  change_variable = { name = voltara_battlefield_victories add = 1 } }
 } }
 voltara_dragons.80 = { type = character_event title = voltara_dragons.80.t desc = voltara_dragons.80.desc theme = realm

@@ -3482,8 +3482,8 @@ birth.8011 = {
 					is_ruler = no
 					exists = location # Security check
 					OR = {
-						location = title:c_byzantion.title_province
-						location = title:c_roma.title_province
+						location = top_liege.capital_province
+						location = faith.religious_head.capital_province
 						# Be a bit more lenient with co-emperors.
 						AND = {
 							is_diarch = yes

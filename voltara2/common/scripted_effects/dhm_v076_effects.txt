@@ -1,39 +1,9 @@
-﻿# v0.7.6: recover only an unambiguous old choice. Event-carried values always win.
+﻿# Current event-carried values always win. Missing legacy choices use the existing unknown-outcome path.
 # Called on the participant who held the old flags; no persistent state is changed.
 
-dhm_v076_resolve_2_legacy_choices_effect = {
-	if = {
-		limit = { NOT = { exists = scope:$KEY$ } }
-		save_scope_value_as = { name = $KEY$ value = flag:unknown }
-		if = {
-			limit = { has_character_flag = $FLAG_1$ NOT = { has_character_flag = $FLAG_2$ } }
-			save_scope_value_as = { name = $KEY$ value = $VALUE_1$ }
-		}
-		else_if = {
-			limit = { has_character_flag = $FLAG_2$ NOT = { has_character_flag = $FLAG_1$ } }
-			save_scope_value_as = { name = $KEY$ value = $VALUE_2$ }
-		}
-	}
-}
+dhm_v076_resolve_2_legacy_choices_effect = { if = { limit = { NOT = { exists = scope:$KEY$ } } save_scope_value_as = { name = $KEY$ value = flag:unknown } } }
 
-dhm_v076_resolve_3_legacy_choices_effect = {
-	if = {
-		limit = { NOT = { exists = scope:$KEY$ } }
-		save_scope_value_as = { name = $KEY$ value = flag:unknown }
-		if = {
-			limit = { has_character_flag = $FLAG_1$ NOT = { has_character_flag = $FLAG_2$ } NOT = { has_character_flag = $FLAG_3$ } }
-			save_scope_value_as = { name = $KEY$ value = $VALUE_1$ }
-		}
-		else_if = {
-			limit = { has_character_flag = $FLAG_2$ NOT = { has_character_flag = $FLAG_1$ } NOT = { has_character_flag = $FLAG_3$ } }
-			save_scope_value_as = { name = $KEY$ value = $VALUE_2$ }
-		}
-		else_if = {
-			limit = { has_character_flag = $FLAG_3$ NOT = { has_character_flag = $FLAG_1$ } NOT = { has_character_flag = $FLAG_2$ } }
-			save_scope_value_as = { name = $KEY$ value = $VALUE_3$ }
-		}
-	}
-}
+dhm_v076_resolve_3_legacy_choices_effect = { if = { limit = { NOT = { exists = scope:$KEY$ } } save_scope_value_as = { name = $KEY$ value = flag:unknown } } }
 
 # Bookkeeping may run before a ruler's first scheduled setup or after succession.
 # Initialize only the requested missing total; never reset earned history.

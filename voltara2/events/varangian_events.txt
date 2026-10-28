@@ -26,7 +26,7 @@
 # Evaluate whether the target is valid for varangians
 scripted_trigger varangian_0001_available_varangian_trigger = {
 	can_be_knight_trigger = {
-		ARMY_OWNER = title:e_byzantium.holder
+		ARMY_OWNER = root.top_liege
 	}
 	age < 40
 	is_married = no
@@ -40,9 +40,9 @@ scripted_trigger varangian_0001_available_varangian_trigger = {
 			has_doctrine_parameter = pacifist
 		}
 		has_trait = craven
-		has_truce = title:e_byzantium.holder
-		is_at_war_with = title:e_byzantium.holder
-		has_relation_rival = title:e_byzantium.holder
+		always = no
+		always = no
+		always = no
 	}
 }
 
@@ -62,12 +62,12 @@ varangian.0001 = {
 		always = no
 		NOR = {
 			always = no
-			has_truce = title:e_byzantium.holder
-			is_at_war_with = title:e_byzantium.holder
+			always = no
+			always = no
 			any_sub_realm_county = {
 				always = no
 			}
-			has_relation_rival = title:e_byzantium.holder
+			always = no
 		}
 		any_courtier = {
 			varangian_0001_available_varangian_trigger = yes

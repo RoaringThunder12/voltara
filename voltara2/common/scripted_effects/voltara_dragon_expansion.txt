@@ -12,7 +12,7 @@
 			name = pitted_dragon_location
 			value = $DRAGONPIT_COUNTY$
 		}
-		remove_variable = travelling_from_pit
+		
 	}
 }
 agot_remove_from_dragonpit_no_event = {
@@ -27,10 +27,7 @@ agot_remove_from_dragonpit_no_event = {
 		remove_character_flag = in_dragonpit
 		remove_character_modifier = agot_dragon_in_dragonpit
 		remove_variable = pitted_dragon_location
-		if = {
-			limit = { has_character_flag = dragon_put_in_different_pit }
-			remove_character_flag = dragon_put_in_different_pit
-		}
+		
 		save_scope_as = removed_dragon
 	}
 }

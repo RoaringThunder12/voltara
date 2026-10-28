@@ -9,7 +9,7 @@
 ### Unite the West Slavs ###
 unite_the_western_slavs_decision = {
 	picture = {
-		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+		reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds"
 	}
 	decision_group_type = major
 	ai_check_interval_by_tier = {
@@ -71,7 +71,7 @@ unite_the_western_slavs_decision = {
 		gain_heroic_legend_seed_tooltip_effect = yes
 		save_scope_as = western_slav_uniter
 
-		show_as_tooltip = { unite_the_western_slavs_decision_effects = yes } #Actually applied in east_europe.0001 - prestige, laws, title, innovation effects
+		show_as_tooltip = {} #Actually applied in east_europe.0001 - prestige, laws, title, innovation effects
 
 		#Events
 		trigger_event = east_europe.0001
@@ -116,7 +116,7 @@ unite_the_western_slavs_decision = {
 ### Unite the South Slavs ###
 unite_the_southern_slavs_decision = {
 	picture = {
-		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+		reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds"
 	}
 	decision_group_type = major
 	ai_check_interval_by_tier = {
@@ -161,7 +161,7 @@ unite_the_southern_slavs_decision = {
 		gain_heroic_legend_seed_tooltip_effect = yes
 		save_scope_as = southern_slav_uniter
 
-		show_as_tooltip = { unite_the_southern_slavs_decision_effects = yes } #Actually applied in east_europe.0006 - prestige, laws, title, innovation effects
+		show_as_tooltip = {} #Actually applied in east_europe.0006 - prestige, laws, title, innovation effects
 
 		#Events
 		trigger_event = east_europe.0005
@@ -202,7 +202,7 @@ unite_the_southern_slavs_decision = {
 ### Unite the Slavs ###
 unite_the_slavs_decision = {
 	picture = {
-		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+		reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds"
 	}
 	decision_group_type = major
 	ai_check_interval_by_tier = {
@@ -247,7 +247,7 @@ unite_the_slavs_decision = {
 	effect = {
 		save_scope_as = slav_uniter
 
-		show_as_tooltip = { unite_the_slavs_decision_effects = yes } #Actually applied in east_europe.0010 - prestige, laws, title, innovation effects
+		show_as_tooltip = {} #Actually applied in east_europe.0010 - prestige, laws, title, innovation effects
 
 		#Events
 		trigger_event = east_europe.0010
@@ -467,7 +467,7 @@ defenders_of_highgod_decision = {
 ### Promote Christian Settlements ###
 promote_hungarian_settlement_decision = {
 	picture = {
-		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+		reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds"
 	}
 	desc = promote_hungarian_settlement_decision_desc
 	selection_tooltip = promote_hungarian_settlement_decision_tooltip
@@ -536,7 +536,7 @@ promote_hungarian_settlement_decision = {
 
 	effect = {
 		show_as_tooltip = {
-			promote_hungarian_settlement_decision_scripted_effect = yes
+
 		}
 		trigger_event = {
 			id = east_europe.0030
@@ -567,109 +567,7 @@ promote_hungarian_settlement_decision = {
 # by Flavio Verna & Ewan Cowhig Croft	#
 #########################################
 ### Revive Táltosism ###
-revive_magyar_paganism_decision = {
-	picture = {
-		reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds"
-	}
-	desc = revive_magyar_paganism_decision_desc
-	selection_tooltip = revive_magyar_paganism_decision_tooltip
-	decision_group_type = major
-	ai_check_interval = 0
-
-	is_shown = {
-		#Must be some flavour of Magyar.
-		culture ?= { has_cultural_pillar = heritage_magyar }
-		#Must be feudalised.
-		OR = {
-			government_has_mechanic = administrative
-			government_has_flag = government_is_feudal
-		}
-		#Must be the ruler of the Carpathian Basin.
-		any_sub_realm_county = {
-			title_province = { geographical_region = custom_hungary }
-		}
-		#Should be done early.
-		custom_tooltip = {
-			text = revive_taltoism_decision_before_last_date
-			current_date <= 1100.1.1
-		}
-		NOR = {
-			#Can only do it once.
-			is_target_in_global_variable_list = {
-				name = unavailable_unique_decisions
-				target = flag:flag_revived_magyar_paganism
-			}
-		}
-		#Must be something other than pagan.
-		NOT = {
-			faith.religion = { is_in_family = rf_pagan }
-		}
-		#Magyar Paganism must not have been reformed.
-		religion:magyar_religion = {
-			any_faith = {
-				count = all
-				has_doctrine_parameter = unreformed
-			}
-		}
-		is_landed = yes
-	}
-
-	is_valid = {
-		#Must be suitably prestigious.
-		prestige_level >= high_prestige_level
-		#Either you hold k_hungary directly, or your vassal does.
-		OR = {
-			always = no
-			AND = {
-				always = no
-				any_vassal = { always = no }
-			}
-		}
-		#Must control at least 80% of de jure Hungary (usually we'd use a region, but if Hungary has shrunk/grown for some reason, the people and title are more important than the actual area).
-		any_realm_county = {
-			count >= 30
-			culture = { has_cultural_pillar = heritage_magyar }
-		}
-		#Must be a noted scholar of theology (and thus filled out the entire Theologian tree).
-		OR = {
-			piety_level >= high_piety_level
-			has_trait = theologian
-		}
-		#Should be done early: reiterate this here so the player isn't surprised by losing the decision when shifting up an era.
-		custom_tooltip = {
-			text = revive_taltoism_decision_before_last_date
-			current_date <= 1100.1.1
-		}
-	}
-
-	is_valid_showing_failures_only = {
-		is_capable_adult = yes
-		is_imprisoned = no
-		is_at_war = no
-		top_liege = this
-	}
-
-	cost = {
-		piety = 2000
-	}
-
-	effect = {
-		gain_holy_legend_seed_tooltip_effect = yes
-		custom_tooltip = revive_magyar_paganism_decision.adjust_the_faith.tt
-		show_as_tooltip = { revive_magyar_paganism_decision_scripted_effect = yes }
-		trigger_event = { id = east_europe.0032 }
-		hidden_effect = {
-			add_to_global_variable_list = {
-				name = unavailable_unique_decisions
-				target = flag:flag_revived_magyar_paganism
-			}
-		}
-	}
-
-	ai_potential = {
-		always = no
-	}
-}
+revive_magyar_paganism_decision = { picture = { reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds" } desc = vt_historical_content_disabled selection_tooltip = vt_historical_content_disabled ai_check_interval = 0 is_shown = { always = no } is_valid = { always = no } effect = { } }
 
 #################################
 # Found the Kingdom of Bosnia	#
@@ -760,7 +658,7 @@ found_kingdom_of_bosnia_decision = {
 
 	effect = {
 		save_scope_as = founder
-		show_as_tooltip = { found_kingdom_of_bosnia_decision_scripted_effect = yes }
+		show_as_tooltip = {}
 		gain_heroic_legend_seed_tooltip_effect = yes
 		trigger_event = { id = east_europe.0101 }
 		#Notify other players.
@@ -882,7 +780,7 @@ found_kingdom_of_albania_decision = {
 
 	effect = {
 		save_scope_as = founder
-		found_kingdom_of_albania_decision_scripted_effect = yes
+
 		gain_heroic_legend_seed_tooltip_effect = yes
 		hidden_effect = {
 			if = {

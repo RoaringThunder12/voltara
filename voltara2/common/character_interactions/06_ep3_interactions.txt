@@ -3038,7 +3038,7 @@ is_valid = {
 			# Tell them that the revocation went through fine.
 			trigger_event = ep3_interactions_events.0011
 			tgp_activate_catalyst_against_hegemon_effect = {
-				HEGEMON = scope:recipient
+				
 				CATALYST = catalyst_hegemon_influenced_by_interaction
 			}
 		}
@@ -3678,7 +3678,7 @@ is_valid = {
 				}
 			}
 			tgp_activate_catalyst_against_hegemon_effect = {
-				HEGEMON = scope:recipient
+				
 				CATALYST = catalyst_hegemon_influenced_by_interaction
 			}
 			# If the minister's merit rank is too low, it will affect the dynastic cycle
@@ -8347,7 +8347,7 @@ is_valid = {
 					exists = cp:minister_personnel
 				}
 			}
-			title:e_minister_of_personnel.holder ?= {
+			scope:actor.top_liege.cp:minister_personnel ?= {
 				save_scope_as = recipient
 			}
 		}
@@ -8685,7 +8685,7 @@ is_valid = {
 						}
 					}
 					tgp_activate_catalyst_against_hegemon_effect = {
-						HEGEMON = scope:recipient
+						
 						CATALYST = catalyst_hegemon_influenced_by_interaction
 					}
 				}
@@ -9619,7 +9619,7 @@ is_valid = {
 				}
 			}
 			tgp_activate_catalyst_against_hegemon_effect = {
-				HEGEMON = scope:recipient
+				
 				CATALYST = catalyst_hegemon_influenced_by_interaction
 			}
 		}
@@ -9891,7 +9891,7 @@ is_valid = {
 				}
 			}
 			tgp_activate_catalyst_against_hegemon_effect = {
-				HEGEMON = scope:recipient
+				
 				CATALYST = catalyst_hegemon_influenced_by_interaction
 			}
 		}
@@ -10343,7 +10343,7 @@ is_valid = {
 		}
 		scope:actor = {
 			tgp_activate_catalyst_against_hegemon_effect = {
-				HEGEMON = scope:recipient
+				
 				CATALYST = catalyst_hegemon_influenced_by_interaction
 			}
 		}
@@ -10517,7 +10517,7 @@ is_valid = {
 		}
 		scope:actor = {
 			tgp_activate_catalyst_against_hegemon_effect = {
-				HEGEMON = scope:recipient
+				
 				CATALYST = catalyst_hegemon_influenced_by_interaction
 			}
 		}
@@ -10959,7 +10959,7 @@ is_valid = {
 				}
 			}
 			tgp_activate_catalyst_against_hegemon_effect = {
-				HEGEMON = scope:recipient
+				
 				CATALYST = catalyst_hegemon_influenced_by_interaction
 			}
 		}
@@ -13874,7 +13874,7 @@ is_valid = {
 				use_hook = scope:recipient
 			}
 			tgp_activate_catalyst_against_hegemon_effect = {
-				HEGEMON = scope:recipient
+				
 				CATALYST = catalyst_hegemon_influenced_by_interaction
 			}
 		}

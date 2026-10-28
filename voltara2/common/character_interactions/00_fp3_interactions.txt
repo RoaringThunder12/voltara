@@ -421,7 +421,7 @@ is_valid = {
 				OR = {
 					any_character_struggle = { is_struggle_type = persian_struggle }
 					# Optional native title is absent on the Voltara map.
-# title:d_sunni.holder ?= this
+# faith.religious_head ?= this
 always = no
 				}
 				top_liege ?= this
@@ -998,7 +998,7 @@ always = no
 
 		modifier = {
 			add = 50
-			title:d_sunni.holder ?= scope:recipient
+			always = no
 		}
 
 		modifier = {
@@ -1721,17 +1721,17 @@ is_valid = {
 			trigger_if = {
 				limit = { has_trait = fp3_struggle_supporter }
 				# Can't be allied to the caliph.
-				NOT = { is_allied_to = title:d_sunni.holder }
+				NOT = { always = no }
 				# Can't be strong hooked _by_ the caliph.
 				NOT = {
-					title:d_sunni.holder = { has_strong_hook = prev }
+					always = no
 				}
 				# Can't have only recently changed to become a supporter.
 				custom_tooltip = {
 					text = fp3_change_allegiance.tt.recently_voluntarily_became_supporter
 					OR = {
 						NOT = { has_variable = last_explicit_friday_prayer_caliph }
-						NOT = { var:last_explicit_friday_prayer_caliph = title:d_sunni.holder }
+						NOT = { always = no }
 					}
 				}
 			}
@@ -1743,7 +1743,7 @@ is_valid = {
 					text = fp3_change_allegiance.tt.recently_voluntarily_became_detractor
 					OR = {
 						NOT = { has_variable = last_explicit_friday_prayer_caliph }
-						NOT = { var:last_explicit_friday_prayer_caliph = title:d_sunni.holder }
+						NOT = { always = no }
 					}
 				}
 				# Can't have been forced into becoming a detractor by the caliph overstepping.
@@ -1751,7 +1751,7 @@ is_valid = {
 					text = fp3_change_allegiance.tt.recently_forced_to_detractor
 					OR = {
 						NOT = { has_variable = last_explicit_defied_caliph }
-						NOT = { var:last_explicit_defied_caliph = title:d_sunni.holder }
+						NOT = { always = no }
 					}
 				}
 			}
@@ -1769,7 +1769,7 @@ is_valid = {
 			# They must be an orthodox Sunni.
 			custom_tooltip = {
 				text = fp3_change_allegiance.tt.hof_is_d_sunni
-				faith.religious_head ?= title:d_sunni.holder
+				always = no
 			}
 		}
 		scope:actor = { is_available_adult = yes }
@@ -1819,7 +1819,7 @@ is_valid = {
 		## Opinion of the caliph
 		opinion_modifier = {
 			who = scope:recipient
-			opinion_target = title:d_sunni.holder
+			opinion_target = faith.religious_head
 			multiplier = {
 				value = 0.5
 				# If you're the caliph, you can take the full amount.

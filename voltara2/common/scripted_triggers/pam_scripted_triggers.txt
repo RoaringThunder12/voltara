@@ -247,8 +247,8 @@ pam_is_ecumenical_patriarch_trigger = {
 	exists = faith.religious_head
 	this = faith.religious_head
 	OR = {
-		faith.religious_head_title ?= title:d_et_constantinople
-		faith.religious_head_title ?= title:k_orthodox
+		always = no
+		always = no
 	}
 }
 

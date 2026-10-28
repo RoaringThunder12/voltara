@@ -57,38 +57,8 @@ dhm_v080_school_pair_history_trigger = {
 	}
 }
 
-dhm_v080_union_reconciliation_history_trigger = {
-	exists = scope:dhm_story_relative
-	exists = scope:dhm_story_spouse
-	scope:dhm_story_relative = {
-		is_alive = yes
-		is_spouse_of = scope:dhm_story_spouse
-	}
-	scope:dhm_story_spouse = {
-		is_alive = yes
-		is_spouse_of = scope:dhm_story_relative
-	}
-	OR = {
-		scope:dhm_story_relative = {
-			any_memory = {
-				OR = {
-					has_memory_type = dhm_marriage_reconciled_memory
-					has_memory_type = dhm_marriage_saved_memory
-				}
-				has_memory_participant = scope:dhm_story_spouse
-			}
-		}
-		scope:dhm_story_spouse = {
-			any_memory = {
-				OR = {
-					has_memory_type = dhm_marriage_reconciled_memory
-					has_memory_type = dhm_marriage_saved_memory
-				}
-				has_memory_participant = scope:dhm_story_relative
-			}
-		}
-	}
-}
+# Retired obsolete donor-save compatibility path: dhm_v080_union_reconciliation_history_trigger
+
 
 dhm_v080_dispute_pair_history_trigger = {
 	exists = scope:dhm_dispute_first
@@ -200,22 +170,22 @@ dhm_v080_relationship_arc_context_valid_trigger = {
 	scope:dhm_arc_second = { is_alive = yes }
 	OR = {
 		AND = {
-			dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:siblings LEGACY = dhm_arc_siblings_context }
+			dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:siblings  }
 			scope:dhm_arc_first = { is_in_the_same_court_as = root is_sibling_of = scope:dhm_arc_second }
 			scope:dhm_arc_second = { is_in_the_same_court_as = root }
 		}
 		AND = {
-			dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:tutor LEGACY = dhm_arc_tutor_context }
+			dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:tutor  }
 			scope:dhm_arc_first = { is_in_the_same_court_as = root }
 			scope:dhm_arc_second = { is_in_the_same_court_as = root this != root }
 		}
 		AND = {
-			dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:inlaw LEGACY = dhm_arc_inlaw_context }
+			dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:inlaw  }
 			scope:dhm_arc_first = { is_in_the_same_court_as = root is_spouse_of = scope:dhm_arc_second }
 			scope:dhm_arc_second = { is_in_the_same_court_as = root }
 		}
 		AND = {
-			dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:estranged LEGACY = dhm_arc_estranged_context }
+			dhm_v071_choice_is_trigger = { KEY = dhm071_arc_kind VALUE = flag:estranged  }
 			scope:dhm_arc_first = { is_close_or_extended_family_of = root }
 			scope:dhm_arc_second = { is_close_or_extended_family_of = root }
 		}

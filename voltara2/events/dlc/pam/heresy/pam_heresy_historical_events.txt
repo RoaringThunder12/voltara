@@ -1,0 +1,43 @@
+﻿namespace = heresy_historical
+
+####################################################################
+# Heresy outbreak system - Component 3: Historical heresy outbreak #
+####################################################################
+# Christianity-only. Each named heresy has a 50-year cooldown (timed global
+# variable) between successive outbreaks. The first outbreak of a named heresy
+# uses its historical founder; subsequent outbreaks ("resurgences") use a
+# secondary historical figure if available, otherwise a generic anonymous
+# preacher. Paulician / Iconoclast / Adoptionist / Messalian have no anchor
+# founder and are always anonymous repeating outbreaks.
+#
+# Resurgence weight is 30% of a first-fire weight, so historical outbreaks are
+# strictly more likely than their resurgences.
+#
+# Pre-declaration vs already-declared: the heresy faith may be in either state
+# at the time of any outbreak (first or resurgence). The pre-declaration setup
+# spawns a rite of the parent faith; the already-declared setup converts the
+# epicenter directly to the heresy faith.
+
+######################################################
+# 0001 - Faith-scope router: pick heresy + epicenter #
+######################################################
+
+heresy_historical.0001 = { type = character_event hidden = yes trigger = { always = no } }
+
+###################################################
+# 0050 - Global player notification event         #
+###################################################
+# Sent to every same-faith landed and landless player worldwide. The epicenter
+# ruler is always AI so this is the only player-facing event for Component 3.
+# Three options:
+#   1. Embrace the new ways - convert via rite or faith depending on declaration
+#   2. Abandon your throne to follow the prophet (DLC-gated, founder must be alive)
+#   3. Reject and continue as before
+
+
+
+############################
+# 0011 - Spread sweep      #
+############################
+
+

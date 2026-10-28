@@ -367,29 +367,11 @@ can_pass_candidate_score_merit_law_trigger = {
 
 #dynastic cycle sort to movement triggers
 should_pick_pro_hegemon_movement_trigger = {
-	title:h_china.holder.legitimacy_level >= 2
-	NOR = {
-		has_relation_victim = title:h_china.holder
-		has_relation_bully = title:h_china.holder
-		has_relation_rival = title:h_china.holder
-		is_at_war_with = title:h_china.holder
-		is_imprisoned_by = title:h_china.holder
-		house_has_feud_relation_with_trigger = { TARGET = title:h_china.holder }
-	}
-	OR = {
-		has_relation_lover = title:h_china.holder
-		has_relation_friend = title:h_china.holder
-		has_relation_crush = title:h_china.holder
-		has_relation_potential_friend = title:h_china.holder
-		has_relation_elder = title:h_china.holder
-		has_relation_disciple = title:h_china.holder
-		has_trait = loyal
-		house ?= title:h_china.holder.house
-		has_dread_level_towards = {
-			target = title:h_china.holder
-			level >= 1
-		}
-	}
+exists = top_liege
+this != top_liege
+top_liege = { government_has_flag = government_is_celestial }
+NOT = { house_has_feud_relation_with_trigger = { TARGET = top_liege } }
+OR = { has_trait = loyal has_dread_level_towards = { target = top_liege level >= 1 } }
 }
 
 should_pick_expansion_movement_trigger = {

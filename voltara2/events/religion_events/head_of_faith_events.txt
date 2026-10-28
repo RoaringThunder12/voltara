@@ -156,7 +156,7 @@ scripted_effect set_religious_head_title_to_&_gain_flag_effect = {
 scripted_effect create_caliph_title_effect = {
 	save_scope_as = founder
 	faith.religious_head = { save_scope_as = old_caliph }
-	show_as_tooltip = { appoint_a_righteous_caliph_scripted_effect = yes }
+	show_as_tooltip = {}
 	# Notify co-faithists; we do this first so we can sort the feed message for how many did/didn't convert.
 	faith = {
 		every_faith_ruler = {
@@ -235,7 +235,7 @@ head_of_faith.0001 = {
 		play_music_cue = "mx_cue_sacredrite"
 		# Grab caliphs.
 		grab_existing_caliph_effect = {
-			TITLE_PATH = title:d_sunni
+			TITLE_PATH = root.faith.religious_head_title
 			DENOMINATION = sunni
 		}
 		grab_existing_caliph_effect = {
@@ -388,7 +388,7 @@ head_of_faith.0011 = {
 		play_music_cue = "mx_cue_sacredrite"
 		# Grab caliphs.
 		grab_existing_caliph_effect = {
-			TITLE_PATH = title:d_shiite
+			TITLE_PATH = root.faith.religious_head_title
 			DENOMINATION = shia
 		}
 		grab_existing_caliph_effect = {
@@ -703,11 +703,11 @@ head_of_faith.0031 = {
 		play_music_cue = "mx_cue_sacredrite"
 		# Grab caliphs.
 		grab_existing_caliph_effect = {
-			TITLE_PATH = title:d_sunni
+			TITLE_PATH = root.faith.religious_head_title
 			DENOMINATION = sunni
 		}
 		grab_existing_caliph_effect = {
-			TITLE_PATH = title:d_shiite
+			TITLE_PATH = root.faith.religious_head_title
 			DENOMINATION = shia
 		}
 		grab_existing_caliph_effect = {

@@ -82,7 +82,7 @@ fp3_persia_supporter_rulers_max_value = {
 					NOT = { always = no }
 					OR = {
 						top_liege = this
-						is_vassal_of = title:d_sunni.holder
+						always = no
 					}
 				}
 			}
@@ -108,7 +108,7 @@ fp3_persia_supporter_rulers_count_value = {
 					NOT = { always = no }
 					OR = {
 						top_liege = this
-						is_vassal_of = title:d_sunni.holder
+						always = no
 					}
 				}
 				# Trigger
@@ -1118,10 +1118,10 @@ fp3_struggle_switch_sides_value = {
 			always = no
 			NOR = {
 				always = no
-				has_relation_friend = title:d_sunni.holder
-				has_relation_lover = title:d_sunni.holder
+				always = no
+				always = no
 				opinion = {
-					target = title:d_sunni.holder
+					target = faith.religious_head
 					value >= 50
 				}
 			}
@@ -1131,9 +1131,9 @@ fp3_struggle_switch_sides_value = {
 			has_trait = fp3_struggle_detractor
 			always = no
 			NOR = {
-				has_relation_rival = title:d_sunni.holder
+				always = no
 				opinion = {
-					target = title:d_sunni.holder
+					target = faith.religious_head
 					value <= -50
 				}
 			}

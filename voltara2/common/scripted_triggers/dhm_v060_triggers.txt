@@ -38,14 +38,14 @@ dhm_v060_damaged_marriage_target_trigger = {
 	is_in_the_same_court_as = scope:dhm_manager
 	NOT = { has_character_flag = dhm_marriage_recovery_recent }
 	NOT = { has_character_flag = dhm_marriage_matter_recent }
-	NOT = { has_character_flag = dhm_living_marriage_recent }
+	
 	any_spouse = {
 		dhm_v081_marriage_may_reopen_trigger = yes
 		is_alive = yes
 		is_in_the_same_court_as = scope:dhm_manager
 		NOT = { has_character_flag = dhm_marriage_recovery_recent }
 		NOT = { has_character_flag = dhm_marriage_matter_recent }
-		NOT = { has_character_flag = dhm_living_marriage_recent }
+		
 		OR = {
 			opinion = { target = prev value <= 0 }
 			stress_level >= 2

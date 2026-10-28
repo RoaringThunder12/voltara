@@ -1411,14 +1411,14 @@ send_to_silent_sisterhood_interaction = {
 		modifier = { # If silent sisters bloated, less likely
 			add = -50
 			title:d_vt_priestesses_of_order.holder ?= {
-				has_character_flag = silent_sisterhood_bloated
+				any_courtier = { count >= 30 }
 			}
 		}
 
 		modifier = { # If silent sisters full, don't do it
 			factor = 0
 			title:d_vt_priestesses_of_order.holder ?= {
-				has_character_flag = silent_sisterhood_full
+				any_courtier = { count >= 50 }
 			}
 		}
 

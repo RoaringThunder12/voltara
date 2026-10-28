@@ -22,23 +22,8 @@ dhm_v073_partner_continuing_trigger = {
 	}
 }
 
-dhm_v073_couple_continuing_trigger = {
-	exists = scope:dhm_journey_relative
-	exists = scope:dhm_journey_spouse
-	scope:dhm_journey_relative = {
-		is_alive = yes
-		is_spouse_of = scope:dhm_journey_spouse
-		is_imprisoned = no
-		is_hostage = no
-		NOT = { has_trait = incapable }
-	}
-	scope:dhm_journey_spouse = {
-		is_alive = yes
-		is_imprisoned = no
-		is_hostage = no
-		NOT = { has_trait = incapable }
-	}
-}
+# Retired obsolete donor-save compatibility path: dhm_v073_couple_continuing_trigger
+
 
 dhm_v073_school_recipient_valid_trigger = {
 	exists = scope:dhm_story_child

@@ -86,85 +86,9 @@ tgp_china_ministry.0001 = {
 	}
 }
 # War won
-tgp_china_ministry.0002 = {
-	type = character_event
-	title = tgp_china_ministry.0002.t
-	desc = tgp_china_ministry.0002.desc
-	theme = martial
-	left_portrait = {
-		character = root
-		animation = war_over_win
-	}
-	right_portrait = {
-		character = scope:attacker
-		animation = random_weapon_celebrate
-	}
-	lower_center_portrait = scope:defender
 
-	immediate = {
-		save_scope_as = owner
-		custom_tooltip = grand_campaign_kingdom_invasion_cb_victory_desc_attacker
-	}
-
-	option = {
-		name = tgp_china_ministry.0002.a
-		if = {
-			limit = {
-				scope:great_project = {
-					any_in_list = {
-						variable = grand_campaign_targets
-						count = all
-						any_in_de_jure_hierarchy = {
-							count = all
-							filter = {
-								tier = tier_county
-							}
-							holder.top_overlord = scope:owner
-						}
-					}
-				}
-			}
-			scope:great_project = {
-				complete_great_project = scope:great_project
-			}
-		}
-
-		add_legitimacy = miniscule_legitimacy_gain
-		custom_tooltip = grand_campaign_won_tt
-		custom_tooltip = grand_campaign_lost_tt
-	}
-}
 # War lost or white peaced
-tgp_china_ministry.0003 = {
-	type = character_event
-	title = tgp_china_ministry.0003.t
-	desc = tgp_china_ministry.0003.desc
-	theme = martial
-	left_portrait = {
-		character = root
-		animation = disappointed
-	}
-	right_portrait = {
-		character = scope:attacker
-		animation = nervous
-	}
-	lower_center_portrait = scope:defender
 
-	immediate = {
-		save_scope_as = owner
-	}
-
-	option = {
-		name = tgp_china_ministry.0003.a
-		scope:attacker = {
-			tgp_activate_catalyst_against_hegemon_effect = {
-				HEGEMON = root
-				CATALYST = catalyst_hegemon_lost_war
-			}
-		}
-		add_legitimacy = miniscule_legitimacy_loss
-	}
-}
 # War joins
 tgp_china_ministry.0004 = {
 	type = character_event
@@ -307,7 +231,7 @@ tgp_china_ministry.0005 = {
 			add_legitimacy_effect = { LEGITIMACY = major_legitimacy_gain }
 			scope:war_leader = {
 				tgp_activate_catalyst_against_hegemon_effect = {
-					HEGEMON = scope:owner
+					
 					CATALYST = catalyst_grand_campaign
 				}
 	 			add_merit_if_relevant_effect = {
@@ -319,7 +243,7 @@ tgp_china_ministry.0005 = {
 			add_legitimacy_effect = { LEGITIMACY = major_legitimacy_loss }
 			scope:war_leader = {
 				tgp_activate_catalyst_against_hegemon_effect = {
-					HEGEMON = scope:owner
+					
 					CATALYST = catalyst_grand_campaign_lost
 				}
 	 			change_influence = major_influence_loss
@@ -488,7 +412,7 @@ tgp_china_ministry.0008 = {
 					add_legitimacy_effect = { LEGITIMACY = major_legitimacy_gain }
 					scope:war_leader = {
 						tgp_activate_catalyst_against_hegemon_effect = {
-							HEGEMON = scope:owner
+							
 							CATALYST = catalyst_grand_campaign
 						}
 			 			add_merit_if_relevant_effect = {
@@ -500,7 +424,7 @@ tgp_china_ministry.0008 = {
 					add_legitimacy_effect = { LEGITIMACY = major_legitimacy_loss }
 					scope:war_leader = {
 						tgp_activate_catalyst_against_hegemon_effect = {
-							HEGEMON = scope:owner
+							
 							CATALYST = catalyst_grand_campaign_lost
 						}
 	 					change_influence = major_influence_loss

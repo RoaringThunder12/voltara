@@ -136,8 +136,8 @@ ep3_frankokratia_transiting_relative_trigger = {
 				always = no
 			}
 		}
-		is_vassal_of = title:e_byzantium.holder
-		is_at_war_with = title:e_byzantium.holder
+		always = no
+		always = no
 	}
 	is_ai = yes
 }
@@ -162,13 +162,13 @@ ep3_frankokratia_story_owner_trigger = {
 		exists = player_heir
 	}
 	NOR = {
-		is_allied_to = title:e_byzantium.holder
-		top_liege = title:e_byzantium.holder
-		is_at_war_with = title:e_byzantium.holder
-		has_truce = title:e_byzantium.holder
-		has_relation_friend = title:e_byzantium.holder
-		has_relation_lover = title:e_byzantium.holder
-		has_relation_soulmate = title:e_byzantium.holder
+		always = no
+		always = no
+		always = no
+		always = no
+		always = no
+		always = no
+		always = no
 	}
 	#Needs to be interesteed in working with Latin shipbuilders
 	capital_province = {
@@ -284,16 +284,16 @@ ep3_frankokratia_claimant_trigger = {
 			always = no
 		}
 		AND = {
-			is_child_of = title:e_byzantium.holder
+			always = no
 			always = no
 		}
 		AND = {
-			is_child_of = title:e_byzantium.holder
+			always = no
 			is_male = yes
 			always = no
 		}
 		AND = {
-			is_child_of = title:e_byzantium.holder
+			always = no
 			is_female = yes
 			always = no
 		}
@@ -309,18 +309,18 @@ ep3_frankokratia_claimant_trigger = {
 		ai_honor <= 0
 	}
 	NOR = {
-		is_vassal_of = title:e_byzantium.holder
-		is_consort_of = title:e_byzantium.holder
-		has_relation_soulmate = title:e_byzantium.holder
-		has_relation_friend = title:e_byzantium.holder
-		has_relation_best_friend = title:e_byzantium.holder
+		always = no
+		always = no
+		always = no
+		always = no
+		always = no
 	}
 	NAND = {
 		OR = {
 			is_landed = yes
 			is_landless_ruler = yes
 		}
-		top_liege = title:e_byzantium.holder
+		always = no
 	}
 }
 
@@ -354,11 +354,11 @@ ep3_frankokratia_financier_trigger = {
 	is_ai = yes
 	#Not pals with byz emperor
 	NOR = {
-		is_allied_to = title:e_byzantium.holder
-		is_vassal_of = title:e_byzantium.holder
-		has_relation_friend = title:e_byzantium.holder
-		has_relation_lover = title:e_byzantium.holder
-		has_relation_soulmate = title:e_byzantium.holder
+		always = no
+		always = no
+		always = no
+		always = no
+		always = no
 		AND = {
 			exists = faith.religious_head
 			this = faith.religious_head
@@ -411,10 +411,10 @@ ep3_frankokratia_valid_joiner_trigger = {
 		any_liege_or_above = {
 			always = no
 		}
-		is_allied_to = title:e_byzantium.holder
-		is_vassal_of = title:e_byzantium.holder
-		has_truce = title:e_byzantium.holder
-		has_relation_friend = title:e_byzantium.holder
+		always = no
+		always = no
+		always = no
+		always = no
 		any_owned_story = {
 			type = frankokratia_story
 		}
@@ -428,9 +428,9 @@ ep3_frankokratia_latin_kingdom_available_trigger = {
 			always = no
 		}
 		holder = {
-			is_vassal_or_below_of = title:e_byzantium.holder
+			always = no
 			NOT = {
-				is_at_war_with = title:e_byzantium.holder
+				always = no
 			}
 		}
 	}
@@ -442,9 +442,9 @@ ep3_frankokratia_latin_kingdom_available_trigger = {
 				always = no
 			}
 			holder = {
-				is_vassal_or_below_of = title:e_byzantium.holder
+				always = no
 				NOT = {
-					is_at_war_with = title:e_byzantium.holder
+					always = no
 				}
 			}
 		}

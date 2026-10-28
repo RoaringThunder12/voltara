@@ -8792,10 +8792,7 @@ pilgrimage.6007 = {
 									remove_trait = bubonic_plague
 									if = {
 										limit = { is_ai = no }
-										add_achievement_global_variable_effect = {
-											VARIABLE = ce1_not_today_achievement_unlocked
-											VALUE = yes
-										}
+										
 									}
 								}
 								else_if = {
@@ -9033,7 +9030,7 @@ scripted_effect check_for_pilgrimage_badge_event_effect = {
 	#Santiago doesn't have it's own destination event so checking here first
 	if = {
 		limit = {
-			location.barony != title:b_santiago
+			always = yes
 		}
 		if = {
 			limit = {

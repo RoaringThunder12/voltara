@@ -2,7 +2,7 @@
   trait = patient trait = diligent trait = education_learning_3 trait = voltara_lifespan_1 trait = vt_ek_education_magic_3
  diplomacy = 10 martial = 12 stewardship = 13 intrigue = 10 learning = 20 prowess = 13
  3749.1.1 = { birth = yes }
- 3781.1.1 = { effect = { set_variable = { name = arcana_base value = 14 } add_perk = alteration_novice_perk voltara_initialize_threadbinder = yes } }
+ 3781.1.1 = { effect = { set_variable = { name = arcana_base value = 14 } if = { limit = { NOT = { has_perk = alteration_novice_perk } } add_perk = alteration_novice_perk } voltara_initialize_threadbinder = yes } }
 }
 19881001 = { name = vae_sibling_0 father = 19881002 mother = 19881003 dynasty = 14881000 culture = vae_azrak_stoneborn rite = vae_mantle
  trait = diligent trait = education_stewardship_2 trait = voltara_lifespan_1
@@ -28,7 +28,7 @@
   trait = patient trait = diligent trait = education_learning_3 trait = vt_ek_education_magic_3
  diplomacy = 10 martial = 12 stewardship = 13 intrigue = 10 learning = 20 prowess = 13
  3736.1.1 = { birth = yes }
- 3781.1.1 = { effect = { set_variable = { name = arcana_base value = 14 } add_perk = restoration_novice_perk voltara_initialize_threadbinder = yes } }
+ 3781.1.1 = { effect = { set_variable = { name = arcana_base value = 14 } if = { limit = { NOT = { has_perk = restoration_novice_perk } } add_perk = restoration_novice_perk } voltara_initialize_threadbinder = yes } }
 }
 19881021 = { name = vae_sibling_2 father = 19881022 mother = 19881023 dynasty = 14881002 culture = vae_sazhir_naga rite = vae_wells
  trait = diligent trait = education_stewardship_2 
@@ -67,7 +67,7 @@
   trait = patient trait = diligent trait = education_learning_3 trait = voltara_lifespan_1 trait = giant trait = vt_ek_education_magic_3
  diplomacy = 10 martial = 12 stewardship = 13 intrigue = 10 learning = 20 prowess = 27
  3707.1.1 = { birth = yes }
- 3781.1.1 = { effect = { set_variable = { name = arcana_base value = 14 } add_perk = destruction_novice_perk voltara_initialize_threadbinder = yes } }
+ 3781.1.1 = { effect = { set_variable = { name = arcana_base value = 14 } if = { limit = { NOT = { has_perk = destruction_novice_perk } } add_perk = destruction_novice_perk } voltara_initialize_threadbinder = yes } }
 }
 19881051 = { name = vae_sibling_5 father = 19881052 mother = 19881053 dynasty = 14881005 culture = vae_vazhari rite = vae_mantle
  trait = diligent trait = education_stewardship_2 trait = giant trait = voltara_lifespan_1
@@ -80,7 +80,7 @@
  female = yes trait = patient trait = diligent trait = education_learning_3 trait = voltara_lifespan_2 trait = vt_ek_education_magic_3
  diplomacy = 10 martial = 12 stewardship = 13 intrigue = 10 learning = 20 prowess = 13
  3669.1.1 = { birth = yes }
- 3781.1.1 = { effect = { set_variable = { name = arcana_base value = 14 } add_perk = illusion_novice_perk voltara_initialize_threadbinder = yes } }
+ 3781.1.1 = { effect = { set_variable = { name = arcana_base value = 14 } if = { limit = { NOT = { has_perk = illusion_novice_perk } } add_perk = illusion_novice_perk } voltara_initialize_threadbinder = yes } }
 }
 19881061 = { name = vae_sibling_6 father = 19881062 mother = 19881063 dynasty = 14881006 culture = voltara_culture_42 rite = vae_canopy
  trait = diligent trait = education_stewardship_2 

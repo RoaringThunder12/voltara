@@ -1383,7 +1383,7 @@ grand_chancellor_law = {
 
 	on_pass = {
 		hidden_effect = {
-			designate_diarch = title:e_minister_chancellor.holder
+			designate_diarch = root.top_liege.cp:councillor_chancellor
 			diarch = {
 				depose_diarch = yes
 			}
@@ -1463,7 +1463,7 @@ grand_marshal_law = {
 
 	on_pass = {
 		hidden_effect = {
-			designate_diarch = title:e_minister_grand_marshal.holder
+			designate_diarch = root.top_liege.cp:minister_grand_marshal
 			diarch = {
 				depose_diarch = yes
 			}
@@ -1487,7 +1487,7 @@ grand_marshal_law = {
 		}
 		if = { limit = {
 				# Optional native title is absent on the Voltara map.
-# title:e_minister_chancellor.holder ?= {
+# root.top_liege.cp:councillor_chancellor ?= {
 # 					is_ai = no
 # 					NOT = { has_court_position = favored_minister_court_position }
 # 				}
@@ -1497,8 +1497,8 @@ always = no
 }
 		if = { limit = {
 				always = no
-				title:e_minister_grand_marshal.holder.merit_level >= root.diarch.merit_level
-				title:e_minister_grand_marshal.holder.merit >= root.diarch.merit
+				always = no
+				always = no
 			} # Unreachable effects archived in debug-dead-branches/audit.json.
 }
 		if = {
@@ -1561,7 +1561,7 @@ grand_censor_law = {
 
 	on_pass = {
 		hidden_effect = {
-			designate_diarch = title:e_minister_censor.holder
+			designate_diarch = root.top_liege.cp:councillor_spymaster
 			diarch = {
 				depose_diarch = yes
 			}
@@ -1590,8 +1590,8 @@ grand_censor_law = {
 }
 		if = { limit = {
 				always = no
-				title:e_minister_censor.holder.merit_level >= root.diarch.merit_level
-				title:e_minister_censor.holder.merit >= root.diarch.merit
+				always = no
+				always = no
 			} # Unreachable effects archived in debug-dead-branches/audit.json.
 }
 		if = {

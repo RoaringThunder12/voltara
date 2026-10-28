@@ -317,7 +317,7 @@ great_project_reward_contribution_completion_actual_reward_effect = {
 		if = {
 			limit = {
 				government_allows = merit
-				this != title:h_china.holder # Chinese Emperor does not "use" merit
+				always = yes # Chinese Emperor does not "use" merit
 			}
 			change_merit = $MERIT_GAIN$
 		}
@@ -601,25 +601,25 @@ make_movement_leader_effect = {
 				trigger = scope:leaders_movement
 				situation:dynastic_cycle.situation_participant_group:expansion_movement = {
 					tgp_activate_catalyst_against_hegemon_effect = {
-						HEGEMON = scope:new_movement_leader.top_liege
+						
 						CATALYST = catalyst_movement_gained_power_expansion
 					}
 				}
 				situation:dynastic_cycle.situation_participant_group:advancement_movement = {
 					tgp_activate_catalyst_against_hegemon_effect = {
-						HEGEMON = scope:new_movement_leader.top_liege
+						
 						CATALYST = catalyst_movement_gained_power_advancement
 					}
 				}
 				situation:dynastic_cycle.situation_participant_group:conservative_movement = {
 					tgp_activate_catalyst_against_hegemon_effect = {
-						HEGEMON = scope:new_movement_leader.top_liege
+						
 						CATALYST = catalyst_movement_gained_power_conservative
 					}
 				}
 				situation:dynastic_cycle.situation_participant_group:pro_hegemon_movement = {
 					tgp_activate_catalyst_against_hegemon_effect = {
-						HEGEMON = scope:new_movement_leader.top_liege
+						
 						CATALYST = catalyst_movement_gained_power_pro_hegemon
 					}
 				}
@@ -1036,13 +1036,13 @@ refuse_movement_petition_effect = {
 					if = { limit = {
 							situation_top_has_catalyst = catalyst_imperial_examinations_gap_short_yearly
 							always = no
-							title:h_china.var:years_since_imperial_examination >= catalyst_imperial_examinations_gap_short_yearly_value
+							always = no
 						} # Unreachable effects archived in debug-dead-branches/audit.json.
 }
 					if = { limit = {
 							situation_top_has_catalyst = catalyst_imperial_examinations_gap_long_yearly
 							always = no
-							title:h_china.var:years_since_imperial_examination >= catalyst_imperial_examinations_gap_long_yearly_value
+							always = no
 						} # Unreachable effects archived in debug-dead-branches/audit.json.
 }
 				}
@@ -1671,246 +1671,14 @@ update_modified_movement_power_effect = {
 
 # When scoped character is appointed as a minister
 got_minister_position_effect = {
-	save_scope_as = new_minister
-
-	if = { # If your liege has a ministry, set up titles if needed
-		limit = {
-			scope:councillor_liege = {
-				this != scope:new_minister
-				tgp_has_access_to_ministry_trigger = yes
-			}
-			not = { exists = scope:swapped_position }
-		}
-		# Grant the ministry title if councillor doesn't have it
-		if = {
-			limit = {
-				NOT = { has_title = title:$MINISTER_TITLE$ }
-			}
-
-			create_title_and_vassal_change = {
-				type = appointment
-				save_scope_as = minister_title_change
-				add_claim_on_loss = no
-			}
-
-			if = {
-				limit = {
-					scope:councillor_liege = {
-						tgp_has_access_to_ministry_trigger = yes
-					}
-				}
-				# retire from other ministry primary titles
-				scope:new_minister = {
-					every_held_title = {
-						limit = {
-							this != title:$MINISTER_TITLE$
-							tgp_is_minister_title = yes
-						}
-						change_title_holder = {
-							holder = current_heir
-							change = scope:minister_title_change
-						}
-					}
-				}
-			}
-
-			title:$MINISTER_TITLE$ = {
-				change_title_holder = {
-					holder = scope:new_minister
-					change = scope:minister_title_change
-				}
-			}
-			resolve_title_and_vassal_change = scope:minister_title_change
-		}
-		# Add the correct title law if it doesn't have it already
-		if = { limit = {
-				exists = title:$MINISTER_TITLE$.holder
-				always = no
-				NOT = {
-					title:$MINISTER_TITLE$ = {
-						has_title_law = celestial_grand_marshal_appointment_succession_law
-					}
-				}
-			} # Proven unreachable; original effects retained below.
-# title:$MINISTER_TITLE$ = {
-# 				add_title_law = celestial_grand_marshal_appointment_succession_law
-# 			}
+save_scope_as = new_minister
+if = {
+ limit = { exists = scope:councillor_liege scope:councillor_liege = { tgp_has_access_to_ministry_trigger = yes this != scope:new_minister } }
+ if = { limit = { NOT = { has_council_position = $MINISTER_POSITION$ } }
+  scope:councillor_liege = { assign_councillor_type = { type = $MINISTER_POSITION$ target = scope:new_minister remove_existing_councillor = yes } }
+ }
+ if = { limit = { NOT = { has_character_modifier = minister_scheme_slots_modifier } } add_character_modifier = minister_scheme_slots_modifier }
 }
-		else_if = {
-			limit = {
-				exists = title:$MINISTER_TITLE$.holder
-				NOR = {
-					always = no
-					title:$MINISTER_TITLE$ = {
-						has_title_law = celestial_ministry_appointment_succession_law
-					}
-				}
-			}
-			title:$MINISTER_TITLE$ = {
-				add_title_law = celestial_ministry_appointment_succession_law
-			}
-		}
-
-		# Make them a minister if they don't have the council position
-		if = {
-			limit = {
-				NOT = { has_council_position = $MINISTER_POSITION$ }
-			}
-			top_liege = {
-				assign_councillor_type = {
-					type = $MINISTER_POSITION$
-					target = scope:new_minister
-					remove_existing_councillor = yes
-				}
-			}
-		}
-		# If we have any vassals remaining, let's move them to where they are supposed to be
-		if = {
-			limit = {
-				vassal_count > 0
-			}
-			create_title_and_vassal_change = {
-				type = granted
-				save_scope_as = minister_vassal_change
-			}
-			every_vassal = {
-				change_liege = {
-					liege = top_liege # I.e. the top liege
-					change = scope:minister_vassal_change
-				}
-			}
-			resolve_title_and_vassal_change = scope:minister_vassal_change
-		}
-		# If the new minister should be the diarch, make it so
-		if = { limit = {
-				OR = {
-					AND = {
-						top_liege ?= {
-							has_realm_law = grand_chancellor_law
-						}
-						always = no
-					}
-					AND = {
-						top_liege ?= {
-							has_realm_law = grand_marshal_law
-						}
-						always = no
-					}
-					AND = {
-						top_liege ?= {
-							has_realm_law = grand_censor_law
-						}
-						always = no
-					}
-				}
-			} # Proven unreachable; original effects retained below.
-# top_liege = {
-# 				if = {
-# 					limit = {
-# 						diarch != scope:new_minister
-# 					}
-# 					if = {
-# 						limit = {
-# 							NOT = { has_diarchy_type = grand_secretariat }
-# 						}
-# 						if = {#  Clear out any old diarchy
-# 							limit = { has_active_diarchy = yes }
-# 							end_diarchy = yes
-# 						}
-# 						try_start_diarchy = grand_secretariat
-# 					}
-# 					set_diarch = scope:new_minister
-# 				}
-# 			}
-}
-
-		# Save and track accomplishment for the Gate domicile building
-		if = { limit = {
-				always = no
-			} # Proven unreachable; original effects retained below.
-# scope:new_minister.house ?= {
-# 				house_head ?= {
-# 					if = {
-# 						limit = {
-# 							exists = domicile
-# 						}
-# 						domicile ?= {
-# 							set_family_accomplishment_effect = { ACCOMPLISHMENT = family_accomplishment_minister }
-# 						}
-# 					}
-# 				}
-# 			}
-}
-		if = { limit = {
-				always = no
-			} # Proven unreachable; original effects retained below.
-# scope:new_minister.house ?= {
-# 				house_head ?= {
-# 					if = {
-# 						limit = {
-# 							exists = domicile
-# 						}
-# 						domicile ?= {
-# 							set_family_accomplishment_effect = { ACCOMPLISHMENT = family_accomplishment_grand_marshal }
-# 						}
-# 					}
-# 				}
-# 			}
-}
-		if = { # make sure the minister is participant in the Dynastic Cycle situation
-			limit = {
-				NOT = {
-					any_character_situation = {
-						situation_type = dynastic_cycle
-					}
-				}
-				top_liege ?= {
-					any_character_situation = {
-						situation_type = dynastic_cycle
-					}
-				}
-			}
-
-			situation:dynastic_cycle = {
-				add_manual_participant = prev
-			}
-		}
-		if = {
-			limit = {
-				NOT = { has_character_modifier = minister_scheme_slots_modifier }
-			}
-			add_character_modifier = minister_scheme_slots_modifier
-		}
-		# Move capital to realm capital
-		scope:councillor_liege.capital_county = {
-			save_scope_as = capital_county
-		}
-		if = {
-			limit = {
-				scope:councillor_liege.capital_county != title:$MINISTER_TITLE$.title_capital_county
-			}
-			title:$MINISTER_TITLE$ = {
-				set_capital_county = scope:capital_county
-			}
-		}
-		every_held_title = {
-			limit = {
-				is_noble_family_title = yes
-			}
-			set_capital_county = scope:capital_county
-		}
-		domicile ?= {
-			move_domicile = scope:capital_county.title_province
-		}
-		if = {
-			limit = {
-				is_in_army = no
-				is_travelling = no
-				NOT = { exists = involved_activity }
-			}
-			set_location_to_default = yes
-		}
-	}
 }
 
 destroy_and_fire_minister_effect = {
@@ -1943,105 +1711,24 @@ fired_minister_position_effect = {
 		}
 		switch = {
 			trigger = primary_title
-			title:e_minister_chancellor = {
-				if = { limit = {
-						always = no
-					} # Unreachable effects archived in debug-dead-branches/audit.json.
-}
-				else = {
-					destroy_and_fire_minister_effect = {
-						MINISTER = e_minister_chancellor
-					}
-				}
-			}
-			title:e_minister_censor = {
-				if = { limit = {
-						always = no
-					} # Unreachable effects archived in debug-dead-branches/audit.json.
-}
-				else = {
-					destroy_and_fire_minister_effect = {
-						MINISTER = e_minister_censor
-					}
-				}
-			}
-			title:e_minister_grand_marshal = {
-				if = { limit = {
-						always = no
-					} # Unreachable effects archived in debug-dead-branches/audit.json.
-}
-				else = {
-					destroy_and_fire_minister_effect = {
-						MINISTER = e_minister_grand_marshal
-					}
-				}
-			}
-			title:e_minister_of_personnel = {
-				if = { limit = {
-						always = no
-					} # Unreachable effects archived in debug-dead-branches/audit.json.
-}
-				else = {
-					destroy_and_fire_minister_effect = {
-						MINISTER = e_minister_of_personnel
-					}
-				}
-			}
-			title:e_minister_of_revenue = {
-				if = { limit = {
-						always = no
-					} # Unreachable effects archived in debug-dead-branches/audit.json.
-}
-				else = {
-					destroy_and_fire_minister_effect = {
-						MINISTER = e_minister_of_revenue
-					}
-				}
-			}
-			title:e_minister_of_rites = {
-				if = { limit = {
-						always = no
-					} # Unreachable effects archived in debug-dead-branches/audit.json.
-}
-				else = {
-					destroy_and_fire_minister_effect = {
-						MINISTER = e_minister_of_rites
-					}
-				}
-			}
-			title:e_minister_of_war = {
-				if = { limit = {
-						always = no
-					} # Unreachable effects archived in debug-dead-branches/audit.json.
-}
-				else = {
-					destroy_and_fire_minister_effect = {
-						MINISTER = e_minister_of_war
-					}
-				}
-			}
-			title:e_minister_of_justice = {
-				if = { limit = {
-						always = no
-					} # Unreachable effects archived in debug-dead-branches/audit.json.
-}
-				else = {
-					destroy_and_fire_minister_effect = {
-						MINISTER = e_minister_of_justice
-					}
-				}
-			}
-			title:e_minister_of_works = {
-				if = { limit = {
-						always = no
-					} # Unreachable effects archived in debug-dead-branches/audit.json.
-}
-				else = {
-					destroy_and_fire_minister_effect = {
-						MINISTER = e_minister_of_works
-					}
-				}
-			}
+			# Historical title scope excluded.
+
+			# Historical title scope excluded.
+
+			# Historical title scope excluded.
+
+			# Historical title scope excluded.
+
+			# Historical title scope excluded.
+
+			# Historical title scope excluded.
+
+			# Historical title scope excluded.
+
+			# Historical title scope excluded.
+
+			# Historical title scope excluded.
+
 		}
 		remove_character_modifier = minister_scheme_slots_modifier
 	}
@@ -2091,7 +1778,7 @@ fill_the_ministry_effect = {
 					add = diplomacy
 				}
 			}
-			got_minister_position_effect = { MINISTER_TITLE = e_minister_chancellor MINISTER_POSITION = councillor_chancellor }
+			got_minister_position_effect = { MINISTER_POSITION = councillor_chancellor }
 		}
 	}
 	# Assign an imperial censor
@@ -2115,7 +1802,7 @@ fill_the_ministry_effect = {
 					add = intrigue
 				}
 			}
-			got_minister_position_effect = { MINISTER_TITLE = e_minister_censor MINISTER_POSITION = councillor_spymaster }
+			got_minister_position_effect = { MINISTER_POSITION = councillor_spymaster }
 		}
 	}
 	# Assign a grand marshal
@@ -2139,7 +1826,7 @@ fill_the_ministry_effect = {
 					add = martial
 				}
 			}
-			got_minister_position_effect = { MINISTER_TITLE = e_minister_grand_marshal MINISTER_POSITION = minister_grand_marshal }
+			got_minister_position_effect = { MINISTER_POSITION = minister_grand_marshal }
 		}
 	}
 	# Assign a minister of personnel
@@ -2163,7 +1850,7 @@ fill_the_ministry_effect = {
 					add = diplomacy
 				}
 			}
-			got_minister_position_effect = { MINISTER_TITLE = e_minister_of_personnel MINISTER_POSITION = minister_personnel }
+			got_minister_position_effect = { MINISTER_POSITION = minister_personnel }
 		}
 	}
 	# Assign a minister of revenue
@@ -2187,7 +1874,7 @@ fill_the_ministry_effect = {
 					add = stewardship
 				}
 			}
-			got_minister_position_effect = { MINISTER_TITLE = e_minister_of_revenue MINISTER_POSITION = councillor_steward }
+			got_minister_position_effect = { MINISTER_POSITION = councillor_steward }
 		}
 	}
 	# Assign a minister of rites
@@ -2211,7 +1898,7 @@ fill_the_ministry_effect = {
 					add = learning
 				}
 			}
-			got_minister_position_effect = { MINISTER_TITLE = e_minister_of_rites MINISTER_POSITION = councillor_court_chaplain }
+			got_minister_position_effect = { MINISTER_POSITION = councillor_court_chaplain }
 		}
 	}
 	# Assign a minister of war
@@ -2235,7 +1922,7 @@ fill_the_ministry_effect = {
 					add = martial
 				}
 			}
-			got_minister_position_effect = { MINISTER_TITLE = e_minister_of_war MINISTER_POSITION = councillor_marshal }
+			got_minister_position_effect = { MINISTER_POSITION = councillor_marshal }
 		}
 	}
 	# Assign a minister of justice
@@ -2259,7 +1946,7 @@ fill_the_ministry_effect = {
 					add = learning
 				}
 			}
-			got_minister_position_effect = { MINISTER_TITLE = e_minister_of_justice MINISTER_POSITION = minister_justice }
+			got_minister_position_effect = { MINISTER_POSITION = minister_justice }
 		}
 	}
 	# Assign a minister of works
@@ -2283,7 +1970,7 @@ fill_the_ministry_effect = {
 					add = stewardship
 				}
 			}
-			got_minister_position_effect = { MINISTER_TITLE = e_minister_of_works MINISTER_POSITION = minister_works }
+			got_minister_position_effect = { MINISTER_POSITION = minister_works }
 		}
 	}
 }

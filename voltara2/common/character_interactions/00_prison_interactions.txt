@@ -1248,7 +1248,7 @@ is_valid = {
 		modifier = { # Even more imprisonment reason if you are a danger to the Kampaku
 			add = 400
 			scope:puppet_or_actor = {
-				primary_title = title:e_japan
+				always = no
 				has_imprisonment_reason = scope:recipient
 			}
 			scope:recipient = {

@@ -192,34 +192,11 @@ the_succession_is_safe_achievement = {
 	}
 }
 
-almost_there_achievement = {
-	possible = {
-		exists = global_var:started_almost_there_achievement
-		always = no
-	}
-	happened = {
-		custom_description = {
-			text = almost_there_achievement_trigger
-			always = no
-			has_religion = religion:christianity_religion
-			always = no
-		}
-	}
-}
+# Unavailable Earth-history achievement retired: almost_there_achievement
 
-last_count_first_king_achievement = {
-	possible = {
-		exists = global_var:started_last_count_first_king_achievement
-		always = no
-	}
-	happened = {
-		custom_description = {
-			text = last_count_first_king_achievement_trigger
-			always = no
-			always = no
-		}
-	}
-}
+
+# Unavailable Earth-history achievement retired: last_count_first_king_achievement
+
 
 prolific_achievement = {
 	possible = {
@@ -494,185 +471,32 @@ give_a_dog_a_bone_achievement = {
 	}
 }
 
-al_andalus_achievement = {
-	possible = {
-		exists = global_var:started_al_andalus_achievement
-	}
-	happened = {
-		custom_description = {
-			text = al_andalus_achievement_trigger
-			has_character_flag = achievement_al_andalus_flag
-			completely_controls_region = world_europe_west_iberia
-		}
-	}
-}
+# Unavailable Earth-history achievement retired: al_andalus_achievement
 
-wily_as_the_fox_achievement = {
-	possible = {
-		exists = global_var:started_wily_as_the_fox_achievement
-	}
-	happened = {
-		custom_description = {
-			text = wily_as_the_fox_achievement_trigger
-			OR = {
-				always = no
-				always = no
-				always = no
-			}
-			OR = {
-				AND = {
-					always = no
-					any_county_in_region = {
-						region = custom_k_epirus
-						count = all
-						faith = faith:catholic
-					}
-				}
-				AND = {
-					always = no
-					any_county_in_region = {
-						region = custom_k_thessalonika
-						count = all
-						faith = faith:catholic
-					}
-				}
-				AND = {
-					always = no
-					any_county_in_region = {
-						region = custom_k_hellas
-						count = all
-						faith = faith:catholic
-					}
-				}
-				#Krete doesn't count.
-			}
-		}
-	}
-}
 
-sibling_rivalry_achievement = {
-	possible = {
-		exists = global_var:started_sibling_rivalry_achievement
-	}
-	happened = {
-		custom_description = {
-			text = sibling_rivalry_achievement_trigger
-			any_held_title = {
-				always = no
-			}
-		}
-	}
-}
+# Unavailable Earth-history achievement retired: wily_as_the_fox_achievement
 
-blood_eagle_achievement = {
-	possible = {
-		exists = global_var:started_blood_eagle_achievement
-	}
-	happened = {
-		custom_description = {
-			text = blood_eagle_achievement_trigger
-			completely_controls_region = world_europe_west_britannia
-		}
-	}
-}
 
-kings_to_the_seventh_generation_achievement = {
-	possible = {
-		exists = global_var:started_kings_to_the_seventh_generation_achievement
-	}
-	happened = {
-		custom_description = {
-			text = kings_to_the_seventh_generation_achievement_trigger
-			any_held_title = {
-				always = no
-			}
-		}
-	}
-}
+# Unavailable Earth-history achievement retired: sibling_rivalry_achievement
 
-norman_yoke_achievement = {
-	possible = {
-		exists = global_var:started_norman_yoke_achievement
-	}
-	happened = {
-		custom_description = {
-			text = norman_yoke_achievement_trigger
-			exists = global_var:achievement_norman_yoke_war_flag
-			culture = culture:english
-			title:k_england = {
-				holder = {
-					this = root
-					save_temporary_scope_as = english_king
-				}
 
-				# All direct vassals who hold a county or duchy in De Jure England must be English.
-				any_in_de_jure_hierarchy = {
-					count = all
+# Unavailable Earth-history achievement retired: blood_eagle_achievement
 
-					trigger_if = {
-						limit = {
-							OR = {
-								tier = tier_county
-								tier = tier_duchy
-							}
-							holder ?= {
-								is_vassal_of = scope:english_king
-							}
-						}
-						holder = {
-							culture = culture:english
-						}
-					}
-				}
-			}
-		}
-	}
-}
 
-royal_dignity_achievement = {
-	possible = {
-		exists = global_var:started_royal_dignity_achievement
-	}
-	happened = {
-		custom_description = {
-			text = royal_dignity_achievement_trigger
-			any_held_title = {
-				always = no
-			}
-			any_held_title = {
-				always = no
-			}
-		}
-	}
-}
+# Unavailable Earth-history achievement retired: kings_to_the_seventh_generation_achievement
 
-going_places_achievement = {
-	possible = {
-		exists = global_var:started_going_places_achievement
-		always = no
-	}
-	happened = {
-		custom_description = {
-			text = going_places_achievement_trigger
-			highest_held_title_tier >= tier_kingdom
-			always = no
-		}
-	}
-}
 
-land_of_the_rus_achievement = {
-	possible = {
-		exists = global_var:started_land_of_the_rus_achievement
-	}
-	happened = {
-		custom_description = {
-			text = land_of_the_rus_achievement_trigger
-			any_held_title = {
-				always = no
-			}
-		}
-	}
-}
+# Unavailable Earth-history achievement retired: norman_yoke_achievement
+
+
+# Unavailable Earth-history achievement retired: royal_dignity_achievement
+
+
+# Unavailable Earth-history achievement retired: going_places_achievement
+
+
+# Unavailable Earth-history achievement retired: land_of_the_rus_achievement
+
 
 above_god_achievement = {
 	possible = {
@@ -908,87 +732,5 @@ beacon_of_progress_achievement = {
 	}
 }
 
-mother_of_us_all_achievement = {
-	possible = {
-		exists = global_var:started_mother_of_us_all_achievement
-	}
-	happened = {
-		custom_description = {
-			text = mother_of_us_all_achievement_trigger
-			OR = {
-				#Siguic/Bidaic
-				AND = {
-					has_global_variable = achievement_mother_of_us_all_siguic
-					any_county_in_region = {
-						region = world_africa
-						count = all
-						faith = { religion_tag = west_african_religion }
-					}
-				}
-				#Orisan
-				AND = {
-					has_global_variable = achievement_mother_of_us_all_orisha
-					any_county_in_region = {
-						region = world_africa
-						count = all
-						faith = { religion_tag = west_african_orisha_religion }
-					}
-				}
-				#Bori
-				AND = {
-					has_global_variable = achievement_mother_of_us_all_bori
-					any_county_in_region = {
-						region = world_africa
-						count = all
-						faith = { religion_tag = west_african_bori_religion }
-					}
-				}
-				#Roog Sene
-				AND = {
-					has_global_variable = achievement_mother_of_us_all_roog_sene
-					any_county_in_region = {
-						region = world_africa
-						count = all
-						faith = { religion_tag = west_african_roog_religion }
-					}
-				}
-				#Akom
-				AND = {
-					has_global_variable = achievement_mother_of_us_all_akom
-					any_county_in_region = {
-						region = world_africa
-						count = all
-						faith = { religion_tag = akom_religion }
-					}
-				}
-				#Kushitism
-				AND = {
-					has_global_variable = achievement_mother_of_us_all_kushitism
-					any_county_in_region = {
-						region = world_africa
-						count = all
-						faith = { religion_tag = kushitism_religion }
-					}
-				}
-				#Waaqism
-				AND = {
-					has_global_variable = achievement_mother_of_us_all_waaqism
-					any_county_in_region = {
-						region = world_africa
-						count = all
-						faith = { religion_tag = waaqism_religion }
-					}
-				}
-				#North African
-				AND = {
-					has_global_variable = achievement_mother_of_us_all_achamanism
-					any_county_in_region = {
-						region = world_africa
-						count = all
-						faith = { religion_tag = north_african_religion }
-					}
-				}
-			}
-		}
-	}
-}
+# Unavailable Earth-history achievement retired: mother_of_us_all_achievement
+

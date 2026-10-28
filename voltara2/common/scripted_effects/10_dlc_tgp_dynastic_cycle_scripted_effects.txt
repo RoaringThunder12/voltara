@@ -180,7 +180,8 @@ always = no
 			}
 		}
 		show_as_tooltip = { # We show this as a tooltip because it looks better than the above effect
-			title:h_china = { change_county_control = 25 }
+			# Historical title scope excluded.
+
 		}
 		# Populate the emperor's court with high merit characters
 		hidden_effect = {
@@ -745,7 +746,7 @@ tgp_treasury_raided_effect = {
 tgp_activate_catalyst_against_hegemon_effect = {
 	if = { limit = {
 			always = no
-			title:h_china.holder ?= $HEGEMON$
+			always = no
 			any_character_situation = {
 				situation:dynastic_cycle ?= this
 				situation_top_has_catalyst = $CATALYST$
@@ -2381,7 +2382,7 @@ tgp_dynastic_cycle_record_history_phase_change_effect = {
 		else_if = { limit = {
 				always = no
 				always = no
-				title:h_china.holder.dynasty != title:h_china.previous_holder.dynasty
+				always = no
 			} # Unreachable effects archived in debug-dead-branches/audit.json.
 }
 		# Else, show none

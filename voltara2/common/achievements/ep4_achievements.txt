@@ -29,17 +29,8 @@ ep4_02_the_heavenly_kingdom_achievement = {
 }
 
 # 03. Sword of Japan
-ep4_03_sword_of_japan_achievement = {
-	possible = {
-		exists = global_var:started_ep4_03_sword_of_japan_achievement
-	}
-	happened = {
-		custom_description = {
-			text = ep4_03_sword_of_japan_achievement_trigger
-			exists = global_var:finished_ep4_03_sword_of_japan_achievement
-		}
-	}
-}
+# Unavailable Earth-history achievement retired: ep4_03_sword_of_japan_achievement
+
 
 # 04. A Living God on Earth
 ep4_04_a_living_god_on_earth_achievement = {
@@ -71,17 +62,8 @@ ep4_05_grand_governor_achievement = {
 }
 
 # 06. Mandate of Heaven
-ep4_06_mandate_of_heaven_achievement = {
-	possible = {
-		
-	}
-	happened = {
-		custom_description = {
-			text = ep4_06_mandate_of_heaven_achievement_trigger
-			exists = global_var:finished_ep4_06_mandate_of_heaven_achievement_trigger
-		}
-	}
-}
+# Unavailable Earth-history achievement retired: ep4_06_mandate_of_heaven_achievement
+
 
 # 07. Cut off the Head... and the Body will Follow
 ep4_07_cut_off_the_head_and_the_body_will_follow_achievement = {
@@ -97,17 +79,8 @@ ep4_07_cut_off_the_head_and_the_body_will_follow_achievement = {
 }
 
 # 08. Shōgun
-ep4_08_shogun_achievement = {
-	possible = {
-		always = no
-	}
-	happened = {
-		custom_description = {
-			text = ep4_08_shogun_achievement_trigger
-			exists = global_var:finished_ep4_08_shogun_achievement
-		}
-	}
-}
+# Unavailable Earth-history achievement retired: ep4_08_shogun_achievement
+
 
 # 09. Devaraja
 ep4_09_devaraja_achievement = {
@@ -267,7 +240,7 @@ ep4_19_stamp_of_approval_achievement = {
 	happened = {
 		custom_description = {
 			text = ep4_19_stamp_of_approval_achievement_trigger
-			top_liege.primary_title = title:h_china
+			always = no
 			OR = {
 				tgp_passed_children_examination = yes
 				tgp_passed_provincial_examination = yes

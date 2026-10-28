@@ -148,6 +148,7 @@ voltara_dragon_duel_cleanup = {
 }
 voltara_dragon_duel_victory = {
  scope:voltara_winner = { add_prestige = 150 add_trait_xp = { trait = dragonrider track = dragon_training value = 10 }
+ if = { limit = { NOT = { has_variable = voltara_dragon_victories } } set_variable = { name = voltara_dragon_victories value = 0 } }
  change_variable = { name = voltara_dragon_victories add = 1 } }
  scope:voltara_loser = { voltara_clear_deployment = yes add_trait = wounded_1
  var:current_dragon ?= { add_trait = dragon_wounded_2 }

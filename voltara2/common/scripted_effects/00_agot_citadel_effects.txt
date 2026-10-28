@@ -358,12 +358,7 @@
 #Moved from ninepenny to be more useful
 send_traveling_maester_to_citadel = {
 	scope:maester = {
-		if = {
-			limit = {
-				has_character_flag = traveling_maester
-			}
-			remove_character_flag = traveling_maester
-		}
+		
 		if = {
 			limit = {
 				NOT = { employer = global_var:citadel_title.holder}

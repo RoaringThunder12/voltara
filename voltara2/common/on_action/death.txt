@@ -342,55 +342,6 @@ on_death = {
 			} # Unreachable effects archived in debug-dead-branches/audit.json.
 }
 
-		# Ludwig the Younger inherits East Francia and Karlmann Bavaria, as historically.
-		if = { limit = {
-				# Make sure we're looking at the right guy & that the circumstances haven't changed too much.
-				always = no
-				highest_held_title_tier = tier_kingdom
-				has_realm_law = confederate_partition_succession_law
-				# Bavaria should be in a fit state for interfering with the handout order.
-				always = no
-				NOT = { always = no }
-				NOT = { exists = designated_heir }
-				always = no
-			} # Proven unreachable; original effects retained below.
-# set_designated_heir = character:42019
-}
-		else_if = { limit = {
-				always = no
-				has_variable = ludwig_younger_designated_by_history
-				always = no
-				NAND = {
-					highest_held_title_tier = tier_kingdom
-					has_realm_law = confederate_partition_succession_law
-					always = no
-					NOT = { always = no }
-				}
-			} # Proven unreachable; original effects retained below.
-# clear_designated_heir = yes
-}
-		# Salzburg sits outside any de jure kingdom, so it would follow Ludwig the Younger into East Francia instead of going to Bavaria with Karlmann
-		if = { limit = {
-				always = no
-				always = no
-				# Optional native title is absent on the Voltara map.
-# title:d_et_salzburg.holder ?= { is_vassal_of = root }
-always = no
-				# Optional native character is absent on the Voltara map.
-# character:42018 ?= {
-# 					is_alive = yes
-# 					is_vassal_of = root
-# 				}
-always = no
-			} # Proven unreachable; original effects retained below.
-# create_title_and_vassal_change = {
-# 				type = granted
-# 				save_scope_as = salzburg_change
-# 				add_claim_on_loss = no
-# 			}
-# resolve_title_and_vassal_change = scope:salzburg_change
-}
-
 		# Diarchies
 		## Handle regency loyalties.
 		if = {
@@ -1659,7 +1610,7 @@ always = no
 		if = { limit = {
 				exists = scope:killer
 				always = no
-				house ?= title:h_china.holder.house
+				always = no
 			} # Unreachable effects archived in debug-dead-branches/audit.json.
 }
 

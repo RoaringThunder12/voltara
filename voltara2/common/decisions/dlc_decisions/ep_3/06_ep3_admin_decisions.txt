@@ -498,7 +498,7 @@ admin_confirmation_decision = {
 				top_liege ?= {
 					OR = {
 						culture = { has_cultural_pillar = heritage_byzantine }
-						capital_barony ?= title:b_constantinople
+						always = no
 						is_roman_emperor_primary_title_trigger = yes
 					}
 				}

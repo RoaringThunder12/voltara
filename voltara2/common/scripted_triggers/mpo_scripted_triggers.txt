@@ -1881,46 +1881,8 @@ mpo_nomad_invasion_war_ai_trigger = {
 			}
 		}
 		#Byzantium or China are actually somehow a viable target
-		title:e_byzantium.holder ?= {
-			in_diplomatic_range = $NOMAD$
-			NOR = {
-				has_any_good_relationship_with_character_trigger = { CHARACTER = $NOMAD$ }
-				is_allied_to = $NOMAD$
-				is_tributary_of = $NOMAD$
-				$NOMAD$ = {
-					is_tributary_of_suzerain_or_above = prev
-				}
-				$NOMAD$ = {
-					has_truce = prev
-				}
-			}
-			#Fulfills strength comparison
-			current_military_strength < $NOMAD$.seventy_percent_of_current_military_strength
-			OR = {
-				gold <= $NOMAD$.fifty_percent_of_current_gold
-				current_military_strength <= $NOMAD$.forty_percent_of_current_military_strength
-			}
-		}
-		title:h_china.holder ?= {
-			in_diplomatic_range = $NOMAD$
-			NOR = {
-				has_any_good_relationship_with_character_trigger = { CHARACTER = $NOMAD$ }
-				is_allied_to = $NOMAD$
-				is_tributary_of = $NOMAD$
-				$NOMAD$ = {
-					is_tributary_of_suzerain_or_above = prev
-				}
-				$NOMAD$ = {
-					has_truce = prev
-				}
-			}
-			#Fulfills strength comparison
-			current_military_strength < $NOMAD$.seventy_percent_of_current_military_strength
-			OR = {
-				gold <= $NOMAD$.fifty_percent_of_current_gold
-				current_military_strength <= $NOMAD$.forty_percent_of_current_military_strength
-			}
-		}
+		always = no
+		always = no
 		# Havsaran zud? Leave the steppe!
 		capital_county ?= {
 			any_county_situation_sub_region = {

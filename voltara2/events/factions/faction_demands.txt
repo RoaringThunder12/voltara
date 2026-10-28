@@ -1158,7 +1158,7 @@ faction_demand.1001 = {
 			
 			modifier = { # Byzantium should try to avoid becoming Latin-rite
 				factor = 0
-				primary_title = title:e_byzantium
+				always = no
 				primary_title.state_rite.faith.religion = scope:peasant_leader.faith.religion
 				scope:peasant_leader.rite = {
 					NOT = { rite_has_doctrine = special_doctrine_is_eastern_christian_faith }

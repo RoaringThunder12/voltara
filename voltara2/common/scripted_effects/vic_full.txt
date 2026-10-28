@@ -5,7 +5,7 @@ vic_gain_clue = {
 if = { limit = { var:vic_clue_$CLUE$ < $LEVEL$ } set_variable = { name = vic_clue_$CLUE$ value = $LEVEL$ } if = { limit = { this = character:19060029 global_var:vic_case_state > 1 } set_global_variable = { name = vic_case_state value = 0 } } }
 }
 vic_close_attempt = {
-if = { limit = { global_var:vic_assassination < 3 } set_global_variable = { name = vic_assassination value = 5 }  } remove_global_variable = vic_attempt_pending set_global_variable = { name = vic_attempt_age value = 0 } 
+if = { limit = { global_var:vic_assassination < 3 } set_global_variable = { name = vic_assassination value = 5 }  }  set_global_variable = { name = vic_attempt_age value = 0 } 
 }
 vic_check_emergencies = {
 if = { limit = { vic_running = yes }

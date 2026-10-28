@@ -165,50 +165,14 @@ interactive_game_start_after_lobby = {
 					has_game_rule = miv_starting_conquerors_miv_players
 				}
 			}
-			title:e_mordor.holder ?= {
-				if = {
-					limit = {
-						OR = {
-							is_ai = yes
-							has_game_rule = miv_starting_conquerors_miv_players
-						}
-					}
-					trigger_event = conqueror.0001
-				}
-			}
-			title:e_hunnic_empire.holder ?= {
-				if = {
-					limit = {
-						OR = {
-							is_ai = yes
-							has_game_rule = miv_starting_conquerors_miv_players
-						}
-					}
-					trigger_event = conqueror.0001
-				}
-			}
-			title:e_blackfyre_rebellion.holder ?= {
-				if = {
-					limit = {
-						OR = {
-							is_ai = yes
-							has_game_rule = miv_starting_conquerors_miv_players
-						}
-					}
-					trigger_event = conqueror.0001
-				}
-			}
-			title:e_colovian_estates.holder ?= {
-				if = {
-					limit = {
-						OR = {
-							is_ai = yes
-							has_game_rule = miv_starting_conquerors_miv_players
-						}
-					}
-					trigger_event = conqueror.0001
-				}
-			}
+			# Historical title scope excluded.
+
+			# Historical title scope excluded.
+
+			# Historical title scope excluded.
+
+			# Historical title scope excluded.
+
 			# Native historical character does not exist in Voltara; original follows.
 # character:163101 ?= {
 # 				if = {

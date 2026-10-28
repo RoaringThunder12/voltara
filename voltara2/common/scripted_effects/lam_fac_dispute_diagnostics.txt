@@ -87,17 +87,8 @@ lam_dr_clock_restart_effect = {
 			lam_fac_stat_add_effect = {
 				KEY = clock_restart
 			}
-			set_variable = {
-				name = lam_dr_last_restart_m
-				value = lam_now_m
-			}
-			set_variable = {
-				name = lam_dr_last_restart_age
-				value = {
-					value = lam_now_m
-					subtract = var:lam_ev_since
-				}
-			}
+			
+			
 		}
 	}
 }
@@ -109,17 +100,8 @@ lam_dr_log_clear_effect = {
 		lam_fac_stat_add_effect = {
 			KEY = clear_total
 		}
-		set_variable = {
-			name = lam_dr_last_clear_m
-			value = lam_now_m
-		}
-		set_variable = {
-			name = lam_dr_last_clear_age
-			value = {
-				value = lam_now_m
-				subtract = var:lam_ev_since
-			}
-		}
+		
+		
 		if = {
 			limit = {
 				var:lam_ev_since > {

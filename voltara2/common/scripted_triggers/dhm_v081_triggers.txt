@@ -36,15 +36,12 @@ dhm_v081_officer_self_reliant_trigger = {
 		}
 	}
 }
-# Pair-specific evidence survives another spouse's settlement. Keep either old
-# one-sided reference until its existing expiry; never rewrite legacy dates.
+# Current pair-specific opinion evidence survives another spouse's settlement.
 dhm_v081_marriage_may_reopen_trigger = {
 	OR = {
 		NOT = { OR = {
 			has_opinion_modifier = { modifier = dhm082_settled_marriage_opinion target = prev }
 			prev = { has_opinion_modifier = { modifier = dhm082_settled_marriage_opinion target = prev } }
-			var:dhm081_settled_spouse ?= prev
-			prev = { var:dhm081_settled_spouse ?= prev }
 		} }
 		opinion = { target = prev value < -20 }
 		stress_level >= 3

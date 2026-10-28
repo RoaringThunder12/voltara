@@ -122,7 +122,7 @@ grand_campaign_project = {
 	is_valid = { always = no }
 
 	on_plan_build = {
-		title:h_china = {
+		scope:owner.primary_title = {
 			set_variable = {
 				name = num_of_grand_campaign_projects
 				value = {
@@ -985,7 +985,7 @@ grand_campaign_project = {
 		value = 10
 		if = {
 			limit = {
-				title:h_china.holder.hegemon_favored_stability_phase_value < 0
+				always = no
 			}
 			add = 50
 		}
@@ -1903,9 +1903,8 @@ minister_project_development = {
 			limit = {
 				has_variable = project_founded_by_minister
 			}
-			title:e_minister_of_works.holder ?= {
-				change_merit = monumental_merit_gain
-			}
+			# Historical title scope excluded.
+
 		}
 		scope:founder ?= {
 			if = {
@@ -3278,9 +3277,8 @@ minister_project_train_troops = {
 						} # Unreachable effects archived in debug-dead-branches/audit.json.
 }
 					else = {
-						title:h_china.holder ?= {
-							save_scope_as = minister
-						}
+						# Historical title scope excluded.
+
 					}
 					save_scope_value_as = {
 						name = minister_exp_boost_value
@@ -3444,9 +3442,8 @@ minister_project_train_troops = {
 							} # Unreachable effects archived in debug-dead-branches/audit.json.
 }
 						else = {
-							title:h_china.holder ?= {
-								save_scope_as = minister
-							}
+							# Historical title scope excluded.
+
 						}
 						save_scope_value_as = {
 							name = minister_exp_boost_value
@@ -3691,9 +3688,8 @@ minister_project_train_troops = {
 							} # Unreachable effects archived in debug-dead-branches/audit.json.
 }
 						else = {
-							title:h_china.holder ?= {
-								save_scope_as = minister
-							}
+							# Historical title scope excluded.
+
 						}
 						save_scope_value_as = {
 							name = minister_exp_boost_value
@@ -4272,9 +4268,7 @@ minister_project_conduct_census = {
 						}
 					}
 					is_governor = yes
-					title:e_minister_of_revenue.holder ?= {
-						treasury >= 1000
-					}
+					always = no
 				}
 			}
 

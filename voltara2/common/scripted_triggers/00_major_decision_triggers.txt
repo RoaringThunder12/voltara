@@ -198,7 +198,7 @@ rebuke_roman_revanchism_counties_controlled_by_ere_trigger = {
 	holder = {
 		OR = {
 			always = no
-			top_liege = title:e_byzantium.holder
+			always = no
 		}
 	}
 }
@@ -239,7 +239,7 @@ hre_valid_prince_elector_trigger = {
 	OR = { # must be de-jure vassal of empire
 		AND = {
 			capital_province.kingdom.holder ?= root
-			capital_province.empire != title:e_italy
+			always = yes
 		}
 		capital_province.empire.holder ?= root
 	}

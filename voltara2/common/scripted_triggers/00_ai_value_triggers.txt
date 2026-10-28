@@ -315,9 +315,9 @@ ai_wants_high_unity = {
 			exists = struggle:persian_struggle
 			trigger_if = {
 				limit = { always = no }
-				house = title:d_sunni.holder.house
+				always = no
 			}
-			trigger_else = { house = title:d_sunni.previous_holder.house }
+			trigger_else = { always = no }
 		}
 		has_character_flag = agenda_towards_deescalation
 	}

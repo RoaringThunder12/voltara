@@ -454,7 +454,7 @@ situation_dynastic_cycle_choose_movement_decision = {
 						scope:recipient.var:movement_power >= high_movement_power_value
 					}
 					tgp_activate_catalyst_against_hegemon_effect = {
-						HEGEMON = scope:recipient.top_liege
+						
 						CATALYST = catalyst_movement_gained_power_pro_hegemon
 					}
 				}
@@ -475,7 +475,7 @@ situation_dynastic_cycle_choose_movement_decision = {
 						scope:recipient.var:movement_power >= high_movement_power_value
 					}
 					tgp_activate_catalyst_against_hegemon_effect = {
-						HEGEMON = scope:recipient.top_liege
+						
 						CATALYST = catalyst_movement_gained_power_expansion
 					}
 				}
@@ -496,7 +496,7 @@ situation_dynastic_cycle_choose_movement_decision = {
 						scope:recipient.var:movement_power >= high_movement_power_value
 					}
 					tgp_activate_catalyst_against_hegemon_effect = {
-						HEGEMON = scope:recipient.top_liege
+						
 						CATALYST = catalyst_movement_gained_power_advancement
 					}
 				}
@@ -517,7 +517,7 @@ situation_dynastic_cycle_choose_movement_decision = {
 						scope:recipient.var:movement_power >= high_movement_power_value
 					}
 					tgp_activate_catalyst_against_hegemon_effect = {
-						HEGEMON = scope:recipient.top_liege
+						
 						CATALYST = catalyst_movement_gained_power_conservative
 					}
 				}
@@ -1655,10 +1655,7 @@ ai_movement_petition_change_laws_decision = {
 					}
 				}
 				modifier = {
-					title:h_china ?= {
-						exists = var:years_since_imperial_examination
-						var:years_since_imperial_examination >= catalyst_imperial_examinations_gap_short_yearly_value
-					}
+					always = no
 					add = 10
 				}
 				save_scope_value_as = {

@@ -59,12 +59,12 @@ dynastic_cycle = {
 			}
 		}
 		
-		title:h_china.holder ?= {
+		every_ruler = { limit = { is_independent_ruler = yes government_has_flag = government_is_celestial }
 			save_scope_as = huangdi
 			# Imperial Examinations tracking
 			if = { limit = {
 					always = no
-					title:h_china.var:years_since_imperial_examination >= 3
+					always = no
 				} # Unreachable effects archived in debug-dead-branches/audit.json.
 }
 		}
@@ -81,7 +81,7 @@ dynastic_cycle = {
 						county = {
 							any_county_situation = { this = situation:dynastic_cycle }
 						}
-						county.holder.top_liege = title:h_china.holder
+						always = no
 					}
 				}
 			}
@@ -105,7 +105,7 @@ dynastic_cycle = {
 						county = {
 							any_county_situation = { this = situation:dynastic_cycle }
 						}
-						county.holder.top_liege = title:h_china.holder
+						always = no
 					}
 				}
 				switch = {
@@ -161,9 +161,9 @@ dynastic_cycle = {
 						}
 					}
 					OR = {
-						is_vassal_or_below_of = title:h_china.holder
+						always = no
 						AND = {
-							is_tributary_of = title:h_china.holder
+							always = no
 							subject_contract_has_flag = celestial_investiture_politics
 						}
 					}
@@ -219,9 +219,9 @@ dynastic_cycle = {
 						}
 					}
 					OR = {
-						is_vassal_or_below_of = title:h_china.holder
+						always = no
 						AND = {
-							is_tributary_of = title:h_china.holder
+							always = no
 							subject_contract_has_flag = celestial_investiture_politics
 						}
 					}
@@ -277,9 +277,9 @@ dynastic_cycle = {
 						}
 					}
 					OR = {
-						is_vassal_or_below_of = title:h_china.holder
+						always = no
 						AND = {
-							is_tributary_of = title:h_china.holder
+							always = no
 							subject_contract_has_flag = celestial_investiture_politics
 						}
 					}
@@ -335,9 +335,9 @@ dynastic_cycle = {
 						}
 					}
 					OR = {
-						is_vassal_or_below_of = title:h_china.holder
+						always = no
 						AND = {
-							is_tributary_of = title:h_china.holder
+							always = no
 							subject_contract_has_flag = celestial_investiture_politics
 						}
 					}
@@ -393,9 +393,9 @@ dynastic_cycle = {
 						}
 					}
 					OR = {
-						is_vassal_or_below_of = title:h_china.holder
+						always = no
 						AND = {
-							is_tributary_of = title:h_china.holder
+							always = no
 							subject_contract_has_flag = celestial_investiture_politics
 						}
 					}
@@ -439,7 +439,7 @@ dynastic_cycle = {
 					}
 					is_independent_ruler = yes
 					NAND = {
-						is_tributary_of = title:h_china.holder
+						always = no
 						subject_contract_has_flag = celestial_investiture_politics
 					}
 				}
@@ -462,28 +462,15 @@ dynastic_cycle = {
 	start_phase = situation_dynastic_cycle_phase_instability
 
 	on_start = {
-		root.situation_sub_region:core = { add_dejure_title_to_sub_region = title:h_china }
-		root.situation_sub_region:core = { add_character_realm_to_sub_region = title:h_china.holder }
+		every_ruler = {
+ limit = { is_independent_ruler = yes government_has_flag = government_is_celestial }
+ save_scope_as = vt_cycle_ruler
+ primary_title = { save_scope_as = vt_cycle_title }
+ root.situation_sub_region:core = { add_dejure_title_to_sub_region = scope:vt_cycle_title add_character_realm_to_sub_region = scope:vt_cycle_ruler }
+}
 
-		title:h_china.holder = {
-			every_councillor = {
-				# Make sure the minister is participant in the Dynastic Cycle situation
-				if = {
-					limit = {
-						NOT = {
-							any_character_situation = {
-								situation_type = dynastic_cycle
-							}
-						}
-					}
-					root = {
-						add_manual_participant = prev
-					}
-				}
-				# Give them modifier for extra scheme slots
-				add_character_modifier = minister_scheme_slots_modifier
-			}
-		}
+		# Historical title scope excluded.
+
 		every_situation_participant = {
 			# Update total movement power for characters
 			update_character_movement_power_individual_effect = yes
@@ -495,12 +482,12 @@ dynastic_cycle = {
 				if = {
 					limit = {
 						merit_level >= merit_level_expected_duchy_value
-						this != title:h_china.holder
+						always = yes
 					}
 					add_to_list = potential_elders
 				}
 				else_if = {
-					limit = { this != title:h_china.holder }
+					limit = { always = yes }
 					add_to_list = potential_disciples
 				}
 			}
@@ -580,16 +567,8 @@ dynastic_cycle = {
 	phases = {
 		situation_dynastic_cycle_phase_stability = {
 			on_start = {
-				title:h_china.holder ?= { # Emperor decides what Stable phase to enter
-					if = {
-						limit = {
-							top_participant_group:dynastic_cycle ?= {
-								participant_group_type = hegemon_ruler
-							}
-						}
-						trigger_event = tgp_dynastic_cycle.0071
-					}
-				}
+				# Historical title scope excluded.
+
 				tgp_update_wuking_element_effect = yes
 			}
 
@@ -632,29 +611,13 @@ dynastic_cycle = {
 					name = stability_phase_start_date
 					value = current_date
 				}
-				title:h_china.holder ?= { # Emperor decides what Stable phase to enter
-					if = {
-						limit = {
-							top_participant_group:dynastic_cycle ?= {
-								participant_group_type = hegemon_ruler
-							}
-						}
-						trigger_event = tgp_dynastic_cycle.0071
-					}
-				}
+				# Historical title scope excluded.
+
 				tgp_update_wuking_element_effect = yes
 
 				#host the exam to unlock merit ranks after chaos is over
-				title:h_china.holder ?= {
-					if = {
-						limit = {
-							is_ai = yes
-							root.var:last_recorded_phase_change = 6
-						}
-						add_character_flag = examinations_ai_override
-						ai_attempt_to_host_activity = activity_imperial_examination
-					}
-				}
+				# Historical title scope excluded.
+
 				tgp_dynastic_cycle_record_history_phase_change_effect = {
 					PHASE = situation_dynastic_cycle_phase_stability_expansion
 					PHASE_NUMBER = 2
@@ -682,7 +645,7 @@ dynastic_cycle = {
 			}
 
 			on_end = {
-				title:h_china.holder ?= {
+				every_ruler = { limit = { is_independent_ruler = yes government_has_flag = government_is_celestial }
 					if = {
 						limit = {
 							top_participant_group:dynastic_cycle ?= {
@@ -912,29 +875,13 @@ dynastic_cycle = {
 					name = stability_phase_start_date
 					value = current_date
 				}
-				title:h_china.holder ?= { # Emperor decides what Stable phase to enter
-					if = {
-						limit = {
-							top_participant_group:dynastic_cycle ?= {
-								participant_group_type = hegemon_ruler
-							}
-						}
-						trigger_event = tgp_dynastic_cycle.0071
-					}
-				}
+				# Historical title scope excluded.
+
 				tgp_update_wuking_element_effect = yes
 
 				#host the exam to unlock merit ranks after chaos is over
-				title:h_china.holder ?= {
-					if = {
-						limit = {
-							is_ai = yes
-							root.var:last_recorded_phase_change = 6
-						}
-						add_character_flag = examinations_ai_override
-						ai_attempt_to_host_activity = activity_imperial_examination
-					}
-				}
+				# Historical title scope excluded.
+
 				tgp_dynastic_cycle_record_history_phase_change_effect = {
 					PHASE = situation_dynastic_cycle_phase_stability_advancement
 					PHASE_NUMBER = 3
@@ -961,7 +908,7 @@ dynastic_cycle = {
 			}
 
 			on_end = {
-				title:h_china.holder ?= {
+				every_ruler = { limit = { is_independent_ruler = yes government_has_flag = government_is_celestial }
 					if = {
 						limit = {
 							top_participant_group:dynastic_cycle ?= {
@@ -1187,7 +1134,8 @@ dynastic_cycle = {
 			illustration = "gfx/interface/illustrations/event_story/tgp_dynastic_cycle_consolidation.dds"
 
 			on_start = {
-				title:h_china.holder ?= { trigger_event = tgp_dynastic_cycle.0061 } # China conquered
+				# Historical title scope excluded.
+ # China conquered
 				tgp_update_wuking_element_effect = yes
 				
 				tgp_dynastic_cycle_record_history_phase_change_effect = {
@@ -1496,16 +1444,8 @@ dynastic_cycle = {
 			illustration = "gfx/interface/illustrations/event_story/tgp_dynastic_cycle_consolidation.dds"
 
 			on_start = {
-				title:h_china.holder ?= {
-					if = {
-						limit = {
-							top_participant_group:dynastic_cycle ?= {
-								participant_group_type = hegemon_ruler
-							}
-						}
-						trigger_event = tgp_dynastic_cycle.0091
-					}
-				}
+				# Historical title scope excluded.
+
 
 				tgp_dynastic_cycle_record_history_phase_change_effect = {
 					PHASE = situation_dynastic_cycle_phase_instability
@@ -1827,17 +1767,8 @@ dynastic_cycle = {
 			illustration = "gfx/interface/illustrations/event_story/tgp_dynastic_cycle_corruption.dds"
 
 			on_start = {
-				title:h_china.holder ?= {
-					save_scope_as = huangdi
-					if = {
-						limit = {
-							top_participant_group:dynastic_cycle ?= {
-								participant_group_type = hegemon_ruler
-							}
-						}
-						trigger_event = tgp_dynastic_cycle.0081 # China shatters
-					}
-				}
+				# Historical title scope excluded.
+
 				tgp_dynastic_cycle_record_history_phase_change_effect = {
 					PHASE = situation_dynastic_cycle_phase_chaos
 					PHASE_NUMBER = 6

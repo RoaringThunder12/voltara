@@ -887,6 +887,12 @@ window = {
 										align = left
 									}
 									text_single = {
+										visible = "[ScriptedGui.IsShown( GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('check', MakeScopeFlag('edu_5') ).End )]"
+										layoutpolicy_horizontal = expanding
+										text = "slot_education_5"
+										align = left
+									}
+									text_single = {
 										visible = "[ScriptedGui.IsShown( GuiScope.SetRoot(GetPlayer.MakeScope).AddScope('check', MakeScopeFlag('legacy') ).End )]"
 										layoutpolicy_horizontal = expanding
 										text = "slot_legacy"
